@@ -37,7 +37,9 @@ library HeroRare requires Units{
 
         //将一个单位放回对应奖池并删除它
         public static method AddRandomHero(unit u){
-            UnitPoolAddUnitType(HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1 );
+            if(GetRepeat()==false){
+                UnitPoolAddUnitType(HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1 );
+            }
             Units.Remove(u);
         }
 
