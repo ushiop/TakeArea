@@ -1,0 +1,13 @@
+//引入所有库
+//! import vjass "map/script/Table.j"
+//! import vjass "map/script/TimerUtils.j"
+//! import zinc "map/script/Hero.j"
+//! import zinc "map/script/Units.j"
+//! import zinc "map/script/Util.j"
+//! import zinc "map/script/Init.j"
+//! import zinc "map/script/Teams.j"
+//! import zinc "map/script/Camera.j"
+//! import zinc "map/script/HeroRare.j"
+//! import zinc "map/script/Tree.j"
+//! import zinc "map/script/PlayerEvent.j"
+//! import zinc "map/script/Winner.j"

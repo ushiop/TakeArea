@@ -1,0 +1,63 @@
+library HeroRare requires Units{
+
+    //英雄池初始化及抽奖类
+
+    private unitpool HeroRare[3];//英雄池 R-SSR[0-2],根据英雄附加值
+
+    public unit HeroRare_LastRandomUnit;//最后一个从奖池抽出来的单位
+
+    function onInit(){
+        group g=CreateGroup(); 
+        HeroRare[0]=CreateUnitPool();
+        HeroRare[1]=CreateUnitPool();
+        HeroRare[2]=CreateUnitPool();
+        GroupEnumUnitsInRange(g,0,0,65535,null);
+        ForGroup(g,function(){
+            unit gu=GetEnumUnit(); 
+            if(IsUnitType(gu,UNIT_TYPE_HERO)==true){
+                HeroRares.AddRandomHero(gu);
+            }
+            gu=null;
+        });
+        DestroyGroup(g);
+        BJDebugMsg("HeroRare_OK");
+    }
+    public struct HeroRares{
+        private static boolean isRepeat=true;//是否可以重复抽取相同英雄
+
+        //设置是否可以重复抽取相同英雄，true为可以
+        public static method Repeat(boolean b){
+            isRepeat=b;
+        }
+
+        //获取是否可以重复抽取相同英雄
+        public static method GetRepeat()->boolean{
+            return isRepeat;
+        }
+
+        //将一个单位放回对应奖池并删除它
+        public static method AddRandomHero(unit u){
+            UnitPoolAddUnitType(HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1 );
+            Units.Remove(u);
+        }
+
+        //为玩家从英雄池中随机一个英雄，随机范围为0-r,r最大为100
+        public static method GetRandomHero(player p,real r)->unit{
+            real r1=GetRandomReal(0,r);
+            integer index=-1;
+            if(r1>=0&&r1<=30){
+                index=0;
+            }else if(r1>=31&&r1<=70){
+                index=1;
+            }else if(r1>=71){
+                index=2;
+            }
+            HeroRare_LastRandomUnit=PlaceRandomUnit(HeroRare[index], p, 0,0,0);
+            Units.Set(HeroRare_LastRandomUnit);
+            if(GetRepeat()==false){
+                UnitPoolRemoveUnitType( HeroRare[index],GetUnitTypeId(HeroRare_LastRandomUnit));
+            }
+            return HeroRare_LastRandomUnit;
+        }
+    }
+}
