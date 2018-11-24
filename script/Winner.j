@@ -89,7 +89,7 @@ library Winner requires Units,TimerUtils,Teams {
                             DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(Winner.Team)+" 获得了最终的胜利！！");
                             Winner.ShowWin(Winner.Team);
                         }else{
-                            rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]);)
+                            rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
                             Winner.NowTime=Winner.NowTime+rtmp;
                         }
                     }
