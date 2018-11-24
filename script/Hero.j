@@ -9,7 +9,7 @@ library Hero{
         }
 
         public {
-
+ 
             //为一个英雄创建英雄基类的实例
             static method Attch(unit u){
                 if(Hero.ht.exists(u)==false){
