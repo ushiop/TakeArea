@@ -57,7 +57,7 @@ library Units requires Table,Hero{
                 Units.Create(u);
             }
         }
-
+ 
 
         //创建单位并绑定UNITS实例
         public static method Spawn(player p,integer unitid,real x,real y,real f)->unit{
