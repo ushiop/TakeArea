@@ -76,7 +76,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                 }else{
                     if(numbers==0){
                         if(Winner.NowTime>0){
-                            Winner.NowTime=Winner.NowTime-(0.01*Teams.GetTeamNumberByIndex(Winner.Team));
+                            Winner.NowTime=Winner.NowTime-(0.02*Teams.GetTeamNumberByIndex(Winner.Team));
                         }else{
                             DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, Teams.GetTeamNameByIndex(Winner.Team)+" 已经丢失了中央球的控制权，中央球现在是中立状态！" );
                             Winner.NowTime=0;
@@ -94,9 +94,10 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                         }else{
                             rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
                             Winner.NowTime=Winner.NowTime+rtmp;
-                            Ui.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
+                            
                         }
                     }
+                    Ui.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
                 }
             }else{
                 ReleaseTimer(GetExpiredTimer());
