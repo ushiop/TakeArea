@@ -12,7 +12,7 @@ library Ui {
                 DzFrameSetText( TakeRightText, "中央区域尚未被争夺" );   
                 DzFrameShow( TakeMoveBar, false );        
             }else{
-                DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.3/*争夺状态为0.3*/ , -0.003); 
+                DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.302/*争夺状态为0.3*/ , -0.003); 
                 DzFrameSetText( TakeRightText, str+"争夺中" );  
                 DzFrameShow( TakeMoveBar, true );               
             }
