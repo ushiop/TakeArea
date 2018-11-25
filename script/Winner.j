@@ -71,6 +71,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                         Winner.ShowTip();
                         Winner.Team=ntmp;
                         DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
+                        Ui.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
                     }
                 }else{
                     if(numbers==0){
@@ -81,6 +82,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                             Winner.NowTime=0;
                             Winner.Team=-1;
                             Winner.ShowTip();
+                            Ui.ShowTakeBar("");
                         }
                     }else{
                         if(Winner.NowTime>=Winner.MaxTime){
@@ -88,9 +90,11 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                             PlaySoundBJ( gg_snd_Winner );
                             DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(Winner.Team)+" 获得了最终的胜利！！");
                             Winner.ShowWin(Winner.Team);
+
                         }else{
                             rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
                             Winner.NowTime=Winner.NowTime+rtmp;
+                            Ui.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
                         }
                     }
                 }
