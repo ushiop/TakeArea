@@ -59,7 +59,7 @@ constant integer TimerUtils__HELD=0x23729801
 //endglobals from TimerUtils
 //globals from Tree:
 constant boolean LIBRARY_Tree=true
-rect array Tree__rec
+rect array Tree___rec
 //endglobals from Tree
 //globals from Util:
 constant boolean LIBRARY_Util=true
@@ -69,14 +69,14 @@ constant boolean LIBRARY_Camera=true
 //endglobals from Camera
 //globals from PlayerEvent:
 constant boolean LIBRARY_PlayerEvent=true
-trigger PlayerEvent__disconnect=CreateTrigger()
+trigger PlayerEvent___disconnect=CreateTrigger()
 //endglobals from PlayerEvent
 //globals from Units:
 constant boolean LIBRARY_Units=true
 //endglobals from Units
 //globals from HeroRare:
 constant boolean LIBRARY_HeroRare=true
-// processed:     unitpool  array HeroRare__HeroRare[3]
+// processed:     unitpool  array HeroRare___HeroRare[3]
 unit HeroRare_LastRandomUnit
 //endglobals from HeroRare
 //globals from Winner:
@@ -157,7 +157,7 @@ string array s__Teams__Team_Name
 integer array s__Teams__Team_Kills
 integer array s__TimerUtils__data
 timer array s__TimerUtils__tT
-unitpool array s__HeroRare__HeroRare
+unitpool array s__HeroRare___HeroRare
 integer array si__Table__GTable_type
 trigger array st__Table__GTable_onDestroy
 integer array si__Units_type
@@ -893,27 +893,27 @@ endfunction
 //library TimerUtils ends
 //library Tree:
 
-        function Tree__anon__7 takes nothing returns nothing
+        function Tree___anon__7 takes nothing returns nothing
             call PolledWait(30.00)
             call DestructableRestoreLife(GetDyingDestructable(), GetDestructableMaxLife(GetDyingDestructable()), true)
         endfunction
-    function Tree__onInit takes nothing returns nothing
+    function Tree___onInit takes nothing returns nothing
         local trigger t
         local location d
         local integer i
         local integer x
-        set Tree__rec[0]=gg_rct_ShuLin_01
-        set Tree__rec[1]=gg_rct_YeGuai_01
-        set Tree__rec[2]=gg_rct_YeGuai_02
+        set Tree___rec[0]=gg_rct_ShuLin_01
+        set Tree___rec[1]=gg_rct_YeGuai_01
+        set Tree___rec[2]=gg_rct_YeGuai_02
         set t=CreateTrigger()
-        call TriggerAddAction(t, function Tree__anon__7)
+        call TriggerAddAction(t, function Tree___anon__7)
         set i=0
         loop
         exitwhen ( i >= 100 )
             set x=0
             loop
             exitwhen ( x >= 3 )
-                set d=GetRandomLocInRect(Tree__rec[x])
+                set d=GetRandomLocInRect(Tree___rec[x])
                 call CreateDestructableLoc('B000', d, GetRandomDirectionDeg(), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4))
                 call TriggerRegisterDeathEvent(t, GetLastCreatedDestructable())
                 call RemoveLocation(d)
@@ -951,21 +951,21 @@ endfunction
 //library Util ends
 //library Camera:
 
-        function Camera__anon__5 takes nothing returns nothing
+        function Camera___anon__5 takes nothing returns nothing
             call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 3000.00, 0)
         endfunction
-    function Camera__onInit takes nothing returns nothing
+    function Camera___onInit takes nothing returns nothing
         call CameraSetSmoothingFactor(998.00)
-        call TimerStart(NewTimer(), 0.01, true, function Camera__anon__5)
+        call TimerStart(NewTimer(), 0.01, true, function Camera___anon__5)
     endfunction
 
 //library Camera ends
 //library PlayerEvent:
 
-        function PlayerEvent__anon__8 takes nothing returns nothing
+        function PlayerEvent___anon__8 takes nothing returns nothing
             call AdjustPlayerStateBJ(GetPlayerState(GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD) / ( (CountPlayersInForceBJ((s__Teams__Team_Players[GetPlayerTeam(((GetTriggerPlayer())))]))) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD) // INLINED!!
         endfunction
-    function PlayerEvent__onDisconnect takes nothing returns nothing
+    function PlayerEvent___onDisconnect takes nothing returns nothing
         local player p=GetTriggerPlayer()
         local integer index=GetConvertedPlayerId(p)
         local integer x
@@ -981,20 +981,20 @@ endfunction
         call sc__HeroRares_AddRandomHero(u)
         set x=(CountPlayersInForceBJ((s__Teams__Team_Players[GetPlayerTeam(((p)))]))) - 1 // INLINED!!
         if ( x != 0 ) then
-            call ForForce((s__Teams__Team_Players[GetPlayerTeam((p))]), function PlayerEvent__anon__8) // INLINED!!
+            call ForForce((s__Teams__Team_Players[GetPlayerTeam((p))]), function PlayerEvent___anon__8) // INLINED!!
         endif
         call s__Teams_PlayerRemoveForce(p)
         call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, GetPlayerName(p) + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
         set p=null
         set u=null
     endfunction
-        function PlayerEvent__anon__9 takes nothing returns nothing
-            call TriggerRegisterPlayerEventLeave(PlayerEvent__disconnect, GetEnumPlayer())
+        function PlayerEvent___anon__9 takes nothing returns nothing
+            call TriggerRegisterPlayerEventLeave(PlayerEvent___disconnect, GetEnumPlayer())
         endfunction
-    function PlayerEvent__onInit takes nothing returns nothing
-        call ForForce(Teams__AllPlayers, (function PlayerEvent__anon__9)) // INLINED!!
-        call TriggerAddAction(PlayerEvent__disconnect, function PlayerEvent__onDisconnect)
-        set PlayerEvent__disconnect=null
+    function PlayerEvent___onInit takes nothing returns nothing
+        call ForForce(Teams__AllPlayers, (function PlayerEvent___anon__9)) // INLINED!!
+        call TriggerAddAction(PlayerEvent___disconnect, function PlayerEvent___onDisconnect)
+        set PlayerEvent___disconnect=null
     endfunction
 
 //library PlayerEvent ends
@@ -1053,20 +1053,20 @@ endfunction
 //library Units ends
 //library HeroRare:
 
-        function HeroRare__anon__6 takes nothing returns nothing
+        function HeroRare___anon__6 takes nothing returns nothing
             local unit gu=GetEnumUnit()
             if ( IsUnitType(gu, UNIT_TYPE_HERO) == true ) then
                 call sc__HeroRares_AddRandomHero(gu)
             endif
             set gu=null
         endfunction
-    function HeroRare__onInit takes nothing returns nothing
+    function HeroRare___onInit takes nothing returns nothing
         local group g=CreateGroup()
-        set s__HeroRare__HeroRare[0]= CreateUnitPool()
-        set s__HeroRare__HeroRare[1]= CreateUnitPool()
-        set s__HeroRare__HeroRare[2]= CreateUnitPool()
+        set s__HeroRare___HeroRare[0]= CreateUnitPool()
+        set s__HeroRare___HeroRare[1]= CreateUnitPool()
+        set s__HeroRare___HeroRare[2]= CreateUnitPool()
         call GroupEnumUnitsInRange(g, 0, 0, 65535, null)
-        call ForGroup(g, function HeroRare__anon__6)
+        call ForGroup(g, function HeroRare___anon__6)
         call DestroyGroup(g)
         set s__HeroRares_isRepeat=(true) // INLINED!!
         call BJDebugMsg("HeroRare_OK")
@@ -1079,7 +1079,7 @@ endfunction
         endfunction
         function s__HeroRares_AddRandomHero takes unit u returns nothing
             if ( (s__HeroRares_isRepeat) == false ) then // INLINED!!
-                call UnitPoolAddUnitType(s__HeroRare__HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
+                call UnitPoolAddUnitType(s__HeroRare___HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
             endif
             call s__Units_Remove(u)
         endfunction
@@ -1093,10 +1093,10 @@ endfunction
             elseif ( r1 >= 71 ) then
                 set index=2
             endif
-            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare__HeroRare[index], p, 0, 0, 0)
+            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare___HeroRare[index], p, 0, 0, 0)
             call s__Units_Set(HeroRare_LastRandomUnit)
             if ( (s__HeroRares_isRepeat) == false ) then // INLINED!!
-                call UnitPoolRemoveUnitType(s__HeroRare__HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
+                call UnitPoolRemoveUnitType(s__HeroRare___HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
             endif
             return HeroRare_LastRandomUnit
         endfunction
@@ -1223,7 +1223,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Sun Nov 25 17:40:14 2018
+//   Date: Sun Nov 25 17:43:59 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -1509,13 +1509,13 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs692436890")
+call ExecuteFunc("jasshelper__initstructs692661578")
 call ExecuteFunc("Teams__onInit")
 call ExecuteFunc("TimerUtils__init")
-call ExecuteFunc("Tree__onInit")
-call ExecuteFunc("Camera__onInit")
-call ExecuteFunc("PlayerEvent__onInit")
-call ExecuteFunc("HeroRare__onInit")
+call ExecuteFunc("Tree___onInit")
+call ExecuteFunc("Camera___onInit")
+call ExecuteFunc("PlayerEvent___onInit")
+call ExecuteFunc("HeroRare___onInit")
 call ExecuteFunc("Init__onInit")
 
     call InitGlobals()
@@ -1599,7 +1599,7 @@ set f__result_boolean= HaveSavedInteger(Table__ht, (this), GetHandleId(key))
    return true
 endfunction
 
-function jasshelper__initstructs692436890 takes nothing returns nothing
+function jasshelper__initstructs692661578 takes nothing returns nothing
     set st__Table__GTable_onDestroy[2]=CreateTrigger()
     set st__Table__GTable_onDestroy[3]=st__Table__GTable_onDestroy[2]
     set st__Table__GTable_onDestroy[4]=st__Table__GTable_onDestroy[2]
