@@ -4,20 +4,20 @@ constant boolean LIBRARY_Hero=true
 //endglobals from Hero
 //globals from Table:
 constant boolean LIBRARY_Table=true
-constant integer Table___MAX_INSTANCES=8100
+constant integer Table__MAX_INSTANCES=8100
         //Feel free to change max instances if necessary, it will only affect allocation
         //speed which shouldn't matter that much.
 
     //=========================================================
-hashtable Table___ht
+hashtable Table__ht
 //endglobals from Table
 //globals from Teams:
 constant boolean LIBRARY_Teams=true
-force Teams___AllPlayers
-// processed:         force  array Teams___Team_Players[3]
-// processed:         rect  array Teams___Team_Rect[3]
-// processed:         string  array Teams___Team_Name[3]
-// processed:         integer  array Teams___Team_Kills[3]
+force Teams__AllPlayers
+// processed:         force  array Teams__Team_Players[3]
+// processed:         rect  array Teams__Team_Rect[3]
+// processed:         string  array Teams__Team_Name[3]
+// processed:         integer  array Teams__Team_Kills[3]
 //endglobals from Teams
 //globals from TimerUtils:
 constant boolean LIBRARY_TimerUtils=true
@@ -36,30 +36,30 @@ constant boolean LIBRARY_TimerUtils=true
         //  * THE LEAST SAFE ( you may have to tweak OFSSET manually for it to
         //                     work)
         //
-constant boolean TimerUtils___USE_HASH_TABLE= false
-constant boolean TimerUtils___USE_FLEXIBLE_OFFSET= true
+constant boolean TimerUtils__USE_HASH_TABLE= false
+constant boolean TimerUtils__USE_FLEXIBLE_OFFSET= true
 
-constant integer TimerUtils___OFFSET= 0x100000
-integer TimerUtils___VOFFSET= TimerUtils___OFFSET
+constant integer TimerUtils__OFFSET= 0x100000
+integer TimerUtils__VOFFSET= TimerUtils__OFFSET
               
         //Timers to preload at map init:
-constant integer TimerUtils___QUANTITY= 256
+constant integer TimerUtils__QUANTITY= 256
         
         //Changing this  to something big will allow you to keep recycling
         // timers even when there are already AN INCREDIBLE AMOUNT of timers in
         // the stack. But it will make things far slower so that's probably a bad idea...
-constant integer TimerUtils___ARRAY_SIZE= 8190
+constant integer TimerUtils__ARRAY_SIZE= 8190
 
-// processed:         integer array TimerUtils___data[TimerUtils___ARRAY_SIZE]
-hashtable TimerUtils___ht
-// processed:         timer array TimerUtils___tT[TimerUtils___ARRAY_SIZE]
-integer TimerUtils___tN= 0
-constant integer TimerUtils___HELD=0x23729801
+// processed:         integer array TimerUtils__data[TimerUtils__ARRAY_SIZE]
+hashtable TimerUtils__ht
+// processed:         timer array TimerUtils__tT[TimerUtils__ARRAY_SIZE]
+integer TimerUtils__tN= 0
+constant integer TimerUtils__HELD=0x23729801
         //use a totally random number here, the more improbable someone uses it, the better.
 //endglobals from TimerUtils
 //globals from Tree:
 constant boolean LIBRARY_Tree=true
-rect array Tree___rec
+rect array Tree__rec
 //endglobals from Tree
 //globals from Util:
 constant boolean LIBRARY_Util=true
@@ -69,14 +69,14 @@ constant boolean LIBRARY_Camera=true
 //endglobals from Camera
 //globals from PlayerEvent:
 constant boolean LIBRARY_PlayerEvent=true
-trigger PlayerEvent___disconnect=CreateTrigger()
+trigger PlayerEvent__disconnect=CreateTrigger()
 //endglobals from PlayerEvent
 //globals from Units:
 constant boolean LIBRARY_Units=true
 //endglobals from Units
 //globals from HeroRare:
 constant boolean LIBRARY_HeroRare=true
-// processed:     unitpool  array HeroRare___HeroRare[3]
+// processed:     unitpool  array HeroRare__HeroRare[3]
 unit HeroRare_LastRandomUnit
 //endglobals from HeroRare
 //globals from Winner:
@@ -108,10 +108,10 @@ trigger l__library_init
 //JASSHelper struct globals:
 constant integer si__Hero=1
 integer s__Hero_ht
-constant integer si__Table___GTable=2
-integer si__Table___GTable_F=0
-integer si__Table___GTable_I=0
-integer array si__Table___GTable_V
+constant integer si__Table__GTable=2
+integer si__Table__GTable_F=0
+integer si__Table__GTable_I=0
+integer array si__Table__GTable_V
 constant integer si__Table=3
 constant integer si__StringTable=4
 constant integer si__HandleTable=5
@@ -119,10 +119,10 @@ constant integer si__Teams=6
 integer si__Teams_F=0
 integer si__Teams_I=0
 integer array si__Teams_V
-constant integer si__Util___Util=7
-integer si__Util___Util_F=0
-integer si__Util___Util_I=0
-integer array si__Util___Util_V
+constant integer si__Util__Util=7
+integer si__Util__Util_F=0
+integer si__Util__Util_I=0
+integer array si__Util__Util_V
 constant integer si__Units=8
 integer si__Units_F=0
 integer si__Units_I=0
@@ -138,7 +138,7 @@ constant integer si__HeroRares=9
 integer si__HeroRares_F=0
 integer si__HeroRares_I=0
 integer array si__HeroRares_V
-boolean s__HeroRares_isRepeat=true
+boolean s__HeroRares_isRepeat=false
 constant integer si__Winner=10
 integer si__Winner_F=0
 integer si__Winner_I=0
@@ -151,25 +151,27 @@ real s__Winner_NowTime=0
 real s__Winner_MaxTime=30
 integer s__Winner_Team=- 1
 integer s__Winner_WinTeam=- 1
-force array s__Teams___Team_Players
-rect array s__Teams___Team_Rect
-string array s__Teams___Team_Name
-integer array s__Teams___Team_Kills
-integer array s__TimerUtils___data
-timer array s__TimerUtils___tT
-unitpool array s__HeroRare___HeroRare
-integer array si__Table___GTable_type
-trigger array st__Table___GTable_onDestroy
+force array s__Teams__Team_Players
+rect array s__Teams__Team_Rect
+string array s__Teams__Team_Name
+integer array s__Teams__Team_Kills
+integer array s__TimerUtils__data
+timer array s__TimerUtils__tT
+unitpool array s__HeroRare__HeroRare
+integer array si__Table__GTable_type
+trigger array st__Table__GTable_onDestroy
 integer array si__Units_type
 trigger array st__Units_onDestroy
 trigger st__HandleTable__getindex
 trigger st__HandleTable__setindex
 trigger st__HandleTable_flush
 trigger st__HandleTable_exists
+trigger st__HeroRares_Repeat
 trigger st__HeroRares_AddRandomHero
 trigger st__Winner_ShowWin
 handle f__arg_handle1
 integer f__arg_integer1
+boolean f__arg_boolean1
 unit f__arg_unit1
 integer f__arg_this
 integer f__result_integer
@@ -178,41 +180,41 @@ boolean f__result_boolean
 endglobals
 
 
-//Generated method caller for Table___GTable.onDestroy
-function sc__Table___GTable_onDestroy takes integer this returns nothing
+//Generated method caller for Table__GTable.onDestroy
+function sc__Table__GTable_onDestroy takes integer this returns nothing
     set f__arg_this=this
-    call TriggerEvaluate(st__Table___GTable_onDestroy[2])
+    call TriggerEvaluate(st__Table__GTable_onDestroy[2])
 endfunction
 
-//Generated allocator of Table___GTable
-function s__Table___GTable__allocate takes nothing returns integer
- local integer this=si__Table___GTable_F
+//Generated allocator of Table__GTable
+function s__Table__GTable__allocate takes nothing returns integer
+ local integer this=si__Table__GTable_F
     if (this!=0) then
-        set si__Table___GTable_F=si__Table___GTable_V[this]
+        set si__Table__GTable_F=si__Table__GTable_V[this]
     else
-        set si__Table___GTable_I=si__Table___GTable_I+1
-        set this=si__Table___GTable_I
+        set si__Table__GTable_I=si__Table__GTable_I+1
+        set this=si__Table__GTable_I
     endif
     if (this>8100) then
         return 0
     endif
 
-    set si__Table___GTable_type[this]=2
-    set si__Table___GTable_V[this]=-1
+    set si__Table__GTable_type[this]=2
+    set si__Table__GTable_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of Table___GTable
-function sc__Table___GTable_deallocate takes integer this returns nothing
+//Generated destructor of Table__GTable
+function sc__Table__GTable_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__Table___GTable_V[this]!=-1) then
+    elseif (si__Table__GTable_V[this]!=-1) then
         return
     endif
     set f__arg_this=this
-    call TriggerEvaluate(st__Table___GTable_onDestroy[si__Table___GTable_type[this]])
-    set si__Table___GTable_V[this]=si__Table___GTable_F
-    set si__Table___GTable_F=this
+    call TriggerEvaluate(st__Table__GTable_onDestroy[si__Table__GTable_type[this]])
+    set si__Table__GTable_V[this]=si__Table__GTable_F
+    set si__Table__GTable_F=this
 endfunction
 
 //Generated method caller for Winner.ShowWin
@@ -247,6 +249,11 @@ function s__Winner_deallocate takes integer this returns nothing
     endif
     set si__Winner_V[this]=si__Winner_F
     set si__Winner_F=this
+endfunction
+
+//Generated method caller for HeroRares.Repeat
+function sc__HeroRares_Repeat takes boolean b returns nothing
+            set s__HeroRares_isRepeat=b
 endfunction
 
 //Generated method caller for HeroRares.AddRandomHero
@@ -314,32 +321,32 @@ function sc__Units_deallocate takes integer this returns nothing
     set si__Units_F=this
 endfunction
 
-//Generated allocator of Util___Util
-function s__Util___Util__allocate takes nothing returns integer
- local integer this=si__Util___Util_F
+//Generated allocator of Util__Util
+function s__Util__Util__allocate takes nothing returns integer
+ local integer this=si__Util__Util_F
     if (this!=0) then
-        set si__Util___Util_F=si__Util___Util_V[this]
+        set si__Util__Util_F=si__Util__Util_V[this]
     else
-        set si__Util___Util_I=si__Util___Util_I+1
-        set this=si__Util___Util_I
+        set si__Util__Util_I=si__Util__Util_I+1
+        set this=si__Util__Util_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__Util___Util_V[this]=-1
+    set si__Util__Util_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of Util___Util
-function s__Util___Util_deallocate takes integer this returns nothing
+//Generated destructor of Util__Util
+function s__Util__Util_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__Util___Util_V[this]!=-1) then
+    elseif (si__Util__Util_V[this]!=-1) then
         return
     endif
-    set si__Util___Util_V[this]=si__Util___Util_F
-    set si__Util___Util_F=this
+    set si__Util__Util_V[this]=si__Util__Util_F
+    set si__Util__Util_F=this
 endfunction
 
 //Generated allocator of Teams
@@ -403,12 +410,12 @@ endfunction
 
 //Generated allocator of HandleTable
 function s__HandleTable__allocate takes nothing returns integer
- local integer this=s__Table___GTable__allocate()
+ local integer this=s__Table__GTable__allocate()
  local integer kthis
     if(this==0) then
         return 0
     endif
-    set si__Table___GTable_type[this]=5
+    set si__Table__GTable_type[this]=5
     set kthis=this
 
  return this
@@ -417,12 +424,12 @@ endfunction
 
 //Generated allocator of StringTable
 function s__StringTable__allocate takes nothing returns integer
- local integer this=s__Table___GTable__allocate()
+ local integer this=s__Table__GTable__allocate()
  local integer kthis
     if(this==0) then
         return 0
     endif
-    set si__Table___GTable_type[this]=4
+    set si__Table__GTable_type[this]=4
     set kthis=this
 
  return this
@@ -431,12 +438,12 @@ endfunction
 
 //Generated allocator of Table
 function s__Table__allocate takes nothing returns integer
- local integer this=s__Table___GTable__allocate()
+ local integer this=s__Table__GTable__allocate()
  local integer kthis
     if(this==0) then
         return 0
     endif
-    set si__Table___GTable_type[this]=3
+    set si__Table__GTable_type[this]=3
     set kthis=this
 
  return this
@@ -520,19 +527,19 @@ endfunction
 //=============================================================
 
 
-        function s__Table___GTable_reset takes integer this returns nothing
-            call FlushChildHashtable(Table___ht, (this))
+        function s__Table__GTable_reset takes integer this returns nothing
+            call FlushChildHashtable(Table__ht, (this))
         endfunction
 
-        function s__Table___GTable_onDestroy takes integer this returns nothing
-            call FlushChildHashtable(Table___ht, ((this))) // INLINED!!
+        function s__Table__GTable_onDestroy takes integer this returns nothing
+            call FlushChildHashtable(Table__ht, ((this))) // INLINED!!
         endfunction
 
         //=============================================================
         // initialize it all.
         //
-        function s__Table___GTable_onInit takes nothing returns nothing
-            set Table___ht=InitHashtable()
+        function s__Table__GTable_onInit takes nothing returns nothing
+            set Table__ht=InitHashtable()
         endfunction
 
 
@@ -541,23 +548,23 @@ endfunction
 //textmacro instance: Table__make("Table","integer","key" )
 
         function s__Table__getindex takes integer this,integer key returns integer
-            return LoadInteger(Table___ht, (this), key)
+            return LoadInteger(Table__ht, (this), key)
         endfunction
 
         function s__Table__setindex takes integer this,integer key,integer value returns nothing
-            call SaveInteger(Table___ht, (this), key, value)
+            call SaveInteger(Table__ht, (this), key, value)
         endfunction
 
         function s__Table_flush takes integer this,integer key returns nothing
-            call RemoveSavedInteger(Table___ht, (this), key)
+            call RemoveSavedInteger(Table__ht, (this), key)
         endfunction
 
         function s__Table_exists takes integer this,integer key returns boolean
-            return HaveSavedInteger(Table___ht, (this), key)
+            return HaveSavedInteger(Table__ht, (this), key)
         endfunction
 
         function s__Table_flush2D takes string firstkey returns nothing
-            call FlushChildHashtable(Table___ht, (((- StringHash(firstkey))))) // INLINED!!
+            call FlushChildHashtable(Table__ht, (((- StringHash(firstkey))))) // INLINED!!
         endfunction
 
         function s__Table__staticgetindex takes string firstkey returns integer
@@ -568,23 +575,23 @@ endfunction
 //textmacro instance: Table__make("StringTable","string", "StringHash(key)" )
 
         function s__StringTable__getindex takes integer this,string key returns integer
-            return LoadInteger(Table___ht, (this), StringHash(key))
+            return LoadInteger(Table__ht, (this), StringHash(key))
         endfunction
 
         function s__StringTable__setindex takes integer this,string key,integer value returns nothing
-            call SaveInteger(Table___ht, (this), StringHash(key), value)
+            call SaveInteger(Table__ht, (this), StringHash(key), value)
         endfunction
 
         function s__StringTable_flush takes integer this,string key returns nothing
-            call RemoveSavedInteger(Table___ht, (this), StringHash(key))
+            call RemoveSavedInteger(Table__ht, (this), StringHash(key))
         endfunction
 
         function s__StringTable_exists takes integer this,string key returns boolean
-            return HaveSavedInteger(Table___ht, (this), StringHash(key))
+            return HaveSavedInteger(Table__ht, (this), StringHash(key))
         endfunction
 
         function s__StringTable_flush2D takes string firstkey returns nothing
-            call FlushChildHashtable(Table___ht, (((- StringHash(firstkey))))) // INLINED!!
+            call FlushChildHashtable(Table__ht, (((- StringHash(firstkey))))) // INLINED!!
         endfunction
 
         function s__StringTable__staticgetindex takes string firstkey returns integer
@@ -595,23 +602,23 @@ endfunction
 //textmacro instance: Table__make("HandleTable","handle","GetHandleId(key)" )
 
         function s__HandleTable__getindex takes integer this,handle key returns integer
-            return LoadInteger(Table___ht, (this), GetHandleId(key))
+            return LoadInteger(Table__ht, (this), GetHandleId(key))
         endfunction
 
         function s__HandleTable__setindex takes integer this,handle key,integer value returns nothing
-            call SaveInteger(Table___ht, (this), GetHandleId(key), value)
+            call SaveInteger(Table__ht, (this), GetHandleId(key), value)
         endfunction
 
         function s__HandleTable_flush takes integer this,handle key returns nothing
-            call RemoveSavedInteger(Table___ht, (this), GetHandleId(key))
+            call RemoveSavedInteger(Table__ht, (this), GetHandleId(key))
         endfunction
 
         function s__HandleTable_exists takes integer this,handle key returns boolean
-            return HaveSavedInteger(Table___ht, (this), GetHandleId(key))
+            return HaveSavedInteger(Table__ht, (this), GetHandleId(key))
         endfunction
 
         function s__HandleTable_flush2D takes string firstkey returns nothing
-            call FlushChildHashtable(Table___ht, (((- StringHash(firstkey))))) // INLINED!!
+            call FlushChildHashtable(Table__ht, (((- StringHash(firstkey))))) // INLINED!!
         endfunction
 
         function s__HandleTable__staticgetindex takes string firstkey returns integer
@@ -625,69 +632,69 @@ endfunction
 //library Teams:
 
     //private:  //玩家阵营相关内容初始化类 //玩家组
-        function Teams___anon__1 takes nothing returns boolean
+        function Teams__anon__1 takes nothing returns boolean
             return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
         endfunction
-        function Teams___anon__2 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
+        function Teams__anon__2 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
         endfunction
-        function Teams___anon__3 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
+        function Teams__anon__3 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
         endfunction
-        function Teams___anon__4 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
+        function Teams__anon__4 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
         endfunction
-    function Teams___onInit takes nothing returns nothing
-        set Teams___AllPlayers=GetPlayersMatching(Condition(function Teams___anon__1))
-        set s__Teams___Team_Players[0]= GetPlayersMatching(Condition(function Teams___anon__2))
-        set s__Teams___Team_Players[1]= GetPlayersMatching(Condition(function Teams___anon__3))
-        set s__Teams___Team_Players[2]= GetPlayersMatching(Condition(function Teams___anon__4))
-        set s__Teams___Team_Rect[0]= gg_rct_A_TEAM
-        set s__Teams___Team_Rect[1]= gg_rct_B_TEAM
-        set s__Teams___Team_Rect[2]= gg_rct_C_TEAM
-        set s__Teams___Team_Name[0]= "A组"
-        set s__Teams___Team_Name[1]= "B组"
-        set s__Teams___Team_Name[2]= "C组"
+    function Teams__onInit takes nothing returns nothing
+        set Teams__AllPlayers=GetPlayersMatching(Condition(function Teams__anon__1))
+        set s__Teams__Team_Players[0]= GetPlayersMatching(Condition(function Teams__anon__2))
+        set s__Teams__Team_Players[1]= GetPlayersMatching(Condition(function Teams__anon__3))
+        set s__Teams__Team_Players[2]= GetPlayersMatching(Condition(function Teams__anon__4))
+        set s__Teams__Team_Rect[0]= gg_rct_A_TEAM
+        set s__Teams__Team_Rect[1]= gg_rct_B_TEAM
+        set s__Teams__Team_Rect[2]= gg_rct_C_TEAM
+        set s__Teams__Team_Name[0]= "A组"
+        set s__Teams__Team_Name[1]= "B组"
+        set s__Teams__Team_Name[2]= "C组"
     endfunction
         function s__Teams_GetTeamKills takes integer p returns integer
-            return s__Teams___Team_Kills[p]
+            return s__Teams__Team_Kills[p]
         endfunction
         function s__Teams_AddTeamKills takes integer p,integer k returns nothing
-            set s__Teams___Team_Kills[p]= s__Teams___Team_Kills[p] + k
+            set s__Teams__Team_Kills[p]= s__Teams__Team_Kills[p] + k
         endfunction
         function s__Teams_GetAllPlayers takes nothing returns force
-            return Teams___AllPlayers
+            return Teams__AllPlayers
         endfunction
         function s__Teams_ActionsForAllPlayer takes code f returns nothing
-            call ForForce(Teams___AllPlayers, f)
+            call ForForce(Teams__AllPlayers, f)
         endfunction
         function s__Teams_ActionsForTeamPlayer takes integer tid,code f returns nothing
-            call ForForce(s__Teams___Team_Players[tid], f)
+            call ForForce(s__Teams__Team_Players[tid], f)
         endfunction
         function s__Teams_PlayerRemoveForce takes player p returns nothing
-            call ForceRemovePlayer(Teams___AllPlayers, p)
-            call ForceRemovePlayer(s__Teams___Team_Players[GetPlayerTeam(p)], p)
+            call ForceRemovePlayer(Teams__AllPlayers, p)
+            call ForceRemovePlayer(s__Teams__Team_Players[GetPlayerTeam(p)], p)
         endfunction
         function s__Teams_GetTeamName takes player p returns string
-            return s__Teams___Team_Name[GetPlayerTeam(p)]
+            return s__Teams__Team_Name[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamNameByIndex takes integer p returns string
-            return s__Teams___Team_Name[p]
+            return s__Teams__Team_Name[p]
         endfunction
         function s__Teams_GetTeamRect takes player p returns rect
-            return s__Teams___Team_Rect[GetPlayerTeam(p)]
+            return s__Teams__Team_Rect[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForce takes player p returns force
-            return s__Teams___Team_Players[GetPlayerTeam(p)]
+            return s__Teams__Team_Players[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForceByIndex takes integer p returns force
-            return s__Teams___Team_Players[p]
+            return s__Teams__Team_Players[p]
         endfunction
         function s__Teams_GetTeamNumber takes player p returns integer
-            return CountPlayersInForceBJ((s__Teams___Team_Players[GetPlayerTeam((p))])) // INLINED!!
+            return CountPlayersInForceBJ((s__Teams__Team_Players[GetPlayerTeam((p))])) // INLINED!!
         endfunction
         function s__Teams_GetTeamNumberByIndex takes integer p returns integer
-            return CountPlayersInForceBJ((s__Teams___Team_Players[(p)])) // INLINED!!
+            return CountPlayersInForceBJ((s__Teams__Team_Players[(p)])) // INLINED!!
         endfunction
 
 //library Teams ends
@@ -739,7 +746,7 @@ endfunction
 
 
 
-            set s__TimerUtils___data[GetHandleId(t) - TimerUtils___VOFFSET]= value
+            set s__TimerUtils__data[GetHandleId(t) - TimerUtils__VOFFSET]= value
 
 
 
@@ -763,7 +770,7 @@ endfunction
 
 
 
-            return s__TimerUtils___data[GetHandleId(t) - TimerUtils___VOFFSET]
+            return s__TimerUtils__data[GetHandleId(t) - TimerUtils__VOFFSET]
 
 
 
@@ -779,13 +786,13 @@ endfunction
 
     //==========================================================================================
     function NewTimer takes nothing returns timer
-        if ( TimerUtils___tN == 0 ) then
+        if ( TimerUtils__tN == 0 ) then
             //If this happens then the QUANTITY rule has already been broken, try to fix the
             // issue, else fail.
 
-                set s__TimerUtils___tT[0]= CreateTimer()
+                set s__TimerUtils__tT[0]= CreateTimer()
 
-                    if ( GetHandleId(s__TimerUtils___tT[0]) - TimerUtils___VOFFSET < 0 ) or ( GetHandleId(s__TimerUtils___tT[0]) - TimerUtils___VOFFSET >= TimerUtils___ARRAY_SIZE ) then
+                    if ( GetHandleId(s__TimerUtils__tT[0]) - TimerUtils__VOFFSET < 0 ) or ( GetHandleId(s__TimerUtils__tT[0]) - TimerUtils__VOFFSET >= TimerUtils__ARRAY_SIZE ) then
                         //all right, couldn't fix it
                         call BJDebugMsg("NewTimer: Unable to allocate a timer, you should probably set TimerUtils_USE_HASH_TABLE to true or fix timer leaks.")
                         return null
@@ -799,10 +806,10 @@ endfunction
 
 
         else
-            set TimerUtils___tN=TimerUtils___tN - 1
+            set TimerUtils__tN=TimerUtils__tN - 1
         endif
-        set s__TimerUtils___data[GetHandleId((s__TimerUtils___tT[TimerUtils___tN] )) - TimerUtils___VOFFSET]= ( 0) // INLINED!!
-     return s__TimerUtils___tT[TimerUtils___tN]
+        set s__TimerUtils__data[GetHandleId((s__TimerUtils__tT[TimerUtils__tN] )) - TimerUtils__VOFFSET]= ( 0) // INLINED!!
+     return s__TimerUtils__tT[TimerUtils__tN]
     endfunction
 
     //==========================================================================================
@@ -810,21 +817,21 @@ endfunction
         if ( t == null ) then
             return
         endif
-        if ( TimerUtils___tN == TimerUtils___ARRAY_SIZE ) then
+        if ( TimerUtils__tN == TimerUtils__ARRAY_SIZE ) then
             //stack is full, the map already has much more troubles than the chance of bug
             call DestroyTimer(t)
         else
             call PauseTimer(t)
-            if ( (s__TimerUtils___data[GetHandleId((t)) - TimerUtils___VOFFSET]) == TimerUtils___HELD ) then // INLINED!!
+            if ( (s__TimerUtils__data[GetHandleId((t)) - TimerUtils__VOFFSET]) == TimerUtils__HELD ) then // INLINED!!
                 return
             endif
-            set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( TimerUtils___HELD) // INLINED!!
-            set s__TimerUtils___tT[TimerUtils___tN]= t
-            set TimerUtils___tN=TimerUtils___tN + 1
+            set s__TimerUtils__data[GetHandleId((t )) - TimerUtils__VOFFSET]= ( TimerUtils__HELD) // INLINED!!
+            set s__TimerUtils__tT[TimerUtils__tN]= t
+            set TimerUtils__tN=TimerUtils__tN + 1
         endif
     endfunction
 
-    function TimerUtils___init takes nothing returns nothing
+    function TimerUtils__init takes nothing returns nothing
      local integer i=0
      local integer o=- 1
      local boolean oops= false
@@ -842,27 +849,27 @@ endfunction
             loop
                 set i=0
                 loop
-                    exitwhen ( i == TimerUtils___QUANTITY )
-                    set s__TimerUtils___tT[i]= CreateTimer()
+                    exitwhen ( i == TimerUtils__QUANTITY )
+                    set s__TimerUtils__tT[i]= CreateTimer()
                     if ( i == 0 ) then
-                        set TimerUtils___VOFFSET=GetHandleId(s__TimerUtils___tT[i])
+                        set TimerUtils__VOFFSET=GetHandleId(s__TimerUtils__tT[i])
 
-                            set o=TimerUtils___VOFFSET
+                            set o=TimerUtils__VOFFSET
 
 
 
                     endif
-                    if ( GetHandleId(s__TimerUtils___tT[i]) - o >= TimerUtils___ARRAY_SIZE ) then
+                    if ( GetHandleId(s__TimerUtils__tT[i]) - o >= TimerUtils__ARRAY_SIZE ) then
                         exitwhen true
                     endif
-                    if ( GetHandleId(s__TimerUtils___tT[i]) - o >= 0 ) then
+                    if ( GetHandleId(s__TimerUtils__tT[i]) - o >= 0 ) then
                         set i=i + 1
                     endif
                 endloop
-                set TimerUtils___tN=i
-                exitwhen ( TimerUtils___tN == TimerUtils___QUANTITY )
+                set TimerUtils__tN=i
+                exitwhen ( TimerUtils__tN == TimerUtils__QUANTITY )
                 set oops=true
-                exitwhen not TimerUtils___USE_FLEXIBLE_OFFSET
+                exitwhen not TimerUtils__USE_FLEXIBLE_OFFSET
             endloop
             
             if ( oops ) then
@@ -886,27 +893,27 @@ endfunction
 //library TimerUtils ends
 //library Tree:
 
-        function Tree___anon__7 takes nothing returns nothing
+        function Tree__anon__7 takes nothing returns nothing
             call PolledWait(30.00)
             call DestructableRestoreLife(GetDyingDestructable(), GetDestructableMaxLife(GetDyingDestructable()), true)
         endfunction
-    function Tree___onInit takes nothing returns nothing
+    function Tree__onInit takes nothing returns nothing
         local trigger t
         local location d
         local integer i
         local integer x
-        set Tree___rec[0]=gg_rct_ShuLin_01
-        set Tree___rec[1]=gg_rct_YeGuai_01
-        set Tree___rec[2]=gg_rct_YeGuai_02
+        set Tree__rec[0]=gg_rct_ShuLin_01
+        set Tree__rec[1]=gg_rct_YeGuai_01
+        set Tree__rec[2]=gg_rct_YeGuai_02
         set t=CreateTrigger()
-        call TriggerAddAction(t, function Tree___anon__7)
+        call TriggerAddAction(t, function Tree__anon__7)
         set i=0
         loop
         exitwhen ( i >= 100 )
             set x=0
             loop
             exitwhen ( x >= 3 )
-                set d=GetRandomLocInRect(Tree___rec[x])
+                set d=GetRandomLocInRect(Tree__rec[x])
                 call CreateDestructableLoc('B000', d, GetRandomDirectionDeg(), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4))
                 call TriggerRegisterDeathEvent(t, GetLastCreatedDestructable())
                 call RemoveLocation(d)
@@ -920,23 +927,23 @@ endfunction
 
 //library Tree ends
 //library Util:
-        function s__Util___Util_XY takes unit u,unit m returns real
+        function s__Util__Util_XY takes unit u,unit m returns real
             return bj_RADTODEG * Atan2(GetUnitY(m) - GetUnitY(u), GetUnitX(m) - GetUnitX(u))
         endfunction
-        function s__Util___Util_XYEX takes real x,real y,real x1,real y1 returns real
+        function s__Util__Util_XYEX takes real x,real y,real x1,real y1 returns real
             return bj_RADTODEG * Atan2(y1 - y, x1 - x)
         endfunction
-        function s__Util___Util_XY2 takes unit u,unit m returns real
+        function s__Util__Util_XY2 takes unit u,unit m returns real
             local real dx=GetUnitX(m) - GetUnitX(u)
             local real dy=GetUnitY(m) - GetUnitY(u)
             return SquareRoot(dx * dx + dy * dy)
         endfunction
-        function s__Util___Util_XY2EX takes real x,real y,real x1,real y1 returns real
+        function s__Util__Util_XY2EX takes real x,real y,real x1,real y1 returns real
             local real dx=x1 - x
             local real dy=y1 - y
             return SquareRoot(dx * dx + dy * dy)
         endfunction
-        function s__Util___Util_UnitAddRemoveAbility takes unit u,integer i returns nothing
+        function s__Util__Util_UnitAddRemoveAbility takes unit u,integer i returns nothing
             call UnitAddAbility(u, i)
             call UnitRemoveAbility(u, i)
         endfunction
@@ -944,27 +951,27 @@ endfunction
 //library Util ends
 //library Camera:
 
-        function Camera___anon__5 takes nothing returns nothing
+        function Camera__anon__5 takes nothing returns nothing
             call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 3000.00, 0)
         endfunction
-    function Camera___onInit takes nothing returns nothing
+    function Camera__onInit takes nothing returns nothing
         call CameraSetSmoothingFactor(998.00)
-        call TimerStart(NewTimer(), 0.01, true, function Camera___anon__5)
+        call TimerStart(NewTimer(), 0.01, true, function Camera__anon__5)
     endfunction
 
 //library Camera ends
 //library PlayerEvent:
 
-        function PlayerEvent___anon__8 takes nothing returns nothing
-            call AdjustPlayerStateBJ(GetPlayerState(GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD) / ( (CountPlayersInForceBJ((s__Teams___Team_Players[GetPlayerTeam(((GetTriggerPlayer())))]))) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD) // INLINED!!
+        function PlayerEvent__anon__8 takes nothing returns nothing
+            call AdjustPlayerStateBJ(GetPlayerState(GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD) / ( (CountPlayersInForceBJ((s__Teams__Team_Players[GetPlayerTeam(((GetTriggerPlayer())))]))) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD) // INLINED!!
         endfunction
-    function PlayerEvent___onDisconnect takes nothing returns nothing
+    function PlayerEvent__onDisconnect takes nothing returns nothing
         local player p=GetTriggerPlayer()
         local integer index=GetConvertedPlayerId(p)
         local integer x
         local unit u=PlayerHero[index]
         call ReviveHero(u, GetUnitX(u), GetUnitY(u), false)
-        call SetUnitPosition(u, GetRectCenterX((s__Teams___Team_Rect[GetPlayerTeam((p))])), GetRectCenterY((s__Teams___Team_Rect[GetPlayerTeam((p))]))) // INLINED!!
+        call SetUnitPosition(u, GetRectCenterX((s__Teams__Team_Rect[GetPlayerTeam((p))])), GetRectCenterY((s__Teams__Team_Rect[GetPlayerTeam((p))]))) // INLINED!!
         set x=1
         loop
         exitwhen ( x > 6 )
@@ -972,22 +979,22 @@ endfunction
         set x=x + 1
         endloop
         call sc__HeroRares_AddRandomHero(u)
-        set x=(CountPlayersInForceBJ((s__Teams___Team_Players[GetPlayerTeam(((p)))]))) - 1 // INLINED!!
+        set x=(CountPlayersInForceBJ((s__Teams__Team_Players[GetPlayerTeam(((p)))]))) - 1 // INLINED!!
         if ( x != 0 ) then
-            call ForForce((s__Teams___Team_Players[GetPlayerTeam((p))]), function PlayerEvent___anon__8) // INLINED!!
+            call ForForce((s__Teams__Team_Players[GetPlayerTeam((p))]), function PlayerEvent__anon__8) // INLINED!!
         endif
         call s__Teams_PlayerRemoveForce(p)
-        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, GetPlayerName(p) + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
+        call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, GetPlayerName(p) + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
         set p=null
         set u=null
     endfunction
-        function PlayerEvent___anon__9 takes nothing returns nothing
-            call TriggerRegisterPlayerEventLeave(PlayerEvent___disconnect, GetEnumPlayer())
+        function PlayerEvent__anon__9 takes nothing returns nothing
+            call TriggerRegisterPlayerEventLeave(PlayerEvent__disconnect, GetEnumPlayer())
         endfunction
-    function PlayerEvent___onInit takes nothing returns nothing
-        call ForForce(Teams___AllPlayers, (function PlayerEvent___anon__9)) // INLINED!!
-        call TriggerAddAction(PlayerEvent___disconnect, function PlayerEvent___onDisconnect)
-        set PlayerEvent___disconnect=null
+    function PlayerEvent__onInit takes nothing returns nothing
+        call ForForce(Teams__AllPlayers, (function PlayerEvent__anon__9)) // INLINED!!
+        call TriggerAddAction(PlayerEvent__disconnect, function PlayerEvent__onDisconnect)
+        set PlayerEvent__disconnect=null
     endfunction
 
 //library PlayerEvent ends
@@ -1007,19 +1014,19 @@ endfunction
                 call s__Hero_Attch(u)
             endif
             set s__Units_hero[ud]=s__Hero_GetHero(u)
-            call SaveInteger(Table___ht, ((s__Units_ht)), GetHandleId((u)), ( (ud))) // INLINED!!
+            call SaveInteger(Table__ht, ((s__Units_ht)), GetHandleId((u)), ( (ud))) // INLINED!!
         endfunction
         function s__Units_Destroys takes unit u returns nothing
-            local integer ud=((LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId((u))))) // INLINED!!
+            local integer ud=((LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId((u))))) // INLINED!!
             call s__Hero_DestroyHero(u)
             call sc__Units_deallocate(ud)
-            call RemoveSavedInteger(Table___ht, ((s__Units_ht)), GetHandleId((u))) // INLINED!!
+            call RemoveSavedInteger(Table__ht, ((s__Units_ht)), GetHandleId((u))) // INLINED!!
         endfunction
         function s__Units_Get takes unit u returns integer
-            return ((LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId((u))))) // INLINED!!
+            return ((LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId((u))))) // INLINED!!
         endfunction
         function s__Units_Set takes unit u returns nothing
-            if ( (HaveSavedInteger(Table___ht, ((s__Units_ht)), GetHandleId((u)))) == false ) then // INLINED!!
+            if ( (HaveSavedInteger(Table__ht, ((s__Units_ht)), GetHandleId((u)))) == false ) then // INLINED!!
                 call s__Units_Create(u)
             endif
         endfunction
@@ -1034,7 +1041,7 @@ endfunction
         endfunction
         function s__Units_Kill takes unit u returns nothing
             call KillUnit(u)
-            if ( s__Units_isHero[(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((u)))))] == false ) then // INLINED!!
+            if ( s__Units_isHero[(LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId(((u)))))] == false ) then // INLINED!!
                 call s__Units_Destroys(u)
             endif
         endfunction
@@ -1046,21 +1053,22 @@ endfunction
 //library Units ends
 //library HeroRare:
 
-        function HeroRare___anon__6 takes nothing returns nothing
+        function HeroRare__anon__6 takes nothing returns nothing
             local unit gu=GetEnumUnit()
             if ( IsUnitType(gu, UNIT_TYPE_HERO) == true ) then
                 call sc__HeroRares_AddRandomHero(gu)
             endif
             set gu=null
         endfunction
-    function HeroRare___onInit takes nothing returns nothing
+    function HeroRare__onInit takes nothing returns nothing
         local group g=CreateGroup()
-        set s__HeroRare___HeroRare[0]= CreateUnitPool()
-        set s__HeroRare___HeroRare[1]= CreateUnitPool()
-        set s__HeroRare___HeroRare[2]= CreateUnitPool()
+        set s__HeroRare__HeroRare[0]= CreateUnitPool()
+        set s__HeroRare__HeroRare[1]= CreateUnitPool()
+        set s__HeroRare__HeroRare[2]= CreateUnitPool()
         call GroupEnumUnitsInRange(g, 0, 0, 65535, null)
-        call ForGroup(g, function HeroRare___anon__6)
+        call ForGroup(g, function HeroRare__anon__6)
         call DestroyGroup(g)
+        set s__HeroRares_isRepeat=(true) // INLINED!!
         call BJDebugMsg("HeroRare_OK")
     endfunction
         function s__HeroRares_Repeat takes boolean b returns nothing
@@ -1071,7 +1079,7 @@ endfunction
         endfunction
         function s__HeroRares_AddRandomHero takes unit u returns nothing
             if ( (s__HeroRares_isRepeat) == false ) then // INLINED!!
-                call UnitPoolAddUnitType(s__HeroRare___HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
+                call UnitPoolAddUnitType(s__HeroRare__HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
             endif
             call s__Units_Remove(u)
         endfunction
@@ -1085,10 +1093,10 @@ endfunction
             elseif ( r1 >= 71 ) then
                 set index=2
             endif
-            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare___HeroRare[index], p, 0, 0, 0)
+            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare__HeroRare[index], p, 0, 0, 0)
             call s__Units_Set(HeroRare_LastRandomUnit)
             if ( (s__HeroRares_isRepeat) == false ) then // INLINED!!
-                call UnitPoolRemoveUnitType(s__HeroRare___HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
+                call UnitPoolRemoveUnitType(s__HeroRare__HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
             endif
             return HeroRare_LastRandomUnit
         endfunction
@@ -1096,17 +1104,17 @@ endfunction
 //library HeroRare ends
 //library Winner:
         function s__Winner_Death takes unit u returns nothing
-            local integer ud=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((u))))) // INLINED!!
+            local integer ud=(LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId(((u))))) // INLINED!!
             local integer p=s__Units_playerid[ud]
             call s__Teams_AddTeamKills(p , 1)
-            if ( (s__Teams___Team_Kills[(p)]) >= s__Winner_MaxKills ) then // INLINED!!
+            if ( (s__Teams__Team_Kills[(p)]) >= s__Winner_MaxKills ) then // INLINED!!
                 set s__Winner_GameEnd=true
-                call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(p)]) + " 获得了最终的胜利！！") // INLINED!!
+                call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams__Team_Name[(p)]) + " 获得了最终的胜利！！") // INLINED!!
                 call sc__Winner_ShowWin(p)
             endif
         endfunction
             function s__Winner_anon__10 takes nothing returns nothing
-                if ( IsPlayerInForce(GetEnumPlayer(), (s__Teams___Team_Players[(s__Winner_WinTeam)])) == true ) then // INLINED!!
+                if ( IsPlayerInForce(GetEnumPlayer(), (s__Teams__Team_Players[(s__Winner_WinTeam)])) == true ) then // INLINED!!
                     call CustomVictoryBJ(GetEnumPlayer(), true, false)
                 else
                     call CustomDefeatBJ(GetEnumPlayer(), "失败！")
@@ -1114,7 +1122,7 @@ endfunction
             endfunction
         function s__Winner_ShowWin takes integer teamid returns nothing
             set s__Winner_WinTeam=teamid
-            call ForForce((Teams___AllPlayers), function s__Winner_anon__10) // INLINED!!
+            call ForForce((Teams__AllPlayers), function s__Winner_anon__10) // INLINED!!
         endfunction
         function s__Winner_ShowTip takes nothing returns nothing
             call StopSoundBJ(gg_snd_ItemReceived, false)
@@ -1156,13 +1164,13 @@ endfunction
                     if ( ntmp != - 1 ) then
                         call s__Winner_ShowTip()
                         set s__Winner_Team=ntmp
-                        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "中央球已被" + (s__Teams___Team_Name[(ntmp)]) + "占领！") // INLINED!!
+                        call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "中央球已被" + (s__Teams__Team_Name[(ntmp)]) + "占领！") // INLINED!!
                     endif
                 elseif ( numbers == 0 ) then
                     if ( s__Winner_NowTime > 0 ) then
-                        set s__Winner_NowTime=s__Winner_NowTime - ( 0.01 * (CountPlayersInForceBJ((s__Teams___Team_Players[((s__Winner_Team))]))) ) // INLINED!!
+                        set s__Winner_NowTime=s__Winner_NowTime - ( 0.01 * (CountPlayersInForceBJ((s__Teams__Team_Players[((s__Winner_Team))]))) ) // INLINED!!
                     else
-                        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, (s__Teams___Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
+                        call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, (s__Teams__Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
                         set s__Winner_NowTime=0
                         set s__Winner_Team=- 1
                         call s__Winner_ShowTip()
@@ -1170,7 +1178,7 @@ endfunction
                 elseif ( s__Winner_NowTime >= s__Winner_MaxTime ) then
                     set s__Winner_GameEnd=true
                     call PlaySoundBJ(gg_snd_Winner)
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
+                    call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams__Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
                     call s__Winner_ShowWin(s__Winner_Team)
                 else
                     set rtmp=( 0.02 * team_numbers[s__Winner_Team] ) - ( 0.01 * ( numbers - team_numbers[s__Winner_Team] ) )
@@ -1190,22 +1198,22 @@ endfunction
 //library Init:
 
     //public:  //中央球、阵初始化、杂物初始化类 //玩家英雄
-        function Init___anon__0 takes nothing returns nothing
+        function Init__anon__0 takes nothing returns nothing
             local unit u
             call UnitShareVision(Origin_Ball, GetEnumPlayer(), true) //目前没有SR、SSR池英雄，随机上限定位R级
             set u=s__HeroRares_GetRandomHero(GetEnumPlayer() , 20)
             set PlayerHero[GetConvertedPlayerId(GetEnumPlayer())]=u
-            call SetUnitPosition(u, GetRectCenterX((s__Teams___Team_Rect[GetPlayerTeam((GetEnumPlayer()))])), GetRectCenterY((s__Teams___Team_Rect[GetPlayerTeam((GetEnumPlayer()))]))) // INLINED!!
+            call SetUnitPosition(u, GetRectCenterX((s__Teams__Team_Rect[GetPlayerTeam((GetEnumPlayer()))])), GetRectCenterY((s__Teams__Team_Rect[GetPlayerTeam((GetEnumPlayer()))]))) // INLINED!!
             set u=null
         endfunction
-    function Init___onInit takes nothing returns nothing
+    function Init__onInit takes nothing returns nothing
         set Origin_Ball=gg_unit_e000_0010
         set Origin_Magic=gg_unit_e001_0011
         set Origin_X=GetUnitX(Origin_Ball)
         set Origin_Y=GetUnitY(Origin_Ball)
         call SetUnitTimeScale(Origin_Magic, 0)
         call s__Winner_start()
-        call ForForce(Teams___AllPlayers, (function Init___anon__0)) // INLINED!!
+        call ForForce(Teams__AllPlayers, (function Init__anon__0)) // INLINED!!
     endfunction
 
 //library Init ends
@@ -1215,7 +1223,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Sun Nov 25 16:52:59 2018
+//   Date: Sun Nov 25 17:40:14 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -1501,14 +1509,14 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs689601171")
-call ExecuteFunc("Teams___onInit")
-call ExecuteFunc("TimerUtils___init")
-call ExecuteFunc("Tree___onInit")
-call ExecuteFunc("Camera___onInit")
-call ExecuteFunc("PlayerEvent___onInit")
-call ExecuteFunc("HeroRare___onInit")
-call ExecuteFunc("Init___onInit")
+call ExecuteFunc("jasshelper__initstructs692436890")
+call ExecuteFunc("Teams__onInit")
+call ExecuteFunc("TimerUtils__init")
+call ExecuteFunc("Tree__onInit")
+call ExecuteFunc("Camera__onInit")
+call ExecuteFunc("PlayerEvent__onInit")
+call ExecuteFunc("HeroRare__onInit")
+call ExecuteFunc("Init__onInit")
 
     call InitGlobals()
     call InitTrig_init() // INLINED!!
@@ -1545,15 +1553,20 @@ endfunction
 //Struct method generated initializers/callers:
 
 //Functions for BigArrays:
-function sa__Table___GTable_onDestroy takes nothing returns boolean
+function sa__Table__GTable_onDestroy takes nothing returns boolean
 local integer this=f__arg_this
-            call FlushChildHashtable(Table___ht, ((this))) // INLINED!!
+            call FlushChildHashtable(Table__ht, ((this))) // INLINED!!
    return true
 endfunction
 function sa__Winner_ShowWin takes nothing returns boolean
 local integer teamid=f__arg_integer1
             set s__Winner_WinTeam=teamid
-            call ForForce((Teams___AllPlayers), function s__Winner_anon__10) // INLINED!!
+            call ForForce((Teams__AllPlayers), function s__Winner_anon__10) // INLINED!!
+   return true
+endfunction
+function sa__HeroRares_Repeat takes nothing returns boolean
+local boolean b=f__arg_boolean1
+            set s__HeroRares_isRepeat=b
    return true
 endfunction
 function sa__HeroRares_AddRandomHero takes nothing returns boolean
@@ -1563,37 +1576,39 @@ endfunction
 function sa__HandleTable__getindex takes nothing returns boolean
 local integer this=f__arg_this
 local handle key=f__arg_handle1
-set f__result_integer= LoadInteger(Table___ht, (this), GetHandleId(key))
+set f__result_integer= LoadInteger(Table__ht, (this), GetHandleId(key))
    return true
 endfunction
 function sa__HandleTable__setindex takes nothing returns boolean
 local integer this=f__arg_this
 local handle key=f__arg_handle1
 local integer value=f__arg_integer1
-            call SaveInteger(Table___ht, (this), GetHandleId(key), value)
+            call SaveInteger(Table__ht, (this), GetHandleId(key), value)
    return true
 endfunction
 function sa__HandleTable_flush takes nothing returns boolean
 local integer this=f__arg_this
 local handle key=f__arg_handle1
-            call RemoveSavedInteger(Table___ht, (this), GetHandleId(key))
+            call RemoveSavedInteger(Table__ht, (this), GetHandleId(key))
    return true
 endfunction
 function sa__HandleTable_exists takes nothing returns boolean
 local integer this=f__arg_this
 local handle key=f__arg_handle1
-set f__result_boolean= HaveSavedInteger(Table___ht, (this), GetHandleId(key))
+set f__result_boolean= HaveSavedInteger(Table__ht, (this), GetHandleId(key))
    return true
 endfunction
 
-function jasshelper__initstructs689601171 takes nothing returns nothing
-    set st__Table___GTable_onDestroy[2]=CreateTrigger()
-    set st__Table___GTable_onDestroy[3]=st__Table___GTable_onDestroy[2]
-    set st__Table___GTable_onDestroy[4]=st__Table___GTable_onDestroy[2]
-    set st__Table___GTable_onDestroy[5]=st__Table___GTable_onDestroy[2]
-    call TriggerAddCondition(st__Table___GTable_onDestroy[2],Condition( function sa__Table___GTable_onDestroy))
+function jasshelper__initstructs692436890 takes nothing returns nothing
+    set st__Table__GTable_onDestroy[2]=CreateTrigger()
+    set st__Table__GTable_onDestroy[3]=st__Table__GTable_onDestroy[2]
+    set st__Table__GTable_onDestroy[4]=st__Table__GTable_onDestroy[2]
+    set st__Table__GTable_onDestroy[5]=st__Table__GTable_onDestroy[2]
+    call TriggerAddCondition(st__Table__GTable_onDestroy[2],Condition( function sa__Table__GTable_onDestroy))
     set st__Winner_ShowWin=CreateTrigger()
     call TriggerAddCondition(st__Winner_ShowWin,Condition( function sa__Winner_ShowWin))
+    set st__HeroRares_Repeat=CreateTrigger()
+    call TriggerAddCondition(st__HeroRares_Repeat,Condition( function sa__HeroRares_Repeat))
     set st__HeroRares_AddRandomHero=CreateTrigger()
     call TriggerAddCondition(st__HeroRares_AddRandomHero,Condition( function sa__HeroRares_AddRandomHero))
     set st__Units_onDestroy[8]=null
@@ -1618,7 +1633,7 @@ function jasshelper__initstructs689601171 takes nothing returns nothing
 
 
     call ExecuteFunc("s__Hero_onInit")
-    call ExecuteFunc("s__Table___GTable_onInit")
+    call ExecuteFunc("s__Table__GTable_onInit")
     call ExecuteFunc("s__Units_onInit")
 endfunction
 

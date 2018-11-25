@@ -1,0 +1,19 @@
+ 
+Frame "BACKDROP" "Panel" {
+    BackdropBackground "UI\Widgets\ToolTips\Human\human-tooltip-background.blp",//背景图
+}
+
+Frame "BACKDROP" "ShowInfo" {
+    BackdropBackground "UI\Widgets\ToolTips\Human\human-tooltip-background.blp",//背景图
+    BackdropBlendAll, //Blend，开启透明通道
+}
+
+Frame "GLUETEXTBUTTON" "Button" {
+    BackdropBackground "UI\Widgets\EscMenu\NightElf\nightelf-options-menu-border.blp",//背景图
+}
+
+Frame "TEXT" "TextInfo"{
+    FontJustificationH JUSTIFYLEFT,
+    FontJustificationV JUSTIFYTOP,
+
+}
