@@ -10,7 +10,7 @@ library HeroRare requires Units{
         group g=CreateGroup(); 
         HeroRare[0]=CreateUnitPool();
         HeroRare[1]=CreateUnitPool();
-        HeroRare[2]=CreateUnitPool();
+        HeroRare[2]=CreateUnitPool(); 
         GroupEnumUnitsInRange(g,0,0,65535,null);
         ForGroup(g,function(){
             unit gu=GetEnumUnit(); 
@@ -20,10 +20,11 @@ library HeroRare requires Units{
             gu=null;
         });
         DestroyGroup(g);
+        HeroRares.Repeat(true);
         BJDebugMsg("HeroRare_OK");
     }
     public struct HeroRares{
-        private static boolean isRepeat=true;//是否可以重复抽取相同英雄
+        private static boolean isRepeat=false;//是否可以重复抽取相同英雄
 
         //设置是否可以重复抽取相同英雄，true为可以
         public static method Repeat(boolean b){
@@ -54,6 +55,7 @@ library HeroRare requires Units{
             }else if(r1>=71){
                 index=2;
             }
+            
             HeroRare_LastRandomUnit=PlaceRandomUnit(HeroRare[index], p, 0,0,0);
             Units.Set(HeroRare_LastRandomUnit);
             if(GetRepeat()==false){
