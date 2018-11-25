@@ -1,4 +1,4 @@
-library Units requires Table,Hero{
+library Units requires Table{
 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
@@ -12,7 +12,7 @@ library Units requires Table,Hero{
             boolean isHero;
             string name;
             unit unit;
-            Hero hero;
+            integer hero;
         }
 
         static method onInit(){
@@ -29,17 +29,16 @@ library Units requires Table,Hero{
             ud.name=GetUnitName(u);
             ud.unit=u;
             if(ud.isHero==true){
-                Hero.Attch(u);
+                 
             }
-            ud.hero=Hero.GetHero(u);
+             
             
             Units.ht[u]=integer(ud); 
         }
 
         //摧毁指定单位 实例
         private static method Destroys(unit u){
-            Units ud=Units(Units.ht[u]);
-            Hero.DestroyHero(u);
+            Units ud=Units(Units.ht[u]); 
             ud.deallocate();
             Units.ht.flush(u);
             
