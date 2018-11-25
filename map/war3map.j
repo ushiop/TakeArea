@@ -1,7 +1,9 @@
 globals
-//globals from Hero:
-constant boolean LIBRARY_Hero=true
-//endglobals from Hero
+//globals from BzAPI:
+constant boolean LIBRARY_BzAPI=true
+trigger array BzAPI___DamageEventQueue
+integer BzAPI___DamageEventNumber= 0
+//endglobals from BzAPI
 //globals from Table:
 constant boolean LIBRARY_Table=true
 constant integer Table__MAX_INSTANCES=8100
@@ -61,6 +63,9 @@ constant integer TimerUtils__HELD=0x23729801
 constant boolean LIBRARY_Tree=true
 rect array Tree___rec
 //endglobals from Tree
+//globals from Ui:
+constant boolean LIBRARY_Ui=true
+//endglobals from Ui
 //globals from Util:
 constant boolean LIBRARY_Util=true
 //endglobals from Util
@@ -106,19 +111,25 @@ unit gg_unit_e000_0010= null
 trigger l__library_init
 
 //JASSHelper struct globals:
-constant integer si__Hero=1
-integer s__Hero_ht
-constant integer si__Table__GTable=2
+constant integer si__Table__GTable=1
 integer si__Table__GTable_F=0
 integer si__Table__GTable_I=0
 integer array si__Table__GTable_V
-constant integer si__Table=3
-constant integer si__StringTable=4
-constant integer si__HandleTable=5
-constant integer si__Teams=6
+constant integer si__Table=2
+constant integer si__StringTable=3
+constant integer si__HandleTable=4
+constant integer si__Teams=5
 integer si__Teams_F=0
 integer si__Teams_I=0
 integer array si__Teams_V
+constant integer si__Ui=6
+integer si__Ui_F=0
+integer si__Ui_I=0
+integer array si__Ui_V
+integer s__Ui_TakeBackground
+integer s__Ui_TakeLeftText
+integer s__Ui_TakeMoveBar
+integer s__Ui_TakeRightText
 constant integer si__Util__Util=7
 integer si__Util__Util_F=0
 integer si__Util__Util_I=0
@@ -160,30 +171,126 @@ timer array s__TimerUtils__tT
 unitpool array s__HeroRare___HeroRare
 integer array si__Table__GTable_type
 trigger array st__Table__GTable_onDestroy
-integer array si__Units_type
-trigger array st__Units_onDestroy
-trigger st__HandleTable__getindex
-trigger st__HandleTable__setindex
-trigger st__HandleTable_flush
-trigger st__HandleTable_exists
 trigger st__HeroRares_Repeat
 trigger st__HeroRares_AddRandomHero
 trigger st__Winner_ShowWin
-handle f__arg_handle1
-integer f__arg_integer1
 boolean f__arg_boolean1
 unit f__arg_unit1
+integer f__arg_integer1
 integer f__arg_this
-integer f__result_integer
-boolean f__result_boolean
 
 endglobals
+    native DzGetMouseTerrainX takes nothing returns real
+    native DzGetMouseTerrainY takes nothing returns real
+    native DzGetMouseTerrainZ takes nothing returns real
+    native DzIsMouseOverUI takes nothing returns boolean
+    native DzGetMouseX takes nothing returns integer
+    native DzGetMouseY takes nothing returns integer
+    native DzGetMouseXRelative takes nothing returns integer
+    native DzGetMouseYRelative takes nothing returns integer
+    native DzSetMousePos takes integer x, integer y returns nothing
+    native DzTriggerRegisterMouseEvent takes trigger trig, integer btn, integer status, boolean sync, string func returns nothing
+    native DzTriggerRegisterMouseEventByCode takes trigger trig, integer btn, integer status, boolean sync, code funcHandle returns nothing
+    native DzTriggerRegisterKeyEvent takes trigger trig, integer key, integer status, boolean sync, string func returns nothing
+    native DzTriggerRegisterKeyEventByCode takes trigger trig, integer key, integer status, boolean sync, code funcHandle returns nothing
+    native DzTriggerRegisterMouseWheelEvent takes trigger trig, boolean sync, string func returns nothing
+    native DzTriggerRegisterMouseWheelEventByCode takes trigger trig, boolean sync, code funcHandle returns nothing
+    native DzTriggerRegisterMouseMoveEvent takes trigger trig, boolean sync, string func returns nothing
+    native DzTriggerRegisterMouseMoveEventByCode takes trigger trig, boolean sync, code funcHandle returns nothing
+    native DzGetTriggerKey takes nothing returns integer
+    native DzGetWheelDelta takes nothing returns integer
+    native DzIsKeyDown takes integer iKey returns boolean
+    native DzGetTriggerKeyPlayer takes nothing returns player
+    native DzGetWindowWidth takes nothing returns integer
+    native DzGetWindowHeight takes nothing returns integer
+    native DzGetWindowX takes nothing returns integer
+    native DzGetWindowY takes nothing returns integer
+    native DzTriggerRegisterWindowResizeEvent takes trigger trig, boolean sync, string func returns nothing
+    native DzTriggerRegisterWindowResizeEventByCode takes trigger trig, boolean sync, code funcHandle returns nothing
+    native DzIsWindowActive takes nothing returns boolean
+    native DzDestructablePosition takes destructable d, real x, real y returns nothing
+    native DzSetUnitPosition takes unit whichUnit, real x, real y returns nothing
+    native DzExecuteFunc takes string funcName returns nothing
+    native DzGetUnitUnderMouse takes nothing returns unit
+    native DzSetUnitTexture takes unit whichUnit, string path, integer texId returns nothing
+    native DzSetMemory takes integer address, real value returns nothing
+    native DzSetUnitID takes unit whichUnit, integer id returns nothing
+    native DzSetUnitModel takes unit whichUnit, string path returns nothing
+    native DzSetWar3MapMap takes string map returns nothing
+    native DzTriggerRegisterSyncData takes trigger trig, string prefix, boolean server returns nothing
+    native DzSyncData takes string prefix, string data returns nothing
+    native DzGetTriggerSyncData takes nothing returns string
+    native DzGetTriggerSyncPlayer takes nothing returns player
+    native DzFrameHideInterface takes nothing returns nothing
+    native DzFrameEditBlackBorders takes real upperHeight, real bottomHeight returns nothing
+    native DzFrameGetPortrait takes nothing returns integer
+    native DzFrameGetMinimap takes nothing returns integer
+    native DzFrameGetCommandBarButton takes integer row, integer column returns integer
+    native DzFrameGetHeroBarButton takes integer buttonId returns integer
+    native DzFrameGetHeroHPBar takes integer buttonId returns integer
+    native DzFrameGetHeroManaBar takes integer buttonId returns integer
+    native DzFrameGetItemBarButton takes integer buttonId returns integer
+    native DzFrameGetMinimapButton takes integer buttonId returns integer
+    native DzFrameGetUpperButtonBarButton takes integer buttonId returns integer
+    native DzFrameGetTooltip takes nothing returns integer
+    native DzFrameGetChatMessage takes nothing returns integer
+    native DzFrameGetUnitMessage takes nothing returns integer
+    native DzFrameGetTopMessage takes nothing returns integer
+    native DzGetColor takes integer r, integer g, integer b, integer a returns integer
+    native DzFrameSetUpdateCallback takes string func returns nothing
+    native DzFrameSetUpdateCallbackByCode takes code funcHandle returns nothing
+    native DzFrameShow takes integer frame, boolean enable returns nothing
+    native DzCreateFrame takes string frame, integer parent, integer id returns integer
+    native DzCreateSimpleFrame takes string frame, integer parent, integer id returns integer
+    native DzDestroyFrame takes integer frame returns nothing
+    native DzLoadToc takes string fileName returns nothing
+    native DzFrameSetPoint takes integer frame, integer point, integer relativeFrame, integer relativePoint, real x, real y returns nothing
+    native DzFrameSetAbsolutePoint takes integer frame, integer point, real x, real y returns nothing
+    native DzFrameClearAllPoints takes integer frame returns nothing
+    native DzFrameSetEnable takes integer name, boolean enable returns nothing
+    native DzFrameSetScript takes integer frame, integer eventId, string func, boolean sync returns nothing
+    native DzFrameSetScriptByCode takes integer frame, integer eventId, code funcHandle, boolean sync returns nothing
+    native DzGetTriggerUIEventPlayer takes nothing returns player
+    native DzGetTriggerUIEventFrame takes nothing returns integer
+    native DzFrameFindByName takes string name, integer id returns integer
+    native DzSimpleFrameFindByName takes string name, integer id returns integer
+    native DzSimpleFontStringFindByName takes string name, integer id returns integer
+    native DzSimpleTextureFindByName takes string name, integer id returns integer
+    native DzGetGameUI takes nothing returns integer
+    native DzClickFrame takes integer frame returns nothing
+    native DzSetCustomFovFix takes real value returns nothing
+    native DzEnableWideScreen takes boolean enable returns nothing
+    native DzFrameSetText takes integer frame, string text returns nothing
+    native DzFrameGetText takes integer frame returns string
+    native DzFrameSetTextSizeLimit takes integer frame, integer size returns nothing
+    native DzFrameGetTextSizeLimit takes integer frame returns integer
+    native DzFrameSetTextColor takes integer frame, integer color returns nothing
+    native DzGetMouseFocus takes nothing returns integer
+    native DzFrameSetAllPoints takes integer frame, integer relativeFrame returns boolean
+    native DzFrameSetFocus takes integer frame, boolean enable returns boolean
+    native DzFrameSetModel takes integer frame, string modelFile, integer modelType, integer flag returns nothing
+    native DzFrameGetEnable takes integer frame returns boolean
+    native DzFrameSetAlpha takes integer frame, integer alpha returns nothing
+    native DzFrameGetAlpha takes integer frame returns integer
+    native DzFrameSetAnimate takes integer frame, integer animId, boolean autocast returns nothing
+    native DzFrameSetAnimateOffset takes integer frame, real offset returns nothing
+    native DzFrameSetTexture takes integer frame, string texture, integer flag returns nothing
+    native DzFrameSetScale takes integer frame, real scale returns nothing
+    native DzFrameSetTooltip takes integer frame, integer tooltip returns nothing
+    native DzFrameCageMouse takes integer frame, boolean enable returns nothing
+    native DzFrameGetValue takes integer frame returns real
+    native DzFrameSetMinMaxValue takes integer frame, real minValue, real maxValue returns nothing
+    native DzFrameSetStepValue takes integer frame, real step returns nothing
+    native DzFrameSetValue takes integer frame, real value returns nothing
+    native DzFrameSetSize takes integer frame, real w, real h returns nothing
+    native DzCreateFrameByTagName takes string frameType, string name, integer parent, string template, integer id returns integer
+    native DzFrameSetVertexColor takes integer frame, integer color returns nothing
 
 
 //Generated method caller for Table__GTable.onDestroy
 function sc__Table__GTable_onDestroy takes integer this returns nothing
     set f__arg_this=this
-    call TriggerEvaluate(st__Table__GTable_onDestroy[2])
+    call TriggerEvaluate(st__Table__GTable_onDestroy[1])
 endfunction
 
 //Generated allocator of Table__GTable
@@ -199,7 +306,7 @@ function s__Table__GTable__allocate takes nothing returns integer
         return 0
     endif
 
-    set si__Table__GTable_type[this]=2
+    set si__Table__GTable_type[this]=1
     set si__Table__GTable_V[this]=-1
  return this
 endfunction
@@ -303,20 +410,17 @@ function s__Units__allocate takes nothing returns integer
         return 0
     endif
 
-    set si__Units_type[this]=8
     set si__Units_V[this]=-1
  return this
 endfunction
 
 //Generated destructor of Units
-function sc__Units_deallocate takes integer this returns nothing
+function s__Units_deallocate takes integer this returns nothing
     if this==null then
         return
     elseif (si__Units_V[this]!=-1) then
         return
     endif
-    set f__arg_this=this
-    call TriggerEvaluate(st__Units_onDestroy[si__Units_type[this]])
     set si__Units_V[this]=si__Units_F
     set si__Units_F=this
 endfunction
@@ -349,6 +453,34 @@ function s__Util__Util_deallocate takes integer this returns nothing
     set si__Util__Util_F=this
 endfunction
 
+//Generated allocator of Ui
+function s__Ui__allocate takes nothing returns integer
+ local integer this=si__Ui_F
+    if (this!=0) then
+        set si__Ui_F=si__Ui_V[this]
+    else
+        set si__Ui_I=si__Ui_I+1
+        set this=si__Ui_I
+    endif
+    if (this>8190) then
+        return 0
+    endif
+
+    set si__Ui_V[this]=-1
+ return this
+endfunction
+
+//Generated destructor of Ui
+function s__Ui_deallocate takes integer this returns nothing
+    if this==null then
+        return
+    elseif (si__Ui_V[this]!=-1) then
+        return
+    endif
+    set si__Ui_V[this]=si__Ui_F
+    set si__Ui_F=this
+endfunction
+
 //Generated allocator of Teams
 function s__Teams__allocate takes nothing returns integer
  local integer this=si__Teams_F
@@ -377,37 +509,6 @@ function s__Teams_deallocate takes integer this returns nothing
     set si__Teams_F=this
 endfunction
 
-//Generated method caller for HandleTable._getindex
-function sc__HandleTable__getindex takes integer this,handle key returns integer
-    set f__arg_this=this
-    set f__arg_handle1=key
-    call TriggerEvaluate(st__HandleTable__getindex)
- return f__result_integer
-endfunction
-
-//Generated method caller for HandleTable._setindex
-function sc__HandleTable__setindex takes integer this,handle key,integer value returns nothing
-    set f__arg_this=this
-    set f__arg_handle1=key
-    set f__arg_integer1=value
-    call TriggerEvaluate(st__HandleTable__setindex)
-endfunction
-
-//Generated method caller for HandleTable.flush
-function sc__HandleTable_flush takes integer this,handle key returns nothing
-    set f__arg_this=this
-    set f__arg_handle1=key
-    call TriggerEvaluate(st__HandleTable_flush)
-endfunction
-
-//Generated method caller for HandleTable.exists
-function sc__HandleTable_exists takes integer this,handle key returns boolean
-    set f__arg_this=this
-    set f__arg_handle1=key
-    call TriggerEvaluate(st__HandleTable_exists)
- return f__result_boolean
-endfunction
-
 //Generated allocator of HandleTable
 function s__HandleTable__allocate takes nothing returns integer
  local integer this=s__Table__GTable__allocate()
@@ -415,7 +516,7 @@ function s__HandleTable__allocate takes nothing returns integer
     if(this==0) then
         return 0
     endif
-    set si__Table__GTable_type[this]=5
+    set si__Table__GTable_type[this]=4
     set kthis=this
 
  return this
@@ -429,7 +530,7 @@ function s__StringTable__allocate takes nothing returns integer
     if(this==0) then
         return 0
     endif
-    set si__Table__GTable_type[this]=4
+    set si__Table__GTable_type[this]=3
     set kthis=this
 
  return this
@@ -443,53 +544,167 @@ function s__Table__allocate takes nothing returns integer
     if(this==0) then
         return 0
     endif
-    set si__Table__GTable_type[this]=3
+    set si__Table__GTable_type[this]=2
     set kthis=this
 
  return this
 endfunction
 
 
-//Generated allocator of Hero
-function s__Hero__allocate takes nothing returns integer
- local integer this=s__Units__allocate()
- local integer kthis
-    if(this==0) then
-        return 0
-    endif
-    set si__Units_type[this]=1
-    set kthis=this
-
- return this
-endfunction
+//library BzAPI:
+    //hardware
 
 
-//library Hero:
-        function s__Hero_onInit takes nothing returns nothing
-            set s__Hero_ht=s__HandleTable__allocate()
-        endfunction
-        //public:
-            function s__Hero_Attch takes unit u returns nothing
-                if ( sc__HandleTable_exists(s__Hero_ht,u) == false ) then
-                    call sc__HandleTable__setindex(s__Hero_ht,u, (s__Hero__allocate()))
-                endif
-            endfunction
-            function s__Hero_DestroyHero takes unit u returns nothing
-                local integer ud
-                if ( sc__HandleTable_exists(s__Hero_ht,u) == true ) then
-                    set ud=(sc__HandleTable__getindex(s__Hero_ht,u))
-                    call sc__Units_deallocate(ud)
-                    call sc__HandleTable_flush(s__Hero_ht,u)
-                endif
-            endfunction
-            function s__Hero_GetHero takes unit u returns integer
-                if ( sc__HandleTable_exists(s__Hero_ht,u) == true ) then
-                    return sc__HandleTable__getindex(s__Hero_ht,u)
-                endif
-                return - 1
-            endfunction
 
-//library Hero ends
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //plus
+
+
+
+
+
+
+
+
+
+    //sync
+
+
+
+
+    //gui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function DzTriggerRegisterMouseEventTrg takes trigger trg,integer status,integer btn returns nothing
+        if trg == null then
+            return
+        endif
+        call DzTriggerRegisterMouseEvent(trg, btn, status, true, null)
+    endfunction
+    function DzTriggerRegisterKeyEventTrg takes trigger trg,integer status,integer btn returns nothing
+        if trg == null then
+            return
+        endif
+        call DzTriggerRegisterKeyEvent(trg, btn, status, true, null)
+    endfunction
+    function DzTriggerRegisterMouseMoveEventTrg takes trigger trg returns nothing
+        if trg == null then
+            return
+        endif
+        call DzTriggerRegisterMouseMoveEvent(trg, true, null)
+    endfunction
+    function DzTriggerRegisterMouseWheelEventTrg takes trigger trg returns nothing
+        if trg == null then
+            return
+        endif
+        call DzTriggerRegisterMouseWheelEvent(trg, true, null)
+    endfunction
+    function DzTriggerRegisterWindowResizeEventTrg takes trigger trg returns nothing
+        if trg == null then
+            return
+        endif
+        call DzTriggerRegisterWindowResizeEvent(trg, true, null)
+    endfunction
+    function DzF2I takes integer i returns integer
+        return i
+    endfunction
+    function DzI2F takes integer i returns integer
+        return i
+    endfunction
+    function DzK2I takes integer i returns integer
+        return i
+    endfunction
+    function DzI2K takes integer i returns integer
+        return i
+    endfunction
+
+//library BzAPI ends
 //library Table:
 //***************************************************************
 //* Table object 3.0
@@ -926,6 +1141,43 @@ endfunction
     endfunction
 
 //library Tree ends
+//library Ui:
+        function s__Ui_ShowTakeBar takes string str returns nothing
+            if ( str == "" ) then
+                call DzFrameSetPoint(s__Ui_TakeRightText, 3, s__Ui_TakeBackground, 3, 0.26, - 0.003)
+                call DzFrameSetText(s__Ui_TakeRightText, "中央区域尚未被争夺")
+                call DzFrameShow(s__Ui_TakeMoveBar, false)
+            else
+                call DzFrameSetPoint(s__Ui_TakeRightText, 3, s__Ui_TakeBackground, 3, 0.3, - 0.003)
+                call DzFrameSetText(s__Ui_TakeRightText, str + "争夺中")
+                call DzFrameShow(s__Ui_TakeMoveBar, true)
+            endif
+        endfunction
+        function s__Ui_SetTakeBarStep takes real acc returns nothing
+            call DzFrameSetPoint(s__Ui_TakeMoveBar, 3, s__Ui_TakeBackground, 3, 0.3 - ( ( 0.3 - 0.021 ) * acc ), 0.001)
+            call DzFrameSetSize(s__Ui_TakeMoveBar, 0.001 + 0.278 * acc, 0.009)
+        endfunction
+        function s__Ui_onInit takes nothing returns nothing
+            set s__Ui_TakeBackground=DzCreateFrameByTagName("BACKDROP", "TakeBackground", DzGetGameUI(), "Panel", 0)
+            call DzFrameSetSize(s__Ui_TakeBackground, 0.349, 0.024)
+            call DzFrameSetPoint(s__Ui_TakeBackground, 3, DzFrameGetUpperButtonBarButton(0), 3, - 0.01, 0)
+            call DzFrameSetTexture(s__Ui_TakeBackground, "UI_LeftUpperBackground.blp", 0)
+            set s__Ui_TakeLeftText=DzCreateFrameByTagName("TEXT", "TakeLeftText", s__Ui_TakeBackground, "TextInfo", 0)
+            call DzFrameSetPoint(s__Ui_TakeLeftText, 3, s__Ui_TakeBackground, 3, 0.005, - 0.003)
+            call DzFrameSetSize(s__Ui_TakeLeftText, 0.02, 0.02)
+            call DzFrameSetText(s__Ui_TakeLeftText, "胜利")
+            set s__Ui_TakeRightText=DzCreateFrameByTagName("TEXT", "TakeRightText", s__Ui_TakeBackground, "TextInfo", 0) //右侧文字提示，未争夺状态的设置
+            call DzFrameSetPoint(s__Ui_TakeRightText, 3, s__Ui_TakeBackground, 3, 0.26, - 0.003)
+            call DzFrameSetSize(s__Ui_TakeRightText, 0.08, 0.02)
+            call DzFrameSetText(s__Ui_TakeRightText, "中央区域尚未被争夺")
+            set s__Ui_TakeMoveBar=DzCreateFrameByTagName("BACKDROP", "TakeMoveBar", s__Ui_TakeBackground, "ShowInfo", 0) //争夺进度条 //进度0%的位置: Point(0.3,0.001),Size(0.001,0.009) //进度100%的位置: Point(0.021,0.001),Size(0.279,0.009)
+            call DzFrameSetPoint(s__Ui_TakeMoveBar, 3, s__Ui_TakeBackground, 3, 0.3, 0.001)
+            call DzFrameSetSize(s__Ui_TakeMoveBar, 0.001, 0.009)
+            call DzFrameSetTexture(s__Ui_TakeMoveBar, "UI_LeftUpperMoveBar.blp", 0)
+            call DzFrameShow(s__Ui_TakeMoveBar, false)
+        endfunction
+
+//library Ui ends
 //library Util:
         function s__Util__Util_XY takes unit u,unit m returns real
             return bj_RADTODEG * Atan2(GetUnitY(m) - GetUnitY(u), GetUnitX(m) - GetUnitX(u))
@@ -1011,15 +1263,12 @@ endfunction
             set s__Units_name[ud]=GetUnitName(u)
             set s__Units_unit[ud]=u
             if ( s__Units_isHero[ud] == true ) then
-                call s__Hero_Attch(u)
             endif
-            set s__Units_hero[ud]=s__Hero_GetHero(u)
             call SaveInteger(Table__ht, ((s__Units_ht)), GetHandleId((u)), ( (ud))) // INLINED!!
         endfunction
         function s__Units_Destroys takes unit u returns nothing
             local integer ud=((LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId((u))))) // INLINED!!
-            call s__Hero_DestroyHero(u)
-            call sc__Units_deallocate(ud)
+            call s__Units_deallocate(ud)
             call RemoveSavedInteger(Table__ht, ((s__Units_ht)), GetHandleId((u))) // INLINED!!
         endfunction
         function s__Units_Get takes unit u returns integer
@@ -1165,24 +1414,29 @@ endfunction
                         call s__Winner_ShowTip()
                         set s__Winner_Team=ntmp
                         call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "中央球已被" + (s__Teams__Team_Name[(ntmp)]) + "占领！") // INLINED!!
+                        call s__Ui_ShowTakeBar((s__Teams__Team_Name[(ntmp)])) // INLINED!!
                     endif
-                elseif ( numbers == 0 ) then
-                    if ( s__Winner_NowTime > 0 ) then
-                        set s__Winner_NowTime=s__Winner_NowTime - ( 0.01 * (CountPlayersInForceBJ((s__Teams__Team_Players[((s__Winner_Team))]))) ) // INLINED!!
-                    else
-                        call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, (s__Teams__Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
-                        set s__Winner_NowTime=0
-                        set s__Winner_Team=- 1
-                        call s__Winner_ShowTip()
-                    endif
-                elseif ( s__Winner_NowTime >= s__Winner_MaxTime ) then
-                    set s__Winner_GameEnd=true
-                    call PlaySoundBJ(gg_snd_Winner)
-                    call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams__Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
-                    call s__Winner_ShowWin(s__Winner_Team)
                 else
-                    set rtmp=( 0.02 * team_numbers[s__Winner_Team] ) - ( 0.01 * ( numbers - team_numbers[s__Winner_Team] ) )
-                    set s__Winner_NowTime=s__Winner_NowTime + rtmp
+                    if ( numbers == 0 ) then
+                        if ( s__Winner_NowTime > 0 ) then
+                            set s__Winner_NowTime=s__Winner_NowTime - ( 0.02 * (CountPlayersInForceBJ((s__Teams__Team_Players[((s__Winner_Team))]))) ) // INLINED!!
+                        else
+                            call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, (s__Teams__Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
+                            set s__Winner_NowTime=0
+                            set s__Winner_Team=- 1
+                            call s__Winner_ShowTip()
+                            call s__Ui_ShowTakeBar("")
+                        endif
+                    elseif ( s__Winner_NowTime >= s__Winner_MaxTime ) then
+                        set s__Winner_GameEnd=true
+                        call PlaySoundBJ(gg_snd_Winner)
+                        call DisplayTimedTextToForce((Teams__AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams__Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
+                        call s__Winner_ShowWin(s__Winner_Team)
+                    else
+                        set rtmp=( 0.02 * team_numbers[s__Winner_Team] ) - ( 0.01 * ( numbers - team_numbers[s__Winner_Team] ) )
+                        set s__Winner_NowTime=s__Winner_NowTime + rtmp
+                    endif
+                    call s__Ui_SetTakeBarStep(s__Winner_NowTime / s__Winner_MaxTime)
                 endif
             else
                 call ReleaseTimer(GetExpiredTimer())
@@ -1223,7 +1477,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Sun Nov 25 17:43:59 2018
+//   Date: Sun Nov 25 21:35:53 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -1315,6 +1569,7 @@ endfunction
 // 调用一些需要的函数让YDWE导入对应库
 //===========================================================================
 function Trig_initActions takes nothing returns nothing
+    call DzLoadToc("resource\\UI.toc")
     call SetUnitUserData(gg_unit_e000_0010, 0)
     call SetUnitUserData(gg_unit_e001_0011, 0)
 endfunction
@@ -1509,7 +1764,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs692661578")
+call ExecuteFunc("jasshelper__initstructs706575984")
 call ExecuteFunc("Teams__onInit")
 call ExecuteFunc("TimerUtils__init")
 call ExecuteFunc("Tree___onInit")
@@ -1573,54 +1828,19 @@ function sa__HeroRares_AddRandomHero takes nothing returns boolean
     call s__HeroRares_AddRandomHero(f__arg_unit1)
    return true
 endfunction
-function sa__HandleTable__getindex takes nothing returns boolean
-local integer this=f__arg_this
-local handle key=f__arg_handle1
-set f__result_integer= LoadInteger(Table__ht, (this), GetHandleId(key))
-   return true
-endfunction
-function sa__HandleTable__setindex takes nothing returns boolean
-local integer this=f__arg_this
-local handle key=f__arg_handle1
-local integer value=f__arg_integer1
-            call SaveInteger(Table__ht, (this), GetHandleId(key), value)
-   return true
-endfunction
-function sa__HandleTable_flush takes nothing returns boolean
-local integer this=f__arg_this
-local handle key=f__arg_handle1
-            call RemoveSavedInteger(Table__ht, (this), GetHandleId(key))
-   return true
-endfunction
-function sa__HandleTable_exists takes nothing returns boolean
-local integer this=f__arg_this
-local handle key=f__arg_handle1
-set f__result_boolean= HaveSavedInteger(Table__ht, (this), GetHandleId(key))
-   return true
-endfunction
 
-function jasshelper__initstructs692661578 takes nothing returns nothing
-    set st__Table__GTable_onDestroy[2]=CreateTrigger()
-    set st__Table__GTable_onDestroy[3]=st__Table__GTable_onDestroy[2]
-    set st__Table__GTable_onDestroy[4]=st__Table__GTable_onDestroy[2]
-    set st__Table__GTable_onDestroy[5]=st__Table__GTable_onDestroy[2]
-    call TriggerAddCondition(st__Table__GTable_onDestroy[2],Condition( function sa__Table__GTable_onDestroy))
+function jasshelper__initstructs706575984 takes nothing returns nothing
+    set st__Table__GTable_onDestroy[1]=CreateTrigger()
+    set st__Table__GTable_onDestroy[2]=st__Table__GTable_onDestroy[1]
+    set st__Table__GTable_onDestroy[3]=st__Table__GTable_onDestroy[1]
+    set st__Table__GTable_onDestroy[4]=st__Table__GTable_onDestroy[1]
+    call TriggerAddCondition(st__Table__GTable_onDestroy[1],Condition( function sa__Table__GTable_onDestroy))
     set st__Winner_ShowWin=CreateTrigger()
     call TriggerAddCondition(st__Winner_ShowWin,Condition( function sa__Winner_ShowWin))
     set st__HeroRares_Repeat=CreateTrigger()
     call TriggerAddCondition(st__HeroRares_Repeat,Condition( function sa__HeroRares_Repeat))
     set st__HeroRares_AddRandomHero=CreateTrigger()
     call TriggerAddCondition(st__HeroRares_AddRandomHero,Condition( function sa__HeroRares_AddRandomHero))
-    set st__Units_onDestroy[8]=null
-    set st__Units_onDestroy[1]=null
-    set st__HandleTable__getindex=CreateTrigger()
-    call TriggerAddCondition(st__HandleTable__getindex,Condition( function sa__HandleTable__getindex))
-    set st__HandleTable__setindex=CreateTrigger()
-    call TriggerAddCondition(st__HandleTable__setindex,Condition( function sa__HandleTable__setindex))
-    set st__HandleTable_flush=CreateTrigger()
-    call TriggerAddCondition(st__HandleTable_flush,Condition( function sa__HandleTable_flush))
-    set st__HandleTable_exists=CreateTrigger()
-    call TriggerAddCondition(st__HandleTable_exists,Condition( function sa__HandleTable_exists))
 
 
 
@@ -1632,8 +1852,8 @@ function jasshelper__initstructs692661578 takes nothing returns nothing
 
 
 
-    call ExecuteFunc("s__Hero_onInit")
     call ExecuteFunc("s__Table__GTable_onInit")
+    call ExecuteFunc("s__Ui_onInit")
     call ExecuteFunc("s__Units_onInit")
 endfunction
 
