@@ -50,7 +50,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                 numbers=CountUnitsInGroup(g);
                 while(FirstOfGroup(g)!=null){
                     tmp=FirstOfGroup(g);
-                    team_numbers[GetPlayerTeam(GetOwningPlayer(tmp)]=team_numbers[GetPlayerTeam(GetOwningPlayer(tmp))]+1;
+                    team_numbers[GetPlayerTeam(GetOwningPlayer(tmp))]=team_numbers[GetPlayerTeam(GetOwningPlayer(tmp))]+1;
                     GroupRemoveUnit(g,tmp);
                     tmp=null;
                 }
@@ -70,8 +70,6 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                     if(ntmp!=-1){
                         Winner.ShowTip();
                         Winner.Team=ntmp;
-                        
-                        BJDebugMsg(I2S(ntmp));
                         DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
                         Ui.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
                     }
