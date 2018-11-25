@@ -1,4 +1,4 @@
-library Winner requires Units,TimerUtils,Teams {
+library Winner requires Units,TimerUtils,Teams,Ui {
 
     //两种胜利方式的管理类
 
