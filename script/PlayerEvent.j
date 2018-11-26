@@ -1,10 +1,12 @@
 library PlayerEvent requires Teams{
 
+    //等待使用事件基类和玩家类重构
+
     //玩家相关事件处理类
     //使用指令、按键、离开游戏等
 
     //当玩家离开游戏
-    private trigger disconnect=CreateTrigger();
+   /* private trigger disconnect=CreateTrigger();
     private function onDisconnect(){
         player p=GetTriggerPlayer();
         integer index=GetConvertedPlayerId(p),x;
@@ -34,5 +36,5 @@ library PlayerEvent requires Teams{
         });
         TriggerAddAction(disconnect,function onDisconnect);
         disconnect=null;
-    }
+    }*/
 }

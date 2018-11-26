@@ -20,8 +20,7 @@ library HeroRare requires Units{
             gu=null;
         });
         DestroyGroup(g);
-        HeroRares.Repeat(true);
-        BJDebugMsg("HeroRare_OK");
+        HeroRares.Repeat(true); 
     }
     public struct HeroRares{
         private static boolean isRepeat=false;//是否可以重复抽取相同英雄

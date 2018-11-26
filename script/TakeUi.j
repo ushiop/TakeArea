@@ -1,4 +1,5 @@
 library TakeUi {
+    //地盘争夺指示器
     public struct TakeUi{
         private static integer TakeBackground;//背景条
         private static integer TakeLeftText;//左侧文字 

@@ -1,4 +1,4 @@
-library Winner requires Units,TimerUtils,Teams,Ui {
+library Winner requires Units,TimerUtils,Teams,TakeUi {
 
     //两种胜利方式的管理类
 
@@ -9,15 +9,19 @@ library Winner requires Units,TimerUtils,Teams,Ui {
         private static real OX,OY,NowTime=0,MaxTime=30; 
         private static integer Team=-1,WinTeam=-1; 
 
+        public static method GetMaxKills()->integer{
+                return MaxKills;
+        }
+
         //英雄死亡时调用该函数,计算胜利条件
         public static method Death(unit u){
-            Units ud=Units.Get(u);
-            integer p=ud.playerid;
-            Teams.AddTeamKills(p,1);
-            if(Teams.GetTeamKills(p)>=Winner.MaxKills){
+            Players ud=Units.Get(u).player; 
+            Teams.AddTeamKills(ud.teamid,1);
+            KillUi.FlushKillData();
+            if(Teams.GetTeamKills(ud.teamid)>=Winner.MaxKills){
                 Winner.GameEnd=true;
-                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(p)+" 获得了最终的胜利！！");
-                Winner.ShowWin(p);
+                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(ud.teamid)+" 获得了最终的胜利！！");
+                Winner.ShowWin(ud.teamid);
             }
         }
 
@@ -41,7 +45,8 @@ library Winner requires Units,TimerUtils,Teams,Ui {
         //夺旗判定 - 范围900码
         private static method onLoop(){
             group g;
-            unit tmp;
+            Players tmp;
+            unit tmp1;
             integer numbers,ntmp,team_numbers[];
             real rtmp;
             if(Winner.GameEnd==false){
@@ -49,10 +54,11 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                 GroupEnumUnitsInRange(g,Winner.OX,Winner.OY,900,function()->boolean{ return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true; });
                 numbers=CountUnitsInGroup(g);
                 while(FirstOfGroup(g)!=null){
-                    tmp=FirstOfGroup(g);
-                    team_numbers[GetPlayerTeam(GetOwningPlayer(tmp))]=team_numbers[GetPlayerTeam(GetOwningPlayer(tmp))]+1;
-                    GroupRemoveUnit(g,tmp);
-                    tmp=null;
+                    tmp1=FirstOfGroup(g);
+                    tmp=Units.Get(tmp1).player;
+                    team_numbers[tmp.teamid]=team_numbers[tmp.teamid]+1;
+                    GroupRemoveUnit(g,tmp1);
+                    tmp1=null; 
                 }
                 DestroyGroup(g);
                 g=null;

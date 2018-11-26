@@ -1,4 +1,4 @@
-library Units requires Table{
+library Units requires Table,Players{
 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
@@ -7,8 +7,7 @@ library Units requires Table{
         private static HandleTable ht;
 
         public {
-            player player;
-            integer playerid;
+            Players player; 
             boolean isHero;
             string name;
             unit unit;
@@ -23,8 +22,7 @@ library Units requires Table{
         //创建指定单位实例
         private static method Create(unit u){
             Units ud=Units.allocate();
-            ud.player=GetOwningPlayer(u);
-            ud.playerid=GetConvertedPlayerId(ud.player);
+            ud.player=Players.Get(GetOwningPlayer(u));
             ud.isHero=IsUnitType(u,UNIT_TYPE_HERO);
             ud.name=GetUnitName(u);
             ud.unit=u;
@@ -39,8 +37,7 @@ library Units requires Table{
         //摧毁指定单位 实例
         private static method Destroys(unit u){
             Units ud=Units(Units.ht[u]); 
-            ud.unit=null;
-            ud.player=null;
+            ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);
             
