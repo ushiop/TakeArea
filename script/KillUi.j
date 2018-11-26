@@ -7,6 +7,7 @@ library KillUi requires Teams,Winner,BzAPI{
         private static integer KillBackgroundText;//文字
         private static integer KillBackgroundMaxLine;//最大化状态的背景
         private static integer KillBackgroundMaxBorder;//最大化状态的底部
+        private static real KillBackgroundMaxHeight;//最大化状态时的高度
         private static KillUi KillTeam[3];
         private static KillUi tmp;
 
@@ -21,17 +22,25 @@ library KillUi requires Teams,Winner,BzAPI{
             integer TeamNumberInfo[3];//玩家数据
         }
 
-        public static method create(integer tid)->KillUi{
+        public static method create(integer tid,integer index)->KillUi{
+            integer i;
             tmp=KillUi.allocate(); 
             tmp.TeamIndex=tid;
             ForForce(Teams.GetTeamForceByIndex(tid),function(){
                 tmp.TeamPlayer[tmp.TeamNumbers]=Players.Get(GetEnumPlayer());
                 tmp.TeamNumbers=tmp.TeamNumbers+1;
             });
-            tmp.TeamName = DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_"+I2S(tid), KillBackgroundMaxLine, "ShowInfo", 0);
+            tmp.TeamName = DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_"+I2S(tid), KillBackgroundMaxLine, "TextInfo", 0);
             DzFrameSetSize( tmp.TeamName, 0.2, 0.1 );
-            DzFrameSetPoint(tmp.TeamName, 0, KillBackgroundMaxLine,0, 0.005,-0.015+ (I2R(tid)* -0.06));
+            DzFrameSetPoint(tmp.TeamName, 0, KillBackgroundMaxLine,0, 0.005,-0.015+ (I2R(index)* -0.06));
             DzFrameSetText( tmp.TeamName, " ---"+Teams.GetTeamNameByIndex(tid)+"---" );
+            for(0<=i<tmp.TeamNumbers){
+                tmp.TeamNumberName[i]=DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_"+I2S(tid)+"_NAME_"+I2S(i), tmp.TeamName, "TextInfo", 0);
+                DzFrameSetSize( tmp.TeamNumberName[i], 0.2, 0.1 );
+                DzFrameSetPoint(tmp.TeamNumberName[i], 0, tmp.TeamName,0, 0.015,-0.02+ (I2R(i)* -0.008));
+                DzFrameSetText( tmp.TeamNumberName[i], tmp.TeamPlayer[i].name );                
+            }
+
             return tmp;
         }
  
@@ -67,13 +76,17 @@ library KillUi requires Teams,Winner,BzAPI{
             //----最大化状态
 
             TimerStart(NewTimer(),1,false,function(){
-                integer i;
+                integer i,index=0;
                 for(0<=i<3){ 
                     KillTeam[i]=-1;
                     if(Teams.GetTeamNumberByIndex(i)!=0){
-                        KillTeam[i]=KillUi.create(i);
+                        KillTeam[i]=KillUi.create(i,index);
+                        index=index+1;
                     }
                 }
+                ReleaseTimer(GetExpiredTimer());
+                KillBackgroundMaxHeight=0.2*(index/2.0);
+                //DzFrameSetSize( KillBackgroundMaxLine, 0.254, 0.2*KillBackgroundMaxHeight );  
             });
          
         }
