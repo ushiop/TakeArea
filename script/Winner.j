@@ -63,22 +63,24 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                 DestroyGroup(g);
                 g=null;
                 if(Winner.Team==-1){
-                    ntmp=-1;
-                    if(team_numbers[0]!=0&&team_numbers[1]==0&&team_numbers[2]==0){
-                        ntmp=0;
-                    }else if(team_numbers[1]!=0&&team_numbers[0]==0&&team_numbers[2]==0)
-                    {
-                        ntmp=1;
-                    }else if(team_numbers[2]!=0&&team_numbers[1]==0&&team_numbers[0]==0)
-                    {
-                        ntmp=2;
+                    if(numbers>0){
+                        ntmp=-1;
+                        if(team_numbers[0]==numbers){
+                            ntmp=0;
+                        }else if(team_numbers[1]==numbers)
+                        {
+                            ntmp=1;
+                        }else if(team_numbers[2]==numbers)
+                        {
+                            ntmp=2;
+                        } 
+                        if(ntmp!=-1){
+                            Winner.ShowTip();
+                            Winner.Team=ntmp;
+                            DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
+                            TakeUi.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
+                        }
                     } 
-                    if(ntmp!=-1){
-                        Winner.ShowTip();
-                        Winner.Team=ntmp;
-                        DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
-                        TakeUi.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
-                    }
                 }else{
                     if(numbers==0){
                         if(Winner.NowTime>0){
