@@ -71,7 +71,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                         Winner.ShowTip();
                         Winner.Team=ntmp;
                         DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
-                        Ui.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
+                        TakeUi.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
                     }
                 }else{
                     if(numbers==0){
@@ -82,7 +82,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                             Winner.NowTime=0;
                             Winner.Team=-1;
                             Winner.ShowTip();
-                            Ui.ShowTakeBar("");
+                            TakeUi.ShowTakeBar("");
                         }
                     }else{
                         if(Winner.NowTime>=Winner.MaxTime){
@@ -97,7 +97,7 @@ library Winner requires Units,TimerUtils,Teams,Ui {
                             
                         }
                     }
-                    Ui.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
+                    TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
                 }
             }else{
                 ReleaseTimer(GetExpiredTimer());

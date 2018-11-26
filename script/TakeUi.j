@@ -1,5 +1,5 @@
-library Ui {
-    public struct Ui{
+library TakeUi {
+    public struct TakeUi{
         private static integer TakeBackground;//背景条
         private static integer TakeLeftText;//左侧文字 
         private static integer TakeMoveBar;//移动条条
