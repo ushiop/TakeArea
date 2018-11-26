@@ -10,8 +10,8 @@ library Units requires Table,Players{
             Players player; 
             boolean isHero;
             string name;
-            unit unit;
-            integer hero;
+            unit unit; 
+            integer uid;
         }
 
         static method onInit(){
@@ -24,7 +24,8 @@ library Units requires Table,Players{
             Units ud=Units.allocate();
             ud.player=Players.Get(GetOwningPlayer(u));
             ud.isHero=IsUnitType(u,UNIT_TYPE_HERO);
-            ud.name=GetUnitName(u);
+            ud.name=GetUnitName(u); 
+            ud.uid=GetUnitTypeId(u);
             ud.unit=u;
             if(ud.isHero==true){
                  

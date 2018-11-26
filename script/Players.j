@@ -10,8 +10,9 @@ library Players{
             integer teamid;//阵营ID
             integer kills;//杀敌数量
             integer deaths;//死亡数量
-            unit hero;//目前的英雄
+            Units hero;//目前的英雄
             string name;//玩家名字
+            boolean isOnline;//是否在线
         }
 
         //为玩家创建对象实例
@@ -19,11 +20,11 @@ library Players{
             Players p=Players.allocate();
             p.kills=0;
             p.deaths=0;
-            p.player=ps;
-            p.hero=null;
+            p.player=ps; 
             p.name=GetPlayerName(ps);
             p.playerid=GetConvertedPlayerId(ps);
             p.teamid=GetPlayerTeam(ps);
+            p.isOnline=true;
             ht[ps]=integer(p);
             return p;
         }

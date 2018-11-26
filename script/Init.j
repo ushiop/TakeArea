@@ -20,7 +20,7 @@ library Init requires Teams,HeroRare,Winner,Players{
             Players p=Players.Set(GetEnumPlayer());
             UnitShareVision(Origin_Ball,p.player, true );
             u=HeroRares.GetRandomHero(p.player,20);//目前没有SR、SSR池英雄，随机上限定位R级
-            p.hero=u;
+            p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
         }); 

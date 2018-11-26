@@ -17,7 +17,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         public static method Death(unit u){
             Players ud=Units.Get(u).player; 
             Teams.AddTeamKills(ud.teamid,1);
-            KillUi.FlushKillData();
+            KillUi.FlushKillData(ud.teamid);
             if(Teams.GetTeamKills(ud.teamid)>=Winner.MaxKills){
                 Winner.GameEnd=true;
                 DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(ud.teamid)+" 获得了最终的胜利！！");
