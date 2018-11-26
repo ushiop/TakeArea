@@ -37,7 +37,7 @@ library KillUi requires Teams,Winner,BzAPI{
             for(0<=i<tmp.TeamNumbers){
                 tmp.TeamNumberName[i]=DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_"+I2S(tid)+"_NAME_"+I2S(i), tmp.TeamName, "TextInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberName[i], 0.2, 0.1 );
-                DzFrameSetPoint(tmp.TeamNumberName[i], 0, tmp.TeamName,0, 0.015,-0.02+ (I2R(i)* -0.008));
+                DzFrameSetPoint(tmp.TeamNumberName[i], 0, tmp.TeamName,0, 0.02,-0.02+ (I2R(i)* -0.008));
                 DzFrameSetText( tmp.TeamNumberName[i], tmp.TeamPlayer[i].name );                
             }
 
@@ -65,7 +65,7 @@ library KillUi requires Teams,Winner,BzAPI{
             //-----最小化状态
 
             KillBackgroundMaxLine = DzCreateFrameByTagName("BACKDROP", "KillBackgroundMaxLine", KillBackground, "ShowInfo", 0);
-            DzFrameSetSize( KillBackgroundMaxLine, 0.254, 0.2 );
+            DzFrameSetSize( KillBackgroundMaxLine, 0.254, 0.37 );
             DzFrameSetPoint(KillBackgroundMaxLine, 1, KillBackground, 7, 0, 0.006);
             DzFrameSetTexture( KillBackgroundMaxLine, "UI_RightDownPanelLine.blp", 0 );
             
@@ -85,8 +85,7 @@ library KillUi requires Teams,Winner,BzAPI{
                     }
                 }
                 ReleaseTimer(GetExpiredTimer());
-                KillBackgroundMaxHeight=0.2*(index/2.0);
-                //DzFrameSetSize( KillBackgroundMaxLine, 0.254, 0.2*KillBackgroundMaxHeight );  
+                KillBackgroundMaxHeight=0.37*(index/2.0);  
             });
          
         }
