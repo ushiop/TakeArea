@@ -39,6 +39,8 @@ library Units requires Table{
         //摧毁指定单位 实例
         private static method Destroys(unit u){
             Units ud=Units(Units.ht[u]); 
+            ud.unit=null;
+            ud.player=null;
             ud.deallocate();
             Units.ht.flush(u);
             
