@@ -1,4 +1,4 @@
-library KillUi requires Teams,Winner{
+library KillUi requires Teams,Winner,BzAPI{
     //杀敌数、战绩榜UI
  
 
@@ -28,7 +28,10 @@ library KillUi requires Teams,Winner{
                 tmp.TeamPlayer[tmp.TeamNumbers]=Players.Get(GetEnumPlayer());
                 tmp.TeamNumbers=tmp.TeamNumbers+1;
             });
-
+            tmp.TeamName = DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_"+I2S(tid), KillBackgroundMaxLine, "ShowInfo", 0);
+            DzFrameSetSize( tmp.TeamName, 0.2, 0.1 );
+            DzFrameSetPoint(tmp.TeamName, 0, KillBackgroundMaxLine,0, 0.005,-0.015+ (I2R(tid)* -0.06));
+            DzFrameSetText( tmp.TeamName, " ---"+Teams.GetTeamNameByIndex(tid)+"---" );
             return tmp;
         }
  
@@ -69,7 +72,6 @@ library KillUi requires Teams,Winner{
                     KillTeam[i]=-1;
                     if(Teams.GetTeamNumberByIndex(i)!=0){
                         KillTeam[i]=KillUi.create(i);
-                        BJDebugMsg(I2S(i));
                     }
                 }
             });
