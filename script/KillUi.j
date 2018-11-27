@@ -9,7 +9,7 @@ library KillUi requires Teams,Winner,BzAPI{
         private static integer KillBackgroundMaxBorder;//最大化状态的底部
         private static real KillBackgroundMaxHeight=0;//最大化状态时的高度
         private static KillUi KillTeam[3];
-        private static KillUi tmp;
+        private static KillUi tmp; 
 
         private{
             integer TeamIndex;//队伍序号 
@@ -36,18 +36,19 @@ library KillUi requires Teams,Winner,BzAPI{
             Players tp;
             KillUi this;
             integer x;
-            this=KillTeam[teamid];
+            this=KillTeam[teamid]; 
             this.TeamWinAcc=Teams.GetTeamKills(this.TeamIndex)/I2R(Winner.GetMaxKills());
             DzFrameSetSize( this.TeamMoveBar, 0.202 * this.TeamWinAcc, 0.01 );
             for(0<=x<this.TeamNumbers){
                 tp=this.TeamPlayer[x];
                 if(tp.isOnline==false){
+                    DzFrameSetTexture( this.TeamNumberHeroIcon[x],"ReplaceableTextures\\CommandButtons\\BTNCancel.blp",0);
                     DzFrameSetText( this.TeamNumberName[x],"[离线]"+DzFrameGetText(this.TeamNumberName[x]) );
+                }else{
+                    DzFrameSetTexture( this.TeamNumberHeroIcon[x],  (EXExecuteScript("(require'jass.slk').unit[" +I2S(tp.hero.uid) + "]." + "Art")),0);
                 }
                 DzFrameSetText(this.TeamNumberInfo[x],"击杀/死亡   "+I2S(tp.kills)+"/"+I2S(tp.deaths));
                 DzFrameSetText(this.TeamNumberHeroName[x],tp.hero.name);
-                DzFrameSetTexture( this.TeamNumberHeroIcon[x],  (EXExecuteScript("(require'jass.slk').unit[" +I2S(tp.hero.uid) + "]." + "Art")),0);
-
             }
         }
 
@@ -107,6 +108,23 @@ library KillUi requires Teams,Winner,BzAPI{
                 FlushData(tid);
             }
         }
+
+        static method Show(EventArgs e){
+            if(e.TriggerKey==113){  
+                if(GetLocalPlayer()==e.TriggerKeyPlayer){ 
+                    DzFrameShow(KillBackgroundMaxLine,true);
+                }
+            } 
+        }
+
+        
+        static method Hide(EventArgs e){
+            if(e.TriggerKey==113){  
+                if(GetLocalPlayer()==e.TriggerKeyPlayer){ 
+                    DzFrameShow(KillBackgroundMaxLine,false);
+                }
+            } 
+        }
             
         static method onInit(){ 
             KillBackground = DzCreateFrameByTagName("BACKDROP", "KillBackground", DzGetGameUI(), "Panel", 0);
@@ -146,7 +164,9 @@ library KillUi requires Teams,Winner,BzAPI{
                 DzFrameSetSize(KillBackgroundMaxLine,0.254,KillBackgroundMaxHeight);  
                 
             });
-         
+            DzFrameShow(KillBackgroundMaxLine,false); 
+            Events.On(Events.onPressKeyDown,KillUi.Show);
+            Events.On(Events.onPressKeyUp,KillUi.Hide);
         }
     }
 }
