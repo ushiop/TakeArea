@@ -66,8 +66,7 @@ library Units requires Table,Players,Events{
  
         static method onInit(){
             ht = HandleTable.create(); 
-            Events.On(Events.onUnitDeath,Units.onDeath);
-            Units.On(Units.onHeroSpawn,Units.test);
+            Events.On(Events.onUnitDeath,Units.onDeath); 
         }
  
 
