@@ -80,36 +80,35 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                         } 
                         if(ntmp!=-1){
                             Winner.ShowTip();
+                            Winner.NowTime=0.001;
                             Winner.Team=ntmp;
                             DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, "中央球已被" +Teams.GetTeamNameByIndex(ntmp)+ "占领！" );
                             TakeUi.ShowTakeBar(Teams.GetTeamNameByIndex(ntmp));
                         }
                     } 
                 }else{
-                    if(numbers==0){
-                        if(Winner.NowTime>0){
-                            Winner.NowTime=Winner.NowTime-(0.02*Teams.GetTeamNumberByIndex(Winner.Team));
-                        }else{
-                            DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, Teams.GetTeamNameByIndex(Winner.Team)+" 已经丢失了中央球的控制权，中央球现在是中立状态！" );
-                            Winner.NowTime=0;
-                            Winner.Team=-1;
-                            Winner.ShowTip();
-                            TakeUi.ShowTakeBar("");
-                        }
-                    }else{
+                    if(Winner.NowTime>0){
                         if(Winner.NowTime>=Winner.MaxTime){
                             Winner.GameEnd=true;
                             PlaySoundBJ( gg_snd_Winner );
                             DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(Winner.Team)+" 获得了最终的胜利！！");
                             Winner.ShowWin(Winner.Team);
-
                         }else{
-                            rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
-                            Winner.NowTime=Winner.NowTime+rtmp;
-                            
-                        }
+                            if(numbers==0){
+                                Winner.NowTime=Winner.NowTime-(0.02*Teams.GetTeamNumberByIndex(Winner.Team));
+                            }else{ 
+                                rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
+                                Winner.NowTime=Winner.NowTime+rtmp;
+                            }
+                            TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
+                        } 
+                    }else{
+                        DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00, Teams.GetTeamNameByIndex(Winner.Team)+" 已经丢失了中央球的控制权，中央球现在是中立状态！" );
+                        Winner.NowTime=0;
+                        Winner.Team=-1;
+                        Winner.ShowTip();
+                        TakeUi.ShowTakeBar("");
                     }
-                    TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
                 }
             }else{
                 ReleaseTimer(GetExpiredTimer());
