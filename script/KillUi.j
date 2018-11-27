@@ -26,7 +26,7 @@ library KillUi requires Teams,Winner,BzAPI{
             integer TeamNumberInfo[3];//玩家数据
         }
 
-        //刷新指定玩家的战绩榜数据
+        //刷新指定玩家的战绩榜数据，同时也会更新阵营数据
         public static method FlushPlayerData(player p){
             KillUi.FlushData(GetPlayerTeam(p));
         }
