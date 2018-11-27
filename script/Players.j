@@ -29,12 +29,12 @@ library Players{
             p.isOnline=true;
             p.randomhero=0;
             p.lifekill=0;
-            ht[ps]=integer(p);
+            ht[ps]=p;
             return p;
         }
 
         public static method Get(player p)->Players{
-            return Players(ht[p]);
+            return ht[p];
         }
 
 

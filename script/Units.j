@@ -78,12 +78,12 @@ library Units requires Table,Players,Events{
             ud.name=GetUnitName(u); 
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
-            Units.ht[u]=integer(ud); 
+            Units.ht[u]=ud; 
         }
 
         //摧毁指定单位 实例
         private static method Destroys(unit u){
-            Units ud=Units(Units.ht[u]); 
+            Units ud=Units.ht[u]; 
             ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);
@@ -92,7 +92,7 @@ library Units requires Table,Players,Events{
 
         //获得指定单位的实例
         public static method Get(unit u)->Units{
-            return Units(Units.ht[u]);
+            return Units.ht[u];
         }
 
         //为某个已存在单位注册实例(比如地图上放置的单位)
