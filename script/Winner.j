@@ -13,15 +13,19 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                 return MaxKills;
         }
 
-        //英雄死亡时调用该函数,计算胜利条件
-        public static method Death(unit u){
-            Players ud=Units.Get(u).player; 
-            Teams.AddTeamKills(ud.teamid,1);
-            KillUi.FlushKillData(ud.teamid);
-            if(Teams.GetTeamKills(ud.teamid)>=Winner.MaxKills){
+        //英雄死亡, u 死亡单位, m 凶手单位
+        public static method Death(Units u,Units m){ 
+            u.player.deaths=u.player.deaths+1;
+            KillUi.FlushPlayerData(u.player.player);
+            if(u.player.teamid!=m.player.teamid){ 
+                m.player.kills=m.player.kills+1;
+                Teams.AddTeamKills(m.player.teamid,1);
+                KillUi.FlushKillData(m.player.teamid);
+            }
+            if(Teams.GetTeamKills(m.player.teamid)>=Winner.MaxKills){
                 Winner.GameEnd=true;
-                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(ud.teamid)+" 获得了最终的胜利！！");
-                Winner.ShowWin(ud.teamid);
+                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(m.player.teamid)+" 获得了最终的胜利！！");
+                Winner.ShowWin(m.player.teamid);
             }
         }
 
@@ -116,6 +120,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             Winner.OX=GetUnitX(Origin_Ball);
             Winner.OY=GetUnitY(Origin_Ball);
             TimerStart(NewTimer(),0.01,true,function Winner.onLoop);
+            Units.On(Units.onHeroDeath,Winner.Death);
         }
     }
     
