@@ -2,6 +2,7 @@
 //! import vjass "map/script/Table.j"
 //! import vjass "map/script/TimerUtils.j"
 
+//! import zinc "map/script/Events.j"
 //! import zinc "map/script/Players.j"
 //! import zinc "map/script/TakeUi.j"
 //! import zinc "map/script/Units.j"
