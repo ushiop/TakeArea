@@ -1,9 +1,9 @@
-library Units requires Table,Players{
+library Units requires Table,Players,Events{
 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
 
-    public struct Units{
+    public struct Units  {
         private static HandleTable ht;
 
         public {
@@ -15,9 +15,9 @@ library Units requires Table,Players{
         }
 
         static method onInit(){
-            ht = HandleTable.create();
+            ht = HandleTable.create(); 
         }
-
+ 
 
         //创建指定单位实例
         private static method Create(unit u){
