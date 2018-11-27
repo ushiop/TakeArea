@@ -59,7 +59,7 @@ library Events requires Table{
         e.TriggerPlayer=GetTriggerPlayer();
         e.TriggerKey=DzGetTriggerKey();
         e.TriggerKeyPlayer=DzGetTriggerKeyPlayer();
-        for(0<=i<Table[Events.$name$][0]){ 
+        for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
         }

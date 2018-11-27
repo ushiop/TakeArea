@@ -30,8 +30,7 @@ library Units requires Table,Players,Events{
             static method Trigger(string eName,unit u,unit m){
                 integer i;
                 UnitsEventInterface callback;
-                for(0<=i<Table[eName][0]){ 
-                    BJDebugMsg("?");
+                for(1<=i<Table[eName][0]){  
                     callback=UnitsEventInterface(Table[eName][i]);
                     callback.evaluate(Units.Get(u),Units.Get(m));
                 }        
@@ -64,10 +63,11 @@ library Units requires Table,Players,Events{
                 Units.Trigger(Units.onUnitSpawn,u,null);
             }
         }
-
+ 
         static method onInit(){
             ht = HandleTable.create(); 
             Events.On(Events.onUnitDeath,Units.onDeath);
+            Units.On(Units.onHeroSpawn,Units.test);
         }
  
 
