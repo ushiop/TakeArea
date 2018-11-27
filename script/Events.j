@@ -49,7 +49,7 @@ library Events requires Table{
 
 //! textmacro RegisterAction takes name 
 
-    function Event_$name$(){
+    function $name$(){
         integer i;
         EventInterface callback;
         EventArgs e=EventArgs.create();
@@ -68,10 +68,10 @@ library Events requires Table{
 
 //! endtextmacro
 
-//! runtextmacro RegisterAction("onUnitDeath")
-//! runtextmacro RegisterAction("onPlayerDisconnect")
-//! runtextmacro RegisterAction("onPressKeyDown")
-//! runtextmacro RegisterAction("onPressKeyUp")
+//! runtextmacro RegisterAction("Event_onUnitDeath")
+//! runtextmacro RegisterAction("Event_onPlayerDisconnect")
+//! runtextmacro RegisterAction("Event_onPressKeyDown")
+//! runtextmacro RegisterAction("Event_onPressKeyUp")
 
     function onInit(){
         trigger t; 
