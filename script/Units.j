@@ -2,10 +2,14 @@ library Units requires Table,Players,Events{
 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
+    //以及单位事件
+
+    type UnitsEventInterface extends function(Units u,Units m);
 
     public struct Units  {
         private static HandleTable ht;
 
+        //属性
         public {
             Players player; 
             boolean isHero;
@@ -14,8 +18,43 @@ library Units requires Table,Players,Events{
             integer uid;
         }
 
+        //自定义事件
+        public {
+
+            static constant string onUnitDeath="Units.UnitDeath";//非英雄单位死亡
+            static constant string onHeroDeath="Units.HeroDeath";//英雄单位死亡
+
+            //触发指定事件名
+            static method Trigger(string eName,unit u,unit m){
+                UnitsEventInterface callback;
+                for(0<=i<Table[eName][0]){ 
+                    callback=UnitsEventInterface(Table[eName][i]);
+                    callback.evaluate(Units.Get(u),Units.Get(m));
+                }        
+            }
+
+            //注册自定义单位事件
+            static method On(string eName,UnitsEventInterface callback){  
+                if(Table[eName][0]==0){ 
+                    Table[eName][0]=1;
+                }
+                Table[eName][Table[eName][0]]=callback;
+                Table[eName][0]=Table[eName][0]+1;
+            }
+        }
+
+        //任意单位死亡,触发单位类的自定义事件
+        static method onDeath(EventArgs e){
+            if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==true){
+                Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
+            }else{
+                Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit);
+            }
+        }
+
         static method onInit(){
             ht = HandleTable.create(); 
+            Events.On(Events.onUnitDeath,Units.onDeath);
         }
  
 
@@ -70,15 +109,16 @@ library Units requires Table,Players,Events{
 
         //杀死单位,如果不是英雄则删除实例
         public static method Kill(unit u){
-            KillUnit(u);
             if(Get(u).isHero==false){
                 Units.Destroys(u);
             }
+            KillUnit(u);
         }
 
-        public static method Remove(unit u){
-            RemoveUnit(u);
+        //删除单位和实例
+        public static method Remove(unit u){ 
             Units.Destroys(u);
+            RemoveUnit(u);
         }
      
 
