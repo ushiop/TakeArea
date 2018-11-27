@@ -4,7 +4,7 @@ library Units requires Table,Players,Events{
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
     //以及单位事件
 
-    type UnitsEventInterface extends function(Units u,Units m);
+    type UnitsEventInterface extends function(Units,Units);
 
     public struct Units  {
         private static HandleTable ht;
@@ -23,11 +23,15 @@ library Units requires Table,Players,Events{
 
             static constant string onUnitDeath="Units.UnitDeath";//非英雄单位死亡
             static constant string onHeroDeath="Units.HeroDeath";//英雄单位死亡
+            static constant string onUnitSpawn="Units.UnitSpawn";//非英雄单位被创建
+            static constant string onHeroSpawn="Units.HeroSpawn";//英雄单位被创建
 
             //触发指定事件名
             static method Trigger(string eName,unit u,unit m){
+                integer i;
                 UnitsEventInterface callback;
                 for(0<=i<Table[eName][0]){ 
+                    BJDebugMsg("?");
                     callback=UnitsEventInterface(Table[eName][i]);
                     callback.evaluate(Units.Get(u),Units.Get(m));
                 }        
@@ -52,6 +56,15 @@ library Units requires Table,Players,Events{
             }
         }
 
+        //任意单位被创建，触发自定义事件
+        static method onSpawn(unit u){
+            if(IsUnitType(u,UNIT_TYPE_HERO)==true){
+                Units.Trigger(Units.onHeroSpawn,u,null);
+            }else{
+                Units.Trigger(Units.onUnitSpawn,u,null);
+            }
+        }
+
         static method onInit(){
             ht = HandleTable.create(); 
             Events.On(Events.onUnitDeath,Units.onDeath);
@@ -66,11 +79,6 @@ library Units requires Table,Players,Events{
             ud.name=GetUnitName(u); 
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
-            if(ud.isHero==true){
-                 
-            }
-             
-            
             Units.ht[u]=integer(ud); 
         }
 
@@ -89,10 +97,11 @@ library Units requires Table,Players,Events{
         }
 
         //为某个已存在单位注册实例(比如地图上放置的单位)
-        //重复注册不会有效果
+        //重复注册不会有效果,会触发‘被创建’事件
         public static method Set(unit u){
             if(Units.ht.exists(u)==false){
                 Units.Create(u);
+                Units.onSpawn(u);
             }
         }
 
@@ -102,6 +111,7 @@ library Units requires Table,Players,Events{
             Units.Create(u);
             UnitAddAbility(u,'Amrf');
             UnitRemoveAbility(u,'Amrf');
+            Units.onSpawn(u);
             bj_lastCreatedUnit=u;
             u=null;
             return bj_lastCreatedUnit;
