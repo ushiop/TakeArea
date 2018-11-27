@@ -13,6 +13,8 @@ library Players{
             Units hero;//目前的英雄
             string name;//玩家名字
             boolean isOnline;//是否在线
+            real randomhero;//抽奖的上限值
+            integer lifekill;//这条命的杀敌数,英雄死亡后重置
         }
 
         //为玩家创建对象实例
@@ -25,6 +27,8 @@ library Players{
             p.playerid=GetConvertedPlayerId(ps);
             p.teamid=GetPlayerTeam(ps);
             p.isOnline=true;
+            p.randomhero=0;
+            p.lifekill=0;
             ht[ps]=integer(p);
             return p;
         }
