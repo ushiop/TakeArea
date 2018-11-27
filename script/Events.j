@@ -53,7 +53,6 @@ library Events requires Table{
             callback.evaluate(e);
         }
         e.Destroy();
-        BJDebugMsg("实例回收"+GetUnitName(e.TriggerUnit));
     }
 
 
