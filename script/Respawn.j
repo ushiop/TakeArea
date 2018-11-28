@@ -15,26 +15,52 @@ library Respawn requires TimerUtils,Units,Players,Util{
         private static integer DeathUIMainSelect;//选择提示
         private static integer DeathUIMainMoveBar;//复活进度条
          
-        private static real RespawnTime;//复活时间
-        private static integer RespawnSaveMoney;//保留复活的金钱 
-        private static integer RespawnSelect;//选择的复活类型;
+         
         private static string RespawnType[3];//复活类型的提示
-        private static boolean RespawnShow=false;
+        private static real MaxRespawnTime=5.0;//复活时间
+
+        public{
+            real RespawnTime;
+            integer RespawnSaveMoney=0;//保留复活的金钱 
+            integer RespawnSelectLast=0;//上一个选择的类型
+            integer RespawnSelect=0;//选择的复活类型;
+            boolean RespawnShow;
+        }
+
+
+        //复活某个玩家
+        private static method Spawn(player p){
+            Players ps=Players.Get(p);
+            Respawn r=ps.respawn;
+            ps.isdeath=false; 
+ 
+            if(r.RespawnSelect==1){
+                hid=ps.hero.uid;
+                HeroRares.AddRandomHero(ps.hero.unit);
+                ps.hero=Units.Get(Units.Spawn(ps.player,hid,GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),0));
+                ps.AddMoney(-r.RespawnSaveMoney);
+                ps.hero.Lock(p);
+            }
+            r.deallocate(); 
+        }
 
         //减少所有玩家的复活时间
         private static method Time(){
             ForForce(Teams.GetAllPlayers(),function(){
                 Players p=Players.Get(GetEnumPlayer());
-                if(p.respawntime>0){
-                    p.respawntime=p.respawntime-1;
+                /*if(p.respawn.RespawnTime>0){
+                    p.respawn.RespawnTime=p.respawn.RespawnTime-1;
                     Respawn.Flush();
                 }else{
-                    //Respawn.Spawn(p.player);
-                }
+                    if(p.isdeath==true){ 
+                        Respawn.Spawn(p.player);
+                    }
+                }*/
             });
         }
 
         static method Death(Units u,Units m){
+            Respawn r=Respawn.allocate();
             if(u.player.teamid!=m.player.teamid){
                 m.player.lifekill=m.player.lifekill+1;
                 ForForce(Teams.GetTeamForce(m.player.player),function(){
@@ -48,66 +74,72 @@ library Respawn requires TimerUtils,Units,Players,Util{
             if(u.player.randomhero<100){
                 u.player.randomhero=u.player.randomhero+5.0;
             }
-            if(Players.localplayer==u.player.player){
-                Respawn.RespawnTime=5.0;
-                Respawn.RespawnSaveMoney=300 + R2I((u.player.lifekill * 300) *1.2);
-                Respawn.RespawnSelect=0;
-            }
-            u.player.respawntime=5.0;
+            r.RespawnTime=Respawn.MaxRespawnTime;
+            r.RespawnSaveMoney= 300 + (u.player.lifekill *300) *1.2;
+            r.RespawnSelect=0;
+            r.RespawnSelectLast=0;
+            r.RespawnShow=false;
+            u.player.isdeath=true; 
             u.player.lifekill=0;
+            u.player.respawn=r;
             Respawn.Show(u.player.player,true);
         }
 
         //刷新死亡面板的信息
-        private static method Flush(){
-            Players p=Players.Get(Players.localplayer);
-            DzFrameSetText( DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$"+I2S(Respawn.RespawnSaveMoney)+"|r)" );
-            if(p.Money()>=Respawn.RespawnSaveMoney){ 
+        private static method Flush(){ 
+            Players p=Players.Get(Players.localplayer); 
+            Respawn r=p.respawn;
+            DzFrameSetText( DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$"+I2S(r.RespawnSaveMoney)+"|r)" );
+            if(p.Money()>=r.RespawnSaveMoney){ 
                 DzFrameShow(DeathUIMainSaveLine,false);
             }else{
-                Respawn.RespawnSelect=0;
+                if(r.RespawnSelect==1) r.RespawnSelect=tmp;
                 DzFrameShow(DeathUIMainSaveLine,true);
             }
             if(p.nextherotype==0){ 
                 DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
                 DzFrameShow(DeathUIMainBuyLine,true);
-                Respawn.RespawnSelect=0;
+                if(r.RespawnSelect==2) r.RespawnSelect=tmp;
             }else{ 
-                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+ Util.GetUnitValue(p.nextherotype,"Name") +"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
-                if(p.Money()>=(Respawn.RespawnSaveMoney*2)){
+                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+ Util.GetUnitValue(p.nextherotype,"Name") +"/$"+I2S(r.RespawnSaveMoney*2)+")" )  ;
+                if(p.Money()>=(r.RespawnSaveMoney*2)){
                     DzFrameShow(DeathUIMainBuyLine,false);        
                 }else{
-                    Respawn.RespawnSelect=0;
+                    if(r.RespawnSelect==2) r.RespawnSelect=tmp;
                 }
             }
-            DzFrameSetText( DeathUIMainSelect, "已选择:|cff00ff00"+Respawn.RespawnType[Respawn.RespawnSelect]+"|r" ) ; 
-            DzFrameSetSize( DeathUIMainMoveBar, 0.137 * (1-(p.respawntime/Respawn.RespawnTime)), 0.006 );
+            if(tmp!=r.RespawnSelect){
+                r.RespawnSelectLast=r.RespawnSelect;
+            }
+            DzFrameSetText( DeathUIMainSelect, "已选择:|cff00ff00"+Respawn.RespawnType[r.RespawnSelect]+"|r" ) ; 
+            DzFrameSetSize( DeathUIMainMoveBar, 0.137 * (1-(r.RespawnTime/Respawn.MaxRespawnTime)), 0.006 );
              
         }
 
         //向玩家显示或者隐藏死亡面板并显示相关数据
         private static method Show(player p,boolean show){
-            if(Players.localplayer==p){  
-                Respawn.RespawnShow=show;
+            Players.Get(p).respawn.RespawnShow=show;
+            if(Players.localplayer==p){   
                 DzFrameShow(DeathUIMainTop,show); 
                 Respawn.Flush();
             }
         }
 
         public static method Press(EventArgs e){
-            if(Respawn.RespawnShow==true){
-                if(e.TriggerKey=='Q'){ 
-                    Respawn.RespawnSelect=0;
-                    Respawn.Flush();
-                }else if(e.TriggerKey=='W'){
-                    Respawn.RespawnSelect=1;
-                    Respawn.Flush();
-                }else if(e.TriggerKey=='E'){
-                    Respawn.RespawnSelect=2;
-                    Respawn.Flush();
-                }
+            Players p=Players.Get(e.TriggerKeyPlayer);
+            Respawn r=p.respawn;
+            if( p.isdeath==true){
+                    if(e.TriggerKey=='Q'){ 
+                        r.RespawnSelect=0;
+                        Respawn.Flush();
+                    }else if(e.TriggerKey=='W'){
+                        r.RespawnSelect=1; 
+                        Respawn.Flush();
+                    }else if(e.TriggerKey=='E'){
+                        r.RespawnSelect=2;
+                        Respawn.Flush();
+                    } 
             }
-            
         }
 
         static method onInit(){

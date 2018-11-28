@@ -25,7 +25,7 @@ library Disconnect requires Teams,Players{
         } 
         Teams.PlayerRemoveForce(tmp.player);
         DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,tmp.name+" 离开了游戏，金钱将平分给他的队友。"  );
-        tmp.isOnline=false;
+        tmp.isonline=false;
         KillUi.FlushPlayerData(tmp.player);
         u=null; 
     }

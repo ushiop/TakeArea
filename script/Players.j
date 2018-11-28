@@ -13,15 +13,21 @@ library Players{
             integer deaths;//死亡数量
             Units hero;//目前的英雄
             string name;//玩家名字
-            boolean isOnline;//是否在线
+            boolean isonline;//是否在线
             real randomhero;//抽奖的上限值
             integer lifekill;//这条命的杀敌数,英雄死亡后重置
-            real respawntime;//剩余复活时间
+            Respawn respawn;//复活信息
             integer nextherotype;//指定复活的英雄类型
+            boolean isdeath;//是否死亡
 
             //返回玩家金钱
             method Money()->integer{
                 return GetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD);
+            }
+
+            //增加玩家金钱
+            method AddMoney(integer addm){
+                AdjustPlayerStateBJ(addm,this.player, PLAYER_STATE_RESOURCE_GOLD );
             }
         }
 
@@ -34,10 +40,11 @@ library Players{
             p.name=GetPlayerName(ps);
             p.playerid=GetConvertedPlayerId(ps);
             p.teamid=GetPlayerTeam(ps);
-            p.isOnline=true;
+            p.isonline=true;
             p.randomhero=0;
             p.lifekill=0;
             p.nextherotype=0;
+            p.isdeath=false;
             ht[ps]=p;
             return p;
         }

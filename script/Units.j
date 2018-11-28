@@ -16,6 +16,14 @@ library Units requires Table,Players,Events{
             string name;
             unit unit; 
             integer uid;
+
+            //移动某玩家镜头到单位所在的位置
+            method Lock(player p){
+                if(Players.localplayer==p){
+                    
+                    PanCameraToTimed(GetUnitX(this.unit),GetUnitY(this.unit), 0 );           
+                }     
+            }
         }
 
         //自定义事件

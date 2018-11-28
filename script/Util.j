@@ -35,10 +35,8 @@ library Util{
             UnitRemoveAbility(u,i);
         }
 
-        //从SLK中获取指定ID的指定属性
-        public static method GetValue(integer id,string valuename)->string{ 
-            
-             
+        //从SLK中获取指定单位ID的指定属性
+        public static method GetUnitValue(integer id,string valuename)->string{  
             return (EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "]."+valuename));
         }
  

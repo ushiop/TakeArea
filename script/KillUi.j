@@ -41,11 +41,11 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             DzFrameSetSize( this.TeamMoveBar, 0.202 * this.TeamWinAcc, 0.01 );
             for(0<=x<this.TeamNumbers){
                 tp=this.TeamPlayer[x];
-                if(tp.isOnline==false){
+                if(tp.isonline==false){
                     DzFrameSetTexture( this.TeamNumberHeroIcon[x],"ReplaceableTextures\\CommandButtons\\BTNCancel.blp",0);
                     DzFrameSetText( this.TeamNumberName[x],"[离线]"+DzFrameGetText(this.TeamNumberName[x]) );
                 }else{
-                    DzFrameSetTexture( this.TeamNumberHeroIcon[x], Util.GetValue(tp.hero.uid ,"Art"),0);
+                    DzFrameSetTexture( this.TeamNumberHeroIcon[x], Util.GetUnitValue(tp.hero.uid ,"Art"),0);
                 }
                 DzFrameSetText(this.TeamNumberInfo[x],"击杀/死亡   "+I2S(tp.kills)+"/"+I2S(tp.deaths));
                 DzFrameSetText(this.TeamNumberHeroName[x],tp.hero.name);
@@ -82,7 +82,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
                 tmp.TeamNumberHeroIcon[i] = DzCreateFrameByTagName("BACKDROP", "TEAMNAME_TITLE_"+I2S(tid)+"_HEROICON_"+I2S(i),tmp.TeamName, "ShowInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberHeroIcon[i], 0.025, 0.025 );
                 DzFrameSetPoint(tmp.TeamNumberHeroIcon[i], 0, tmp.TeamName, 0, 0.007, -0.02+(I2R(i)*-0.036)); 
-                DzFrameSetTexture( tmp.TeamNumberHeroIcon[i],  Util.GetValue(tmp.TeamPlayer[i].hero.uid,"Art"), 0 );         
+                DzFrameSetTexture( tmp.TeamNumberHeroIcon[i],  Util.GetUnitValue(tmp.TeamPlayer[i].hero.uid,"Art"), 0 );         
                 tmp.TeamNumberHr[i]= DzCreateFrameByTagName("BACKDROP", "TEAMNAME_TITLE_"+I2S(tid)+"_HR_"+I2S(i),tmp.TeamName, "ShowInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberHr[i], 0.06, 0.001 );
                 DzFrameSetPoint(tmp.TeamNumberHr[i], 0, tmp.TeamName, 0, 0.035,-0.032 + (I2R(i)*-0.035));
