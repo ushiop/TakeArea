@@ -1,4 +1,4 @@
-library Respawn requires TimerUtils,Units,Players,Util{
+library Respawn requires TimerUtils,Units,Players,Util,Camera{
     //英雄复活、击杀奖励相关类
 
     struct Respawn{
@@ -18,13 +18,14 @@ library Respawn requires TimerUtils,Units,Players,Util{
          
         private static string RespawnType[3];//复活类型的提示
         private static real MaxRespawnTime=5.0;//复活时间
+        private static boolean RespawnShow=false;//是否显示面板
+        private static real RespawnShowTime=0.0;//上一次切换显示的时间
 
         public{
             real RespawnTime;
             integer RespawnSaveMoney=0;//保留复活的金钱 
             integer RespawnSelectLast=0;//上一个选择的类型
-            integer RespawnSelect=0;//选择的复活类型;
-            boolean RespawnShow;
+            integer RespawnSelect=0;//选择的复活类型; 
         }
 
 
@@ -34,6 +35,7 @@ library Respawn requires TimerUtils,Units,Players,Util{
             Players ps=Players.Get(p);
             Respawn r=ps.respawn; 
             ps.isdeath=false;  
+            Respawn.Show(p,false);
             if(r.RespawnSelect==1){
                 hid=ps.hero.uid; 
                 money=r.RespawnSaveMoney;
@@ -51,8 +53,7 @@ library Respawn requires TimerUtils,Units,Players,Util{
             SetUnitX(ps.hero.unit,GetRectCenterX(Teams.GetTeamRect(ps.player)));
             SetUnitY(ps.hero.unit,GetRectCenterY(Teams.GetTeamRect(ps.player)));
             ps.AddMoney(-money);
-            ps.hero.Lock(p);
-            Respawn.Show(p,false);
+            ps.hero.Lock(p); 
             ps.respawn=0;
             r.deallocate(); 
         }
@@ -91,11 +92,10 @@ library Respawn requires TimerUtils,Units,Players,Util{
             r.RespawnTime=Respawn.MaxRespawnTime;
             r.RespawnSaveMoney= 000 + R2I((u.player.lifekill *300) *1.2);
             r.RespawnSelect=0;
-            r.RespawnSelectLast=0;
-            r.RespawnShow=false;
+            r.RespawnSelectLast=0; 
             u.player.isdeath=true; 
             u.player.lifekill=0;
-            u.player.respawn=r;
+            u.player.respawn=r; 
             Respawn.Show(u.player.player,true);
         }
 
@@ -148,10 +148,14 @@ library Respawn requires TimerUtils,Units,Players,Util{
 
         //向玩家显示或者隐藏死亡面板并显示相关数据
         private static method Show(player p,boolean show){
-            Players ps=Players.Get(p);
-            Respawn(ps.respawn).RespawnShow=show;
+            Players ps=Players.Get(p); 
             if(Players.localplayer==p){   
-                DzFrameShow(DeathUIMainTop,show); 
+                if(GameTime>=Respawn.RespawnShowTime||ps.isdeath==false){
+                    Respawn.RespawnShowTime=GameTime+0.05;
+                    Respawn.RespawnShow=show;
+                    DzFrameShow(DeathUIMainTop,show); 
+                }
+
                 Respawn.Flush(p);
             }
         }
@@ -170,6 +174,13 @@ library Respawn requires TimerUtils,Units,Players,Util{
                         r.RespawnSelect=2;
                         Respawn.Flush(p.player);
                     } 
+                    if(e.TriggerKey=='C'){ 
+                        if(Respawn.RespawnShow==false){
+                            Respawn.Show(p.player,true);
+                        }else{
+                            Respawn.Show(p.player,false);
+                        }
+                    }
             }
         }
 
@@ -192,7 +203,7 @@ library Respawn requires TimerUtils,Units,Players,Util{
             DeathUIMainTitle = DzCreateFrameByTagName("TEXT", "DeathUIMainTitle", DeathUIMainLine, "TextInfo", 0);
             DzFrameSetSize( DeathUIMainTitle, 0.18, 0.12 );
             DzFrameSetPoint(DeathUIMainTitle, 1, DeathUIMainLine, 1, 0.045,-0.01) ;
-            DzFrameSetText( DeathUIMainTitle, "↓请选择复活方式↓" );
+            DzFrameSetText( DeathUIMainTitle, "↓请选择复活方式↓  \n按|cff00ff00C|r键可以开关该面板" );
 
             DeathUIMainRoll = DzCreateFrameByTagName("TEXT", "DeathUIMainRoll", DeathUIMainLine, "TextInfo", 0);
             DzFrameSetSize( DeathUIMainRoll, 0.18, 0.12 );
