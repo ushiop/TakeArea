@@ -52,7 +52,7 @@ library Units requires Table,Players,Events{
                 Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
             }else{
                 Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
-                Units.Destroys(u);
+                Units.Destroys(e.TriggerUnit);
             }
         }
 

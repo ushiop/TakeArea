@@ -3,6 +3,7 @@ library Players{
     public struct Players{
 
         private static HandleTable ht;
+        public static player localplayer;
 
         public{
             integer playerid;//玩家ID
@@ -15,6 +16,13 @@ library Players{
             boolean isOnline;//是否在线
             real randomhero;//抽奖的上限值
             integer lifekill;//这条命的杀敌数,英雄死亡后重置
+            real respawntime;//剩余复活时间
+            integer nextherotype;//指定复活的英雄类型
+
+            //返回玩家金钱
+            method Money()->integer{
+                return GetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD);
+            }
         }
 
         //为玩家创建对象实例
@@ -29,6 +37,7 @@ library Players{
             p.isOnline=true;
             p.randomhero=0;
             p.lifekill=0;
+            p.nextherotype=0;
             ht[ps]=p;
             return p;
         }
@@ -40,6 +49,7 @@ library Players{
 
         static method onInit(){
             ht=HandleTable.create();
+            localplayer=GetLocalPlayer();
         }
     }
 }
