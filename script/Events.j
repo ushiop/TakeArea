@@ -12,6 +12,11 @@ library Events requires Table{
         player TriggerPlayer;//触发玩家
         integer TriggerKey;//被按下的键
         player TriggerKeyPlayer;//触发硬件事件的玩家,网易怕不是个睿智哦
+        unit DamageUnit;//伤害来源
+        real Damage;//伤害值
+        boolean RangeDamage;//是否是远程伤害
+        boolean AttackDamage;//是否是攻击伤害
+        boolean MagicDamage;//是否是法术伤害
         
         static method create()->EventArgs{
             EventArgs e=EventArgs.allocate();
@@ -24,6 +29,7 @@ library Events requires Table{
             this.DeathUnit=null;
             this.TriggerPlayer=null;
             this.TriggerKeyPlayer=null;
+            this.DamageUnit=null;
             this.deallocate();
         }
     }
@@ -35,6 +41,7 @@ library Events requires Table{
             static constant string onPlayerDisconnect="Events.PlayerDisconnect";//任意玩家离开游戏
             static constant string onPressKeyDown="Event.PressKeyDown";//任意按键被按下
             static constant string onPressKeyUp="Event.PressKeyUp";//任意按键被松开
+            static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -55,6 +62,11 @@ library Events requires Table{
         EventArgs e=EventArgs.create();
         e.DeathUnit=GetDyingUnit();
         e.KillUnit=GetKillingUnit();
+        e.DamageUnit=GetEventDamageSource();
+        e.Damage=GetEventDamage();
+        e.RangeDamage=YDWEIsEventRangedDamage();
+        e.AttackDamage=YDWEIsEventAttackDamage();
+        e.MagicDamage=!YDWEIsEventPhysicalDamage();
         e.TriggerUnit=GetTriggerUnit(); 
         e.TriggerPlayer=GetTriggerPlayer();
         e.TriggerKey=DzGetTriggerKey();
@@ -72,6 +84,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onPlayerDisconnect")
 //! runtextmacro RegisterAction("onPressKeyDown")
 //! runtextmacro RegisterAction("onPressKeyUp")
+//! runtextmacro RegisterAction("onUnitDamage")
 
     function onInit(){
         trigger t; 
@@ -104,6 +117,9 @@ library Events requires Table{
         //! endtextmacro
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerEventLeave","","Event_onPlayerDisconnect")
 
+        t=CreateTrigger();
+        YDWESyStemAnyUnitDamagedRegistTrigger( t );
+        TriggerAddAction(t, function Event_onUnitDamage);
         t=null;
     }
 
