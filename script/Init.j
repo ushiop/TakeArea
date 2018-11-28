@@ -5,6 +5,7 @@ library Init requires Teams,HeroRare,Winner,Players{
     public{ 
         unit Origin_Ball,Origin_Magic;//中央球,中央阵
         real Origin_X,Origin_Y;//中央球的原始坐标
+        real GameTime=0.0;//游戏时间轴
     }
 
     function onInit(){
