@@ -24,6 +24,16 @@ library Units requires Table,Players,Events{
                     PanCameraToTimed(GetUnitX(this.unit),GetUnitY(this.unit), 0 );           
                 }     
             }
+
+            //移动单位到X,Y的位置,order为是否打断命令
+            method Position(real x,real y,boolean order){
+                if(order==true){
+                    SetUnitPosition(this.unit,x,y);
+                }else{
+                    SetUnitX(this.unit,x);
+                    SetUnitY(this.unit,y);
+                }
+            }
         }
 
         //自定义事件

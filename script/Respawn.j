@@ -50,8 +50,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }else{
                 ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
             }
-            SetUnitX(ps.hero.unit,GetRectCenterX(Teams.GetTeamRect(ps.player)));
-            SetUnitY(ps.hero.unit,GetRectCenterY(Teams.GetTeamRect(ps.player)));
+            ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             ps.AddMoney(-money);
             ps.hero.Lock(p); 
             ps.respawn=0;
