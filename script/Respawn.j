@@ -32,7 +32,7 @@ library Respawn requires TimerUtils,Units,Players,Util{
         private static method Spawn(player p){
             integer hid=0,money=0;
             Players ps=Players.Get(p);
-            Respawn r=ps.respawn;
+            Respawn r=ps.respawn; 
             ps.isdeath=false;  
             if(r.RespawnSelect==1){
                 hid=ps.hero.uid; 
@@ -40,14 +40,16 @@ library Respawn requires TimerUtils,Units,Players,Util{
             }else if(r.RespawnSelect==2){
                 hid=ps.nextherotype;
                 money=r.RespawnSaveMoney*2;
-            }               
+            }                
             HeroRares.AddRandomHero(ps.hero.unit); 
             if(r.RespawnSelect==0)
             {
-                HeroRares.GetRandomHero(p.player,ps.randomhero);            
+                ps.hero=Units.Get(HeroRares.GetRandomHero(ps.player,ps.randomhero));   
             }else{
-                ps.hero=Units.Get(Units.Spawn(ps.player,hid,GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),0));   
+                ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
             }
+            SetUnitX(ps.hero.unit,GetRectCenterX(Teams.GetTeamRect(ps.player)));
+            SetUnitY(ps.hero.unit,GetRectCenterY(Teams.GetTeamRect(ps.player)));
             ps.AddMoney(-money);
             ps.hero.Lock(p);
             Respawn.Show(p,false);
