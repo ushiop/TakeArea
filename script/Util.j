@@ -2,7 +2,7 @@ library Util{
 
     //实用的小函数类
 
-    struct Util{
+    public struct Util{
 
         //返回U到M的角度
         public static method XY(unit u,unit m)->real{
@@ -36,8 +36,10 @@ library Util{
         }
 
         //从SLK中获取指定ID的指定属性
-        public static method GetValue(integer id,string valuename)->string{
-            return EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "].+"+valuename);
+        public static method GetValue(integer id,string valuename)->string{ 
+            
+             
+            return (EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "]."+valuename));
         }
  
     }

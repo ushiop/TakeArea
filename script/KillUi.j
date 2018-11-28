@@ -1,4 +1,4 @@
-library KillUi requires Teams,Winner,BzAPI{
+library KillUi requires Teams,Winner,BzAPI,Util{
     //杀敌数、战绩榜UI
  
 
@@ -81,7 +81,7 @@ library KillUi requires Teams,Winner,BzAPI{
                 DzFrameSetText( tmp.TeamNumberHeroName[i], tmp.TeamPlayer[i].hero.name );       
                 tmp.TeamNumberHeroIcon[i] = DzCreateFrameByTagName("BACKDROP", "TEAMNAME_TITLE_"+I2S(tid)+"_HEROICON_"+I2S(i),tmp.TeamName, "ShowInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberHeroIcon[i], 0.025, 0.025 );
-                DzFrameSetPoint(tmp.TeamNumberHeroIcon[i], 0, tmp.TeamName, 0, 0.007, -0.02+(I2R(i)*-0.036));
+                DzFrameSetPoint(tmp.TeamNumberHeroIcon[i], 0, tmp.TeamName, 0, 0.007, -0.02+(I2R(i)*-0.036)); 
                 DzFrameSetTexture( tmp.TeamNumberHeroIcon[i],  Util.GetValue(tmp.TeamPlayer[i].hero.uid,"Art"), 0 );         
                 tmp.TeamNumberHr[i]= DzCreateFrameByTagName("BACKDROP", "TEAMNAME_TITLE_"+I2S(tid)+"_HR_"+I2S(i),tmp.TeamName, "ShowInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberHr[i], 0.06, 0.001 );
@@ -134,7 +134,7 @@ library KillUi requires Teams,Winner,BzAPI{
             KillBackgroundText = DzCreateFrameByTagName("TEXT", "KillBackgroundText", KillBackground, "TextInfo", 0);
             DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.042);
             DzFrameSetSize( KillBackgroundText,0.3, 0.1 );
-            TimerStart(NewTimer(),0.01,false,function(){
+            TimerStart(NewTimer(),0.05,false,function(){
                 FlushKillData(-1);
                 ReleaseTimer(GetExpiredTimer());
             });
@@ -151,7 +151,7 @@ library KillUi requires Teams,Winner,BzAPI{
             DzFrameSetTexture( KillBackgroundMaxBorder, "UI_RightDownPanelBorder.blp", 0 ) ;
             //----最大化状态
 
-            TimerStart(NewTimer(),0.03,false,function(){
+            TimerStart(NewTimer(),0.06,false,function(){
                 integer i,index=0;
                 for(0<=i<3){ 
                     KillTeam[i]=-1;
