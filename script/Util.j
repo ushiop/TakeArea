@@ -36,8 +36,8 @@ library Util{
         }
 
         //从SLK中获取指定ID的指定属性
-        public static method GetValue(integer id,string valuename){
-            return EXExecuteScript("(require'jass.slk').unit[" + I2S(id) + "].+"+valuename+");
+        public static method GetValue(integer id,string valuename)->string{
+            return EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "].+"+valuename);
         }
  
     }
