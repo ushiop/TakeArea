@@ -134,7 +134,7 @@ library KillUi requires Teams,Winner,BzAPI{
             KillBackgroundText = DzCreateFrameByTagName("TEXT", "KillBackgroundText", KillBackground, "TextInfo", 0);
             DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.042);
             DzFrameSetSize( KillBackgroundText,0.3, 0.1 );
-            TimerStart(NewTimer(),1,false,function(){
+            TimerStart(NewTimer(),0.01,false,function(){
                 FlushKillData(-1);
                 ReleaseTimer(GetExpiredTimer());
             });
@@ -151,7 +151,7 @@ library KillUi requires Teams,Winner,BzAPI{
             DzFrameSetTexture( KillBackgroundMaxBorder, "UI_RightDownPanelBorder.blp", 0 ) ;
             //----最大化状态
 
-            TimerStart(NewTimer(),1,false,function(){
+            TimerStart(NewTimer(),0.03,false,function(){
                 integer i,index=0;
                 for(0<=i<3){ 
                     KillTeam[i]=-1;
