@@ -93,6 +93,7 @@ library Events requires Table{
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown") 
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'W'","Event_onPressKeyDown")               
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'E'","Event_onPressKeyDown") 
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'C'","Event_onPressKeyDown") 
             
         //! textmacro AllPlayerRegisterEvent takes tri,event,action
         t=CreateTrigger();
