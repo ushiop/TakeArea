@@ -16,7 +16,7 @@ library Players{
             boolean isonline;//是否在线
             real randomhero;//抽奖的上限值
             integer lifekill;//这条命的杀敌数,英雄死亡后重置
-            Respawn respawn;//复活信息
+            integer respawn;//复活信息
             integer nextherotype;//指定复活的英雄类型
             boolean isdeath;//是否死亡
 
