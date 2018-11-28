@@ -1,4 +1,4 @@
-library Respawn requires TimerUtils,Units,Players{
+library Respawn requires TimerUtils,Units,Players,Util{
     //英雄复活、击杀奖励相关类
 
     struct Respawn{
@@ -19,7 +19,7 @@ library Respawn requires TimerUtils,Units,Players{
         private static integer RespawnSaveMoney;//保留复活的金钱 
         private static integer RespawnSelect;//选择的复活类型;
         private static string RespawnType[3];//复活类型的提示
-        private static boolean RespawnShow;
+        private static boolean RespawnShow=false;
 
         //减少所有玩家的复活时间
         private static method Time(){
@@ -65,19 +65,19 @@ library Respawn requires TimerUtils,Units,Players{
             if(p.Money()>=Respawn.RespawnSaveMoney){ 
                 DzFrameShow(DeathUIMainSaveLine,false);
             }else{
-                Repsawn.RespawnSelect=0;
+                Respawn.RespawnSelect=0;
                 DzFrameShow(DeathUIMainSaveLine,true);
             }
             if(p.nextherotype==0){ 
                 DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
                 DzFrameShow(DeathUIMainBuyLine,true);
-                Repsawn.RespawnSelect=0;
-            }else{
-                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+Util.GetValue(p.nextherotype,"Name")+"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
+                Respawn.RespawnSelect=0;
+            }else{ 
+                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+ Util.GetUnitValue(p.nextherotype,"Name") +"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
                 if(p.Money()>=(Respawn.RespawnSaveMoney*2)){
                     DzFrameShow(DeathUIMainBuyLine,false);        
                 }else{
-                    Repsawn.RespawnSelect=0;
+                    Respawn.RespawnSelect=0;
                 }
             }
             DzFrameSetText( DeathUIMainSelect, "已选择:|cff00ff00"+Respawn.RespawnType[Respawn.RespawnSelect]+"|r" ) ; 
