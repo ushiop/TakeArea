@@ -19,6 +19,7 @@ library Respawn requires TimerUtils,Units,Players{
         private static integer RespawnSaveMoney;//保留复活的金钱 
         private static integer RespawnSelect;//选择的复活类型;
         private static string RespawnType[3];//复活类型的提示
+        private static boolean RespawnShow;
 
         //减少所有玩家的复活时间
         private static method Time(){
@@ -26,7 +27,7 @@ library Respawn requires TimerUtils,Units,Players{
                 Players p=Players.Get(GetEnumPlayer());
                 if(p.respawntime>0){
                     p.respawntime=p.respawntime-1;
-                    //Respawn.Flush();
+                    Respawn.Flush();
                 }else{
                     //Respawn.Spawn(p.player);
                 }
@@ -70,7 +71,7 @@ library Respawn requires TimerUtils,Units,Players{
                 DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
                 DzFrameShow(DeathUIMainBuyLine,true);
             }else{
-                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+EXExecuteScript("(require'jass.slk').unit[" + I2S(p.nextherotype) + "].Name")+"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
+                DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+Util.GetValue(p.nextherotype,"Name")+"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
                 if(p.Money()>=(Respawn.RespawnSaveMoney*2)){
                     DzFrameShow(DeathUIMainBuyLine,false);        
                 }
@@ -83,7 +84,15 @@ library Respawn requires TimerUtils,Units,Players{
         //向玩家显示或者隐藏死亡面板并显示相关数据
         private static method Show(player p,boolean show){
             if(Players.localplayer==p){  
-                //DzFrameShow(DeathUIMainTop,show); 
+                Respawn.RespawnShow=show;
+                DzFrameShow(DeathUIMainTop,show); 
+                Respawn.Flush();
+            }
+        }
+
+        public static method Press(EventArgs e){
+            if(e.TriggerKey=='Q'){
+                BJDebugMsg("?");
             }
         }
 
@@ -119,8 +128,8 @@ library Respawn requires TimerUtils,Units,Players{
             DzFrameSetText( DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$0|r)" );
 
             DeathUIMainSaveLine= DzCreateFrameByTagName("BACKDROP", "DeathUIMainSaveLine", DeathUIMainLine, "ShowInfo", 0);
-            DzFrameSetSize( DeathUIMainSaveLine, 0.10, 0.002 );
-            DzFrameSetPoint(DeathUIMainSaveLine, 1, DeathUIMainLine, 1, -0.034,-0.072);
+            DzFrameSetSize( DeathUIMainSaveLine, 0.097, 0.002 );
+            DzFrameSetPoint(DeathUIMainSaveLine, 1, DeathUIMainLine, 1, -0.036,-0.072);
             DzFrameSetTexture( DeathUIMainSaveLine, "UI_WHITEBLOCK.blp", 0 );
 
             DeathUIMainBuy = DzCreateFrameByTagName("TEXT", "DeathUIMainBuy", DeathUIMainLine, "TextInfo", 0);
@@ -165,6 +174,8 @@ library Respawn requires TimerUtils,Units,Players{
             DzFrameShow(DeathUIMainTop,false);
             
             Units.On(Units.onHeroDeath,Respawn.Death);
+
+            Events.On(Events.onPressKeyDown,Respawn.Press);
 
             TimerStart(NewTimer(),1,true,function Respawn.Time);
         }
