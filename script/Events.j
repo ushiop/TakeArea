@@ -90,9 +90,10 @@ library Events requires Table{
         //! endtextmacro
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","113","Event_onPressKeyDown")
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","113","Event_onPressKeyUp")
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown")
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'Q'","Event_onPressKeyUp")        
-
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown") 
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'W'","Event_onPressKeyDown")               
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'E'","Event_onPressKeyDown") 
+            
         //! textmacro AllPlayerRegisterEvent takes tri,event,action
         t=CreateTrigger();
         for(0<=index<=12){

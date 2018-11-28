@@ -65,15 +65,19 @@ library Respawn requires TimerUtils,Units,Players{
             if(p.Money()>=Respawn.RespawnSaveMoney){ 
                 DzFrameShow(DeathUIMainSaveLine,false);
             }else{
+                Repsawn.RespawnSelect=0;
                 DzFrameShow(DeathUIMainSaveLine,true);
             }
             if(p.nextherotype==0){ 
                 DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
                 DzFrameShow(DeathUIMainBuyLine,true);
+                Repsawn.RespawnSelect=0;
             }else{
                 DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+Util.GetValue(p.nextherotype,"Name")+"/$"+I2S(Respawn.RespawnSaveMoney*2)+")" )  ;
                 if(p.Money()>=(Respawn.RespawnSaveMoney*2)){
                     DzFrameShow(DeathUIMainBuyLine,false);        
+                }else{
+                    Repsawn.RespawnSelect=0;
                 }
             }
             DzFrameSetText( DeathUIMainSelect, "已选择:|cff00ff00"+Respawn.RespawnType[Respawn.RespawnSelect]+"|r" ) ; 
@@ -91,9 +95,19 @@ library Respawn requires TimerUtils,Units,Players{
         }
 
         public static method Press(EventArgs e){
-            if(e.TriggerKey=='Q'){
-                BJDebugMsg("?");
+            if(Respawn.RespawnShow==true){
+                if(e.TriggerKey=='Q'){ 
+                    Respawn.RespawnSelect=0;
+                    Respawn.Flush();
+                }else if(e.TriggerKey=='W'){
+                    Respawn.RespawnSelect=1;
+                    Respawn.Flush();
+                }else if(e.TriggerKey=='E'){
+                    Respawn.RespawnSelect=2;
+                    Respawn.Flush();
+                }
             }
+            
         }
 
         static method onInit(){
