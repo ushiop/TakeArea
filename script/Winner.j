@@ -17,7 +17,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         public static method Death(Units u,Units m){ 
             u.player.deaths=u.player.deaths+1;
             KillUi.FlushPlayerData(u.player.player);
-            if(u.player.teamid!=m.player.teamid){ 
+            if(u.player.teamid!=m.player.teamid&&m.unit!=null){ 
                 m.player.kills=m.player.kills+1;
                 Teams.AddTeamKills(m.player.teamid,1);
                 KillUi.FlushKillData(m.player.teamid);
