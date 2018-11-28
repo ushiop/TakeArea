@@ -51,7 +51,8 @@ library Units requires Table,Players,Events{
             if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==true){
                 Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
             }else{
-                Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit);
+                Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
+                Units.Destroys(u);
             }
         }
 
@@ -117,10 +118,7 @@ library Units requires Table,Players,Events{
         }
 
         //杀死单位,如果不是英雄则删除实例
-        public static method Kill(unit u){
-            if(Get(u).isHero==false){
-                Units.Destroys(u);
-            }
+        public static method Kill(unit u){ 
             KillUnit(u);
         }
 
