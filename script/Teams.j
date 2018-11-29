@@ -19,6 +19,9 @@ library Teams  {
         Team_Name[0]="A组";
         Team_Name[1]="B组";
         Team_Name[2]="C组";
+        SetPlayerName( Player(9),Team_Name[0] );
+        SetPlayerName( Player(10),Team_Name[1] );
+        SetPlayerName( Player(11),Team_Name[2] );
     }
 
     public struct Teams{

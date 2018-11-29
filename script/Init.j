@@ -24,6 +24,17 @@ library Init requires Teams,HeroRare,Winner,Players{
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
+            if(p.teamid==0){
+                SetPlayerAllianceStateBJ( Player(9), p.player, bj_ALLIANCE_ALLIED_VISION );
+                SetPlayerAllianceStateBJ( p.player,Player(9), bj_ALLIANCE_ALLIED_VISION );
+            }else if(p.teamid==1){
+                SetPlayerAllianceStateBJ( Player(10), p.player, bj_ALLIANCE_ALLIED_VISION );
+                SetPlayerAllianceStateBJ( p.player,Player(10), bj_ALLIANCE_ALLIED_VISION );                
+            }else{
+                SetPlayerAllianceStateBJ( Player(11), p.player, bj_ALLIANCE_ALLIED_VISION );
+                SetPlayerAllianceStateBJ( p.player,Player(11), bj_ALLIANCE_ALLIED_VISION );                     
+            }
         }); 
+
     }
 }
