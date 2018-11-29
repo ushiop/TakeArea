@@ -39,6 +39,14 @@ library Util{
         public static method GetUnitValue(integer id,string valuename)->string{  
             return (EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "]."+valuename));
         }
+
+        public static method B2S(boolean b)->string{
+            if(b==true){
+                return "true";
+            }else{
+                return "false";
+            }
+        }
  
     }
 }
