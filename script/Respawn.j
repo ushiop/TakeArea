@@ -89,7 +89,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 u.player.randomhero=u.player.randomhero+5.0;
             }
             r.RespawnTime=Respawn.MaxRespawnTime;
-            r.RespawnSaveMoney= 000 + R2I((u.player.lifekill *300) *1.2);
+            r.RespawnSaveMoney= 200 + R2I((u.player.lifekill *300) *1.2);
             r.RespawnSelect=0;
             r.RespawnSelectLast=0; 
             u.player.isdeath=true; 
