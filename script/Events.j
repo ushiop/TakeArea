@@ -39,8 +39,8 @@ library Events requires Table{
         public  {
             static constant string onUnitDeath="Events.UnitDeath";//任意单位死亡
             static constant string onPlayerDisconnect="Events.PlayerDisconnect";//任意玩家离开游戏
-            static constant string onPressKeyDown="Event.PressKeyDown";//任意按键被按下
-            static constant string onPressKeyUp="Event.PressKeyUp";//任意按键被松开
+            static constant string onPressKeyDown="Events.PressKeyDown";//任意按键被按下
+            static constant string onPressKeyUp="Events.PressKeyUp";//任意按键被松开
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
 
             //注册事件，触发时调用callback
