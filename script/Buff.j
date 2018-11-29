@@ -41,7 +41,7 @@ library Buff requires Util{
                 if(tmp!=Buffs.Root){
                     UnitRemoveAbility(u,aid);
                     UnitRemoveAbility(u,bid);
-                    BuffEventInterface(tmp.onRemove).evaluate(tmp); 
+                    if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
                     tmp.Destroy();
                 }
             }
@@ -96,11 +96,11 @@ library Buff requires Util{
                     }else{
                         if(dealy==true){
                             tmp.MaxTime=tmp.MaxTime+time; 
-                            BuffEventInterface(tmp.onDelay).evaluate(tmp); 
+                            if(tmp.onDelay!=0) BuffEventInterface(tmp.onDelay).evaluate(tmp); 
                         }else{
                             tmp.NowTime=time;
                             tmp.MaxTime=time; 
-                            BuffEventInterface(tmp.onFlush).evaluate(tmp); 
+                            if(tmp.onFlush!=0) BuffEventInterface(tmp.onFlush).evaluate(tmp); 
                         } 
                         return tmp;
                     }
@@ -153,11 +153,11 @@ library Buff requires Util{
                 if(tmp!=Root){
                     if(tmp.NowTime>0&&IsUnitAliveBJ(tmp.Unit)==true){ 
                         tmp.NowTime=tmp.NowTime-0.01;
-                        BuffEventInterface(tmp.onTime).evaluate(tmp); 
+                        if(tmp.onTime!=0) BuffEventInterface(tmp.onTime).evaluate(tmp); 
                     }else{
                         UnitRemoveAbility(tmp.Unit,tmp.Ability);
                         UnitRemoveAbility(tmp.Unit,tmp.Buff);
-                        BuffEventInterface(tmp.onEnd).evaluate(tmp); 
+                        if(tmp.onEnd!=0) BuffEventInterface(tmp.onEnd).evaluate(tmp); 
                         tmp.Destroy();
                     }
                 } 
