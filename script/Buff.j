@@ -36,9 +36,8 @@ library Buff requires Util{
             }
 
             //从单位身上删除buff,会触发onRemove
-            static method Remove(unit u,integer aid){
-                integer bid=S2I(Util.GetAbilityValue(aid,"BuffId1"));
-                Buffs tmp=Buffs.Find(u,aid);
+            static method Remove(unit u,integer aid,integer bid){ 
+                Buffs tmp=Buffs.Find(u,aid,bid);
                 if(tmp!=Buffs.Root){
                     UnitRemoveAbility(u,aid);
                     UnitRemoveAbility(u,bid);
@@ -48,8 +47,7 @@ library Buff requires Util{
             }
 
             //在所有BUFF中寻找u身上的aidbuff实例并返回
-            static method Find(unit u,integer aid)->Buffs{
-                integer bid=S2I(Util.GetAbilityValue(aid,"BuffId1"));
+            static method Find(unit u,integer aid,integer bid)->Buffs{ 
                 Buffs tmp=Buffs.Root;
                 while(tmp.Next!=0){
                     if(tmp.Unit==u&&tmp.Buff==bid&&tmp.Ability==aid){
@@ -61,22 +59,22 @@ library Buff requires Util{
                 return tmp;
             }
 
-            //添加一个aidBUFF给u,持续time
+            //添加一个aidBUFF给u,持续time,bid为BUFF图标技能的ID
             //已经有的BUFF将在原来的时间上加上新的时间
             //dealy为true时，时间叠加，否则为设置时间为time
             //对于原生技能BUFF，不会执行任何动作并返回根节点
             //通过技能的目标属性是否为'自己'来判断是原生技能还是光环模拟的BUFF
-            static method Add(unit u,integer aid,real time,boolean dealy)->Buffs{
+            static method Add(unit u,integer aid,integer bid,real time,boolean dealy)->Buffs{
                 string target=Util.GetAbilityValue(aid,"targs1"); 
                 Buffs tmp;
                 if(target=="self"){
-                    tmp=Buffs.Find(u,aid);
+                    tmp=Buffs.Find(u,aid,bid);
                     if(tmp==Buffs.Root){
                         tmp=Buffs.allocate();
                         tmp.NowTime=time;
                         tmp.MaxTime=time;
                         tmp.Ability=aid;
-                        tmp.Buff=S2I(Util.GetAbilityValue(aid,"BuffId1"));
+                        tmp.Buff=bid;
                         tmp.Unit=u; 
                         tmp.Obj=0;  
                         tmp.onTime=0;
@@ -87,7 +85,7 @@ library Buff requires Util{
                         tmp.Prev=Buffs.Last;
                         tmp.Next=0; 
                         Buffs.Last.Next=tmp; 
-                        Buffs.Last=tmp;
+                        Buffs.Last=tmp; 
                         UnitAddAbility(u,aid); 
                         if(Units.Get(u).isHero==true){ 
                             Buffs.Trigger(Buffs.onHeroBuff,u,tmp);
@@ -150,25 +148,28 @@ library Buff requires Util{
         //计时循环
         private static method onLoop(){
             Buffs tmp=Root,tmp1;
-            while(tmp.Next!=0){
+            while(tmp!=0){ 
                 tmp1=tmp.Next;
-                if(tmp.NowTime>0){
-                    tmp.NowTime=tmp.NowTime-0.01;
-                    BuffEventInterface(tmp.onTime).evaluate(tmp); 
-                }else{
-                    UnitRemoveAbility(tmp.Unit,tmp.Ability);
-                    UnitRemoveAbility(tmp.Unit,tmp.Buff);
-                    BuffEventInterface(tmp.onEnd).evaluate(tmp); 
-                    tmp.Destroy();
-                }
+                if(tmp!=Root){
+                    if(tmp.NowTime>0&&IsUnitAliveBJ(tmp.Unit)==true){ 
+                        tmp.NowTime=tmp.NowTime-0.01;
+                        BuffEventInterface(tmp.onTime).evaluate(tmp); 
+                    }else{
+                        UnitRemoveAbility(tmp.Unit,tmp.Ability);
+                        UnitRemoveAbility(tmp.Unit,tmp.Buff);
+                        BuffEventInterface(tmp.onEnd).evaluate(tmp); 
+                        tmp.Destroy();
+                    }
+                } 
                 tmp=tmp1;
             }
         }
+ 
 
         static method onInit(){
             Root=Buffs.allocate();
             Last=Root;
-            TimerStart(NewTimer(),0.01,true,function Buffs.onLoop);
+            TimerStart(NewTimer(),0.01,true,function Buffs.onLoop); 
         }
     }
 }
