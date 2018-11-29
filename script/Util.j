@@ -40,6 +40,16 @@ library Util{
             return (EXExecuteScript( "(require'jass.slk').unit[" + I2S(id) + "]."+valuename));
         }
 
+        //从SLK中获取指定技能ID的指定属性
+        public static method GetAbilityValue(integer id,string valuename)->string{  
+            return (EXExecuteScript( "(require'jass.slk').ability[" + I2S(id) + "]."+valuename));
+        }
+
+        //从SLK中获取指定BUFFID的指定属性
+        public static method GetBuffValue(integer id,string valuename)->string{  
+            return (EXExecuteScript( "(require'jass.slk').buff[" + I2S(id) + "]."+valuename));
+        }
+
         public static method B2S(boolean b)->string{
             if(b==true){
                 return "true";
