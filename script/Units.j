@@ -34,6 +34,11 @@ library Units requires Table,Players,Events{
                     SetUnitY(this.unit,y);
                 }
             }
+
+            //使单位对m造成伤害,dtype,spell为本次伤害所属技能，被动填0
+            method Damage(unit m,integer dtype,integer spell,real dmg){
+                Damage.To(this.unit,m,dtype,spell,dmg);
+            }
         }
 
         //自定义事件
