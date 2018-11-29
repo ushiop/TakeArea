@@ -16,3 +16,4 @@
 //! import zinc "map/script/Winner.j" 
 //! import zinc "map/script/KillUi.j"
 //! import zinc "map/script/Respawn.j"
+//! import zinc "map/script/Damage.j"
