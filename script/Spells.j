@@ -1,8 +1,8 @@
-library Spells {
+library Spells requires Units{
     //技能管理类
-    
+     
     type SpellEventInterface extends function(Spell);
-
+ 
     public struct Spell{
 
         unit Spell;//施法者
@@ -49,7 +49,7 @@ library Spells {
         }
 
 
-        static method Spell(EventArgs e){
+        static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             Spell tmp=Spell.allocate();
             tmp.Spell=u.unit;
@@ -68,7 +68,7 @@ library Spells {
         }
 
         static method onInit(){
-            Events.On(Events.onUnitSpell,Spell.Spell);
+            Events.On(Events.onUnitSpell,Spell.onUnitSpell);
         }
     }
 }

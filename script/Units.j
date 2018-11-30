@@ -1,5 +1,5 @@
-library Units requires Table,Players,Events,Spells{
-
+library Units requires Table,Players,Events{
+ 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
     //以及单位事件
@@ -16,8 +16,8 @@ library Units requires Table,Players,Events,Spells{
             string name;
             unit unit; 
             integer uid;
-            SpellEventInterface spell;//单位释放技能的回调，用于反向捕捉
-
+            integer spell;//单位释放技能的回调，用于反向捕捉
+ 
             //移动某玩家镜头到单位所在的位置
             method Lock(player p){
                 if(Players.localplayer==p){
