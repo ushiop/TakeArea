@@ -10,6 +10,8 @@ library Dashs requires TimerUtils{
             static Dash Last;//最后一个节点
             static constant integer NORMAL=0;//匀速冲锋
             static constant integer PWX=1;//抛物线比例冲锋（即慢-快-慢)
+            static constant integer ADD=2;//加速冲锋
+            static constant integer SUB=3;//减速冲锋
 
             //停止指定单位身上的所有冲锋类特效,会触发onend以及onremove
             static method Stop(unit u){
@@ -64,8 +66,7 @@ library Dashs requires TimerUtils{
             static method onLoop(){
                 Dash tmp=Root,tmp1;
                 boolean walk=false;
-                real speed; 
-                string st="";
+                real speed;  
                 while(tmp!=0){
                     tmp1=tmp.Next;
                     if(tmp!=Root){
@@ -78,7 +79,12 @@ library Dashs requires TimerUtils{
                                 speed=tmp.Speed;
                             }else if(tmp.DashType==Dash.PWX){
                                 speed=tmp.Speed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
-                            }   
+                            }else if(tmp.DashType==Dash.ADD){
+                                speed=tmp.Speed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
+                            }else if(tmp.DashType==Dash.SUB){
+                                speed=tmp.Speed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
+                                BJDebugMsg(R2S(speed)+"/"+R2S(GetUnitX(tmp.Unit)));
+                            }
                             tmp.X=GetUnitX(tmp.Unit)+speed*CosBJ(tmp.Angle);
                             tmp.Y=GetUnitY(tmp.Unit)+speed*SinBJ(tmp.Angle); 
                             if(tmp.Fly==true){
@@ -94,7 +100,7 @@ library Dashs requires TimerUtils{
                             if(walk==true){
                                 walk=RectContainsCoords(gg_rct_main,tmp.X,tmp.Y);
                             }
-                            if(walk==false){
+                            if(walk==false||(tmp.DashType==Dash.SUB&&speed<1.0)){
                                 
                                 tmp.NowDis=tmp.MaxDis;
                             }else{
@@ -110,11 +116,19 @@ library Dashs requires TimerUtils{
                     tmp=tmp1;
                 } 
             } 
+
+            public static method test(EventArgs e){
+                Players p=Players.Get(e.TriggerKeyPlayer);
+                if(e.TriggerKey=='C'){
+                    Dash.Start(p.hero.unit,p.hero.GetFacing(),1000,Dash.SUB,25,true,false);
+                }
+            }
             
             static method onInit(){
                 Root=Dash.allocate();
                 Last=Root;
                 TimerStart(NewTimer(),0.01,true,function Dash.onLoop); 
+                Events.On(Events.onPressKeyDown,Dash.test);
             }
         }
 
