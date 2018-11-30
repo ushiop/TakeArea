@@ -18,7 +18,6 @@ library Spells requires Units{
         method Destroy(){
             this.Use=this.Use-1;
             if(this.Use==0){
-                BJDebugMsg(I2S(this)+"销毁了");
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
@@ -59,12 +58,11 @@ library Spells requires Units{
             tmp.Id=e.SpellId;
             tmp.Kill=false;
             tmp.Use=1;
-            Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
             if(u.spell!=0){
                 tmp.Use=2;
                 SpellEventInterface(u.spell).evaluate(tmp);
-            }
-            
+            } 
+            Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
         }
 
         static method onInit(){
