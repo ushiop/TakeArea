@@ -1,5 +1,6 @@
 //引入所有库
 //! import vjass "map/script/Table.j"
+//! import vjass "map/script/TerrainPathability.j"
 //! import vjass "map/script/TimerUtils.j"
 
 //! import zinc "map/script/Events.j"
@@ -18,3 +19,4 @@
 //! import zinc "map/script/Respawn.j"
 //! import zinc "map/script/Damage.j" 
 //! import zinc "map/script/Buff.j"
+//! import zinc "map/script/Dashs.j"
