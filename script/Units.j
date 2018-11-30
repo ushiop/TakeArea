@@ -23,7 +23,7 @@ library Units requires Table,Players,Events{
                     PanCameraToTimed(GetUnitX(this.unit),GetUnitY(this.unit), 0 );           
                 }     
             }
-
+ 
             //返回单位面向角度
             method GetFacing()->real{
                 return GetUnitFacing(this.unit);
