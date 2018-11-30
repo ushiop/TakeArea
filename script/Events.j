@@ -8,7 +8,11 @@ library Events requires Table{
         
         unit DeathUnit;//死亡单位
         unit KillUnit;//凶手单位
-        unit TriggerUnit;//触发单位
+        unit TriggerUnit;//触发单位 
+        unit SpellTargetUnit;//技能目标单位
+        real SpellTargetX;//技能目标X
+        real SpellTargetY;//技能目标Y
+        integer SpellId;//施放的技能ID
         player TriggerPlayer;//触发玩家
         integer TriggerKey;//被按下的键
         player TriggerKeyPlayer;//触发硬件事件的玩家,网易怕不是个睿智哦
@@ -42,6 +46,7 @@ library Events requires Table{
             static constant string onPressKeyDown="Events.PressKeyDown";//任意按键被按下
             static constant string onPressKeyUp="Events.PressKeyUp";//任意按键被松开
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
+            static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -71,6 +76,10 @@ library Events requires Table{
         e.TriggerPlayer=GetTriggerPlayer();
         e.TriggerKey=DzGetTriggerKey();
         e.TriggerKeyPlayer=DzGetTriggerKeyPlayer();
+        e.SpellTargetUnit=GetSpellTargetUnit();
+        e.SpellTargetX=GetSpellTargetX();
+        e.SpellTargetY=GetSpellTargetY();
+        e.SpellId=GetSpellAbilityId();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
@@ -85,6 +94,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onPressKeyDown")
 //! runtextmacro RegisterAction("onPressKeyUp")
 //! runtextmacro RegisterAction("onUnitDamage")
+//! runtextmacro RegisterAction("onUnitSpell")
 
     function onInit(){
         trigger t; 
@@ -95,6 +105,7 @@ library Events requires Table{
         TriggerAddAction(t,function $action$); 
         //! endtextmacro
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_DEATH","Event_onUnitDeath")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_EFFECT","Event_onUnitSpell")
  
         //! textmacro RegisterArgsEvent takes tri,args,event,action
         t=CreateTrigger();
