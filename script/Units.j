@@ -24,6 +24,11 @@ library Units requires Table,Players,Events{
                 }     
             }
 
+            //返回单位面向角度
+            method GetFacing()->real{
+                return GetUnitFacing(this.unit);
+            }
+
             //移动单位到X,Y的位置,order为是否打断命令
             method Position(real x,real y,boolean order){
                 if(order==true){
