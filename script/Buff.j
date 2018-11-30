@@ -49,7 +49,7 @@ library Buff requires Util{
             //在所有BUFF中寻找u身上的aidbuff实例并返回
             static method Find(unit u,integer aid,integer bid)->Buffs{ 
                 Buffs tmp=Buffs.Root;
-                while(tmp.Next!=0){
+                while(tmp!=0){ 
                     if(tmp.Unit==u&&tmp.Buff==bid&&tmp.Ability==aid){
                         break;
                     }else{
