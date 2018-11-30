@@ -50,6 +50,12 @@ library Util{
             return (EXExecuteScript( "(require'jass.slk').buff[" + I2S(id) + "]."+valuename));
         }
 
+        //用抛物线公式计算，并返回结果系数
+        //power为轨迹的角度,now为自变量的当前值，max为自变量的最大值
+        public static method GetPwx(real power,real now,real max)->real{
+            return   1.00 - ( power * Pow(( (now /max ) - 0.50 ), 2.00) );
+        }
+
         public static method B2S(boolean b)->string{
             if(b==true){
                 return "true";
