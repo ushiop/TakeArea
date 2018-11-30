@@ -29,6 +29,7 @@ library Events requires Table{
 
         method Destroy(){
             this.KillUnit=null;
+            this.SpellTargetUnit=null;
             this.TriggerUnit=null;
             this.DeathUnit=null;
             this.TriggerPlayer=null;
