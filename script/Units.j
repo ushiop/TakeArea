@@ -1,4 +1,4 @@
-library Units requires Table,Players,Events{
+library Units requires Table,Players,Events,Spells{
 
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
@@ -16,6 +16,7 @@ library Units requires Table,Players,Events{
             string name;
             unit unit; 
             integer uid;
+            SpellEventInterface spell;//单位释放技能的回调，用于反向捕捉
 
             //移动某玩家镜头到单位所在的位置
             method Lock(player p){
@@ -69,6 +70,8 @@ library Units requires Table,Players,Events{
             static constant string onHeroDeath="Units.HeroDeath";//英雄单位死亡
             static constant string onUnitSpawn="Units.UnitSpawn";//非英雄单位被创建
             static constant string onHeroSpawn="Units.HeroSpawn";//英雄单位被创建
+            static constant string onAlocDeath="Units.AlocDeath";//蝗虫单位死亡
+            static constant string onAlocSpawn="Units.AlocSpawn";//蝗虫单位出生
 
             //触发指定事件名
             static method Trigger(string eName,unit u,unit m){
@@ -91,22 +94,35 @@ library Units requires Table,Players,Events{
         }
 
         //任意单位死亡,触发单位类的自定义事件
-        static method onDeath(EventArgs e){
+        static method onDeath(EventArgs e){ 
             if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==true){
-                Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
+                if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
+                    Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
+                }else{
+                    Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 
+                }
             }else{
-                Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
+                if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
+                    Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
+                }else{
+                    Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit);  
+                }
                 Units.Destroys(e.TriggerUnit);
             }
         }
 
         //任意单位被创建，触发自定义事件
         static method onSpawn(unit u){
-            if(IsUnitType(u,UNIT_TYPE_HERO)==true){
-                Units.Trigger(Units.onHeroSpawn,u,null);
+            if(GetUnitAbilityLevel(u,'Aloc')==0){
+                if(IsUnitType(u,UNIT_TYPE_HERO)==true){
+                    Units.Trigger(Units.onHeroSpawn,u,null);
+                }else{
+                    Units.Trigger(Units.onUnitSpawn,u,null);
+                }
             }else{
-                Units.Trigger(Units.onUnitSpawn,u,null);
+                Units.Trigger(Units.onAlocSpawn,u,null);
             }
+
         }
  
         static method onInit(){
@@ -123,6 +139,7 @@ library Units requires Table,Players,Events{
             ud.name=GetUnitName(u); 
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
+            ud.spell=0;
             Units.ht[u]=ud; 
         }
 
@@ -154,7 +171,7 @@ library Units requires Table,Players,Events{
             unit u=CreateUnit(p,unitid,x,y,f);
             Units.Create(u);
             UnitAddAbility(u,'Amrf');
-            UnitRemoveAbility(u,'Amrf');
+            UnitRemoveAbility(u,'Amrf'); 
             Units.onSpawn(u);
             bj_lastCreatedUnit=u;
             u=null;
