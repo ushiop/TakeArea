@@ -38,6 +38,23 @@ library Units requires Table,Players,Events{
             method Damage(unit m,integer dtype,integer spell,real dmg){
                 Damage.To(this.player.hero.unit,m,dtype,spell,dmg);
             }
+
+            //为单位添加技能
+            method AddAbility(integer aid){
+                UnitAddAbility(this.unit,aid);
+            }
+
+            //获取单位是否拥有该技能
+            method IsAbility(integer aid)->boolean{
+                return GetUnitAbilityLevel(this.unit,aid)>0;
+            }
+
+            method SetAbilityLevel(integer aid,integer lv){
+                if(this.IsAbility(aid)==false){
+                    this.AddAbility(aid);
+                }
+                SetUnitAbilityLevel(this.unit,aid,lv);
+            }
         }
 
         //自定义事件
