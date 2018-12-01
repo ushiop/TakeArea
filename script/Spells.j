@@ -1,4 +1,4 @@
-library Spells requires Units{
+library Spells{
     //技能管理类
      
     type SpellEventInterface extends function(Spell);
@@ -59,11 +59,11 @@ library Spells requires Units{
             tmp.Y=e.SpellTargetY;
             tmp.Id=e.SpellId;
             if(tmp.Target==null){
-                tmp.Angle=Utils.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
-                tmp.Dis=Utils.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                tmp.Angle=Util.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                tmp.Dis=Util.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
             }else{
-                tmp.Angle=Utils.XY(tmp.Spell,tmp.Target);
-                tmp.Dis=Utils.XY2(tmp.Spell,tmp.Target);
+                tmp.Angle=Util.XY(tmp.Spell,tmp.Target);
+                tmp.Dis=Util.XY2(tmp.Spell,tmp.Target);
             }
             
             tmp.Kill=false;
