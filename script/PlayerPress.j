@@ -1,4 +1,4 @@
-library PlayerPress requires Events,Players{
+library PlayerPress requires Events{
     //玩家按键、鼠标操作的参数类，用于同步玩家硬件状态数据
     //鼠标坐标的延迟很大
     //暂时没有实现鼠标的获取,延迟过大

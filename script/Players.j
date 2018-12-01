@@ -20,7 +20,7 @@ library Players{
             integer respawn;//复活信息
             integer nextherotype;//指定复活的英雄类型
             boolean isdeath;//是否死亡
-            integer press;//玩家QWERDF的按键状态以及鼠标坐标（鼠标延迟很大)
+            PlayerPress press;//玩家QWERDF的按键状态以及鼠标坐标（鼠标延迟很大)
             boolean isai;//玩家是否是电脑
 
             //返回玩家金钱
