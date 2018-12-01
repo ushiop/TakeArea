@@ -1,11 +1,11 @@
 library LevelUp requires Events{
     //英雄升级管理类，解锁技能条件、调整AI等级
 
-    static integer MaxLv=1;
+    integer MaxLv=1;
 
     function LvUp(EventArgs e){
         integer lv=GetUnitLevel(e.TriggerUnit);
-        Players p=Players.Get(Units.Get(e.TriggerUnit)));
+        Players p=Units.Get(e.TriggerUnit).player;
         if(lv>MaxLv){
             MaxLv=lv;
         }
