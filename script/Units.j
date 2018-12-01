@@ -1,4 +1,4 @@
-library Units requires Table,Players,Events{
+library Units requires Table,Players,Events,Util{
  
     //单位基础类
     //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是
@@ -76,19 +76,19 @@ library Units requires Table,Players,Events{
             //触发指定事件名
             static method Trigger(string eName,unit u,unit m){
                 integer i;
-                UnitsEventInterface callback;
+                UnitsEventInterface b       ack;
                 for(1<=i<Table[eName][0]){  
-                    callback=UnitsEventInterface(Table[eName][i]);
-                    callback.evaluate(Units.Get(u),Units.Get(m));
+                    b       ack=UnitsEventInterface(Table[eName][i]);
+                    b       ack.evaluate(Units.Get(u),Units.Get(m));
                 }        
             }
 
             //注册自定义单位事件
-            static method On(string eName,UnitsEventInterface callback){  
+            static method On(string eName,UnitsEventInterface b     ack){  
                 if(Table[eName][0]==0){ 
                     Table[eName][0]=1;
                 }
-                Table[eName][Table[eName][0]]=callback;
+                Table[eName][Table[eName][0]]=b     ack;
                 Table[eName][0]=Table[eName][0]+1;
             }
         }
@@ -169,16 +169,32 @@ library Units requires Table,Players,Events{
         //创建单位并绑定UNITS实例
         public static method Spawn(player p,integer unitid,real x,real y,real f)->unit{
             unit u=CreateUnit(p,unitid,x,y,f);
-            Units.Create(u);
-            UnitAddAbility(u,'Amrf');
-            UnitRemoveAbility(u,'Amrf'); 
+            Units.Create(u); 
+            Utils.UnitAddRemoveAbility(u,'Amrf');
             Units.onSpawn(u);
             bj_lastCreatedUnit=u;
             u=null;
             return bj_lastCreatedUnit;
         }
 
-        //杀死单位,如果不是英雄则删除实例
+        //创建一个马甲单位
+        //modsize 模型大小,animspeed 动画速度,animname 播放的动画名,modpath 模型路径,lifetime 生存时间
+        //不会触发'spawn'事件
+        public static method MJ(player p,integer uid,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->unit{
+            unit u=CreateUnit(p,uid,x,y,f);
+            Units.Create(u);
+            Utils.UnitAddRemoveAbility(u,'Amrf'); 
+            DzSetUnitModel( u, modpath);
+            SetUnitAnimation( u,animname);
+            SetUnitScale( u,modsize,modsize,modsize);
+            SetUnitTimeScale( u,animspeed);
+            UnitApplyTimedLife(u, 'BHwe', lifetime);
+            bj_lastCreatedUnit=u;
+            u=null;
+            return bj_lastCreatedUnit;
+        } 
+
+        //杀死单位
         public static method Kill(unit u){ 
             KillUnit(u);
         }
