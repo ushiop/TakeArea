@@ -14,6 +14,7 @@
 //! import zinc "map/script/HeroRare.j"
 //! import zinc "map/script/Tree.j"
 //! import zinc "map/script/PlayerEvent.j"
+//! import zinc "map/script/PlayerPress.j"
 //! import zinc "map/script/Winner.j" 
 //! import zinc "map/script/KillUi.j"
 //! import zinc "map/script/Respawn.j"
