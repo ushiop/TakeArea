@@ -115,9 +115,18 @@ library Events requires Table{
         //! endtextmacro
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","113","Event_onPressKeyDown")
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","113","Event_onPressKeyUp")
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown") 
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'W'","Event_onPressKeyDown")               
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'E'","Event_onPressKeyDown") 
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'Q'","Event_onPressKeyUp") 
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'W'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'W'","Event_onPressKeyUp")               
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'E'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'E'","Event_onPressKeyUp")              
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'R'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'R'","Event_onPressKeyUp")            
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'D'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'D'","Event_onPressKeyUp")            
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'F'","Event_onPressKeyDown")  
+        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'F'","Event_onPressKeyUp") 
         //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'C'","Event_onPressKeyDown") 
             
         //! textmacro AllPlayerRegisterEvent takes tri,event,action
