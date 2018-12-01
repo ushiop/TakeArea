@@ -22,6 +22,11 @@ library Players{
             boolean isdeath;//是否死亡
             PlayerPress press;//玩家QWERDF的按键状态以及鼠标坐标（鼠标延迟很大)
             boolean isai;//玩家是否是电脑
+            unit lv5;//技能等级5-25的解锁单位
+            unit lv10;
+            unit lv15;
+            unit lv20;
+            unit lv25;
 
             //返回玩家金钱
             method Money()->integer{

@@ -22,3 +22,4 @@
 //! import zinc "map/script/Buff.j"
 //! import zinc "map/script/Dashs.j"
 //! import zinc "map/script/Spells.j"
+//! import zinc "map/script/LevelUp.j"
