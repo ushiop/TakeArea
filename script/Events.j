@@ -9,6 +9,7 @@ library Events requires Table{
         unit DeathUnit;//死亡单位
         unit KillUnit;//凶手单位
         unit TriggerUnit;//触发单位 
+        unit LevelUpUnit;//升级单位
         unit SpellTargetUnit;//技能目标单位
         real SpellTargetX;//技能目标X
         real SpellTargetY;//技能目标Y
@@ -30,6 +31,7 @@ library Events requires Table{
         method Destroy(){
             this.KillUnit=null;
             this.SpellTargetUnit=null;
+            this.LevelUpUnit=null;
             this.TriggerUnit=null;
             this.DeathUnit=null;
             this.TriggerPlayer=null;
@@ -48,6 +50,7 @@ library Events requires Table{
             static constant string onPressKeyUp="Events.PressKeyUp";//任意按键被松开
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
             static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果
+            static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -81,6 +84,7 @@ library Events requires Table{
         e.SpellTargetX=GetSpellTargetX();
         e.SpellTargetY=GetSpellTargetY();
         e.SpellId=GetSpellAbilityId();
+        e.LevelUpUnit=GetLevelingUnit();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
@@ -96,6 +100,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onPressKeyUp")
 //! runtextmacro RegisterAction("onUnitDamage")
 //! runtextmacro RegisterAction("onUnitSpell")
+//! runtextmacro RegisterAction("onHeroLevelUp")
 
     function onInit(){
         trigger t; 
@@ -107,6 +112,7 @@ library Events requires Table{
         //! endtextmacro
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_DEATH","Event_onUnitDeath")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_EFFECT","Event_onUnitSpell")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_HERO_LEVEL","Event_onHeroLevelUp")
  
         //! textmacro RegisterArgsEvent takes tri,args,event,action
         t=CreateTrigger();
