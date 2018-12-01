@@ -48,7 +48,7 @@ library Spells requires Units{
                 Table[eName][spellid]=callback; 
             }
         }
-
+ 
 
         static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
