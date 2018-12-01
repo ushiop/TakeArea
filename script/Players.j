@@ -1,10 +1,11 @@
 library Players{
-    //玩家类，包含了玩家信息，以及玩家相关事件的接口
+    //玩家类，包含了玩家信息，以及玩家相关事件的接口 
+ 
+
     public struct Players{
 
         private static HandleTable ht;
-        public static player localplayer;
-
+        public static player localplayer; 
         public{
             integer playerid;//玩家ID
             player player;//玩家自己
@@ -19,6 +20,8 @@ library Players{
             integer respawn;//复活信息
             integer nextherotype;//指定复活的英雄类型
             boolean isdeath;//是否死亡
+            integer press;//玩家QWERDF的按键状态以及鼠标坐标（鼠标延迟很大)
+            boolean isai;//玩家是否是电脑
 
             //返回玩家金钱
             method Money()->integer{
@@ -40,11 +43,13 @@ library Players{
             p.name=GetPlayerName(ps);
             p.playerid=GetConvertedPlayerId(ps);
             p.teamid=GetPlayerTeam(ps);
+            p.isai=GetPlayerController(ps) == MAP_CONTROL_COMPUTER;
             p.isonline=true;
             p.randomhero=0;
             p.lifekill=0;
             p.nextherotype=0;
             p.isdeath=false;
+            p.press=0;
             ht[ps]=p;
             return p;
         }

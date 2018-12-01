@@ -9,6 +9,8 @@ library Spells requires Units{
         unit Target;//目标单位
         real X;//目标点X
         real Y;//目标点Y
+        real Angle;//施法方向
+        real Dis;//施法距离
         integer Id;//技能ID
         integer Obj;//自定义数据
         boolean Kill;//技能实例销毁时是否杀死施法单位
@@ -56,6 +58,14 @@ library Spells requires Units{
             tmp.X=e.SpellTargetX;
             tmp.Y=e.SpellTargetY;
             tmp.Id=e.SpellId;
+            if(tmp.Target==null){
+                tmp.Angle=Utils.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                tmp.Dis=Utils.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+            }else{
+                tmp.Angle=Utils.XY(tmp.Spell,tmp.Target);
+                tmp.Dis=Utils.XY2(tmp.Spell,tmp.Target);
+            }
+            
             tmp.Kill=false;
             tmp.Use=1;
             if(u.spell!=0){
