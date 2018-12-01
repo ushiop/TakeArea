@@ -76,19 +76,19 @@ library Units requires Table,Players,Events,Util{
             //触发指定事件名
             static method Trigger(string eName,unit u,unit m){
                 integer i;
-                UnitsEventInterface b       ack;
+                UnitsEventInterface callback;
                 for(1<=i<Table[eName][0]){  
-                    b       ack=UnitsEventInterface(Table[eName][i]);
-                    b       ack.evaluate(Units.Get(u),Units.Get(m));
+                    callback=UnitsEventInterface(Table[eName][i]);
+                    callback.evaluate(Units.Get(u),Units.Get(m));
                 }        
             }
 
             //注册自定义单位事件
-            static method On(string eName,UnitsEventInterface b     ack){  
+            static method On(string eName,UnitsEventInterface callback){  
                 if(Table[eName][0]==0){ 
                     Table[eName][0]=1;
                 }
-                Table[eName][Table[eName][0]]=b     ack;
+                Table[eName][Table[eName][0]]=callback;
                 Table[eName][0]=Table[eName][0]+1;
             }
         }
@@ -170,7 +170,7 @@ library Units requires Table,Players,Events,Util{
         public static method Spawn(player p,integer unitid,real x,real y,real f)->unit{
             unit u=CreateUnit(p,unitid,x,y,f);
             Units.Create(u); 
-            Utils.UnitAddRemoveAbility(u,'Amrf');
+            Util.UnitAddRemoveAbility(u,'Amrf'); 
             Units.onSpawn(u);
             bj_lastCreatedUnit=u;
             u=null;
@@ -183,7 +183,7 @@ library Units requires Table,Players,Events,Util{
         public static method MJ(player p,integer uid,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->unit{
             unit u=CreateUnit(p,uid,x,y,f);
             Units.Create(u);
-            Utils.UnitAddRemoveAbility(u,'Amrf'); 
+            Util.UnitAddRemoveAbility(u,'Amrf'); 
             DzSetUnitModel( u, modpath);
             SetUnitAnimation( u,animname);
             SetUnitScale( u,modsize,modsize,modsize);
