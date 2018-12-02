@@ -23,6 +23,7 @@ library Spells{
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
+                this.Target=null;
                 this.Spell=null;
                 this.deallocate();
             }
@@ -65,7 +66,7 @@ library Spells{
                 tmp.Angle=Util.XY(tmp.Spell,tmp.Target);
                 tmp.Dis=Util.XY2(tmp.Spell,tmp.Target);
             }
-            
+            tmp.Obj=0;
             tmp.Kill=false;
             tmp.Use=1;
             if(u.spell!=0){
