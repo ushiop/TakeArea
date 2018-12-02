@@ -13,8 +13,8 @@ library PlayerPress requires Press{
         real MouseUnit;
     
 
-        static method Down(player p,string e){
-            Players p=Players.Get(p);
+        static method Down(player ps,string e){
+            Players p=Players.Get(ps);
             if(p.press==0){
                 p.press=PlayerPress.allocate();
             }
@@ -33,8 +33,8 @@ library PlayerPress requires Press{
             }
         }
 
-        static method Up(player p,string e){
-            Players p=Players.Get(p);
+        static method Up(player ps,string e){
+            Players p=Players.Get(ps);
             if(e=="Q"){
                 p.press.Q=false;
             }else if(e=="W"){
@@ -48,8 +48,7 @@ library PlayerPress requires Press{
             }else if(e=="F"){
                 p.press.F=false;
             }            
-        }
-
+        } 
         static method onInit(){
             Press.OnSnyc(Press.onSnycPressKeyDown,PlayerPress.Down);
             Press.OnSnyc(Press.onSnycPressKeyUp,PlayerPress.Up);

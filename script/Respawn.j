@@ -161,7 +161,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Players p=Players.Get(Players.localplayer);
             Respawn r=p.respawn;
             if( p.isdeath==true){
-                    if(e=='C'){ 
+                    if(e=="C"){ 
                         if(Respawn.RespawnShow==false){
                             Respawn.Show(p.player,true);
                         }else{
@@ -171,17 +171,17 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }
         }
 
-        public static method PressSnyc(player p,string e){
-            Players p=Players.Get(p);
+        public static method PressSnyc(player ps,string e){
+            Players p=Players.Get(ps);
             Respawn r=p.respawn;
             if( p.isdeath==true){
-                    if(e=='Q'){ 
+                    if(e=="Q"){ 
                         r.RespawnSelect=0;
                         Respawn.Flush(p.player);
-                    }else if(e=='W'){
+                    }else if(e=="W"){
                         r.RespawnSelect=1; 
                         Respawn.Flush(p.player);
-                    }else if(e=='E'){
+                    }else if(e=="E"){
                         r.RespawnSelect=2;
                         Respawn.Flush(p.player);
                     } 
