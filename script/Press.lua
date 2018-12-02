@@ -1,6 +1,12 @@
     --键盘捕捉
     --与Press.j协作，提供异步/同步的按键事件
-    require "jass.console".enable = true
+    --部分玩家会在HOOK消息部分崩溃，原因不明。。
+    --2018/12/02 测试过程
+    --第一次启动：虾子按下按键后崩溃，推测为键盘消息HOOK导致
+    --第二次启动：删除了键盘消息HOOK，不崩溃
+    --第三次启动：添加了内置JAPI、打开了崩溃跟踪器，添加了键盘消息HOOK，不崩溃
+    --第四次启动：使用的是第一次启动的版本的地图，重新用YDWE编译过，不崩溃
+    require "jass.console".enable = false
     
     local cj=require 'jass.common' 
     local message=require 'jass.message'
