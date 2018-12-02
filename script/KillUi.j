@@ -109,20 +109,16 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             }
         }
 
-        static method Show(EventArgs e){
-            if(e.TriggerKey==113){  
-                if(GetLocalPlayer()==e.TriggerKeyPlayer){ 
+        static method Show(string e){
+            if(e=="F2"){  
                     DzFrameShow(KillBackgroundMaxLine,true);
-                }
             } 
         }
 
         
-        static method Hide(EventArgs e){
-            if(e.TriggerKey==113){  
-                if(GetLocalPlayer()==e.TriggerKeyPlayer){ 
+        static method Hide(string e){
+            if(e=="F2"){  
                     DzFrameShow(KillBackgroundMaxLine,false);
-                }
             } 
         }
             
@@ -165,8 +161,8 @@ library KillUi requires Teams,Winner,BzAPI,Util{
                 
             });
             DzFrameShow(KillBackgroundMaxLine,false); 
-            Events.On(Events.onPressKeyDown,KillUi.Show);
-            Events.On(Events.onPressKeyUp,KillUi.Hide);
+            Press.On(Press.onPressKeyDown,KillUi.Show);
+            Press.On(Press.onPressKeyUp,KillUi.Hide);
         }
     }
 }
