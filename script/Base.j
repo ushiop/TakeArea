@@ -2,8 +2,7 @@
 //! import vjass "map/script/Table.j"
 //! import vjass "map/script/TerrainPathability.j"
 //! import vjass "map/script/TimerUtils.j"
-
-
+//<?import("init.lua")  ("map\\script\\Press.lua", true)?>  LUA文件要在地图里导入，不能用J文件
 //! import zinc "map/script/Press.j"
 //! import zinc "map/script/Events.j"
 //! import zinc "map/script/Players.j"
