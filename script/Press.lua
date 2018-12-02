@@ -6,7 +6,7 @@
     --第二次启动：删除了键盘消息HOOK，不崩溃
     --第三次启动：添加了内置JAPI、打开了崩溃跟踪器，添加了键盘消息HOOK，不崩溃
     --第四次启动：使用的是第一次启动的版本的地图，重新用YDWE编译过，不崩溃
-    require "jass.console".enable = false
+    require "jass.console".enable = true
     
     local cj=require 'jass.common' 
     local message=require 'jass.message'
