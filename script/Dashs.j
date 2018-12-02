@@ -116,19 +116,11 @@ library Dashs requires TimerUtils{
                     tmp=tmp1;
                 } 
             } 
-
-            public static method test(EventArgs e){
-                Players p=Players.Get(e.TriggerKeyPlayer);
-                if(e.TriggerKey=='C'){
-                    Dash.Start(p.hero.unit,p.hero.GetFacing(),1000,Dash.SUB,25,true,false);
-                }
-            }
-            
+ 
             static method onInit(){
                 Root=Dash.allocate();
                 Last=Root;
-                TimerStart(NewTimer(),0.01,true,function Dash.onLoop); 
-                Events.On(Events.onPressKeyDown,Dash.test);
+                TimerStart(NewTimer(),0.01,true,function Dash.onLoop);  
             }
         }
 
