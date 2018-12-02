@@ -149,31 +149,19 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         private static method Show(player p,boolean show){
             Players ps=Players.Get(p); 
             if(Players.localplayer==p){   
-                if(GameTime>=Respawn.RespawnShowTime||ps.isdeath==false){
-                    Respawn.RespawnShowTime=GameTime+0.05;
+                if(ps.isdeath==false){
                     Respawn.RespawnShow=show;
                     DzFrameShow(DeathUIMainTop,show); 
                 }
-
                 Respawn.Flush(p);
             }
         }
 
-        public static method Press(EventArgs e){
-            Players p=Players.Get(e.TriggerKeyPlayer);
+        public static method Press(string e){
+            Players p=Players.Get(Players.localplayer);
             Respawn r=p.respawn;
             if( p.isdeath==true){
-                    if(e.TriggerKey=='Q'){ 
-                        r.RespawnSelect=0;
-                        Respawn.Flush(p.player);
-                    }else if(e.TriggerKey=='W'){
-                        r.RespawnSelect=1; 
-                        Respawn.Flush(p.player);
-                    }else if(e.TriggerKey=='E'){
-                        r.RespawnSelect=2;
-                        Respawn.Flush(p.player);
-                    } 
-                    if(e.TriggerKey=='C'){ 
+                    if(e=='C'){ 
                         if(Respawn.RespawnShow==false){
                             Respawn.Show(p.player,true);
                         }else{
@@ -181,6 +169,23 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                         }
                     }
             }
+        }
+
+        public static method PressSnyc(player p,string e){
+            Players p=Players.Get(p);
+            Respawn r=p.respawn;
+            if( p.isdeath==true){
+                    if(e=='Q'){ 
+                        r.RespawnSelect=0;
+                        Respawn.Flush(p.player);
+                    }else if(e=='W'){
+                        r.RespawnSelect=1; 
+                        Respawn.Flush(p.player);
+                    }else if(e=='E'){
+                        r.RespawnSelect=2;
+                        Respawn.Flush(p.player);
+                    } 
+            }            
         }
 
         static method onInit(){
@@ -262,7 +267,8 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             
             Units.On(Units.onHeroDeath,Respawn.Death);
 
-            Events.On(Events.onPressKeyDown,Respawn.Press);
+            Press.On(Press.onPressKeyDown,Respawn.Press);
+            Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.PressSnyc);
 
             TimerStart(NewTimer(),1,true,function Respawn.Time);
         }
