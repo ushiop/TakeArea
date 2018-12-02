@@ -94,7 +94,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             r.RespawnSelectLast=0; 
             u.player.isdeath=true; 
             u.player.lifekill=0;
-            u.player.respawn=r; 
+            u.player.respawn=r;  
             Respawn.Show(u.player.player,true);
         }
 
@@ -148,11 +148,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         //向玩家显示或者隐藏死亡面板并显示相关数据
         private static method Show(player p,boolean show){
             Players ps=Players.Get(p); 
-            if(Players.localplayer==p){   
-                if(ps.isdeath==false){
-                    Respawn.RespawnShow=show;
-                    DzFrameShow(DeathUIMainTop,show); 
-                }
+            if(Players.localplayer==p){    
+                Respawn.RespawnShow=show;
+                DzFrameShow(DeathUIMainTop,show); 
                 Respawn.Flush(p);
             }
         }
@@ -161,13 +159,13 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Players p=Players.Get(Players.localplayer);
             Respawn r=p.respawn;
             if( p.isdeath==true){
-                    if(e=="C"){ 
-                        if(Respawn.RespawnShow==false){
-                            Respawn.Show(p.player,true);
-                        }else{
-                            Respawn.Show(p.player,false);
-                        }
+                if(e=="C"){ 
+                    if(Respawn.RespawnShow==false){
+                        Respawn.Show(p.player,true);
+                    }else{
+                        Respawn.Show(p.player,false);
                     }
+                }
             }
         }
 
@@ -175,16 +173,16 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Players p=Players.Get(ps);
             Respawn r=p.respawn;
             if( p.isdeath==true){
-                    if(e=="Q"){ 
-                        r.RespawnSelect=0;
-                        Respawn.Flush(p.player);
-                    }else if(e=="W"){
-                        r.RespawnSelect=1; 
-                        Respawn.Flush(p.player);
-                    }else if(e=="E"){
-                        r.RespawnSelect=2;
-                        Respawn.Flush(p.player);
-                    } 
+                if(e=="Q"){ 
+                    r.RespawnSelect=0;
+                    Respawn.Flush(p.player);
+                }else if(e=="W"){
+                    r.RespawnSelect=1; 
+                    Respawn.Flush(p.player);
+                }else if(e=="E"){
+                    r.RespawnSelect=2;
+                    Respawn.Flush(p.player);
+                } 
             }            
         }
 
