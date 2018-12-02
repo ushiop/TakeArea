@@ -39,7 +39,7 @@ library Table
         //speed which shouldn't matter that much.
 
     //=========================================================
-        private hashtable ht
+        private hashtable ht=InitHashtable()
     endglobals
 
     private struct GTable[MAX_INSTANCES]
@@ -56,7 +56,7 @@ library Table
         // initialize it all.
         //
         private static method onInit takes nothing returns nothing
-            set ht = InitHashtable()
+            //set ht = InitHashtable()
         endmethod
 
     endstruct
