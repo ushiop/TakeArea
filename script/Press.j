@@ -86,6 +86,7 @@
         }else if(t=="U"){
             Press.TriggerSnyc(Press.onSnycPressKeyUp,p,msg); 
         }
+        p=null;
     }
 
     function onInit(){
