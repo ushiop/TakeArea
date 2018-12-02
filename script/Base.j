@@ -3,6 +3,7 @@
 //! import vjass "map/script/TerrainPathability.j"
 //! import vjass "map/script/TimerUtils.j"
 
+//! import zinc "map/script/Press.j"
 //! import zinc "map/script/Events.j"
 //! import zinc "map/script/Players.j"
 //! import zinc "map/script/TakeUi.j"
