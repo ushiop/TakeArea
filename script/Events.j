@@ -15,13 +15,11 @@ library Events requires Table{
         real SpellTargetY;//技能目标Y
         integer SpellId;//施放的技能ID
         player TriggerPlayer;//触发玩家
-        integer TriggerKey;//被按下的键
-        player TriggerKeyPlayer;//触发硬件事件的玩家,网易怕不是个睿智哦
         unit DamageUnit;//伤害来源
         real Damage;//伤害值
         boolean RangeDamage;//是否是远程伤害
         boolean AttackDamage;//是否是攻击伤害
-        boolean MagicDamage;//是否是法术伤害
+        boolean MagicDamage;//是否是法术伤害 
         
         static method create()->EventArgs{
             EventArgs e=EventArgs.allocate();
@@ -34,9 +32,8 @@ library Events requires Table{
             this.LevelUpUnit=null;
             this.TriggerUnit=null;
             this.DeathUnit=null;
-            this.TriggerPlayer=null;
-            this.TriggerKeyPlayer=null;
-            this.DamageUnit=null;
+            this.TriggerPlayer=null; 
+            this.DamageUnit=null; 
             this.deallocate();
         }
     }
@@ -46,11 +43,9 @@ library Events requires Table{
         public  {
             static constant string onUnitDeath="Events.UnitDeath";//任意单位死亡
             static constant string onPlayerDisconnect="Events.PlayerDisconnect";//任意玩家离开游戏
-            static constant string onPressKeyDown="Events.PressKeyDown";//任意按键被按下
-            static constant string onPressKeyUp="Events.PressKeyUp";//任意按键被松开
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
             static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果
-            static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级
+            static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级 
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -78,13 +73,11 @@ library Events requires Table{
         e.MagicDamage=!YDWEIsEventPhysicalDamage();
         e.TriggerUnit=GetTriggerUnit(); 
         e.TriggerPlayer=GetTriggerPlayer();
-        e.TriggerKey=DzGetTriggerKey();
-        e.TriggerKeyPlayer=DzGetTriggerKeyPlayer();
         e.SpellTargetUnit=GetSpellTargetUnit();
         e.SpellTargetX=GetSpellTargetX();
         e.SpellTargetY=GetSpellTargetY();
         e.SpellId=GetSpellAbilityId();
-        e.LevelUpUnit=GetLevelingUnit();
+        e.LevelUpUnit=GetLevelingUnit(); 
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
@@ -96,11 +89,9 @@ library Events requires Table{
 
 //! runtextmacro RegisterAction("onUnitDeath")
 //! runtextmacro RegisterAction("onPlayerDisconnect")
-//! runtextmacro RegisterAction("onPressKeyDown")
-//! runtextmacro RegisterAction("onPressKeyUp")
 //! runtextmacro RegisterAction("onUnitDamage")
 //! runtextmacro RegisterAction("onUnitSpell")
-//! runtextmacro RegisterAction("onHeroLevelUp")
+//! runtextmacro RegisterAction("onHeroLevelUp") 
 
     function onInit(){
         trigger t; 
@@ -118,22 +109,8 @@ library Events requires Table{
         t=CreateTrigger();
         $tri$(t,$args$, $event$ );
         TriggerAddAction(t,function $action$); 
-        //! endtextmacro
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","113","Event_onPressKeyDown")
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","113","Event_onPressKeyUp")
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'Q'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'Q'","Event_onPressKeyUp") 
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'W'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'W'","Event_onPressKeyUp")               
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'E'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'E'","Event_onPressKeyUp")              
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'R'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'R'","Event_onPressKeyUp")            
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'D'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'D'","Event_onPressKeyUp")            
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'F'","Event_onPressKeyDown")  
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","0","'F'","Event_onPressKeyUp") 
-        //! runtextmacro RegisterArgsEvent("DzTriggerRegisterKeyEventTrg","1","'C'","Event_onPressKeyDown") 
+        //! endtextmacro 
+
             
         //! textmacro AllPlayerRegisterEvent takes tri,event,action
         t=CreateTrigger();
