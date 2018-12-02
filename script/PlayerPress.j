@@ -1,5 +1,8 @@
 library PlayerPress requires Press{
     //玩家按键、鼠标操作的参数类
+    //键盘按键捕捉由press事件完成
+    //鼠标坐标同步由计时器定时获取，然后同步的方式来完成
+    //同步间隔为0.5秒，更短的时间会造成较大的延迟。
 
     public struct PlayerPress{
         boolean Q;
@@ -9,9 +12,27 @@ library PlayerPress requires Press{
         boolean D;
         boolean F;
         real MouseX;
-        real MouseY;
-        real MouseUnit;
-    
+        real MouseY; 
+
+        static method onMouse(){
+            if(Players.localplayer==Players.localplayer){
+                DzSyncData( "Mouse", "X"+R2S(DzGetMouseTerrainX()) );
+                DzSyncData( "Mouse", "Y"+R2S(DzGetMouseTerrainY()) );
+            }
+        }
+
+        static method MouseSyncData(){
+            player p=DzGetTriggerSyncPlayer(); 
+            string d=DzGetTriggerSyncData();
+            string t=SubString(d,0,1);
+            string msg=SubString(d,1,StringLength(d));
+            if(t=="X"){
+                Players.Get(p).press.MouseX=S2R(msg);
+            }else if(t=="Y"){
+                Players.Get(p).press.MouseY=S2R(msg);
+            }
+            p=null;
+        }
 
         static method Down(player ps,string e){
             Players p=Players.Get(ps);
@@ -50,8 +71,14 @@ library PlayerPress requires Press{
             }            
         } 
         static method onInit(){
+            trigger t=CreateTrigger();        
+            DzTriggerRegisterSyncData( t, "Mouse", false );
+            TriggerAddAction(t, function PlayerPress.MouseSyncData);
+            t=null;
+            TimerStart(NewTimer(),0.5,true,function PlayerPress.onMouse);
             Press.OnSnyc(Press.onSnycPressKeyDown,PlayerPress.Down);
-            Press.OnSnyc(Press.onSnycPressKeyUp,PlayerPress.Up);
+            Press.OnSnyc(Press.onSnycPressKeyUp,PlayerPress.Up);       
+
         }
 
     }
