@@ -6,6 +6,7 @@ library Init requires Teams,HeroRare,Winner,Players{
         unit Origin_Ball,Origin_Magic;//中央球,中央阵
         real Origin_X,Origin_Y;//中央球的原始坐标
         real GameTime=0.0;//游戏时间轴
+        group tmp_group;//公共单位组
     }
 
     function onInit(){
@@ -15,6 +16,7 @@ library Init requires Teams,HeroRare,Winner,Players{
         Origin_Y=GetUnitY(Origin_Ball);
         SetUnitTimeScale(Origin_Magic,0);
         Winner.start(); 
+        tmp_group=CreateGroup();
         Players.Set(Player(PLAYER_NEUTRAL_PASSIVE));
         Teams.ActionsForAllPlayer(function(){
             unit u;

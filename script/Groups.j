@@ -1,4 +1,4 @@
-library Groups requires Units{
+library Groups requires Units,Damage,Init{
     //一些常用的单位组判断
 
     //是否是建筑

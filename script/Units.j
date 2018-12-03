@@ -50,21 +50,18 @@ library Units requires Table,Players,Events,Util{
             }
 
             method FlushAnimeId(integer id){
-                /*timer t=NewTimer();
+                timer t=NewTimer();
                 DelayTimer data=DelayTimer.create();
                 data.obj=this;
-                data.obj1=id;
-                BJDebugMsg(Units(data.obj).name+"/"+I2S(data));
-                SetTimerData(t,122);
-                TimerStart(t,0.1,false,function(){
-                    BJDebugMsg(I2S(GetTimerData(GetExpiredTimer())));
-                    DelayTimer d=DelayTimer(GetTimerData(GetExpiredTimer()));
-                    BJDebugMsg(Units(d.obj).name+"/"+I2S(d.obj1)+"/"+I2S(GetTimerData(GetExpiredTimer())));
+                data.obj1=id; 
+                SetTimerData(t,data);
+                TimerStart(t,0,false,function(){
+                    DelayTimer d=DelayTimer(GetTimerData(GetExpiredTimer()));  
                     SetUnitAnimationByIndex(Units(d.obj).unit,d.obj1);
                     ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
                 });
-                t=null;*/
+                t=null;
             }
 
             method AnimeId(integer id){

@@ -10,7 +10,7 @@ library DelayTimer requires TimerUtils{
         integer obj5;//携带数据5
         integer obj6;//携带数据6
 
-        method Destroy(){
+        method Destroy(){ 
             this.deallocate();
         }
 
