@@ -128,8 +128,8 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             DzFrameSetPoint( KillBackground, 3, DzFrameGetUpperButtonBarButton(0), 5, 0.458, 0.00 );
             DzFrameSetTexture( KillBackground, "UI_RightUpperBackground.blp", 0 );
             KillBackgroundText = DzCreateFrameByTagName("TEXT", "KillBackgroundText", KillBackground, "TextInfo", 0);
-            DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.042);
-            DzFrameSetSize( KillBackgroundText,0.3, 0.1 );
+            DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.004);
+            DzFrameSetSize( KillBackgroundText,0.3, 0.021 );
 
 
             KillBackgroundMaxLine = DzCreateFrameByTagName("BACKDROP", "KillBackgroundMaxLine", KillBackground, "ShowInfo", 0);
