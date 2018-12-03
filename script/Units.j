@@ -51,23 +51,28 @@ library Units requires Table,Players,Events,Util{
                 UnitApplyTimedLife(this.unit, 'BHwe',time);
             }
 
+
             method FlushAnimeId(integer id){
+                this.DelayAnime(id,0);
+            }
+
+            method AnimeId(integer id){
+                SetUnitAnimationByIndex( this.unit,id);
+            }
+
+            method DelayAnime(integer id,real delay){
                 timer t=NewTimer();
                 DelayTimer data=DelayTimer.create();
                 data.obj=this;
-                data.obj1=id; 
+                data.obj1=id;
                 SetTimerData(t,data);
-                TimerStart(t,0,false,function(){
+                TimerStart(t,delay,false,function(){
                     DelayTimer d=DelayTimer(GetTimerData(GetExpiredTimer()));  
                     SetUnitAnimationByIndex(Units(d.obj).unit,d.obj1);
                     ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
                 });
-                t=null;
-            }
-
-            method AnimeId(integer id){
-                SetUnitAnimationByIndex( this.unit,id);
+                t=null;                
             }
 
             //播放单位动画名
