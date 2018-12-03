@@ -17,6 +17,8 @@ library Units requires Table,Players,Events,Util{
             unit unit; 
             integer uid;
             integer spell;//单位释放技能的回调，用于反向捕捉
+            integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
+            integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
 
             //返回英雄力量
             method Str()->integer{
@@ -265,9 +267,11 @@ library Units requires Table,Players,Events,Util{
         //创建一个马甲单位
         //modsize 模型大小,animspeed 动画速度,animname 播放的动画名,modpath 模型路径,lifetime 生存时间
         //不会触发'spawn'事件
-        public static method MJ(player p,integer uid,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->Units{
+        public static method MJ(player p,integer uid,integer aid,integer aindex,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->Units{
             unit u=CreateUnit(p,uid,x,y,f);
             Units t=Units.Create(u);
+            t.aid=aid;
+            t.aidindex=aindex;
             Util.UnitAddRemoveAbility(u,'Amrf'); 
             DzSetUnitModel( u, modpath);
             SetUnitAnimation( u,animname);
