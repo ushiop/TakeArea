@@ -44,7 +44,10 @@ library Events requires Table{
             static constant string onUnitDeath="Events.UnitDeath";//任意单位死亡
             static constant string onPlayerDisconnect="Events.PlayerDisconnect";//任意玩家离开游戏
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
-            static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果
+            static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果 
+            static constant string onUnitReadySpell="Events.onUnitReadySpell";//任意单位准备发动技能效果
+            static constant string onUnitStartSpell="Events.onUnitStartSpell";//任意单位开始发动技能效果
+            static constant string onUnitStopSpell="Events.onUnitStopSpell";//任意单位停止发动技能效果
             static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级 
 
             //注册事件，触发时调用callback
@@ -91,6 +94,9 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onPlayerDisconnect")
 //! runtextmacro RegisterAction("onUnitDamage")
 //! runtextmacro RegisterAction("onUnitSpell")
+//! runtextmacro RegisterAction("onUnitReadySpell")
+//! runtextmacro RegisterAction("onUnitStartSpell")
+//! runtextmacro RegisterAction("onUnitStopSpell")
 //! runtextmacro RegisterAction("onHeroLevelUp") 
 
     function onInit(){
@@ -104,6 +110,9 @@ library Events requires Table{
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_DEATH","Event_onUnitDeath")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_EFFECT","Event_onUnitSpell")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_HERO_LEVEL","Event_onHeroLevelUp")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_CHANNEL","Event_onUnitReadySpell")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_CAST","Event_onUnitStartSpell")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_ENDCAST","Event_onUnitStopSpell")
  
         //! textmacro RegisterArgsEvent takes tri,args,event,action
         t=CreateTrigger();
