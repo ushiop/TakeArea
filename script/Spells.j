@@ -54,6 +54,7 @@ library Spells{
         static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             Spell tmp=Spell.allocate();
+            SpellNameText(u.unit,GetAbilityName(e.SpellId),3,12.5);
             tmp.Spell=u.unit;
             tmp.Target=e.SpellTargetUnit;
             tmp.X=e.SpellTargetX;
