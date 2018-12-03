@@ -24,4 +24,8 @@
 //! import zinc "map/script/Dashs.j"
 //! import zinc "map/script/Spells.j"
 //! import zinc "map/script/SpellNameText.j"
-//! import zinc "map/script/LevelUp.j"
+//! import zinc "map/script/LevelUp.j" 
+//! import zinc "map/script/DelayTimer.j"
+//! import zinc "map/script/Groups.j"
+//英雄
+//! import zinc "map/script/hero/001 Ordinary Wizard.j"

@@ -146,7 +146,7 @@ library Buff requires Util{
         }
 
         //计时循环
-        private static method onLoop(){
+        public static method onLoop(){
             Buffs tmp=Root,tmp1;
             while(tmp!=0){ 
                 tmp1=tmp.Next;
@@ -169,7 +169,9 @@ library Buff requires Util{
         static method onInit(){
             Root=Buffs.allocate();
             Last=Root;
-            TimerStart(NewTimer(),0.01,true,function Buffs.onLoop); 
         }
+    }
+    function onInit(){
+        TimerStart(NewTimer(),0.01,true,function Buffs.onLoop); 
     }
 }

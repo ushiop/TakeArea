@@ -58,7 +58,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         }
 
         //减少所有玩家的复活时间
-        private static method Time(){
+        public static method Time(){
             ForForce(Teams.GetAllPlayers(),function(){
                 Players p=Players.Get(GetEnumPlayer());
                 Respawn r=Respawn(p.respawn);
@@ -268,7 +268,10 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Press.On(Press.onPressKeyDown,Respawn.Press);
             Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.PressSnyc);
 
-            TimerStart(NewTimer(),1,true,function Respawn.Time);
         }
+    }
+    function onInit(){
+        
+        TimerStart(NewTimer(),1,true,function Respawn.Time);
     }
 }

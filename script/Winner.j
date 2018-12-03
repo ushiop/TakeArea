@@ -47,7 +47,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             PingMinimap(Winner.OX,Winner.OY, 3.00 );
         }
         //夺旗判定 - 范围900码
-        private static method onLoop(){
+        public  static method onLoop(){
             group g;
             Players tmp;
             unit tmp1;
@@ -118,11 +118,13 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         public static method start(){
             Winner.OX=GetUnitX(Origin_Ball);
             Winner.OY=GetUnitY(Origin_Ball);
-            TimerStart(NewTimer(),0.01,true,function Winner.onLoop);
             Units.On(Units.onHeroDeath,Winner.Death);
         }
     }
-    
+    function onInit(){
+
+        TimerStart(NewTimer(),0.01,true,function Winner.onLoop);
+    }
 
 
 

@@ -5,10 +5,10 @@ library KillUi requires Teams,Winner,BzAPI,Util{
     public struct KillUi{
         private static integer KillBackground;//最小化状态的背景条
         private static integer KillBackgroundText;//文字
-        private static integer KillBackgroundMaxLine;//最大化状态的背景
+        public static integer KillBackgroundMaxLine;//最大化状态的背景
         private static integer KillBackgroundMaxBorder;//最大化状态的底部
-        private static real KillBackgroundMaxHeight=0;//最大化状态时的高度
-        private static KillUi KillTeam[3];
+        public static real KillBackgroundMaxHeight=0;//最大化状态时的高度
+        public static KillUi KillTeam[3];
         private static KillUi tmp; 
 
         private{
@@ -130,11 +130,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             KillBackgroundText = DzCreateFrameByTagName("TEXT", "KillBackgroundText", KillBackground, "TextInfo", 0);
             DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.042);
             DzFrameSetSize( KillBackgroundText,0.3, 0.1 );
-            TimerStart(NewTimer(),0.05,false,function(){
-                FlushKillData(-1);
-                ReleaseTimer(GetExpiredTimer());
-            });
-            //-----最小化状态
+
 
             KillBackgroundMaxLine = DzCreateFrameByTagName("BACKDROP", "KillBackgroundMaxLine", KillBackground, "ShowInfo", 0);
             DzFrameSetSize( KillBackgroundMaxLine, 0.254, 0.37 );
@@ -147,22 +143,31 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             DzFrameSetTexture( KillBackgroundMaxBorder, "UI_RightDownPanelBorder.blp", 0 ) ;
             //----最大化状态
 
-            TimerStart(NewTimer(),0.06,false,function(){
-                integer i,index=0;
-                for(0<=i<3){ 
-                    KillTeam[i]=-1;
-                    if(Teams.GetTeamNumberByIndex(i)!=0){
-                        KillTeam[i]=KillUi.create(i,index);  
-                        index=index+1;
-                    }
-                }
-                ReleaseTimer(GetExpiredTimer()); 
-                DzFrameSetSize(KillBackgroundMaxLine,0.254,KillBackgroundMaxHeight);  
-                
-            });
             DzFrameShow(KillBackgroundMaxLine,false); 
             Press.On(Press.onPressKeyDown,KillUi.Show);
             Press.On(Press.onPressKeyUp,KillUi.Hide);
         }
+    }
+
+    function onInit(){
+                    TimerStart(NewTimer(),0.05,false,function(){
+                KillUi.FlushKillData(-1);
+                ReleaseTimer(GetExpiredTimer());
+            });
+            //-----最小化状态
+            
+            TimerStart(NewTimer(),0.06,false,function(){
+                integer i,index=0;
+                for(0<=i<3){ 
+                    KillUi.KillTeam[i]=-1;
+                    if(Teams.GetTeamNumberByIndex(i)!=0){
+                        KillUi.KillTeam[i]=KillUi.create(i,index);  
+                        index=index+1;
+                    }
+                }
+                ReleaseTimer(GetExpiredTimer()); 
+                DzFrameSetSize(KillUi.KillBackgroundMaxLine,0.254,KillUi.KillBackgroundMaxHeight);  
+                
+            });
     }
 }

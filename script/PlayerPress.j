@@ -75,12 +75,15 @@ library PlayerPress requires Press{
             DzTriggerRegisterSyncData( t, "Mouse", false );
             TriggerAddAction(t, function PlayerPress.MouseSyncData);
             t=null;
-            TimerStart(NewTimer(),0.5,true,function PlayerPress.onMouse);
             Press.OnSnyc(Press.onSnycPressKeyDown,PlayerPress.Down);
             Press.OnSnyc(Press.onSnycPressKeyUp,PlayerPress.Up);       
 
         }
 
+    }
+    function onInit(){
+
+            TimerStart(NewTimer(),0.5,true,function PlayerPress.onMouse);
     }
 
     

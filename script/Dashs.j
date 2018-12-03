@@ -66,7 +66,7 @@ library Dashs requires TimerUtils{
             static Dash Root;//根节点
             static Dash Last;//最后一个节点
   
-            static method onLoop(){
+            public static method onLoop(){
                 Dash tmp=Root,tmp1;
                 boolean walk=false;
                 real speed;  
@@ -123,7 +123,6 @@ library Dashs requires TimerUtils{
             static method onInit(){
                 Root=Dash.allocate();
                 Last=Root;
-                TimerStart(NewTimer(),0.01,true,function Dash.onLoop);  
             }
         }
 
@@ -189,5 +188,10 @@ library Dashs requires TimerUtils{
                 Table[eName][0]=Table[eName][0]+1;
             }
         }
+    }
+
+    function onInit(){
+        
+        TimerStart(NewTimer(),0.01,true,function Dash.onLoop);  
     }
 }
