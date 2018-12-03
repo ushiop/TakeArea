@@ -17,6 +17,79 @@ library Units requires Table,Players,Events,Util{
             unit unit; 
             integer uid;
             integer spell;//单位释放技能的回调，用于反向捕捉
+
+            //返回英雄力量
+            method Str()->integer{
+                    return GetHeroStr(this.unit,true);
+            }
+
+            //返回英雄敏捷
+            method Agi()->integer{
+                return GetHeroAgi(this.unit,true);
+            }
+
+            //返回英雄智力
+            method Int()->integer{
+                return GetHeroInt(this.unit,true);
+            }
+
+            //隐藏或者显示单位
+            method Show(boolean f){
+                ShowUnit(this.unit,f);
+            }
+
+
+            //设置单位模型大小
+            method Size(real s){ 
+                SetUnitScale( this.unit,s,s,s);
+            }
+
+            //设置单位生存时间
+            method Life(real time){ 
+                UnitApplyTimedLife(this.unit, 'BHwe',time);
+            }
+
+            method FlushAnimeId(integer id){
+                /*timer t=NewTimer();
+                DelayTimer data=DelayTimer.create();
+                data.obj=this;
+                data.obj1=id;
+                BJDebugMsg(Units(data.obj).name+"/"+I2S(data));
+                SetTimerData(t,122);
+                TimerStart(t,0.1,false,function(){
+                    BJDebugMsg(I2S(GetTimerData(GetExpiredTimer())));
+                    DelayTimer d=DelayTimer(GetTimerData(GetExpiredTimer()));
+                    BJDebugMsg(Units(d.obj).name+"/"+I2S(d.obj1)+"/"+I2S(GetTimerData(GetExpiredTimer())));
+                    SetUnitAnimationByIndex(Units(d.obj).unit,d.obj1);
+                    ReleaseTimer(GetExpiredTimer());
+                    d.Destroy(); 
+                });
+                t=null;*/
+            }
+
+            method AnimeId(integer id){
+                SetUnitAnimationByIndex( this.unit,id);
+            }
+
+            //播放单位动画名
+            method Anime(string name){
+                SetUnitAnimation( this.unit,name);
+            }
+
+            //设置单位动画播放速率
+            method AnimeSpeed(real sp){
+                SetUnitTimeScale(this.unit,sp);
+            }
+
+            //返回Y坐标
+            method Y()->real{
+                return GetUnitY(this.unit);
+            }
+
+            //返回X坐标
+            method X()->real{
+                return GetUnitX(this.unit);
+            }
  
             //移动某玩家镜头到单位所在的位置
             method Lock(player p){
@@ -26,8 +99,18 @@ library Units requires Table,Players,Events,Util{
             }
  
             //返回单位面向角度
-            method GetFacing()->real{
+            method F()->real{
                 return GetUnitFacing(this.unit);
+            }
+
+            //设置飞行高度
+            method SetH(real h){
+                SetUnitFlyHeight(this.unit,h,0);
+            }
+
+            //返回飞行高度
+            method H()->real{
+                return GetUnitFlyHeight(this.unit);
             }
 
             //移动单位到X,Y的位置,order为是否打断命令
@@ -132,7 +215,7 @@ library Units requires Table,Players,Events,Util{
  
 
         //创建指定单位实例
-        private static method Create(unit u){
+        private static method Create(unit u)->Units{
             Units ud=Units.allocate();
             ud.player=Players.Get(GetOwningPlayer(u));
             ud.isHero=IsUnitType(u,UNIT_TYPE_HERO);
@@ -141,11 +224,12 @@ library Units requires Table,Players,Events,Util{
             ud.unit=u;
             ud.spell=0;
             Units.ht[u]=ud; 
+            return ud;
         }
 
         //摧毁指定单位 实例
         private static method Destroys(unit u){
-            Units ud=Units.ht[u]; 
+            Units ud=Units.ht[u];  
             ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);
@@ -180,9 +264,9 @@ library Units requires Table,Players,Events,Util{
         //创建一个马甲单位
         //modsize 模型大小,animspeed 动画速度,animname 播放的动画名,modpath 模型路径,lifetime 生存时间
         //不会触发'spawn'事件
-        public static method MJ(player p,integer uid,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->unit{
+        public static method MJ(player p,integer uid,real x,real y,real f,real lifetime,real modsize,real animspeed,string animname,string modpath)->Units{
             unit u=CreateUnit(p,uid,x,y,f);
-            Units.Create(u);
+            Units t=Units.Create(u);
             Util.UnitAddRemoveAbility(u,'Amrf'); 
             DzSetUnitModel( u, modpath);
             SetUnitAnimation( u,animname);
@@ -191,7 +275,7 @@ library Units requires Table,Players,Events,Util{
             UnitApplyTimedLife(u, 'BHwe', lifetime);
             bj_lastCreatedUnit=u;
             u=null;
-            return bj_lastCreatedUnit;
+            return t;
         } 
 
         //杀死单位
@@ -201,7 +285,9 @@ library Units requires Table,Players,Events,Util{
 
         //删除单位和实例
         public static method Remove(unit u){ 
-            Units.Destroys(u);
+            if(Units.Get(u)!=0){ 
+                Units.Destroys(u);
+            }
             RemoveUnit(u);
         }
      

@@ -5,24 +5,22 @@ library Dashs requires TimerUtils{
     type DashsEventInterface extends function(unit,Dash);
 
     public struct Dash{
-        private{
-            static Dash Root;//根节点
-            static Dash Last;//最后一个节点
+
+        public{
             static constant integer NORMAL=0;//匀速冲锋
             static constant integer PWX=1;//抛物线比例冲锋（即慢-快-慢)
             static constant integer ADD=2;//加速冲锋
             static constant integer SUB=3;//减速冲锋
 
+
             //停止指定单位身上的所有冲锋类特效,会触发onend以及onremove
-            static method Stop(unit u){
+            static method AllStop(unit u){
                 Dash tmp=Root,tmp1;
                 while(tmp!=0){
                     tmp1=tmp.Next;
                     if(tmp!=Root){
                         if(tmp.Unit==u){
-                            if(tmp.onRemove!=0) DashEventInterface(tmp.onRemove).evaluate(tmp);
-                            if(tmp.onEnd!=0) DashEventInterface(tmp.onEnd).evaluate(tmp);
-                            tmp.Destroy();
+                            tmp.Stop();
                         }
                     }
                     tmp=tmp1;
@@ -62,7 +60,12 @@ library Dashs requires TimerUtils{
                 }
                 return tmp;
             }
+        }
 
+        private{
+            static Dash Root;//根节点
+            static Dash Last;//最后一个节点
+  
             static method onLoop(){
                 Dash tmp=Root,tmp1;
                 boolean walk=false;
@@ -76,14 +79,13 @@ library Dashs requires TimerUtils{
                             tmp.LastX=tmp.X;
                             tmp.LastY=tmp.Y;
                             if(tmp.DashType==Dash.NORMAL){
-                                speed=tmp.Speed;
+                                speed=tmp.MaxSpeed;
                             }else if(tmp.DashType==Dash.PWX){
-                                speed=tmp.Speed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
+                                speed=tmp.MaxSpeed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
                             }else if(tmp.DashType==Dash.ADD){
-                                speed=tmp.Speed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
+                                speed=tmp.MaxSpeed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
                             }else if(tmp.DashType==Dash.SUB){
-                                speed=tmp.Speed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
-                                BJDebugMsg(R2S(speed)+"/"+R2S(GetUnitX(tmp.Unit)));
+                                speed=tmp.MaxSpeed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis));  
                             }
                             tmp.X=GetUnitX(tmp.Unit)+speed*CosBJ(tmp.Angle);
                             tmp.Y=GetUnitY(tmp.Unit)+speed*SinBJ(tmp.Angle); 
@@ -104,6 +106,7 @@ library Dashs requires TimerUtils{
                                 
                                 tmp.NowDis=tmp.MaxDis;
                             }else{
+                                tmp.Speed=speed;
                                 tmp.NowDis=tmp.NowDis+speed;
                                 Units.Get(tmp.Unit).Position(tmp.X,tmp.Y,tmp.Order);
                                 if(tmp.onMove!=0) DashEventInterface(tmp.onMove).evaluate(tmp);
@@ -155,6 +158,13 @@ library Dashs requires TimerUtils{
                     this.Next.Prev=this.Prev;
                 }
                 this.deallocate();   
+            }
+
+            //停止冲锋
+            method Stop(){
+                if(this.onRemove!=0) DashEventInterface(this.onRemove).evaluate(this);
+                if(this.onEnd!=0) DashEventInterface(this.onEnd).evaluate(this);
+                this.Destroy();
             }
 
             static constant string onHeroDash="Dashs.HeroDash";//英雄单位开始冲锋

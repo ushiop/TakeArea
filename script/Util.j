@@ -63,6 +63,14 @@ library Util{
                 return "false";
             }
         }
+
+        //显示指定范围大小的特效，用来测试范围
+        public static method Range(real x,real y,real dis){
+            integer i;
+            for(0<=i<36){
+                DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl",x+dis*CosBJ(i*10),y+dis*SinBJ(i*10)) );
+            }
+        }
  
     }
 }

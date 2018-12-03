@@ -15,11 +15,12 @@ library Spells requires SpellNameText{
         integer Obj;//自定义数据
         boolean Kill;//技能实例销毁时是否杀死施法单位
         integer Use;//实例的引用计数，为0时销毁
+        integer State;//该技能实例的阶段
 
         //删除实例
         method Destroy(){
             this.Use=this.Use-1;
-            if(this.Use==0){
+            if(this.Use==0){ 
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
@@ -32,10 +33,15 @@ library Spells requires SpellNameText{
                 //自定义事件
         public {
 
+            static constant integer SpellState=0;
+            static constant integer ReadyState=1;
+            static constant integer StartState=2;
+            static constant integer StopState=3;
+
             static constant string onSpell="Spell.UnitSpell";//任意单位发动技能效果
-            static constant string onReady="Spell.UnitReadySpell";//任意单位准备发动技能效果
-            static constant string onStart="Spell.UnitSpell";//任意单位开始发动技能效果
-            static constant string onStop="Spell.UnitSpell";//任意单位停止发动技能效果
+            static constant string onReady="Spell.UnitReadySpell";//任意单位准备发动技能效果(进入技能前摇)
+            static constant string onStart="Spell.UnitStartSpell";//任意单位开始发动技能效果(进入单位前摇)
+            static constant string onStop="Spell.UnitStopSpell";//任意单位停止发动技能效果
 
             //触发指定事件名
             static method Trigger(string eName,integer id,Spell m){ 
@@ -73,6 +79,7 @@ library Spells requires SpellNameText{
             tmp.Obj=0;
             tmp.Kill=false;
             tmp.Use=1;
+            tmp.State=Spell.SpellState;
             if(u.spell!=0){
                 tmp.Use=2;
                 SpellEventInterface(u.spell).evaluate(tmp);
@@ -80,8 +87,33 @@ library Spells requires SpellNameText{
             Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
         }
 
+        //! textmacro SpellFunc takes name,ev,type
+        static method onUnit$name$(EventArgs e){
+            Units u=Units.Get(e.TriggerUnit);
+            Spell tmp=Spell.allocate();
+            tmp.Spell=u.unit;
+            tmp.Target=e.SpellTargetUnit;
+            tmp.X=e.SpellTargetX;
+            tmp.Y=e.SpellTargetY;
+            tmp.Id=e.SpellId;
+            tmp.Angle=0;
+            tmp.Dis=0;
+            tmp.Obj=0;
+            tmp.Kill=false;
+            tmp.Use=1; 
+            tmp.State=$type$;
+            Spell.Trigger(Spell.on$ev$,tmp.Id,tmp);
+        } 
+        //! endtextmacro
+        //! runtextmacro SpellFunc("StartSpell","Start","2")
+        //! runtextmacro SpellFunc("StopSpell","Stop","3")
+        //! runtextmacro SpellFunc("ReadySpell","Ready","1")
+
         static method onInit(){
             Events.On(Events.onUnitSpell,Spell.onUnitSpell);
+            Events.On(Events.onUnitStartSpell,Spell.onUnitStartSpell);
+            Events.On(Events.onUnitStopSpell,Spell.onUnitStopSpell);
+            Events.On(Events.onUnitReadySpell,Spell.onUnitReadySpell);
         }
     }
 }
