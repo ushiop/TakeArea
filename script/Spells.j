@@ -1,4 +1,4 @@
-library Spells{
+library Spells requires SpellNameText{
     //技能管理类
      
     type SpellEventInterface extends function(Spell);
@@ -54,7 +54,7 @@ library Spells{
         static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             Spell tmp=Spell.allocate();
-            SpellNameText(u.unit,GetAbilityName(e.SpellId),3,12.5);
+            SpellNameText(u.unit,GetAbilityName(e.SpellId),3,10);
             tmp.Spell=u.unit;
             tmp.Target=e.SpellTargetUnit;
             tmp.X=e.SpellTargetX;
