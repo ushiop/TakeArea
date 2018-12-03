@@ -56,6 +56,7 @@ library Buff requires Util{
                         tmp=tmp.Next;
                     }
                 }
+                
                 return tmp;
             }
 
@@ -67,9 +68,10 @@ library Buff requires Util{
             static method Add(unit u,integer aid,integer bid,real time,boolean dealy)->Buffs{
                 string target=Util.GetAbilityValue(aid,"targs1"); 
                 Buffs tmp;
+                
                 if(target=="self"){
-                    tmp=Buffs.Find(u,aid,bid);
-                    if(tmp==Buffs.Root){
+                    tmp=Buffs.Find(u,aid,bid); 
+                    if(tmp==0){ 
                         tmp=Buffs.allocate();
                         tmp.NowTime=time;
                         tmp.MaxTime=time;
