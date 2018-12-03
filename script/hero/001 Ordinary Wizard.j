@@ -84,7 +84,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             dash.NowDis=10;
             dash.onMove=function(Dash d){
                 Units u=Units(d.Obj);
-                Units tmp=Units(d.Unit); 
+                Units tmp=Units.Get(d.Unit); 
                 real dis,f;
                 if(d.NowDis>200){  
                     if(u.player.lv15!=null){
@@ -110,7 +110,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             };
             dash.onEnd=function(Dash d){
                 integer i;
-                Units u=Units(d.Unit); 
+                Units u=Units.Get(d.Unit); 
                 effect e; 
                 u.Anime("death");
                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc); 
