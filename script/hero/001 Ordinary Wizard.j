@@ -10,12 +10,12 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             real x=u.X(),y=u.Y(),f=e.Angle;
             Dash dash;
             //气旋
-            Units mj=Units.MJ(u.player.player,'e009',x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,0.5, "stand","wind.mdx");
+            Units mj=Units.MJ(u.player.player,'e009','A002',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1.5, "stand","wind.mdx");
             mj.SetH(200); 
             dash=Dash.Start(mj.unit,f,450,Dash.SUB,60,true,false);
             //气旋结束
             //地裂
-            mj=Units.MJ(u.player.player,'e008',x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.4,1, "stand","dust.mdx");
+            mj=Units.MJ(u.player.player,'e008','A002',1,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.4,1, "stand","dust.mdx");
             mj.SetH(50);
             dash=Dash.Start(mj.unit,f,1600,Dash.SUB,70,true,false);
             dash.Obj=mj; 
@@ -41,7 +41,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             //火球
             DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",x+100*CosBJ(f),y+100*SinBJ(f) ));
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", u.unit, "hand right") );
-            mj=Units.MJ(u.player.player,'e008',x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,2,1, "stand","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
+            mj=Units.MJ(u.player.player,'e008','A002',2,x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,2,1, "stand","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
             mj.SetH(120);      
             SetUnitPosition(mj.unit,mj.X(),mj.Y());
             dash=Dash.Start(mj.unit,f,1300,Dash.ADD,50,true,false);
@@ -49,10 +49,9 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             dash.NowDis=10;
             dash.onMove=function(Dash d){
                 Units u=Units(d.Obj);
-                Units tmp;
+                Units tmp; 
                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),75,function GroupIsAliveNotAloc);
-                if(d.NowDis>200){
-                     
+                if(d.NowDis>200){ 
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));
                         if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
@@ -93,7 +92,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
 
         static method HERO_START(Spell e){
             if(e.Id=='A002'){ 
-                Units.Get(e.Spell).AnimeSpeed(3);
+                Units.Get(e.Spell).AnimeSpeed(2.5);
                 Units.Get(e.Spell).FlushAnimeId(5);//5
             }
             e.Destroy();
