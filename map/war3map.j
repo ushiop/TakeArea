@@ -24,11 +24,11 @@ constant boolean LIBRARY_TakeUi=true
 //endglobals from TakeUi
 //globals from Teams:
 constant boolean LIBRARY_Teams=true
-force Teams__AllPlayers
-// processed:         force  array Teams__Team_Players[3]
-// processed:         rect  array Teams__Team_Rect[3]
-// processed:         string  array Teams__Team_Name[3]
-// processed:         integer  array Teams__Team_Kills[3]
+force Teams___AllPlayers
+// processed:         force  array Teams___Team_Players[3]
+// processed:         rect  array Teams___Team_Rect[3]
+// processed:         string  array Teams___Team_Name[3]
+// processed:         integer  array Teams___Team_Kills[3]
 //endglobals from Teams
 //globals from TerrainPathability:
 constant boolean LIBRARY_TerrainPathability=true
@@ -81,7 +81,7 @@ constant integer TimerUtils___HELD=0x23729801
 //endglobals from TimerUtils
 //globals from Tree:
 constant boolean LIBRARY_Tree=true
-rect array Tree__rec
+rect array Tree___rec
 //endglobals from Tree
 //globals from Util:
 constant boolean LIBRARY_Util=true
@@ -103,6 +103,9 @@ group yd_NullTempGroup
 //globals from YDWEJapiEffect:
 constant boolean LIBRARY_YDWEJapiEffect=true
 //endglobals from YDWEJapiEffect
+//globals from YDWEJapiUnit:
+constant boolean LIBRARY_YDWEJapiUnit=true
+//endglobals from YDWEJapiUnit
 //globals from YDWETriggerEvent:
 constant boolean LIBRARY_YDWETriggerEvent=true
 trigger yd_DamageEventTrigger= null
@@ -136,7 +139,7 @@ constant boolean LIBRARY_DelayTimer=true
 //endglobals from DelayTimer
 //globals from Disconnect:
 constant boolean LIBRARY_Disconnect=true
-integer Disconnect__tmp
+integer Disconnect___tmp
 //endglobals from Disconnect
 //globals from Events:
 constant boolean LIBRARY_Events=true
@@ -168,7 +171,7 @@ constant boolean LIBRARY_Units=true
 //endglobals from Units
 //globals from HeroRare:
 constant boolean LIBRARY_HeroRare=true
-// processed:     unitpool  array HeroRare__HeroRare[3]
+// processed:     unitpool  array HeroRare___HeroRare[3]
 unit HeroRare_LastRandomUnit
 //endglobals from HeroRare
 //globals from Winner:
@@ -210,9 +213,9 @@ sound gg_snd_ItemReceived= null
 sound gg_snd_Winner= null
 trigger gg_trg_init= null
 trigger gg_trg____________________001= null
+trigger gg_trg____________________002= null
 unit gg_unit_e001_0011= null
 unit gg_unit_e000_0010= null
-trigger gg_trg____________________002= null
 
 trigger l__library_init
 
@@ -495,10 +498,10 @@ integer array s__KillUi_TeamNumberHr
 integer array s___KillUi_TeamNumberInfo
 constant integer s___KillUi_TeamNumberInfo_size=3
 integer array s__KillUi_TeamNumberInfo
-constant integer si__OrdinaryWizard___OrdinaryWizard=29
-integer si__OrdinaryWizard___OrdinaryWizard_F=0
-integer si__OrdinaryWizard___OrdinaryWizard_I=0
-integer array si__OrdinaryWizard___OrdinaryWizard_V
+constant integer si__OrdinaryWizard__OrdinaryWizard=29
+integer si__OrdinaryWizard__OrdinaryWizard_F=0
+integer si__OrdinaryWizard__OrdinaryWizard_I=0
+integer array si__OrdinaryWizard__OrdinaryWizard_V
 constant integer si__Respawn__Respawn=30
 integer si__Respawn__Respawn_F=0
 integer si__Respawn__Respawn_I=0
@@ -522,13 +525,13 @@ real array s__Respawn__Respawn_RespawnTime
 integer array s__Respawn__Respawn_RespawnSaveMoney
 integer array s__Respawn__Respawn_RespawnSelectLast
 integer array s__Respawn__Respawn_RespawnSelect
-force array s__Teams__Team_Players
-rect array s__Teams__Team_Rect
-string array s__Teams__Team_Name
-integer array s__Teams__Team_Kills
+force array s__Teams___Team_Players
+rect array s__Teams___Team_Rect
+string array s__Teams___Team_Name
+integer array s__Teams___Team_Kills
 integer array s__TimerUtils___data
 timer array s__TimerUtils___tT
-unitpool array s__HeroRare__HeroRare
+unitpool array s__HeroRare___HeroRare
 integer array s__s__KillUi_KillTeam
 string array s__s__Respawn__Respawn_RespawnType
 integer array si__Table___GTable_type
@@ -555,12 +558,12 @@ trigger st__KillUi_FlushData
 trigger st__KillUi_FlushKillData
 trigger st__Respawn__Respawn_Flush
 trigger st__Respawn__Respawn_Show
-trigger array st___prototype19
 trigger array st___prototype20
 trigger array st___prototype21
 trigger array st___prototype22
-trigger array st___prototype24
-trigger array st___prototype26
+trigger array st___prototype23
+trigger array st___prototype25
+trigger array st___prototype27
 handle f__arg_handle1
 integer f__arg_integer1
 integer f__arg_integer2
@@ -697,6 +700,10 @@ endglobals
 	native EXEffectMatScale takes effect e, real x, real y, real z returns nothing
 	native EXEffectMatReset takes effect e returns nothing
 	native EXSetEffectSpeed takes effect e, real speed returns nothing
+	native EXSetUnitFacing takes unit u, real angle returns nothing
+	native EXPauseUnit takes unit u, boolean flag returns nothing
+	native EXSetUnitCollisionType takes boolean enable, unit u, integer t returns nothing
+	native EXSetUnitMoveType takes unit u, integer t returns nothing
 	native EXExecuteScript takes string script returns string
 
 
@@ -778,35 +785,35 @@ function s__Respawn__Respawn_deallocate takes integer this returns nothing
     set si__Respawn__Respawn_F=this
 endfunction
 
-//Generated allocator of OrdinaryWizard___OrdinaryWizard
-function s__OrdinaryWizard___OrdinaryWizard__allocate takes nothing returns integer
- local integer this=si__OrdinaryWizard___OrdinaryWizard_F
+//Generated allocator of OrdinaryWizard__OrdinaryWizard
+function s__OrdinaryWizard__OrdinaryWizard__allocate takes nothing returns integer
+ local integer this=si__OrdinaryWizard__OrdinaryWizard_F
     if (this!=0) then
-        set si__OrdinaryWizard___OrdinaryWizard_F=si__OrdinaryWizard___OrdinaryWizard_V[this]
+        set si__OrdinaryWizard__OrdinaryWizard_F=si__OrdinaryWizard__OrdinaryWizard_V[this]
     else
-        set si__OrdinaryWizard___OrdinaryWizard_I=si__OrdinaryWizard___OrdinaryWizard_I+1
-        set this=si__OrdinaryWizard___OrdinaryWizard_I
+        set si__OrdinaryWizard__OrdinaryWizard_I=si__OrdinaryWizard__OrdinaryWizard_I+1
+        set this=si__OrdinaryWizard__OrdinaryWizard_I
     endif
     if (this>8190) then
-        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: OrdinaryWizard___OrdinaryWizard")
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: OrdinaryWizard__OrdinaryWizard")
         return 0
     endif
 
-    set si__OrdinaryWizard___OrdinaryWizard_V[this]=-1
+    set si__OrdinaryWizard__OrdinaryWizard_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of OrdinaryWizard___OrdinaryWizard
-function s__OrdinaryWizard___OrdinaryWizard_deallocate takes integer this returns nothing
+//Generated destructor of OrdinaryWizard__OrdinaryWizard
+function s__OrdinaryWizard__OrdinaryWizard_deallocate takes integer this returns nothing
     if this==null then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: OrdinaryWizard___OrdinaryWizard")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: OrdinaryWizard__OrdinaryWizard")
         return
-    elseif (si__OrdinaryWizard___OrdinaryWizard_V[this]!=-1) then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: OrdinaryWizard___OrdinaryWizard")
+    elseif (si__OrdinaryWizard__OrdinaryWizard_V[this]!=-1) then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: OrdinaryWizard__OrdinaryWizard")
         return
     endif
-    set si__OrdinaryWizard___OrdinaryWizard_V[this]=si__OrdinaryWizard___OrdinaryWizard_F
-    set si__OrdinaryWizard___OrdinaryWizard_F=this
+    set si__OrdinaryWizard__OrdinaryWizard_V[this]=si__OrdinaryWizard__OrdinaryWizard_F
+    set si__OrdinaryWizard__OrdinaryWizard_F=this
 endfunction
 
 //Generated method caller for KillUi.FlushPlayerData
@@ -1565,84 +1572,84 @@ function s__HandleTable__allocate takes nothing returns integer
  return this
 endfunction
 
-function sc___prototype19_execute takes integer i,integer a1 returns nothing
+function sc___prototype20_execute takes integer i,integer a1 returns nothing
     set f__arg_integer1=a1
-
-    call TriggerExecute(st___prototype19[i])
-endfunction
-function sc___prototype19_evaluate takes integer i,integer a1 returns nothing
-    set f__arg_integer1=a1
-
-    call TriggerEvaluate(st___prototype19[i])
-
-endfunction
-function sc___prototype20_execute takes integer i,unit a1,integer a2 returns nothing
-    set f__arg_unit1=a1
-    set f__arg_integer1=a2
 
     call TriggerExecute(st___prototype20[i])
 endfunction
-function sc___prototype20_evaluate takes integer i,unit a1,integer a2 returns nothing
-    set f__arg_unit1=a1
-    set f__arg_integer1=a2
+function sc___prototype20_evaluate takes integer i,integer a1 returns nothing
+    set f__arg_integer1=a1
 
     call TriggerEvaluate(st___prototype20[i])
 
 endfunction
-function sc___prototype21_execute takes integer i,string a1 returns nothing
-    set f__arg_string1=a1
+function sc___prototype21_execute takes integer i,unit a1,integer a2 returns nothing
+    set f__arg_unit1=a1
+    set f__arg_integer1=a2
 
     call TriggerExecute(st___prototype21[i])
 endfunction
-function sc___prototype21_evaluate takes integer i,string a1 returns nothing
-    set f__arg_string1=a1
+function sc___prototype21_evaluate takes integer i,unit a1,integer a2 returns nothing
+    set f__arg_unit1=a1
+    set f__arg_integer1=a2
 
     call TriggerEvaluate(st___prototype21[i])
 
 endfunction
-function sc___prototype22_execute takes integer i,player a1,string a2 returns nothing
-    set f__arg_player1=a1
-    set f__arg_string1=a2
+function sc___prototype22_execute takes integer i,string a1 returns nothing
+    set f__arg_string1=a1
 
     call TriggerExecute(st___prototype22[i])
 endfunction
-function sc___prototype22_evaluate takes integer i,player a1,string a2 returns nothing
-    set f__arg_player1=a1
-    set f__arg_string1=a2
+function sc___prototype22_evaluate takes integer i,string a1 returns nothing
+    set f__arg_string1=a1
 
     call TriggerEvaluate(st___prototype22[i])
 
 endfunction
-function sc___prototype24_execute takes integer i,integer a1,integer a2 returns nothing
+function sc___prototype23_execute takes integer i,player a1,string a2 returns nothing
+    set f__arg_player1=a1
+    set f__arg_string1=a2
+
+    call TriggerExecute(st___prototype23[i])
+endfunction
+function sc___prototype23_evaluate takes integer i,player a1,string a2 returns nothing
+    set f__arg_player1=a1
+    set f__arg_string1=a2
+
+    call TriggerEvaluate(st___prototype23[i])
+
+endfunction
+function sc___prototype25_execute takes integer i,integer a1,integer a2 returns nothing
     set f__arg_integer1=a1
     set f__arg_integer2=a2
 
-    call TriggerExecute(st___prototype24[i])
+    call TriggerExecute(st___prototype25[i])
 endfunction
-function sc___prototype24_evaluate takes integer i,integer a1,integer a2 returns nothing
+function sc___prototype25_evaluate takes integer i,integer a1,integer a2 returns nothing
     set f__arg_integer1=a1
     set f__arg_integer2=a2
 
-    call TriggerEvaluate(st___prototype24[i])
+    call TriggerEvaluate(st___prototype25[i])
 
 endfunction
-function sc___prototype26_execute takes integer i,integer a1,unit a2,integer a3,integer a4,real a5 returns nothing
+function sc___prototype27_execute takes integer i,integer a1,unit a2,integer a3,integer a4,real a5 returns nothing
     set f__arg_integer1=a1
     set f__arg_unit1=a2
     set f__arg_integer2=a3
     set f__arg_integer3=a4
     set f__arg_real1=a5
 
-    call TriggerExecute(st___prototype26[i])
+    call TriggerExecute(st___prototype27[i])
 endfunction
-function sc___prototype26_evaluate takes integer i,integer a1,unit a2,integer a3,integer a4,real a5 returns nothing
+function sc___prototype27_evaluate takes integer i,integer a1,unit a2,integer a3,integer a4,real a5 returns nothing
     set f__arg_integer1=a1
     set f__arg_unit1=a2
     set f__arg_integer2=a3
     set f__arg_integer3=a4
     set f__arg_real1=a5
 
-    call TriggerEvaluate(st___prototype26[i])
+    call TriggerEvaluate(st___prototype27[i])
 
 endfunction
 
@@ -2026,66 +2033,66 @@ endfunction
 //library Teams:
 
     //private:  //玩家阵营相关内容初始化类 //玩家组
-        function Teams__anon__2 takes nothing returns boolean
+        function Teams___anon__3 takes nothing returns boolean
             return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
         endfunction
-        function Teams__anon__3 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
+        function Teams___anon__4 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
         endfunction
-        function Teams__anon__4 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
+        function Teams___anon__5 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
         endfunction
-        function Teams__anon__5 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
+        function Teams___anon__6 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
         endfunction
-    function Teams__onInit takes nothing returns nothing
-        set Teams__AllPlayers=GetPlayersMatching(Condition(function Teams__anon__2))
-        set s__Teams__Team_Players[0]= GetPlayersMatching(Condition(function Teams__anon__3))
-        set s__Teams__Team_Players[1]= GetPlayersMatching(Condition(function Teams__anon__4))
-        set s__Teams__Team_Players[2]= GetPlayersMatching(Condition(function Teams__anon__5))
-        set s__Teams__Team_Rect[0]= gg_rct_A_TEAM
-        set s__Teams__Team_Rect[1]= gg_rct_B_TEAM
-        set s__Teams__Team_Rect[2]= gg_rct_C_TEAM
-        set s__Teams__Team_Name[0]= "A组"
-        set s__Teams__Team_Name[1]= "B组"
-        set s__Teams__Team_Name[2]= "C组"
-        call SetPlayerName(Player(9), s__Teams__Team_Name[0])
-        call SetPlayerName(Player(10), s__Teams__Team_Name[1])
-        call SetPlayerName(Player(11), s__Teams__Team_Name[2])
+    function Teams___onInit takes nothing returns nothing
+        set Teams___AllPlayers=GetPlayersMatching(Condition(function Teams___anon__3))
+        set s__Teams___Team_Players[0]= GetPlayersMatching(Condition(function Teams___anon__4))
+        set s__Teams___Team_Players[1]= GetPlayersMatching(Condition(function Teams___anon__5))
+        set s__Teams___Team_Players[2]= GetPlayersMatching(Condition(function Teams___anon__6))
+        set s__Teams___Team_Rect[0]= gg_rct_A_TEAM
+        set s__Teams___Team_Rect[1]= gg_rct_B_TEAM
+        set s__Teams___Team_Rect[2]= gg_rct_C_TEAM
+        set s__Teams___Team_Name[0]= "A组"
+        set s__Teams___Team_Name[1]= "B组"
+        set s__Teams___Team_Name[2]= "C组"
+        call SetPlayerName(Player(9), s__Teams___Team_Name[0])
+        call SetPlayerName(Player(10), s__Teams___Team_Name[1])
+        call SetPlayerName(Player(11), s__Teams___Team_Name[2])
     endfunction
         function s__Teams_GetTeamKills takes integer p returns integer
-            return s__Teams__Team_Kills[p]
+            return s__Teams___Team_Kills[p]
         endfunction
         function s__Teams_AddTeamKills takes integer p,integer k returns nothing
-            set s__Teams__Team_Kills[p]= s__Teams__Team_Kills[p] + k
+            set s__Teams___Team_Kills[p]= s__Teams___Team_Kills[p] + k
         endfunction
         function s__Teams_GetAllPlayers takes nothing returns force
-            return Teams__AllPlayers
+            return Teams___AllPlayers
         endfunction
         function s__Teams_ActionsForAllPlayer takes code f returns nothing
-            call ForForce(Teams__AllPlayers, f)
+            call ForForce(Teams___AllPlayers, f)
         endfunction
         function s__Teams_ActionsForTeamPlayer takes integer tid,code f returns nothing
-            call ForForce(s__Teams__Team_Players[tid], f)
+            call ForForce(s__Teams___Team_Players[tid], f)
         endfunction
         function s__Teams_PlayerRemoveForce takes player p returns nothing
-            call ForceRemovePlayer(Teams__AllPlayers, p)
-            call ForceRemovePlayer(s__Teams__Team_Players[GetPlayerTeam(p)], p)
+            call ForceRemovePlayer(Teams___AllPlayers, p)
+            call ForceRemovePlayer(s__Teams___Team_Players[GetPlayerTeam(p)], p)
         endfunction
         function s__Teams_GetTeamName takes player p returns string
-            return s__Teams__Team_Name[GetPlayerTeam(p)]
+            return s__Teams___Team_Name[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamNameByIndex takes integer p returns string
-            return s__Teams__Team_Name[p]
+            return s__Teams___Team_Name[p]
         endfunction
         function s__Teams_GetTeamRect takes player p returns rect
-            return s__Teams__Team_Rect[GetPlayerTeam(p)]
+            return s__Teams___Team_Rect[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForce takes player p returns force
-            return s__Teams__Team_Players[GetPlayerTeam(p)]
+            return s__Teams___Team_Players[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForceByIndex takes integer p returns force
-            return s__Teams__Team_Players[p]
+            return s__Teams___Team_Players[p]
         endfunction
         function s__Teams_GetTeamNumber takes player p returns integer
             return CountPlayersInForceBJ(s__Teams_GetTeamForce(p))
@@ -2395,27 +2402,27 @@ endfunction
 //library TimerUtils ends
 //library Tree:
 
-        function Tree__anon__8 takes nothing returns nothing
+        function Tree___anon__9 takes nothing returns nothing
             call PolledWait(30.00)
             call DestructableRestoreLife(GetDyingDestructable(), GetDestructableMaxLife(GetDyingDestructable()), true)
         endfunction
-    function Tree__onInit takes nothing returns nothing
+    function Tree___onInit takes nothing returns nothing
         local trigger t
         local location d
         local integer i
         local integer x
-        set Tree__rec[0]=gg_rct_ShuLin_01
-        set Tree__rec[1]=gg_rct_YeGuai_01
-        set Tree__rec[2]=gg_rct_YeGuai_02
+        set Tree___rec[0]=gg_rct_ShuLin_01
+        set Tree___rec[1]=gg_rct_YeGuai_01
+        set Tree___rec[2]=gg_rct_YeGuai_02
         set t=CreateTrigger()
-        call TriggerAddAction(t, function Tree__anon__8)
+        call TriggerAddAction(t, function Tree___anon__9)
         set i=0
         loop
         exitwhen ( i >= 100 )
             set x=0
             loop
             exitwhen ( x >= 3 )
-                set d=GetRandomLocInRect(Tree__rec[x])
+                set d=GetRandomLocInRect(Tree___rec[x])
                 call CreateDestructableLoc('B000', d, GetRandomDirectionDeg(), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4))
                 call TriggerRegisterDeathEvent(t, GetLastCreatedDestructable())
                 call RemoveLocation(d)
@@ -2542,6 +2549,19 @@ endfunction
 	endfunction
 
 //library YDWEJapiEffect ends
+//library YDWEJapiUnit:
+
+
+
+
+ function YDWEUnitAddStun takes unit u returns nothing
+		call EXPauseUnit(u, true)
+	endfunction
+ function YDWEUnitRemoveStun takes unit u returns nothing
+		call EXPauseUnit(u, false)
+	endfunction
+
+//library YDWEJapiUnit ends
 //library YDWETriggerEvent:
 	
 //===========================================================================  
@@ -2653,7 +2673,7 @@ endfunction
                     call UnitRemoveAbility(u, aid)
                     call UnitRemoveAbility(u, bid)
                     if ( s__Buffs_onRemove[tmp] != 0 ) then
-                        call sc___prototype19_evaluate((s__Buffs_onRemove[tmp]),tmp)
+                        call sc___prototype20_evaluate((s__Buffs_onRemove[tmp]),tmp)
                     endif
                     call s__Buffs_Destroy(tmp)
                 endif
@@ -2703,13 +2723,13 @@ endfunction
                         if ( dealy == true ) then
                             set s__Buffs_MaxTime[tmp]=s__Buffs_MaxTime[tmp] + time
                             if ( s__Buffs_onDelay[tmp] != 0 ) then
-                                call sc___prototype19_evaluate((s__Buffs_onDelay[tmp]),tmp)
+                                call sc___prototype20_evaluate((s__Buffs_onDelay[tmp]),tmp)
                             endif
                         else
                             set s__Buffs_NowTime[tmp]=time
                             set s__Buffs_MaxTime[tmp]=time
                             if ( s__Buffs_onFlush[tmp] != 0 ) then
-                                call sc___prototype19_evaluate((s__Buffs_onFlush[tmp]),tmp)
+                                call sc___prototype20_evaluate((s__Buffs_onFlush[tmp]),tmp)
                             endif
                         endif
                         return tmp
@@ -2733,7 +2753,7 @@ endfunction
                 loop
                 exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                     set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                    call sc___prototype20_evaluate(callback,u , m)
+                    call sc___prototype21_evaluate(callback,u , m)
                 set i=i + 1
                 endloop
             endfunction
@@ -2754,13 +2774,13 @@ endfunction
                     if ( s__Buffs_NowTime[tmp] > 0 and IsUnitAliveBJ(s__Buffs_Unit[tmp]) == true ) then
                         set s__Buffs_NowTime[tmp]=s__Buffs_NowTime[tmp] - 0.01
                         if ( s__Buffs_onTime[tmp] != 0 ) then
-                            call sc___prototype19_evaluate((s__Buffs_onTime[tmp]),tmp)
+                            call sc___prototype20_evaluate((s__Buffs_onTime[tmp]),tmp)
                         endif
                     else
                         call UnitRemoveAbility(s__Buffs_Unit[tmp], s__Buffs_Ability[tmp])
                         call UnitRemoveAbility(s__Buffs_Unit[tmp], s__Buffs_Buff[tmp])
                         if ( s__Buffs_onEnd[tmp] != 0 ) then
-                            call sc___prototype19_evaluate((s__Buffs_onEnd[tmp]),tmp)
+                            call sc___prototype20_evaluate((s__Buffs_onEnd[tmp]),tmp)
                         endif
                         call s__Buffs_Destroy(tmp)
                     endif
@@ -2869,12 +2889,12 @@ endfunction
                                 set s__Dash_NowDis[tmp]=s__Dash_NowDis[tmp] + speed
                                 call sc__Units_Position(sc__Units_Get(s__Dash_Unit[tmp]),s__Dash_X[tmp] , s__Dash_Y[tmp] , s__Dash_Order[tmp])
                                 if ( s__Dash_onMove[tmp] != 0 ) then
-                                    call sc___prototype19_evaluate((s__Dash_onMove[tmp]),tmp)
+                                    call sc___prototype20_evaluate((s__Dash_onMove[tmp]),tmp)
                                 endif
                             endif
                         else
                             if ( s__Dash_onEnd[tmp] != 0 ) then
-                                call sc___prototype19_evaluate((s__Dash_onEnd[tmp]),tmp)
+                                call sc___prototype20_evaluate((s__Dash_onEnd[tmp]),tmp)
                             endif
                             call sc__Dash_Destroy(tmp)
                         endif
@@ -2900,10 +2920,10 @@ endfunction
             endfunction
             function s__Dash_Stop takes integer this returns nothing
                 if ( s__Dash_onRemove[this] != 0 ) then
-                    call sc___prototype19_evaluate((s__Dash_onRemove[this]),this)
+                    call sc___prototype20_evaluate((s__Dash_onRemove[this]),this)
                 endif
                 if ( s__Dash_onEnd[this] != 0 ) then
-                    call sc___prototype19_evaluate((s__Dash_onEnd[this]),this)
+                    call sc___prototype20_evaluate((s__Dash_onEnd[this]),this)
                 endif
                 call s__Dash_Destroy(this)
             endfunction
@@ -2914,7 +2934,7 @@ endfunction
                 loop
                 exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                     set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                    call sc___prototype20_evaluate(callback,u , m)
+                    call sc___prototype21_evaluate(callback,u , m)
                 set i=i + 1
                 endloop
             endfunction
@@ -2942,16 +2962,16 @@ endfunction
 //library DelayTimer ends
 //library Disconnect:
 
-        function Disconnect__anon__9 takes nothing returns nothing
-            call AdjustPlayerStateBJ(GetPlayerState(s__Players_player[Disconnect__tmp], PLAYER_STATE_RESOURCE_GOLD) / ( s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+        function Disconnect___anon__10 takes nothing returns nothing
+            call AdjustPlayerStateBJ(GetPlayerState(s__Players_player[Disconnect___tmp], PLAYER_STATE_RESOURCE_GOLD) / ( s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
         endfunction
-    function Disconnect__onDisconnect takes integer e returns nothing
+    function Disconnect___onDisconnect takes integer e returns nothing
         local integer x
         local unit u
-        set Disconnect__tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
-        set u=s__Units_unit[s__Players_hero[Disconnect__tmp]]
+        set Disconnect___tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
+        set u=s__Units_unit[s__Players_hero[Disconnect___tmp]]
         call ReviveHero(u, GetUnitX(u), GetUnitY(u), false)
-        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])))
+        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])))
         set x=1
         loop
         exitwhen ( x > 6 )
@@ -2959,17 +2979,17 @@ endfunction
         set x=x + 1
         endloop
         call sc__HeroRares_AddRandomHero(u)
-        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1
+        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1
         if ( x != 0 ) then
-            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect__tmp]), function Disconnect__anon__9)
+            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect___tmp]), function Disconnect___anon__10)
         endif
-        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect__tmp])
-        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect__tmp] + " 离开了游戏，金钱将平分给他的队友。")
-        set s__Players_isonline[Disconnect__tmp]=false
-        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect__tmp])
+        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
+        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。")
+        set s__Players_isonline[Disconnect___tmp]=false
+        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
         set u=null
     endfunction
-    function Disconnect__onInit takes nothing returns nothing
+    function Disconnect___onInit takes nothing returns nothing
         call sc__Events_On(s__Events_onPlayerDisconnect , (1))
     endfunction
 
@@ -3021,7 +3041,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitDeath),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitDeath),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3048,7 +3068,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onPlayerDisconnect),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onPlayerDisconnect),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3075,7 +3095,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitDamage),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitDamage),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3102,7 +3122,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitSpell),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitSpell),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3129,7 +3149,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitReadySpell),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitReadySpell),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3156,7 +3176,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitStartSpell),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitStartSpell),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3183,7 +3203,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitStopSpell),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onUnitStopSpell),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3210,7 +3230,7 @@ endfunction
         loop
         exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(s__Events_onHeroLevelUp),0) )
             set callback=(s__Table__getindex(s__Table__staticgetindex(s__Events_onHeroLevelUp),i))
-            call sc___prototype19_evaluate(callback,e)
+            call sc___prototype20_evaluate(callback,e)
         set i=i + 1
         endloop
         call s__EventArgs_Destroy(e)
@@ -3262,7 +3282,7 @@ endfunction
             loop
             exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                 set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                call sc___prototype22_evaluate(callback,n , keyName)
+                call sc___prototype23_evaluate(callback,n , keyName)
             set i=i + 1
             endloop
         endfunction
@@ -3280,7 +3300,7 @@ endfunction
             loop
             exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                 set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                call sc___prototype21_evaluate(callback,keyName)
+                call sc___prototype22_evaluate(callback,keyName)
             set i=i + 1
             endloop
         endfunction
@@ -3332,6 +3352,7 @@ endfunction
         function s__Spell_Destroy takes integer this returns nothing
             set s__Spell_Use[this]=s__Spell_Use[this] - 1
             if ( s__Spell_Use[this] == 0 ) then
+                call BJDebugMsg(GetAbilityName(s__Spell_Id[this]) + "结束了阶段:" + I2S(s__Spell_State[this]))
                 if ( s__Spell_Kill[this] == true ) then
                     call sc__Units_Kill(s__Spell_Spell[this])
                 endif
@@ -3344,7 +3365,7 @@ endfunction
             function s__Spell_Trigger takes string eName,integer id,integer m returns nothing
                 local integer callback
                 if ( s__Table__getindex(s__Table__staticgetindex(eName),id) != 0 ) then
-                    call sc___prototype19_evaluate((s__Table__getindex(s__Table__staticgetindex(eName),id)),m)
+                    call sc___prototype20_evaluate((s__Table__getindex(s__Table__staticgetindex(eName),id)),m)
                 else
                     call s__Spell_Destroy(m)
                 endif
@@ -3374,7 +3395,7 @@ endfunction
             set s__Spell_State[tmp]=s__Spell_SpellState
             if ( s__Units_spell[u] != 0 ) then
                 set s__Spell_Use[tmp]=2
-                call sc___prototype19_evaluate((s__Units_spell[u]),tmp)
+                call sc___prototype20_evaluate((s__Units_spell[u]),tmp)
             endif
             call s__Spell_Trigger(s__Spell_onSpell , s__Spell_Id[tmp] , tmp)
         endfunction
@@ -3456,7 +3477,7 @@ endfunction
                 loop
                 exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                     set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                    call sc___prototype19_evaluate(callback,e)
+                    call sc___prototype20_evaluate(callback,e)
                 set i=i + 1
                 endloop
             endfunction
@@ -3616,7 +3637,7 @@ endfunction
             call s__Press_OnSnyc(s__Press_onSnycPressKeyDown , (1))
             call s__Press_OnSnyc(s__Press_onSnycPressKeyUp , (2))
         endfunction
-    function PlayerPress__onInit takes nothing returns nothing
+    function PlayerPress___onInit takes nothing returns nothing
         call TimerStart(NewTimer(), 0.5, true, function s__PlayerPress_onMouse)
     endfunction
 
@@ -3659,6 +3680,21 @@ endfunction
             endfunction
             function s__Units_AnimeId takes integer this,integer id returns nothing
                 call SetUnitAnimationByIndex(s__Units_unit[this], id)
+            endfunction
+                function s__Units_anon__1 takes nothing returns nothing
+                    local integer d=(GetTimerData(GetExpiredTimer()))
+                    call SetUnitAnimationByIndex(s__Units_unit[(s__DelayTimer_obj[d])], s__DelayTimer_obj1[d])
+                    call ReleaseTimer(GetExpiredTimer())
+                    call s__DelayTimer_Destroy(d)
+                endfunction
+            function s__Units_DelayAnime takes integer this,integer id,real delay returns nothing
+                local timer t=NewTimer()
+                local integer data=s__DelayTimer_create()
+                set s__DelayTimer_obj[data]=this
+                set s__DelayTimer_obj1[data]=id
+                call SetTimerData(t , data)
+                call TimerStart(t, delay, false, function s__Units_anon__1)
+                set t=null
             endfunction
             function s__Units_Anime takes integer this,string name returns nothing
                 call SetUnitAnimation(s__Units_unit[this], name)
@@ -3720,7 +3756,7 @@ endfunction
                 loop
                 exitwhen ( i >= s__Table__getindex(s__Table__staticgetindex(eName),0) )
                     set callback=(s__Table__getindex(s__Table__staticgetindex(eName),i))
-                    call sc___prototype24_evaluate(callback,sc__Units_Get(u) , sc__Units_Get(m))
+                    call sc___prototype25_evaluate(callback,sc__Units_Get(u) , sc__Units_Get(m))
                 set i=i + 1
                 endloop
             endfunction
@@ -3825,20 +3861,20 @@ endfunction
 //library Units ends
 //library HeroRare:
 
-        function HeroRare__anon__7 takes nothing returns nothing
+        function HeroRare___anon__8 takes nothing returns nothing
             local unit gu=GetEnumUnit()
             if ( IsUnitType(gu, UNIT_TYPE_HERO) == true ) then
                 call sc__HeroRares_AddRandomHero(gu)
             endif
             set gu=null
         endfunction
-    function HeroRare__onInit takes nothing returns nothing
+    function HeroRare___onInit takes nothing returns nothing
         local group g=CreateGroup()
-        set s__HeroRare__HeroRare[0]= CreateUnitPool()
-        set s__HeroRare__HeroRare[1]= CreateUnitPool()
-        set s__HeroRare__HeroRare[2]= CreateUnitPool()
+        set s__HeroRare___HeroRare[0]= CreateUnitPool()
+        set s__HeroRare___HeroRare[1]= CreateUnitPool()
+        set s__HeroRare___HeroRare[2]= CreateUnitPool()
         call GroupEnumUnitsInRange(g, 0, 0, 65535, null)
-        call ForGroup(g, function HeroRare__anon__7)
+        call ForGroup(g, function HeroRare___anon__8)
         call DestroyGroup(g)
         call sc__HeroRares_Repeat(true)
     endfunction
@@ -3850,7 +3886,7 @@ endfunction
         endfunction
         function s__HeroRares_AddRandomHero takes unit u returns nothing
             if ( s__HeroRares_GetRepeat() == false ) then
-                call UnitPoolAddUnitType(s__HeroRare__HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
+                call UnitPoolAddUnitType(s__HeroRare___HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1)
             endif
             call s__Units_Remove(u)
         endfunction
@@ -3864,10 +3900,10 @@ endfunction
             elseif ( r1 >= 71 ) then
                 set index=2
             endif
-            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare__HeroRare[index], p, 0, 0, 0)
+            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare___HeroRare[index], p, 0, 0, 0)
             call s__Units_Set(HeroRare_LastRandomUnit)
             if ( s__HeroRares_GetRepeat() == false ) then
-                call UnitPoolRemoveUnitType(s__HeroRare__HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
+                call UnitPoolRemoveUnitType(s__HeroRare___HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
             endif
             return HeroRare_LastRandomUnit
         endfunction
@@ -3892,7 +3928,7 @@ endfunction
                 call sc__Winner_ShowWin(s__Players_teamid[s__Units_player[m]])
             endif
         endfunction
-            function s__Winner_anon__10 takes nothing returns nothing
+            function s__Winner_anon__11 takes nothing returns nothing
                 if ( IsPlayerInForce(GetEnumPlayer(), s__Teams_GetTeamForceByIndex(s__Winner_WinTeam)) == true ) then
                     call CustomVictoryBJ(GetEnumPlayer(), true, false)
                 else
@@ -3901,14 +3937,14 @@ endfunction
             endfunction
         function s__Winner_ShowWin takes integer teamid returns nothing
             set s__Winner_WinTeam=teamid
-            call ForForce(s__Teams_GetAllPlayers(), function s__Winner_anon__10)
+            call ForForce(s__Teams_GetAllPlayers(), function s__Winner_anon__11)
         endfunction
         function s__Winner_ShowTip takes nothing returns nothing
             call StopSoundBJ(gg_snd_ItemReceived, false)
             call PlaySoundBJ(gg_snd_ItemReceived)
             call PingMinimap(s__Winner_OX, s__Winner_OY, 3.00)
         endfunction  //夺旗判定 - 范围900码
-            function s__Winner_anon__11 takes nothing returns boolean
+            function s__Winner_anon__12 takes nothing returns boolean
                 return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true
             endfunction
         function s__Winner_onLoop takes nothing returns nothing
@@ -3921,7 +3957,7 @@ endfunction
             local real rtmp
             if ( s__Winner_GameEnd == false ) then
                 set g=CreateGroup()
-                call GroupEnumUnitsInRange(g, s__Winner_OX, s__Winner_OY, 900, Condition(function s__Winner_anon__11))
+                call GroupEnumUnitsInRange(g, s__Winner_OX, s__Winner_OY, 900, Condition(function s__Winner_anon__12))
                 set numbers=CountUnitsInGroup(g)
                 loop
                 exitwhen ( FirstOfGroup(g) == null )
@@ -3982,7 +4018,7 @@ endfunction
             set s__Winner_OY=GetUnitY(Origin_Ball)
             call s__Units_On(s__Units_onHeroDeath , (1))
         endfunction
-    function Winner__onInit takes nothing returns nothing
+    function Winner___onInit takes nothing returns nothing
         call TimerStart(NewTimer(), 0.01, true, function s__Winner_onLoop)
     endfunction
 
@@ -3990,7 +4026,7 @@ endfunction
 //library Init:
 
     //public:  //中央球、阵初始化、杂物初始化类 //中央球,中央阵
-        function Init__anon__1 takes nothing returns nothing
+        function Init___anon__2 takes nothing returns nothing
             local unit u
             local integer p=s__Players_Set(GetEnumPlayer())
             call UnitShareVision(Origin_Ball, s__Players_player[p], true) //目前没有SR、SSR池英雄，随机上限定位R级
@@ -4009,7 +4045,7 @@ endfunction
                 call SetPlayerAllianceStateBJ(s__Players_player[p], Player(11), bj_ALLIANCE_ALLIED_VISION)
             endif
         endfunction
-    function Init__onInit takes nothing returns nothing
+    function Init___onInit takes nothing returns nothing
         local integer i
         set Origin_Ball=gg_unit_e000_0010
         set Origin_Magic=gg_unit_e001_0011
@@ -4019,7 +4055,7 @@ endfunction
         call s__Winner_start()
         set tmp_group=CreateGroup()
         call s__Players_Set(Player(PLAYER_NEUTRAL_PASSIVE))
-        call s__Teams_ActionsForAllPlayer(function Init__anon__1)
+        call s__Teams_ActionsForAllPlayer(function Init___anon__2)
         set i=0 //测试
         loop
         exitwhen ( i > 5 )
@@ -4057,7 +4093,7 @@ endfunction
             set x=x + 1
             endloop
         endfunction
-            function s__KillUi_anon__12 takes nothing returns nothing
+            function s__KillUi_anon__13 takes nothing returns nothing
                 set s___KillUi_TeamPlayer[s__KillUi_TeamPlayer[s__KillUi_tmp]+s__KillUi_TeamNumbers[s__KillUi_tmp]]=s__Players_Get(GetEnumPlayer())
                 set s__KillUi_TeamNumbers[s__KillUi_tmp]=s__KillUi_TeamNumbers[s__KillUi_tmp] + 1
             endfunction
@@ -4065,7 +4101,7 @@ endfunction
             local integer i
             set s__KillUi_tmp=s__KillUi__allocate()
             set s__KillUi_TeamIndex[s__KillUi_tmp]=tid
-            call ForForce(s__Teams_GetTeamForceByIndex(tid), function s__KillUi_anon__12)
+            call ForForce(s__Teams_GetTeamForceByIndex(tid), function s__KillUi_anon__13)
             set s__KillUi_KillBackgroundMaxHeight=s__KillUi_KillBackgroundMaxHeight + 0.007
             set s__KillUi_TeamName[s__KillUi_tmp]=DzCreateFrameByTagName("TEXT", "TEAMNAME_TITLE_" + I2S(tid), s__KillUi_KillBackgroundMaxLine, "TextInfo", 0)
             call DzFrameSetSize(s__KillUi_TeamName[s__KillUi_tmp], 0.2, 0.1)
@@ -4144,11 +4180,11 @@ endfunction
             call s__Press_On(s__Press_onPressKeyDown , (1))
             call s__Press_On(s__Press_onPressKeyUp , (2))
         endfunction
-        function KillUi__anon__13 takes nothing returns nothing
+        function KillUi__anon__14 takes nothing returns nothing
             call s__KillUi_FlushKillData(- 1)
             call ReleaseTimer(GetExpiredTimer())
         endfunction  //-----最小化状态
-        function KillUi__anon__14 takes nothing returns nothing
+        function KillUi__anon__15 takes nothing returns nothing
             local integer i
             local integer index=0
             set i=0
@@ -4165,20 +4201,20 @@ endfunction
             call DzFrameSetSize(s__KillUi_KillBackgroundMaxLine, 0.254, s__KillUi_KillBackgroundMaxHeight)
         endfunction
     function KillUi__onInit takes nothing returns nothing
-        call TimerStart(NewTimer(), 0.05, false, function KillUi__anon__13)
-        call TimerStart(NewTimer(), 0.06, false, function KillUi__anon__14)
+        call TimerStart(NewTimer(), 0.05, false, function KillUi__anon__14)
+        call TimerStart(NewTimer(), 0.06, false, function KillUi__anon__15)
     endfunction
 
 //library KillUi ends
 //library Camera:
 
-        function Camera__anon__6 takes nothing returns nothing
+        function Camera___anon__7 takes nothing returns nothing
             call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 2650.00, 0) //游戏时间轴，方便计算时间;
             set GameTime=GameTime + 0.01
         endfunction
-    function Camera__onInit takes nothing returns nothing
+    function Camera___onInit takes nothing returns nothing
         call CameraSetSmoothingFactor(998.00)
-        call TimerStart(NewTimer(), 0.01, true, function Camera__anon__6)
+        call TimerStart(NewTimer(), 0.01, true, function Camera___anon__7)
     endfunction
 
 //library Camera ends
@@ -4226,10 +4262,44 @@ endfunction
 
 //library Groups ends
 //library OrdinaryWizard:
-            function s__OrdinaryWizard___OrdinaryWizard_anon__17 takes integer da returns nothing
+            function s__OrdinaryWizard__OrdinaryWizard_anon__18 takes nothing returns nothing
+                local integer e=(GetTimerData(GetExpiredTimer()))
+                local integer u=s__Units_Get(s__Spell_Spell[e])
+                local integer mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A004' , 1 , s__Units_X(u) , s__Units_Y(u) , 0 , 2 , 1 , 1 , "birth" , "fire1.mdx")
+                call s__Units_SetH(mj,50)
+                call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", s__Units_X(u), s__Units_Y(u)))
+                call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl", s__Units_X(u), s__Units_Y(u)))
+                call GroupEnumUnitsInRange(tmp_group, s__Units_X(u), s__Units_Y(u), 250, Condition(function GroupIsAliveNotAloc))
+                loop
+                exitwhen ( FirstOfGroup(tmp_group) == null )
+                    set mj=s__Units_Get(FirstOfGroup(tmp_group))
+                    if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then
+                        call s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , s__Units_unit[mj]) , 400 , s__Dash_SUB , 70 , true , true)
+                        call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Magic , 'A004' , s__Units_Int(u) * 10)
+                    endif
+                    call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                endloop
+                call GroupClear(tmp_group)
+                call EXPauseUnit(s__Units_unit[u], false)
+                call s__Spell_Destroy(e)
+                call ReleaseTimer(GetExpiredTimer())
+            endfunction
+        function s__OrdinaryWizard__OrdinaryWizard_W takes integer e returns nothing
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer mj
+            local timer t=NewTimer()
+            call EXPauseUnit(s__Units_unit[u], true)
+            call s__Units_AnimeId(u,6)
+            set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A004' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 2 , 1.5 , 1.5 , "birth" , "fire2.mdx")
+            call s__Units_DelayAnime(mj,2 , 0.8)
+            call SetTimerData(t , e)
+            call TimerStart(t, 0.8, false, function s__OrdinaryWizard__OrdinaryWizard_anon__18)
+            set t=null
+        endfunction
+            function s__OrdinaryWizard__OrdinaryWizard_anon__19 takes integer da returns nothing
                 call s__Units_Anime(s__Units_Get(s__Dash_Unit[da]),"death")
             endfunction
-            function s__OrdinaryWizard___OrdinaryWizard_anon__18 takes integer da returns nothing
+            function s__OrdinaryWizard__OrdinaryWizard_anon__20 takes integer da returns nothing
                 local integer u=(s__Dash_Obj[da])
                 local integer tmp
                 call GroupEnumUnitsInRange(tmp_group, s__Units_X(u), s__Units_Y(u), 150, Condition(function GroupIsAliveNotAloc))
@@ -4247,7 +4317,7 @@ endfunction
                     call s__Units_Anime(u,"death")
                 endif
             endfunction  //地裂结束
-            function s__OrdinaryWizard___OrdinaryWizard_anon__19 takes integer d returns nothing
+            function s__OrdinaryWizard__OrdinaryWizard_anon__21 takes integer d returns nothing
                 local integer u=(s__Dash_Obj[d])
                 local integer tmp
                 call GroupEnumUnitsInRange(tmp_group, s__Units_X(u), s__Units_Y(u), 75, Condition(function GroupIsAliveNotAloc))
@@ -4264,7 +4334,7 @@ endfunction
                     call GroupClear(tmp_group)
                 endif
             endfunction
-            function s__OrdinaryWizard___OrdinaryWizard_anon__20 takes integer d returns nothing
+            function s__OrdinaryWizard__OrdinaryWizard_anon__22 takes integer d returns nothing
                 local integer i
                 local integer u=(s__Dash_Obj[d])
                 local effect e
@@ -4286,7 +4356,7 @@ endfunction
                     call GroupDamage(u , s__Units_X(u) , s__Units_Y(u) , 250 , s__Units_Int(s__Players_hero[s__Units_player[u]]) * 5.0 , s__Damage_Magic , 'A002' , false)
                 endif
             endfunction  //火球结束
-        function s__OrdinaryWizard___OrdinaryWizard_Q takes integer e returns nothing
+        function s__OrdinaryWizard__OrdinaryWizard_Q takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local real x=s__Units_X(u)
             local real y=s__Units_Y(u)
@@ -4314,23 +4384,24 @@ endfunction
             call s__Units_AnimeSpeed(u,1)
             call s__Spell_Destroy(e)
         endfunction
-        function s__OrdinaryWizard___OrdinaryWizard_HERO_START takes integer e returns nothing
+        function s__OrdinaryWizard__OrdinaryWizard_HERO_START takes integer e returns nothing
             if ( s__Spell_Id[e] == 'A002' ) then
-                call s__Units_AnimeSpeed(s__Units_Get(s__Spell_Spell[e]),2.5) //5
+                call s__Units_AnimeSpeed(s__Units_Get(s__Spell_Spell[e]),2.5)
                 call s__Units_FlushAnimeId(s__Units_Get(s__Spell_Spell[e]),5)
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__OrdinaryWizard___OrdinaryWizard_HERO_STOP takes integer e returns nothing
+        function s__OrdinaryWizard__OrdinaryWizard_HERO_STOP takes integer e returns nothing
             if ( s__Spell_Id[e] == 'A002' ) then
                 call s__Units_AnimeSpeed(s__Units_Get(s__Spell_Spell[e]),1)
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__OrdinaryWizard___OrdinaryWizard_onInit takes nothing returns nothing
+        function s__OrdinaryWizard__OrdinaryWizard_onInit takes nothing returns nothing
             call s__Spell_On(s__Spell_onSpell , 'A002' , (14))
-            call s__Spell_On(s__Spell_onStart , 'A002' , (15))
-            call s__Spell_On(s__Spell_onStop , 'A002' , (16))
+            call s__Spell_On(s__Spell_onSpell , 'A004' , (15))
+            call s__Spell_On(s__Spell_onStart , 'A002' , (16))
+            call s__Spell_On(s__Spell_onStop , 'A002' , (17))
         endfunction
 
 //library OrdinaryWizard ends
@@ -4363,7 +4434,7 @@ endfunction
             set s__Players_respawn[ps]=0
             call s__Respawn__Respawn_deallocate(r)
         endfunction
-            function s__Respawn__Respawn_anon__15 takes nothing returns nothing
+            function s__Respawn__Respawn_anon__16 takes nothing returns nothing
                 local integer p=s__Players_Get(GetEnumPlayer())
                 local integer r=(s__Players_respawn[p])
                 if ( s__Respawn__Respawn_RespawnTime[r] > 0 ) then
@@ -4374,16 +4445,16 @@ endfunction
                 endif
             endfunction
         function s__Respawn__Respawn_Time takes nothing returns nothing
-            call ForForce(s__Teams_GetAllPlayers(), function s__Respawn__Respawn_anon__15)
+            call ForForce(s__Teams_GetAllPlayers(), function s__Respawn__Respawn_anon__16)
         endfunction
-            function s__Respawn__Respawn_anon__16 takes nothing returns nothing
+            function s__Respawn__Respawn_anon__17 takes nothing returns nothing
                 call AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
             endfunction
         function s__Respawn__Respawn_Death takes integer u,integer m returns nothing
             local integer r=s__Respawn__Respawn__allocate()
             if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                 set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
-                call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__16)
+                call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__17)
                 call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[m]] + " 及友军因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r")
                 if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                     set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
@@ -4560,7 +4631,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Mon Dec 03 20:33:33 2018
+//   Date: Mon Dec 03 21:06:12 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -4726,6 +4797,7 @@ function Trig_initActions takes nothing returns nothing
     call SetUnitUserData(gg_unit_e001_0011, 0)
     call BJDebugMsg(( EXExecuteScript("(require'jass.slk').unit[" + I2S('hrif') + "].Art") ))
     call EXEffectMatReset(bj_lastCreatedEffect)
+    call YDWEUnitAddStun(GetTriggerUnit())
 endfunction
 //===========================================================================
 function InitTrig_init takes nothing returns nothing
@@ -4752,23 +4824,9 @@ function InitTrig____________________001 takes nothing returns nothing
     call TriggerAddAction(gg_trg____________________001, function Trig____________________001Actions)
 endfunction
 //===========================================================================
-// Trigger: 未命名触发器 002
-//===========================================================================
-function Trig____________________002Actions takes nothing returns nothing
-    call KillUnit(FirstOfGroup(YDWEGetUnitsOfPlayerAllNull(Player(0))))
-endfunction
-//===========================================================================
-function InitTrig____________________002 takes nothing returns nothing
-    set gg_trg____________________002=CreateTrigger()
-    call DoNothing()
-    call TriggerRegisterPlayerEventEndCinematic(gg_trg____________________002, Player(0))
-    call TriggerAddAction(gg_trg____________________002, function Trig____________________002Actions)
-endfunction
-//===========================================================================
 function InitCustomTriggers takes nothing returns nothing
     call InitTrig_init()
     call InitTrig____________________001()
-    call InitTrig____________________002()
 endfunction
 //***************************************************************************
 //*
@@ -4951,23 +5009,23 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs277370343")
-call ExecuteFunc("Teams__onInit")
+call ExecuteFunc("jasshelper__initstructs279329250")
+call ExecuteFunc("Teams___onInit")
 call ExecuteFunc("TerrainPathability___Init")
 call ExecuteFunc("TimerUtils___init")
-call ExecuteFunc("Tree__onInit")
+call ExecuteFunc("Tree___onInit")
 call ExecuteFunc("Buff__onInit")
 call ExecuteFunc("Dashs__onInit")
-call ExecuteFunc("Disconnect__onInit")
+call ExecuteFunc("Disconnect___onInit")
 call ExecuteFunc("Events___onInit")
 call ExecuteFunc("Press___onInit")
 call ExecuteFunc("LevelUp__onInit")
-call ExecuteFunc("PlayerPress__onInit")
-call ExecuteFunc("HeroRare__onInit")
-call ExecuteFunc("Winner__onInit")
-call ExecuteFunc("Init__onInit")
+call ExecuteFunc("PlayerPress___onInit")
+call ExecuteFunc("HeroRare___onInit")
+call ExecuteFunc("Winner___onInit")
+call ExecuteFunc("Init___onInit")
 call ExecuteFunc("KillUi__onInit")
-call ExecuteFunc("Camera__onInit")
+call ExecuteFunc("Camera___onInit")
 call ExecuteFunc("Respawn__onInit")
 
     call InitGlobals()
@@ -5109,7 +5167,7 @@ endfunction
 function sa__Winner_ShowWin takes nothing returns boolean
 local integer teamid=f__arg_integer1
             set s__Winner_WinTeam=teamid
-            call ForForce(s__Teams_GetAllPlayers(), function s__Winner_anon__10)
+            call ForForce(s__Teams_GetAllPlayers(), function s__Winner_anon__11)
    return true
 endfunction
 function sa__HeroRares_Repeat takes nothing returns boolean
@@ -5187,10 +5245,10 @@ endfunction
 function sa__Dash_Stop takes nothing returns boolean
 local integer this=f__arg_this
                 if ( s__Dash_onRemove[this] != 0 ) then
-                    call sc___prototype19_evaluate((s__Dash_onRemove[this]),this)
+                    call sc___prototype20_evaluate((s__Dash_onRemove[this]),this)
                 endif
                 if ( s__Dash_onEnd[this] != 0 ) then
-                    call sc___prototype19_evaluate((s__Dash_onEnd[this]),this)
+                    call sc___prototype20_evaluate((s__Dash_onEnd[this]),this)
                 endif
                 call s__Dash_Destroy(this)
    return true
@@ -5229,15 +5287,15 @@ local integer value=f__arg_integer1
             call SaveInteger(Table___ht, (this), GetHandleId(key), value)
    return true
 endfunction
-function sa___prototype19_Disconnect__onDisconnect takes nothing returns boolean
+function sa___prototype20_Disconnect___onDisconnect takes nothing returns boolean
  local integer e=f__arg_integer1
 
         local integer x
         local unit u
-        set Disconnect__tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
-        set u=s__Units_unit[s__Players_hero[Disconnect__tmp]]
+        set Disconnect___tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
+        set u=s__Units_unit[s__Players_hero[Disconnect___tmp]]
         call ReviveHero(u, GetUnitX(u), GetUnitY(u), false)
-        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])))
+        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])))
         set x=1
         loop
         exitwhen ( x > 6 )
@@ -5245,18 +5303,18 @@ function sa___prototype19_Disconnect__onDisconnect takes nothing returns boolean
         set x=x + 1
         endloop
         call sc__HeroRares_AddRandomHero(u)
-        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1
+        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1
         if ( x != 0 ) then
-            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect__tmp]), function Disconnect__anon__9)
+            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect___tmp]), function Disconnect___anon__10)
         endif
-        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect__tmp])
-        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect__tmp] + " 离开了游戏，金钱将平分给他的队友。")
-        set s__Players_isonline[Disconnect__tmp]=false
-        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect__tmp])
+        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
+        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。")
+        set s__Players_isonline[Disconnect___tmp]=false
+        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
         set u=null
     return true
 endfunction
-function sa___prototype19_LevelUp__LvUp takes nothing returns boolean
+function sa___prototype20_LevelUp__LvUp takes nothing returns boolean
  local integer e=f__arg_integer1
 
         local integer lv=GetUnitLevel(s__EventArgs_TriggerUnit[e])
@@ -5281,7 +5339,7 @@ function sa___prototype19_LevelUp__LvUp takes nothing returns boolean
         endif
     return true
 endfunction
-function sa___prototype19_s__Spell_onUnitSpell takes nothing returns boolean
+function sa___prototype20_s__Spell_onUnitSpell takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=sc__Units_Get(s__EventArgs_TriggerUnit[e])
@@ -5305,12 +5363,12 @@ function sa___prototype19_s__Spell_onUnitSpell takes nothing returns boolean
             set s__Spell_State[tmp]=s__Spell_SpellState
             if ( s__Units_spell[u] != 0 ) then
                 set s__Spell_Use[tmp]=2
-                call sc___prototype19_evaluate((s__Units_spell[u]),tmp)
+                call sc___prototype20_evaluate((s__Units_spell[u]),tmp)
             endif
             call s__Spell_Trigger(s__Spell_onSpell , s__Spell_Id[tmp] , tmp)
     return true
 endfunction
-function sa___prototype19_s__Spell_onUnitStartSpell takes nothing returns boolean
+function sa___prototype20_s__Spell_onUnitStartSpell takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=sc__Units_Get(s__EventArgs_TriggerUnit[e])
@@ -5329,7 +5387,7 @@ function sa___prototype19_s__Spell_onUnitStartSpell takes nothing returns boolea
             call s__Spell_Trigger(s__Spell_onStart , s__Spell_Id[tmp] , tmp)
     return true
 endfunction
-function sa___prototype19_s__Spell_onUnitStopSpell takes nothing returns boolean
+function sa___prototype20_s__Spell_onUnitStopSpell takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=sc__Units_Get(s__EventArgs_TriggerUnit[e])
@@ -5348,7 +5406,7 @@ function sa___prototype19_s__Spell_onUnitStopSpell takes nothing returns boolean
             call s__Spell_Trigger(s__Spell_onStop , s__Spell_Id[tmp] , tmp)
     return true
 endfunction
-function sa___prototype19_s__Spell_onUnitReadySpell takes nothing returns boolean
+function sa___prototype20_s__Spell_onUnitReadySpell takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=sc__Units_Get(s__EventArgs_TriggerUnit[e])
@@ -5367,7 +5425,7 @@ function sa___prototype19_s__Spell_onUnitReadySpell takes nothing returns boolea
             call s__Spell_Trigger(s__Spell_onReady , s__Spell_Id[tmp] , tmp)
     return true
 endfunction
-function sa___prototype19_s__Damage_onDisconnect takes nothing returns boolean
+function sa___prototype20_s__Damage_onDisconnect takes nothing returns boolean
  local integer p=f__arg_integer1
 
             if ( s__HandleTable_exists(s__Damage_ht,s__EventArgs_TriggerPlayer[p]) == true ) then
@@ -5375,7 +5433,7 @@ function sa___prototype19_s__Damage_onDisconnect takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype19_s__Damage_onDamage takes nothing returns boolean
+function sa___prototype20_s__Damage_onDamage takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer dmg=s__DamageArgs_create()
@@ -5410,7 +5468,7 @@ function sa___prototype19_s__Damage_onDamage takes nothing returns boolean
             call s__DamageArgs_Destroy(dmg)
     return true
 endfunction
-function sa___prototype22_s__PlayerPress_Down takes nothing returns boolean
+function sa___prototype23_s__PlayerPress_Down takes nothing returns boolean
  local player ps=f__arg_player1
  local string e=f__arg_string1
 
@@ -5433,7 +5491,7 @@ function sa___prototype22_s__PlayerPress_Down takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype22_s__PlayerPress_Up takes nothing returns boolean
+function sa___prototype23_s__PlayerPress_Up takes nothing returns boolean
  local player ps=f__arg_player1
  local string e=f__arg_string1
 
@@ -5453,11 +5511,11 @@ function sa___prototype22_s__PlayerPress_Up takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype26_s__Units_Damage takes nothing returns boolean
+function sa___prototype27_s__Units_Damage takes nothing returns boolean
     call s__Units_Damage(f__arg_integer1,f__arg_unit1,f__arg_integer2,f__arg_integer3,f__arg_real1)
     return true
 endfunction
-function sa___prototype19_s__Units_onDeath takes nothing returns boolean
+function sa___prototype20_s__Units_onDeath takes nothing returns boolean
  local integer e=f__arg_integer1
 
             if ( IsUnitType(s__EventArgs_TriggerUnit[e], UNIT_TYPE_HERO) == true ) then
@@ -5476,7 +5534,7 @@ function sa___prototype19_s__Units_onDeath takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype24_s__Winner_Death takes nothing returns boolean
+function sa___prototype25_s__Winner_Death takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -5494,7 +5552,7 @@ function sa___prototype24_s__Winner_Death takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype21_s__KillUi_Show takes nothing returns boolean
+function sa___prototype22_s__KillUi_Show takes nothing returns boolean
  local string e=f__arg_string1
 
             if ( e == "F2" ) then
@@ -5502,7 +5560,7 @@ function sa___prototype21_s__KillUi_Show takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype21_s__KillUi_Hide takes nothing returns boolean
+function sa___prototype22_s__KillUi_Hide takes nothing returns boolean
  local string e=f__arg_string1
 
             if ( e == "F2" ) then
@@ -5510,13 +5568,13 @@ function sa___prototype21_s__KillUi_Hide takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__17 takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__19 takes nothing returns boolean
  local integer da=f__arg_integer1
 
                 call s__Units_Anime(s__Units_Get(s__Dash_Unit[da]),"death")
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__18 takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__20 takes nothing returns boolean
  local integer da=f__arg_integer1
 
                 local integer u=(s__Dash_Obj[da])
@@ -5537,7 +5595,7 @@ function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__18 takes noth
                 endif
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__19 takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__21 takes nothing returns boolean
  local integer d=f__arg_integer1
 
                 local integer u=(s__Dash_Obj[d])
@@ -5557,7 +5615,7 @@ function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__19 takes noth
                 endif
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__20 takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__22 takes nothing returns boolean
  local integer d=f__arg_integer1
 
                 local integer i
@@ -5582,7 +5640,7 @@ function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__20 takes noth
                 endif
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_Q takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -5613,17 +5671,32 @@ function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_Q takes nothing ret
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_START takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_W takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer mj
+            local timer t=NewTimer()
+            call EXPauseUnit(s__Units_unit[u], true)
+            call s__Units_AnimeId(u,6)
+            set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A004' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 2 , 1.5 , 1.5 , "birth" , "fire2.mdx")
+            call s__Units_DelayAnime(mj,2 , 0.8)
+            call SetTimerData(t , e)
+            call TimerStart(t, 0.8, false, function s__OrdinaryWizard__OrdinaryWizard_anon__18)
+            set t=null
+    return true
+endfunction
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             if ( s__Spell_Id[e] == 'A002' ) then
-                call s__Units_AnimeSpeed(s__Units_Get(s__Spell_Spell[e]),2.5) //5
+                call s__Units_AnimeSpeed(s__Units_Get(s__Spell_Spell[e]),2.5)
                 call s__Units_FlushAnimeId(s__Units_Get(s__Spell_Spell[e]),5)
             endif
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP takes nothing returns boolean
+function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             if ( s__Spell_Id[e] == 'A002' ) then
@@ -5632,14 +5705,14 @@ function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP takes not
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype24_s__Respawn__Respawn_Death takes nothing returns boolean
+function sa___prototype25_s__Respawn__Respawn_Death takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
             local integer r=s__Respawn__Respawn__allocate()
             if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                 set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
-                call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__16)
+                call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__17)
                 call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[m]] + " 及友军因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r")
                 if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                     set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
@@ -5658,7 +5731,7 @@ function sa___prototype24_s__Respawn__Respawn_Death takes nothing returns boolea
             call sc__Respawn__Respawn_Show(s__Players_player[s__Units_player[u]] , true)
     return true
 endfunction
-function sa___prototype21_s__Respawn__Respawn_Press takes nothing returns boolean
+function sa___prototype22_s__Respawn__Respawn_Press takes nothing returns boolean
  local string e=f__arg_string1
 
             local integer p=s__Players_Get(s__Players_localplayer)
@@ -5674,7 +5747,7 @@ function sa___prototype21_s__Respawn__Respawn_Press takes nothing returns boolea
             endif
     return true
 endfunction
-function sa___prototype22_s__Respawn__Respawn_PressSnyc takes nothing returns boolean
+function sa___prototype23_s__Respawn__Respawn_PressSnyc takes nothing returns boolean
  local player ps=f__arg_player1
  local string e=f__arg_string1
 
@@ -5695,7 +5768,7 @@ function sa___prototype22_s__Respawn__Respawn_PressSnyc takes nothing returns bo
     return true
 endfunction
 
-function jasshelper__initstructs277370343 takes nothing returns nothing
+function jasshelper__initstructs279329250 takes nothing returns nothing
     set st__Respawn__Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn__Respawn_Flush,Condition( function sa__Respawn__Respawn_Flush))
     set st__Respawn__Respawn_Show=CreateTrigger()
@@ -5745,81 +5818,84 @@ function jasshelper__initstructs277370343 takes nothing returns nothing
     call TriggerAddCondition(st__HandleTable__getindex,Condition( function sa__HandleTable__getindex))
     set st__HandleTable__setindex=CreateTrigger()
     call TriggerAddCondition(st__HandleTable__setindex,Condition( function sa__HandleTable__setindex))
-    set st___prototype19[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[1],function sa___prototype19_Disconnect__onDisconnect)
-    call TriggerAddCondition(st___prototype19[1],Condition(function sa___prototype19_Disconnect__onDisconnect))
-    set st___prototype19[8]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[8],function sa___prototype19_LevelUp__LvUp)
-    call TriggerAddCondition(st___prototype19[8],Condition(function sa___prototype19_LevelUp__LvUp))
-    set st___prototype19[2]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[2],function sa___prototype19_s__Spell_onUnitSpell)
-    call TriggerAddCondition(st___prototype19[2],Condition(function sa___prototype19_s__Spell_onUnitSpell))
-    set st___prototype19[3]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[3],function sa___prototype19_s__Spell_onUnitStartSpell)
-    call TriggerAddCondition(st___prototype19[3],Condition(function sa___prototype19_s__Spell_onUnitStartSpell))
-    set st___prototype19[4]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[4],function sa___prototype19_s__Spell_onUnitStopSpell)
-    call TriggerAddCondition(st___prototype19[4],Condition(function sa___prototype19_s__Spell_onUnitStopSpell))
-    set st___prototype19[5]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[5],function sa___prototype19_s__Spell_onUnitReadySpell)
-    call TriggerAddCondition(st___prototype19[5],Condition(function sa___prototype19_s__Spell_onUnitReadySpell))
-    set st___prototype19[6]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[6],function sa___prototype19_s__Damage_onDisconnect)
-    call TriggerAddCondition(st___prototype19[6],Condition(function sa___prototype19_s__Damage_onDisconnect))
-    set st___prototype19[7]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[7],function sa___prototype19_s__Damage_onDamage)
-    call TriggerAddCondition(st___prototype19[7],Condition(function sa___prototype19_s__Damage_onDamage))
+    set st___prototype20[1]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[1],function sa___prototype20_Disconnect___onDisconnect)
+    call TriggerAddCondition(st___prototype20[1],Condition(function sa___prototype20_Disconnect___onDisconnect))
+    set st___prototype20[8]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[8],function sa___prototype20_LevelUp__LvUp)
+    call TriggerAddCondition(st___prototype20[8],Condition(function sa___prototype20_LevelUp__LvUp))
+    set st___prototype20[2]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[2],function sa___prototype20_s__Spell_onUnitSpell)
+    call TriggerAddCondition(st___prototype20[2],Condition(function sa___prototype20_s__Spell_onUnitSpell))
+    set st___prototype20[3]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[3],function sa___prototype20_s__Spell_onUnitStartSpell)
+    call TriggerAddCondition(st___prototype20[3],Condition(function sa___prototype20_s__Spell_onUnitStartSpell))
+    set st___prototype20[4]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[4],function sa___prototype20_s__Spell_onUnitStopSpell)
+    call TriggerAddCondition(st___prototype20[4],Condition(function sa___prototype20_s__Spell_onUnitStopSpell))
+    set st___prototype20[5]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[5],function sa___prototype20_s__Spell_onUnitReadySpell)
+    call TriggerAddCondition(st___prototype20[5],Condition(function sa___prototype20_s__Spell_onUnitReadySpell))
+    set st___prototype20[6]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[6],function sa___prototype20_s__Damage_onDisconnect)
+    call TriggerAddCondition(st___prototype20[6],Condition(function sa___prototype20_s__Damage_onDisconnect))
+    set st___prototype20[7]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[7],function sa___prototype20_s__Damage_onDamage)
+    call TriggerAddCondition(st___prototype20[7],Condition(function sa___prototype20_s__Damage_onDamage))
+    set st___prototype23[1]=CreateTrigger()
+    call TriggerAddAction(st___prototype23[1],function sa___prototype23_s__PlayerPress_Down)
+    call TriggerAddCondition(st___prototype23[1],Condition(function sa___prototype23_s__PlayerPress_Down))
+    set st___prototype23[2]=CreateTrigger()
+    call TriggerAddAction(st___prototype23[2],function sa___prototype23_s__PlayerPress_Up)
+    call TriggerAddCondition(st___prototype23[2],Condition(function sa___prototype23_s__PlayerPress_Up))
+    set st___prototype27[1]=CreateTrigger()
+    call TriggerAddAction(st___prototype27[1],function sa___prototype27_s__Units_Damage)
+    call TriggerAddCondition(st___prototype27[1],Condition(function sa___prototype27_s__Units_Damage))
+    set st___prototype20[9]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[9],function sa___prototype20_s__Units_onDeath)
+    call TriggerAddCondition(st___prototype20[9],Condition(function sa___prototype20_s__Units_onDeath))
+    set st___prototype25[1]=CreateTrigger()
+    call TriggerAddAction(st___prototype25[1],function sa___prototype25_s__Winner_Death)
+    call TriggerAddCondition(st___prototype25[1],Condition(function sa___prototype25_s__Winner_Death))
     set st___prototype22[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype22[1],function sa___prototype22_s__PlayerPress_Down)
-    call TriggerAddCondition(st___prototype22[1],Condition(function sa___prototype22_s__PlayerPress_Down))
+    call TriggerAddAction(st___prototype22[1],function sa___prototype22_s__KillUi_Show)
+    call TriggerAddCondition(st___prototype22[1],Condition(function sa___prototype22_s__KillUi_Show))
     set st___prototype22[2]=CreateTrigger()
-    call TriggerAddAction(st___prototype22[2],function sa___prototype22_s__PlayerPress_Up)
-    call TriggerAddCondition(st___prototype22[2],Condition(function sa___prototype22_s__PlayerPress_Up))
-    set st___prototype26[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype26[1],function sa___prototype26_s__Units_Damage)
-    call TriggerAddCondition(st___prototype26[1],Condition(function sa___prototype26_s__Units_Damage))
-    set st___prototype19[9]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[9],function sa___prototype19_s__Units_onDeath)
-    call TriggerAddCondition(st___prototype19[9],Condition(function sa___prototype19_s__Units_onDeath))
-    set st___prototype24[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype24[1],function sa___prototype24_s__Winner_Death)
-    call TriggerAddCondition(st___prototype24[1],Condition(function sa___prototype24_s__Winner_Death))
-    set st___prototype21[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype21[1],function sa___prototype21_s__KillUi_Show)
-    call TriggerAddCondition(st___prototype21[1],Condition(function sa___prototype21_s__KillUi_Show))
-    set st___prototype21[2]=CreateTrigger()
-    call TriggerAddAction(st___prototype21[2],function sa___prototype21_s__KillUi_Hide)
-    call TriggerAddCondition(st___prototype21[2],Condition(function sa___prototype21_s__KillUi_Hide))
-    set st___prototype19[10]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[10],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__17)
-    call TriggerAddCondition(st___prototype19[10],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__17))
-    set st___prototype19[11]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[11],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__18)
-    call TriggerAddCondition(st___prototype19[11],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__18))
-    set st___prototype19[12]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[12],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__19)
-    call TriggerAddCondition(st___prototype19[12],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__19))
-    set st___prototype19[13]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[13],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__20)
-    call TriggerAddCondition(st___prototype19[13],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_anon__20))
-    set st___prototype19[14]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[14],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_Q)
-    call TriggerAddCondition(st___prototype19[14],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_Q))
-    set st___prototype19[15]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[15],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_START)
-    call TriggerAddCondition(st___prototype19[15],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_START))
-    set st___prototype19[16]=CreateTrigger()
-    call TriggerAddAction(st___prototype19[16],function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP)
-    call TriggerAddCondition(st___prototype19[16],Condition(function sa___prototype19_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP))
-    set st___prototype24[2]=CreateTrigger()
-    call TriggerAddAction(st___prototype24[2],function sa___prototype24_s__Respawn__Respawn_Death)
-    call TriggerAddCondition(st___prototype24[2],Condition(function sa___prototype24_s__Respawn__Respawn_Death))
-    set st___prototype21[3]=CreateTrigger()
-    call TriggerAddAction(st___prototype21[3],function sa___prototype21_s__Respawn__Respawn_Press)
-    call TriggerAddCondition(st___prototype21[3],Condition(function sa___prototype21_s__Respawn__Respawn_Press))
+    call TriggerAddAction(st___prototype22[2],function sa___prototype22_s__KillUi_Hide)
+    call TriggerAddCondition(st___prototype22[2],Condition(function sa___prototype22_s__KillUi_Hide))
+    set st___prototype20[10]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[10],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__19)
+    call TriggerAddCondition(st___prototype20[10],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__19))
+    set st___prototype20[11]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[11],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__20)
+    call TriggerAddCondition(st___prototype20[11],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__20))
+    set st___prototype20[12]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[12],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__21)
+    call TriggerAddCondition(st___prototype20[12],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__21))
+    set st___prototype20[13]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[13],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__22)
+    call TriggerAddCondition(st___prototype20[13],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_anon__22))
+    set st___prototype20[14]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[14],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_Q)
+    call TriggerAddCondition(st___prototype20[14],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_Q))
+    set st___prototype20[15]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[15],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_W)
+    call TriggerAddCondition(st___prototype20[15],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_W))
+    set st___prototype20[16]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[16],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_START)
+    call TriggerAddCondition(st___prototype20[16],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_START))
+    set st___prototype20[17]=CreateTrigger()
+    call TriggerAddAction(st___prototype20[17],function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_STOP)
+    call TriggerAddCondition(st___prototype20[17],Condition(function sa___prototype20_s__OrdinaryWizard__OrdinaryWizard_HERO_STOP))
+    set st___prototype25[2]=CreateTrigger()
+    call TriggerAddAction(st___prototype25[2],function sa___prototype25_s__Respawn__Respawn_Death)
+    call TriggerAddCondition(st___prototype25[2],Condition(function sa___prototype25_s__Respawn__Respawn_Death))
     set st___prototype22[3]=CreateTrigger()
-    call TriggerAddAction(st___prototype22[3],function sa___prototype22_s__Respawn__Respawn_PressSnyc)
-    call TriggerAddCondition(st___prototype22[3],Condition(function sa___prototype22_s__Respawn__Respawn_PressSnyc))
+    call TriggerAddAction(st___prototype22[3],function sa___prototype22_s__Respawn__Respawn_Press)
+    call TriggerAddCondition(st___prototype22[3],Condition(function sa___prototype22_s__Respawn__Respawn_Press))
+    set st___prototype23[3]=CreateTrigger()
+    call TriggerAddAction(st___prototype23[3],function sa___prototype23_s__Respawn__Respawn_PressSnyc)
+    call TriggerAddCondition(st___prototype23[3],Condition(function sa___prototype23_s__Respawn__Respawn_PressSnyc))
 
 
 
@@ -5871,7 +5947,7 @@ function jasshelper__initstructs277370343 takes nothing returns nothing
     call ExecuteFunc("s__PlayerPress_onInit")
     call ExecuteFunc("s__Units_onInit")
     call ExecuteFunc("s__KillUi_onInit")
-    call ExecuteFunc("s__OrdinaryWizard___OrdinaryWizard_onInit")
+    call ExecuteFunc("s__OrdinaryWizard__OrdinaryWizard_onInit")
     call ExecuteFunc("s__Respawn__Respawn_onInit")
 endfunction
 

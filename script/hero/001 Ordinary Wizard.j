@@ -6,7 +6,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Units mj;
-            timer t=NewTimer();
+            timer t=NewTimer(); 
             EXPauseUnit(u.unit,true);
             u.AnimeId(6);
             mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
