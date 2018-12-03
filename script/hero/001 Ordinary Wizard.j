@@ -3,6 +3,15 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
     //R级英雄 
     struct OrdinaryWizard{
 
+        //凤凰火焰
+        static method E(Units u,Units m){ 
+            if(u.aid=='A005'&&u.aidindex==0){
+                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
+                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", u.X(),u.Y()) );
+
+            }
+        }
+
         //炎空爆
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
@@ -15,6 +24,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             u.PositionEnabled(false);
             SetTimerData(t,e);
             TimerStart(t,0.8,false,function(){
+                integer i;
                 Spell e=Spell(GetTimerData(GetExpiredTimer()));
                 Units u=Units.Get(e.Spell);
                 Units mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
@@ -31,6 +41,17 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     GroupRemoveUnit(tmp_group,mj.unit);
                 }
                 GroupClear(tmp_group); 
+                if(u.player.lv15!=null){
+                    //是否触发E
+                    if(u.IsAbility('B000')==false){
+                        Buffs.Add(u.unit,'A000','B000',2,false);
+                        for(0<=i<6){
+                            mj=Units.MJ(u.player.player,'e008','A005',0,u.X(),u.Y(),I2R(i)*60,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
+                            Dash.Start(mj.unit,mj.F(),300,Dash.PWX,20,true,false);
+                        }
+                    }
+
+                }
                 u.PositionEnabled(true);
                 EXPauseUnit(u.unit,false);
                 e.Destroy();
@@ -110,7 +131,8 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             };
             dash.onEnd=function(Dash d){
                 integer i;
-                Units u=Units.Get(d.Unit); 
+                Units u=Units.Get(d.Unit),tmp; 
+                real x,y;
                 effect e; 
                 u.Anime("death");
                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc); 
@@ -118,16 +140,27 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 GroupClear(tmp_group);  
                 if(i!=0){  
                     u.Position(u.X()+100*CosBJ(d.Angle),u.Y()+100*SinBJ(d.Angle),false);   
-                    DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\FragDriller\\FragDriller.mdl",u.X(),u.Y()) );
-                    e=AddSpecialEffect("abilities\\weapons\\DemolisherMissile\\DemolisherMissile.mdl", u.X(),u.Y()) ;
+                    x=u.X();
+                    y=u.Y();
+                    DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\FragDriller\\FragDriller.mdl",x,y) );
+                    e=AddSpecialEffect("abilities\\weapons\\DemolisherMissile\\DemolisherMissile.mdl", x,y) ;
                     EXSetEffectSize( e,2);
                     DestroyEffect(e);
-                    e=AddSpecialEffect("Abilities\\Weapons\\DemolisherFireMissile\\DemolisherFireMissile.mdl", u.X(),u.Y());
+                    e=AddSpecialEffect("Abilities\\Weapons\\DemolisherFireMissile\\DemolisherFireMissile.mdl", x,y);
                     EXSetEffectSize( e,2);
                     EXSetEffectSpeed( e, 2.5 );
                     DestroyEffect(e);
                     e=null;
-                    GroupDamage(u,u.X(),u.Y(),250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false);
+                    GroupDamage(u,x,y,250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false); 
+                    u=Units(d.Obj);
+                    if(u.player.lv15!=null){
+                        //是否触发E
+                            Buffs.Add(u.unit,'A000','B000',1,false);
+                            for(0<=i<4){
+                                tmp=Units.MJ(u.player.player,'e008','A005',0,x,y,I2R(i)*90,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
+                                Dash.Start(tmp.unit,tmp.F(),300,Dash.ADD,30,true,false);
+                            }
+                    }
                 } 
             };
             //火球结束
@@ -156,6 +189,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Spell.On(Spell.onSpell,'A004',OrdinaryWizard.W);
             Spell.On(Spell.onStart,'A002',OrdinaryWizard.HERO_START);
             Spell.On(Spell.onStop,'A002',OrdinaryWizard.HERO_STOP);   
+            Units.On(Units.onAlocDeath,OrdinaryWizard.E);
         }
     }
 }
