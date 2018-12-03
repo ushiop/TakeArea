@@ -15,7 +15,7 @@ library Units requires Table,Players,Events,Util{
             boolean isHero;//是否是英雄
             string name;//单位名字
             unit unit; //单位本体
-            boolean nomove;//是否不能被位移
+            boolean move;//是否能被位移
             integer uid;//单位类型ID
             integer spell;//单位释放技能的回调，用于反向捕捉
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
@@ -118,14 +118,14 @@ library Units requires Table,Players,Events,Util{
                 return GetUnitFlyHeight(this.unit);
             }
 
-            //设置单位是否不可以移动,默认为false
-            method PositionDisabled(boolean f){
-                this.nomove=f;
+            //设置单位是否可以移动,默认为true
+            method PositionEnabled(boolean f){
+                this.move=f;
             }
 
             //移动单位到X,Y的位置,order为是否打断命令
             method Position(real x,real y,boolean order){
-                if(this.nomove==false){
+                if(this.move==true){
                     if(order==true){
                         SetUnitPosition(this.unit,x,y);
                     }else{
@@ -240,7 +240,7 @@ library Units requires Table,Players,Events,Util{
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
             ud.spell=0;
-            ud.nomove=false;
+            ud.move=true;
             Units.ht[u]=ud; 
             return ud;
         }

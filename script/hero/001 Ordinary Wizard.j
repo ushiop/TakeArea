@@ -12,12 +12,13 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             u.AnimeId(6);
             mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
             mj.DelayAnime(2,0.8);
+            u.PositionEnabled(false);
             SetTimerData(t,e);
             TimerStart(t,0.8,false,function(){
                 Spell e=Spell(GetTimerData(GetExpiredTimer()));
                 Units u=Units.Get(e.Spell);
                 Units mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
-                mj.SetH(50);
+                mj.SetH(50); 
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);
@@ -29,7 +30,8 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     }
                     GroupRemoveUnit(tmp_group,mj.unit);
                 }
-                GroupClear(tmp_group);
+                GroupClear(tmp_group); 
+                u.PositionEnabled(true);
                 EXPauseUnit(u.unit,false);
                 e.Destroy();
                 ReleaseTimer(GetExpiredTimer());
