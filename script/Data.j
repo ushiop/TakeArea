@@ -12,19 +12,18 @@ library Data{
         group g[2];//单位组型数据
         
 
-        method Destroy(){ 
-            integer i;
+        method Destroy(){  
             if(this.u[0]!=null){
-                BJDebugMsg("DATA异常:u[0]未设空,ID:"+I2S(this.id));
+                BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id));
             }
             if(this.u[1]!=null){
-                BJDebugMsg("DATA异常:u[1]未设空,ID:"+I2S(this.id));
+                BJDebugMsg("DATA异常:u[1]未设空,ID:"+GetAbilityName(this.id));
             }
             if(this.g[0]!=null){
-                BJDebugMsg("DATA异常:g[0]未设空,ID:"+I2S(this.id));
+                BJDebugMsg("DATA异常:g[0]未设空,ID:"+GetAbilityName(this.id));
             }
             if(this.g[1]!=null){
-                BJDebugMsg("DATA异常:g[1]未设空,ID:"+I2S(this.id));
+                BJDebugMsg("DATA异常:g[1]未设空,ID:"+GetAbilityName(this.id));
             }
             this.deallocate();
         }
