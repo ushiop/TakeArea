@@ -1,24 +1,36 @@
 library Groups requires Units,Damage,Init{
     //一些常用的单位组判断
 
+
+
     //是否是建筑
-    public function GroupIsHouse()->boolean{
+    public function GroupIsNotHouse()->boolean{
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE);
     }
 
     //是否存活
-    public function GroupIsAlive()->boolean{
+    public function GroupIsNotAlive()->boolean{
         return IsUnitAliveBJ(GetFilterUnit());
+    }
+
+    //是否不是蝗虫单位
+    public function GroupIsNotAloc()->boolean{
+        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==0;
     }
 
     //是否是蝗虫单位
     public function GroupIsAloc()->boolean{
-        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==0;
+        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==1;
     }
 
-    //是否存活并且不是蝗虫单位
     public function GroupIsAliveAloc()->boolean{
-        return GroupIsAloc()&&GroupIsAlive()&&!GroupIsHouse();
+        return GroupIsAloc()&&GroupIsNotAlive();
+    }
+
+
+    //是否存活并且不是蝗虫单位
+    public function GroupIsAliveNotAloc()->boolean{
+        return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsNotHouse();
     }
 
     public function GroupDamage(Units u,real x,real y,real dis,real dmg,integer dmgtype,integer aid,boolean hero)
