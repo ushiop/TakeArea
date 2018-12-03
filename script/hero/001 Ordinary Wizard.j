@@ -3,6 +3,38 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
     //R级英雄 
     struct OrdinaryWizard{
 
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Units mj;
+            timer t=NewTimer();
+            EXPauseUnit(u.unit,true);
+            u.AnimeId(6);
+            mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
+            mj.DelayAnime(2,0.8);
+            SetTimerData(t,e);
+            TimerStart(t,0.8,false,function(){
+                Spell e=Spell(GetTimerData(GetExpiredTimer()));
+                Units u=Units.Get(e.Spell);
+                Units mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1,"birth","fire1.mdx");
+                mj.SetH(50);
+                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
+                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
+                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                        Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),400,Dash.SUB,70,true,true);    
+                        u.Damage(mj.unit,Damage.Magic,'A004',u.Int()*10);
+                    }
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                }
+                GroupClear(tmp_group);
+                EXPauseUnit(u.unit,false);
+                e.Destroy();
+                ReleaseTimer(GetExpiredTimer());
+            });
+            t=null;
+        }
 
         //火球术
         static method Q(Spell e){
@@ -93,8 +125,8 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
         static method HERO_START(Spell e){
             if(e.Id=='A002'){ 
                 Units.Get(e.Spell).AnimeSpeed(2.5);
-                Units.Get(e.Spell).FlushAnimeId(5);//5
-            }
+                Units.Get(e.Spell).FlushAnimeId(5); 
+            } 
             e.Destroy();
         }
 
@@ -108,8 +140,9 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
         //注册技能事件
         static method onInit(){
             Spell.On(Spell.onSpell,'A002',OrdinaryWizard.Q);
+            Spell.On(Spell.onSpell,'A004',OrdinaryWizard.W);
             Spell.On(Spell.onStart,'A002',OrdinaryWizard.HERO_START);
-            Spell.On(Spell.onStop,'A002',OrdinaryWizard.HERO_STOP);
+            Spell.On(Spell.onStop,'A002',OrdinaryWizard.HERO_STOP);     
         }
     }
 }
