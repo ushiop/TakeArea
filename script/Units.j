@@ -63,17 +63,17 @@ library Units requires Table,Players,Events,Util{
 
             method DelayAnime(integer id,real delay){
                 timer t=NewTimer();
-                DelayTimer data=DelayTimer.create();
-                data.obj=this;
-                data.obj1=id;
+                Data data=Data.create('A000');
+                data.c[0]=this;
+                data.i[0]=id;
                 SetTimerData(t,data);
                 TimerStart(t,delay,false,function(){
-                    DelayTimer d=DelayTimer(GetTimerData(GetExpiredTimer()));  
-                    SetUnitAnimationByIndex(Units(d.obj).unit,d.obj1);
+                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                    SetUnitAnimationByIndex(Units(d.c[0]).unit,d.i[0]);
                     ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
                 });
-                t=null;                
+                t=null;               
             }
 
             //播放单位动画名
