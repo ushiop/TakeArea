@@ -11,11 +11,12 @@ library Units requires Table,Players,Events,Util{
 
         //属性
         public {
-            Players player; 
-            boolean isHero;
-            string name;
-            unit unit; 
-            integer uid;
+            Players player; //玩家对象
+            boolean isHero;//是否是英雄
+            string name;//单位名字
+            unit unit; //单位本体
+            boolean nomove;//是否能被位移
+            integer uid;//单位类型ID
             integer spell;//单位释放技能的回调，用于反向捕捉
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
@@ -117,14 +118,22 @@ library Units requires Table,Players,Events,Util{
                 return GetUnitFlyHeight(this.unit);
             }
 
+            //设置单位是否不可以移动,默认为false
+            method PositionDisabled(boolean f){
+                this.nomove=f;
+            }
+
             //移动单位到X,Y的位置,order为是否打断命令
             method Position(real x,real y,boolean order){
-                if(order==true){
-                    SetUnitPosition(this.unit,x,y);
-                }else{
-                    SetUnitX(this.unit,x);
-                    SetUnitY(this.unit,y);
+                if(this.nomove==false){
+                    if(order==true){
+                        SetUnitPosition(this.unit,x,y);
+                    }else{
+                        SetUnitX(this.unit,x);
+                        SetUnitY(this.unit,y);
+                    }
                 }
+
             }
 
             //使单位对m造成伤害,dtype,spell为本次伤害所属技能，被动填0
@@ -231,6 +240,7 @@ library Units requires Table,Players,Events,Util{
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
             ud.spell=0;
+            ud.nomove=false;
             Units.ht[u]=ud; 
             return ud;
         }
