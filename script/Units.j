@@ -15,7 +15,7 @@ library Units requires Table,Players,Events,Util{
             boolean isHero;//是否是英雄
             string name;//单位名字
             unit unit; //单位本体
-            boolean nomove;//是否能被位移
+            boolean nomove;//是否不能被位移
             integer uid;//单位类型ID
             integer spell;//单位释放技能的回调，用于反向捕捉
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
