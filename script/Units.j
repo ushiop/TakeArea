@@ -141,6 +141,10 @@ library Units requires Table,Players,Events,Util{
                 }
                 SetUnitAbilityLevel(this.unit,aid,lv);
             }
+
+            method RemoveAbility(integer aid){
+                UnitRemoveAbility(this.unit,aid);
+            }
         }
 
         //自定义事件

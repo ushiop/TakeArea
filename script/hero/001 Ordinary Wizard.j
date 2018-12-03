@@ -9,9 +9,12 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Units u=Units.Get(e.Spell);
             real x=u.X(),y=u.Y(),f=e.Angle;
             Dash dash;
-            Units mj=Units.MJ(u.player.player,'e009',x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1, "stand","wind.mdx");
+            //气旋
+            Units mj=Units.MJ(u.player.player,'e009',x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,0.5, "stand","wind.mdx");
             mj.SetH(200); 
-            dash=Dash.Start(mj.unit,f,200,Dash.SUB,60,true,false);
+            dash=Dash.Start(mj.unit,f,450,Dash.SUB,60,true,false);
+            //气旋结束
+            //地裂
             mj=Units.MJ(u.player.player,'e008',x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.4,1, "stand","dust.mdx");
             mj.SetH(50);
             dash=Dash.Start(mj.unit,f,1600,Dash.SUB,70,true,false);
@@ -20,7 +23,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             dash.onMove=function(Dash da){
                 Units u=Units(da.Obj);
                 Units tmp;
-                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveAloc);
+                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));
                     if(IsUnitEnemy(tmp.unit,u.player.player)==true){
@@ -34,17 +37,20 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     u.Anime("death"); 
                 }
             };
+            //地裂结束
+            //火球
             DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",x+100*CosBJ(f),y+100*SinBJ(f) ));
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", u.unit, "hand right") );
             mj=Units.MJ(u.player.player,'e008',x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,2,1, "stand","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
             mj.SetH(120);      
+            SetUnitPosition(mj.unit,mj.X(),mj.Y());
             dash=Dash.Start(mj.unit,f,1300,Dash.ADD,50,true,false);
             dash.Obj=mj;             
             dash.NowDis=10;
             dash.onMove=function(Dash d){
                 Units u=Units(d.Obj);
                 Units tmp;
-                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),75,function GroupIsAliveAloc);
+                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),75,function GroupIsAliveNotAloc);
                 if(d.NowDis>200){
                      
                     while(FirstOfGroup(tmp_group)!=null){
@@ -63,7 +69,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 Units u=Units(d.Obj); 
                 effect e; 
                 u.Anime("death");
-                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveAloc); 
+                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc); 
                 i=CountUnitsInGroup(tmp_group);
                 GroupClear(tmp_group);  
                 if(i!=0){  
@@ -80,7 +86,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     GroupDamage(u,u.X(),u.Y(),250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false);
                 } 
             };
-
+            //火球结束
             u.AnimeSpeed(1); 
             e.Destroy();
         }
