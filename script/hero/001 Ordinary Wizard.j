@@ -9,7 +9,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Units u=Units.Get(e.Spell);
             real x=u.X(),y=u.Y(),f=e.Angle;
             Dash dash;
-            Units mj=Units.MJ(u.player.player,'e009',x+100*CosBJ(f),y+100*SinBJ(f),f,0.5,2,2, "stand","wind.mdx");
+            Units mj=Units.MJ(u.player.player,'e009',x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1, "stand","wind.mdx");
             mj.SetH(200); 
             dash=Dash.Start(mj.unit,f,200,Dash.SUB,60,true,false);
             mj=Units.MJ(u.player.player,'e008',x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.4,1, "stand","dust.mdx");
