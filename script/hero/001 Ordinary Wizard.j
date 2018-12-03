@@ -3,6 +3,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
     //R级英雄 
     struct OrdinaryWizard{
 
+        //炎空爆
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Units mj;
@@ -15,7 +16,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             TimerStart(t,0.8,false,function(){
                 Spell e=Spell(GetTimerData(GetExpiredTimer()));
                 Units u=Units.Get(e.Spell);
-                Units mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1,"birth","fire1.mdx");
+                Units mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
                 mj.SetH(50);
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
@@ -77,13 +78,23 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             mj.SetH(120);      
             SetUnitPosition(mj.unit,mj.X(),mj.Y());
             dash=Dash.Start(mj.unit,f,1300,Dash.ADD,50,true,false);
-            dash.Obj=mj;             
+            dash.Obj=u;             
             dash.NowDis=10;
             dash.onMove=function(Dash d){
                 Units u=Units(d.Obj);
-                Units tmp; 
-                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),75,function GroupIsAliveNotAloc);
-                if(d.NowDis>200){ 
+                Units tmp=Units(d.Unit); 
+                real dis,f;
+                if(d.NowDis>200){  
+                    if(u.player.lv15!=null){
+                        //是否触发E
+                        if(u.IsAbility('B000')==false){
+                            dis=GetRandomReal(0,150);
+                            f=GetRandomReal(0,360);
+                            Buffs.Add(u.unit,'A000','B000',0.03,false);
+                            Units.MJ(u.player.player,'e008','A005',0,tmp.X()+dis*CosBJ(f),tmp.Y()+dis*SinBJ(f),f,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
+                        }
+                    }
+                    GroupEnumUnitsInRange(tmp_group,tmp.X(),tmp.Y(),75,function GroupIsAliveNotAloc);
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));
                         if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
@@ -97,7 +108,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             };
             dash.onEnd=function(Dash d){
                 integer i;
-                Units u=Units(d.Obj); 
+                Units u=Units(d.Unit); 
                 effect e; 
                 u.Anime("death");
                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc); 
@@ -142,7 +153,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Spell.On(Spell.onSpell,'A002',OrdinaryWizard.Q);
             Spell.On(Spell.onSpell,'A004',OrdinaryWizard.W);
             Spell.On(Spell.onStart,'A002',OrdinaryWizard.HERO_START);
-            Spell.On(Spell.onStop,'A002',OrdinaryWizard.HERO_STOP);     
+            Spell.On(Spell.onStop,'A002',OrdinaryWizard.HERO_STOP);   
         }
     }
 }
