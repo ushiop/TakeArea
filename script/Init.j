@@ -10,6 +10,7 @@ library Init requires Teams,HeroRare,Winner,Players{
     }
 
     function onInit(){
+        integer i;
         Origin_Ball=gg_unit_e000_0010;
         Origin_Magic=gg_unit_e001_0011;
         Origin_X=GetUnitX(Origin_Ball);
@@ -38,5 +39,10 @@ library Init requires Teams,HeroRare,Winner,Players{
             }
         }); 
 
+
+        //测试
+        for(0<=i<=5){
+            Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0);
+        }
     }
 }
