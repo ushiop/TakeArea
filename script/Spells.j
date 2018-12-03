@@ -33,6 +33,9 @@ library Spells requires SpellNameText{
         public {
 
             static constant string onSpell="Spell.UnitSpell";//任意单位发动技能效果
+            static constant string onReady="Spell.UnitReadySpell";//任意单位准备发动技能效果
+            static constant string onStart="Spell.UnitSpell";//任意单位开始发动技能效果
+            static constant string onStop="Spell.UnitSpell";//任意单位停止发动技能效果
 
             //触发指定事件名
             static method Trigger(string eName,integer id,Spell m){ 
