@@ -57,15 +57,37 @@ library Units requires Table,Players,Events,Util{
                 UnitApplyTimedLife(this.unit, 'BHwe',time);
             }
 
-
+            //0秒后播放指定动画
             method FlushAnimeId(integer id){
                 this.DelayAnime(id,0);
             }
 
+            //播放指定动画
             method AnimeId(integer id){
                 SetUnitAnimationByIndex( this.unit,id);
             }
 
+            //延迟一定时间后替换单位模型,0秒为立即替换（不开启计时器)
+            method DelayModel(string path,real delay){
+                timer t;
+                Data data;
+                if(delay==0){
+                    DzSetUnitModel(this.unit,path);
+                }else{
+                    t=NewTimer();
+                    data=Data.create('A001');
+                    data.c[0]=this;
+                    data.s[0]=path;
+                    SetTimerData(t,data);
+                    TimerStart(t,delay,false,function(){
+                        Data d=Data(GetTimerData(GetExpiredTimer()));
+                        DzSetUnitModel(Units(d.c[0]).unit,d.s[0]);
+                    });
+                    t=null;
+                }
+            }
+
+            //延迟一定时间后播放动画
             method DelayAnime(integer id,real delay){
                 timer t=NewTimer();
                 Data data=Data.create('A000');
@@ -74,7 +96,8 @@ library Units requires Table,Players,Events,Util{
                 SetTimerData(t,data);
                 TimerStart(t,delay,false,function(){
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
-                    SetUnitAnimationByIndex(Units(d.c[0]).unit,d.i[0]);
+                    Units u=Units(d.c[0]);
+                    u.AnimeId(d.i[0]);
                     ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
                 });
@@ -108,6 +131,15 @@ library Units requires Table,Players,Events,Util{
                 }     
             }
  
+            //设置单位面向角度,ex为是否使用JAPI（立即转身)
+            method SetF(real f,boolean ex){
+                if(ex==true){
+                    EXSetUnitFacing(this.unit,f);
+                }else{
+                    SetUnitFacing(this.unit,f);
+                }
+            }
+
             //返回单位面向角度
             method F()->real{
                 return GetUnitFacing(this.unit);
@@ -142,7 +174,7 @@ library Units requires Table,Players,Events,Util{
             }
 
             //使单位对m造成伤害,dtype,spell为本次伤害所属技能，被动填0
-            method Damage(unit m,integer dtype,integer spell,real dmg){
+            method Damage(unit m,integer dtype,integer spell,real dmg){ 
                 Damage.To(this.player.hero.unit,m,dtype,spell,dmg);
             }
 
