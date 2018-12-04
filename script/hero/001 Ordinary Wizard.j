@@ -112,6 +112,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 Units u=Units.Get(e.Spell);
                 Units mj;
                 if(u.Alive()==true){
+                    Util.Duang(u.X(),u.Y(),1,300,300,-246,0.05,75);
                     mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
                     mj.SetH(50); 
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
