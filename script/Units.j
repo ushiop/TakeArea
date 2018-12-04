@@ -230,6 +230,14 @@ library Units requires Table,Players,Events,Util{
             }
         }
 
+        //任意单位开始腐化（真的死亡)
+        //非英雄单位在这个时候才清空绑定的数据
+        static method onDeacy(EventArgs e){
+            if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==false){ 
+                Units.Destroys(e.TriggerUnit);
+            }
+        }
+
         //任意单位死亡,触发单位类的自定义事件
         static method onDeath(EventArgs e){ 
             if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==true){
@@ -242,9 +250,9 @@ library Units requires Table,Players,Events,Util{
                 if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
                     Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
                 }else{
-                    Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit);  
+                    Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 
+                    Units.Destroys(e.TriggerUnit); 
                 }
-                Units.Destroys(e.TriggerUnit);
             }
         }
 
@@ -265,6 +273,7 @@ library Units requires Table,Players,Events,Util{
         static method onInit(){
             ht = HandleTable.create(); 
             Events.On(Events.onUnitDeath,Units.onDeath); 
+            Events.On(Events.onUnitDeacy,Units.onDeacy);
         }
  
 
