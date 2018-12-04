@@ -23,12 +23,13 @@ library Groups requires Units,Damage,Init{
         return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==1;
     }
 
+    //存活且是蝗虫单位
     public function GroupIsAliveAloc()->boolean{
         return GroupIsAloc()&&GroupIsNotAlive();
     }
 
 
-    //是否存活并且不是蝗虫单位
+    //存活并且不是蝗虫单位
     public function GroupIsAliveNotAloc()->boolean{
         return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsNotHouse();
     }
@@ -37,7 +38,7 @@ library Groups requires Units,Damage,Init{
     { 
         Units tmp;
         boolean f=false;
-        GroupEnumUnitsInRange(tmp_group,x,y,dis,function GroupIsAliveAloc); 
+        GroupEnumUnitsInRange(tmp_group,x,y,dis,function GroupIsAliveNotAloc); 
         while(FirstOfGroup(tmp_group)!=null){
             tmp=Units.Get(FirstOfGroup(tmp_group));
             f=false;
