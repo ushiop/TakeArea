@@ -2,8 +2,7 @@ library Groups requires Units,Damage,Init{
     //一些常用的单位组判断
 
 
-    public group tmp_group=CreateGroup();//公共单位组
-    public unit tmp_group_unit;//公共单位组循环用的单位
+    public group tmp_group=CreateGroup();//公共单位组 
 
     //是否是建筑
     public function GroupIsNotHouse()->boolean{
