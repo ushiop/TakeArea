@@ -10,9 +10,16 @@ library Data{
         integer c[5];//实例型数据(实例ID，由使用方自己转换)
         unit u[2];//单位型数据
         group g[2];//单位组型数据
+        string s[2];//字符串型数据
         
 
         method Destroy(){  
+            integer x;
+            for(0<=x<5){
+                this.i[x]=0;
+                this.r[x]=0.0;
+                this.c[x]=0; 
+            }
             if(this.u[0]!=null){
                 BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id));
             }
