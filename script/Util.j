@@ -56,6 +56,7 @@ library Util{
             return   1.00 - ( power * Pow(( (now /max ) - 0.50 ), 2.00) );
         }
 
+        //布尔值转字符串
         public static method B2S(boolean b)->string{
             if(b==true){
                 return "true";
@@ -70,6 +71,14 @@ library Util{
             for(0<=i<36){
                 DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl",x+dis*CosBJ(i*10),y+dis*SinBJ(i*10)) );
             }
+        }
+
+        //在x,y的位置创建一次地面下陷效果
+        //持续time,开始半径startrange,结束半径endrange,深度deep,周期loops,间距dis
+        public static method Duang(real x,real y,real time,real startrange,real endrange,real deep,real loops,real dis){
+            location d=Location(x,y);
+            TerrainDeformationRippleBJ(time, true, d,startrange,endrange,deep,loops,dis );
+            RemoveLocation(d);
         }
  
     }
