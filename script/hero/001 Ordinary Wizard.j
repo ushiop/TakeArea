@@ -118,12 +118,12 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);
                     while(FirstOfGroup(tmp_group)!=null){
-                        tmp_group_unit=FirstOfGroup(tmp_group);
-                        if(IsUnitEnemy(tmp_group_unit,u.player.player)==true){
-                            Dash.Start(tmp_group_unit,Util.XY(u.unit,tmp_group_unit),400,Dash.SUB,70,true,true);    
-                            u.Damage(tmp_group_unit,Damage.Magic,'A004',u.Int()*10);
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                            Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),400,Dash.SUB,70,true,true);    
+                            u.Damage(mj.unit,Damage.Magic,'A004',u.Int()*10);
                         }
-                        GroupRemoveUnit(tmp_group,tmp_group_unit);
+                        GroupRemoveUnit(tmp_group,mj.unit);
                     }
                     GroupClear(tmp_group); 
                     if(u.player.lv15!=null){
