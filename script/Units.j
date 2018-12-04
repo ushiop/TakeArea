@@ -21,6 +21,11 @@ library Units requires Table,Players,Events,Util{
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
 
+            //是否存活
+            method Alive()->boolean{
+                return IsUnitAliveBJ(this.unit);
+            }
+
             //返回英雄力量
             method Str()->integer{
                     return GetHeroStr(this.unit,true);
@@ -263,6 +268,7 @@ library Units requires Table,Players,Events,Util{
         //重复注册不会有效果,会触发‘被创建’事件
         public static method Set(unit u){
             if(Units.ht.exists(u)==false){
+                Util.UnitAddRemoveAbility(u,'Amrf');
                 Units.Create(u);
                 Units.onSpawn(u);
             }
