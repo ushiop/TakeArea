@@ -42,6 +42,7 @@ library Events requires Table{
         //事件注册类
         public  {
             static constant string onUnitDeath="Events.UnitDeath";//任意单位死亡
+            static constant string onUnitDeacy="Events.UnitDeacy";//任意单位开始腐化(真的死亡)
             static constant string onPlayerDisconnect="Events.PlayerDisconnect";//任意玩家离开游戏
             static constant string onUnitDamage="Events.UnitDamage";//任意单位受到伤害
             static constant string onUnitSpell="Events.onUnitSpell";//任意单位发动技能效果 
@@ -98,6 +99,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitStartSpell")
 //! runtextmacro RegisterAction("onUnitStopSpell")
 //! runtextmacro RegisterAction("onHeroLevelUp") 
+//! runtextmacro RegisterAction("onUnitDeacy") 
 
     function onInit(){
         trigger t; 
@@ -113,7 +115,9 @@ library Events requires Table{
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_CHANNEL","Event_onUnitReadySpell")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_CAST","Event_onUnitStartSpell")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_ENDCAST","Event_onUnitStopSpell")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_DECAY","Event_onUnitDeacy")
  
+  
         //! textmacro RegisterArgsEvent takes tri,args,event,action
         t=CreateTrigger();
         $tri$(t,$args$, $event$ );
