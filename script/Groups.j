@@ -2,6 +2,8 @@ library Groups requires Units,Damage,Init{
     //一些常用的单位组判断
 
 
+    public group tmp_group=CreateGroup();//公共单位组
+    public unit tmp_group_unit;//公共单位组循环用的单位
 
     //是否是建筑
     public function GroupIsNotHouse()->boolean{
@@ -9,7 +11,7 @@ library Groups requires Units,Damage,Init{
     }
 
     //是否存活
-    public function GroupIsNotAlive()->boolean{
+    public function GroupIsNotAlive()->boolean{ 
         return IsUnitAliveBJ(GetFilterUnit());
     }
 
@@ -35,7 +37,7 @@ library Groups requires Units,Damage,Init{
     }
 
     public function GroupDamage(Units u,real x,real y,real dis,real dmg,integer dmgtype,integer aid,boolean hero)
-    { 
+    {  
         Units tmp;
         boolean f=false;
         GroupEnumUnitsInRange(tmp_group,x,y,dis,function GroupIsAliveNotAloc); 
