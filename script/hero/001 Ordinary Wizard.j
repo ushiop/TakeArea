@@ -102,22 +102,32 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             timer t=NewTimer(); 
             EXPauseUnit(u.unit,true);
             u.AnimeId(6);
+            u.AnimeSpeed(2);
             mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
-            mj.DelayAnime(2,0.8);
+            mj.DelayAnime(2,0.4);
             u.PositionEnabled(false);
             SetTimerData(t,e);
-            TimerStart(t,0.8,false,function(){
+            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                    Buffs.Add(mj.unit,'A007','B001',1.5,false);
+                }
+                GroupRemoveUnit(tmp_group,mj.unit);
+            }
+            GroupClear(tmp_group); 
+            TimerStart(t,0.4,false,function(){
                 integer i;
                 Spell e=Spell(GetTimerData(GetExpiredTimer()));
                 Units u=Units.Get(e.Spell);
                 Units mj;
-                if(u.Alive()==true){
-                    Util.Duang(u.X(),u.Y(),1,300,300,-246,0.05,75);
+                if(u.Alive()==true){ 
+                    Util.Duang(u.X(),u.Y(),0.8,300,300,-140,0.05,75);
                     mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
                     mj.SetH(50); 
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
@@ -138,6 +148,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                         } 
                     }
                 } 
+                u.AnimeSpeed(1);
                 u.PositionEnabled(true);
                 EXPauseUnit(u.unit,false);
                 e.Destroy();
