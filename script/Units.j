@@ -22,6 +22,11 @@ library Units requires Table,Players,Events,Util{
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
             Data Obj;//自定义数据,死亡时自动解构
 
+            //暂停单位
+            method Pause(boolean p){
+                EXPauseUnit(this.unit,p);
+            }
+
             //取消该单位身上绑定的OBJ对象(并没有销毁)
             method RemoveObj(){
                 if(this.Obj!=0){
