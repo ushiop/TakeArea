@@ -7,13 +7,18 @@ library Buff requires Util{
         private static Buffs Root;//根节点
         private static Buffs Last;//最后一个节点
 
+        public static integer TYPE_ADD=1;//属于增益状态
+        public static integer TYPE_SUB=2;//属于减益状态
+        public static integer TYPE_DISPEL_TRUE=10;//可驱散
+        public static integer TYPE_DISPEL_FALSE=20;//不可驱散
+
         public{
             real MaxTime;//总持续时间
             real NowTime;//当前持续时间
             integer Ability;//作为主体的技能ID
             integer Buff;//作为BUFF图标的技能ID
             integer Obj;//这个BUFF携带的实例化对象ID，由对应类自己转化为实例 
-            boolean Expelled;//可否被驱散(默认不可)
+            integer Type;//可否被驱散(默认为增益,不可驱散)
             unit Unit;//BUFF的携带者  
             BuffEventInterface onTime;//BUFF计时时触发的事件
             BuffEventInterface onEnd;//BUFF正常到期时触发的事件
@@ -36,12 +41,14 @@ library Buff requires Util{
                 this.deallocate();         
             }
 
-            static method AllRemove(unit u){
+            //移除一个单位身上的所有满足条件的BUFF
+            //btype指示是否是增益,dtype指示是否可驱散
+            static method AllRemove(unit u,integer btype,integer dtype){
                 Buffs tmp=Root,tmp1;
                 while(tmp!=0){ 
                     tmp1=tmp.Next;
                     if(tmp!=Root){
-                        if(tmp.Unit==u&&tmp.Expelled==true){                    
+                        if(tmp.Unit==u&&tmp.Type==btype+dtype){                    
                             UnitRemoveAbility(tmp.Unit,tmp.Ability);
                             UnitRemoveAbility(tmp.Unit,tmp.Buff);
                             if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
@@ -102,7 +109,7 @@ library Buff requires Util{
                         tmp.onRemove=0;
                         tmp.onDelay=0;
                         tmp.onFlush=0;
-                        tmp.Expelled=false;
+                        tmp.Type=Buffs.TYPE_ADD+buffs.TYPE_DISPEL_FALSE;
                         tmp.Prev=Buffs.Last;
                         tmp.Next=0; 
                         Buffs.Last.Next=tmp; 
