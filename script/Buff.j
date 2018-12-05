@@ -134,18 +134,18 @@ library Buff requires Util{
                         return tmp;
                     }
                 }else{
-                    Buffs.Skill(u,Util.GetAbilityValue(aid,"Order"),aid,1);    
+                    Buffs.Skill(u,aid,1);    
                     return Buffs.Root;
                 } 
             }
 
             //对目标单位发布一个魔兽原版技能
-            static method Skill(unit u,string order,integer aid,integer lv){
-                UnitAddAbility(u,aid);
-                SetUnitAbilityLevel(u,aid,lv);
-                Buffs.Trigger(Buffs.onUnitSkill,u,0);
-                IssueTargetOrder(Origin_Magic,order,u);
-                UnitRemoveAbility(u,aid);
+            static method Skill(unit u,integer aid,integer lv){
+                UnitAddAbility(Origin_Magic,aid);
+                SetUnitAbilityLevel(Origin_Magic,aid,lv);
+                Buffs.Trigger(Buffs.onUnitSkill,u,aid);
+                IssueTargetOrder(Origin_Magic,Util.GetAbilityValue(aid,"Order"),u);
+                UnitRemoveAbility(Origin_Magic,aid);
             }
 
             static constant string onUnitBuff="Buffs.UnitBuff";//非英雄获得BUFF
