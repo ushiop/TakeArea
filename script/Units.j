@@ -119,6 +119,23 @@ library Units requires Table,Players,Events,Util{
                 t=null;               
             }
 
+            //延迟一定时间后设置动画播放速度
+            method DelayAnimeSpeed(real speed,real delay){
+                timer t=NewTimer();
+                Data data=Data.create('A002');
+                data.c[0]=this;
+                data.r[0]=speed;
+                SetTimerData(t,data);
+                TimerStart(t,delay,false,function(){
+                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                    Units u=Units(d.c[0]);
+                    u.AnimeSpeed(d.r[0]);
+                    ReleaseTimer(GetExpiredTimer());
+                    d.Destroy(); 
+                });
+                t=null;               
+            }
+
             //播放单位动画名
             method Anime(string name){
                 SetUnitAnimation( this.unit,name);
