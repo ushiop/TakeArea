@@ -5,7 +5,7 @@ library HitFly requires Util{
     public struct HitFlys{
         private static HitFlys Root;//根节点
         private static HitFlys Last;//最后一个节点
-        private static real Power=9.8;//下落重力
+        private static real Power=0.98;//下落重力
   
         public{
             real UpPower;//上升力  
@@ -107,7 +107,7 @@ library HitFly requires Util{
             while(tmp!=0){ 
                 tmp1=tmp.Next;
                 if(tmp!=Root){
-                    if(GetUnitFlyHeight(tmp.Unit)>10){ 
+                    if(GetUnitFlyHeight(tmp.Unit)>10||tmp.UpPower>0){ 
                         SetUnitFlyHeight(tmp.Unit,GetUnitFlyHeight(tmp.Unit)+tmp.UpPower,0);
                         tmp.UpPower=tmp.UpPower-HitFlys.Power;
                         if(tmp.Down==false){
