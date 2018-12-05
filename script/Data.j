@@ -20,6 +20,8 @@ library Data{
                 this.r[x]=0.0;
                 this.c[x]=0; 
             }
+            this.s[0]=null;
+            this.s[1]=null;
             if(this.u[0]!=null){
                 BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id));
             }

@@ -29,3 +29,4 @@
 //! import zinc "map/script/Groups.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
+//! import zinc "map/script/hero/002 Dazzle Master.j"
