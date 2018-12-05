@@ -22,6 +22,18 @@ library Units requires Table,Players,Events,Util{
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
             Data Obj;//自定义数据,死亡时自动解构
 
+            //取消该单位身上绑定的OBJ对象(并没有销毁)
+            method RemoveObj(){
+                if(this.Obj!=0){
+                    this.Obj=0;
+                }
+            }
+
+            //绑定自定义数据到单位上
+            method AddObj(Data obj){
+                this.Obj=obj;
+            }
+
             //是否存活
             method Alive()->boolean{
                 return IsUnitAliveBJ(this.unit);
@@ -200,7 +212,7 @@ library Units requires Table,Players,Events,Util{
 
             method RemoveAbility(integer aid){
                 UnitRemoveAbility(this.unit,aid);
-            }
+            } 
         }
 
         //自定义事件
