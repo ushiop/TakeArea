@@ -8,7 +8,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Units u=Units.Get(e.Spell);
             Dash dash;
             Data data;
-            EXPauseUnit(e.Spell,true); 
+            u.Pause(true);
             Units.MJ(u.player.player,'e008','A006',0,u.X(),u.Y(),e.Angle,2,2.5,1,"death","Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl");
             for(0<=i<2){
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl", u.X(),u.Y()) );
@@ -82,7 +82,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 }
                 u.SetH(0); 
                 u.AnimeSpeed(1); 
-                EXPauseUnit(e.Spell,false);
+                u.Pause(false);
                 e.Destroy();
                 data.Destroy();
             };
@@ -102,7 +102,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             Units u=Units.Get(e.Spell);
             Units mj;
             timer t=NewTimer(); 
-            EXPauseUnit(u.unit,true);
+            u.Pause(true);
             u.AnimeId(6);
             u.AnimeSpeed(2);
             mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
@@ -152,7 +152,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 } 
                 u.AnimeSpeed(1);
                 u.PositionEnabled(true);
-                EXPauseUnit(u.unit,false);
+                u.Pause(false);
                 e.Destroy();
                 ReleaseTimer(GetExpiredTimer());
             });
