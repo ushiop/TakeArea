@@ -14,7 +14,7 @@ library Data{
         
 
         method Destroy(){  
-            integer x;
+            integer x; 
             for(0<=x<5){
                 this.i[x]=0;
                 this.r[x]=0.0;
@@ -23,23 +23,23 @@ library Data{
             this.s[0]=null;
             this.s[1]=null;
             if(this.u[0]!=null){
-                BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id));
+                BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
             }
             if(this.u[1]!=null){
-                BJDebugMsg("DATA异常:u[1]未设空,ID:"+GetAbilityName(this.id));
+                BJDebugMsg("DATA异常:u[1]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
             }
             if(this.g[0]!=null){
-                BJDebugMsg("DATA异常:g[0]未设空,ID:"+GetAbilityName(this.id));
+                BJDebugMsg("DATA异常:g[0]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
             }
             if(this.g[1]!=null){
-                BJDebugMsg("DATA异常:g[1]未设空,ID:"+GetAbilityName(this.id));
+                BJDebugMsg("DATA异常:g[1]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
             }
             this.deallocate();
         }
 
         static method  create(integer id)->Data{
             Data t=Data.allocate();
-            t.id=id;
+            t.id=id; 
             return t;
         }
     }
