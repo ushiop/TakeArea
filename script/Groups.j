@@ -1,8 +1,13 @@
-library Groups requires Units,Damage,Init{
+library Groups requires Units,Damage{
     //一些常用的单位组判断
 
 
     public group tmp_group=CreateGroup();//公共单位组 
+
+    //返回单位组内单位数量
+    public function GroupNumber(group g)->integer{
+        return CountUnitsInGroup(g);
+    }
 
     //是否是建筑
     public function GroupIsNotHouse()->boolean{
