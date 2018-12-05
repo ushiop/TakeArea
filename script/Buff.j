@@ -42,14 +42,14 @@ library Buff requires Util{
             }
 
             //移除一个单位身上的所有满足条件的BUFF
-            //btype指示是否是增益,dtype指示是否可驱散
-            //任意一个指示为-1则表示清除所有BUFF
-            static method AllRemove(unit u,integer btype,integer dtype){
+            //btype指示BUFF类型,由Buffs类定义
+            //指示为-1则表示清除所有BUFF
+            static method AllRemove(unit u,integer btype){
                 Buffs tmp=Root,tmp1;
                 while(tmp!=0){ 
                     tmp1=tmp.Next;
                     if(tmp!=Root){
-                        if(tmp.Unit==u&&((tmp.Type==btype+dtype)||btype==-1||dtype==-1)){                    
+                        if(tmp.Unit==u&&((tmp.Type==btype)||btype==-1)){                    
                             UnitRemoveAbility(tmp.Unit,tmp.Ability);
                             UnitRemoveAbility(tmp.Unit,tmp.Buff);
                             if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
