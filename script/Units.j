@@ -20,6 +20,7 @@ library Units requires Table,Players,Events,Util{
             integer spell;//单位释放技能的回调，用于反向捕捉
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
+            Data Obj;//自定义数据,死亡时自动解构
 
             //是否存活
             method Alive()->boolean{
@@ -82,6 +83,8 @@ library Units requires Table,Players,Events,Util{
                     TimerStart(t,delay,false,function(){
                         Data d=Data(GetTimerData(GetExpiredTimer()));
                         DzSetUnitModel(Units(d.c[0]).unit,d.s[0]);
+                        ReleaseTimer(GetExpiredTimer());
+                        d.Destroy();
                     });
                     t=null;
                 }
@@ -287,6 +290,7 @@ library Units requires Table,Players,Events,Util{
             ud.unit=u;
             ud.spell=0;
             ud.move=true;
+            ud.Obj=0;
             Units.ht[u]=ud; 
             return ud;
         }
@@ -294,6 +298,7 @@ library Units requires Table,Players,Events,Util{
         //摧毁指定单位 实例
         private static method Destroys(unit u){
             Units ud=Units.ht[u];  
+            if(ud.Obj!=0) Data(ud.Obj).Destroy();
             ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);
