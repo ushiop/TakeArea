@@ -6,9 +6,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
-            Data data;
-            if(e.DamageUnit.IsAbility('A008')==true){
-                data=Data(e.DamageUnit.Obj);
+            Data data; 
+            if(e.DamageUnit.IsAbility('A008')==true&&e.DamageType==Damage.Attack){
+                data=Data(e.DamageUnit.Obj); 
                 if(data.i[0]==2){
                     data.i[0]=0;
                     DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
@@ -73,13 +73,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.RemoveObj();
                         data.Destroy();  
                     }else{
-                        x=u.X()+(75+GroupNumber(data.g[0])*3)*CosBJ(u.F()+180);
-                        y=u.Y()+(75+GroupNumber(data.g[0])*3)*SinBJ(u.F()+180);
+                        x=u.X()+(75+GroupNumber(data.g[0])*5)*CosBJ(u.F()+180);
+                        y=u.Y()+(75+GroupNumber(data.g[0])*5)*SinBJ(u.F()+180);
                         GroupAddGroup(data.g[0],tmp_group);  
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             ra=360.0/GroupNumber(data.g[0])*(h/5);
-                            dis=(Util.XY2(tmp.unit,u.unit)/50)+(GroupNumber(data.g[0])*3); 
+                            dis=(Util.XY2(tmp.unit,u.unit)/100)+(GroupNumber(data.g[0])*5); 
                             x=x+(dis)*CosBJ(ra);
                             y=y+(dis)*SinBJ(ra);
                             tmp.Position(x,y,false);
@@ -96,21 +96,73 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         }
 
         static method HERO_START(Spell e){
-            if(e.Id=='A009'){
-                Units.Get(e.Spell).AnimeSpeed(0.7);
+            if(e.Id=='A009'){ 
                 Units.Get(e.Spell).FlushAnimeId(5); 
             }
             e.Destroy();
         }
 
-        static method HERO_STOP(Spell e){
-            Units.Get(e.Spell).AnimeSpeed(1);
+        static method HERO_STOP(Spell e){  
+            e.Destroy();
+        }
+
+        static method Q(Spell e){
+            Units u=Units.Get(e.Spell);
+            Dash dash;
+            Data data=Data.create('A009');
+            EXPauseUnit(u.unit,true);  
+            u.AnimeId(6); 
+            u.AnimeSpeed(0.7);
+            data.c[0]=u;
+            data.i[0]=0;
+            data.g[0]=CreateGroup();
+            dash=Dash.Start(u.unit,e.Angle,600,Dash.SUB,60,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                Units tmp; 
+                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),90,function GroupIsAliveNotAloc);
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
+                        GroupAddUnit(data.g[0],tmp.unit);
+                        Buffs.Skill(tmp.unit,'A00A',1);
+                        HitFlys.Add(tmp.unit,25);
+                        u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi()*3+u.Str()*4);
+                        if(dash.NowDis<500){ 
+                            Dash.Start(tmp.unit,dash.Angle,600-dash.NowDis,Dash.SUB,90,true,true);
+                        }
+                        if(data.i[0]==0){
+                            data.i[0]=1;
+                            AddDazzle(u.unit,1);
+                        }
+                    }
+                }
+                GroupClear(tmp_group); 
+                if(dash.Speed>15&&dash.Speed<40){ 
+                    DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
+                } 
+                if(dash.Speed<1.5){
+                    dash.Stop();
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
+                EXPauseUnit(u.unit,false);  
+                u.AnimeSpeed(1);
+                data.Destroy();
+            };
             e.Destroy();
         }
     }
 
     function onInit(){
-        //Spell.On(Spell.onSpell,'A009',DazzleMaster.Q);
+        Spell.On(Spell.onSpell,'A009',DazzleMaster.Q);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
