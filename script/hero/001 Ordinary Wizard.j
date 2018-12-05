@@ -113,7 +113,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             while(FirstOfGroup(tmp_group)!=null){
                 mj=Units.Get(FirstOfGroup(tmp_group));
                 if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                    Buffs.Add(mj.unit,'A007','B001',1.5,false);
+                    Buffs.Add(mj.unit,'A007','B001',1.5,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                 }
                 GroupRemoveUnit(tmp_group,mj.unit);
             }

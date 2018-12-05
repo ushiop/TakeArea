@@ -49,7 +49,7 @@ library Buff requires Util{
                 while(tmp!=0){ 
                     tmp1=tmp.Next;
                     if(tmp!=Root){
-                        if(tmp.Unit==u&&((tmp.Type==btype+dtype)||btype==-1||dtype==-1){                    
+                        if(tmp.Unit==u&&((tmp.Type==btype+dtype)||btype==-1||dtype==-1)){                    
                             UnitRemoveAbility(tmp.Unit,tmp.Ability);
                             UnitRemoveAbility(tmp.Unit,tmp.Buff);
                             if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
@@ -110,7 +110,7 @@ library Buff requires Util{
                         tmp.onRemove=0;
                         tmp.onDelay=0;
                         tmp.onFlush=0;
-                        tmp.Type=Buffs.TYPE_ADD+buffs.TYPE_DISPEL_FALSE;
+                        tmp.Type=Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_FALSE;
                         tmp.Prev=Buffs.Last;
                         tmp.Next=0; 
                         Buffs.Last.Next=tmp; 
