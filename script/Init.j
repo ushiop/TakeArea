@@ -1,4 +1,4 @@
-library Init requires Teams,HeroRare,Winner,Players{
+library Init requires Teams,HeroRare,Winner,Players,Units{
     
     //中央球、阵初始化、杂物初始化类
 
