@@ -26,6 +26,7 @@
 //! import zinc "map/script/SpellNameText.j"
 //! import zinc "map/script/LevelUp.j" 
 //! import zinc "map/script/Data.j"
+//! import zinc "map/script/HitFly.j"
 //! import zinc "map/script/Groups.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
