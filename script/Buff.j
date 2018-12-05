@@ -13,10 +13,11 @@ library Buff requires Util{
             integer Ability;//作为主体的技能ID
             integer Buff;//作为BUFF图标的技能ID
             integer Obj;//这个BUFF携带的实例化对象ID，由对应类自己转化为实例 
+            boolean Expelled;//可否被驱散(默认不可)
             unit Unit;//BUFF的携带者  
             BuffEventInterface onTime;//BUFF计时时触发的事件
             BuffEventInterface onEnd;//BUFF正常到期时触发的事件
-            BuffEventInterface onRemove;//BUFF被移除时触发的事件(不会触发onEnd)
+            BuffEventInterface onRemove;//BUFF被移除时触发的事件(不会触发onEnd),被驱散时也会触发
             BuffEventInterface onDelay;//BUFF被增加最大持续时间时触发
             BuffEventInterface onFlush;//BUFF被刷新时间时触发
             Buffs Prev;//上一个BUFF节点，为0则无
@@ -35,10 +36,27 @@ library Buff requires Util{
                 this.deallocate();         
             }
 
+            static method AllRemove(unit u){
+                Buffs tmp=Root,tmp1;
+                while(tmp!=0){ 
+                    tmp1=tmp.Next;
+                    if(tmp!=Root){
+                        if(tmp.Unit==u&&tmp.Expelled==true){                    
+                            UnitRemoveAbility(tmp.Unit,tmp.Ability);
+                            UnitRemoveAbility(tmp.Unit,tmp.Buff);
+                            if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
+                            tmp.Destroy();
+                        }
+                    } 
+                    tmp=tmp1;
+                }
+            }
+
             //从单位身上删除buff,会触发onRemove
+            //无视驱散
             static method Remove(unit u,integer aid,integer bid){ 
                 Buffs tmp=Buffs.Find(u,aid,bid);
-                if(tmp!=Buffs.Root){
+                if(tmp!=0){
                     UnitRemoveAbility(u,aid);
                     UnitRemoveAbility(u,bid);
                     if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
@@ -84,6 +102,7 @@ library Buff requires Util{
                         tmp.onRemove=0;
                         tmp.onDelay=0;
                         tmp.onFlush=0;
+                        tmp.Expelled=false;
                         tmp.Prev=Buffs.Last;
                         tmp.Next=0; 
                         Buffs.Last.Next=tmp; 
