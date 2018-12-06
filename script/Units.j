@@ -22,6 +22,12 @@ library Units requires Table,Players,Events,Util{
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
             Data Obj;//自定义数据,死亡时自动解构
 
+
+            //设置单位透明度,0-255,0为不可见
+            method Alpha(real a){
+                SetUnitVertexColor(this.unit, 255, 255, 255, a );
+            }
+
             //暂停单位
             method Pause(boolean p){
                 EXPauseUnit(this.unit,p);
