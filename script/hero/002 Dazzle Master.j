@@ -110,25 +110,62 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units u=Units.Get(e.Spell); 
             Dash dash;
             u.Pause(true);
-            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,4,1,1, "stand","dust1.mdx");
-            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,4,1.5,0.7, "stand","dust2.mdx");
-            Util.Duang(u.X(),u.Y(),0.5,200,200,-192,0.04,100);
+            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,2,1,1, "stand","dust1.mdx");
+            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,2,1.5,2, "stand","dust2.mdx"); 
+            Util.Duang(u.X(),u.Y(),0.5,200,200,-82,0.04,100);
             dash=Dash.Start(u.unit,e.Angle,250,Dash.SUB,40,true,false);
-            dash.Obj=0;
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
                 Units mj;
-                if(dash.NowDis>100&&dash.NowDis<115){  
-                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,4,0.7,2, "death","wind1.mdx");
+                Units tmp;
+                integer s=0;
+                real x,y;
+                if(dash.NowDis>100&&dash.NowDis<115){ 
+                    u.SetF(dash.Angle,true); 
+                    u.AnimeId(13);
+                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,2,0.7,2, "death","wind1.mdx");
                     mj.SetH(150);
                     Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,10,true,false);                    
-                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,4,1,1.5, "death","wind1.mdx");
+                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,2,1,1.5, "death","wind1.mdx");
                     mj.SetH(200);
                     Dash.Start(mj.unit,dash.Angle,350,Dash.SUB,15,true,false);
+                    x=dash.X+100*CosBJ(dash.Angle);
+                    y=dash.Y+100*SinBJ(dash.Angle);
+                    GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
+                    if(GroupNumber(tmp_group)!=0){ 
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
+                                s+=1;
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                        if(s!=0){ 
+                            GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
+                            AddDazzle(u.unit,2);           
+                            tmp=Units.MJ(u.player.player,'e009','A002',0,dash.X,dash.Y,dash.Angle,2,2.5,2, "stand","wind.mdx");
+                            tmp.SetH(200); 
+                            Dash.Start(tmp.unit,dash.Angle+180,450,Dash.SUB,60,true,false);
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
+                                    Buffs.Skill(tmp.unit,'A00C',1); 
+                                    u.Damage(tmp.unit,Damage.Physics,'A00B',u.Agi()*6+u.Str()*6);
+                                    Dash.Start(tmp.unit,dash.Angle,300,Dash.SUB,90,true,true);   
+                                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
+                                }
+                            } 
+                            GroupClear(tmp_group);   
+                        } 
+                    }else{ 
+                        GroupClear(tmp_group);   
+                    }
                 }
                 if(dash.NowDis>180){
                     DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
-                    BJDebugMsg(R2S(dash.NowDis));
+                     
                     if(dash.NowDis<197){ 
                         u.Alpha(255);
                     }else{ 
@@ -139,7 +176,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 }
             };
             dash.onEnd=function(Dash dash){
-                Units u=Units.Get(dash.Unit);
+                Units u=Units.Get(dash.Unit); 
                 u.Pause(false);
                 u.Alpha(255);
             };
@@ -156,7 +193,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             u.AnimeSpeed(0.7);
             data.c[0]=u;
             data.i[0]=0;
-            data.g[0]=CreateGroup(); 
+            data.g[0]=CreateGroup();  
+            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,4,1,2.5, "stand","dust2.mdx"); 
             dash=Dash.Start(u.unit,e.Angle,600,Dash.SUB,60,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
