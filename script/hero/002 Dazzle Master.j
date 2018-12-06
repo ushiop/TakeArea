@@ -210,6 +210,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Buffs.Skill(tmp.unit,'A00A',1);
                         HitFlys.Add(tmp.unit,25);
                         u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi()*3+u.Str()*4);
+                        DestroyEffect( AddSpecialEffectTarget("bd2d2.mdx", tmp.unit, "chest") );
+                                
                         if(dash.NowDis<500){ 
                             Dash.Start(tmp.unit,dash.Angle,500-dash.NowDis,Dash.SUB,90,true,true);
                         }
