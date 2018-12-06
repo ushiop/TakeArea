@@ -62,12 +62,13 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     Units.MJ(u.player.player,'e008','A006',0,x,y,0,4,1.75,0.5,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
                     Units.MJ(u.player.player,'e008','A006',0,x,y,0,3.5,1.25,2,"birth","Abilities\\Spells\\Human\\FlameStrike\\FlameStrike.mdl");
                     Units.MJ(u.player.player,'e008','A006',0,x,y,0,3.5,2,1.5,"death","Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl");
-                    Units.MJ(u.player.player,'e008','A006',0,x,y,0,5,1,1.5,"death","fire3.mdx");
+                    
                     u.DelayModel("units\\human\\HeroBloodElf\\HeroBloodElf.mdx",0.3); 
                     GroupDamage(u, x,y,300,u.player.hero.Int()*20.0,Damage.Magic,'A006',false);                     
                     if(u.player.lv15!=null){
                     //是否触发E
                     if(u.IsAbility('B000')==false){
+                        Units.MJ(u.player.player,'e008','A006',0,x,y,0,5,1,1.5,"death","fire3.mdx");
                         Buffs.Add(u.unit,'A000','B000',1,false);
                             for(0<=i<12){
                                 mj=Units.MJ(u.player.player,'e008','A005',0,x,y,I2R(i)*30,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
