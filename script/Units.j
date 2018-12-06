@@ -24,7 +24,7 @@ library Units requires Table,Players,Events,Util{
 
 
             //设置单位透明度,0-255,0为不可见
-            method Alpha(real a){
+            method Alpha(integer a){
                 SetUnitVertexColor(this.unit, 255, 255, 255, a );
             }
 
@@ -128,6 +128,23 @@ library Units requires Table,Players,Events,Util{
                     d.Destroy(); 
                 });
                 t=null;               
+            }
+
+            //延迟一定时间后设置模型大小
+            method DelaySize(real s,real delay){
+                timer t=NewTimer();
+                Data data=Data.create('A003');
+                data.c[0]=this;
+                data.r[0]=s;
+                SetTimerData(t,data);
+                TimerStart(t,delay,false,function(){
+                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                    Units u=Units(d.c[0]);
+                    u.Size(d.r[0]);
+                    ReleaseTimer(GetExpiredTimer());
+                    d.Destroy(); 
+                });
+                t=null;                    
             }
 
             //延迟一定时间后设置动画播放速度
