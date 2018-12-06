@@ -110,19 +110,19 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units u=Units.Get(e.Spell);
             Dash dash;
             Data data=Data.create('A009');
-            EXPauseUnit(u.unit,true);  
+            u.Pause(true);
             u.AnimeId(6); 
             u.AnimeSpeed(0.7);
             data.c[0]=u;
             data.i[0]=0;
-            data.g[0]=CreateGroup();
+            data.g[0]=CreateGroup(); 
             dash=Dash.Start(u.unit,e.Angle,600,Dash.SUB,60,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 Units tmp; 
-                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),90,function GroupIsAliveNotAloc);
+                GroupEnumUnitsInRange(tmp_group,u.X()+100*CosBJ(dash.Angle),u.Y()+100*SinBJ(dash.Angle),90,function GroupIsAliveNotAloc);
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,tmp.unit);
@@ -132,7 +132,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         HitFlys.Add(tmp.unit,25);
                         u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi()*3+u.Str()*4);
                         if(dash.NowDis<500){ 
-                            Dash.Start(tmp.unit,dash.Angle,600-dash.NowDis,Dash.SUB,90,true,true);
+                            Dash.Start(tmp.unit,dash.Angle,500-dash.NowDis,Dash.SUB,90,true,true);
                         }
                         if(data.i[0]==0){
                             data.i[0]=1;
@@ -153,7 +153,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Units u=Units(data.c[0]);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
-                EXPauseUnit(u.unit,false);  
+                u.Pause(false); 
                 u.AnimeSpeed(1);
                 data.Destroy();
             };
