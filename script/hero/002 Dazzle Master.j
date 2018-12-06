@@ -106,6 +106,47 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             e.Destroy();
         }
 
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell); 
+            Dash dash;
+            u.Pause(true);
+            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,4,1,1, "stand","dust1.mdx");
+            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,4,1.5,0.7, "stand","dust2.mdx");
+            Util.Duang(u.X(),u.Y(),0.5,200,200,-192,0.04,100);
+            dash=Dash.Start(u.unit,e.Angle,250,Dash.SUB,40,true,false);
+            dash.Obj=0;
+            dash.onMove=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                Units mj;
+                if(dash.NowDis>100&&dash.NowDis<115){  
+                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,4,0.7,2, "death","wind1.mdx");
+                    mj.SetH(150);
+                    Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,10,true,false);                    
+                    mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,4,1,1.5, "death","wind1.mdx");
+                    mj.SetH(200);
+                    Dash.Start(mj.unit,dash.Angle,350,Dash.SUB,15,true,false);
+                }
+                if(dash.NowDis>180){
+                    DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
+                    BJDebugMsg(R2S(dash.NowDis));
+                    if(dash.NowDis<197){ 
+                        u.Alpha(255);
+                    }else{ 
+                        u.Alpha(0); 
+                    }
+                }else{
+                    u.Alpha(0);
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                u.Pause(false);
+                u.Alpha(255);
+            };
+            e.Destroy();
+            
+        }
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
@@ -163,6 +204,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
     function onInit(){
         Spell.On(Spell.onSpell,'A009',DazzleMaster.Q);
+        Spell.On(Spell.onSpell,'A00B',DazzleMaster.W);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
