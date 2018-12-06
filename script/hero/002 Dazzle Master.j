@@ -50,6 +50,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 data.r[2]=0;//用于计算炫纹上下浮动的值
                 data.i[0]=0;//用于计算无属性炫纹的触发
                 data.g[0]=CreateGroup();//炫纹单位组
+                data.u[0]=null;//炫纹发射的需求单位
                 u.AddObj(data);
                 SetTimerData(t,data);
                 TimerStart(t,0.01,true,function(){
@@ -59,6 +60,16 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     real h=0,x,y,dis,fa,ra;
                     data.r[2]=data.r[2]+1;
                     if(data.r[2]>96) data.r[2]=data.r[2]-96;
+                    if(GroupNumber(data.g[0])!=0){
+                        if(data.u[0]==null){ 
+                            data.u[0]=Units.MJ(u.player.player,'e00A','A008',65,0,0,0,86400,1,1, "stand",".mdx").unit; 
+                        }
+                    }else{
+                        if(data.u[0]!=null){
+                            Units.Remove(data.u[0]); 
+                            data.u[0]=null;
+                        }
+                    }
                     if(u.Alive()==false){                    
                         GroupAddGroup(data.g[0],tmp_group);
                         while(FirstOfGroup(tmp_group)!=null){
@@ -69,7 +80,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         GroupClear(tmp_group);
                         ReleaseTimer(GetExpiredTimer());
                         DestroyGroup(data.g[0]);
+                        Units.Remove(data.u[0]);
                         data.g[0]=null;
+                        data.u[0]=null;
                         u.RemoveObj();
                         data.Destroy();  
                     }else{
