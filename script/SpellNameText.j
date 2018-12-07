@@ -10,11 +10,11 @@ library SpellNameText{
         t=null;
     }
 
-    public function TextForPlayer(player p,unit u,string name,real time,real text){
+    public function TextForPlayer(player p,unit u,string name,real time,real text,real face){
         texttag t= CreateTextTagUnitBJ(name, u, 0, text, 100, 100, 0, 0 ); 
         SetTextTagLifespan( t,time);
         SetTextTagVisibility( t, true );
-        SetTextTagVelocityBJ(t, 128.00, 90 );
+        SetTextTagVelocityBJ(t, 128.00,face );
         SetTextTagPermanent( t, false );
         SetTextTagFadepoint(t,time*0.1); 
         if(GetLocalPlayer()==p){
