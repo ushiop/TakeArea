@@ -21,6 +21,8 @@ library Units requires Table,Players,Events,Util{
             integer aid;//如果是马甲，则为所属技能，用于标识是什么技能的马甲
             integer aidindex;//如果是马甲，则为所属技能的马甲ID，用于表示具体的马甲
             Data Obj;//自定义数据,死亡时自动解构
+            integer pauses;//暂停计数
+            integer moves;//位移计数
 
 
             //设置单位透明度,0-255,0为不可见
@@ -30,7 +32,18 @@ library Units requires Table,Players,Events,Util{
 
             //暂停单位
             method Pause(boolean p){
-                EXPauseUnit(this.unit,p);
+                if(p==true){
+                    if(this.pauses==0){ 
+                        EXPauseUnit(this.unit,p);
+                    }
+                    this.pauses+=1;
+                }else{
+                    this.pauses-=1;
+                    if(this.pauses==0){ 
+                        EXPauseUnit(this.unit,p);
+                    }
+                }
+
             }
 
             //取消该单位身上绑定的OBJ对象(并没有销毁)
@@ -217,7 +230,17 @@ library Units requires Table,Players,Events,Util{
 
             //设置单位是否可以移动,默认为true
             method PositionEnabled(boolean f){
-                this.move=f;
+                if(f==true){
+                    if(this.moves==0){ 
+                        this.move=f;
+                    }
+                    this.moves+=1;
+                }else{
+                    this.moves-=1;
+                    if(this.moves==0){ 
+                        this.move=f;
+                    }
+                }
             }
 
             //移动单位到X,Y的位置,order为是否打断命令
@@ -348,6 +371,8 @@ library Units requires Table,Players,Events,Util{
             ud.spell=0;
             ud.move=true;
             ud.Obj=0;
+            ud.pauses=0;
+            ud.moves=0;
             Units.ht[u]=ud; 
             return ud;
         }
