@@ -127,13 +127,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             data.c[0]=u;
             data.r[0]=0;//蓄力时间
             SetTimerData(t,data); 
-            TimerStart(t,0.05,true,function(){
+            TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units mj;
                 Units u=Units(data.c[0]);
                 Dash dash;
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false){ 
-                    data.r[0]+=0.05;
+                    data.r[0]+=0.1;
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45); 
                         Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx");
@@ -144,7 +144,12 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                 }else{ 
                     ReleaseTimer(GetExpiredTimer());   
-                    TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,300);
+                    if(data.r[0]>2.5){
+                        data.r[0]=2.5;
+                    }
+                    if(data.r[0]!=0){ 
+                        TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,300);
+                    }
                     if(data.r[0]>2){
                         mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
                         mj.SetH(200); 
@@ -153,15 +158,36 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
+                    data.i[0]=0;
+                    data.g[0]=CreateGroup();
                     dash=Dash.Start(u.unit,u.F(),300+(data.r[0]*100),Dash.SUB,80,true,false);
-                    dash.Obj=data;
+                    dash.Obj=data; 
                     dash.onMove=function(Dash dash){
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);
+                        Units tmp;
+                        Buffs bf;
                         dash.Angle=u.F(); 
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
+                                GroupAddUnit(data.g[0],tmp.unit);  
+                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi()*(12*(data.r[0]*2.5)));
+                                DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
+                                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
+                                Dash.Start(tmp.unit,dash.Angle,300+(data.r[0]*2)*50,Dash.SUB,30*data.r[0],true,true);
+                                if(data.i[0]==0){
+                                    data.i[0]=1;
+                                    AddDazzle(u.unit,3);
+                                } 
+                            }
+                        }
+                        GroupClear(tmp_group);
                     };
                     dash.onEnd=function(Dash dash){
                         Data data=Data(dash.Obj);
@@ -169,6 +195,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Units mj=Units(data.c[1]);  
                         mj.Anime("death");
                         mj.Life(1);
+                        DestroyGroup(data.g[0]);
+                        data.g[0]=null;
                         u.Pause(false);
                         data.Destroy();
                     };
