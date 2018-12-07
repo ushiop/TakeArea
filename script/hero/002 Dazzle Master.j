@@ -126,14 +126,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             u.Pause(true);
             data.c[0]=u;
             data.r[0]=0;//蓄力时间
-            SetTimerData(t,data);
-            TimerStart(t,0.01,true,function(){
+            SetTimerData(t,data); 
+            TimerStart(t,0.05,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units mj;
                 Units u=Units(data.c[0]);
                 Dash dash;
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false){ 
-                    data.r[0]+=0.01;
+                    data.r[0]+=0.05;
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45); 
                         Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx");
@@ -143,7 +143,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
                     }
                 }else{ 
-                    ReleaseTimer(GetExpiredTimer());  
+                    ReleaseTimer(GetExpiredTimer());   
                     TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,300);
                     if(data.r[0]>2){
                         mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
@@ -168,7 +168,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);  
                         mj.Anime("death");
-                        mj.Life(0.5);
+                        mj.Life(1);
                         u.Pause(false);
                         data.Destroy();
                     };
