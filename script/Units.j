@@ -228,6 +228,11 @@ library Units requires Table,Players,Events,Util{
                 return GetUnitFlyHeight(this.unit);
             }
 
+            //设置单位开启/关闭碰撞
+            method Pz(boolean f){
+                SetUnitPathing( this.unit,f );
+            }
+
             //设置单位是否可以移动,默认为true
             method PositionEnabled(boolean f){
                 if(f==true){
