@@ -135,7 +135,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false){ 
                     data.r[0]+=0.01;
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
-                        TextForPlayer(u.player.player,u.unit,"已蓄力"+R2S(data.r[0])+"秒",0.2,12,0); 
+                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45); 
                         Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx");
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", u.unit, "hand right") );
                     } 
@@ -144,30 +144,31 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                 }else{ 
                     ReleaseTimer(GetExpiredTimer());  
-                    TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,0);
-                    //Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.4,1.1, "stand","kc12.mdx");
-                    
-                    mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,0.3,2, "stand","kc12.mdx");
-                    mj.SetH(100); 
-                    Dash.Start(mj.unit,u.F()+180,100,Dash.ADD,40,true,false);
+                    TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,300);
                     if(data.r[0]>2){
                         mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
                         mj.SetH(200); 
                         Dash.Start(mj.unit,u.F()+180,100,Dash.ADD,60,true,false);
                     }
+                    mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu.mdx");
+                    mj.SetH(100);
+                    data.c[1]=mj;
                     dash=Dash.Start(u.unit,u.F(),300+(data.r[0]*100),Dash.SUB,80,true,false);
                     dash.Obj=data;
                     dash.onMove=function(Dash dash){
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
-                        dash.Angle=u.F();
-                        if(dash.Speed<60){
-                            DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
-                        }
+                        Units mj=Units(data.c[1]);
+                        dash.Angle=u.F(); 
+                        mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
+                        mj.SetF(dash.Angle,true);
                     };
                     dash.onEnd=function(Dash dash){
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
+                        Units mj=Units(data.c[1]);  
+                        mj.Anime("death");
+                        mj.Life(0.5);
                         u.Pause(false);
                         data.Destroy();
                     };
