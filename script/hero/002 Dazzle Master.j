@@ -123,9 +123,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units u=Units.Get(e.Spell); 
             Dash dash;
             u.Pause(true);
-            Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,2,1,1, "stand","dust1.mdx");
+            //Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,2,1,1, "stand","dust1.mdx");
             Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,2,1.5,2, "stand","dust2.mdx"); 
-            Util.Duang(u.X(),u.Y(),0.5,200,200,-82,0.04,100);
+            Util.Duang(u.X(),u.Y(),0.3,200,200,-48,0.04,100);
             dash=Dash.Start(u.unit,e.Angle,250,Dash.SUB,40,true,false);
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
@@ -135,7 +135,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 real x,y;
                 if(dash.NowDis>100&&dash.NowDis<115){ 
                     u.SetF(dash.Angle,true); 
-                    u.AnimeId(13);
+                    u.AnimeId(13);                    
+                    
                     mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,2,0.7,2, "death","wind1.mdx");
                     mj.SetH(150);
                     Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,10,true,false);                    
@@ -157,6 +158,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         if(s!=0){ 
                             GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2);           
+                            mj=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),dash.Angle,0.6,1.25,1.5, "birth","dg.mdx");
+                            mj.SetH(100);
+                            Dash.Start(mj.unit,dash.Angle,300,Dash.ADD,80,true,false);
                             tmp=Units.MJ(u.player.player,'e009','A002',0,dash.X,dash.Y,dash.Angle,2,2.5,2, "stand","wind.mdx");
                             tmp.SetH(200); 
                             Dash.Start(tmp.unit,dash.Angle+180,450,Dash.SUB,60,true,false);
