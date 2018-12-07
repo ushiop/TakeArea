@@ -119,6 +119,149 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             e.Destroy();
         }
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Units tmp;
+            Dash dash;
+            integer s=0;
+            timer t;
+            Data data;
+            real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
+            //Util.Range(x,y,150);
+            u.Pause(true);
+            u.PositionEnabled(false); 
+            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);
+            if(GroupNumber(tmp_group)!=0){ 
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                        s+=1;
+                        break;
+                    }
+                }
+                GroupClear(tmp_group);
+                if(s!=0){
+                    Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
+                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                            HitFlys.Add(tmp.unit,10);
+                            Dash.Start(tmp.unit,u.F(),100,Dash.SUB,45,true,true);    
+                            u.Damage(tmp.unit,Damage.Physics,'A00E',u.Agi()*4.0);
+                            DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
+                            Buffs.Skill(tmp.unit,'A00C',1); 
+                        }
+                    }
+                    GroupClear(tmp_group);
+                    t=NewTimer();
+                    data=Data.create('A00E');
+                    data.c[0]=u;
+                    SetTimerData(t,data);
+                    TimerStart(t,0.2,false,function(){
+                        Data data=Data(GetTimerData(GetExpiredTimer()));
+                        Units u=Units(data.c[0]);
+                        Units tmp;
+                        real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
+                        data.g[0]=CreateGroup();
+                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                GroupAddUnit(data.g[0],tmp.unit);
+                                Buffs.Skill(tmp.unit,'A00C',1);   
+                                HitFlys.Remove(tmp.unit);
+                                Dash.Start(tmp.unit,Util.XY(tmp.unit,u.unit),Util.XY2(tmp.unit,u.unit),Dash.NORMAL,Util.XY2(tmp.unit,u.unit)/4,true,false).onMove=function(Dash dash){
+                                    Units u=Units.Get(dash.Unit);
+                                    u.SetH(200*(dash.NowDis/dash.MaxDis));
+                                };   
+                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") ); 
+                            }
+                        }
+                        GroupClear(tmp_group);     
+                        data.r[0]=0.2;                  
+                        TimerStart(GetExpiredTimer(),0.02,true,function(){
+                            Data data=Data(GetTimerData(GetExpiredTimer()));
+                            Units u=Units(data.c[0]);
+                            Units tmp;
+                            Dash dash;
+                            real x,y;
+                            if(data.r[0]>0){
+                                data.r[0]-=0.02;
+                                GroupAddGroup(data.g[0],tmp_group);  
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,tmp.unit);
+                                    tmp.Position(u.X(),u.Y(),false);
+                                }
+                                GroupClear(tmp_group);                               
+                            }else{
+                                data.i[0]=0;
+                                if(u.player.press.R==true){ 
+                                    x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
+                                }else{ 
+                                    x=u.X()+200*CosBJ(u.F()+180),y=u.Y()+200*SinBJ(u.F()+180);
+                                }
+                                data.r[1]=x;
+                                data.r[2]=y;
+                                data.r[3]=u.X();
+                                data.r[4]=u.Y();
+                                u.SetF(Util.XYEX(u.X(),u.Y(),x,y),true);
+                                GroupAddGroup(data.g[0],tmp_group);  
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,tmp.unit);
+                                    data.i[1]+=1; 
+                                    dash=Dash.Start(tmp.unit,Util.XYEX(tmp.X(),tmp.Y(),x,y),Util.XY2EX(tmp.X(),tmp.Y(),x,y),Dash.NORMAL,20,true,false);
+                                    dash.Obj=data;
+                                    dash.onMove=function(Dash dash){
+                                        Data data=Data(dash.Obj);
+                                        Units u=Units.Get(dash.Unit);
+                                        Units(data.c[0]).Position(data.r[3],data.r[4],false);
+                                        u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
+                                    };         
+                                    dash.onEnd=function(Dash dash){
+                                        Data data=Data(dash.Obj);
+                                        Units u=Units(data.c[0]); 
+                                        Units tmp=Units.Get(dash.Unit);
+                                        tmp.SetH(0);
+                                        data.i[1]-=1;  
+                                        Buffs.Skill(tmp.unit,'A00F',1);  
+                                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str()*18.0); 
+                                        if(data.i[0]==0){
+                                            data.i[0]=1;
+                                            Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
+                                            Util.Duang(data.r[1],data.r[2],0.5,200,200,-75,0.02,50);
+                                        }
+                                        if(data.i[1]==0){
+                                            data.Destroy(); 
+                                        }
+                                    };
+                                }
+                                GroupClear(tmp_group);
+                                ReleaseTimer(GetExpiredTimer());
+                                DestroyGroup(data.g[0]);
+                                data.g[0]=null; 
+                                u.PositionEnabled(true); 
+                                u.Pause(false); 
+                            } 
+                        });
+                    });
+                    t=null;
+                } 
+            }else{ 
+                GroupClear(tmp_group);   
+                u.PositionEnabled(true); 
+                u.Pause(false);  
+                u.Pz(true);
+            }
+      
+            e.Destroy();
+        }
+
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A00D');
@@ -355,6 +498,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Spell.On(Spell.onSpell,'A009',DazzleMaster.Q);
         Spell.On(Spell.onSpell,'A00B',DazzleMaster.W);
         Spell.On(Spell.onSpell,'A00D',DazzleMaster.E);
+        Spell.On(Spell.onSpell,'A00E',DazzleMaster.R);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
