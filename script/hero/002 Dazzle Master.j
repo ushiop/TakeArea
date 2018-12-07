@@ -119,6 +119,65 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             e.Destroy();
         }
 
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A00D');
+            timer t=NewTimer();
+            u.Pause(true);
+            data.c[0]=u;
+            data.r[0]=0;//蓄力时间
+            SetTimerData(t,data);
+            TimerStart(t,0.01,true,function(){
+                Data data=Data(GetTimerData(GetExpiredTimer()));
+                Units mj;
+                Units u=Units(data.c[0]);
+                Dash dash;
+                if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false){ 
+                    data.r[0]+=0.01;
+                    if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
+                        TextForPlayer(u.player.player,u.unit,"已蓄力"+R2S(data.r[0])+"秒",0.2,12,0); 
+                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx");
+                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", u.unit, "hand right") );
+                    } 
+                    if(data.r[0]>=0.5){
+                        u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
+                    }
+                }else{ 
+                    ReleaseTimer(GetExpiredTimer());  
+                    TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,0);
+                    //Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.4,1.1, "stand","kc12.mdx");
+                    
+                    mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,0.3,2, "stand","kc12.mdx");
+                    mj.SetH(100); 
+                    Dash.Start(mj.unit,u.F()+180,100,Dash.ADD,40,true,false);
+                    if(data.r[0]>2){
+                        mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
+                        mj.SetH(200); 
+                        Dash.Start(mj.unit,u.F()+180,100,Dash.ADD,60,true,false);
+                    }
+                    dash=Dash.Start(u.unit,u.F(),300+(data.r[0]*100),Dash.SUB,80,true,false);
+                    dash.Obj=data;
+                    dash.onMove=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        Units u=Units(data.c[0]);
+                        dash.Angle=u.F();
+                        if(dash.Speed<60){
+                            DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
+                        }
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        Units u=Units(data.c[0]);
+                        u.Pause(false);
+                        data.Destroy();
+                    };
+
+                }
+            });
+            t=null;
+            e.Destroy();
+        }
+
         static method W(Spell e){
             Units u=Units.Get(e.Spell); 
             Dash dash;
@@ -161,9 +220,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2); 
                             //刀光特效版          
-                            mj=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),dash.Angle,0.6,1.25,1.5, "birth","dg.mdx");
+                            mj=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),dash.Angle,0.6,0.8,1.5, "birth","dg.mdx");
                             mj.SetH(100);
-                            Dash.Start(mj.unit,dash.Angle,300,Dash.ADD,80,true,false);
+                            Dash.Start(mj.unit,dash.Angle,200,Dash.ADD,80,true,false);
                             //---
                             tmp=Units.MJ(u.player.player,'e009','A002',0,dash.X,dash.Y,dash.Angle,2,2.5,2, "stand","wind.mdx");
                             tmp.SetH(200); 
@@ -266,6 +325,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
     function onInit(){
         Spell.On(Spell.onSpell,'A009',DazzleMaster.Q);
         Spell.On(Spell.onSpell,'A00B',DazzleMaster.W);
+        Spell.On(Spell.onSpell,'A00D',DazzleMaster.E);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
