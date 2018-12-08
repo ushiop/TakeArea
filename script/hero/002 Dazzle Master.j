@@ -5,7 +5,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
     struct DazzleMaster{
 
         static string DazzlePath[5];
-
+        static string DazzleName[5];
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
@@ -100,7 +100,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             y=y+(dis)*SinBJ(ra);
                             tmp.Position(x,y,false);
                             tmp.SetH(70+(150*Util.GetPwx(3.99,data.r[2]+GetRandomReal(0,10),96)));
-                            tmp.SetF(Util.XY(tmp.unit,u.unit));
+                            tmp.SetF(Util.XY(tmp.unit,u.unit),true);
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             h=h+5; 
                         }
@@ -123,8 +123,37 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             e.Destroy();
         }
 
+        //增加20点移动速度,30点攻击速度,最多叠加4次,持续5秒,使炫纹发射以外的冷却中的技能减少1秒冷却
+                //data.r[0]=0;//'炫纹发射'带来的移动速度加成总额
+                //data.r[1]=0;//'炫纹发射'带来的攻击速度加成总额
         static method D(Spell e){
-           e.Destroy();
+            Units u=Units.Get(e.Spell);
+            Data data=Data(u.Obj);
+            Units first=Units.Get(FirstOfGroup(data.g[0]));
+            real cd;
+            GroupRemoveUnit(data.g[0],first.unit);
+            TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
+            Buffs.Add(u.unit,'A00G','B002',5,false).onEnd=function(Buffs b){
+                Data data=Data(Units.Get(b.Unit).Obj); 
+                SetUnitMoveSpeed(b.Unit, GetUnitMoveSpeed(b.Unit)-data.r[0] );
+                SetUnitState(b.Unit, ConvertUnitState(0x51), GetUnitState(b.Unit, ConvertUnitState(0x51))-data.r[1] );
+                data.r[0]=0;
+                data.r[1]=0;
+            }; 
+            if(data.r[0]<80){
+                data.r[0]+=20;    
+                SetUnitMoveSpeed(u.unit, GetUnitMoveSpeed(u.unit)+20 );
+            }
+            if(data.r[1]<1.2){
+                data.r[1]+=0.3;
+                SetUnitState(u.unit, ConvertUnitState(0x51), GetUnitState(u.unit, ConvertUnitState(0x51))+0.3 );
+            } 
+            cd=data.r[0]/20;
+            YDWESetUnitAbilityState( u.unit, 'A009', 1, YDWEGetUnitAbilityState(u.unit,'A009', 1)-cd );
+            YDWESetUnitAbilityState( u.unit, 'A00B', 1, YDWEGetUnitAbilityState(u.unit,'A00B', 1)-cd  );
+            YDWESetUnitAbilityState( u.unit, 'A00D', 1, YDWEGetUnitAbilityState(u.unit,'A00D', 1)-cd );
+            YDWESetUnitAbilityState( u.unit, 'A00E', 1, YDWEGetUnitAbilityState(u.unit,'A00E', 1)-cd  );
+            e.Destroy();
         }
 
         static method R(Spell e){
@@ -490,9 +519,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
         DazzleMaster.DazzlePath[0]="ball_nothing.mdx";
+        DazzleMaster.DazzleName[0]="无属性";
         DazzleMaster.DazzlePath[1]="ball_light.mdx";
+        DazzleMaster.DazzleName[1]="光属性";
         DazzleMaster.DazzlePath[2]="ball_ice.mdx";
+        DazzleMaster.DazzleName[2]="冰属性";
         DazzleMaster.DazzlePath[3]="ball_fire.mdx";
+        DazzleMaster.DazzleName[3]="火属性";
         DazzleMaster.DazzlePath[4]="ball_dark.mdx";
+        DazzleMaster.DazzleName[4]="暗属性";
     }
 }
