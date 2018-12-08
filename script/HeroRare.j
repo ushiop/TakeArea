@@ -35,10 +35,19 @@ library HeroRare requires Units{
             return isRepeat;
         }
 
+        //返回单位的稀有度等级,0~2 r-ssr
+        public static method GetUnitRare(unit u)->integer{
+            string rare=Util.GetUnitValue(GetUnitTypeId(u),"EditorSuffix"); 
+            if(rare=="R") return 0;
+            if(rare=="SR") return 1;
+            if(rare=="SSR") return 2;
+            return 0;
+        }
+
         //将一个单位放回对应奖池并删除它
         public static method AddRandomHero(unit u){
             if(GetRepeat()==false){
-                UnitPoolAddUnitType(HeroRare[GetUnitPointValue(u)], GetUnitTypeId(u), 1 );
+                UnitPoolAddUnitType(HeroRare[HeroRares.GetUnitRare(u)], GetUnitTypeId(u), 1 );
             }
             Units.Remove(u);
         }
