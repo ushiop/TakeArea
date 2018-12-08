@@ -47,9 +47,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 money=r.RespawnSaveMoney*2;
             }                
             r_lv=GetUnitLevel(ps.hero.unit);
-            r_str=ps.hero.Str();
-            r_agi=ps.hero.Agi();
-            r_int=ps.hero.Int();
+            r_str=GetHeroStr(ps.hero.unit,false);
+            r_agi=GetHeroAgi(ps.hero.unit,false);
+            r_int=GetHeroInt(ps.hero.unit,false);
             for(0<=r_i<6){
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
