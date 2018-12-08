@@ -24,9 +24,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         //炫纹死亡
         static method Death(Units u,Units m){
             Data data;
-            if(u.aid=='A008'){
+            if(u.aid=='A008'&&u.aidindex>=0&&u.aidindex<=4){
                 data=Data(u.Obj);
-                GroupRemoveUnit(data.g[0],u.unit);
+                GroupRemoveUnit(data.g[0],u.unit); 
                 u.RemoveObj(); 
             }
         }
@@ -123,15 +123,16 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             e.Destroy();
         }
 
-        //增加20点移动速度,30点攻击速度,最多叠加4次,持续5秒,使炫纹发射以外的冷却中的技能减少1秒冷却
-                //data.r[0]=0;//'炫纹发射'带来的移动速度加成总额
-                //data.r[1]=0;//'炫纹发射'带来的攻击速度加成总额
+ 
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data(u.Obj);
             Units first=Units.Get(FirstOfGroup(data.g[0]));
-            real cd;
-            GroupRemoveUnit(data.g[0],first.unit);
+            Dash dash;
+            real cd,x=first.X(),y=first.Y(),h=first.H();
+            integer id;             
+            id=first.aidindex;
+            Units.Kill(first.unit);
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
             Buffs.Add(u.unit,'A00G','B002',5,false).onEnd=function(Buffs b){
                 Data data=Data(Units.Get(b.Unit).Obj); 
@@ -153,6 +154,61 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             YDWESetUnitAbilityState( u.unit, 'A00B', 1, YDWEGetUnitAbilityState(u.unit,'A00B', 1)-cd  );
             YDWESetUnitAbilityState( u.unit, 'A00D', 1, YDWEGetUnitAbilityState(u.unit,'A00D', 1)-cd );
             YDWESetUnitAbilityState( u.unit, 'A00E', 1, YDWEGetUnitAbilityState(u.unit,'A00E', 1)-cd  );
+
+            first=Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,15,1.5,1, "stand",DazzlePath[id]);
+            first.SetH(h);
+            id=Dash.ADD;
+            dash=Dash.Start(first.unit,Util.XYEX(first.X(),first.Y(),e.X,e.Y),Util.XY2EX(first.X(),first.Y(),e.X,e.Y),id,50,true,false);
+            dash.Obj=R2I(first.H());
+            dash.onMove=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                u.SetH(50+(R2I(dash.Obj)*(1-Util.GetPwx(3.99,dash.NowDis/2,dash.MaxDis))));   
+            };
+            dash.onEnd=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                Units tmp;
+                real x=u.X(),y=u.Y();
+                real dmg=(u.player.hero.Str()*0.4)+(u.player.hero.Int()*0.8); 
+                integer id=u.aidindex-10;
+                //Util.Range(u.X(),u.Y(),150);
+                u.Life(1);
+                u.AnimeSpeed(2);
+                u.Anime("death");
+                if(id==0){  
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
+                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                            DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\GlaiveMissile\\GlaiveMissile.mdl", tmp.unit, "chest") );
+                            u.Damage(tmp.unit,Damage.Magic,'A008',dmg);
+                        }
+                    }
+                    GroupClear(tmp_group); 
+                }
+                if(id==4){ 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_dark_kc.mdx"); 
+                    if(GroupFind(u.unit,x,y,300,false)!=null){
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,0.42,2.5,1.75, "death","dark.mdx");
+                        tmp.SetH(50);
+                        //tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,0.4,1.5,2, "stand","dark1.mdx");
+                        GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", tmp.unit, "chest") );
+                                u.Damage(tmp.unit,Damage.Chaos,'A008',dmg);
+                                HitFlys.Add(tmp.unit,20);
+                                Dash.Start(tmp.unit,Util.XY(tmp.unit,u.unit),Util.XY2(tmp.unit,u.unit),Dash.ADD,40,true,false);
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                    } 
+                }
+            };
+
             e.Destroy();
         }
 
@@ -269,7 +325,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                         tmp.SetH(0);
                                         data.i[1]-=1;  
                                         Buffs.Skill(tmp.unit,'A00F',1);  
-                                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str()*18.0); 
+                                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str()*18.0);  
                                         if(data.i[0]==0){
                                             data.i[0]=1;
                                             Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
@@ -283,8 +339,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 GroupClear(tmp_group);
                                 ReleaseTimer(GetExpiredTimer());
                                 DestroyGroup(data.g[0]);
-                                data.g[0]=null; 
-                                data.Destroy();
+                                data.g[0]=null;  
                                 u.PositionEnabled(true); 
                                 u.Pause(false); 
                             } 
