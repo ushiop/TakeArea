@@ -29,11 +29,14 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         }
 
 
+
         //复活某个玩家
         private static method Spawn(player p){
             integer hid=0,money=0;
             Players ps=Players.Get(p);
             Respawn r=ps.respawn; 
+            integer r_i,r_lv,r_str,r_agi,r_int;
+            integer r_it[];
             ps.isdeath=false;  
             Respawn.Show(p,false);
             if(r.RespawnSelect==1){
@@ -43,12 +46,26 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 hid=ps.nextherotype;
                 money=r.RespawnSaveMoney*2;
             }                
+            r_lv=GetUnitLevel(ps.hero.unit);
+            r_str=ps.hero.Str();
+            r_agi=ps.hero.Agi();
+            r_int=ps.hero.Int();
+            for(0<=r_i<6){
+                r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
+            } 
             HeroRares.AddRandomHero(ps.hero.unit); 
             if(r.RespawnSelect==0)
             {
                 ps.hero=Units.Get(HeroRares.GetRandomHero(ps.player,ps.randomhero));   
             }else{
                 ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
+            }
+            SetHeroLevel(ps.hero.unit,r_lv,false);
+            SetHeroAgi(ps.hero.unit,r_agi,true);
+            SetHeroStr(ps.hero.unit,r_str,true);
+            SetHeroInt(ps.hero.unit,r_int,true);
+            for(0<=r_i<6){
+                UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
             }
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             ps.AddMoney(-money);
