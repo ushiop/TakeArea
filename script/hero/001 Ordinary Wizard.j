@@ -216,17 +216,10 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                             Buffs.Add(u.unit,'A000','B000',0.03,false);
                             Units.MJ(u.player.player,'e008','A005',0,tmp.X()+dis*CosBJ(f),tmp.Y()+dis*SinBJ(f),f,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
                         }
-                    }
-                    GroupEnumUnitsInRange(tmp_group,tmp.X(),tmp.Y(),75,function GroupIsAliveNotAloc);
-                    while(FirstOfGroup(tmp_group)!=null){
-                        tmp=Units.Get(FirstOfGroup(tmp_group));
-                        if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
-                            d.Stop();
-                            break;
-                        }
-                        GroupRemoveUnit(tmp_group,tmp.unit);
-                    }
-                    GroupClear(tmp_group);
+                    } 
+                    if(GroupFind(u.unit,tmp.X(),tmp.Y(),75,false)!=null){
+                        d.Stop();
+                    } 
                 }
             };
             dash.onEnd=function(Dash d){
