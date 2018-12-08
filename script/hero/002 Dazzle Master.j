@@ -100,6 +100,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             y=y+(dis)*SinBJ(ra);
                             tmp.Position(x,y,false);
                             tmp.SetH(70+(150*Util.GetPwx(3.99,data.r[2]+GetRandomReal(0,10),96)));
+                            tmp.SetF(Util.XY(tmp.unit,u.unit));
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             h=h+5; 
                         }
