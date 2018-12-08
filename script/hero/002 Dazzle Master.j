@@ -2,7 +2,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
     //英雄'炫纹大师'技能
     //SR级英雄
 
-    public struct DazzleMaster{
+    struct DazzleMaster{
+
+        static string DazzlePath[5];
+
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
@@ -32,7 +35,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         static method AddDazzle(unit u,integer id){
             Units s=Units.Get(u);
             Data data=Data(s.Obj);
-            Units mj=Units.MJ(s.player.player,'e008','A008',id,s.X(),s.Y(),0,15,1.5,1, "stand","Abilities\\Weapons\\BloodElfMissile\\BloodElfMissile.mdl");
+            Units mj=Units.MJ(s.player.player,'e008','A008',id,s.X(),s.Y(),0,15,1.5,1, "stand",DazzlePath[id]);
             mj.AddObj(data);
             GroupAddUnit(data.g[0],mj.unit); 
         }
@@ -86,13 +89,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.RemoveObj();
                         data.Destroy();  
                     }else{
-                        x=u.X()+(75+GroupNumber(data.g[0])*5)*CosBJ(u.F()+180);
-                        y=u.Y()+(75+GroupNumber(data.g[0])*5)*SinBJ(u.F()+180);
+                        x=u.X()+(75+GroupNumber(data.g[0])*7)*CosBJ(u.F()+180);
+                        y=u.Y()+(75+GroupNumber(data.g[0])*7)*SinBJ(u.F()+180);
                         GroupAddGroup(data.g[0],tmp_group);  
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             ra=360.0/GroupNumber(data.g[0])*(h/5);
-                            dis=(Util.XY2(tmp.unit,u.unit)/100)+(GroupNumber(data.g[0])*5); 
+                            dis=(Util.XY2(tmp.unit,u.unit)/100)+(GroupNumber(data.g[0])*7); 
                             x=x+(dis)*CosBJ(ra);
                             y=y+(dis)*SinBJ(ra);
                             tmp.Position(x,y,false);
@@ -136,6 +139,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             u.PositionEnabled(false);   
             if(GroupFind(u.unit,x,y,150,false)!=null){
                 Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
+                AddDazzle(u.unit,4);
                 GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -484,5 +488,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
+        DazzleMaster.DazzlePath[0]="ball_nothing.mdx";
+        DazzleMaster.DazzlePath[1]="ball_light.mdx";
+        DazzleMaster.DazzlePath[2]="ball_ice.mdx";
+        DazzleMaster.DazzlePath[3]="ball_fire.mdx";
+        DazzleMaster.DazzlePath[4]="ball_dark.mdx";
     }
 }
