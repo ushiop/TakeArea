@@ -8,6 +8,12 @@ library LevelUp requires Events{
         Players p=Units.Get(e.TriggerUnit).player;
         if(lv>MaxLv){
             MaxLv=lv;
+            ForForce(Teams.GetAllPlayers(),function(){
+                Players p=Players.Get(GetEnumPlayer());
+                if(p.isai==true){
+                    SetHeroLevel(p.hero.unit,MaxLv, true );
+                }
+            });
         }
         if(lv>=5&&p.lv5==null){
             p.lv5=Units.Spawn(p.player,'e003',0,0,0);
