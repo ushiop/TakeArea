@@ -12,6 +12,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
         integer i;
         Origin_Ball=gg_unit_e000_0010;
         Origin_Magic=gg_unit_e001_0011;
+        SetUnitOwner( Origin_Magic, Player(bj_PLAYER_NEUTRAL_EXTRA), false );
         Origin_X=GetUnitX(Origin_Ball);
         Origin_Y=GetUnitY(Origin_Ball);
         SetUnitTimeScale(Origin_Magic,0);
