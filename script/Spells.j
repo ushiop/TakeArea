@@ -21,6 +21,7 @@ library Spells requires SpellNameText{
         method Destroy(){
             this.Use=this.Use-1;
             if(this.Use==0){ 
+                BJDebugMsg(GetAbilityName(this.Id)+"结束阶段:"+R2S(this.State));
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
@@ -62,47 +63,54 @@ library Spells requires SpellNameText{
 
         static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
-            Spell tmp=Spell.allocate();
-            SpellNameText(u.unit,GetAbilityName(e.SpellId),3,10);
-            tmp.Spell=u.unit;
-            tmp.Target=e.SpellTargetUnit;
-            tmp.X=e.SpellTargetX;
-            tmp.Y=e.SpellTargetY;
-            tmp.Id=e.SpellId;
-            if(tmp.Target==null){
-                tmp.Angle=Util.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
-                tmp.Dis=Util.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
-            }else{
-                tmp.Angle=Util.XY(tmp.Spell,tmp.Target);
-                tmp.Dis=Util.XY2(tmp.Spell,tmp.Target);
+            Spell tmp;
+            if(u.IsAbility('Aloc')==0){
+                tmp=Spell.allocate();
+                SpellNameText(u.unit,GetAbilityName(e.SpellId),3,10);
+                tmp.Spell=u.unit;
+                tmp.Target=e.SpellTargetUnit;
+                tmp.X=e.SpellTargetX;
+                tmp.Y=e.SpellTargetY;
+                tmp.Id=e.SpellId;
+                if(tmp.Target==null){
+                    tmp.Angle=Util.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                    tmp.Dis=Util.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                }else{
+                    tmp.Angle=Util.XY(tmp.Spell,tmp.Target);
+                    tmp.Dis=Util.XY2(tmp.Spell,tmp.Target);
+                }
+                tmp.Obj=0;
+                tmp.Kill=false;
+                tmp.Use=1;
+                tmp.State=Spell.SpellState;
+                if(u.spell!=0){
+                    tmp.Use=2;
+                    SpellEventInterface(u.spell).evaluate(tmp);
+                } 
+                Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
             }
-            tmp.Obj=0;
-            tmp.Kill=false;
-            tmp.Use=1;
-            tmp.State=Spell.SpellState;
-            if(u.spell!=0){
-                tmp.Use=2;
-                SpellEventInterface(u.spell).evaluate(tmp);
-            } 
-            Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
         }
 
         //! textmacro SpellFunc takes name,ev,type
         static method onUnit$name$(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
-            Spell tmp=Spell.allocate();
-            tmp.Spell=u.unit;
-            tmp.Target=e.SpellTargetUnit;
-            tmp.X=e.SpellTargetX;
-            tmp.Y=e.SpellTargetY;
-            tmp.Id=e.SpellId;
-            tmp.Angle=0;
-            tmp.Dis=0;
-            tmp.Obj=0;
-            tmp.Kill=false;
-            tmp.Use=1; 
-            tmp.State=$type$;
-            Spell.Trigger(Spell.on$ev$,tmp.Id,tmp);
+            Spell tmp;
+            if(u.IsAbility('Aloc')==0){
+                tmp=Spell.allocate();
+                tmp.Spell=u.unit;
+                tmp.Target=e.SpellTargetUnit;
+                tmp.X=e.SpellTargetX;
+                tmp.Y=e.SpellTargetY;
+                tmp.Id=e.SpellId;
+                tmp.Angle=0;
+                tmp.Dis=0;
+                tmp.Obj=0;
+                tmp.Kill=false;
+                tmp.Use=1; 
+                tmp.State=$type$;
+                Spell.Trigger(Spell.on$ev$,tmp.Id,tmp);
+            }
+
         } 
         //! endtextmacro
         //! runtextmacro SpellFunc("StartSpell","Start","2")
