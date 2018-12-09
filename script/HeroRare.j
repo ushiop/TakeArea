@@ -6,6 +6,8 @@ library HeroRare requires Units{
 
     public unit HeroRare_LastRandomUnit;//最后一个从奖池抽出来的单位
 
+    public integer HeroType[];
+
     function onInit(){
         group g=CreateGroup(); 
         HeroRare[0]=CreateUnitPool();
@@ -15,6 +17,7 @@ library HeroRare requires Units{
         ForGroup(g,function(){
             unit gu=GetEnumUnit(); 
             if(IsUnitType(gu,UNIT_TYPE_HERO)==true){
+                HeroType[GetUnitPointValue(gu)]=GetUnitTypeId(gu);
                 HeroRares.AddRandomHero(gu);
             }
             gu=null;
