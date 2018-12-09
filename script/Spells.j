@@ -64,7 +64,7 @@ library Spells requires SpellNameText{
         static method onUnitSpell(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             Spell tmp;
-            if(u.IsAbility('Aloc')==0){
+            if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){
                 tmp=Spell.allocate();
                 SpellNameText(u.unit,GetAbilityName(e.SpellId),3,10);
                 tmp.Spell=u.unit;
@@ -95,7 +95,7 @@ library Spells requires SpellNameText{
         static method onUnit$name$(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             Spell tmp;
-            if(u.IsAbility('Aloc')==0){
+            if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){
                 tmp=Spell.allocate();
                 tmp.Spell=u.unit;
                 tmp.Target=e.SpellTargetUnit;
