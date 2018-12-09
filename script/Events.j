@@ -21,6 +21,7 @@ library Events requires Table{
         boolean RangeDamage;//是否是远程伤害
         boolean AttackDamage;//是否是攻击伤害
         boolean MagicDamage;//是否是法术伤害 
+        item BuyItem;//购买的物品
         
         static method create()->EventArgs{
             EventArgs e=EventArgs.allocate();
@@ -36,6 +37,7 @@ library Events requires Table{
             this.TriggerPlayer=null; 
             this.DamageUnit=null;
             this.BuyingUnit=null; 
+            this.BuyItem=null;
             this.deallocate();
         }
     }
@@ -86,6 +88,7 @@ library Events requires Table{
         e.SpellId=GetSpellAbilityId();
         e.LevelUpUnit=GetLevelingUnit(); 
         e.BuyingUnit=GetBuyingUnit();
+        e.BuyItem=GetSoldItem();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
