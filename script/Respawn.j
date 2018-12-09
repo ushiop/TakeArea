@@ -60,7 +60,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }else{
                 ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
             }
-            SetHeroLevel(ps.hero.unit,r_lv,false);
+            if(r_lv!=1){ 
+                SetHeroLevel(ps.hero.unit,r_lv,false);
+            }
             SetHeroAgi(ps.hero.unit,r_agi,true);
             SetHeroStr(ps.hero.unit,r_str,true);
             SetHeroInt(ps.hero.unit,r_int,true);
@@ -70,7 +72,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             ps.AddMoney(-money);
             ps.hero.Lock(p); 
-            ps.respawn=0;
+            ps.nextherotype=-1;
+            ps.respawn=0; 
+            KillUi.FlushPlayerData(ps.player);
             r.deallocate(); 
         }
 
