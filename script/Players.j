@@ -50,7 +50,7 @@ library Players{
             p.teamid=GetPlayerTeam(ps);
             p.isai=GetPlayerController(ps) == MAP_CONTROL_COMPUTER;
             p.isonline=true;
-            p.randomhero=0;
+            p.randomhero=100;
             p.lifekill=0;
             p.nextherotype=-1;
             p.isdeath=false;
