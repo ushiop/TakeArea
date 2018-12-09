@@ -14,7 +14,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 data=Data(e.DamageUnit.Obj); 
                 if(data.i[0]==2){
                     data.i[0]=0;
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,3);
                 }else{
                     data.i[0]+=1;
                 }
@@ -174,7 +174,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 u.Life(1);
                 u.AnimeSpeed(2);
                 u.Anime("death");
-                if(id==0){  
+                if(id==0){//无
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
                     GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
@@ -187,7 +187,71 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                     GroupClear(tmp_group); 
                 }
-                if(id==4){ 
+                if(id==1){//光
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
+                    
+                    if(GroupFind(u.unit,x,y,200,false)!=null){
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,4,1.5,1.15, "death","OrbOfLightning.mdx");
+                        tmp.SetH(50);  
+                        GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                u.Damage(tmp.unit,Damage.Chaos,'A008',dmg); 
+                                Buffs.Skill(tmp.unit,'A00H',1);
+                                Buffs.AllRemove(tmp.unit,Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_TRUE);
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                    } 
+                    
+                }
+                if(id==2){//冰
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
+                    
+                    if(GroupFind(u.unit,x,y,150,false)!=null){
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl");
+                        tmp.SetH(50); 
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\LichMissile\\LichMissile.mdl");
+                        tmp.SetH(50);                        
+                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
+                                Buffs.Add(tmp.unit,'A00I','B003',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\ZigguratFrostMissile\\ZigguratFrostMissile.mdl", tmp.unit, "chest") );
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                    } 
+                }
+                if(id==3){//火
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
+                     
+                    if(GroupFind(u.unit,x,y,200,false)!=null){
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2.5,1, "death","Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl");
+                        tmp.SetH(50); 
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl");
+                        tmp.SetH(50);                    
+                        GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
+                                DestroyEffect( AddSpecialEffectTarget("Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl", tmp.unit, "chest") );
+                                Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),300-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,60,true,true);
+
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                    }                     
+
+                }
+                if(id==4){//暗
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_dark_kc.mdx"); 
                     if(GroupFind(u.unit,x,y,300,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,0.42,2.5,1.75, "death","dark.mdx");
@@ -553,7 +617,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi()*3+u.Str()*4);
                         DestroyEffect( AddSpecialEffectTarget("bd2d2.mdx", tmp.unit, "chest") );
                                 
-                        if(dash.NowDis<500){ 
+                        if(dash.NowDis<400){ 
                             Dash.Start(tmp.unit,dash.Angle,500-dash.NowDis,Dash.SUB,90,true,true);
                         }
                         if(data.i[0]==0){
