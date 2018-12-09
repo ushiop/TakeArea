@@ -65,7 +65,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     
                     u.DelayModel("units\\human\\HeroBloodElf\\HeroBloodElf.mdx",0.3); 
                     GroupDamage(u, x,y,300,u.player.hero.Int()*20.0,Damage.Magic,'A006',false);                     
-                    if(u.player.lv15!=null){
+                    if(u.player.lv10!=null){
                     //是否触发E
                     if(u.IsAbility('B000')==false){
                         Units.MJ(u.player.player,'e008','A006',0,x,y,0,5,1,1.5,"death","fire3.mdx");
@@ -143,7 +143,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                         GroupRemoveUnit(tmp_group,mj.unit);
                     }
                     GroupClear(tmp_group); 
-                    if(u.player.lv15!=null){
+                    if(u.player.lv10!=null){
                         //是否触发E
                         if(u.IsAbility('B000')==false){
                             Buffs.Add(u.unit,'A000','B000',2,false);
@@ -211,7 +211,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 Units tmp=Units.Get(d.Unit); 
                 real dis,f;
                 if(d.NowDis>200){  
-                    if(u.player.lv15!=null){
+                    if(u.player.lv10!=null){
                         //是否触发E
                         if(u.IsAbility('B000')==false){
                             dis=GetRandomReal(0,150);
@@ -249,7 +249,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     e=null;
                     GroupDamage(u,x,y,250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false); 
                     u=Units(d.Obj);
-                    if(u.player.lv15!=null){
+                    if(u.player.10!=null){
                         //是否触发E
                             Buffs.Add(u.unit,'A000','B000',7,false);
                             for(0<=i<4){
