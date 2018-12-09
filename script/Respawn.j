@@ -133,7 +133,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     DzFrameShow(DeathUIMainSaveLine,true);
                 }
             }
-            if(p.nextherotype==0){ 
+            if(p.nextherotype==-1){ 
                 if(ps==Players.localplayer){
                     DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
                     DzFrameShow(DeathUIMainBuyLine,true);

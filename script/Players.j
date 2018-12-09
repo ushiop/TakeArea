@@ -52,7 +52,7 @@ library Players{
             p.isonline=true;
             p.randomhero=0;
             p.lifekill=0;
-            p.nextherotype=0;
+            p.nextherotype=-1;
             p.isdeath=false;
             p.press=0;
             ht[ps]=p;
