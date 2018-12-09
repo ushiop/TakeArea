@@ -243,7 +243,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
                                 DestroyEffect( AddSpecialEffectTarget("Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl", tmp.unit, "chest") );
-                                Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),300-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,60,true,true);
+                                Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),300-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,40,true,true);
 
                             }
                         }
