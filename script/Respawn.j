@@ -70,6 +70,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
             }
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
+            DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
             ps.hero.Lock(p); 
             ps.nextherotype=-1;
