@@ -17,16 +17,19 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         public static method Death(Units u,Units m){ 
             u.player.deaths=u.player.deaths+1;
             KillUi.FlushPlayerData(u.player.player);
-            if(u.player.teamid!=m.player.teamid&&m.unit!=null){ 
-                m.player.kills=m.player.kills+1;
-                Teams.AddTeamKills(m.player.teamid,1);
-                KillUi.FlushKillData(m.player.teamid);
+            if(m.player.hero!=null){
+                if(u.player.teamid!=m.player.teamid){ 
+                    m.player.kills=m.player.kills+1;
+                    Teams.AddTeamKills(m.player.teamid,1);
+                    KillUi.FlushKillData(m.player.teamid);
+                }
+                if(Teams.GetTeamKills(m.player.teamid)>=Winner.MaxKills){
+                    Winner.GameEnd=true;
+                    DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(m.player.teamid)+" 获得了最终的胜利！！");
+                    Winner.ShowWin(m.player.teamid);
+                }
             }
-            if(Teams.GetTeamKills(m.player.teamid)>=Winner.MaxKills){
-                Winner.GameEnd=true;
-                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(m.player.teamid)+" 获得了最终的胜利！！");
-                Winner.ShowWin(m.player.teamid);
-            }
+
         }
 
         //设置指定阵营序号胜利
