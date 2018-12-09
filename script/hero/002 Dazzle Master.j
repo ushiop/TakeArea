@@ -157,6 +157,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
             first=Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,15,1.5,1, "stand",DazzlePath[id]);
             first.SetH(h);
+            first.Position(x,y,true);
             id=Dash.ADD;
             dash=Dash.Start(first.unit,Util.XYEX(first.X(),first.Y(),e.X,e.Y),Util.XY2EX(first.X(),first.Y(),e.X,e.Y),id,50,true,false);
             dash.Obj=R2I(first.H());
