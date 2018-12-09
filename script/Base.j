@@ -33,3 +33,4 @@
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
 //! import zinc "map/script/hero/002 Dazzle Master.j"
+//! import zinc "map/script/hero/003 Wind Walk.j"
