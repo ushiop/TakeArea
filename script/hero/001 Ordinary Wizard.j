@@ -249,7 +249,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     e=null;
                     GroupDamage(u,x,y,250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false); 
                     u=Units(d.Obj);
-                    if(u.player.10!=null){
+                    if(u.player.lv10!=null){
                         //是否触发E
                             Buffs.Add(u.unit,'A000','B000',7,false);
                             for(0<=i<4){
