@@ -10,6 +10,7 @@ library Events requires Table{
         unit KillUnit;//凶手单位
         unit TriggerUnit;//触发单位 
         unit LevelUpUnit;//升级单位
+        unit BuyingUnit;//购买单位
         unit SpellTargetUnit;//技能目标单位
         real SpellTargetX;//技能目标X
         real SpellTargetY;//技能目标Y
@@ -33,7 +34,8 @@ library Events requires Table{
             this.TriggerUnit=null;
             this.DeathUnit=null;
             this.TriggerPlayer=null; 
-            this.DamageUnit=null; 
+            this.DamageUnit=null;
+            this.BuyingUnit=null; 
             this.deallocate();
         }
     }
@@ -50,6 +52,7 @@ library Events requires Table{
             static constant string onUnitStartSpell="Events.onUnitStartSpell";//任意单位开始发动技能效果
             static constant string onUnitStopSpell="Events.onUnitStopSpell";//任意单位停止发动技能效果
             static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级 
+            static constant string onUnitSellItem="Events.onUnitSellItem";//任意单位出售物品
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -82,6 +85,7 @@ library Events requires Table{
         e.SpellTargetY=GetSpellTargetY();
         e.SpellId=GetSpellAbilityId();
         e.LevelUpUnit=GetLevelingUnit(); 
+        e.BuyingUnit=GetBuyingUnit();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
@@ -100,6 +104,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitStopSpell")
 //! runtextmacro RegisterAction("onHeroLevelUp") 
 //! runtextmacro RegisterAction("onUnitDeacy") 
+//! runtextmacro RegisterAction("onUnitSellItem") 
 
     function onInit(){
         trigger t; 
@@ -116,6 +121,7 @@ library Events requires Table{
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_CAST","Event_onUnitStartSpell")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SPELL_ENDCAST","Event_onUnitStopSpell")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_DECAY","Event_onUnitDeacy")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_SELL_ITEM","Event_onUnitSellItem")
  
   
         //! textmacro RegisterArgsEvent takes tri,args,event,action
