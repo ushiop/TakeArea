@@ -112,7 +112,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     u.player.randomhero=u.player.randomhero+5.0;
                 }
             }else{
-                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,u.player.name+"死在了野怪的手里...s");    
+                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,u.player.name+"死在了野怪的手里...");    
             }
             r.RespawnTime=Respawn.MaxRespawnTime;
             r.RespawnSaveMoney= 200 + R2I((u.player.lifekill *300) *1.2);
