@@ -18,6 +18,8 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
         SetUnitTimeScale(Origin_Magic,0);
         Winner.start(); 
         Players.Set(Player(PLAYER_NEUTRAL_PASSIVE));
+        Players.Set(Player(PLAYER_NEUTRAL_AGGRESSIVE));
+        Players.Set(Player(bj_PLAYER_NEUTRAL_EXTRA));
         Teams.ActionsForAllPlayer(function(){
             unit u;
             Players p=Players.Set(GetEnumPlayer());
