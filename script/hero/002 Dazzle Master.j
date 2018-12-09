@@ -308,6 +308,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 t=NewTimer();
                 data=Data.create('A00E');
                 data.c[0]=u;
+                data.c[1]=e;
                 SetTimerData(t,data);
                 TimerStart(t,0.2,false,function(){
                     Data data=Data(GetTimerData(GetExpiredTimer()));
@@ -354,6 +355,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 if(u.Alive()==false){
                                     ReleaseTimer(GetExpiredTimer());
                                     DestroyGroup(data.g[0]);
+                                    Spell(data.c[1]).Destroy();
                                     data.g[0]=null; 
                                     data.Destroy();
                                     u.PositionEnabled(true); 
@@ -404,6 +406,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 }   
                                 GroupClear(tmp_group);
                                 ReleaseTimer(GetExpiredTimer());
+                                Spell(data.c[1]).Destroy();
                                 DestroyGroup(data.g[0]);
                                 data.g[0]=null;  
                                 u.PositionEnabled(true); 
@@ -411,6 +414,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             } 
                         });
                     }else{
+                        Spell(data.c[1]).Destroy();
                         data.Destroy();
                         u.PositionEnabled(true); 
                         u.Pause(false);                
@@ -421,8 +425,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             }else{   
                 u.PositionEnabled(true); 
                 u.Pause(false);  
+                e.Destroy();
             }
-            e.Destroy();
         }
 
         static method E(Spell e){
@@ -431,6 +435,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             timer t=NewTimer();
             u.Pause(true);
             data.c[0]=u;
+            data.c[2]=e;
             data.r[0]=0;//蓄力时间
             SetTimerData(t,data); 
             TimerStart(t,0.1,true,function(){
@@ -502,6 +507,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);  
+                        Spell(data.c[2]).Destroy();
                         mj.Anime("death");
                         mj.Life(1);
                         DestroyGroup(data.g[0]);
@@ -512,8 +518,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
                 }
             });
-            t=null;
-            e.Destroy();
+            t=null; 
         }
 
         static method W(Spell e){
