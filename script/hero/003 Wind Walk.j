@@ -44,7 +44,7 @@ library WindWalk requires Groups{
                 integer i;
                 if(u.Alive()==true){
                     for(0<=i<6){
-                        mj=Units.MJ(u.player.player,'e008','A00K',0,u.X()+125*CosBJ(u.F()),u.Y()+125*SinBJ(u.F()),u.F()+(-30+(i*15)),3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
+                        mj=Units.MJ(u.player.player,'e008','A00K',0,u.X()+125*CosBJ(u.F()),u.Y()+125*SinBJ(u.F()),dash.Angle+180+(-30+(i*15)),3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                         mj.SetH(70);
                         mj.Position(mj.X(),mj.Y(),true);
                         dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,80,true,false);
