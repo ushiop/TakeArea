@@ -3,6 +3,80 @@ library WindWalk requires Groups{
     //R级英雄
     struct WindWalk{
 
+        static method E1(){
+            Data data=Data(GetTimerData(GetExpiredTimer()));
+            Units u=Units(data.c[0]);
+            Spell e=Spell(data.c[1]);
+            Dash dash; 
+            if(u.Alive()==true&&data.i[0]>0){
+                if(u.player.press.E==true){
+                    if(data.r[1]!=0){
+                        data.r[1]-=1;
+                    }else{
+                        data.r[1]=2;
+                        data.r[0]=data.r[0]-0.01;
+                        if(data.r[0]<0.02){
+                            data.r[0]=0.02;
+                        }
+                        TimerStart(GetExpiredTimer(),data.r[0],true,function WindWalk.E1);
+                    }
+                } 
+                u.Position(data.r[2],data.r[3],false);
+                dash=Dash.Start(u.unit,GetRandomReal(0,360),200,Dash.SUB,60,true,false);
+                dash.onEnd=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    Units mj;
+                    mj=Units.MJ(u.player.player,'e008','A00L',0,dash.X,dash.Y,dash.Angle,0.7,1.3,1.5, "attack","units\\creeps\\SylvanusWindrunner\\SylvanusWindrunner.mdl"); 
+                    mj.Alpha(50); 
+                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",mj.unit, "origin") );
+                    mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
+                    mj.SetH(70);
+                    mj.Position(mj.X(),mj.Y(),true);
+                    dash=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
+                    dash.onMove=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        unit k=GroupFind(u.unit,u.X(),u.Y(),60,false);
+                        if(k!=null){
+                            DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
+                            Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
+                            dash.Stop(); 
+                            u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi()*15.0);
+                        }     
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        u.Anime("death");
+                        u.Life(0.5);                        
+                    };
+                }; 
+                data.i[0]-=1;
+            }else{
+                ReleaseTimer(GetExpiredTimer());
+                u.Alpha(255);
+                u.Pause(false);
+                e.Destroy();
+                data.Destroy();
+            }
+        }
+
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            timer t=NewTimer();
+            Data data=Data.create('A00L');
+            u.Pause(true);
+            u.Alpha(0);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0.08;
+            data.r[1]=2;
+            data.r[2]=u.X();
+            data.r[3]=u.Y();
+            data.i[0]=30;
+            SetTimerData(t,data);
+            TimerStart(t,data.r[0],true,function WindWalk.E1);
+            t=null;
+        }
+
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             integer i;
@@ -34,7 +108,7 @@ library WindWalk requires Groups{
                 };
             }
             Units.MJ(u.player.player,'e009','A00K',0,u.X(),u.Y(),u.F(),2,0.5,2.5, "stand","tx.mdx").SetH(80);
-            u.AnimeSpeed(2);
+            u.AnimeSpeed(2.5);
             u.AnimeId(6);
             dash=Dash.Start(u.unit,u.F()+180,300,Dash.SUB,50,true,false);
             dash.Obj=e;
@@ -142,6 +216,7 @@ library WindWalk requires Groups{
         }
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A00L',WindWalk.E);
             Spell.On(Spell.onSpell,'A00J',WindWalk.Q);
             Spell.On(Spell.onSpell,'A00K',WindWalk.W);
             Spell.On(Spell.onReady,'A00K',HERO_START);
