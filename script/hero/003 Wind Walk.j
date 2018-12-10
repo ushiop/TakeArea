@@ -52,6 +52,7 @@ library WindWalk requires Groups{
                 data.i[0]-=1;
             }else{
                 ReleaseTimer(GetExpiredTimer());
+                u.AnimeId(5);
                 u.Alpha(255);
                 u.Pause(false);
                 e.Destroy();
