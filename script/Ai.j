@@ -22,8 +22,7 @@ library Ai requires Teams,Groups{
             target=GroupFind(u.unit,x,y,1000,true);
             if(target!=null){ 
                 x1=GetUnitX(target);
-                y1=GetUnitY(target);
-                u.SetF(Util.XY(u.unit,target),true);
+                y1=GetUnitY(target); 
                 no=GroupFind(u.unit,x,y,300,true);
                 if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
