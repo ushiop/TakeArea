@@ -44,7 +44,8 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 money=r.RespawnSaveMoney;
             }else if(r.RespawnSelect==2){
                 hid=ps.nextherotype;
-                money=r.RespawnSaveMoney*2;
+                money=r.RespawnSaveMoney*2; 
+                ps.nextherotype=-1;
             }                
             r_lv=GetUnitLevel(ps.hero.unit);
             r_str=GetHeroStr(ps.hero.unit,false);
@@ -73,7 +74,6 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
             ps.hero.Lock(p); 
-            ps.nextherotype=-1;
             ps.respawn=0; 
             KillUi.FlushPlayerData(ps.player);
             r.deallocate(); 
