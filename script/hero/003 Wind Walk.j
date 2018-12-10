@@ -136,7 +136,6 @@ library WindWalk requires Groups{
                 ReleaseTimer(GetExpiredTimer());
                 u.AnimeId(5);
                 u.Alpha(255);
-                u.Pause(false);
                 e.Destroy();
                 data.Destroy();
             }
@@ -146,7 +145,6 @@ library WindWalk requires Groups{
             Units u=Units.Get(e.Spell);
             timer t=NewTimer();
             Data data=Data.create('A00L');
-            u.Pause(true);
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=0.08;
