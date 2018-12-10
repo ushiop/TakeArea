@@ -38,8 +38,7 @@ library WindWalk requires Groups{
                         Units c=Units(data.c[2]); 
                         Units tmp;
                         c.Position(dash.X,dash.Y,false);
-                        if(Util.XY2(u.unit,k.unit)<100){
-                            Util.Range(u.X(),u.Y(),200);
+                        if(Util.XY2(u.unit,k.unit)<100){ 
                             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),200,function GroupIsAliveNotAloc);                   
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
