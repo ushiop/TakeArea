@@ -251,6 +251,7 @@ library WindWalk requires Groups{
                         Dash dash1;
                         
                         u.Alpha(0);
+                        if(GetRandomInt(0,1)==0){ 
                             mj=Units.MJ(u.player.player,'e008','A00J',0,u.X(),u.Y(),u.F(),10,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                             mj.Position(u.X(),u.Y(),true); 
                             mj.SetH(50);
@@ -270,6 +271,7 @@ library WindWalk requires Groups{
                                 u.Anime("death");
                                 u.Life(0.5);
                             };
+                        }
                         
                     };
                     dash1.onEnd=function(Dash dash){
