@@ -331,12 +331,14 @@ library Units requires Table,Players,Events,Util{
         static method onDeath(EventArgs e){ 
             if(IsUnitType(e.TriggerUnit,UNIT_TYPE_HERO)==true){
                 if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
+                    SetUnitState( e.TriggerUnit, UNIT_STATE_LIFE, -0.001 );
                     Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
                 }else{
                     Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 
                 }
             }else{
                 if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
+                    SetUnitState( e.TriggerUnit, UNIT_STATE_LIFE, -0.001 );
                     Units.Trigger(Units.onUnitDeath,e.TriggerUnit,e.KillUnit); 
                 }else{
                     Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 

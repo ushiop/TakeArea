@@ -58,7 +58,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             real rtmp;
             if(Winner.GameEnd==false){
                 g=CreateGroup();
-                GroupEnumUnitsInRange(g,Winner.OX,Winner.OY,900,function()->boolean{ return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true; });
+                GroupEnumUnitsInRange(g,Winner.OX,Winner.OY,900,function()->boolean{ return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true&&IsUnitAliveBJ(GetFilterUnit()); });
                 numbers=CountUnitsInGroup(g);
                 while(FirstOfGroup(g)!=null){
                     tmp1=FirstOfGroup(g);
