@@ -21,7 +21,6 @@ library Spells requires SpellNameText{
         method Destroy(){
             this.Use=this.Use-1;
             if(this.Use==0){ 
-                BJDebugMsg(GetAbilityName(this.Id)+"结束阶段:"+R2S(this.State));
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
