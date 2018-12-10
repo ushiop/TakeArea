@@ -30,6 +30,7 @@
 //! import zinc "map/script/HitFly.j"
 //! import zinc "map/script/Groups.j"
 //! import zinc "map/script/YeG.j"
+//! import zinc "map/script/Ai.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
 //! import zinc "map/script/hero/002 Dazzle Master.j"
