@@ -6,7 +6,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
 
         private static boolean GameEnd=false;
         private static integer MaxKills=100;
-        private static real OX,OY,NowTime=0,MaxTime=60; 
+        private static real OX,OY,NowTime=0,MaxTime=120; 
         private static integer Team=-1,WinTeam=-1; 
 
         public static method GetMaxKills()->integer{
