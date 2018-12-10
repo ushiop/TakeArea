@@ -23,6 +23,7 @@ library Units requires Table,Players,Events,Util{
             Data Obj;//自定义数据,死亡时自动解构
             integer pauses;//暂停计数
             integer moves;//位移计数
+            integer ai;//AI施法的接口
 
 
             //设置单位透明度,0-255,0为不可见
@@ -374,6 +375,7 @@ library Units requires Table,Players,Events,Util{
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
             ud.spell=0;
+            ud.ai=0;
             ud.move=true;
             ud.Obj=0;
             ud.pauses=0;
