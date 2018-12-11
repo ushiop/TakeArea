@@ -3,7 +3,7 @@ library Ai requires Teams,Groups{
     //非玩家英雄的自动施法、移动类
     //对于没有实现AI接口的英雄
     //点目标技能会在1000码内释放
-    //无目标技能会在300码内释放
+    //无目标技能会在400码内释放
     //无论什么类型，都会按这个命令串顺序释放
     // curse - dispel - charm - channel - doom
 
@@ -23,7 +23,7 @@ library Ai requires Teams,Groups{
             if(target!=null){ 
                 x1=GetUnitX(target);
                 y1=GetUnitY(target); 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,400,true);
                 if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "doom" );
@@ -31,7 +31,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "doom",x1,y1);
                 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,400,true);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "channel" );
@@ -39,7 +39,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "channel",x1,y1);
 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,400,true);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "charm" );
@@ -47,7 +47,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "charm",x1,y1); 
 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,400,true);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "dispel" );
@@ -55,7 +55,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "dispel",x1,y1);
 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,400,true);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "curse" );
