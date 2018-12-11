@@ -41,6 +41,30 @@ library Groups requires Units,Damage{
         return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsNotHouse();
     }
 
+    //返回指定单位组内最早出生的单位
+    //最早出生，而不是第一个
+    public function GroupFirst(group g)->unit{
+        Units tmp;
+        real c=99999;
+        unit r=null;
+        GroupAddGroup(g,tmp_group);
+        while(FirstOfGroup(tmp_group)!=null){
+            tmp=Units.Get(FirstOfGroup(tmp_group));
+            GroupRemoveUnit(tmp_group,tmp.unit);
+            if(tmp.createtime<c){
+                r=tmp.unit;
+                c=tmp.createtime;
+            }
+        }
+        GroupClear(tmp_group);
+        if(r!=null){
+            LAST_FIND_UNIT=r;
+            r=null;
+            return LAST_FIND_UNIT;
+        }
+        return null;        
+    }
+
     //让U对范围内的单位造成一次伤害
     public function GroupDamage(Units u,real x,real y,real dis,real dmg,integer dmgtype,integer aid,boolean hero)
     {  
