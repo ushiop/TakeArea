@@ -176,7 +176,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 u.AnimeSpeed(2);
                 u.Anime("death");
                 if(id==0){//无
-                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_nothing_kc.mdx"); 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_nothing_kc.mdx"); 
                     GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -189,7 +189,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     GroupClear(tmp_group); 
                 }
                 if(id==1){//光
-                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_light_kc.mdx"); 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_light_kc.mdx"); 
                     
                     if(GroupFind(u.unit,x,y,200,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,4,1.5,1.15, "death","OrbOfLightning.mdx");
@@ -209,7 +209,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     
                 }
                 if(id==2){//冰
-                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_ice_kc.mdx"); 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_ice_kc.mdx"); 
                     
                     if(GroupFind(u.unit,x,y,150,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl");
@@ -230,7 +230,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     } 
                 }
                 if(id==3){//火
-                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_fire_kc.mdx"); 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_fire_kc.mdx"); 
                      
                     if(GroupFind(u.unit,x,y,200,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2.5,1, "death","Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl");
@@ -253,7 +253,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
                 }
                 if(id==4){//暗
-                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2.5, "stand","ball_dark_kc.mdx"); 
+                    Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_dark_kc.mdx"); 
                     if(GroupFind(u.unit,x,y,300,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,0.42,2.5,1.75, "death","dark.mdx");
                         tmp.SetH(50);
