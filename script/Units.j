@@ -24,6 +24,7 @@ library Units requires Table,Players,Events,Util{
             integer pauses;//暂停计数
             integer moves;//位移计数
             integer ai;//AI施法的接口
+            real createtime;//被创建时间
 
 
             //设置单位透明度,0-255,0为不可见
@@ -382,6 +383,7 @@ library Units requires Table,Players,Events,Util{
             ud.Obj=0;
             ud.pauses=0;
             ud.moves=0;
+            ud.createtime=GameTime;
             Units.ht[u]=ud; 
             return ud;
         }
