@@ -40,11 +40,52 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             GroupAddUnit(data.g[0],mj.unit); 
         }
 
+        //炫纹大师的AI施法机制
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;
+            target=GroupFind(u.unit,x,y,1000,true);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);
+
+                no=GroupFind(u.unit,x,y,200,true);
+                if(no!=null){ 
+                    IssueImmediateOrder( u.unit, "doom" );//落花
+                }    
+
+
+                no=GroupFind(u.unit,x,y,200,true);
+                if(no!=null){ 
+                    IssueImmediateOrder( u.unit, "charm" );//圆舞棍
+                }                
+
+                
+                no=GroupFind(u.unit,x,y,300,true);
+                if(no!=null){ 
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssuePointOrder(u.unit, "channel",x1,y1);//天击
+                }
+                
+                no=GroupFind(u.unit,x,y,600,true);
+                if(no!=null){ 
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssuePointOrder(u.unit, "dispel",x1,y1);//天击
+                }
+                IssuePointOrder(u.unit, "curse",x1,y1);//炫纹发射
+            }
+        }
+
         //炫纹大师被创建时触发,绑定炫纹数据开启计时器
         static method Spawn(Units u,Units m){
             timer t;
             Data data;
             if(u.IsAbility('A008')==true){
+                u.ai=DazzleMaster.AI;
                 t=NewTimer();
                 data=Data.create('A008');
                 data.c[0]=u;
