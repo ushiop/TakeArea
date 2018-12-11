@@ -52,13 +52,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 y1=GetUnitY(target);
 
                 no=GroupFind(u.unit,x,y,200,true);
-                if(no!=null){ 
+                if(no!=null){  
+                    u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "doom" );//落花
                 }    
 
 
                 no=GroupFind(u.unit,x,y,200,true);
                 if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "charm" );//圆舞棍
                 }                
 
@@ -480,6 +482,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             data.c[0]=u;
             data.c[2]=e;
             data.r[0]=0;//蓄力时间
+            data.i[3]=2;
+            if(u.player.isai==true){
+                data.r[0]=2.5;
+            }
             SetTimerData(t,data); 
             TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
@@ -492,10 +498,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.AnimeId(14);
                     }
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
-                        
-                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45); 
-                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx"); 
+                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
                     } 
+                    if(data.i[3]==0){
+                        data.i[3]=2;
+                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx"); 
+                    }else{
+                        data.i[3]-=1;
+                    }
                     if(data.r[0]>=0.5){
                         u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
                     }
