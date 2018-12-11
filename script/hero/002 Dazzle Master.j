@@ -429,11 +429,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             }
         }
 
+        // 14 转圈(蓄力)    15 收尾  16前摇 17前冲
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A00D');
             timer t=NewTimer();
             u.Pause(true);
+            u.AnimeId(16);
             data.c[0]=u;
             data.c[2]=e;
             data.r[0]=0;//蓄力时间
@@ -445,10 +447,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Dash dash;
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
+                    if(data.r[0]==0.2){
+                        u.AnimeId(14);
+                    }
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
+                        
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45); 
-                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx");
-                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", u.unit, "hand right") );
+                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx"); 
                     } 
                     if(data.r[0]>=0.5){
                         u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
@@ -467,8 +472,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     if(data.r[0]>2){
                         mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
                         mj.SetH(200); 
-                        Dash.Start(mj.unit,u.F()+180,100,Dash.ADD,60,true,false);
+                        Dash.Start(mj.unit,u.F(),200,Dash.ADD,60,true,false);
                     }
+                    u.AnimeSpeed(2);
+                    u.AnimeId(17);
                     mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
@@ -512,6 +519,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         mj.Life(1);
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
+                        u.AnimeSpeed(3);
+                        u.AnimeId(15);
+                        u.DelayAnimeSpeed(1,0.2);
                         u.Pause(false);
                         data.Destroy();
                     };
@@ -662,6 +672,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Spell.On(Spell.onSpell,'A00E',DazzleMaster.R);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
+        Spell.On(Spell.onReady,'A00D',DazzleMaster.HERO_START);
+        Spell.On(Spell.onStop,'A00D',DazzleMaster.HERO_STOP);   
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
