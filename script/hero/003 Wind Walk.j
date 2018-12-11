@@ -38,7 +38,7 @@ library WindWalk requires Groups{
                         Units c=Units(data.c[2]); 
                         Units tmp;
                         c.Position(dash.X,dash.Y,false);
-                        if(Util.XY2(u.unit,k.unit)<100){ 
+                        if(Util.XY2(u.unit,k.unit)<100||k.Alive()==false){ 
                             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),200,function GroupIsAliveNotAloc);                   
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -152,6 +152,9 @@ library WindWalk requires Groups{
             data.r[2]=u.X();
             data.r[3]=u.Y();
             data.i[0]=30;
+            if(u.player.isai==true){
+                data.r[0]=0.02;
+            }
             SetTimerData(t,data);
             TimerStart(t,data.r[0],true,function WindWalk.E1);
             t=null;
