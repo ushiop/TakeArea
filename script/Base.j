@@ -27,6 +27,7 @@
 //! import zinc "map/script/LevelUp.j" 
 //! import zinc "map/script/Data.j"
 //! import zinc "map/script/BuyNextHero.j"
+//! import zinc "map/script/BuyStrAgiInt.j"
 //! import zinc "map/script/HitFly.j"
 //! import zinc "map/script/Groups.j"
 //! import zinc "map/script/YeG.j"
