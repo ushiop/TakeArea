@@ -513,7 +513,11 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     ReleaseTimer(GetExpiredTimer()); 
                     if(u.Alive()==false){
                         data.r[0]=0;
-                    }  
+                    }else{
+                        mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),0.6,0.8,1.5, "birth","dg.mdx");
+                        mj.SetH(100);
+                        Dash.Start(mj.unit,u.F(),300+(data.r[0]*100),Dash.ADD,80,true,false);
+                    }
                     if(data.r[0]>2.5){
                         data.r[0]=2.5;
                     }
@@ -527,7 +531,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                     u.AnimeSpeed(2);
                     u.AnimeId(17);
-                    mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu.mdx");
+                    mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_blue.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
                     data.i[0]=0;
@@ -539,8 +543,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);
                         Units tmp;
-                        Buffs bf;
-                        dash.Angle=u.F(); 
+                        Buffs bf; 
+                        u.SetF(dash.Angle,true);
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
                         GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);
@@ -566,6 +570,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);  
                         Spell(data.c[2]).Destroy();
+                        u.SetF(dash.Angle,true);
                         mj.Anime("death");
                         mj.Life(1);
                         DestroyGroup(data.g[0]);
