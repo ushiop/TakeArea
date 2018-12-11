@@ -127,7 +127,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data(u.Obj);
-            Units first=Units.Get(FirstOfGroup(data.g[0]));
+            Units first=Units.Get(GroupFirst(data.g[0]));
             Dash dash;
             real cd,x=first.X(),y=first.Y(),h=first.H();
             integer id;             
