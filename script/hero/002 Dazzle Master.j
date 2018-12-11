@@ -519,9 +519,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         mj.Life(1);
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
-                        u.AnimeSpeed(3);
-                        u.AnimeId(15);
-                        u.DelayAnimeSpeed(1,0.2);
+                        u.AnimeSpeed(1); 
                         u.Pause(false);
                         data.Destroy();
                     };
