@@ -10,11 +10,11 @@ library TakeUi {
         public static method ShowTakeBar(string str){
             if(str==""){
                 DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.26/*争夺状态为0.3*/ , -0.003); 
-                DzFrameSetText( TakeRightText, "中央区域尚未被争夺" );   
+                DzFrameSetText( TakeRightText, "中央区域尚未被占领" );   
                 DzFrameShow( TakeMoveBar, false );        
             }else{
                 DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.302/*争夺状态为0.3*/ , -0.003); 
-                DzFrameSetText( TakeRightText, str+"争夺中" );  
+                DzFrameSetText( TakeRightText, str+"占领中" );  
                 DzFrameShow( TakeMoveBar, true );               
             }
         }
@@ -39,7 +39,7 @@ library TakeUi {
             TakeRightText = DzCreateFrameByTagName("TEXT", "TakeRightText", TakeBackground, "TextInfo", 0);
             DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.26/*争夺状态为0.3*/ , -0.003);
             DzFrameSetSize( TakeRightText, 0.08, 0.02 );
-            DzFrameSetText( TakeRightText, "中央区域尚未被争夺" );
+            DzFrameSetText( TakeRightText, "中央区域尚未被占领" );
 
             //争夺进度条
             //进度0%的位置: Point(0.3,0.001),Size(0.001,0.009)
