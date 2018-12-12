@@ -4,6 +4,9 @@ library Groups requires Units,Damage{
 
     public group tmp_group=CreateGroup();//公共单位组 
     public unit LAST_FIND_UNIT=null;//最后搜寻的单位
+    group tmp_find_group=CreateGroup();//寻找单位用的临时组
+    group tmp_create_group=CreateGroup();//寻找最早单位用的临时租
+    group tmp_damage_group=CreateGroup();//范围伤害用的临时组
 
     //返回单位组内单位数量
     public function GroupNumber(group g)->integer{
@@ -47,16 +50,17 @@ library Groups requires Units,Damage{
         Units tmp;
         real c=99999;
         unit r=null;
-        GroupAddGroup(g,tmp_group);
-        while(FirstOfGroup(tmp_group)!=null){
-            tmp=Units.Get(FirstOfGroup(tmp_group));
-            GroupRemoveUnit(tmp_group,tmp.unit);
+        
+        GroupAddGroup(g,tmp_create_group);
+        while(FirstOfGroup(tmp_create_group)!=null){
+            tmp=Units.Get(FirstOfGroup(tmp_create_group));
+            GroupRemoveUnit(tmp_create_group,tmp.unit);
             if(tmp.createtime<c){
                 r=tmp.unit;
                 c=tmp.createtime;
             }
         }
-        GroupClear(tmp_group);
+        GroupClear(tmp_create_group);
         if(r!=null){
             LAST_FIND_UNIT=r;
             r=null;
@@ -70,9 +74,9 @@ library Groups requires Units,Damage{
     {  
         Units tmp;
         boolean f=false;
-        GroupEnumUnitsInRange(tmp_group,x,y,dis,function GroupIsAliveNotAloc); 
-        while(FirstOfGroup(tmp_group)!=null){
-            tmp=Units.Get(FirstOfGroup(tmp_group));
+        GroupEnumUnitsInRange(tmp_damage_group,x,y,dis,function GroupIsAliveNotAloc); 
+        while(FirstOfGroup(tmp_damage_group)!=null){
+            tmp=Units.Get(FirstOfGroup(tmp_damage_group));
             f=false;
             if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
                 if(hero==true){
@@ -84,9 +88,9 @@ library Groups requires Units,Damage{
                     u.Damage(tmp.unit,dmgtype,aid,dmg); 
                 }
             }
-            GroupRemoveUnit(tmp_group,tmp.unit);
+            GroupRemoveUnit(tmp_damage_group,tmp.unit);
         }  
-        GroupClear(tmp_group);
+        GroupClear(tmp_damage_group);
     }
 
     //在X Y的DIS范围内帮U寻找一个最近的敌人，HERO为是否英雄优先,true为优先
@@ -94,9 +98,9 @@ library Groups requires Units,Damage{
         unit tmp;
         real rdis=9999999999;
         unit lock=null;
-        GroupEnumUnitsInRange(tmp_group,x,y,dis,function GroupIsAliveNotAloc); 
-        while(FirstOfGroup(tmp_group)!=null){
-            tmp=FirstOfGroup(tmp_group); 
+        GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
+        while(FirstOfGroup(tmp_find_group)!=null){
+            tmp=FirstOfGroup(tmp_find_group); 
             if(IsUnitEnemy(tmp,GetOwningPlayer(u))==true){  
                 if(Util.XY2(tmp,u)<rdis){
                     if(hero==true){
@@ -113,9 +117,9 @@ library Groups requires Units,Damage{
                     }
                 }
             }
-            GroupRemoveUnit(tmp_group,tmp);
+            GroupRemoveUnit(tmp_find_group,tmp);
         }  
-        GroupClear(tmp_group);       
+        GroupClear(tmp_find_group);       
         if(lock!=null){
             LAST_FIND_UNIT=lock;
             lock=null;
