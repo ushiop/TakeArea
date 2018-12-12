@@ -92,6 +92,7 @@ library Events requires Table{
         e.LevelUpUnit=GetLevelingUnit(); 
         e.BuyingUnit=GetBuyingUnit();
         e.BuyItem=GetSoldItem();
+        e.ChatString=GetEventPlayerChatString();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
