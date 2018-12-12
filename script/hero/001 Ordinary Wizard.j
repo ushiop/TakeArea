@@ -67,15 +67,12 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     GroupDamage(u, x,y,300,u.player.hero.Int()*20.0,Damage.Magic,'A006',false);                     
                     if(u.player.lv10!=null){
                     //是否触发E
-                    if(u.IsAbility('B000')==false){
                         Units.MJ(u.player.player,'e008','A006',0,x,y,0,5,1,1.5,"death","fire3.mdx");
-                        Buffs.Add(u.unit,'A000','B000',1,false);
                             for(0<=i<12){
                                 mj=Units.MJ(u.player.player,'e008','A005',0,x,y,I2R(i)*30,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
                                 Dash.Start(mj.unit,mj.F(),600,Dash.SUB,40,true,false);
                             }
                         } 
-                    }        
                 }else{
                     Units.MJ(u.player.player,'e008','A006',0,u.X(),u.Y(),e.Angle,2,2.5,1,"death","Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl");
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl", u.X(),u.Y()) );
@@ -145,14 +142,11 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     GroupClear(tmp_group); 
                     if(u.player.lv10!=null){
                         //是否触发E
-                        if(u.IsAbility('B000')==false){
-                            Buffs.Add(u.unit,'A000','B000',2,false);
                             for(0<=i<6){
                                 mj=Units.MJ(u.player.player,'e008','A005',0,u.X(),u.Y(),I2R(i)*60,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
                                 Dash.Start(mj.unit,mj.F(),300,Dash.PWX,20,true,false);
                             }
                         } 
-                    }
                 } 
                 u.AnimeSpeed(1);
                 u.PositionEnabled(true);
@@ -251,7 +245,6 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     u=Units(d.Obj);
                     if(u.player.lv10!=null){
                         //是否触发E
-                            Buffs.Add(u.unit,'A000','B000',7,false);
                             for(0<=i<4){
                                 tmp=Units.MJ(u.player.player,'e008','A005',0,x,y,I2R(i)*90,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
                                 Dash.Start(tmp.unit,tmp.F(),300,Dash.ADD,30,true,false);
