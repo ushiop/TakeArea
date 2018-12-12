@@ -524,6 +524,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
+                        u.AnimeSpeed(2);
                     }
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
