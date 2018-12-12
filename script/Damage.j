@@ -64,36 +64,39 @@ library Damage requires Table,Events{
  
             //收到任意伤害时读取相关信息并封装成DamageArgs实例触发自定义事件
         public  static method onDamage(EventArgs e){
-            DamageArgs dmg=DamageArgs.create(); 
-            dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
-            dmg.TriggerUnit=Units.Get(e.TriggerUnit);
-            dmg.DamageUnit=Units.Get(e.DamageUnit);
-            dmg.Damage=e.Damage; 
-            if(YDWEIsEventDamageType(DAMAGE_TYPE_MAGIC)&&YDWEIsEventAttackType(ATTACK_TYPE_NORMAL)){
-                dmg.DamageType=Damage.Magic;
-            }else if(YDWEIsEventDamageType(DAMAGE_TYPE_UNIVERSAL)&&YDWEIsEventAttackType( ATTACK_TYPE_CHAOS)){
-                dmg.DamageType=Damage.Chaos;
-            }else if(YDWEIsEventDamageType(DAMAGE_TYPE_NORMAL)&&YDWEIsEventAttackType( ATTACK_TYPE_HERO)){
-                if(e.AttackDamage==true){ 
+            DamageArgs dmg;
+            if(e.Damage>0){
+                dmg=DamageArgs.create(); 
+                dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
+                dmg.TriggerUnit=Units.Get(e.TriggerUnit);
+                dmg.DamageUnit=Units.Get(e.DamageUnit);
+                dmg.Damage=e.Damage; 
+                if(YDWEIsEventDamageType(DAMAGE_TYPE_MAGIC)&&YDWEIsEventAttackType(ATTACK_TYPE_NORMAL)){
+                    dmg.DamageType=Damage.Magic;
+                }else if(YDWEIsEventDamageType(DAMAGE_TYPE_UNIVERSAL)&&YDWEIsEventAttackType( ATTACK_TYPE_CHAOS)){
+                    dmg.DamageType=Damage.Chaos;
+                }else if(YDWEIsEventDamageType(DAMAGE_TYPE_NORMAL)&&YDWEIsEventAttackType( ATTACK_TYPE_HERO)){
+                    if(e.AttackDamage==true){ 
+                        dmg.DamageType=Damage.Attack;
+                    }else{ 
+                        dmg.DamageType=Damage.Physics;
+                    }
+                }else{
                     dmg.DamageType=Damage.Attack;
-                }else{ 
-                    dmg.DamageType=Damage.Physics;
                 }
-            }else{
-                dmg.DamageType=Damage.Attack;
-            }
-            dmg.isRange=e.RangeDamage;
-            if(dmg.TriggerUnit.isHero==true){
-                Damage.Trigger(Damage.onHeroDamage,dmg);
-            }else{
-                Damage.Trigger(Damage.onUnitDamage,dmg);
-            }
-            if(dmg.DamageUnit.isHero==true){
-                Damage.Trigger(Damage.onHeroDamageed,dmg);
-            }else{
-                Damage.Trigger(Damage.onUnitDamageed,dmg);
-            }
-            dmg.Destroy(); 
+                dmg.isRange=e.RangeDamage;
+                if(dmg.TriggerUnit.isHero==true){
+                    Damage.Trigger(Damage.onHeroDamage,dmg);
+                }else{
+                    Damage.Trigger(Damage.onUnitDamage,dmg);
+                }
+                if(dmg.DamageUnit.isHero==true){
+                    Damage.Trigger(Damage.onHeroDamageed,dmg);
+                }else{
+                    Damage.Trigger(Damage.onUnitDamageed,dmg);
+                }
+                dmg.Destroy(); 
+            } 
         }
 
         //使U对M造成dmg点dtype类型伤害，伤害来源于spellid技能,被动填0
