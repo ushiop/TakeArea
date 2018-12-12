@@ -15,6 +15,18 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(data.i[0]==2){
                     data.i[0]=0;
                     DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
+                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
                 }else{
                     data.i[0]+=1;
                 }
@@ -106,7 +118,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     Data data=Data(GetTimerData(GetExpiredTimer()));
                     Units u=Units(data.c[0]);
                     Units tmp;
-                    real h=0,x,y,dis,fa,ra;
+                    real h=0,x,y,dis,fa,ra,b1,b2,x1,y1;
                     data.r[2]=data.r[2]+1;
                     if(data.r[2]>96) data.r[2]=data.r[2]-96;
                     if(GroupNumber(data.g[0])!=0){
@@ -135,15 +147,25 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.RemoveObj();
                         data.Destroy();  
                     }else{
-                        x=u.X()+(75+GroupNumber(data.g[0])*7)*CosBJ(u.F()+180);
-                        y=u.Y()+(75+GroupNumber(data.g[0])*7)*SinBJ(u.F()+180);
+                        //x=u.X()+(75+GroupNumber(data.g[0])*7)*CosBJ(u.F()+180);
+                        //y=u.Y()+(75+GroupNumber(data.g[0])*7)*SinBJ(u.F()+180);
+                        x1=u.X();
+                        y1=u.Y();
+                        b1=0;
+                        b2=0; 
                         GroupAddGroup(data.g[0],tmp_group);  
                         while(FirstOfGroup(tmp_group)!=null){
-                            tmp=Units.Get(FirstOfGroup(tmp_group));
-                            ra=360.0/GroupNumber(data.g[0])*(h/5);
-                            dis=(Util.XY2(tmp.unit,u.unit)/100)+(GroupNumber(data.g[0])*7); 
-                            x=x+(dis)*CosBJ(ra);
-                            y=y+(dis)*SinBJ(ra);
+                            tmp=Units.Get(FirstOfGroup(tmp_group)); 
+                            dis=75+(Util.XY2(tmp.unit,u.unit)/600)+(b2*30);
+                            ra=u.F()+180+(30-(b2*5))+(b1*-(30-(b2*5)));
+                            b1+=1;
+                            if(b1==3){
+                                b2+=1;
+                                b1=0;
+                            }
+                            
+                            x=x1+(dis)*CosBJ(ra);
+                            y=y1+(dis)*SinBJ(ra);
                             tmp.Position(x,y,false);
                             tmp.SetH(70+(150*Util.GetPwx(3.99,data.r[2]+GetRandomReal(0,10),96)));
                             tmp.SetF(Util.XY(tmp.unit,u.unit),true);
