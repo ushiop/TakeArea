@@ -11,7 +11,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         static method Attack(DamageArgs e){
             Data data; 
             if(e.DamageUnit.IsAbility('A008')==true&&e.DamageType==Damage.Attack){
-                data=Data(e.DamageUnit.Obj); 
+                data=Data(e.DamageUnit.Obj);  
                 if(data.i[0]==2){
                     data.i[0]=0;
                     DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
@@ -51,6 +51,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 x1=GetUnitX(target);
                 y1=GetUnitY(target);
 
+
                 no=GroupFind(u.unit,x,y,200,true);
                 if(no!=null){  
                     u.SetF(Util.XY(u.unit,no),true);
@@ -78,6 +79,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     y1=GetUnitY(no); 
                     IssuePointOrder(u.unit, "dispel",x1,y1);//天击
                 }
+
+                
                 IssuePointOrder(u.unit, "curse",x1,y1);//炫纹发射
             }
         }
@@ -176,6 +179,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             integer id;             
             id=first.aidindex;
             Units.Kill(first.unit);
+            if(x==0){
+                BJDebugMsg(first.name+R2S(x)+"/"+R2S(y)+":::"+R2S(e.X)+"/"+R2S(e.Y)+"/类型："+I2S(id)+"/炫纹组："+I2S(GroupNumber(data.g[0])));
+                BJDebugMsg("---这是一条错误提示,如果提示了这个提示,请保存录像并联系作者");
+            }
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
             Buffs.Add(u.unit,'A00G','B002',5,false).onEnd=function(Buffs b){
                 Data data=Data(Units.Get(b.Unit).Obj); 
@@ -280,16 +287,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         tmp.SetH(50); 
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl");
                         tmp.SetH(50);                    
-                        GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
+                        GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);      
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
-                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            GroupRemoveUnit(tmp_group,tmp.unit); 
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
                                 DestroyEffect( AddSpecialEffectTarget("Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl", tmp.unit, "chest") );
                                 Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),300-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,40,true,true);
-
-                            }
+                            } 
                         }
                         GroupClear(tmp_group); 
                     }                     
