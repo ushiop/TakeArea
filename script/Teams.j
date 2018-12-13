@@ -92,5 +92,9 @@ library Teams  {
             return CountPlayersInForceBJ(GetTeamForceByIndex(p));
         }
 
+        public static method GetAllPlayersNumber()->integer{ 
+            return CountPlayersInForceBJ(AllPlayers);
+        }
+
     }
 }
