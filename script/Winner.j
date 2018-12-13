@@ -98,7 +98,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                             Winner.ShowWin(Winner.Team);
                         }else{
                             if(numbers==0){
-                                Winner.NowTime=Winner.NowTime-(0.02*Teams.GetTeamNumberByIndex(Winner.Team));
+                                Winner.NowTime=Winner.NowTime-(0.01*Teams.GetAllPlayersNumber());
                             }else{ 
                                 rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
                                 Winner.NowTime=Winner.NowTime+rtmp;
