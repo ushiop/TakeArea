@@ -238,15 +238,15 @@ library Units requires Table,Players,Events,Util{
             //设置单位是否可以移动,默认为true
             method PositionEnabled(boolean f){
                 if(f==true){
-                    if(this.moves==0){ 
-                        this.move=f;
-                    }
-                    this.moves+=1;
-                }else{
                     this.moves-=1;
                     if(this.moves==0){ 
                         this.move=f;
                     }
+                }else{
+                    if(this.moves==0){ 
+                        this.move=f;
+                    }
+                    this.moves+=1;
                 }
             }
 
