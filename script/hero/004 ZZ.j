@@ -32,6 +32,9 @@ library ZZ requires Groups{
                     u.PositionEnabled(true);
                     u.Pause(false);
                 }else{ 
+                    if(u.Alive()==false){
+                        data.r[0]=0.1;
+                    }
                     data.r[0]-=0.05;
                     if(data.r[0]==0.05){  
                         Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
@@ -48,7 +51,7 @@ library ZZ requires Groups{
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                             u.Damage(mj.unit,Damage.Magic,'A00R',u.Agi()*1.5);   
-                            Buffs.Skill(mj.unit,'A00H',1);
+                            Buffs.Skill(mj.unit,'A00T',1);
                         }
                     }
                     GroupClear(tmp_group);  
@@ -77,7 +80,6 @@ library ZZ requires Groups{
                 }else{
                     k=GroupFind(u.unit,x,y,80,false);
                     if(k!=null){
-                        dash.Stop();
                         mj=Units.MJ(u.player.player,'e008','A00P',0,x,y,0,2,1.5,2, "death","lei2.mdx");
                         mj.SetH(100);
                         mj=Units.MJ(u.player.player,'e008','A00P',0,x,y,0,2,1.75,1.75, "death","lei2.mdx");
@@ -96,6 +98,7 @@ library ZZ requires Groups{
                             }
                         }
                         GroupClear(tmp_group); 
+                        dash.Stop();
                         u.Pause(true); 
                         u.AnimeSpeed(3.5);
                         t=NewTimer();
