@@ -103,22 +103,24 @@ library Groups requires Units,Damage{
         GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
         while(FirstOfGroup(tmp_find_group)!=null){
             tmp=FirstOfGroup(tmp_find_group); 
-            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==!team){  
-                if(Util.XY2(tmp,u)<rdis){
-                    if(hero==true){
-                        if(IsUnitType(tmp,UNIT_TYPE_HERO)==true){ 
+            if(tmp!=u){
+                if(IsUnitEnemy(tmp,GetOwningPlayer(u))==!team){  
+                    if(Util.XY2(tmp,u)<rdis){
+                        if(hero==true){
+                            if(IsUnitType(tmp,UNIT_TYPE_HERO)==true){ 
+                                lock=tmp;
+                                rdis=Util.XY2(tmp,u);
+                            }else if(IsUnitType(lock,UNIT_TYPE_HERO)==false){
+                                lock=tmp;
+                                rdis=Util.XY2(tmp,u);                            
+                            }
+                        }else{
                             lock=tmp;
                             rdis=Util.XY2(tmp,u);
-                        }else if(IsUnitType(lock,UNIT_TYPE_HERO)==false){
-                            lock=tmp;
-                            rdis=Util.XY2(tmp,u);                            
                         }
-                    }else{
-                        lock=tmp;
-                        rdis=Util.XY2(tmp,u);
                     }
                 }
-            }
+            } 
             GroupRemoveUnit(tmp_find_group,tmp);
         }  
         GroupClear(tmp_find_group);       
@@ -140,7 +142,7 @@ library Groups requires Units,Damage{
         GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
         while(FirstOfGroup(tmp_find_group)!=null){
             tmp=FirstOfGroup(tmp_find_group); 
-            if(filter!=tmp){
+            if(filter!=tmp&&u!=tmp){
                 if(IsUnitEnemy(tmp,GetOwningPlayer(u))==!team){  
                     if(Util.XY2(tmp,u)<rdis){
                         if(hero==true){
@@ -156,9 +158,9 @@ library Groups requires Units,Damage{
                             rdis=Util.XY2(tmp,u);
                         }
                     }
-                }
-                GroupRemoveUnit(tmp_find_group,tmp);
+                } 
             }
+            GroupRemoveUnit(tmp_find_group,tmp);
         }  
         GroupClear(tmp_find_group);       
         if(lock!=null){
@@ -186,6 +188,7 @@ library Groups requires Units,Damage{
             }
         }        
         DestroyGroup(g);
+        GroupRemoveUnit(tmp_random_group,u);
         g=null;
         tmp=null;
         tmp=GroupPickRandomUnit(tmp_random_group);
@@ -214,6 +217,7 @@ library Groups requires Units,Damage{
             }
         }        
         DestroyGroup(g);
+        GroupRemoveUnit(tmp_random_group,u);
         g=null;
         tmp=null;
         tmp=GroupPickRandomUnit(tmp_random_group);
