@@ -129,7 +129,7 @@ library ZZ requires Groups{
                         mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
                         mj.SetH(100); 
                     }
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),350,function GroupIsAliveNotAloc);                   
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
