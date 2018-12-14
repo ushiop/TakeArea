@@ -27,12 +27,12 @@ library ZZ requires Groups{
                         u.Anime("death");
                     }
                     if(u.aidindex==0){
-                        k=GroupFind(u.unit,dash.X,dash.Y,50,false);
+                        k=GroupFind(u.unit,dash.X,dash.Y,50,false,false);
                         if(k!=null){
                             u.Damage(k,Damage.Magic,'A00S',u.Agi()*15.0);   
                             Buffs.Skill(k,'A00H',1);                             
                             dash.Speed=1;         
-                            k=GroupRandomFilter(u.unit,GetUnitX(k),GetUnitY(k),500,k);
+                            k=GroupRandomFilter(u.unit,GetUnitX(k),GetUnitY(k),500,false,k);
                             if(k!=null){  
                                 mj=Units.MJ(u.player.player,'e008','A00S',0,dash.X,dash.Y,Util.XY(u.unit,k),50,0.6,1, "birth","az_lxj_blue.mdx"); 
                                 mj.SetH(100);
@@ -163,7 +163,7 @@ library ZZ requires Groups{
                 if(dash.Speed<2){
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",u.unit, "hand,left") );
                 }else{
-                    k=GroupFind(u.unit,x,y,80,false);
+                    k=GroupFind(u.unit,x,y,80,false,false);
                     if(k!=null){ 
                         mj=Units.MJ(u.player.player,'e008','A00P',0,x,y,0,2,1.5,2, "death","lei2.mdx");
                         mj.SetH(100);

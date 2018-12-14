@@ -214,7 +214,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                             Units.MJ(u.player.player,'e008','A005',0,tmp.X()+dis*CosBJ(f),tmp.Y()+dis*SinBJ(f),f,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
                         }
                     } 
-                    if(GroupFind(u.unit,tmp.X(),tmp.Y(),75,false)!=null){
+                    if(GroupFind(u.unit,tmp.X(),tmp.Y(),75,false,false)!=null){
                         d.Stop();
                     } 
                 }

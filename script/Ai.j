@@ -19,11 +19,11 @@ library Ai requires Teams,Groups{
         if(u.ai!=0){
             AiEventInterface(u.ai).evaluate(u.unit);
         }else{
-            target=GroupFind(u.unit,x,y,1000,true);
+            target=GroupFind(u.unit,x,y,1000,true,false);
             if(target!=null){ 
                 x1=GetUnitX(target);
                 y1=GetUnitY(target); 
-                no=GroupFind(u.unit,x,y,400,true);
+                no=GroupFind(u.unit,x,y,400,true,false);
                 if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "doom" );
@@ -31,7 +31,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "doom",x1,y1);
                 
-                no=GroupFind(u.unit,x,y,400,true);
+                no=GroupFind(u.unit,x,y,400,true,false);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "channel" );
@@ -39,7 +39,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "channel",x1,y1);
 
-                no=GroupFind(u.unit,x,y,400,true);
+                no=GroupFind(u.unit,x,y,400,true,false);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "charm" );
@@ -47,7 +47,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "charm",x1,y1); 
 
-                no=GroupFind(u.unit,x,y,400,true);
+                no=GroupFind(u.unit,x,y,400,true,false);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "dispel" );
@@ -55,7 +55,7 @@ library Ai requires Teams,Groups{
                 }
                 IssuePointOrder(u.unit, "dispel",x1,y1);
 
-                no=GroupFind(u.unit,x,y,400,true);
+                no=GroupFind(u.unit,x,y,400,true,false);
                 if(no!=null){
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "curse" );

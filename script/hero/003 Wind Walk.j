@@ -19,7 +19,7 @@ library WindWalk requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
                 Dash dash1;
-                unit k=GroupFind(u.unit,dash.X,dash.Y,100,false);
+                unit k=GroupFind(u.unit,dash.X,dash.Y,100,false,false);
                 if(k!=null){ 
                     data.i[0]=1; 
                     dash.Stop();
@@ -117,7 +117,7 @@ library WindWalk requires Groups{
                     dash=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
                     dash.onMove=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
-                        unit k=GroupFind(u.unit,u.X(),u.Y(),60,false);
+                        unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
                         if(k!=null){
                             DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                             Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
@@ -173,7 +173,7 @@ library WindWalk requires Groups{
                 dash=Dash.Start(mj.unit,mj.F(),900,Dash.SUB,40,true,false);
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
-                    unit k=GroupFind(u.unit,u.X(),u.Y(),60,false);
+                    unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
                     if(k!=null){
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                         Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
@@ -207,7 +207,7 @@ library WindWalk requires Groups{
                         dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,80,true,false);
                         dash1.onMove=function(Dash dash){
                             Units u=Units.Get(dash.Unit);
-                            unit k=GroupFind(u.unit,u.X(),u.Y(),60,false);
+                            unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
                             if(k!=null){
                                 DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                                 Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
@@ -261,7 +261,7 @@ library WindWalk requires Groups{
                             dash1=Dash.Start(mj.unit,u.F(),900,Dash.ADD,50,true,false);
                             dash1.onMove=function(Dash dash){
                                 Units u=Units.Get(dash.Unit);
-                                unit k=GroupFind(u.unit,u.X(),u.Y(),60,false);
+                                unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
                                 if(k!=null){
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                                     Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);

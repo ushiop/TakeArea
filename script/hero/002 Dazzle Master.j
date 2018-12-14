@@ -58,34 +58,34 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             unit target,no;
             real x=u.X(),y=u.Y();
             real x1,y1;
-            target=GroupFind(u.unit,x,y,1000,true);
+            target=GroupFind(u.unit,x,y,1000,true,false);
             if(target!=null){
                 x1=GetUnitX(target);
                 y1=GetUnitY(target);
 
 
-                no=GroupFind(u.unit,x,y,200,true);
+                no=GroupFind(u.unit,x,y,200,true,false);
                 if(no!=null){  
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "doom" );//落花
                 }    
 
 
-                no=GroupFind(u.unit,x,y,200,true);
+                no=GroupFind(u.unit,x,y,200,true,false);
                 if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
                     IssueImmediateOrder( u.unit, "charm" );//圆舞棍
                 }                
 
                 
-                no=GroupFind(u.unit,x,y,300,true);
+                no=GroupFind(u.unit,x,y,300,true,false);
                 if(no!=null){ 
                     x1=GetUnitX(no);
                     y1=GetUnitY(no); 
                     IssuePointOrder(u.unit, "channel",x1,y1);//天击
                 }
                 
-                no=GroupFind(u.unit,x,y,600,true);
+                no=GroupFind(u.unit,x,y,600,true,false);
                 if(no!=null){ 
                     x1=GetUnitX(no);
                     y1=GetUnitY(no); 
@@ -263,7 +263,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(id==1){//光
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_light_kc.mdx"); 
                     
-                    if(GroupFind(u.unit,x,y,200,false)!=null){
+                    if(GroupFind(u.unit,x,y,200,false,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,4,1.5,1.15, "death","OrbOfLightning.mdx");
                         tmp.SetH(50);  
                         GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
@@ -283,7 +283,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(id==2){//冰
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_ice_kc.mdx"); 
                     
-                    if(GroupFind(u.unit,x,y,150,false)!=null){
+                    if(GroupFind(u.unit,x,y,150,false,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\FrostWyrmMissile\\FrostWyrmMissile.mdl");
                         tmp.SetH(50); 
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\LichMissile\\LichMissile.mdl");
@@ -304,7 +304,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(id==3){//火
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_fire_kc.mdx"); 
                      
-                    if(GroupFind(u.unit,x,y,200,false)!=null){
+                    if(GroupFind(u.unit,x,y,200,false,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2.5,1, "death","Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl");
                         tmp.SetH(50); 
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl");
@@ -325,7 +325,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 }
                 if(id==4){//暗
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_dark_kc.mdx"); 
-                    if(GroupFind(u.unit,x,y,300,false)!=null){
+                    if(GroupFind(u.unit,x,y,300,false,false)!=null){
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,0.42,2.5,1.75, "death","dark.mdx");
                         tmp.SetH(50);
                         u.SetH(150);
@@ -360,7 +360,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             //Util.Range(x,y,150);
             u.Pause(true);
             u.PositionEnabled(false);   
-            if(GroupFind(u.unit,x,y,150,false)!=null){
+            if(GroupFind(u.unit,x,y,150,false,false)!=null){
                 Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
                 AddDazzle(u.unit,4);
                 GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
@@ -646,7 +646,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     x=dash.X+100*CosBJ(dash.Angle);
                     y=dash.Y+100*SinBJ(dash.Angle);
          
-                        if(GroupFind(u.unit,x,y,200,false)!=null){ 
+                        if(GroupFind(u.unit,x,y,200,false,false)!=null){ 
                             GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2); 
                             //刀光特效版          
