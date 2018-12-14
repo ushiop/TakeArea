@@ -120,16 +120,16 @@ library ZZ requires Groups{
                         data.r[0]=0.1;
                     }
                     data.r[0]-=0.05;
-                    if(data.r[0]==0.05){  
-                        Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
+                    /*if(data.r[0]==0.05){  
+                        //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
                     }else if(data.r[0]>0.4){ 
-                        Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
-                    }
-                    if(data.r[0]>0.35){
+                        //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
+                    }*/
+                    if(data.r[0]>0.1){
                         mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
                         mj.SetH(100); 
                     }
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);                   
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),325,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
