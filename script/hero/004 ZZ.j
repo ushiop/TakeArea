@@ -29,7 +29,7 @@ library ZZ requires Groups{
                     if(u.aidindex==0){
                         k=GroupFind(u.unit,dash.X,dash.Y,50,false,false);
                         if(k!=null){
-                            u.Damage(k,Damage.Magic,'A00S',u.Agi()*15.0);   
+                            u.Damage(k,Damage.Magic,'A00S',u.player.hero.Agi()*15.0);   
                             Buffs.Skill(k,'A00H',1);                             
                             dash.Speed=1;         
                             k=GroupRandomFilter(u.unit,GetUnitX(k),GetUnitY(k),500,false,k);
@@ -45,7 +45,7 @@ library ZZ requires Groups{
                                         dash.Stop();
                                     }else{
                                         if(Util.XY2(u.unit,k.unit)<25){
-                                            u.Damage(k.unit,Damage.Magic,'A00S',u.Agi()*5.0);   
+                                            u.Damage(k.unit,Damage.Magic,'A00S',u.player.hero.Agi()*5.0);   
                                             Buffs.Skill(k.unit,'A00H',1);                             
                                             u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
                                             u.AnimeSpeed(GetRandomReal(0.7,1.2));
