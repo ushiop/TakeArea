@@ -15,18 +15,6 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(data.i[0]==2){
                     data.i[0]=0;
                     DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
-                    DazzleMaster.AddDazzle(e.DamageUnit.unit,0);
                 }else{
                     data.i[0]+=1;
                 }
@@ -567,7 +555,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     data.g[0]=CreateGroup();
                     
                     Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster.mdx");
-                    Util.Duang(u.X(),u.Y(),0.4,200,200,-128,0.04,100);
+                    Util.Duang(u.X(),u.Y(),0.4,200,200,-(data.r[0]*51.2),0.04,100);
                     dash=Dash.Start(u.unit,u.F(),300+(data.r[0]*100),Dash.SUB,80,true,false);
                     dash.Obj=data; 
                     dash.onMove=function(Dash dash){
