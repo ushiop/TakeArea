@@ -4,6 +4,90 @@ library ZZ requires Groups{
 
     struct ZZ{
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            integer i;
+            real x=u.X()+50*CosBJ(e.Angle),y=u.Y()+50*SinBJ(e.Angle);
+            Units mj;
+            Dash dash;
+            for(0<=i<9){
+                mj=Units.MJ(u.player.player,'e008','A00S',0,x,y,e.Angle-30+(i*6.667),5,0.3,1, "birth","az_lxj_blue.mdx"); 
+                mj.SetH(100);
+                dash=Dash.Start(mj.unit,mj.F(),1800,Dash.SUB,60,true,false);
+                dash.onMove=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    Dash dash1;
+                    Units mj;
+                    unit k=null;
+                    if(dash.Speed<5&&dash.Speed>4.8&&u.aidindex==0){ 
+                        u.aidindex=1;
+                        u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                        u.Size(0.7);
+                        u.AnimeSpeed(GetRandomReal(0.7,1.2));
+                        u.Anime("death");
+                    }
+                    if(u.aidindex==0){
+                        k=GroupFind(u.unit,dash.X,dash.Y,50,false);
+                        if(k!=null){
+                            u.Damage(k,Damage.Magic,'A00S',u.Agi()*15.0);   
+                            Buffs.Skill(k,'A00H',1);                             
+                            dash.Speed=1;         
+                            k=GroupRandomFilter(u.unit,GetUnitX(k),GetUnitY(k),500,k);
+                            if(k!=null){  
+                                mj=Units.MJ(u.player.player,'e008','A00S',0,dash.X,dash.Y,Util.XY(u.unit,k),50,0.6,1, "birth","az_lxj_blue.mdx"); 
+                                mj.SetH(100);
+                                dash1=Dash.Start(mj.unit,mj.F(),1800,Dash.SUB,13,true,false);
+                                dash1.Obj=Units.Get(k);
+                                dash1.onMove=function(Dash dash){ 
+                                    Units u=Units.Get(dash.Unit); 
+                                    Units k=Units(dash.Obj);
+                                    if(k.Alive()==false){
+                                        dash.Stop();
+                                    }else{
+                                        if(Util.XY2(u.unit,k.unit)<25){
+                                            u.Damage(k.unit,Damage.Magic,'A00S',u.Agi()*5.0);   
+                                            Buffs.Skill(k.unit,'A00H',1);                             
+                                            u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                                            u.AnimeSpeed(GetRandomReal(0.7,1.2));
+                                            u.Anime("death");   
+                                            u.Size(0.7);
+                                            dash.Stop();
+                                        }else{
+                                            u.SetF(Util.XY(u.unit,k.unit),true); 
+                                            dash.Angle=u.F();
+                                            dash.MaxDis+=100;
+                                        }
+                                    }
+                                };
+                                dash1.onEnd=function(Dash dash){
+                                    Units u=Units.Get(dash.Unit); 
+                                    u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                                    u.AnimeSpeed(GetRandomReal(0.7,1.2));
+                                    u.Size(0.7);
+                                    u.Anime("death");  
+                                    u.Life(0.5);
+                                };
+                            }      
+                        }
+                        k=null;
+                    }
+                    if(dash.Speed<2){
+                        dash.Stop();
+                    }
+                };
+                dash.onEnd=function(Dash dash){
+                    Units u=Units.Get(dash.Unit); 
+                    if(u.aidindex==0){
+                        u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                        u.AnimeSpeed(GetRandomReal(0.7,1.2));
+                        u.Size(0.7);
+                        u.Anime("death");                       
+                    }
+                    u.Life(0.5);
+                };
+            }
+            e.Destroy();
+        }
 
         //15
         static method E(Spell e){
@@ -148,6 +232,10 @@ library ZZ requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            if(e.Id=='A00S'){
+                u.AnimeSpeed(2);
+                u.FlushAnimeId(11);
+            }
             if(e.Id=='A00O'){
                 u.AnimeSpeed(1.7);
                 u.FlushAnimeId(6);
@@ -161,20 +249,23 @@ library ZZ requires Groups{
 
         static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
-            if(e.Id=='A00O'||e.Id=='A00R'){ 
+            if(e.Id=='A00O'||e.Id=='A00R'||e.Id=='A00S'){ 
                 u.AnimeSpeed(1);
             }
             e.Destroy();
         }
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A00S',ZZ.R);
             Spell.On(Spell.onSpell,'A00R',ZZ.E);
             Spell.On(Spell.onSpell,'A00P',ZZ.W);
             Spell.On(Spell.onSpell,'A00O',ZZ.Q);
             Spell.On(Spell.onStart,'A00O',ZZ.HERO_START);
             Spell.On(Spell.onStop,'A00O',ZZ.HERO_STOP);     
             Spell.On(Spell.onStart,'A00R',ZZ.HERO_START);
-            Spell.On(Spell.onStop,'A00R',ZZ.HERO_STOP);              
+            Spell.On(Spell.onStop,'A00R',ZZ.HERO_STOP);     
+            Spell.On(Spell.onStart,'A00S',ZZ.HERO_START);
+            Spell.On(Spell.onStop,'A00S',ZZ.HERO_STOP);               
         }
     }
 }
