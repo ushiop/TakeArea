@@ -181,7 +181,7 @@ library Groups requires Units,Damage{
         while(FirstOfGroup(g)!=null){
             tmp=FirstOfGroup(g);
             GroupRemoveUnit(g,tmp);
-            if(IsUnitEnemy(tmp,u.unit)==team){
+            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==team){
                 GroupRemoveUnit(tmp_random_group,tmp);
             }
         }        
@@ -209,7 +209,7 @@ library Groups requires Units,Damage{
         while(FirstOfGroup(g)!=null){
             tmp=FirstOfGroup(g);
             GroupRemoveUnit(g,tmp);
-            if(IsUnitEnemy(tmp,u.unit)==team||filter==tmp){
+            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==team||filter==tmp){
                 GroupRemoveUnit(tmp_random_group,tmp);
             }
         }        
