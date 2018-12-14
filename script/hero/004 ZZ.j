@@ -117,7 +117,7 @@ library ZZ requires Groups{
                     u.Pause(false);
                 }else{ 
                     if(u.Alive()==false){
-                        data.r[0]=0.1;
+                        data.r[0]=0.05;
                     }
                     data.r[0]-=0.05;
                     /*if(data.r[0]==0.05){  
@@ -126,6 +126,7 @@ library ZZ requires Groups{
                         //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
                     }*/
                     if(data.r[0]>0.1){
+                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",u.unit, "origin") );
                         mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
                         mj.SetH(100); 
                     }
@@ -158,12 +159,12 @@ library ZZ requires Groups{
                 Units mj;
                 unit k;
                 timer t; 
-                real x=dash.X+75*CosBJ(dash.Angle),y=dash.Y+75*SinBJ(dash.Angle);
+                real x=dash.X+80*CosBJ(dash.Angle),y=dash.Y+80*SinBJ(dash.Angle);
                 if(dash.Speed<2){
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",u.unit, "hand,left") );
                 }else{
                     k=GroupFind(u.unit,x,y,80,false);
-                    if(k!=null){
+                    if(k!=null){ 
                         mj=Units.MJ(u.player.player,'e008','A00P',0,x,y,0,2,1.5,2, "death","lei2.mdx");
                         mj.SetH(100);
                         mj=Units.MJ(u.player.player,'e008','A00P',0,x,y,0,2,1.75,1.75, "death","lei2.mdx");
@@ -211,7 +212,7 @@ library ZZ requires Groups{
             Units mj;
             real x=u.X()+25*CosBJ(e.Angle),y=u.Y()+25*SinBJ(e.Angle);
             integer i; 
-            u.AnimeSpeed(1); 
+            u.AnimeSpeed(1);  
             mj=Units.MJ(u.player.player,'e008','A00O',0,x,y,e.Angle,4,0.75,2, "stand","AZ_HYHX.mdx");
             //-30 右边 +30 左边  650
             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),650,function GroupIsAliveNotAloc);                   
