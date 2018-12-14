@@ -95,14 +95,15 @@ library Groups requires Units,Damage{
     }
 
     //在X Y的DIS范围内帮U寻找一个最近的敌人，HERO为是否英雄优先,true为优先
-    public function GroupFind(unit u,real x,real y,real dis,boolean hero)->unit{
+    //team为友军判定，true为友军,false为敌军
+    public function GroupFind(unit u,real x,real y,real dis,boolean hero,boolean team)->unit{
         unit tmp;
         real rdis=9999999999;
         unit lock=null;
         GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
         while(FirstOfGroup(tmp_find_group)!=null){
             tmp=FirstOfGroup(tmp_find_group); 
-            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==true){  
+            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==!team){  
                 if(Util.XY2(tmp,u)<rdis){
                     if(hero==true){
                         if(IsUnitType(tmp,UNIT_TYPE_HERO)==true){ 
@@ -131,30 +132,33 @@ library Groups requires Units,Damage{
 
     //在X Y的DIS范围内帮U寻找一个最近的敌人，HERO为是否英雄优先,true为优先
     //filter为排除某个单位
-    public function GroupFindFilter(unit u,real x,real y,real dis,boolean hero,unit filter)->unit{
+    //team为友军判定，true为友军,false为敌军
+    public function GroupFindFilter(unit u,real x,real y,real dis,boolean hero,boolean team,unit filter)->unit{
         unit tmp;
         real rdis=9999999999;
         unit lock=null;
         GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
         while(FirstOfGroup(tmp_find_group)!=null){
             tmp=FirstOfGroup(tmp_find_group); 
-            if(IsUnitEnemy(tmp,GetOwningPlayer(u))==true&&filter!=tmp){  
-                if(Util.XY2(tmp,u)<rdis){
-                    if(hero==true){
-                        if(IsUnitType(tmp,UNIT_TYPE_HERO)==true){ 
+            if(filter!=tmp){
+                if(IsUnitEnemy(tmp,GetOwningPlayer(u))==!team){  
+                    if(Util.XY2(tmp,u)<rdis){
+                        if(hero==true){
+                            if(IsUnitType(tmp,UNIT_TYPE_HERO)==true){ 
+                                lock=tmp;
+                                rdis=Util.XY2(tmp,u);
+                            }else if(IsUnitType(lock,UNIT_TYPE_HERO)==false){
+                                lock=tmp;
+                                rdis=Util.XY2(tmp,u);                            
+                            }
+                        }else{
                             lock=tmp;
                             rdis=Util.XY2(tmp,u);
-                        }else if(IsUnitType(lock,UNIT_TYPE_HERO)==false){
-                            lock=tmp;
-                            rdis=Util.XY2(tmp,u);                            
                         }
-                    }else{
-                        lock=tmp;
-                        rdis=Util.XY2(tmp,u);
                     }
                 }
+                GroupRemoveUnit(tmp_find_group,tmp);
             }
-            GroupRemoveUnit(tmp_find_group,tmp);
         }  
         GroupClear(tmp_find_group);       
         if(lock!=null){
@@ -168,16 +172,24 @@ library Groups requires Units,Damage{
 
     //在X Y的DIS范围内随机寻找一个敌人
     //filter为排除某个单位
-    public function GroupRandom(unit u,real x,real y,real dis)->unit{
+    //team为是否为友军,true随机选取友军,false随机选取敌军
+    public function GroupRandom(unit u,real x,real y,real dis,boolean team)->unit{
         unit tmp; 
+        group g=CreateGroup();
         GroupEnumUnitsInRange(tmp_random_group,x,y,dis,function GroupIsAliveNotAloc); 
-        if(GroupNumber(tmp_random_group)==0){
-            GroupClear(tmp_random_group);   
-            tmp=null;
-        }else{
-            tmp=GroupPickRandomUnit(tmp_random_group);
-            GroupClear(tmp_random_group);   
-        }     
+        GroupAddGroup(tmp_random_group,g);
+        while(FirstOfGroup(g)!=null){
+            tmp=FirstOfGroup(g);
+            GroupRemoveUnit(g,tmp);
+            if(IsUnitEnemy(tmp,u.unit)==team){
+                GroupRemoveUnit(tmp_random_group,tmp);
+            }
+        }        
+        DestroyGroup(g);
+        g=null;
+        tmp=null;
+        tmp=GroupPickRandomUnit(tmp_random_group);
+        GroupClear(tmp_random_group);   
         if(tmp!=null){
             LAST_FIND_UNIT=tmp;
             tmp=null;
@@ -187,29 +199,25 @@ library Groups requires Units,Damage{
     }
 
     //在X Y的DIS范围内随机寻找一个敌人
-    //filter为排除某个单位
-    public function GroupRandomFilter(unit u,real x,real y,real dis,unit filter)->unit{
+    //filter为排除某个单位 
+    //team为是否为友军,true随机选取友军,false随机选取敌军
+    public function GroupRandomFilter(unit u,real x,real y,real dis,boolean team,unit filter)->unit{
         unit tmp; 
-        group g;
+        group g=CreateGroup();
         GroupEnumUnitsInRange(tmp_random_group,x,y,dis,function GroupIsAliveNotAloc); 
-        if(GroupNumber(tmp_random_group)==0){
-            GroupClear(tmp_random_group);   
-            tmp=null;
-        }else{
-            g=CreateGroup();
-            GroupAddGroup(tmp_random_group,g);
-            while(FirstOfGroup(g)!=null){
-                tmp=FirstOfGroup(g);
-                GroupRemoveUnit(g,tmp);
-                if(tmp==filter){
-                    GroupRemoveUnit(tmp_random_group,tmp);
-                }
+        GroupAddGroup(tmp_random_group,g);
+        while(FirstOfGroup(g)!=null){
+            tmp=FirstOfGroup(g);
+            GroupRemoveUnit(g,tmp);
+            if(IsUnitEnemy(tmp,u.unit)==team||filter==tmp){
+                GroupRemoveUnit(tmp_random_group,tmp);
             }
-            DestroyGroup(g);
-            g=null;
-            tmp=GroupPickRandomUnit(tmp_random_group);
-            GroupClear(tmp_random_group);   
-        }     
+        }        
+        DestroyGroup(g);
+        g=null;
+        tmp=null;
+        tmp=GroupPickRandomUnit(tmp_random_group);
+        GroupClear(tmp_random_group);   
         if(tmp!=null){
             LAST_FIND_UNIT=tmp;
             tmp=null;
