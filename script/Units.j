@@ -208,11 +208,10 @@ library Units requires Table,Players,Events,Util{
  
             //设置单位面向角度,ex为是否使用JAPI（立即转身)
             method SetF(real f,boolean ex){
+                SetUnitFacing(this.unit,f);
                 if(ex==true){
                     EXSetUnitFacing(this.unit,f);
-                }else{
-                    SetUnitFacing(this.unit,f);
-                }
+                } 
             }
 
             //返回单位面向角度
