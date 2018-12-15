@@ -48,9 +48,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 ps.nextherotype=-1;
             }                
             r_lv=GetUnitLevel(ps.hero.unit);
-            r_str=GetHeroStr(ps.hero.unit,false);
-            r_agi=GetHeroAgi(ps.hero.unit,false);
-            r_int=GetHeroInt(ps.hero.unit,false);
+            r_str=ps.hero.Str(false);
+            r_agi=ps.hero.Agi(false);
+            r_int=ps.hero.Int(false);
             for(0<=r_i<6){
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
