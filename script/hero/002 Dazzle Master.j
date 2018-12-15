@@ -54,15 +54,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
                 no=GroupFind(u.unit,x,y,200,true,false);
                 if(no!=null){  
-                    u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "doom" );//落花
+                    u.SetF(Util.XY(u.unit,no),true);        
+                    IssueImmediateOrder( u.unit, "inferno" );//落花
                 }    
 
 
                 no=GroupFind(u.unit,x,y,200,true,false);
                 if(no!=null){ 
-                    u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "charm" );//圆舞棍
+                    u.SetF(Util.XY(u.unit,no),true); 
+                    IssueImmediateOrder( u.unit, "impale" );//圆舞棍
                 }                
 
                 
@@ -70,7 +70,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(no!=null){ 
                     x1=GetUnitX(no);
                     y1=GetUnitY(no); 
-                    IssuePointOrder(u.unit, "channel",x1,y1);//天击
+                    IssuePointOrder(u.unit, "channel",x1,y1);//龙牙
                 }
                 
                 no=GroupFind(u.unit,x,y,600,true,false);
