@@ -107,6 +107,8 @@ library ZZ requires Groups{
             data.c[1]=e;
             data.r[0]=0.5;
             SetTimerData(t,data); 
+            DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", u.X(),u.Y()) );
+
             TimerStart(t,0.05,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units u=Units(data.c[0]); 
@@ -126,12 +128,15 @@ library ZZ requires Groups{
                         //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
                     }else if(data.r[0]>0.4){ 
                         //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
-                    }*/
+                    }*/ 
+                    if(data.r[0]>0.3){
+                        DestroyEffect( AddSpecialEffectTarget("lei2.mdx",u.unit, "weapon") );
+                    }
                     if(data.r[0]>0.1){
-                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\Purge\\PurgeBuffTarget.mdl",u.unit, "origin") );
                         mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
                         mj.SetH(100); 
                     }
+                    
                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),325,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
