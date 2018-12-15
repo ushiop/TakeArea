@@ -17,7 +17,7 @@ library Ai requires Teams,Groups{
         unit target,no;
         real x=u.X(),y=u.Y();
         real x1,y1;
-        //IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
+        IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
         if(u.ai!=0){
             AiEventInterface(u.ai).evaluate(u.unit);
         }else{
