@@ -126,7 +126,7 @@ library Units requires Table,Players,Events,Util{
                     SetTimerData(t,data);
                     TimerStart(t,delay,false,function(){
                         Data d=Data(GetTimerData(GetExpiredTimer()));
-                        this.Model(d.s[0]);
+                        Units(d.c[0]).Model(d.s[0]);
                         ReleaseTimer(GetExpiredTimer());
                         d.Destroy();
                     });
