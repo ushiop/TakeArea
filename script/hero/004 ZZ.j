@@ -13,6 +13,7 @@ library ZZ requires Groups{
             for(0<=i<9){
                 mj=Units.MJ(u.player.player,'e008','A00S',0,x,y,e.Angle-30+(i*6.667),5,0.3,1, "birth","az_lxj_blue.mdx"); 
                 mj.SetH(100);
+                mj.Position(x,y,true);
                 dash=Dash.Start(mj.unit,mj.F(),1800,Dash.SUB,60,true,false);
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
@@ -36,6 +37,7 @@ library ZZ requires Groups{
                             if(k!=null){  
                                 mj=Units.MJ(u.player.player,'e008','A00S',0,dash.X,dash.Y,Util.XY(u.unit,k),50,0.6,1, "birth","az_lxj_blue.mdx"); 
                                 mj.SetH(100);
+                                mj.Position(dash.X,dash.Y,true);
                                 dash1=Dash.Start(mj.unit,mj.F(),1800,Dash.SUB,13,true,false);
                                 dash1.Obj=Units.Get(k);
                                 dash1.onMove=function(Dash dash){ 
