@@ -144,14 +144,14 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }
             if(p.nextherotype==-1){ 
                 if(ps==Players.localplayer){
-                    DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)" )  ;
+                    DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/|cffffcc00$0|r)" )  ;
                     DzFrameShow(DeathUIMainBuyLine,true);
                 }
                 if(r.RespawnSelect==2) r.RespawnSelect=r.RespawnSelectLast;
             }else{ 
                 if(ps==Players.localplayer){
 
-                    DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+ Util.GetUnitValue(p.nextherotype,"Name") +"/$"+I2S(r.RespawnSaveMoney*2)+")" )  ;
+                    DzFrameSetText( DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活("+ Util.GetUnitValue(p.nextherotype,"Name") +"/|cffffcc00$"+I2S(r.RespawnSaveMoney*2)+"|r)" )  ;
                 }
                 if(p.Money()>=(r.RespawnSaveMoney*2)){
                     if(ps==Players.localplayer){
