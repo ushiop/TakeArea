@@ -68,17 +68,17 @@ library Units requires Table,Players,Events,Util{
             //返回英雄力量
             //true为包含绿字
             method Str(boolean f)->integer{
-                    return GetHeroStr(this.unit,f);
+                    return GetHeroStr(this.player.hero.unit,f);
             }
 
             //返回英雄敏捷
             method Agi(boolean f)->integer{
-                return GetHeroAgi(this.unit,f);
+                return GetHeroAgi(this.player.hero.unit,f);
             }
 
             //返回英雄智力
             method Int(boolean f)->integer{
-                return GetHeroInt(this.unit,f);
+                return GetHeroInt(this.player.hero.unit,f);
             }
 
             //隐藏或者显示单位
