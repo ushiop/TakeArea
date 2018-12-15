@@ -106,12 +106,17 @@ library Units requires Table,Players,Events,Util{
                 SetUnitAnimationByIndex( this.unit,id);
             }
 
+            //替换模型为path
+            method Model(string path){
+                DzSetUnitModel(this.unit,path);
+            }
+
             //延迟一定时间后替换单位模型,0秒为立即替换（不开启计时器)
             method DelayModel(string path,real delay){
                 timer t;
                 Data data;
                 if(delay==0){
-                    DzSetUnitModel(this.unit,path);
+                    this.Model(path);
                 }else{
                     t=NewTimer();
                     data=Data.create('A001');
@@ -120,7 +125,7 @@ library Units requires Table,Players,Events,Util{
                     SetTimerData(t,data);
                     TimerStart(t,delay,false,function(){
                         Data d=Data(GetTimerData(GetExpiredTimer()));
-                        DzSetUnitModel(Units(d.c[0]).unit,d.s[0]);
+                        this.Model(d.s[0]);
                         ReleaseTimer(GetExpiredTimer());
                         d.Destroy();
                     });
