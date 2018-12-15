@@ -22,7 +22,7 @@ library ZZ requires Groups{
                     unit k=null;
                     if(dash.Speed<5&&dash.Speed>4.8&&u.aidindex==0){ 
                         u.aidindex=1;
-                        u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                        u.Model("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"); 
                         u.Size(0.7);
                         u.AnimeSpeed(GetRandomReal(0.7,1.2));
                         u.Anime("death");
@@ -49,7 +49,7 @@ library ZZ requires Groups{
                                         if(Util.XY2(u.unit,k.unit)<25){
                                             u.Damage(k.unit,Damage.Magic,'A00S',u.player.hero.Agi()*5.0);   
                                             Buffs.Skill(k.unit,'A00H',1);                             
-                                            u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                                            u.Model("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"); 
                                             u.AnimeSpeed(GetRandomReal(0.7,1.2));
                                             u.Anime("death");   
                                             u.Size(0.7);
@@ -63,7 +63,7 @@ library ZZ requires Groups{
                                 };
                                 dash1.onEnd=function(Dash dash){
                                     Units u=Units.Get(dash.Unit); 
-                                    u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                                    u.Model("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"); 
                                     u.AnimeSpeed(GetRandomReal(0.7,1.2));
                                     u.Size(0.7);
                                     u.Anime("death");  
@@ -80,7 +80,7 @@ library ZZ requires Groups{
                 dash.onEnd=function(Dash dash){
                     Units u=Units.Get(dash.Unit); 
                     if(u.aidindex==0){
-                        u.DelayModel("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",0); 
+                        u.Model("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"); 
                         u.AnimeSpeed(GetRandomReal(0.7,1.2));
                         u.Size(0.7);
                         u.Anime("death");                       
