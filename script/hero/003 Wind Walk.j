@@ -122,7 +122,7 @@ library WindWalk requires Groups{
                             DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                             Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                             dash.Stop(); 
-                            u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi()*7.0);
+                            u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
                         }     
                     };
                     dash.onEnd=function(Dash dash){
@@ -178,7 +178,7 @@ library WindWalk requires Groups{
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                         Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                         dash.Stop(); 
-                        u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi()*10.0);
+                        u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi(true)*10.0);
                     }                    
                     if(dash.Speed<2){
                         dash.Stop();
@@ -212,7 +212,7 @@ library WindWalk requires Groups{
                                 DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                                 Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                                 dash.Stop(); 
-                                u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi()*10.0);
+                                u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi(true)*10.0);
                             }   
                         };
                         dash1.onEnd=function(Dash dash){
@@ -266,7 +266,7 @@ library WindWalk requires Groups{
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                                     Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                                     dash.Stop(); 
-                                    u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi()*2.0);
+                                    u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi(true)*2.0);
                                 }
                             };
                             dash1.onEnd=function(Dash dash){

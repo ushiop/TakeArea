@@ -229,7 +229,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Units u=Units.Get(dash.Unit);
                 Units tmp;
                 real x=u.X(),y=u.Y();
-                real dmg=(u.player.hero.Str()*0.4)+(u.player.hero.Int()*0.8); 
+                real dmg=(u.player.hero.Str(true)*0.4)+(u.player.hero.Int(true)*0.8); 
                 integer id=u.aidindex-10;
                 //Util.Range(u.X(),u.Y(),150);
                 u.Life(1);
@@ -358,7 +358,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                         HitFlys.Add(tmp.unit,10);
                         Dash.Start(tmp.unit,u.F(),100,Dash.SUB,45,true,true);    
-                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Agi()*4.0);
+                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Agi(true)*4.0);
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
                         Buffs.Skill(tmp.unit,'A00C',1); 
                     }
@@ -452,7 +452,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                         tmp.SetH(0);
                                         data.i[1]-=1;  
                                         Buffs.Skill(tmp.unit,'A00F',1);  
-                                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str()*18.0);  
+                                        u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str(true)*18.0);  
                                         if(data.i[0]==0){
                                             data.i[0]=1;
                                             Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
@@ -573,7 +573,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
                                 GroupAddUnit(data.g[0],tmp.unit);  
-                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi()*(12*(data.r[0]*2.5)));
+                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
                                 DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
                                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
                                 Dash.Start(tmp.unit,dash.Angle,300+(data.r[0]*2)*50,Dash.SUB,30*data.r[0],true,true);
@@ -650,7 +650,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
                                     Buffs.Skill(tmp.unit,'A00C',1); 
-                                    u.Damage(tmp.unit,Damage.Physics,'A00B',u.Agi()*6+u.Str()*6);
+                                    u.Damage(tmp.unit,Damage.Physics,'A00B',u.Agi(true)*6+u.Str(true)*6);
                                     Dash.Start(tmp.unit,dash.Angle,300,Dash.SUB,90,true,true);   
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
                                 }
@@ -705,7 +705,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         GroupAddUnit(data.g[0],tmp.unit);
                         Buffs.Skill(tmp.unit,'A00A',1);
                         HitFlys.Add(tmp.unit,25);
-                        u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi()*3+u.Str()*4);
+                        u.Damage(tmp.unit,Damage.Magic,'A009',u.Agi(true)*3+u.Str(true)*4);
                         DestroyEffect( AddSpecialEffectTarget("bd2d2.mdx", tmp.unit, "chest") );
                                 
                         if(dash.NowDis<400){ 

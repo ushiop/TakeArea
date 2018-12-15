@@ -30,7 +30,7 @@ library ZZ requires Groups{
                     if(u.aidindex==0){
                         k=GroupFind(u.unit,dash.X,dash.Y,50,false,false);
                         if(k!=null){
-                            u.Damage(k,Damage.Magic,'A00S',u.player.hero.Agi()*15.0);   
+                            u.Damage(k,Damage.Magic,'A00S',u.player.hero.Agi(true)*15.0);   
                             Buffs.Skill(k,'A00H',1);                             
                             dash.Speed=1;         
                             k=GroupRandomFilter(u.unit,GetUnitX(k),GetUnitY(k),500,false,k);
@@ -47,7 +47,7 @@ library ZZ requires Groups{
                                         dash.Stop();
                                     }else{
                                         if(Util.XY2(u.unit,k.unit)<25){
-                                            u.Damage(k.unit,Damage.Magic,'A00S',u.player.hero.Agi()*5.0);   
+                                            u.Damage(k.unit,Damage.Magic,'A00S',u.player.hero.Agi(true)*5.0);   
                                             Buffs.Skill(k.unit,'A00H',1);                             
                                             u.Model("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"); 
                                             u.AnimeSpeed(GetRandomReal(0.7,1.2));
@@ -142,7 +142,7 @@ library ZZ requires Groups{
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                            u.Damage(mj.unit,Damage.Magic,'A00R',u.Agi()*1.5);   
+                            u.Damage(mj.unit,Damage.Magic,'A00R',u.Agi(true)*1.5);   
                             Buffs.Skill(mj.unit,'A00T',1);
                         }
                     }
@@ -185,7 +185,7 @@ library ZZ requires Groups{
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                u.Damage(mj.unit,Damage.Magic,'A00P',u.Agi()*10.0);   
+                                u.Damage(mj.unit,Damage.Magic,'A00P',u.Agi(true)*10.0);   
                                 Buffs.Skill(mj.unit,'A00H',1);
                             }
                         }
@@ -228,7 +228,7 @@ library ZZ requires Groups{
                 GroupRemoveUnit(tmp_group,mj.unit);
                 if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                     if(Util.XY(u.unit,mj.unit)>e.Angle-30&&Util.XY(u.unit,mj.unit)<e.Angle+30){ 
-                        u.Damage(mj.unit,Damage.Magic,'A00O',u.Int()*5.0);  
+                        u.Damage(mj.unit,Damage.Magic,'A00O',u.Int(true)*5.0);  
                         DestroyEffect( AddSpecialEffectTarget("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest") );
                         Dash.Start(mj.unit,e.Angle,700.0-Util.XY2(u.unit,mj.unit),Dash.SUB,40,true,true);
                     }

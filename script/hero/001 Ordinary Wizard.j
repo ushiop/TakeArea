@@ -64,7 +64,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     Units.MJ(u.player.player,'e008','A006',0,x,y,0,3.5,2,1.5,"death","Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl");
                     
                     u.DelayModel("units\\human\\HeroBloodElf\\HeroBloodElf.mdx",0.3); 
-                    GroupDamage(u, x,y,300,u.player.hero.Int()*20.0,Damage.Magic,'A006',false);                     
+                    GroupDamage(u, x,y,300,u.player.hero.Int(true)*20.0,Damage.Magic,'A006',false);                     
                     if(u.player.lv10!=null){
                     //是否触发E
                         Units.MJ(u.player.player,'e008','A006',0,x,y,0,5,1,1.5,"death","fire3.mdx");
@@ -94,7 +94,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             if(u.aid=='A005'&&u.aidindex==0){
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Incinerate\\FireLordDeathExplode.mdl", u.X(),u.Y()) );
-                GroupDamage(u, u.X(),u.Y(),150,u.player.hero.Int()*2.0,Damage.Magic,0,false); 
+                GroupDamage(u, u.X(),u.Y(),150,u.player.hero.Int(true)*2.0,Damage.Magic,0,false); 
             }
         }
 
@@ -135,7 +135,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                             Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),400,Dash.SUB,70,true,true);    
-                            u.Damage(mj.unit,Damage.Magic,'A004',u.Int()*10);
+                            u.Damage(mj.unit,Damage.Magic,'A004',u.Int(true)*10);
                         }
                         GroupRemoveUnit(tmp_group,mj.unit);
                     }
@@ -241,7 +241,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                     EXSetEffectSpeed( e, 2.5 );
                     DestroyEffect(e);
                     e=null;
-                    GroupDamage(u,x,y,250,u.player.hero.Int()*5.0,Damage.Magic,'A002',false); 
+                    GroupDamage(u,x,y,250,u.player.hero.Int(true)*5.0,Damage.Magic,'A002',false); 
                     u=Units(d.Obj);
                     if(u.player.lv10!=null){
                         //是否触发E

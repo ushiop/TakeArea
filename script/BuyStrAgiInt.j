@@ -9,7 +9,7 @@ library BuyStrAgiInt{
             p=Units.Get(e.BuyingUnit).player;
             RemoveItem(e.BuyItem); 
             if(id=='I003'||id=='I004'){
-                if(p.hero.Str()>10){
+                if(p.hero.Str(false)>10){
                     add=10;
                 }else{
                     add=0;
@@ -25,7 +25,7 @@ library BuyStrAgiInt{
                 }
             }
             if(id=='I005'||id=='I006'){
-                if(p.hero.Agi()>10){
+                if(p.hero.Agi(false)>10){
                     add=10;
                 }else{
                     add=0;
@@ -41,7 +41,7 @@ library BuyStrAgiInt{
                 }
             }
             if(id=='I007'||id=='I008'){
-                if(p.hero.Int()>10){
+                if(p.hero.Int(false)>10){
                     add=10;
                 }else{
                     add=0;
@@ -56,7 +56,7 @@ library BuyStrAgiInt{
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Items\\AIam\\AIamTarget.mdl",p.hero.X(),p.hero.Y()) );
                 }
             }    
-            DisplayTimedTextFromPlayer(p.player,0,0,5,"属性转换完成~！现在的属性是: 力量("+I2S(p.hero.Str())+")  敏捷("+I2S(p.hero.Agi())+")   智力("+I2S(p.hero.Int())+")");                    
+            DisplayTimedTextFromPlayer(p.player,0,0,5,"属性转换完成~！现在的属性是: 力量("+I2S(p.hero.Str(true))+")  敏捷("+I2S(p.hero.Agi(true))+")   智力("+I2S(p.hero.Int(true))+")");                    
         }
     }
 
