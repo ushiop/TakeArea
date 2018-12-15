@@ -4,8 +4,10 @@ library Ai requires Teams,Groups{
     //对于没有实现AI接口的英雄
     //点目标技能会在1000码内释放
     //无目标技能会在400码内释放
-    //无论什么类型，都会按这个命令串顺序释放
-    // curse - dispel - charm - channel - doom
+    //相同的顺序，无目标和点目标有2套命令串顺序
+    //在调整施法顺序的时候将对应的命令串填入即可
+    // 点目标：curse - dispel - charm  - channel -  doom    
+    // 无目标: heal  -  hex   - impale - inferno - instant
 
     type AiEventInterface extends function(unit);
 
@@ -15,7 +17,7 @@ library Ai requires Teams,Groups{
         unit target,no;
         real x=u.X(),y=u.Y();
         real x1,y1;
-        IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
+        //IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
         if(u.ai!=0){
             AiEventInterface(u.ai).evaluate(u.unit);
         }else{
@@ -24,44 +26,59 @@ library Ai requires Teams,Groups{
                 x1=GetUnitX(target);
                 y1=GetUnitY(target); 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){ 
+                if(no!=null){  
                     u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "doom" );
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssueImmediateOrder( u.unit, "instant" );
                     no=null;
                 }
                 IssuePointOrder(u.unit, "doom",x1,y1);
+               
                 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){
+                if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "channel" );
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssueImmediateOrder( u.unit, "inferno" );
                     no=null;
                 }
                 IssuePointOrder(u.unit, "channel",x1,y1);
+                
 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){
+                if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "charm" );
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssueImmediateOrder( u.unit, "impale" ); 
                     no=null;
-                }
-                IssuePointOrder(u.unit, "charm",x1,y1); 
+                }  
+                IssuePointOrder(u.unit, "charm",x1,y1);  
+                
 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){
+                if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "dispel" );
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssueImmediateOrder( u.unit, "hex" );
                     no=null;
                 }
                 IssuePointOrder(u.unit, "dispel",x1,y1);
+                
 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){
+                if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);
-                    IssueImmediateOrder( u.unit, "curse" );
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssueImmediateOrder( u.unit, "heal" );
                     no=null;
                 }
                 IssuePointOrder(u.unit, "curse",x1,y1); 
+                
             }
         }
     }
