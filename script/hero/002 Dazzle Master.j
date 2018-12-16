@@ -6,7 +6,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
 
         static string DazzlePath[5];
         static string DazzleName[5];
-        static integer E_sound;
+        static integer E_sound[4];
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
@@ -511,10 +511,21 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                 Dash dash;
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
-                    RunSoundOnUnit(DazzleMaster.E_sound, u.unit); 
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
                         u.AnimeSpeed(2);
+                        RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
+                    }
+                    if(data.r[0]==1){
+                        RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
+
+                    }
+                    if(data.r[0]==1.5){
+                        
+                        RunSoundOnUnit(DazzleMaster.E_sound[2], u.unit); 
+                    }
+                    if(data.r[0]==2){ 
+                        RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
                     }
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
@@ -763,7 +774,10 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
         DazzleMaster.DazzleName[3]="火属性";
         DazzleMaster.DazzlePath[4]="ball_dark.mdx";
         DazzleMaster.DazzleName[4]="暗属性";
-        DazzleMaster.E_sound = DefineSound("resource\\wind_effect_1.wav",700, false, true);
+        DazzleMaster.E_sound[0] = DefineSound("resource\\sound_effect_xuanwendashi_e_0.wav",1000, false, true);
+        DazzleMaster.E_sound[1] = DefineSound("resource\\sound_effect_xuanwendashi_e_1.wav",1000, false, true);
+        DazzleMaster.E_sound[2] = DefineSound("resource\\sound_effect_xuanwendashi_e_2.wav",1000, false, true);
+        DazzleMaster.E_sound[3] = DefineSound("resource\\sound_effect_xuanwendashi_e_3.wav",1000, false, true);
  
     }
 }
