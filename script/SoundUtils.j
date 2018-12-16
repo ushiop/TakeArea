@@ -267,14 +267,14 @@ function RunSound takes integer soundRef returns sound
         call SetSoundDuration(s, sh.duration)
         
         //Stuff that must be performed immediately upon creation of sounds
-        call SetSoundChannel(s, 5)
+        call SetSoundChannel(s, 0)
         call SetSoundVolume(s, 127)
         call SetSoundPitch(s, 1.)
         if sh.is3D then
             //These are settings necessary for 3-D sounds to function properly
             //You can change them at will outside of this function
-            call SetSoundDistances(s, 600., 10000.)
-            call SetSoundDistanceCutoff(s, 3000.)
+            call SetSoundDistances(s, 2000., 3000.)
+            call SetSoundDistanceCutoff(s, 2250.)
             call SetSoundConeAngles(s, 0., 0., 127)
             call SetSoundConeOrientation(s, 0., 0., 0.)
         endif

@@ -1,7 +1,8 @@
 //引入所有库
 //! import vjass "map/script/Table.j"
 //! import vjass "map/script/TerrainPathability.j"
-//! import vjass "map/script/TimerUtils.j"
+//! import vjass "map/script/TimerUtils.j" 
+//! import vjass "map/script/Stack.j"
 //! import vjass "map/script/SoundUtils.j"
 //<?import("init.lua")  ("map\\script\\Press.lua", true)?>  LUA文件要在地图里导入，不能用J文件
 //! import zinc "map/script/Press.j"

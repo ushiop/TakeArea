@@ -1,4 +1,4 @@
-library DazzleMaster requires TimerUtils,Groups,Units{
+library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
     //英雄'炫纹大师'技能
     //SR级英雄
 
@@ -6,6 +6,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
         static string DazzlePath[5];
         static string DazzleName[5];
+        static integer E_sound;
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
@@ -510,6 +511,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Dash dash;
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
+                    RunSoundOnUnit(DazzleMaster.E_sound, u.unit); 
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
                         u.AnimeSpeed(2);
@@ -761,5 +763,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         DazzleMaster.DazzleName[3]="火属性";
         DazzleMaster.DazzlePath[4]="ball_dark.mdx";
         DazzleMaster.DazzleName[4]="暗属性";
+        DazzleMaster.E_sound = DefineSound("resource\\wind_effect_1.wav",700, false, true);
+ 
     }
 }
