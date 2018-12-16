@@ -84,6 +84,8 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                 
                 IssuePointOrder(u.unit, "curse",x1,y1);//炫纹发射
             }
+            target=null;
+            no=null;
         }
 
         //炫纹大师被创建时触发,绑定炫纹数据开启计时器

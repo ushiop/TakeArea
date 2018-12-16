@@ -81,6 +81,8 @@ library Ai requires Teams,Groups{
                 
             }
         }
+        target=null;
+        no=null;
     }
 
 

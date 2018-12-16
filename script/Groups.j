@@ -123,7 +123,8 @@ library Groups requires Units,Damage{
             } 
             GroupRemoveUnit(tmp_find_group,tmp);
         }  
-        GroupClear(tmp_find_group);       
+        GroupClear(tmp_find_group);     
+        tmp=null;  
         if(lock!=null){
             LAST_FIND_UNIT=lock;
             lock=null;
@@ -162,7 +163,8 @@ library Groups requires Units,Damage{
             }
             GroupRemoveUnit(tmp_find_group,tmp);
         }  
-        GroupClear(tmp_find_group);       
+        GroupClear(tmp_find_group);    
+        tmp=null;   
         if(lock!=null){
             LAST_FIND_UNIT=lock;
             lock=null;

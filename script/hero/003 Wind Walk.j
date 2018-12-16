@@ -67,6 +67,7 @@ library WindWalk requires Groups{
                         data.Destroy();
                     };
                 }
+                k=null;
                 if(dash.Speed<4){
                     dash.Stop();
                 }
@@ -123,7 +124,8 @@ library WindWalk requires Groups{
                             Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                             dash.Stop(); 
                             u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
-                        }     
+                        }    
+                        k=null; 
                     };
                     dash.onEnd=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
@@ -179,7 +181,8 @@ library WindWalk requires Groups{
                         Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                         dash.Stop(); 
                         u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi(true)*10.0);
-                    }                    
+                    }            
+                    k=null;        
                     if(dash.Speed<2){
                         dash.Stop();
                     }
@@ -214,6 +217,7 @@ library WindWalk requires Groups{
                                 dash.Stop(); 
                                 u.Damage(k,Damage.Physics,'A00K',u.player.hero.Agi(true)*10.0);
                             }   
+                            k=null;
                         };
                         dash1.onEnd=function(Dash dash){
                             Units u=Units.Get(dash.Unit);
@@ -268,6 +272,7 @@ library WindWalk requires Groups{
                                     dash.Stop(); 
                                     u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi(true)*2.0);
                                 }
+                                k=null;
                             };
                             dash1.onEnd=function(Dash dash){
                                 Units u=Units.Get(dash.Unit);
