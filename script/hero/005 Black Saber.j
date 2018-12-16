@@ -5,6 +5,14 @@ library BlackSaber requires Groups{
 
         static integer Q_HIT;
 
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell); 
+            u.Pause(true);
+            u.AnimeId(14);
+            u.Pause(false);
+            e.Destroy();
+        }
+
         //3 8
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
@@ -16,23 +24,21 @@ library BlackSaber requires Groups{
             dash.Obj=e;
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
-                real x=u.X()+90*CosBJ(dash.Angle),y=u.Y()+90*SinBJ(dash.Angle);
+                real x=u.X()+70*CosBJ(dash.Angle),y=u.Y()+70*SinBJ(dash.Angle);
                 unit k=null;  
                 Units mj;
                     if(dash.Speed<1.5){
                         DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", dash.X,dash.Y) );
-                 
                     }
-                    
-                    k=GroupFind(u.unit,x,y,60,true,false);
-                    if(k!=null){
+                    k=GroupFind(u.unit,x,y,70,true,false);
+                    if(k!=null){ 
                         dash.Stop();
                         u.Pause(true);
                         u.AnimeSpeed(2.5);
-                        u.DelayReleaseAnimePause(0.2); 
+                        u.DelayReleaseAnimePause(0.3); 
                         u.Damage(k,Damage.Physics,'A00U',u.Str(true)*5.0);
-                        Buffs.Skill(k,'A00W',1);     
-                        
+                        u.SetF(Util.XY(u.unit,k),true);
+                        Buffs.Skill(k,'A00W',1);      
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",k, "chest") );
                         if(dash.NowDis>100){
                             Dash.Start(u.unit,Util.XY(k,u.unit),200*(dash.NowDis/dash.MaxDis),Dash.SUB,20,true,false);
@@ -52,13 +58,30 @@ library BlackSaber requires Groups{
             };
         }
 
+        static method HERO_START(Spell e){
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A00V'){
+                u.AnimeSpeed(1.5);
+                u.FlushAnimeId(7);
+            }
+            e.Destroy();
+        }
+
+
+        static method HERO_STOP(Spell e){
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A00V'){
+                u.AnimeSpeed(1);
+            }
+            e.Destroy();
+        }
 
         static method onInit(){
-            Spell.On(Spell.onSpell,'A00U',BlackSaber.Q);
-            /*
-            Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
-            Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
-            */
+            Spell.On(Spell.onSpell,'A00U',BlackSaber.Q); 
+            Spell.On(Spell.onSpell,'A00V',BlackSaber.W); 
+            Spell.On(Spell.onReady,'A00V',BlackSaber.HERO_START);
+            Spell.On(Spell.onStop,'A00V',BlackSaber.HERO_STOP);   
+            
             Q_HIT=DefineSound("resource\\sound_effect_hit_0.wav",1000, false, true);
         }
     }
