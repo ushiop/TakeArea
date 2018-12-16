@@ -183,6 +183,23 @@ library Units requires Table,Players,Events,Util{
                     d.Destroy(); 
                 });
                 t=null;               
+            } 
+
+            //延迟一定时间后解除暂停并设置动画速度为1倍
+            method DelayReleaseAnimePause(real delay){
+                timer t=NewTimer();
+                Data data=Data.create('A004');
+                data.c[0]=this;
+                SetTimerData(t,data);
+                TimerStart(t,delay,false,function(){
+                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                    Units u=Units(d.c[0]);
+                    u.AnimeSpeed(1);
+                    u.Pause(false);
+                    ReleaseTimer(GetExpiredTimer());
+                    d.Destroy(); 
+                });
+                t=null;       
             }
 
             //播放单位动画名
