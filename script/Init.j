@@ -47,7 +47,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
 
         //测试
         for(0<=i<=5){
-            Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0);
+            RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
         }
     }
 }
