@@ -164,8 +164,7 @@ library ZZ requires Groups{
             dash.onMove=function(Dash dash){ 
                 Units u=Units.Get(dash.Unit);
                 Units mj;
-                unit k;
-                timer t; 
+                unit k; 
                 real x=dash.X+80*CosBJ(dash.Angle),y=dash.Y+80*SinBJ(dash.Angle);
                 if(dash.Speed<2){
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl",u.unit, "hand,left") );
@@ -193,15 +192,7 @@ library ZZ requires Groups{
                         dash.Stop();
                         u.Pause(true); 
                         u.AnimeSpeed(3.5);
-                        t=NewTimer();
-                        SetTimerData(t,u);
-                        TimerStart(t,0.2,false,function(){
-                            Units u=Units(GetTimerData(GetExpiredTimer()));
-                            ReleaseTimer(GetExpiredTimer());
-                            u.AnimeSpeed(1);
-                            u.Pause(false);
-                        });
-                        t=null;
+                        u.DelayReleaseAnimePause(0.2);
                     }
                     k=null;
                 }
