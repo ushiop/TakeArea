@@ -100,9 +100,9 @@ library ZZ requires Groups{
             u.Pause(true);
             u.AnimeId(15);
             u.PositionEnabled(false);
-            for(0<=i<5){ 
-                Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2,2, "stand","lei1.mdx"); 
-            }
+            //for(0<=i<5){ 
+                Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),1.5,3,1, "stand","az_goods_blink(3).mdx").SetH(200); 
+            //}
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=0.5;
@@ -113,6 +113,7 @@ library ZZ requires Groups{
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units u=Units(data.c[0]); 
                 Units mj;
+                real dis,a;
                 if(data.r[0]==0){ 
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
@@ -132,12 +133,16 @@ library ZZ requires Groups{
                     if(data.r[0]>0.3){
                         DestroyEffect( AddSpecialEffectTarget("lei2.mdx",u.unit, "weapon") );
                     }
-                    if(data.r[0]>0.1){
+                    if(data.r[0]>0.1&&data.r[0]<0.35){
                         mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
-                        mj.SetH(100); 
+                        mj.SetH(100);  
+                        dis=GetRandomReal(0,100);
+                        a=GetRandomReal(0,360);                       
+                        mj=Units.MJ(u.player.player,'e008','A00R',0,u.X()+dis*CosBJ(a),u.Y()+dis*SinBJ(a),GetRandomReal(0,360),2,1,1, "stand","az_storm_v2_z_5.mdl");
+                         
                     }
                     
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),325,function GroupIsAliveNotAloc);                   
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
