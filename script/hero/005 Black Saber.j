@@ -13,11 +13,13 @@ library BlackSaber requires Groups{
             u.Pause(true);
             u.AnimeId(14);
             u.Pause(false); 
-            mj=Units.MJ(u.player.player,'e008','A00V',0,x,y,e.Angle,10,1,1, "stand","dark4_fast.mdx");  
-            dash=Dash.Start(mj.unit,e.Angle,450,Dash.SUB,20,true,false);
+            mj=Units.MJ(u.player.player,'e008','A00V',0,x,y,e.Angle,10,1,1, "stand","dark4_fast.mdl");  
+            //mj.SetH(100);
+            dash=Dash.Start(mj.unit,e.Angle,450,Dash.SUB,30,true,false);
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
                 Units mj;
+                real dis,a; 
                 if(dash.Speed<2){ 
                     GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
@@ -27,14 +29,20 @@ library BlackSaber requires Groups{
                             u.Damage(mj.unit,'A00V',Damage.Magic,u.Int(true)*10);
                         }
                     }
-                    GroupClear(tmp_group);     
-                    Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,2,1.25,1.25, "stand","black_thunderclapcaster.mdl"); 
+                    GroupClear(tmp_group);    
+                    Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,1,0.2,2, "stand","black_thunderclapcaster.mdl"); 
+                    Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,5,0.7,2, "death","fire-boom-new-darkblue.mdl"); 
                     mj=Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,1.3,3,1, "birth","blue-fire.mdl");
                     mj.SetH(125); 
                     mj.DelaySize(5,0.4);
                     mj.DelayAnime(2,0.8);
                     dash.Stop();
-                }else{
+                }else{ 
+                    dis=GetRandomReal(0,100);
+                    a=GetRandomReal(0,360);
+                    mj=Units.MJ(u.player.player,'e008','A00V',0,dash.X+dis*CosBJ(a),dash.Y+dis*SinBJ(a),0,0.3,1,1, "stand","blue-fire.mdl");
+                    mj.SetH(100);  
+                    mj.DelayAnime(2,0.15); 
                     GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
@@ -65,7 +73,7 @@ library BlackSaber requires Groups{
             dash.Obj=e;
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
-                real x=u.X()+70*CosBJ(dash.Angle),y=u.Y()+70*SinBJ(dash.Angle);
+                real x=u.X()+50*CosBJ(dash.Angle),y=u.Y()+50*SinBJ(dash.Angle);
                 unit k=null;  
                 Units mj;
                     if(dash.Speed<1.5){
@@ -79,7 +87,9 @@ library BlackSaber requires Groups{
                         u.DelayReleaseAnimePause(0.3); 
                         u.Damage(k,Damage.Physics,'A00U',u.Str(true)*5.0);
                         u.SetF(Util.XY(u.unit,k),true);
-                        Buffs.Skill(k,'A00W',1);      
+                        Buffs.Skill(k,'A00W',1);   
+                        Units.MJ(u.player.player,'e008','A00U',0,GetUnitX(k),GetUnitY(k),0,2,0.7,2.5, "stand","hit-red.mdl").SetH(100); 
+                       
                         DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",k, "chest") );
                         if(dash.NowDis>100){
                             Dash.Start(u.unit,Util.XY(k,u.unit),200*(dash.NowDis/dash.MaxDis),Dash.SUB,20,true,false);
