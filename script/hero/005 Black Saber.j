@@ -7,9 +7,50 @@ library BlackSaber requires Groups{
 
         static method W(Spell e){
             Units u=Units.Get(e.Spell); 
+            Units mj;
+            Dash dash;
+            real x=u.X()+50*CosBJ(e.Angle),y=u.Y()+50*SinBJ(e.Angle);
             u.Pause(true);
             u.AnimeId(14);
-            u.Pause(false);
+            u.Pause(false); 
+            mj=Units.MJ(u.player.player,'e008','A00V',0,x,y,e.Angle,10,1,1, "stand","dark4_fast.mdx");  
+            dash=Dash.Start(mj.unit,e.Angle,450,Dash.SUB,20,true,false);
+            dash.onMove=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                Units mj;
+                if(dash.Speed<2){ 
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);                   
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                            u.Damage(mj.unit,'A00V',Damage.Magic,u.Int(true)*10);
+                        }
+                    }
+                    GroupClear(tmp_group);     
+                    Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,2,1.25,1.25, "stand","black_thunderclapcaster.mdl"); 
+                    mj=Units.MJ(u.player.player,'e008','A00V',0,dash.X,dash.Y,0,1.3,3,1, "birth","blue-fire.mdl");
+                    mj.SetH(125); 
+                    mj.DelaySize(5,0.4);
+                    mj.DelayAnime(2,0.8);
+                    dash.Stop();
+                }else{
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);                   
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                            mj.Position(dash.X,dash.Y,true);
+                        }
+                    }
+                    GroupClear(tmp_group);                     
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                u.Life(5);
+                u.Anime("death");
+            };
             e.Destroy();
         }
 
@@ -44,8 +85,7 @@ library BlackSaber requires Groups{
                             Dash.Start(u.unit,Util.XY(k,u.unit),200*(dash.NowDis/dash.MaxDis),Dash.SUB,20,true,false);
                         }
                         RunSoundOnUnit(BlackSaber.Q_HIT,k); 
-                        mj=Units.MJ(u.player.player,'e008','A00U',0,x,y,0,1,2,1, "birth","Abilities\\Weapons\\Rifle\\RifleImpact.mdl");
-                        mj.SetH(100);
+ 
                     }
                     k=null;
                  
@@ -61,7 +101,7 @@ library BlackSaber requires Groups{
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A00V'){
-                u.AnimeSpeed(1.5);
+                u.AnimeSpeed(1.75);
                 u.FlushAnimeId(7);
             }
             e.Destroy();
