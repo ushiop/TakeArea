@@ -103,7 +103,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     ForForce(Teams.GetTeamForce(m.player.player),function(){
                         AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD )  ;          
                     });
-                    DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,m.player.name+" 及友军因击杀 "+u.player.name+" 而获得了|cffffcc00$300|r");
+                    DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,m.player.name+"与队友 因击杀 "+u.player.name+" 而获得了|cffffcc00$300|r");
                     if(m.player.randomhero>0){
                         m.player.randomhero=m.player.randomhero-5.0;
                     }
