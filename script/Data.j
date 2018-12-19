@@ -15,6 +15,7 @@ library Data{
 
         method Destroy(){  
             integer x; 
+            BJDebugMsg(GetAbilityName(this.id)+"结束");
             for(0<=x<5){
                 this.i[x]=0;
                 this.r[x]=0.0;
@@ -40,6 +41,7 @@ library Data{
         static method  create(integer id)->Data{
             Data t=Data.allocate();
             t.id=id; 
+             
             return t;
         }
     }
