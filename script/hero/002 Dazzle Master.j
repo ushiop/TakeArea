@@ -351,7 +351,8 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
             u.AnimeId(18);
             data.c[0]=u;
             data.c[1]=e;
-            SetTimerData(t,data);
+            SetTimerData(t,data); 
+            Units.MJ(u.player.player,'e008','A00E',0,u.X(),u.Y(),0,2,0.5,0.75, "stand","white-qiquan.mdl"); 
             TimerStart(t,0.25,false,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units u=Units(data.c[0]);
