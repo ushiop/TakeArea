@@ -34,11 +34,23 @@ library PlayerPress requires Press{
             p=null;
         }
 
+        static method create()->PlayerPress{
+            PlayerPress p=PlayerPress.allocate();
+            p.Q=false;
+            p.W=false;
+            p.E=false;
+            p.R=false;
+            p.D=false;
+            p.F=false;
+            p.MouseX=0;
+            p.MouseY=0;
+            return p;
+        }
+
         static method Down(player ps,string e){
             Players p=Players.Get(ps);
-            if(p.press==0){
-                p.press=PlayerPress.allocate();
-            }
+            
+            //BJDebugMsg(p.name+"按下了"+e);
             if(e=="Q"){
                 p.press.Q=true;
             }else if(e=="W"){
@@ -56,6 +68,7 @@ library PlayerPress requires Press{
 
         static method Up(player ps,string e){
             Players p=Players.Get(ps);
+            //BJDebugMsg(p.name+"松开了"+e);
             if(e=="Q"){
                 p.press.Q=false;
             }else if(e=="W"){

@@ -54,7 +54,7 @@ library Players{
             p.lifekill=0;
             p.nextherotype=-1;
             p.isdeath=false;
-            p.press=0;
+            p.press=PlayerPress.create();
             ht[ps]=p;
             return p;
         }
