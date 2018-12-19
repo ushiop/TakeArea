@@ -481,10 +481,10 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                                                     Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
                                                     Util.Duang(data.r[1],data.r[2],0.5,200,200,-75,0.02,50);
                                                 }
-                                                if(data.i[1]==0){
-                                                    data.Destroy();   
+                                                if(data.i[1]==0){ 
                                                     Spell(data.c[1]).Destroy();
-                                                    u.PositionEnabled(true); 
+                                                    data.Destroy();   
+                                                    u.PositionEnabled(true);  
                                                     u.DelayReleaseAnimePause(0.2);
                                                 }
                                             };
@@ -494,10 +494,10 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                                         DestroyGroup(data.g[0]);
                                         data.g[0]=null;  
                                         if(data.i[1]==0){
-                                            data.Destroy();   
                                             Spell(data.c[1]).Destroy();
+                                            data.Destroy();   
                                             u.PositionEnabled(true); 
-                                            u.Pause(false);   
+                                            u.Pause(false);  
                                         }
                                     } 
                                 });
@@ -540,24 +540,24 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
             data.c[0]=u;
             data.c[2]=e;
             data.r[0]=0;//蓄力时间
-            data.i[3]=2;
+            data.i[3]=2; 
             if(u.player.isai==true){
                 data.r[0]=2.5;
-            }
-            SetTimerData(t,data); 
+            } 
+            SetTimerData(t,data);  
             TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units mj;
                 Units u=Units(data.c[0]);
-                Dash dash;
+                Dash dash; 
                 if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
                         u.AnimeSpeed(2);
-                        RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
+                        //RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
                     }
-                    if(data.r[0]==1){
+                    /*if(data.r[0]==1){
                         RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
 
                     }
@@ -567,7 +567,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                     }
                     if(data.r[0]==2){ 
                         RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
-                    }
+                    }*/
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
                     } 
@@ -616,8 +616,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]);
-                        Units tmp;
-                        Buffs bf; 
+                        Units tmp; 
                         u.SetF(dash.Angle,true);
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
