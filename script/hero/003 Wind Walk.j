@@ -89,7 +89,7 @@ library WindWalk requires Groups{
             Data data=Data(GetTimerData(GetExpiredTimer()));
             Units u=Units(data.c[0]);
             Spell e=Spell(data.c[1]);
-            Dash dash; 
+            Dash dash;  
             if(u.Alive()==true&&data.i[0]>0){
                 if(u.player.press.E==true){
                     if(data.r[1]!=0){
@@ -109,14 +109,16 @@ library WindWalk requires Groups{
                 dash.onEnd=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
                     Units mj;
+                    Dash dash1;
+                    //BJDebugMsg(GetUnitName(dash.Unit)+"/"+GetUnitName(u.unit)+"/"+GetPlayerName(u.player.player));
                     mj=Units.MJ(u.player.player,'e008','A00L',0,dash.X,dash.Y,dash.Angle,0.7,1.3,1.5, "attack","units\\creeps\\SylvanusWindrunner\\SylvanusWindrunner.mdl"); 
                     mj.Alpha(50); 
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",mj.unit, "origin") );
-                    mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
+                    mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,6,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                     mj.SetH(70);
                     mj.Position(mj.X(),mj.Y(),true);
-                    dash=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
-                    dash.onMove=function(Dash dash){
+                    dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
+                    dash1.onMove=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
                         unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
                         if(k!=null){
@@ -124,14 +126,14 @@ library WindWalk requires Groups{
                             Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                             dash.Stop(); 
                             u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
-                        }    
+                        }     
                         k=null; 
-                    };
-                    dash.onEnd=function(Dash dash){
+                    }; 
+                    dash1.onEnd=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
                         u.Anime("death");
-                        u.Life(0.5);                        
-                    };
+                        u.Life(0.5);                       
+                    }; 
                 }; 
                 data.i[0]-=1;
             }else{
