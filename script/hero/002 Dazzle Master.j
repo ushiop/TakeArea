@@ -390,8 +390,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             Data data=Data(GetTimerData(GetExpiredTimer()));
                             Units u=Units(data.c[0]); 
                             Units tmp; 
-                            real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
-                            BJDebugMsg(I2S(GetHandleId(GetExpiredTimer()))+"@@"); 
+                            real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F()); 
                             if(u.Alive()==true){
                                 Units.MJ(u.player.player,'e00B','A00E',0,u.X(),u.Y(),u.F()-90,2,0.5,2, "stand","daoguang-blue-hengsao.mdl").SetH(100);
                                 data.g[0]=CreateGroup();     
@@ -413,7 +412,6 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 GroupClear(tmp_group);  
                                 if(GroupNumber(data.g[0])!=0){ 
                                     data.r[0]=0.1;         
-                                    BJDebugMsg(I2S(GetHandleId(GetExpiredTimer()))+"$$"); 
                                     TimerStart(GetExpiredTimer(),0.02,true,function(){
                                         Data data=Data(GetTimerData(GetExpiredTimer()));
                                         Units u=Units(data.c[0]);
@@ -484,7 +482,6 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                                         Util.Duang(data.r[1],data.r[2],0.5,200,200,-75,0.02,50);
                                                     }
                                                     if(data.i[1]==0){ 
-                                                        BJDebugMsg(I2S(data)+"/E:"+I2S(data.c[1]));
                                                         Spell(data.c[1]).Destroy();
                                                         data.Destroy(); 
                                                         u.PositionEnabled(true); 
@@ -524,16 +521,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         });
                         t=null; 
                         ReleaseTimer(GetExpiredTimer());  
-                    }else{   
-                        BJDebugMsg("AAAAAAAAAAAA");
+                    }else{    
                         u.PositionEnabled(true); 
                         u.Pause(false);  
                         Spell(data.c[1]).Destroy();   
                         data.Destroy();
                         ReleaseTimer(GetExpiredTimer());  
                     }
-                }else{
-                        BJDebugMsg("BBBBBBBBBBBBBBB");
+                }else{ 
                     u.PositionEnabled(true); 
                     u.Pause(false);  
                     Spell(data.c[1]).Destroy();   
@@ -559,9 +554,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             if(u.player.isai==true){
                 data.r[0]=2.5;
             } 
-
             SetTimerData(t,data);  
-            BJDebugMsg(I2S(GetHandleId(t))+"LLL");
             TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units mj;

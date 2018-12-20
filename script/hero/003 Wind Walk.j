@@ -110,7 +110,6 @@ library WindWalk requires Groups{
                     Units u=Units.Get(dash.Unit);
                     Units mj;
                     Dash dash1;
-                    //BJDebugMsg(GetUnitName(dash.Unit)+"/"+GetUnitName(u.unit)+"/"+GetPlayerName(u.player.player));
                     mj=Units.MJ(u.player.player,'e008','A00L',0,dash.X,dash.Y,dash.Angle,0.7,1.3,1.5, "attack","units\\creeps\\SylvanusWindrunner\\SylvanusWindrunner.mdl"); 
                     mj.Alpha(50); 
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",mj.unit, "origin") );
