@@ -36,14 +36,14 @@ library PlayerPress requires Press{
 
         static method create()->PlayerPress{
             PlayerPress p=PlayerPress.allocate();
-            /*p.Q=false;
+            p.Q=false;
             p.W=false;
             p.E=false;
             p.R=false;
             p.D=false;
             p.F=false;
             p.MouseX=0;
-            p.MouseY=0;*/
+            p.MouseY=0;
             return p;
         }
 
