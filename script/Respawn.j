@@ -38,10 +38,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             integer r_i,r_lv,r_str,r_agi,r_int;
             integer r_it[];
             ps.isdeath=false;  
-            Respawn.Show(p,false);
-            if(ps.nextherotype!=-1){
-                r.RespawnSelect=2;
-            }
+            Respawn.Show(p,false); 
             if(r.RespawnSelect==1){
                 hid=ps.hero.uid; 
                 money=r.RespawnSaveMoney;
