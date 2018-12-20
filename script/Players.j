@@ -8,6 +8,7 @@ library Players{
         public static player localplayer; 
         public{
             integer playerid;//玩家ID
+            string playerids;//玩家ID（字符串)
             player player;//玩家自己
             integer teamid;//阵营ID
             integer kills;//杀敌数量
@@ -47,6 +48,7 @@ library Players{
             p.player=ps; 
             p.name=GetPlayerName(ps);
             p.playerid=GetConvertedPlayerId(ps);
+            p.playerids=I2S(GetPlayerId(ps));
             p.teamid=GetPlayerTeam(ps);
             p.isai=GetPlayerController(ps) == MAP_CONTROL_COMPUTER;
             p.isonline=true;
