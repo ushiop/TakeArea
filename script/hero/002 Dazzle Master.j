@@ -1,12 +1,11 @@
-library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
+library DazzleMaster requires TimerUtils,Groups,Units{
     //英雄'炫纹大师'技能
     //SR级英雄
 
     struct DazzleMaster{
 
         static string DazzlePath[5];
-        static string DazzleName[5];
-        static integer E_sound[4];
+        static string DazzleName[5]; 
 
         //攻击3次获得一个无属性炫纹
         static method Attack(DamageArgs e){
@@ -34,11 +33,11 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
 
         //为指定单位添加一个炫纹
         static method AddDazzle(unit u,integer id){
-            Units s=Units.Get(u);
+            /*Units s=Units.Get(u);
             Data data=Data(s.Obj);
             Units mj=Units.MJ(s.player.player,'e008','A008',id,s.X(),s.Y(),0,15,1.5,1, "stand",DazzlePath[id]);
             mj.AddObj(data);
-            GroupAddUnit(data.g[0],mj.unit); 
+            GroupAddUnit(data.g[0],mj.unit); */
         }
 
         //炫纹大师的AI施法机制
@@ -369,7 +368,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                     tmp.SetH(100);
                     Dash.Start(tmp.unit,u.F()+180,100,Dash.SUB,20,true,false);
                         
-                    if(GroupFind(u.unit,x,y,150,false,false)!=null){
+                    if(GroupFind(u.unit,x,y,150,false,false)==null){
                         Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
                         AddDazzle(u.unit,4);
                         GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
@@ -385,13 +384,14 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                             }
                         }
                         GroupClear(tmp_group);
-                        t=NewTimer(); 
+                        /*t=NewTimer(); 
                         SetTimerData(t,data);
                         TimerStart(t,0.15,false,function(){
                             Data data=Data(GetTimerData(GetExpiredTimer()));
                             Units u=Units(data.c[0]);
-                            Units tmp;
+                            Units tmp; 
                             real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
+                            BJDebugMsg(I2S(GetHandleId(GetExpiredTimer()))+"@@"); 
                             if(u.Alive()==true){
                                 Units.MJ(u.player.player,'e00B','A00E',0,u.X(),u.Y(),u.F()-90,2,0.5,2, "stand","daoguang-blue-hengsao.mdl").SetH(100);
                                 data.g[0]=CreateGroup();
@@ -411,13 +411,16 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                                     }
                                 }
                                 GroupClear(tmp_group);     
-                                data.r[0]=0.1;          
+                                data.r[0]=0.1;         
+                                BJDebugMsg(I2S(GetHandleId(GetExpiredTimer()))+"$$"); 
                                 TimerStart(GetExpiredTimer(),0.02,true,function(){
                                     Data data=Data(GetTimerData(GetExpiredTimer()));
                                     Units u=Units(data.c[0]);
                                     Units tmp;
                                     Dash dash;
                                     real x,y;
+                                    
+                                BJDebugMsg(I2S(GetHandleId(GetExpiredTimer()))+"##"); 
                                     if(data.r[0]>0){
                                         data.r[0]-=0.02;
                                         GroupAddGroup(data.g[0],tmp_group);  
@@ -510,8 +513,14 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                             }
                             
                         });
-                        t=null;
+                        t=null; */
+                        u.PositionEnabled(true); 
+                        u.Pause(false);  
+                        Spell(data.c[1]).Destroy();   
+                        data.Destroy();
+                        ReleaseTimer(GetExpiredTimer());  
                     }else{   
+                        BJDebugMsg("AAAAAAAAAAAA");
                         u.PositionEnabled(true); 
                         u.Pause(false);  
                         Spell(data.c[1]).Destroy();   
@@ -519,6 +528,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                         ReleaseTimer(GetExpiredTimer());  
                     }
                 }else{
+                        BJDebugMsg("BBBBBBBBBBBBBBB");
                     u.PositionEnabled(true); 
                     u.Pause(false);  
                     Spell(data.c[1]).Destroy();   
@@ -544,7 +554,9 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
             if(u.player.isai==true){
                 data.r[0]=2.5;
             } 
+
             SetTimerData(t,data);  
+            BJDebugMsg(I2S(GetHandleId(t))+"LLL");
             TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units mj;
@@ -554,20 +566,8 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
-                        u.AnimeSpeed(2);
-                        //RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
+                        u.AnimeSpeed(2); 
                     }
-                    /*if(data.r[0]==1){
-                        RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
-
-                    }
-                    if(data.r[0]==1.5){
-                        
-                        RunSoundOnUnit(DazzleMaster.E_sound[2], u.unit); 
-                    }
-                    if(data.r[0]==2){ 
-                        RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
-                    }*/
                     if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
                         TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
                     } 
@@ -646,6 +646,7 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
                         u.SetF(dash.Angle,true);
                         mj.Anime("death");
                         mj.Life(1);
+                        GroupClear(data.g[0]);
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
                         u.AnimeSpeed(1); 
@@ -814,10 +815,6 @@ library DazzleMaster requires TimerUtils,Groups,Units,SoundUtils{
         DazzleMaster.DazzleName[3]="火属性";
         DazzleMaster.DazzlePath[4]="ball_dark.mdx";
         DazzleMaster.DazzleName[4]="暗属性";
-        DazzleMaster.E_sound[0] = DefineSound("resource\\sound_effect_xuanwendashi_e_0.wav",1000, false, true);
-        DazzleMaster.E_sound[1] = DefineSound("resource\\sound_effect_xuanwendashi_e_1.wav",1000, false, true);
-        DazzleMaster.E_sound[2] = DefineSound("resource\\sound_effect_xuanwendashi_e_2.wav",1000, false, true);
-        DazzleMaster.E_sound[3] = DefineSound("resource\\sound_effect_xuanwendashi_e_3.wav",1000, false, true);
  
     }
 }
