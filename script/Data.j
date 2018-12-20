@@ -14,8 +14,7 @@ library Data{
         
 
         method Destroy(){  
-            integer x; 
-            BJDebugMsg(GetAbilityName(this.id)+"结束");
+            integer x;  
             for(0<=x<5){
                 this.i[x]=0;
                 this.r[x]=0.0;
