@@ -11,6 +11,7 @@
     local cj=require 'jass.common' 
     local message=require 'jass.message'
     local war3=require 'jass.globals'
+
     local keys={} 
     local oldkeys={}
     local keyname={[769]="F2",[81]="Q",[87]="W",[69]="E",[82]="R",[68]="D",[70]="F",[67]="C",[32]="SPACE"}
@@ -20,7 +21,7 @@
         oldkeys[i]="key_up"
     end
 
-    cj.TimerStart(cj.CreateTimer(),0.01,true,function()
+    cj.TimerStart(war3.PressTimer,0.01,true,function()
         for i,v in pairs(keyname) do  
             war3.PressCode=0
             if (oldkeys[i]~=keys[i] or keys[i]==nil) then
@@ -31,7 +32,6 @@
             end  
             cj.ExecuteFunc("PressSnycLuaCallback")
         end
-         
     end)
      
     function message.hook(msg)

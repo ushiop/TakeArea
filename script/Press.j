@@ -61,6 +61,7 @@
     public string PressType="";//按键类型 
     public string PressName="";//按键名
     public integer PressCode=0;
+    public timer PressTimer;
 
     //让LUA引擎调用的函数,用于传递参数
     public function PressSnycLuaCallback(){
@@ -91,10 +92,11 @@
 
     function onInit(){
         trigger t=CreateTrigger();
-        Cheat( "exec-lua:init" );
         DzTriggerRegisterSyncData( t, "Press", false );
         TriggerAddAction(t, function PressSnycData);
         t=null;
+        PressTimer=NewTimer();
+        Cheat( "exec-lua:init" );
     }
 }  
 
