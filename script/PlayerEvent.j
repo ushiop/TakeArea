@@ -16,6 +16,7 @@ library Disconnect requires Teams,Players{
         for(1<=x<=6){
             UnitRemoveItemFromSlotSwapped(x,u);
         } 
+        Units.Kill(u);
         HeroRares.AddRandomHero(u);
         x=Teams.GetTeamNumber(tmp.player)-1; 
         if(x!=0){
