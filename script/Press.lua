@@ -15,28 +15,32 @@
     local keys={} 
     local oldkeys={}
     local keyname={[769]="F2",[81]="Q",[87]="W",[69]="E",[82]="R",[68]="D",[70]="F",[67]="C",[32]="SPACE"}
-    
+    local pid=cj.GetPlayerId(cj.GetLocalPlayer())
+
     for i,v in pairs(keyname) do
         keys[i]="key_up"
         oldkeys[i]="key_up"
     end
 
-    --[[cj.TimerStart(war3.PressTimer,0.01,true,function()
-        for i,v in pairs(keyname) do  
-            war3.PressCode=0
+    function Sync()
+        for i,v in pairs(keyname) do   
             if (oldkeys[i]~=keys[i] or keys[i]==nil) then
                 keys[i]=oldkeys[i] 
-                war3.PressType=keys[i]
-                war3.PressName=v 
-                war3.PressCode=1
-            end  
-            cj.ExecuteFunc("PressSnycLuaCallback")
+                if(keys[i]=="key_up") then 
+                    cj.StoreInteger(war3.gc,pid,i,1)
+                else
+                    cj.StoreInteger(war3.gc,pid,i,2)
+                end
+                cj.SyncStoredInteger(war3.gc,pid,i)
+                cj.StoreInteger(war3.gc,pid,i, 0) 
+            end   
         end
-    end)]]
+    end
      
     function message.hook(msg)
         if (msg.type=="key_up" or msg.type=="key_down") then
             oldkeys[msg.code]=msg.type 
+            Sync()
         end
         return  true
     end

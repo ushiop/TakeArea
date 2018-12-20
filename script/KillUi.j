@@ -109,14 +109,14 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             }
         }
 
-        static method Show(string e){
+        static method Show(player p,string e){
             if(e=="F2"){  
                     DzFrameShow(KillBackgroundMaxLine,true);
             } 
         }
 
         
-        static method Hide(string e){
+        static method Hide(player p,string e){
             if(e=="F2"){  
                     DzFrameShow(KillBackgroundMaxLine,false);
             } 
@@ -144,8 +144,8 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             //----最大化状态
 
             DzFrameShow(KillBackgroundMaxLine,false); 
-            Press.On(Press.onPressKeyDown,KillUi.Show);
-            Press.On(Press.onPressKeyUp,KillUi.Hide);
+            Press.OnSnyc(Press.onSnycPressKeyDown,KillUi.Show);
+            Press.OnSnyc(Press.onSnycPressKeyUp,KillUi.Hide);
         }
     }
 

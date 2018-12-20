@@ -39,6 +39,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             integer r_it[];
             ps.isdeath=false;  
             Respawn.Show(p,false);
+            if(ps.nextherotype!=-1){
+                r.RespawnSelect=2;
+            }
             if(r.RespawnSelect==1){
                 hid=ps.hero.uid; 
                 money=r.RespawnSaveMoney;
@@ -181,7 +184,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }
         }
 
-        public static method Press(string e){
+        public static method Press(player ps,string e){
             Players p=Players.Get(Players.localplayer);
             Respawn r=p.respawn;
             if( p.isdeath==true){
@@ -291,7 +294,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             
             Units.On(Units.onHeroDeath,Respawn.Death);
 
-            Press.On(Press.onPressKeyDown,Respawn.Press);
+            Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.Press);
             Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.PressSnyc);
 
         }
