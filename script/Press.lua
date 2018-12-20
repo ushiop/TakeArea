@@ -21,7 +21,7 @@
         oldkeys[i]="key_up"
     end
 
-    cj.TimerStart(war3.PressTimer,0.01,true,function()
+    --[[cj.TimerStart(war3.PressTimer,0.01,true,function()
         for i,v in pairs(keyname) do  
             war3.PressCode=0
             if (oldkeys[i]~=keys[i] or keys[i]==nil) then
@@ -32,7 +32,7 @@
             end  
             cj.ExecuteFunc("PressSnycLuaCallback")
         end
-    end)
+    end)]]
      
     function message.hook(msg)
         if (msg.type=="key_up" or msg.type=="key_down") then
