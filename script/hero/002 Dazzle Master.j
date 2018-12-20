@@ -33,11 +33,11 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
         //为指定单位添加一个炫纹
         static method AddDazzle(unit u,integer id){
-            /*Units s=Units.Get(u);
+            Units s=Units.Get(u);
             Data data=Data(s.Obj);
             Units mj=Units.MJ(s.player.player,'e008','A008',id,s.X(),s.Y(),0,15,1.5,1, "stand",DazzlePath[id]);
             mj.AddObj(data);
-            GroupAddUnit(data.g[0],mj.unit); */
+            GroupAddUnit(data.g[0],mj.unit); 
         }
 
         //炫纹大师的AI施法机制
@@ -634,7 +634,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
                                 DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
                                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
-                                Dash.Start(tmp.unit,dash.Angle,300+(data.r[0]*2)*50,Dash.SUB,30*data.r[0],true,true);
+                                Dash.Start(tmp.unit,dash.Angle,300+(data.r[0]*2)*50,Dash.SUB,10+(20*data.r[0]),true,true);
                                 if(data.i[0]==0){
                                     data.i[0]=1;
                                     AddDazzle(u.unit,3);
