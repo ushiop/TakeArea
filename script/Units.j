@@ -145,8 +145,8 @@ library Units requires Table,Players,Events,Util{
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
                     u.AnimeId(d.i[0]);
-                    ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
+                    ReleaseTimer(GetExpiredTimer());
                 });
                 t=null;               
             }
@@ -162,8 +162,8 @@ library Units requires Table,Players,Events,Util{
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
                     u.Size(d.r[0]);
-                    ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
+                    ReleaseTimer(GetExpiredTimer());
                 });
                 t=null;                    
             }
@@ -179,8 +179,8 @@ library Units requires Table,Players,Events,Util{
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
                     u.AnimeSpeed(d.r[0]);
-                    ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
+                    ReleaseTimer(GetExpiredTimer());
                 });
                 t=null;               
             } 
@@ -196,8 +196,8 @@ library Units requires Table,Players,Events,Util{
                     Units u=Units(d.c[0]);
                     u.AnimeSpeed(1);
                     u.Pause(false);
-                    ReleaseTimer(GetExpiredTimer());
                     d.Destroy(); 
+                    ReleaseTimer(GetExpiredTimer());
                 });
                 t=null;       
             }
