@@ -97,7 +97,7 @@ library Groups requires Units,Damage{
     //在X Y的DIS范围内帮U寻找一个最近的敌人，HERO为是否英雄优先,true为优先
     //team为友军判定，true为友军,false为敌军
     public function GroupFind(unit u,real x,real y,real dis,boolean hero,boolean team)->unit{
-        unit tmp;
+        /*unit tmp;
         real rdis=9999999999;
         unit lock=null;
         GroupEnumUnitsInRange(tmp_find_group,x,y,dis,function GroupIsAliveNotAloc); 
@@ -130,6 +130,7 @@ library Groups requires Units,Damage{
             lock=null;
             return LAST_FIND_UNIT;
         }
+        return null;*/
         return null;
     }
 
