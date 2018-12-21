@@ -255,7 +255,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1,2, "stand","ball_light_kc.mdx"); 
                     
                     if(GroupFind(u.unit,x,y,200,false,false)!=null){
-                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,4,1.5,1.15, "death","OrbOfLightning.mdx");
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,4,1.5,1.3, "death","OrbOfLightning.mdx");
                         tmp.SetH(50);  
                         GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
                         while(FirstOfGroup(tmp_group)!=null){
