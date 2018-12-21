@@ -263,7 +263,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Chaos,'A008',dmg); 
-                                Buffs.Skill(tmp.unit,'A00H',1);
+                                HitFlys.Add(tmp.unit,10);
+                                Buffs.Skill(tmp.unit,'A00X',1);
                                 Buffs.AllRemove(tmp.unit,Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_TRUE);
                             }
                         }
@@ -299,6 +300,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2.5,1, "death","Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl");
                         tmp.SetH(50); 
                         tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,2,1, "death","Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl");
+                        tmp.SetH(50);    
+                        tmp=Units.MJ(u.player.player,'e008','A008',66,x,y,0,2,1.5,2, "death","Abilities\\Weapons\\FragDriller\\FragDriller.mdl");
                         tmp.SetH(50);                    
                         GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);      
                         while(FirstOfGroup(tmp_group)!=null){
@@ -307,7 +310,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
                                 DestroyEffect( AddSpecialEffectTarget("Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl", tmp.unit, "chest") );
-                                Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),300-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,40,true,true);
+                                Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),350-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,30,true,false);
                             } 
                         }
                         GroupClear(tmp_group); 
@@ -553,7 +556,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             data.r[0]=0;//蓄力时间
             data.i[3]=2; 
             if(u.player.isai==true){
-                data.r[0]=2.5;
+                data.r[0]=2;
             } 
             SetTimerData(t,data);  
             TimerStart(t,0.1,true,function(){
@@ -561,7 +564,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Units mj;
                 Units u=Units(data.c[0]);
                 Dash dash; 
-                if(u.player.press.E==true&&data.r[0]<=2.5&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
+                if(u.player.press.E==true&&data.r[0]<=2&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
@@ -569,18 +572,18 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
                     } 
                     
-                    if(data.r[0]==1){
+                    if(data.r[0]==0.8){
                         RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
                     }
-                    if(data.r[0]==1.5){
+                    if(data.r[0]==1.3){
                         
                         RunSoundOnUnit(DazzleMaster.E_sound[2], u.unit); 
                     }
-                    if(data.r[0]==2){ 
+                    if(data.r[0]==1.8){ 
                         RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
                     }
-                    if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2||data.r[0]==2.5){
-                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2.5)*100.0)+"%",0.4,12,45);     
+                    if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2){
+                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2)*100.0)+"%",0.4,12,45);     
                     } 
                     if(data.i[3]==0){
                         data.i[3]=2;
@@ -593,20 +596,20 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                 }else{ 
                     ReleaseTimer(GetExpiredTimer()); 
+                    if(data.r[0]>2){
+                        data.r[0]=2;
+                    }
                     if(u.Alive()==false){
                         data.r[0]=0;
                     }else{
                         mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),0.6,0.8,1.5, "birth","dg.mdx");
                         mj.SetH(100);
-                        Dash.Start(mj.unit,u.F(),300+(data.r[0]*100),Dash.ADD,80,true,false);
-                    }
-                    if(data.r[0]>2.5){
-                        data.r[0]=2.5;
+                        Dash.Start(mj.unit,u.F(),350+(data.r[0]*250),Dash.ADD,80,true,false);
                     }
                     if(data.r[0]!=0){ 
-                        TextForPlayer(u.player.player,u.unit,R2S(data.r[0]*100)+"%落花!",0.8,14,300);
+                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2)*100)+"%落花!",0.8,14,300);
                     }
-                    if(data.r[0]>2){
+                    if(data.r[0]>1.5){
                         mj=Units.MJ(u.player.player,'e009','A00D',0,u.X(),u.Y(),u.F(),2,1.5,2, "stand","wind.mdx");
                         mj.SetH(200); 
                         Dash.Start(mj.unit,u.F(),200,Dash.ADD,60,true,false);
@@ -621,7 +624,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     
                     Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster.mdx");
                     Util.Duang(u.X(),u.Y(),0.4,200,200,-(data.r[0]*51.2),0.04,100);
-                    dash=Dash.Start(u.unit,u.F(),300+(data.r[0]*100),Dash.SUB,80,true,false);
+                    dash=Dash.Start(u.unit,u.F(),350+(data.r[0]*250),Dash.SUB,80,true,false);
                     dash.Obj=data; 
                     dash.onMove=function(Dash dash){
                         Data data=Data(dash.Obj);
@@ -640,7 +643,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
                                 DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
                                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
-                                Dash.Start(tmp.unit,dash.Angle,300+(data.r[0]*2)*50,Dash.SUB,10+(20*data.r[0]),true,true);
+                                Dash.Start(tmp.unit,dash.Angle,350+(data.r[0]*2)*50,Dash.SUB,15+(15*data.r[0]),true,true);
                                 if(data.i[0]==0){
                                     data.i[0]=1;
                                     AddDazzle(u.unit,3);
@@ -749,19 +752,28 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units u=Units.Get(e.Spell);
             Dash dash;
             Data data=Data.create('A009');
+            Units ts;
             u.Pause(true);
-            u.AnimeId(6); 
-            u.AnimeSpeed(0.7);
+            u.Alpha(0);
+            u.AnimeId(6);
             data.c[0]=u;
+            data.c[1]=e;
             data.i[0]=0;
-            data.g[0]=CreateGroup();  
+            data.g[0]=CreateGroup();    
+            ts=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,10,1,0.7, "stand","kiyohime_lancer.mdl");  
+            ts.AnimeId(6); 
+            ts.AnimeSpeed(0.7);
+            data.c[2]=ts;
+            data.i[1]=0;
             Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,4,1,2.5, "stand","dust2.mdx"); 
-            dash=Dash.Start(u.unit,e.Angle,600,Dash.SUB,60,true,false);
+            dash=Dash.Start(ts.unit,e.Angle,600,Dash.SUB,60,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
+                Units du=Units.Get(dash.Unit);
                 Units u=Units(data.c[0]);
                 Units tmp; 
+                u.Position(du.X(),du.Y(),false);
                 GroupEnumUnitsInRange(tmp_group,u.X()+100*CosBJ(dash.Angle),u.Y()+100*SinBJ(dash.Angle),90,function GroupIsAliveNotAloc);
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -784,6 +796,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 }
                 GroupClear(tmp_group); 
                 if(dash.Speed>15&&dash.Speed<40){ 
+                    if(data.i[1]==0){
+                        data.i[1]=1; 
+                        u.Pause(false);  
+                    }
                     DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
                 } 
                 if(dash.Speed<1.5){
@@ -795,11 +811,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Units u=Units(data.c[0]);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
-                u.Pause(false); 
-                u.AnimeSpeed(1);
+                Units.Remove(Units(data.c[2]).unit);
+                Spell(data.c[1]).Destroy();
+                u.Alpha(255);
+                if(data.i[1]==0){ 
+                    u.Pause(false);  
+                }
                 data.Destroy();
             };
-            e.Destroy();
         }
     }
 
