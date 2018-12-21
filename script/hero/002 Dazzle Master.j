@@ -676,14 +676,20 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         static method W(Spell e){
             Units u=Units.Get(e.Spell); 
             Dash dash;
+            Data data=Data.create('A00B');
             u.Pause(true);
             //刀光特效版取消的特效
             //Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),0,2,1,1, "stand","dust1.mdx");
             Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,2,1.5,2, "stand","dust2.mdx");
             //刀光特效改动，原版:0.8,-120 
             Util.Duang(u.X(),u.Y(),0.3,200,200,-48,0.04,100);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;
             dash=Dash.Start(u.unit,e.Angle,250,Dash.SUB,40,true,false);
+            dash.Obj=data;
             dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
                 Units mj;
                 Units tmp;
@@ -703,6 +709,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     y=dash.Y+100*SinBJ(dash.Angle);
          
                         if(GroupFind(u.unit,x,y,200,false,false)!=null){ 
+                            if(data.i[0]==0){
+                                data.i[0]=1;
+                                u.Pause(false);
+                            }
                             GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2); 
                             //刀光特效版          
@@ -740,12 +750,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 }
             };
             dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit); 
-                u.Pause(false);
+                if(data.i[0]==0){ 
+                    u.Pause(false);
+                }
                 u.Alpha(255);
-            };
-            e.Destroy();
-            
+                Spell(data.c[1]).Destroy();
+                data.Destroy();
+            }; 
         }
 
         static method Q(Spell e){
