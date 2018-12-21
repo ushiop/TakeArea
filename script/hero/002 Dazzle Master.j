@@ -172,10 +172,25 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         }
 
         static method HERO_START(Spell e){
+            Units u=Units.Get(e.Spell);
             if(e.Id=='A009'){ 
-                Units.Get(e.Spell).FlushAnimeId(5); 
+                if(u.IsAbility('B006')==false){ 
+                    u.FlushAnimeId(5);
+                    e.Destroy();
+                }else{
+                    if(u.MP()>=100){
+                        if(u.GetAbilityCD('A009')==0){ 
+                            u.SetMP(u.MP()-100);
+                            u.SetAbilityCD('A009',10);
+                            DazzleMaster.Q(e); 
+                        }else{
+                            e.Destroy();
+                        }
+                    }else{
+                        e.Destroy();
+                    }
+                } 
             }
-            e.Destroy();
         }
 
         static method HERO_STOP(Spell e){  
@@ -713,6 +728,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 data.i[0]=1;
                                 u.Pause(false);
                             }
+                            Buffs.Add(u.unit,'A011','B006',0.5,false);
                             GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2); 
                             //刀光特效版          
@@ -842,9 +858,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Spell.On(Spell.onSpell,'A00D',DazzleMaster.E);
         Spell.On(Spell.onSpell,'A00E',DazzleMaster.R);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
-        Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);   
-        Spell.On(Spell.onReady,'A00D',DazzleMaster.HERO_START);
-        Spell.On(Spell.onStop,'A00D',DazzleMaster.HERO_STOP);   
+        Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);    
         Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
