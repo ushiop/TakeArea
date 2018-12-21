@@ -264,7 +264,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Chaos,'A008',dmg); 
                                 HitFlys.Add(tmp.unit,10);
-                                Buffs.Skill(tmp.unit,'A00X',1);
+                                Buffs.Skill(tmp.unit,'A00Y',1);
                                 Buffs.AllRemove(tmp.unit,Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_TRUE);
                             }
                         }
