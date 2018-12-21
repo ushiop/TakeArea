@@ -26,6 +26,21 @@ library Units requires Table,Players,Events,Util{
             integer ai;//AI施法的接口
             real createtime;//被创建时间
 
+            method SetMP(real r){
+                SetUnitState(this.unit,UNIT_STATE_MANA,r);
+            }
+
+            method SetHP(real r){
+                SetUnitState(this.unit,UNIT_STATE_LIFE,r); 
+            }
+
+            method MP()->real{
+                return GetUnitState(this.unit, UNIT_STATE_MANA);
+            }
+
+            method HP()->real{ 
+                return GetUnitState(this.unit, UNIT_STATE_LIFE);
+            }
 
             //设置单位透明度,0-255,0为不可见
             method Alpha(integer a){
@@ -310,6 +325,14 @@ library Units requires Table,Players,Events,Util{
             method RemoveAbility(integer aid){
                 UnitRemoveAbility(this.unit,aid);
             } 
+
+            method GetAbilityCD(integer id)->real{
+                return YDWEGetUnitAbilityState(this.unit, id, 1);
+            }
+
+            method SetAbilityCD(integer id,real cd){
+                YDWESetUnitAbilityState(this.unit,id, 1,cd);
+            }
         }
 
         //自定义事件
