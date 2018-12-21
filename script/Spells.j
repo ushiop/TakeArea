@@ -101,8 +101,13 @@ library Spells requires SpellNameText{
                 tmp.X=e.SpellTargetX;
                 tmp.Y=e.SpellTargetY;
                 tmp.Id=e.SpellId;
-                tmp.Angle=0;
-                tmp.Dis=0;
+                if(tmp.Target==null){
+                    tmp.Angle=Util.XYEX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                    tmp.Dis=Util.XY2EX(GetUnitX(tmp.Spell),GetUnitY(tmp.Spell),tmp.X,tmp.Y);
+                }else{
+                    tmp.Angle=Util.XY(tmp.Spell,tmp.Target);
+                    tmp.Dis=Util.XY2(tmp.Spell,tmp.Target);
+                } 
                 tmp.Obj=0;
                 tmp.Kill=false;
                 tmp.Use=1; 
