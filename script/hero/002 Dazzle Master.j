@@ -180,6 +180,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 }else{
                     if(u.MP()>=100){
                         if(u.GetAbilityCD('A009')==0){ 
+                            SpellNameText(u.unit,"!-龙牙击-!",3,10);
                             u.SetMP(u.MP()-100);
                             u.SetAbilityCD('A009',10);
                             DazzleMaster.Q(e); 
