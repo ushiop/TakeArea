@@ -5,6 +5,100 @@ library BlackSaber requires Groups{
 
         static integer Q_HIT;
 
+        //16
+        static method E1(unit u){
+            
+        }
+
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A00X'); 
+            timer t=NewTimer();
+            u.Pause(true); 
+            u.AnimeId(16);
+            u.AnimeSpeed(3.5);
+            u.AddAbility('A00Z');
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;
+            data.r[0]=0;
+            data.r[1]=0;
+            data.r[2]=0;
+            SetTimerData(t,data);
+            Dash.Start(u.unit,u.F(),300,Dash.SUB,10,true,false); 
+            Units.MJ(u.player.player,'e008','A00X',0,u.X(),u.Y(),0,2,0.4,1, "stand","white-qiquan.mdl"); 
+            TimerStart(t,0.01,true,function(){
+                Data data=Data(GetTimerData(GetExpiredTimer()));
+                Units u=Units(data.c[0]);
+                real x,y;
+                Units mj;
+                if(u.Alive()==true){
+                    data.r[0]+=0.01;
+                    if(data.r[0]<0.2){ 
+                        u.SetH(u.H()+20);
+                    }else{ 
+                        u.SetH(u.H()-20);
+                    }
+                    if(data.r[0]>0.5){ 
+                        u.RemoveAbility('A00Z');
+                        u.AnimeSpeed(1);
+                        u.Pause(false);
+                        Spell(data.c[1]).Destroy();
+                        data.Destroy();
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{ 
+                        if(data.r[0]<0.3){
+                            DestroyEffect( AddSpecialEffectTarget("dark5.mdx", u.unit, "weapon") );   
+                            if(data.r[0]<0.2){
+                                DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-2.mdl", u.unit, "weapon") );   
+                            } 
+                        }
+                        if(data.r[1]==0){
+                            data.r[1]=0.1; 
+                            data.r[2]+=1;
+                            x=u.X()+125*CosBJ(u.F());
+                            y=u.Y()+125*SinBJ(u.F());
+                            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                    if(data.r[2]==1||data.r[2]==5){ 
+                                        if(data.r[2]==1){
+                                            HitFlys.Add(mj.unit,20);
+                                        }
+                                        u.Damage(mj.unit,'A00X',Damage.Magic,u.Int(true)*3);
+                                        DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
+                                        mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
+                                    }
+                                    if(data.r[2]>=2&&data.r[2]<=4){
+                                        if(mj.H()>10){ 
+                                            HitFlys.Add(mj.unit,7);
+                                            u.Damage(mj.unit,'A00X',Damage.Chaos,u.Int(true)*3);
+                                            DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
+                                            mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
+                                        }
+                                    } 
+                                }
+                            }
+                            GroupClear(tmp_group);                               
+                        }else{
+                            data.r[1]-=0.01;
+                        }
+                    }
+                }else{ 
+                    u.RemoveAbility('A00Z');
+                    u.AnimeSpeed(1);
+                    u.Pause(false);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                    ReleaseTimer(GetExpiredTimer());
+                }
+            });
+            t=null;
+
+        }
+
         static method W(Spell e){
             Units u=Units.Get(e.Spell); 
             Units mj;
@@ -82,6 +176,7 @@ library BlackSaber requires Groups{
                     k=GroupFind(u.unit,x,y,70,true,false);
                     if(k!=null){ 
                         dash.Stop();
+                        Buffs.Add(u.unit,'A010','B005',0.5,false);
                         u.Pause(true);
                         u.AnimeSpeed(2.5);
                         u.DelayReleaseAnimePause(0.3); 
@@ -106,15 +201,32 @@ library BlackSaber requires Groups{
                 u.AnimeSpeed(1);
                 u.Pause(false);
             };
-        }
-
+        } 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A00V'){
                 u.AnimeSpeed(1.75);
-                u.FlushAnimeId(7);
+                u.FlushAnimeId(7); 
+                e.Destroy();
             }
-            e.Destroy();
+            if(e.Id=='A00X'){
+                if(u.IsAbility('B005')==false){ 
+                    u.FlushAnimeId(15);
+                    e.Destroy();
+                }else{ 
+                    if(u.MP()>=150){
+                        if(u.GetAbilityCD('A00X')==0){ 
+                            u.SetMP(u.MP()-150);
+                            u.SetAbilityCD('A00X',15);
+                            BlackSaber.E(e); 
+                        }else{
+                            e.Destroy();
+                        }
+                    }else{
+                        e.Destroy();
+                    }
+                }
+            }
         }
 
 
@@ -129,6 +241,9 @@ library BlackSaber requires Groups{
         static method onInit(){
             Spell.On(Spell.onSpell,'A00U',BlackSaber.Q); 
             Spell.On(Spell.onSpell,'A00V',BlackSaber.W); 
+            Spell.On(Spell.onSpell,'A00X',BlackSaber.E); 
+            Spell.On(Spell.onReady,'A00X',BlackSaber.HERO_START);
+            Spell.On(Spell.onStop,'A00X',BlackSaber.HERO_STOP);   
             Spell.On(Spell.onReady,'A00V',BlackSaber.HERO_START);
             Spell.On(Spell.onStop,'A00V',BlackSaber.HERO_STOP);   
             
