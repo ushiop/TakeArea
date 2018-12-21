@@ -9,6 +9,7 @@ library Disconnect requires Teams,Players{
     private function onDisconnect(EventArgs e){ 
         integer x;
         unit u;
+        timer t;
         tmp=Players.Get(e.TriggerPlayer); 
         u=tmp.hero.unit; 
         tmp.hero=0;
@@ -18,7 +19,14 @@ library Disconnect requires Teams,Players{
             UnitRemoveItemFromSlotSwapped(x,u);
         } 
         Units.Kill(u);
-        HeroRares.AddRandomHero(u);
+        t=NewTimer();
+        SetTimerData(t,Units.Get(u));
+        TimerStart(t,3,false,function(){
+            Units u=Units(GetTimerData(GetExpiredTimer()));
+            HeroRares.AddRandomHero(u.unit);
+            ReleaseTimer(GetExpiredTimer());
+        });
+        t=null;
         x=Teams.GetTeamNumber(tmp.player)-1; 
         if(x!=0){
             ForForce(Teams.GetTeamForce(tmp.player), function(){
