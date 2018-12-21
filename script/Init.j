@@ -28,7 +28,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
                 测试时不随机英雄
             u=HeroRares.GetRandomHero(p.player,20);//目前没有SR、SSR池英雄，随机上限定位R级
             */ 
-            u=Units.Spawn(p.player,'H002',0,0,0);
+            u=Units.Spawn(p.player,'H005',0,0,0);
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
