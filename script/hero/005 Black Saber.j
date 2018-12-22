@@ -5,11 +5,124 @@ library BlackSaber requires Groups{
 
         static integer Q_HIT;
 
-        //16
-        static method E1(unit u){
-            
+
+
+
+        //17 前冲   18 收手  19 抬手  20 炮击
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Dash dash;
+            Data data=Data.create('A012');
+            u.Pause(true);
+            u.AnimeId(17);
+            u.AnimeSpeed(2.5);
+            u.AddAbility('A013');
+            u.SetF(e.Angle,true);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;
+            Units.MJ(u.player.player,'e008','A012',0,u.X(),u.Y(),e.Angle,2.5,0.5,1, "stand","cf2.mdl").SetH(70);   
+            dash=Dash.Start(u.unit,e.Angle,1000,Dash.SUB,80,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units.Get(dash.Unit);
+                unit k; 
+                timer t; 
+                if(dash.Speed<5){
+                    if(data.i[0]==0){
+                        u.RemoveAbility('A013');
+                        u.Pause(false);
+                        u.AnimeSpeed(1);
+                        u.AnimeId(18);
+                        data.i[0]=1; 
+                    }
+                }
+                if(dash.Speed>50){
+                    DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y) );
+                }                
+                if(data.i[0]==0){
+                    k=GroupFind(u.unit,u.X()+70*CosBJ(dash.Angle),u.Y()+70*SinBJ(dash.Angle),70,true,false);
+                    if(k!=null){
+                        data.i[0]=2;
+                        dash.Stop();
+                        t=NewTimer(); 
+                        u.AnimeId(19);
+                        u.AnimeSpeed(1.5); 
+                        data.r[0]=0;    
+                        data.r[1]=0;
+                        data.c[2]=Units.Get(k);
+                        SetTimerData(t,data);
+                        Dash.Start(u.unit,dash.Angle,200,Dash.SUB,20,true,false);
+                        TimerStart(t,0.01,true,function(){
+                            Data data=Data(GetTimerData(GetExpiredTimer()));
+                            Units u=Units(data.c[0]);
+                            Units m=Units(data.c[2]);
+                            Units mj;
+                            if(u.Alive()==true){
+                                HitFlys.Remove(m.unit);
+                                if(data.r[1]==0){ 
+                                    if(data.r[0]<360){
+                                        data.r[0]+=15;
+                                        m.Position(u.X()+90*CosBJ(u.F()),u.Y()+90*SinBJ(u.F()),false);
+                                        m.SetH(125*Util.GetPwx(3.99,data.r[0],720));
+                                        //DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",m.X(),m.Y()) );
+                                        Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,0.6,2, "death","BlackDragonMissile.mdl").SetH(m.H());               
+                                        u.SetF(u.F()+15,true);
+                                        Buffs.Skill(m.unit,'A00F',1);
+                                    }else{     
+                                        data.r[1]=1;
+                                        data.r[0]=0;
+                                        u.AddAbility('A014');
+                                    }
+                                }
+                                if(data.r[1]==1){
+                                    if(data.r[0]<80){
+                                        data.r[0]+=1;
+                                        //Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1.5*(data.r[0]/50),2.5, "death","BlackDragonMissile.mdl").SetH(m.H());                            
+  
+                                    }else{
+                                        data.r[1]=2; 
+                                        u.RemoveAbility('A014');
+                                        mj=Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,2,1, "birth","blue-fire.mdl");
+                                        mj.SetH(m.H());                            
+                                        mj.DelayAnime(2,0.2);
+                                        Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1.5,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
+                                    }
+                                }
+                            }else{ 
+                                if(m.H()>10){
+                                    HitFlys.Add(m.unit,0.1);
+                                }
+                                u.RemoveAbility('A013');
+                                u.RemoveAbility('A014');
+                                u.Pause(false);
+                                u.AnimeSpeed(1);
+                                Spell(data.c[1]).Destroy();
+                                data.Destroy();
+                                ReleaseTimer(GetExpiredTimer());
+                            }
+                        });
+                        t=null;
+                    }
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units.Get(dash.Unit);
+                if(data.i[0]==0){ 
+                    u.RemoveAbility('A013');
+                    u.AnimeSpeed(1);
+                    u.Pause(false);  
+                } 
+                if(data.i[0]<=1){ 
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                }
+            };
         }
 
+        //16  
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A00X'); 
@@ -239,6 +352,7 @@ library BlackSaber requires Groups{
         }
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A012',BlackSaber.R); 
             Spell.On(Spell.onSpell,'A00U',BlackSaber.Q); 
             Spell.On(Spell.onSpell,'A00V',BlackSaber.W); 
             Spell.On(Spell.onSpell,'A00X',BlackSaber.E); 
