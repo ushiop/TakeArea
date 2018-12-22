@@ -1,4 +1,4 @@
-library Players{
+library Players requires TimerUtils{
     //玩家类，包含了玩家信息，以及玩家相关事件的接口 
  
 
@@ -28,6 +28,34 @@ library Players{
             unit lv15;
             unit lv20;
             unit lv25;
+            timer duangtimer=null;//震屏计时器
+            real duanglv;//震屏幅度
+            real duangtime;//震屏时间
+
+            //使玩家屏幕震荡，幅度可叠加，时间可叠加
+            method Duang(real lv,real time){
+                if(this.duangtimer==null){
+                    this.duangtimer=NewTimer();
+                    BJDebugMsg("开启计时器-"+R2S(this.duanglv));
+                    SetTimerData(this.duangtimer,this);
+                    TimerStart(this.duangtimer,0.01,true,function(){
+                        Players p=Players(GetTimerData(GetExpiredTimer()));
+                        CameraSetEQNoiseForPlayer(p.player,p.duanglv);
+                        p.duangtime-=0.01;
+                        if(p.duangtime<=0){
+                            
+                    BJDebugMsg("关闭计时器");
+                            p.duangtimer=null;
+                            p.duanglv=0;
+                            p.duangtime=0;
+                            CameraClearNoiseForPlayer( p.player ); 
+                            ReleaseTimer(GetExpiredTimer());
+                        }
+                    });
+                }
+                this.duanglv+=lv;
+                this.duangtime+=time; 
+            }
 
             //返回玩家金钱
             method Money()->integer{
