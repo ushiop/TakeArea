@@ -533,6 +533,18 @@ library BlackSaber requires Groups{
             e.Destroy();
         }
 
+        //黑S的AI施法机制
+        static method AI(unit ua){
+
+        }
+
+        //绑定AI施法
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A015')==true){
+                u.ai=BlackSaber.AI;
+            }
+        }
+
         static method onInit(){
             Spell.On(Spell.onSpell,'A015',BlackSaber.D); 
             Spell.On(Spell.onSpell,'A012',BlackSaber.R); 
@@ -544,8 +556,8 @@ library BlackSaber requires Groups{
             Spell.On(Spell.onReady,'A00V',BlackSaber.HERO_START);
             Spell.On(Spell.onStop,'A00V',BlackSaber.HERO_STOP);   
             Spell.On(Spell.onReady,'A015',BlackSaber.HERO_START);
-            Spell.On(Spell.onStop,'A015',BlackSaber.HERO_STOP);   
-            
+            Spell.On(Spell.onStop,'A015',BlackSaber.HERO_STOP);    
+            Units.On(Units.onHeroSpawn,BlackSaber.Spawn);
             Q_HIT=DefineSound("resource\\sound_effect_hit_0.wav",1000, false, true);
         }
     }
