@@ -17,10 +17,8 @@ library SL requires Groups{
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units u=Units(data.c[0]);
                 Units mj;
-                real x=u.X(),y=u.Y(),a; 
-                real f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
-                integer i;
-                 
+                real x=u.X(),y=u.Y(); 
+                real f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F())); 
                 if(u.Alive()==true){
                     Units.MJ(u.player.player,'e008','A017',0,x,y,u.F(),2,0.5,2.2, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
                     GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
