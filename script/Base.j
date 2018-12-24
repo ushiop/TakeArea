@@ -41,3 +41,4 @@
 //! import zinc "map/script/hero/003 Wind Walk.j"
 //! import zinc "map/script/hero/004 ZZ.j"
 //! import zinc "map/script/hero/005 Black Saber.j"
+//! import zinc "map/script/hero/006 SL.j"
