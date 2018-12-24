@@ -383,7 +383,7 @@ library BlackSaber requires Groups{
             u.Pause(false); 
             mj=Units.MJ(u.player.player,'e008','A00V',0,x,y,e.Angle,10,1,1, "stand","dark4_fast.mdl");  
             //mj.SetH(100);
-            dash=Dash.Start(mj.unit,e.Angle,450,Dash.SUB,30,true,false);
+            dash=Dash.Start(mj.unit,e.Angle,450,Dash.SUB,40,true,false);
             dash.onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
                 Units mj;
@@ -535,7 +535,41 @@ library BlackSaber requires Groups{
 
         //黑S的AI施法机制
         static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);
 
+                no=GroupFind(u.unit,x,y,200,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true); 
+                    IssueImmediateOrder( u.unit, "impale" );//魔力震击
+                }  
+
+
+                no=GroupFind(u.unit,x,y,450,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(no);
+                    y1=GetUnitY(no); 
+                    IssuePointOrder(u.unit, "channel",x1,y1);//炸裂
+                }
+
+                no=GroupFind(u.unit,x,y,200,true,false);
+                if(no!=null){  
+                    u.SetF(Util.XY(u.unit,no),true);        
+                    IssueImmediateOrder( u.unit, "hex" );//火炎斩
+                }    
+ 
+                IssuePointOrder(u.unit, "doom",x1,y1);//黑暗炮
+
+                IssuePointOrder(u.unit, "curse",x1,y1);//冲撞
+            }
+            target=null;
+            no=null;
         }
 
         //绑定AI施法
