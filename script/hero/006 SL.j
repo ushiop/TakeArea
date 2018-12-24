@@ -23,10 +23,6 @@ library SL requires Groups{
                  
                 if(u.Alive()==true){
                     Units.MJ(u.player.player,'e008','A017',0,x,y,u.F(),2,0.5,2.2, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
-                    for(0<=i<9){
-                        Units.MJ(u.player.player,'e008','A017',0,x+(i*33)*CosBJ(f+80),y+(i*33)*SinBJ(f+80),u.F(),2,1,1, "death","Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl").SetH(0); 
-                        Units.MJ(u.player.player,'e008','A017',0,x+(i*33)*CosBJ(f-80),y+(i*33)*SinBJ(f-80),u.F(),2,1,1, "death","Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl").SetH(0); 
-                    } 
                     GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
@@ -35,7 +31,7 @@ library SL requires Groups{
                             if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
                                 u.Damage(mj.unit,Damage.Physics,'A017',u.Str(true)*5.0);  
                                 DestroyEffect( AddSpecialEffectTarget("az-blood-hit.mdl", mj.unit, "chest") );
-                                Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200.0,Dash.SUB,40,true,true);
+                                Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200.0,Dash.SUB,20,true,true);
                             }
                         }
                     }
