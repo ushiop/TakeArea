@@ -95,13 +95,6 @@ library Ai requires Teams,Groups{
         });
     }
 
-    //任意英雄造成伤害
-    function onDmged(DamageArgs dmg){
-        Units u=dmg.DamageUnit;
-        if(u.player.isai==true){ 
-            AISpell(u.unit);
-        }
-    }
 
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
@@ -113,7 +106,6 @@ library Ai requires Teams,Groups{
 
 
     function onInit(){
-        Damage.On(Damage.onHeroDamageed,onDmged);
         Damage.On(Damage.onHeroDamage,onDmg);
         TimerStart(NewTimer(),1,true,function onLoop);
     }
