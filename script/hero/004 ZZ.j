@@ -216,22 +216,15 @@ library ZZ requires Groups{
             real x=u.X()+25*CosBJ(e.Angle),y=u.Y()+25*SinBJ(e.Angle);
             integer i; 
             real ta;
-            u.AnimeSpeed(1);  
-            if(e.Angle<0){
-                e.Angle+=360;
-            }
+            u.AnimeSpeed(1);   
             mj=Units.MJ(u.player.player,'e008','A00O',0,x,y,e.Angle,4,0.75,2, "stand","AZ_HYHX.mdx");
             //-30 右边 +30 左边  650
             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),650,function GroupIsAliveNotAloc);                   
             while(FirstOfGroup(tmp_group)!=null){
                 mj=Units.Get(FirstOfGroup(tmp_group));
                 GroupRemoveUnit(tmp_group,mj.unit);
-                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                    ta=Util.XY(u.unit,mj.unit);
-                    if(ta<0){
-                        ta+=360;
-                    }
-                    if(ta>e.Angle-30&&ta<e.Angle+30){ 
+                if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                    if(Util.FAN(u.unit,mj.unit,e.Angle,30)==true){ 
                         u.Damage(mj.unit,Damage.Magic,'A00O',u.Int(true)*5.0);  
                         DestroyEffect( AddSpecialEffectTarget("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest") );
                         Dash.Start(mj.unit,e.Angle,700.0-Util.XY2(u.unit,mj.unit),Dash.SUB,40,true,true);

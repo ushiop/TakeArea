@@ -18,21 +18,21 @@ library SL requires Groups{
                 Units u=Units(data.c[0]);
                 Units mj;
                 real x=u.X(),y=u.Y(),a; 
-                real f=u.F();
+                real f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
                 integer i;
-                
+                 
                 if(u.Alive()==true){
                     Units.MJ(u.player.player,'e008','A017',0,x,y,u.F(),2,0.5,2.2, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
+                    for(0<=i<9){
+                        Units.MJ(u.player.player,'e008','A017',0,x+(i*33)*CosBJ(f+80),y+(i*33)*SinBJ(f+80),u.F(),2,1,1, "death","Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl").SetH(0); 
+                        Units.MJ(u.player.player,'e008','A017',0,x+(i*33)*CosBJ(f-80),y+(i*33)*SinBJ(f-80),u.F(),2,1,1, "death","Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl").SetH(0); 
+                    } 
                     GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                            a=Util.XY(u.unit,mj.unit);
-                            if(a<0){
-                                a+=360;
-                            } 
-                            if(a>f-80&&a<f+80){ 
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                            if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
                                 u.Damage(mj.unit,Damage.Physics,'A017',u.Str(true)*5.0);  
                                 DestroyEffect( AddSpecialEffectTarget("az-blood-hit.mdl", mj.unit, "chest") );
                                 Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200.0,Dash.SUB,40,true,true);
