@@ -22,6 +22,11 @@ library Util{
         
         }
 
+        //判断单位M是否在单位U的a方向的r角度扇形内
+        public static method FAN(unit u,unit m,real a,real r)->boolean{ 
+            return CosBJ(Util.XY(u,m)-a)>=CosBJ(r);
+        }
+
         //返回XY到XY1的距离
         public static method XY2EX(real x,real y,real x1,real y1)->real{
             real dx=x1-x;
