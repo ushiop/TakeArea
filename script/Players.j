@@ -35,16 +35,13 @@ library Players requires TimerUtils{
             //使玩家屏幕震荡，幅度可叠加，时间可叠加
             method Duang(real lv,real time){
                 if(this.duangtimer==null){
-                    this.duangtimer=NewTimer();
-                    BJDebugMsg("开启计时器-"+R2S(this.duanglv));
+                    this.duangtimer=NewTimer(); 
                     SetTimerData(this.duangtimer,this);
                     TimerStart(this.duangtimer,0.01,true,function(){
                         Players p=Players(GetTimerData(GetExpiredTimer()));
                         CameraSetEQNoiseForPlayer(p.player,p.duanglv);
                         p.duangtime-=0.01;
-                        if(p.duangtime<=0){
-                            
-                    BJDebugMsg("关闭计时器");
+                        if(p.duangtime<=0){ 
                             p.duangtimer=null;
                             p.duanglv=0;
                             p.duangtime=0;
