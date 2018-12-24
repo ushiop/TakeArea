@@ -650,7 +650,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.SetF(dash.Angle,true);
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
-                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);
+                        GroupEnumUnitsInRange(tmp_group,dash.X+140*CosBJ(dash.Angle),dash.Y+140*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
@@ -671,7 +671,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     dash.onEnd=function(Dash dash){
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
-                        Units mj=Units(data.c[1]);  
+                        Units mj=Units(data.c[1]);   
                         Spell(data.c[2]).Destroy();
                         u.SetF(dash.Angle,true);
                         mj.Anime("death");
