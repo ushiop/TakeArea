@@ -88,6 +88,8 @@ library BlackSaber requires Groups{
                                     u.Damage(mj.unit,'A015',Damage.Magic,u.Int(true)*2.2);
                                     HitFlys.Add(mj.unit,20);
                                     Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(u.unit,mj.unit),Dash.SUB,10,true,true);
+                                    Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(mj.H());
+                                        
                                 }
                             }
                             GroupClear(tmp_group);   
