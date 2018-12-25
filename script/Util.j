@@ -23,6 +23,8 @@ library Util{
         }
 
         //判断单位M是否在单位U的a方向的r角度扇形内
+        //r为扇形的宽度，60为左右60，共计120度
+        //a为扇形所面向的角度，由XYEX/XY计算而来
         public static method FAN(unit u,unit m,real a,real r)->boolean{ 
             return CosBJ(Util.XY(u,m)-a)>=CosBJ(r);
         }
