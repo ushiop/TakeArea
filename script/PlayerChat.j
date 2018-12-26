@@ -4,7 +4,7 @@ library PlayerChat requires Events,Players{
 
     function Chat(EventArgs e){
         Players p=Players.Get(e.TriggerPlayer); 
-        if(e.ChatString=="-AI"){
+        if(e.ChatString=="-PC"){
             if(p.isai==true){
                 p.isai=false;
                 DisplayTextToPlayer(p.player,0,0,"你已关闭电脑托管~!");
