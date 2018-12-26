@@ -45,9 +45,8 @@ library SL requires Groups{
 
         }
 
-
         static method onInit(){ 
-            Spell.On(Spell.onSpell,'A017',SL.Q); 
+            Spell.On(Spell.onSpell,'A017',SL.Q);  
         }
     }
 }
