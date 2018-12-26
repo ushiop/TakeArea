@@ -34,6 +34,14 @@ library Units requires Table,Players,Events,Util{
                 SetUnitState(this.unit,UNIT_STATE_LIFE,r); 
             }
 
+            method MaxMP()->real{
+                return GetUnitState(this.unit, UNIT_STATE_MAX_MANA);
+            }
+
+            method MaxHP()->real{ 
+                return GetUnitState(this.unit, UNIT_STATE_MAX_LIFE);
+            }
+
             method MP()->real{
                 return GetUnitState(this.unit, UNIT_STATE_MANA);
             }
