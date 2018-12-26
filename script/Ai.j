@@ -17,7 +17,12 @@ library Ai requires Teams,Groups{
         unit target,no;
         real x=u.X(),y=u.Y();
         real x1,y1;
-        IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
+        real mps=u.MP()/u.MaxMP();
+        if(mps>0.2){ 
+            IssuePointOrder(u.unit, "attack",GetUnitX(Origin_Ball), GetUnitY(Origin_Ball));
+        }else{
+            IssuePointOrder(u.unit, "attack",GetRectCenterX(Teams.GetTeamRect(u.player.player)), GetRectCenterY(Teams.GetTeamRect(u.player.player)));
+        }
         if(u.ai!=0){
             AiEventInterface(u.ai).evaluate(u.unit);
         }else{
