@@ -50,6 +50,33 @@ library Units requires Table,Players,Events,Util{
                 return GetUnitState(this.unit, UNIT_STATE_LIFE);
             }
 
+            //在time秒内将透明度由nowA转变为maxA
+            method DelayAlpha(integer nowA,integer maxA,real time){
+                timer t=NewTimer();
+                Data data=Data.create('A010');
+                data.c[0]=this;
+                data.i[0]=R2I((maxA-nowA) / (time/0.01));
+                data.i[1]=nowA;
+                data.i[2]=maxA;
+                data.r[3]=time;
+                this.Alpha(nowA);
+                SetTimerData(t,data);
+                TimerStart(t,0.01,true,function(){
+                    Data data=Data(GetTimerData(GetExpiredTimer())); 
+                    Units u=Units(data.c[0]);
+                    if(data.r[3]<=0){
+                        u.Alpha(data.i[2]);
+                        data.Destroy();
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        data.r[3]-=0.01;
+                        data.i[1]+=data.i[0];
+                        u.Alpha(data.i[1]);
+                    }
+                });
+                t=null;                     
+            }
+
             //设置单位透明度,0-255,0为不可见
             method Alpha(integer a){
                 SetUnitVertexColor(this.unit, 255, 255, 255, a );
