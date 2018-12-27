@@ -7,16 +7,24 @@ library SL requires Groups{
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A01A');
             timer t=NewTimer();
+            real s=0.4;
             u.Pause(true);
+            if(u.player.lv15!=null){
+                s=0.01;
+                u.AnimeSpeed(6);
+            }
             u.AnimeId(6);
             data.c[0]=u;
             data.c[1]=e;
             SetTimerData(t,data);
-            TimerStart(t,0.4,false,function(){
+            TimerStart(t,s,false,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
                 Units u=Units(data.c[0]),mj;
                 real x=u.X(),y=u.Y(),f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
                 Dash dash;
+                u.SetF(u.F(),true);
+                u.AnimeSpeed(1);
+                u.AnimeId(10);
                 if(u.Alive()==true){
                     Units.MJ(u.player.player,'e00B','A01A',0,x,y,f+90,2,0.5,2.5, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
                     mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f+180,2,1.5,1, "stand","dust2.mdl"); 
@@ -72,7 +80,12 @@ library SL requires Groups{
                         }
                     };
                 } 
-                u.DelayReleaseAnimePause(0.6);
+                if(u.player.lv15==null){ 
+                    u.DelayReleaseAnimePause(0.6);
+                }else{ 
+                    u.AnimeSpeed(3);
+                    u.DelayReleaseAnimePause(0.2);
+                }
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
                 ReleaseTimer(GetExpiredTimer());
@@ -249,7 +262,12 @@ library SL requires Groups{
                                                 u.AnimeSpeed(2.5);
                                                 u.DelayAlpha(0,255,0.2);
                                                 u.AnimeId(8);
-                                                u.DelayReleaseAnimePause(0.4);
+                                                if(u.player.lv15==null){ 
+                                                    u.DelayReleaseAnimePause(0.4);
+                                                }else{
+                                                    u.AnimeSpeed(5); 
+                                                    u.DelayReleaseAnimePause(0.2);
+                                                }
                                                 data.u[0]=null; 
                                                 Spell(data.c[1]).Destroy();
                                                 data.Destroy();
@@ -330,7 +348,12 @@ library SL requires Groups{
                     GroupClear(tmp_group);    
                 }
                 u.AnimeSpeed(2);
-                u.DelayReleaseAnimePause(0.4);
+                if(u.player.lv15==null){ 
+                    u.DelayReleaseAnimePause(0.4);
+                }else{ 
+                    u.AnimeSpeed(4);
+                    u.DelayReleaseAnimePause(0.2);
+                }
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
                 ReleaseTimer(GetExpiredTimer());
@@ -345,7 +368,10 @@ library SL requires Groups{
                 u.FlushAnimeId(1);
                 e.Destroy();
             }
-
+            if(e.Id=='A01B'){
+                u.FlushAnimeId(7);
+                e.Destroy();
+            }
         }
 
         static method HERO_STOP(Spell e){ 
@@ -363,6 +389,8 @@ library SL requires Groups{
             Spell.On(Spell.onSpell,'A018',SL.W);  
             Spell.On(Spell.onReady,'A018',SL.HERO_START);
             Spell.On(Spell.onStop,'A018',SL.HERO_STOP);   
+            Spell.On(Spell.onReady,'A01B',SL.HERO_START);
+            Spell.On(Spell.onStop,'A01B',SL.HERO_STOP);   
             Damage.On(Damage.onHeroDamageed,SL.test);
         }
     }
