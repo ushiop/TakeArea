@@ -266,6 +266,7 @@ library BlackSaber requires Groups{
                             }
                         });
                         t=null;
+                        k=null;
                     }
                 }
             };
