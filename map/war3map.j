@@ -30,11 +30,11 @@ constant boolean LIBRARY_TakeUi=true
 //endglobals from TakeUi
 //globals from Teams:
 constant boolean LIBRARY_Teams=true
-force Teams___AllPlayers
-// processed:         force  array Teams___Team_Players[3]
-// processed:         rect  array Teams___Team_Rect[3]
-// processed:         string  array Teams___Team_Name[3]
-// processed:         integer  array Teams___Team_Kills[3]
+force Teams__AllPlayers
+// processed:         force  array Teams__Team_Players[3]
+// processed:         rect  array Teams__Team_Rect[3]
+// processed:         string  array Teams__Team_Name[3]
+// processed:         integer  array Teams__Team_Kills[3]
 //endglobals from Teams
 //globals from TerrainPathability:
 constant boolean LIBRARY_TerrainPathability=true
@@ -87,7 +87,7 @@ constant integer TimerUtils__HELD=0x23729801
 //endglobals from TimerUtils
 //globals from Tree:
 constant boolean LIBRARY_Tree=true
-rect array Tree___rec
+rect array Tree__rec
 //endglobals from Tree
 //globals from Util:
 constant boolean LIBRARY_Util=true
@@ -223,7 +223,7 @@ constant boolean LIBRARY_Damage=true
 //endglobals from Damage
 //globals from Disconnect:
 constant boolean LIBRARY_Disconnect=true
-integer Disconnect___tmp
+integer Disconnect__tmp
 //endglobals from Disconnect
 //globals from LevelUp:
 constant boolean LIBRARY_LevelUp=true
@@ -249,7 +249,7 @@ group Groups___tmp_random_group=CreateGroup()
 //endglobals from Groups
 //globals from HeroRare:
 constant boolean LIBRARY_HeroRare=true
-// processed:     unitpool  array HeroRare___HeroRare[3]
+// processed:     unitpool  array HeroRare__HeroRare[3]
 unit HeroRare_LastRandomUnit
 integer array HeroType
 //endglobals from HeroRare
@@ -700,42 +700,42 @@ constant integer si__ZZ___ZZ=44
 integer si__ZZ___ZZ_F=0
 integer si__ZZ___ZZ_I=0
 integer array si__ZZ___ZZ_V
-constant integer si__Respawn___Respawn=45
-integer si__Respawn___Respawn_F=0
-integer si__Respawn___Respawn_I=0
-integer array si__Respawn___Respawn_V
-integer s__Respawn___Respawn_DeathUIMainTop
-integer s__Respawn___Respawn_DeathUIMainLine
-integer s__Respawn___Respawn_DeathUIMainDown
-integer s__Respawn___Respawn_DeathUIMainTitle
-integer s__Respawn___Respawn_DeathUIMainRoll
-integer s__Respawn___Respawn_DeathUIMainSave
-integer s__Respawn___Respawn_DeathUIMainSaveLine
-integer s__Respawn___Respawn_DeathUIMainBuy
-integer s__Respawn___Respawn_DeathUIMainBuyLine
-integer s__Respawn___Respawn_DeathUIMainTip
-integer s__Respawn___Respawn_DeathUIMainSelect
-integer s__Respawn___Respawn_DeathUIMainMoveBar
-real s__Respawn___Respawn_MaxRespawnTime=5.0
-boolean s__Respawn___Respawn_RespawnShow=false
-real s__Respawn___Respawn_RespawnShowTime=0.0
-real array s__Respawn___Respawn_RespawnTime
-integer array s__Respawn___Respawn_RespawnSaveMoney
-integer array s__Respawn___Respawn_RespawnSelectLast
-integer array s__Respawn___Respawn_RespawnSelect
-force array s__Teams___Team_Players
-rect array s__Teams___Team_Rect
-string array s__Teams___Team_Name
-integer array s__Teams___Team_Kills
+constant integer si__Respawn__Respawn=45
+integer si__Respawn__Respawn_F=0
+integer si__Respawn__Respawn_I=0
+integer array si__Respawn__Respawn_V
+integer s__Respawn__Respawn_DeathUIMainTop
+integer s__Respawn__Respawn_DeathUIMainLine
+integer s__Respawn__Respawn_DeathUIMainDown
+integer s__Respawn__Respawn_DeathUIMainTitle
+integer s__Respawn__Respawn_DeathUIMainRoll
+integer s__Respawn__Respawn_DeathUIMainSave
+integer s__Respawn__Respawn_DeathUIMainSaveLine
+integer s__Respawn__Respawn_DeathUIMainBuy
+integer s__Respawn__Respawn_DeathUIMainBuyLine
+integer s__Respawn__Respawn_DeathUIMainTip
+integer s__Respawn__Respawn_DeathUIMainSelect
+integer s__Respawn__Respawn_DeathUIMainMoveBar
+real s__Respawn__Respawn_MaxRespawnTime=5.0
+boolean s__Respawn__Respawn_RespawnShow=false
+real s__Respawn__Respawn_RespawnShowTime=0.0
+real array s__Respawn__Respawn_RespawnTime
+integer array s__Respawn__Respawn_RespawnSaveMoney
+integer array s__Respawn__Respawn_RespawnSelectLast
+integer array s__Respawn__Respawn_RespawnSelect
+force array s__Teams__Team_Players
+rect array s__Teams__Team_Rect
+string array s__Teams__Team_Name
+integer array s__Teams__Team_Kills
 integer array s__TimerUtils__data
 timer array s__TimerUtils__tT
-unitpool array s__HeroRare___HeroRare
+unitpool array s__HeroRare__HeroRare
 rect array s__YeG___rec
 string array s__s__DazzleMaster___DazzleMaster_DazzlePath
 string array s__s__DazzleMaster___DazzleMaster_DazzleName
 integer array s__s__DazzleMaster___DazzleMaster_E_sound
 integer array s__s__KillUi_KillTeam
-string array s__s__Respawn___Respawn_RespawnType
+string array s__s__Respawn__Respawn_RespawnType
 integer array si__Table__GTable_type
 trigger array st__Table__GTable_onDestroy
 trigger st__Stack_onDestroy
@@ -774,8 +774,8 @@ trigger st__DazzleMaster___DazzleMaster_Q
 trigger st__KillUi_FlushPlayerData
 trigger st__KillUi_FlushData
 trigger st__KillUi_FlushKillData
-trigger st__Respawn___Respawn_Flush
-trigger st__Respawn___Respawn_Show
+trigger st__Respawn__Respawn_Flush
+trigger st__Respawn__Respawn_Show
 trigger array st___prototype1
 trigger array st___prototype32
 trigger array st___prototype34
@@ -983,51 +983,51 @@ function s__Data_deallocate takes integer this returns nothing
     set si__Data_F=this
 endfunction
 
-//Generated method caller for Respawn___Respawn.Flush
-function sc__Respawn___Respawn_Flush takes player ps returns nothing
+//Generated method caller for Respawn__Respawn.Flush
+function sc__Respawn__Respawn_Flush takes player ps returns nothing
     set f__arg_player1=ps
-    call TriggerEvaluate(st__Respawn___Respawn_Flush)
+    call TriggerEvaluate(st__Respawn__Respawn_Flush)
 endfunction
 
-//Generated method caller for Respawn___Respawn.Show
-function sc__Respawn___Respawn_Show takes player p,boolean show returns nothing
+//Generated method caller for Respawn__Respawn.Show
+function sc__Respawn__Respawn_Show takes player p,boolean show returns nothing
     set f__arg_player1=p
     set f__arg_boolean1=show
-    call TriggerEvaluate(st__Respawn___Respawn_Show)
+    call TriggerEvaluate(st__Respawn__Respawn_Show)
 endfunction
 
-//Generated allocator of Respawn___Respawn
-function s__Respawn___Respawn__allocate takes nothing returns integer
- local integer this=si__Respawn___Respawn_F
+//Generated allocator of Respawn__Respawn
+function s__Respawn__Respawn__allocate takes nothing returns integer
+ local integer this=si__Respawn__Respawn_F
     if (this!=0) then
-        set si__Respawn___Respawn_F=si__Respawn___Respawn_V[this]
+        set si__Respawn__Respawn_F=si__Respawn__Respawn_V[this]
     else
-        set si__Respawn___Respawn_I=si__Respawn___Respawn_I+1
-        set this=si__Respawn___Respawn_I
+        set si__Respawn__Respawn_I=si__Respawn__Respawn_I+1
+        set this=si__Respawn__Respawn_I
     endif
     if (this>8190) then
-        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: Respawn___Respawn")
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: Respawn__Respawn")
         return 0
     endif
 
-   set s__Respawn___Respawn_RespawnSaveMoney[this]=0
-   set s__Respawn___Respawn_RespawnSelectLast[this]=0
-   set s__Respawn___Respawn_RespawnSelect[this]=0
-    set si__Respawn___Respawn_V[this]=-1
+   set s__Respawn__Respawn_RespawnSaveMoney[this]=0
+   set s__Respawn__Respawn_RespawnSelectLast[this]=0
+   set s__Respawn__Respawn_RespawnSelect[this]=0
+    set si__Respawn__Respawn_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of Respawn___Respawn
-function s__Respawn___Respawn_deallocate takes integer this returns nothing
+//Generated destructor of Respawn__Respawn
+function s__Respawn__Respawn_deallocate takes integer this returns nothing
     if this==null then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: Respawn___Respawn")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: Respawn__Respawn")
         return
-    elseif (si__Respawn___Respawn_V[this]!=-1) then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: Respawn___Respawn")
+    elseif (si__Respawn__Respawn_V[this]!=-1) then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: Respawn__Respawn")
         return
     endif
-    set si__Respawn___Respawn_V[this]=si__Respawn___Respawn_F
-    set si__Respawn___Respawn_F=this
+    set si__Respawn__Respawn_V[this]=si__Respawn__Respawn_F
+    set si__Respawn__Respawn_F=this
 endfunction
 
 //Generated allocator of ZZ___ZZ
@@ -3136,66 +3136,66 @@ endfunction
 //library Teams:
 
     //private:  //玩家阵营相关内容初始化类 //玩家组
-        function Teams___anon__9 takes nothing returns boolean
+        function Teams__anon__9 takes nothing returns boolean
             return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
         endfunction
-        function Teams___anon__10 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
+        function Teams__anon__10 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 0
         endfunction
-        function Teams___anon__11 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
+        function Teams__anon__11 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 1
         endfunction
-        function Teams___anon__12 takes nothing returns boolean
-            return IsPlayerInForce(GetFilterPlayer(), Teams___AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
+        function Teams__anon__12 takes nothing returns boolean
+            return IsPlayerInForce(GetFilterPlayer(), Teams__AllPlayers) == true and GetPlayerTeam(GetFilterPlayer()) == 2
         endfunction
-    function Teams___onInit takes nothing returns nothing
-        set Teams___AllPlayers=GetPlayersMatching(Condition(function Teams___anon__9))
-        set s__Teams___Team_Players[0]= GetPlayersMatching(Condition(function Teams___anon__10))
-        set s__Teams___Team_Players[1]= GetPlayersMatching(Condition(function Teams___anon__11))
-        set s__Teams___Team_Players[2]= GetPlayersMatching(Condition(function Teams___anon__12))
-        set s__Teams___Team_Rect[0]= gg_rct_A_TEAM
-        set s__Teams___Team_Rect[1]= gg_rct_B_TEAM
-        set s__Teams___Team_Rect[2]= gg_rct_C_TEAM
-        set s__Teams___Team_Name[0]= "A组"
-        set s__Teams___Team_Name[1]= "B组"
-        set s__Teams___Team_Name[2]= "C组"
-        call SetPlayerName(Player(9), s__Teams___Team_Name[0])
-        call SetPlayerName(Player(10), s__Teams___Team_Name[1])
-        call SetPlayerName(Player(11), s__Teams___Team_Name[2])
+    function Teams__onInit takes nothing returns nothing
+        set Teams__AllPlayers=GetPlayersMatching(Condition(function Teams__anon__9))
+        set s__Teams__Team_Players[0]= GetPlayersMatching(Condition(function Teams__anon__10))
+        set s__Teams__Team_Players[1]= GetPlayersMatching(Condition(function Teams__anon__11))
+        set s__Teams__Team_Players[2]= GetPlayersMatching(Condition(function Teams__anon__12))
+        set s__Teams__Team_Rect[0]= gg_rct_A_TEAM
+        set s__Teams__Team_Rect[1]= gg_rct_B_TEAM
+        set s__Teams__Team_Rect[2]= gg_rct_C_TEAM
+        set s__Teams__Team_Name[0]= "A组"
+        set s__Teams__Team_Name[1]= "B组"
+        set s__Teams__Team_Name[2]= "C组"
+        call SetPlayerName(Player(9), s__Teams__Team_Name[0])
+        call SetPlayerName(Player(10), s__Teams__Team_Name[1])
+        call SetPlayerName(Player(11), s__Teams__Team_Name[2])
     endfunction
         function s__Teams_GetTeamKills takes integer p returns integer
-            return s__Teams___Team_Kills[p]
+            return s__Teams__Team_Kills[p]
         endfunction
         function s__Teams_AddTeamKills takes integer p,integer k returns nothing
-            set s__Teams___Team_Kills[p]= s__Teams___Team_Kills[p] + k
+            set s__Teams__Team_Kills[p]= s__Teams__Team_Kills[p] + k
         endfunction
         function s__Teams_GetAllPlayers takes nothing returns force
-            return Teams___AllPlayers
+            return Teams__AllPlayers
         endfunction
         function s__Teams_ActionsForAllPlayer takes code f returns nothing
-            call ForForce(Teams___AllPlayers, f)
+            call ForForce(Teams__AllPlayers, f)
         endfunction
         function s__Teams_ActionsForTeamPlayer takes integer tid,code f returns nothing
-            call ForForce(s__Teams___Team_Players[tid], f)
+            call ForForce(s__Teams__Team_Players[tid], f)
         endfunction
         function s__Teams_PlayerRemoveForce takes player p returns nothing
-            call ForceRemovePlayer(Teams___AllPlayers, p)
-            call ForceRemovePlayer(s__Teams___Team_Players[GetPlayerTeam(p)], p)
+            call ForceRemovePlayer(Teams__AllPlayers, p)
+            call ForceRemovePlayer(s__Teams__Team_Players[GetPlayerTeam(p)], p)
         endfunction
         function s__Teams_GetTeamName takes player p returns string
-            return s__Teams___Team_Name[GetPlayerTeam(p)]
+            return s__Teams__Team_Name[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamNameByIndex takes integer p returns string
-            return s__Teams___Team_Name[p]
+            return s__Teams__Team_Name[p]
         endfunction
         function s__Teams_GetTeamRect takes player p returns rect
-            return s__Teams___Team_Rect[GetPlayerTeam(p)]
+            return s__Teams__Team_Rect[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForce takes player p returns force
-            return s__Teams___Team_Players[GetPlayerTeam(p)]
+            return s__Teams__Team_Players[GetPlayerTeam(p)]
         endfunction
         function s__Teams_GetTeamForceByIndex takes integer p returns force
-            return s__Teams___Team_Players[p]
+            return s__Teams__Team_Players[p]
         endfunction
         function s__Teams_GetTeamNumber takes player p returns integer
             return CountPlayersInForceBJ(s__Teams_GetTeamForce(p))
@@ -3204,7 +3204,7 @@ endfunction
             return CountPlayersInForceBJ(s__Teams_GetTeamForceByIndex(p))
         endfunction
         function s__Teams_GetAllPlayersNumber takes nothing returns integer
-            return CountPlayersInForceBJ(Teams___AllPlayers)
+            return CountPlayersInForceBJ(Teams__AllPlayers)
         endfunction
 
 //library Teams ends
@@ -3508,27 +3508,27 @@ endfunction
 //library TimerUtils ends
 //library Tree:
 
-        function Tree___anon__15 takes nothing returns nothing
+        function Tree__anon__15 takes nothing returns nothing
             call PolledWait(30.00)
             call DestructableRestoreLife(GetDyingDestructable(), GetDestructableMaxLife(GetDyingDestructable()), true)
         endfunction
-    function Tree___onInit takes nothing returns nothing
+    function Tree__onInit takes nothing returns nothing
         local trigger t
         local location d
         local integer i
         local integer x
-        set Tree___rec[0]=gg_rct_ShuLin_01
-        set Tree___rec[1]=gg_rct_YeGuai_01
-        set Tree___rec[2]=gg_rct_YeGuai_02
+        set Tree__rec[0]=gg_rct_ShuLin_01
+        set Tree__rec[1]=gg_rct_YeGuai_01
+        set Tree__rec[2]=gg_rct_YeGuai_02
         set t=CreateTrigger()
-        call TriggerAddAction(t, function Tree___anon__15)
+        call TriggerAddAction(t, function Tree__anon__15)
         set i=0
         loop
         exitwhen ( i >= 100 )
             set x=0
             loop
             exitwhen ( x >= 3 )
-                set d=GetRandomLocInRect(Tree___rec[x])
+                set d=GetRandomLocInRect(Tree__rec[x])
                 call CreateDestructableLoc('B000', d, GetRandomDirectionDeg(), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4))
                 call TriggerRegisterDeathEvent(t, GetLastCreatedDestructable())
                 call RemoveLocation(d)
@@ -5269,7 +5269,7 @@ endfunction
 
 //library BuyNextHero ends
 //library Damage:
-//processed:     function interface Damage___DamageEventInterface takes DamageArgs arg0 returns nothing
+//processed:     function interface Damage__DamageEventInterface takes DamageArgs arg0 returns nothing
         function s__DamageArgs_create takes nothing returns integer
             return s__DamageArgs__allocate()
         endfunction
@@ -5357,23 +5357,23 @@ endfunction
 //library Damage ends
 //library Disconnect:
 
-        function Disconnect___anon__16 takes nothing returns nothing
+        function Disconnect__anon__16 takes nothing returns nothing
             local integer u=(GetTimerData(GetExpiredTimer()))
             call sc__HeroRares_AddRandomHero(s__Units_unit[u])
             call ReleaseTimer(GetExpiredTimer())
         endfunction
-        function Disconnect___anon__17 takes nothing returns nothing
-            call AdjustPlayerStateBJ(GetPlayerState(s__Players_player[Disconnect___tmp], PLAYER_STATE_RESOURCE_GOLD) / ( s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+        function Disconnect__anon__17 takes nothing returns nothing
+            call AdjustPlayerStateBJ(GetPlayerState(s__Players_player[Disconnect__tmp], PLAYER_STATE_RESOURCE_GOLD) / ( s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1 ), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
         endfunction
-    function Disconnect___onDisconnect takes integer e returns nothing
+    function Disconnect__onDisconnect takes integer e returns nothing
         local integer x
         local unit u
         local timer t
-        set Disconnect___tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
-        set u=s__Units_unit[s__Players_hero[Disconnect___tmp]]
-        set s__Players_hero[Disconnect___tmp]=0
+        set Disconnect__tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
+        set u=s__Units_unit[s__Players_hero[Disconnect__tmp]]
+        set s__Players_hero[Disconnect__tmp]=0
         call ReviveHero(u, GetUnitX(u), GetUnitY(u), false)
-        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])))
+        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])))
         set x=1
         loop
         exitwhen ( x > 6 )
@@ -5383,19 +5383,19 @@ endfunction
         call sc__Units_Kill(u)
         set t=NewTimer()
         call SetTimerData(t , sc__Units_Get(u))
-        call TimerStart(t, 3, false, function Disconnect___anon__16)
+        call TimerStart(t, 3, false, function Disconnect__anon__16)
         set t=null
-        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1
+        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1
         if ( x != 0 ) then
-            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect___tmp]), function Disconnect___anon__17)
+            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect__tmp]), function Disconnect__anon__17)
         endif
-        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
-        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。")
-        set s__Players_isonline[Disconnect___tmp]=false
-        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
+        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect__tmp])
+        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect__tmp] + " 离开了游戏，金钱将平分给他的队友。")
+        set s__Players_isonline[Disconnect__tmp]=false
+        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect__tmp])
         set u=null
     endfunction
-    function Disconnect___onInit takes nothing returns nothing
+    function Disconnect__onInit takes nothing returns nothing
         call s__Events_On(s__Events_onPlayerDisconnect , (9))
     endfunction
 
@@ -5438,7 +5438,7 @@ endfunction
 //library LevelUp ends
 //library PlayerChat:
 
-    function PlayerChat___Chat takes integer e returns nothing
+    function PlayerChat__Chat takes integer e returns nothing
         local integer p=s__Players_Get(s__EventArgs_TriggerPlayer[e])
         if ( s__EventArgs_ChatString[e] == "-PC" ) then
             if ( s__Players_isai[p] == true ) then
@@ -5450,7 +5450,7 @@ endfunction
             endif
         endif
     endfunction
-    function PlayerChat___onInit takes nothing returns nothing
+    function PlayerChat__onInit takes nothing returns nothing
         call s__Events_On(s__Events_onPlayerChat , (11))
     endfunction
 
@@ -5527,13 +5527,13 @@ endfunction
             call s__Press_OnSnyc(s__Press_onSnycPressKeyDown , (1))
             call s__Press_OnSnyc(s__Press_onSnycPressKeyUp , (2))
         endfunction
-    function PlayerPress___onInit takes nothing returns nothing
+    function PlayerPress__onInit takes nothing returns nothing
         call TimerStart(NewTimer(), 0.5, true, function s__PlayerPress_onMouse)
     endfunction
 
 //library PlayerPress ends
 //library Units:
-//processed:     function interface Units___UnitsEventInterface takes Units arg0, Units arg1 returns nothing  //单位基础类 //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是 //以及单位事件
+//processed:     function interface Units__UnitsEventInterface takes Units arg0, Units arg1 returns nothing  //单位基础类 //管理单位身上的集合数据,创建单位用该类函数,杀死单位也是 //以及单位事件
         //public:  //属性 //玩家对象
             function s__Units_SetMP takes integer this,real r returns nothing
                 call SetUnitState(s__Units_unit[this], UNIT_STATE_MANA, r)
@@ -6123,7 +6123,7 @@ endfunction
 //library Groups ends
 //library HeroRare:
 
-        function HeroRare___anon__14 takes nothing returns nothing
+        function HeroRare__anon__14 takes nothing returns nothing
             local unit gu=GetEnumUnit()
             if ( IsUnitType(gu, UNIT_TYPE_HERO) == true ) then
                 set HeroType[GetUnitPointValue(gu)]=GetUnitTypeId(gu)
@@ -6131,13 +6131,13 @@ endfunction
             endif
             set gu=null
         endfunction
-    function HeroRare___onInit takes nothing returns nothing
+    function HeroRare__onInit takes nothing returns nothing
         local group g=CreateGroup()
-        set s__HeroRare___HeroRare[0]= CreateUnitPool()
-        set s__HeroRare___HeroRare[1]= CreateUnitPool()
-        set s__HeroRare___HeroRare[2]= CreateUnitPool()
+        set s__HeroRare__HeroRare[0]= CreateUnitPool()
+        set s__HeroRare__HeroRare[1]= CreateUnitPool()
+        set s__HeroRare__HeroRare[2]= CreateUnitPool()
         call GroupEnumUnitsInRange(g, 0, 0, 65535, null)
-        call ForGroup(g, function HeroRare___anon__14)
+        call ForGroup(g, function HeroRare__anon__14)
         call DestroyGroup(g)
         call sc__HeroRares_Repeat(true)
     endfunction
@@ -6162,7 +6162,7 @@ endfunction
         endfunction
         function s__HeroRares_AddRandomHero takes unit u returns nothing
             if ( s__HeroRares_GetRepeat() == false ) then
-                call UnitPoolAddUnitType(s__HeroRare___HeroRare[s__HeroRares_GetUnitRare(u)], GetUnitTypeId(u), 1)
+                call UnitPoolAddUnitType(s__HeroRare__HeroRare[s__HeroRares_GetUnitRare(u)], GetUnitTypeId(u), 1)
             endif
             call s__Units_Remove(u)
         endfunction
@@ -6176,10 +6176,10 @@ endfunction
             elseif ( r1 >= 71 ) then
                 set index=2
             endif
-            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare___HeroRare[index], p, 0, 0, 0)
+            set HeroRare_LastRandomUnit=PlaceRandomUnit(s__HeroRare__HeroRare[index], p, 0, 0, 0)
             call s__Units_Set(HeroRare_LastRandomUnit)
             if ( s__HeroRares_GetRepeat() == false ) then
-                call UnitPoolRemoveUnitType(s__HeroRare___HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
+                call UnitPoolRemoveUnitType(s__HeroRare__HeroRare[index], GetUnitTypeId(HeroRare_LastRandomUnit))
             endif
             return HeroRare_LastRandomUnit
         endfunction
@@ -6296,7 +6296,7 @@ endfunction
             set s__Winner_OY=GetUnitY(Origin_Ball)
             call s__Units_On(s__Units_onHeroDeath , (1))
         endfunction
-    function Winner___onInit takes nothing returns nothing
+    function Winner__onInit takes nothing returns nothing
         call TimerStart(NewTimer(), 0.01, true, function s__Winner_onLoop)
     endfunction
 
@@ -7842,7 +7842,7 @@ endfunction
 //library Init:
 
     //public:  //中央球、阵初始化、杂物初始化类 //中央球,中央阵
-        function Init___anon__8 takes nothing returns nothing
+        function Init__anon__8 takes nothing returns nothing
             local unit u
             local integer p=s__Players_Set(GetEnumPlayer())
             call UnitShareVision(Origin_Ball, s__Players_player[p], true)
@@ -7861,7 +7861,7 @@ endfunction
                 call SetPlayerAllianceStateBJ(s__Players_player[p], Player(11), bj_ALLIANCE_ALLIED_VISION)
             endif
         endfunction
-    function Init___onInit takes nothing returns nothing
+    function Init__onInit takes nothing returns nothing
         local integer i
         set Origin_Ball=gg_unit_e000_0010
         set Origin_Magic=gg_unit_e001_0011
@@ -7873,7 +7873,7 @@ endfunction
         call s__Players_Set(Player(PLAYER_NEUTRAL_PASSIVE))
         call s__Players_Set(Player(PLAYER_NEUTRAL_AGGRESSIVE))
         call s__Players_Set(Player(bj_PLAYER_NEUTRAL_EXTRA))
-        call s__Teams_ActionsForAllPlayer(function Init___anon__8)
+        call s__Teams_ActionsForAllPlayer(function Init__anon__8)
         set i=0 //测试
         loop
         exitwhen ( i > 5 )
@@ -7998,11 +7998,11 @@ endfunction
             call s__Press_OnSnyc(s__Press_onSnycPressKeyDown , (3))
             call s__Press_OnSnyc(s__Press_onSnycPressKeyUp , (4))
         endfunction
-        function KillUi___anon__21 takes nothing returns nothing
+        function KillUi__anon__21 takes nothing returns nothing
             call s__KillUi_FlushKillData(- 1)
             call ReleaseTimer(GetExpiredTimer())
         endfunction  //-----最小化状态
-        function KillUi___anon__22 takes nothing returns nothing
+        function KillUi__anon__22 takes nothing returns nothing
             local integer i
             local integer index=0
             set i=0
@@ -8018,9 +8018,9 @@ endfunction
             call ReleaseTimer(GetExpiredTimer())
             call DzFrameSetSize(s__KillUi_KillBackgroundMaxLine, 0.254, s__KillUi_KillBackgroundMaxHeight)
         endfunction
-    function KillUi___onInit takes nothing returns nothing
-        call TimerStart(NewTimer(), 0.05, false, function KillUi___anon__21)
-        call TimerStart(NewTimer(), 0.06, false, function KillUi___anon__22)
+    function KillUi__onInit takes nothing returns nothing
+        call TimerStart(NewTimer(), 0.05, false, function KillUi__anon__21)
+        call TimerStart(NewTimer(), 0.06, false, function KillUi__anon__22)
     endfunction
 
 //library KillUi ends
@@ -8326,7 +8326,7 @@ endfunction
                             call s__Units_Life(u,0.5)
                             call s__Units_Anime(u,"death")
                         endif
-                    elseif ( s__Dash_Obj[dash] == 0 ) then //12
+                    elseif ( s__Dash_Obj[dash] == 0 ) then //12 
                         set s__Dash_Obj[dash]=2
                         call GroupEnumUnitsInRange(tmp_group, s__Dash_X[dash], s__Dash_Y[dash], 125, Condition(function GroupIsAliveNotAloc))
                         loop
@@ -8375,7 +8375,7 @@ endfunction
                         endif
                     endloop
                     call GroupClear(tmp_group)
-                    set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01A' , 0 , x + 75 * CosBJ(f) , y + 75 * SinBJ(f) , f , 5 , 0.75 , 1 , "stand" , "bladewave.mdl")
+                    set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01A' , 0 , x + 75 * CosBJ(f) , y + 75 * SinBJ(f) , f , 5 , 0.75 , 1 , "stand" , "bladewave_yellow.mdl")
                     set dash=s__Dash_Start(s__Units_unit[mj] , f , 1600 , s__Dash_SUB , 40 , true , false)
                     set s__Dash_Obj[dash]=2
                     set s__Dash_onMove[dash]=(61)
@@ -8665,6 +8665,10 @@ endfunction
                 call s__Units_FlushAnimeId(u,1)
                 call s__Spell_Destroy(e)
             endif
+            if ( s__Spell_Id[e] == 'A01B' ) then
+                call s__Units_FlushAnimeId(u,7)
+                call s__Spell_Destroy(e)
+            endif
         endfunction
         function s__SL___SL_HERO_STOP takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -8679,6 +8683,8 @@ endfunction
             call s__Spell_On(s__Spell_onSpell , 'A018' , (73))
             call s__Spell_On(s__Spell_onReady , 'A018' , (74))
             call s__Spell_On(s__Spell_onStop , 'A018' , (75))
+            call s__Spell_On(s__Spell_onReady , 'A01B' , (74))
+            call s__Spell_On(s__Spell_onStop , 'A01B' , (75))
             call s__Damage_On(s__Damage_onHeroDamageed , (76))
         endfunction
 
@@ -9319,20 +9325,20 @@ endfunction
 //library ZZ ends
 //library Camera:
 
-        function Camera___anon__13 takes nothing returns nothing
+        function Camera__anon__13 takes nothing returns nothing
             call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 2250.00, 0) //游戏时间轴，方便计算时间;
             set GameTime=GameTime + 0.01
         endfunction
-    function Camera___onInit takes nothing returns nothing
+    function Camera__onInit takes nothing returns nothing
         call CameraSetSmoothingFactor(998.00)
-        call TimerStart(NewTimer(), 0.01, true, function Camera___anon__13)
+        call TimerStart(NewTimer(), 0.01, true, function Camera__anon__13)
     endfunction
 
 //library Camera ends
 //library Respawn:
 
         //public:
-        function s__Respawn___Respawn_Spawn takes player p returns nothing
+        function s__Respawn__Respawn_Spawn takes player p returns nothing
             local integer hid=0
             local integer money=0
             local integer ps=s__Players_Get(p)
@@ -9344,13 +9350,13 @@ endfunction
             local integer r_int
             local integer array r_it
             set s__Players_isdeath[ps]=false
-            call sc__Respawn___Respawn_Show(p , false)
-            if ( s__Respawn___Respawn_RespawnSelect[r] == 1 ) then
+            call sc__Respawn__Respawn_Show(p , false)
+            if ( s__Respawn__Respawn_RespawnSelect[r] == 1 ) then
                 set hid=s__Units_uid[s__Players_hero[ps]]
-                set money=s__Respawn___Respawn_RespawnSaveMoney[r]
-            elseif ( s__Respawn___Respawn_RespawnSelect[r] == 2 ) then
+                set money=s__Respawn__Respawn_RespawnSaveMoney[r]
+            elseif ( s__Respawn__Respawn_RespawnSelect[r] == 2 ) then
                 set hid=s__Players_nextherotype[ps]
-                set money=s__Respawn___Respawn_RespawnSaveMoney[r] * 2
+                set money=s__Respawn__Respawn_RespawnSaveMoney[r] * 2
                 set s__Players_nextherotype[ps]=- 1
             endif
             set r_lv=GetUnitLevel(s__Units_unit[s__Players_hero[ps]])
@@ -9364,7 +9370,7 @@ endfunction
             set r_i=r_i + 1
             endloop
             call s__HeroRares_AddRandomHero(s__Units_unit[s__Players_hero[ps]])
-            if ( s__Respawn___Respawn_RespawnSelect[r] == 0 ) then
+            if ( s__Respawn__Respawn_RespawnSelect[r] == 0 ) then
                 set s__Players_hero[ps]=s__Units_Get(s__HeroRares_GetRandomHero(s__Players_player[ps] , s__Players_randomhero[ps]))
             else
                 set s__Players_hero[ps]=s__Units_Get(s__Units_Spawn(s__Players_player[ps] , hid , 0 , 0 , 0))
@@ -9387,30 +9393,30 @@ endfunction
             call s__Units_Lock(s__Players_hero[ps],p)
             set s__Players_respawn[ps]=0
             call s__KillUi_FlushPlayerData(s__Players_player[ps])
-            call s__Respawn___Respawn_deallocate(r)
+            call s__Respawn__Respawn_deallocate(r)
         endfunction
-            function s__Respawn___Respawn_anon__23 takes nothing returns nothing
+            function s__Respawn__Respawn_anon__23 takes nothing returns nothing
                 local integer p=s__Players_Get(GetEnumPlayer())
                 local integer r=(s__Players_respawn[p])
-                if ( s__Respawn___Respawn_RespawnTime[r] > 0 ) then
-                    set s__Respawn___Respawn_RespawnTime[r]=s__Respawn___Respawn_RespawnTime[r] - 1
-                    call sc__Respawn___Respawn_Flush(s__Players_player[p])
+                if ( s__Respawn__Respawn_RespawnTime[r] > 0 ) then
+                    set s__Respawn__Respawn_RespawnTime[r]=s__Respawn__Respawn_RespawnTime[r] - 1
+                    call sc__Respawn__Respawn_Flush(s__Players_player[p])
                 elseif ( s__Players_isdeath[p] == true ) then
-                    call s__Respawn___Respawn_Spawn(s__Players_player[p])
+                    call s__Respawn__Respawn_Spawn(s__Players_player[p])
                 endif
             endfunction
-        function s__Respawn___Respawn_Time takes nothing returns nothing
-            call ForForce(s__Teams_GetAllPlayers(), function s__Respawn___Respawn_anon__23)
+        function s__Respawn__Respawn_Time takes nothing returns nothing
+            call ForForce(s__Teams_GetAllPlayers(), function s__Respawn__Respawn_anon__23)
         endfunction
-            function s__Respawn___Respawn_anon__24 takes nothing returns nothing
+            function s__Respawn__Respawn_anon__24 takes nothing returns nothing
                 call AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
             endfunction
-        function s__Respawn___Respawn_Death takes integer u,integer m returns nothing
-            local integer r=s__Respawn___Respawn__allocate()
+        function s__Respawn__Respawn_Death takes integer u,integer m returns nothing
+            local integer r=s__Respawn__Respawn__allocate()
             if ( s__Players_hero[s__Units_player[m]] != null ) then
                 if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                     set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
-                    call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn___Respawn_anon__24)
+                    call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__24)
                     call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r")
                     if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                         set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
@@ -9422,165 +9428,165 @@ endfunction
             else
                 call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[u]] + "死在了野怪的手里...")
             endif
-            set s__Respawn___Respawn_RespawnTime[r]=s__Respawn___Respawn_MaxRespawnTime
-            set s__Respawn___Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
-            set s__Respawn___Respawn_RespawnSelect[r]=0
-            set s__Respawn___Respawn_RespawnSelectLast[r]=0
+            set s__Respawn__Respawn_RespawnTime[r]=s__Respawn__Respawn_MaxRespawnTime
+            set s__Respawn__Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
+            set s__Respawn__Respawn_RespawnSelect[r]=0
+            set s__Respawn__Respawn_RespawnSelectLast[r]=0
             set s__Players_isdeath[s__Units_player[u]]=true
             set s__Players_lifekill[s__Units_player[u]]=0
             set s__Players_respawn[s__Units_player[u]]=r
-            call sc__Respawn___Respawn_Show(s__Players_player[s__Units_player[u]] , true)
+            call sc__Respawn__Respawn_Show(s__Players_player[s__Units_player[u]] , true)
         endfunction
-        function s__Respawn___Respawn_Flush takes player ps returns nothing
+        function s__Respawn__Respawn_Flush takes player ps returns nothing
             local integer p=s__Players_Get(ps)
             local integer r=s__Players_respawn[p]
             if ( ps == s__Players_localplayer ) then
-                call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$" + I2S(s__Respawn___Respawn_RespawnSaveMoney[r]) + "|r)")
+                call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$" + I2S(s__Respawn__Respawn_RespawnSaveMoney[r]) + "|r)")
             endif
-            if ( s__Players_Money(p) >= s__Respawn___Respawn_RespawnSaveMoney[r] ) then
+            if ( s__Players_Money(p) >= s__Respawn__Respawn_RespawnSaveMoney[r] ) then
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainSaveLine, false)
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainSaveLine, false)
                 endif
             else
-                if ( s__Respawn___Respawn_RespawnSelect[r] == 1 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                if ( s__Respawn__Respawn_RespawnSelect[r] == 1 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainSaveLine, true)
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainSaveLine, true)
                 endif
             endif
             if ( s__Players_nextherotype[p] == - 1 ) then
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameSetText(s__Respawn___Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/|cffffcc00$0|r)")
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainBuyLine, true)
+                    call DzFrameSetText(s__Respawn__Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/|cffffcc00$0|r)")
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainBuyLine, true)
                 endif
-                if ( s__Respawn___Respawn_RespawnSelect[r] == 2 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                if ( s__Respawn__Respawn_RespawnSelect[r] == 2 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
             else
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameSetText(s__Respawn___Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(" + s__Util_GetUnitValue(s__Players_nextherotype[p] , "Name") + "/|cffffcc00$" + I2S(s__Respawn___Respawn_RespawnSaveMoney[r] * 2) + "|r)")
+                    call DzFrameSetText(s__Respawn__Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(" + s__Util_GetUnitValue(s__Players_nextherotype[p] , "Name") + "/|cffffcc00$" + I2S(s__Respawn__Respawn_RespawnSaveMoney[r] * 2) + "|r)")
                 endif
-                if ( s__Players_Money(p) >= ( s__Respawn___Respawn_RespawnSaveMoney[r] * 2 ) ) then
+                if ( s__Players_Money(p) >= ( s__Respawn__Respawn_RespawnSaveMoney[r] * 2 ) ) then
                     if ( ps == s__Players_localplayer ) then
-                        call DzFrameShow(s__Respawn___Respawn_DeathUIMainBuyLine, false)
+                        call DzFrameShow(s__Respawn__Respawn_DeathUIMainBuyLine, false)
                     endif
-                elseif ( s__Respawn___Respawn_RespawnSelect[r] == 2 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                elseif ( s__Respawn__Respawn_RespawnSelect[r] == 2 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
             endif
-            if ( s__Respawn___Respawn_RespawnSelectLast[r] != s__Respawn___Respawn_RespawnSelect[r] ) then
-                set s__Respawn___Respawn_RespawnSelectLast[r]=s__Respawn___Respawn_RespawnSelect[r]
+            if ( s__Respawn__Respawn_RespawnSelectLast[r] != s__Respawn__Respawn_RespawnSelect[r] ) then
+                set s__Respawn__Respawn_RespawnSelectLast[r]=s__Respawn__Respawn_RespawnSelect[r]
             endif
             if ( ps == s__Players_localplayer ) then
-                call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSelect, "已选择:|cff00ff00" + s__s__Respawn___Respawn_RespawnType[s__Respawn___Respawn_RespawnSelect[r]] + "|r")
-                call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainMoveBar, 0.001 + ( 0.136 * ( 1 - ( s__Respawn___Respawn_RespawnTime[r] / s__Respawn___Respawn_MaxRespawnTime ) ) ), 0.006)
+                call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSelect, "已选择:|cff00ff00" + s__s__Respawn__Respawn_RespawnType[s__Respawn__Respawn_RespawnSelect[r]] + "|r")
+                call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainMoveBar, 0.001 + ( 0.136 * ( 1 - ( s__Respawn__Respawn_RespawnTime[r] / s__Respawn__Respawn_MaxRespawnTime ) ) ), 0.006)
             endif
         endfunction
-        function s__Respawn___Respawn_Show takes player p,boolean show returns nothing
+        function s__Respawn__Respawn_Show takes player p,boolean show returns nothing
             local integer ps=s__Players_Get(p)
             if ( s__Players_localplayer == p ) then
-                set s__Respawn___Respawn_RespawnShow=show
-                call DzFrameShow(s__Respawn___Respawn_DeathUIMainTop, show)
-                call s__Respawn___Respawn_Flush(p)
+                set s__Respawn__Respawn_RespawnShow=show
+                call DzFrameShow(s__Respawn__Respawn_DeathUIMainTop, show)
+                call s__Respawn__Respawn_Flush(p)
             endif
         endfunction
-        function s__Respawn___Respawn_Press takes player ps,string e returns nothing
+        function s__Respawn__Respawn_Press takes player ps,string e returns nothing
             local integer p=s__Players_Get(s__Players_localplayer)
             local integer r=s__Players_respawn[p]
             if ( s__Players_isdeath[p] == true ) then
                 if ( e == "C" ) then
-                    if ( s__Respawn___Respawn_RespawnShow == false ) then
-                        call s__Respawn___Respawn_Show(s__Players_player[p] , true)
+                    if ( s__Respawn__Respawn_RespawnShow == false ) then
+                        call s__Respawn__Respawn_Show(s__Players_player[p] , true)
                     else
-                        call s__Respawn___Respawn_Show(s__Players_player[p] , false)
+                        call s__Respawn__Respawn_Show(s__Players_player[p] , false)
                     endif
                 endif
             endif
         endfunction
-        function s__Respawn___Respawn_PressSnyc takes player ps,string e returns nothing
+        function s__Respawn__Respawn_PressSnyc takes player ps,string e returns nothing
             local integer p=s__Players_Get(ps)
             local integer r=s__Players_respawn[p]
             if ( s__Players_isdeath[p] == true ) then
                 if ( e == "Q" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=0
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=0
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 elseif ( e == "W" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=1
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=1
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 elseif ( e == "E" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=2
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=2
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 endif
             endif
         endfunction
-        function s__Respawn___Respawn_onInit takes nothing returns nothing
-            set s__Respawn___Respawn_DeathUIMainTop=DzCreateFrameByTagName("BACKDROP", "DeathUIMainTop", DzGetGameUI(), "Panel", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainTop, 0.18, 0.003)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainTop, 4, DzGetGameUI(), 4, 0, 0.18)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainTop, "UI_TopBorder.blp", 0)
-            set s__Respawn___Respawn_DeathUIMainLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainLine", s__Respawn___Respawn_DeathUIMainTop, "ShowInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainLine, 0.18, 0.2)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainLine, 1, s__Respawn___Respawn_DeathUIMainTop, 7, 0, 0)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainLine, "UI_RightDownPanelLine.blp", 0)
-            set s__Respawn___Respawn_DeathUIMainDown=DzCreateFrameByTagName("BACKDROP", "DeathUIMainDown", s__Respawn___Respawn_DeathUIMainLine, "ShowInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainDown, 0.18, 0.005)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainDown, 1, s__Respawn___Respawn_DeathUIMainLine, 7, 0, 0)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainDown, "UI_RightDownPanelBorder.blp", 0)
-            set s__Respawn___Respawn_DeathUIMainTitle=DzCreateFrameByTagName("TEXT", "DeathUIMainTitle", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainTitle, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainTitle, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.045, - 0.01)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainTitle, "↓请选择复活方式↓  \n按|cff00ff00C|r键可以开关该面板")
-            set s__Respawn___Respawn_DeathUIMainRoll=DzCreateFrameByTagName("TEXT", "DeathUIMainRoll", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainRoll, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainRoll, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.04)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainRoll, "(|cff00ff00Q|r)随机抽取一个新的英雄复活")
-            set s__Respawn___Respawn_DeathUIMainSave=DzCreateFrameByTagName("TEXT", "DeathUIMainSave", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainSave, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainSave, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.067)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$0|r)")
-            set s__Respawn___Respawn_DeathUIMainSaveLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainSaveLine", s__Respawn___Respawn_DeathUIMainLine, "ShowInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainSaveLine, 0.097, 0.002)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainSaveLine, 1, s__Respawn___Respawn_DeathUIMainLine, 1, - 0.036, - 0.072)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainSaveLine, "UI_WHITEBLOCK.blp", 0)
-            set s__Respawn___Respawn_DeathUIMainBuy=DzCreateFrameByTagName("TEXT", "DeathUIMainBuy", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainBuy, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainBuy, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.097)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)")
-            set s__Respawn___Respawn_DeathUIMainBuyLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainBuyLine", s__Respawn___Respawn_DeathUIMainLine, "ShowInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainBuyLine, 0.087, 0.002)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainBuyLine, 1, s__Respawn___Respawn_DeathUIMainLine, 1, - 0.041, - 0.103)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainBuyLine, "UI_WHITEBLOCK.blp", 0)
-            set s__Respawn___Respawn_DeathUIMainTip=DzCreateFrameByTagName("TEXT", "DeathUIMainTip", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainTip, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainTip, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.122)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainTip, "按下绿色按键选择对应复活方式\n有白色线条挡住的不可选择\n如不选择,复活时将自动选择抽取复活")
-            set s__Respawn___Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainDeath", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainSelect, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainSelect, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.182)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSelect, "|cffff0000死亡|r")
-            set s__Respawn___Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainSpawn", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainSelect, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainSelect, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.159, - 0.182)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSelect, "|cff00ff00复活|r")
-            set s__Respawn___Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainSelect", s__Respawn___Respawn_DeathUIMainLine, "TextInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainSelect, 0.18, 0.12)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainSelect, 1, s__Respawn___Respawn_DeathUIMainLine, 1, 0.005, - 0.167)
-            call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSelect, "已选择:|cff00ff00抽取复活|r")
-            set s__Respawn___Respawn_DeathUIMainMoveBar=DzCreateFrameByTagName("BACKDROP", "DeathUIMainMoveBar", s__Respawn___Respawn_DeathUIMainLine, "ShowInfo", 0)
-            call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainMoveBar, 0.001, 0.006)
-            call DzFrameSetPoint(s__Respawn___Respawn_DeathUIMainMoveBar, 0, s__Respawn___Respawn_DeathUIMainLine, 1, - 0.068, - 0.185)
-            call DzFrameSetTexture(s__Respawn___Respawn_DeathUIMainMoveBar, "UI_WHITEBLOCK.blp", 0)
-            set s__s__Respawn___Respawn_RespawnType[0]= "抽取复活"
-            set s__s__Respawn___Respawn_RespawnType[1]= "保留复活"
-            set s__s__Respawn___Respawn_RespawnType[2]= "指定复活"
-            call DzFrameShow(s__Respawn___Respawn_DeathUIMainTop, false)
+        function s__Respawn__Respawn_onInit takes nothing returns nothing
+            set s__Respawn__Respawn_DeathUIMainTop=DzCreateFrameByTagName("BACKDROP", "DeathUIMainTop", DzGetGameUI(), "Panel", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainTop, 0.18, 0.003)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainTop, 4, DzGetGameUI(), 4, 0, 0.18)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainTop, "UI_TopBorder.blp", 0)
+            set s__Respawn__Respawn_DeathUIMainLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainLine", s__Respawn__Respawn_DeathUIMainTop, "ShowInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainLine, 0.18, 0.2)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainLine, 1, s__Respawn__Respawn_DeathUIMainTop, 7, 0, 0)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainLine, "UI_RightDownPanelLine.blp", 0)
+            set s__Respawn__Respawn_DeathUIMainDown=DzCreateFrameByTagName("BACKDROP", "DeathUIMainDown", s__Respawn__Respawn_DeathUIMainLine, "ShowInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainDown, 0.18, 0.005)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainDown, 1, s__Respawn__Respawn_DeathUIMainLine, 7, 0, 0)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainDown, "UI_RightDownPanelBorder.blp", 0)
+            set s__Respawn__Respawn_DeathUIMainTitle=DzCreateFrameByTagName("TEXT", "DeathUIMainTitle", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainTitle, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainTitle, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.045, - 0.01)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainTitle, "↓请选择复活方式↓  \n按|cff00ff00C|r键可以开关该面板")
+            set s__Respawn__Respawn_DeathUIMainRoll=DzCreateFrameByTagName("TEXT", "DeathUIMainRoll", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainRoll, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainRoll, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.04)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainRoll, "(|cff00ff00Q|r)随机抽取一个新的英雄复活")
+            set s__Respawn__Respawn_DeathUIMainSave=DzCreateFrameByTagName("TEXT", "DeathUIMainSave", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainSave, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainSave, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.067)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$0|r)")
+            set s__Respawn__Respawn_DeathUIMainSaveLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainSaveLine", s__Respawn__Respawn_DeathUIMainLine, "ShowInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainSaveLine, 0.097, 0.002)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainSaveLine, 1, s__Respawn__Respawn_DeathUIMainLine, 1, - 0.036, - 0.072)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainSaveLine, "UI_WHITEBLOCK.blp", 0)
+            set s__Respawn__Respawn_DeathUIMainBuy=DzCreateFrameByTagName("TEXT", "DeathUIMainBuy", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainBuy, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainBuy, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.097)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/$0)")
+            set s__Respawn__Respawn_DeathUIMainBuyLine=DzCreateFrameByTagName("BACKDROP", "DeathUIMainBuyLine", s__Respawn__Respawn_DeathUIMainLine, "ShowInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainBuyLine, 0.087, 0.002)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainBuyLine, 1, s__Respawn__Respawn_DeathUIMainLine, 1, - 0.041, - 0.103)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainBuyLine, "UI_WHITEBLOCK.blp", 0)
+            set s__Respawn__Respawn_DeathUIMainTip=DzCreateFrameByTagName("TEXT", "DeathUIMainTip", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainTip, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainTip, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.122)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainTip, "按下绿色按键选择对应复活方式\n有白色线条挡住的不可选择\n如不选择,复活时将自动选择抽取复活")
+            set s__Respawn__Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainDeath", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainSelect, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainSelect, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.182)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSelect, "|cffff0000死亡|r")
+            set s__Respawn__Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainSpawn", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainSelect, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainSelect, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.159, - 0.182)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSelect, "|cff00ff00复活|r")
+            set s__Respawn__Respawn_DeathUIMainSelect=DzCreateFrameByTagName("TEXT", "DeathUIMainSelect", s__Respawn__Respawn_DeathUIMainLine, "TextInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainSelect, 0.18, 0.12)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainSelect, 1, s__Respawn__Respawn_DeathUIMainLine, 1, 0.005, - 0.167)
+            call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSelect, "已选择:|cff00ff00抽取复活|r")
+            set s__Respawn__Respawn_DeathUIMainMoveBar=DzCreateFrameByTagName("BACKDROP", "DeathUIMainMoveBar", s__Respawn__Respawn_DeathUIMainLine, "ShowInfo", 0)
+            call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainMoveBar, 0.001, 0.006)
+            call DzFrameSetPoint(s__Respawn__Respawn_DeathUIMainMoveBar, 0, s__Respawn__Respawn_DeathUIMainLine, 1, - 0.068, - 0.185)
+            call DzFrameSetTexture(s__Respawn__Respawn_DeathUIMainMoveBar, "UI_WHITEBLOCK.blp", 0)
+            set s__s__Respawn__Respawn_RespawnType[0]= "抽取复活"
+            set s__s__Respawn__Respawn_RespawnType[1]= "保留复活"
+            set s__s__Respawn__Respawn_RespawnType[2]= "指定复活"
+            call DzFrameShow(s__Respawn__Respawn_DeathUIMainTop, false)
             call s__Units_On(s__Units_onHeroDeath , (6))
             call s__Press_OnSnyc(s__Press_onSnycPressKeyDown , (5))
             call s__Press_OnSnyc(s__Press_onSnycPressKeyDown , (6))
         endfunction
-    function Respawn___onInit takes nothing returns nothing
-        call TimerStart(NewTimer(), 1, true, function s__Respawn___Respawn_Time)
+    function Respawn__onInit takes nothing returns nothing
+        call TimerStart(NewTimer(), 1, true, function s__Respawn__Respawn_Time)
     endfunction
 
 //library Respawn ends
@@ -9590,7 +9596,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Thu Dec 27 21:54:15 2018
+//   Date: Thu Dec 27 23:53:15 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -10013,31 +10019,31 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs556028515")
+call ExecuteFunc("jasshelper__initstructs563168359")
 call ExecuteFunc("BuyStrAgiInt___onInit")
-call ExecuteFunc("Teams___onInit")
+call ExecuteFunc("Teams__onInit")
 call ExecuteFunc("TerrainPathability__Init")
 call ExecuteFunc("TimerUtils__init")
-call ExecuteFunc("Tree___onInit")
+call ExecuteFunc("Tree__onInit")
 call ExecuteFunc("Buff___onInit")
 call ExecuteFunc("Dashs___onInit")
 call ExecuteFunc("Events__onInit")
 call ExecuteFunc("HitFly___onInit")
 call ExecuteFunc("Press__onInit")
 call ExecuteFunc("BuyNextHero___onInit")
-call ExecuteFunc("Disconnect___onInit")
+call ExecuteFunc("Disconnect__onInit")
 call ExecuteFunc("LevelUp___onInit")
-call ExecuteFunc("PlayerChat___onInit")
-call ExecuteFunc("PlayerPress___onInit")
-call ExecuteFunc("HeroRare___onInit")
-call ExecuteFunc("Winner___onInit")
+call ExecuteFunc("PlayerChat__onInit")
+call ExecuteFunc("PlayerPress__onInit")
+call ExecuteFunc("HeroRare__onInit")
+call ExecuteFunc("Winner__onInit")
 call ExecuteFunc("Ai___onInit")
 call ExecuteFunc("DazzleMaster___onInit")
-call ExecuteFunc("Init___onInit")
-call ExecuteFunc("KillUi___onInit")
+call ExecuteFunc("Init__onInit")
+call ExecuteFunc("KillUi__onInit")
 call ExecuteFunc("YeG___onInit")
-call ExecuteFunc("Camera___onInit")
-call ExecuteFunc("Respawn___onInit")
+call ExecuteFunc("Camera__onInit")
+call ExecuteFunc("Respawn__onInit")
 
     call InitGlobals()
     call InitCustomTriggers()
@@ -10079,62 +10085,62 @@ endfunction
 //Struct method generated initializers/callers:
 
 //Functions for BigArrays:
-function sa__Respawn___Respawn_Flush takes nothing returns boolean
+function sa__Respawn__Respawn_Flush takes nothing returns boolean
 local player ps=f__arg_player1
             local integer p=s__Players_Get(ps)
             local integer r=s__Players_respawn[p]
             if ( ps == s__Players_localplayer ) then
-                call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$" + I2S(s__Respawn___Respawn_RespawnSaveMoney[r]) + "|r)")
+                call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSave, "(|cff00ff00W|r)保留当前英雄复活(需要|cffffcc00$" + I2S(s__Respawn__Respawn_RespawnSaveMoney[r]) + "|r)")
             endif
-            if ( s__Players_Money(p) >= s__Respawn___Respawn_RespawnSaveMoney[r] ) then
+            if ( s__Players_Money(p) >= s__Respawn__Respawn_RespawnSaveMoney[r] ) then
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainSaveLine, false)
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainSaveLine, false)
                 endif
             else
-                if ( s__Respawn___Respawn_RespawnSelect[r] == 1 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                if ( s__Respawn__Respawn_RespawnSelect[r] == 1 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainSaveLine, true)
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainSaveLine, true)
                 endif
             endif
             if ( s__Players_nextherotype[p] == - 1 ) then
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameSetText(s__Respawn___Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/|cffffcc00$0|r)")
-                    call DzFrameShow(s__Respawn___Respawn_DeathUIMainBuyLine, true)
+                    call DzFrameSetText(s__Respawn__Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(未指定/|cffffcc00$0|r)")
+                    call DzFrameShow(s__Respawn__Respawn_DeathUIMainBuyLine, true)
                 endif
-                if ( s__Respawn___Respawn_RespawnSelect[r] == 2 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                if ( s__Respawn__Respawn_RespawnSelect[r] == 2 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
             else
                 if ( ps == s__Players_localplayer ) then
-                    call DzFrameSetText(s__Respawn___Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(" + s__Util_GetUnitValue(s__Players_nextherotype[p] , "Name") + "/|cffffcc00$" + I2S(s__Respawn___Respawn_RespawnSaveMoney[r] * 2) + "|r)")
+                    call DzFrameSetText(s__Respawn__Respawn_DeathUIMainBuy, "(|cff00ff00E|r)使用指定的英雄复活(" + s__Util_GetUnitValue(s__Players_nextherotype[p] , "Name") + "/|cffffcc00$" + I2S(s__Respawn__Respawn_RespawnSaveMoney[r] * 2) + "|r)")
                 endif
-                if ( s__Players_Money(p) >= ( s__Respawn___Respawn_RespawnSaveMoney[r] * 2 ) ) then
+                if ( s__Players_Money(p) >= ( s__Respawn__Respawn_RespawnSaveMoney[r] * 2 ) ) then
                     if ( ps == s__Players_localplayer ) then
-                        call DzFrameShow(s__Respawn___Respawn_DeathUIMainBuyLine, false)
+                        call DzFrameShow(s__Respawn__Respawn_DeathUIMainBuyLine, false)
                     endif
-                elseif ( s__Respawn___Respawn_RespawnSelect[r] == 2 ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=s__Respawn___Respawn_RespawnSelectLast[r]
+                elseif ( s__Respawn__Respawn_RespawnSelect[r] == 2 ) then
+                    set s__Respawn__Respawn_RespawnSelect[r]=s__Respawn__Respawn_RespawnSelectLast[r]
                 endif
             endif
-            if ( s__Respawn___Respawn_RespawnSelectLast[r] != s__Respawn___Respawn_RespawnSelect[r] ) then
-                set s__Respawn___Respawn_RespawnSelectLast[r]=s__Respawn___Respawn_RespawnSelect[r]
+            if ( s__Respawn__Respawn_RespawnSelectLast[r] != s__Respawn__Respawn_RespawnSelect[r] ) then
+                set s__Respawn__Respawn_RespawnSelectLast[r]=s__Respawn__Respawn_RespawnSelect[r]
             endif
             if ( ps == s__Players_localplayer ) then
-                call DzFrameSetText(s__Respawn___Respawn_DeathUIMainSelect, "已选择:|cff00ff00" + s__s__Respawn___Respawn_RespawnType[s__Respawn___Respawn_RespawnSelect[r]] + "|r")
-                call DzFrameSetSize(s__Respawn___Respawn_DeathUIMainMoveBar, 0.001 + ( 0.136 * ( 1 - ( s__Respawn___Respawn_RespawnTime[r] / s__Respawn___Respawn_MaxRespawnTime ) ) ), 0.006)
+                call DzFrameSetText(s__Respawn__Respawn_DeathUIMainSelect, "已选择:|cff00ff00" + s__s__Respawn__Respawn_RespawnType[s__Respawn__Respawn_RespawnSelect[r]] + "|r")
+                call DzFrameSetSize(s__Respawn__Respawn_DeathUIMainMoveBar, 0.001 + ( 0.136 * ( 1 - ( s__Respawn__Respawn_RespawnTime[r] / s__Respawn__Respawn_MaxRespawnTime ) ) ), 0.006)
             endif
    return true
 endfunction
-function sa__Respawn___Respawn_Show takes nothing returns boolean
+function sa__Respawn__Respawn_Show takes nothing returns boolean
 local player p=f__arg_player1
 local boolean show=f__arg_boolean1
             local integer ps=s__Players_Get(p)
             if ( s__Players_localplayer == p ) then
-                set s__Respawn___Respawn_RespawnShow=show
-                call DzFrameShow(s__Respawn___Respawn_DeathUIMainTop, show)
-                call s__Respawn___Respawn_Flush(p)
+                set s__Respawn__Respawn_RespawnShow=show
+                call DzFrameShow(s__Respawn__Respawn_DeathUIMainTop, show)
+                call s__Respawn__Respawn_Flush(p)
             endif
    return true
 endfunction
@@ -10543,17 +10549,17 @@ function sa___prototype1_BuyNextHero___Buy takes nothing returns boolean
         endif
     return true
 endfunction
-function sa___prototype1_Disconnect___onDisconnect takes nothing returns boolean
+function sa___prototype1_Disconnect__onDisconnect takes nothing returns boolean
  local integer e=f__arg_integer1
 
         local integer x
         local unit u
         local timer t
-        set Disconnect___tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
-        set u=s__Units_unit[s__Players_hero[Disconnect___tmp]]
-        set s__Players_hero[Disconnect___tmp]=0
+        set Disconnect__tmp=s__Players_Get(s__EventArgs_TriggerPlayer[e])
+        set u=s__Units_unit[s__Players_hero[Disconnect__tmp]]
+        set s__Players_hero[Disconnect__tmp]=0
         call ReviveHero(u, GetUnitX(u), GetUnitY(u), false)
-        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect___tmp])))
+        call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[Disconnect__tmp])))
         set x=1
         loop
         exitwhen ( x > 6 )
@@ -10563,16 +10569,16 @@ function sa___prototype1_Disconnect___onDisconnect takes nothing returns boolean
         call sc__Units_Kill(u)
         set t=NewTimer()
         call SetTimerData(t , sc__Units_Get(u))
-        call TimerStart(t, 3, false, function Disconnect___anon__16)
+        call TimerStart(t, 3, false, function Disconnect__anon__16)
         set t=null
-        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect___tmp]) - 1
+        set x=s__Teams_GetTeamNumber(s__Players_player[Disconnect__tmp]) - 1
         if ( x != 0 ) then
-            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect___tmp]), function Disconnect___anon__17)
+            call ForForce(s__Teams_GetTeamForce(s__Players_player[Disconnect__tmp]), function Disconnect__anon__17)
         endif
-        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
-        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。")
-        set s__Players_isonline[Disconnect___tmp]=false
-        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
+        call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect__tmp])
+        call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[Disconnect__tmp] + " 离开了游戏，金钱将平分给他的队友。")
+        set s__Players_isonline[Disconnect__tmp]=false
+        call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect__tmp])
         set u=null
     return true
 endfunction
@@ -10602,7 +10608,7 @@ function sa___prototype1_LevelUp___LvUp takes nothing returns boolean
         endif
     return true
 endfunction
-function sa___prototype1_PlayerChat___Chat takes nothing returns boolean
+function sa___prototype1_PlayerChat__Chat takes nothing returns boolean
  local integer e=f__arg_integer1
 
         local integer p=s__Players_Get(s__EventArgs_TriggerPlayer[e])
@@ -12081,7 +12087,7 @@ function sa___prototype1_s__SL___SL_anon__90 takes nothing returns boolean
                             call s__Units_Life(u,0.5)
                             call s__Units_Anime(u,"death")
                         endif
-                    elseif ( s__Dash_Obj[dash] == 0 ) then //12
+                    elseif ( s__Dash_Obj[dash] == 0 ) then //12 
                         set s__Dash_Obj[dash]=2
                         call GroupEnumUnitsInRange(tmp_group, s__Dash_X[dash], s__Dash_Y[dash], 125, Condition(function GroupIsAliveNotAloc))
                         loop
@@ -12327,6 +12333,10 @@ function sa___prototype1_s__SL___SL_HERO_START takes nothing returns boolean
             local integer u=s__Units_Get(s__Spell_Spell[e])
             if ( s__Spell_Id[e] == 'A018' ) then
                 call s__Units_FlushAnimeId(u,1)
+                call s__Spell_Destroy(e)
+            endif
+            if ( s__Spell_Id[e] == 'A01B' ) then
+                call s__Units_FlushAnimeId(u,7)
                 call s__Spell_Destroy(e)
             endif
     return true
@@ -12960,15 +12970,15 @@ function sa___prototype1_s__ZZ___ZZ_HERO_STOP takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype46_s__Respawn___Respawn_Death takes nothing returns boolean
+function sa___prototype46_s__Respawn__Respawn_Death takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
-            local integer r=s__Respawn___Respawn__allocate()
+            local integer r=s__Respawn__Respawn__allocate()
             if ( s__Players_hero[s__Units_player[m]] != null ) then
                 if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                     set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
-                    call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn___Respawn_anon__24)
+                    call ForForce(s__Teams_GetTeamForce(s__Players_player[s__Units_player[m]]), function s__Respawn__Respawn_anon__24)
                     call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r")
                     if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                         set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
@@ -12980,17 +12990,17 @@ function sa___prototype46_s__Respawn___Respawn_Death takes nothing returns boole
             else
                 call DisplayTimedTextToForce(s__Teams_GetAllPlayers(), 5.00, s__Players_name[s__Units_player[u]] + "死在了野怪的手里...")
             endif
-            set s__Respawn___Respawn_RespawnTime[r]=s__Respawn___Respawn_MaxRespawnTime
-            set s__Respawn___Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
-            set s__Respawn___Respawn_RespawnSelect[r]=0
-            set s__Respawn___Respawn_RespawnSelectLast[r]=0
+            set s__Respawn__Respawn_RespawnTime[r]=s__Respawn__Respawn_MaxRespawnTime
+            set s__Respawn__Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
+            set s__Respawn__Respawn_RespawnSelect[r]=0
+            set s__Respawn__Respawn_RespawnSelectLast[r]=0
             set s__Players_isdeath[s__Units_player[u]]=true
             set s__Players_lifekill[s__Units_player[u]]=0
             set s__Players_respawn[s__Units_player[u]]=r
-            call sc__Respawn___Respawn_Show(s__Players_player[s__Units_player[u]] , true)
+            call sc__Respawn__Respawn_Show(s__Players_player[s__Units_player[u]] , true)
     return true
 endfunction
-function sa___prototype35_s__Respawn___Respawn_Press takes nothing returns boolean
+function sa___prototype35_s__Respawn__Respawn_Press takes nothing returns boolean
  local player ps=f__arg_player1
  local string e=f__arg_string1
 
@@ -12998,16 +13008,16 @@ function sa___prototype35_s__Respawn___Respawn_Press takes nothing returns boole
             local integer r=s__Players_respawn[p]
             if ( s__Players_isdeath[p] == true ) then
                 if ( e == "C" ) then
-                    if ( s__Respawn___Respawn_RespawnShow == false ) then
-                        call s__Respawn___Respawn_Show(s__Players_player[p] , true)
+                    if ( s__Respawn__Respawn_RespawnShow == false ) then
+                        call s__Respawn__Respawn_Show(s__Players_player[p] , true)
                     else
-                        call s__Respawn___Respawn_Show(s__Players_player[p] , false)
+                        call s__Respawn__Respawn_Show(s__Players_player[p] , false)
                     endif
                 endif
             endif
     return true
 endfunction
-function sa___prototype35_s__Respawn___Respawn_PressSnyc takes nothing returns boolean
+function sa___prototype35_s__Respawn__Respawn_PressSnyc takes nothing returns boolean
  local player ps=f__arg_player1
  local string e=f__arg_string1
 
@@ -13015,24 +13025,24 @@ function sa___prototype35_s__Respawn___Respawn_PressSnyc takes nothing returns b
             local integer r=s__Players_respawn[p]
             if ( s__Players_isdeath[p] == true ) then
                 if ( e == "Q" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=0
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=0
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 elseif ( e == "W" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=1
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=1
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 elseif ( e == "E" ) then
-                    set s__Respawn___Respawn_RespawnSelect[r]=2
-                    call s__Respawn___Respawn_Flush(s__Players_player[p])
+                    set s__Respawn__Respawn_RespawnSelect[r]=2
+                    call s__Respawn__Respawn_Flush(s__Players_player[p])
                 endif
             endif
     return true
 endfunction
 
-function jasshelper__initstructs556028515 takes nothing returns nothing
-    set st__Respawn___Respawn_Flush=CreateTrigger()
-    call TriggerAddCondition(st__Respawn___Respawn_Flush,Condition( function sa__Respawn___Respawn_Flush))
-    set st__Respawn___Respawn_Show=CreateTrigger()
-    call TriggerAddCondition(st__Respawn___Respawn_Show,Condition( function sa__Respawn___Respawn_Show))
+function jasshelper__initstructs563168359 takes nothing returns nothing
+    set st__Respawn__Respawn_Flush=CreateTrigger()
+    call TriggerAddCondition(st__Respawn__Respawn_Flush,Condition( function sa__Respawn__Respawn_Flush))
+    set st__Respawn__Respawn_Show=CreateTrigger()
+    call TriggerAddCondition(st__Respawn__Respawn_Show,Condition( function sa__Respawn__Respawn_Show))
     set st__KillUi_FlushPlayerData=CreateTrigger()
     call TriggerAddCondition(st__KillUi_FlushPlayerData,Condition( function sa__KillUi_FlushPlayerData))
     set st__KillUi_FlushData=CreateTrigger()
@@ -13123,14 +13133,14 @@ function jasshelper__initstructs556028515 takes nothing returns nothing
     call TriggerAddAction(st___prototype1[6],function sa___prototype1_BuyNextHero___Buy)
     call TriggerAddCondition(st___prototype1[6],Condition(function sa___prototype1_BuyNextHero___Buy))
     set st___prototype1[9]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[9],function sa___prototype1_Disconnect___onDisconnect)
-    call TriggerAddCondition(st___prototype1[9],Condition(function sa___prototype1_Disconnect___onDisconnect))
+    call TriggerAddAction(st___prototype1[9],function sa___prototype1_Disconnect__onDisconnect)
+    call TriggerAddCondition(st___prototype1[9],Condition(function sa___prototype1_Disconnect__onDisconnect))
     set st___prototype1[10]=CreateTrigger()
     call TriggerAddAction(st___prototype1[10],function sa___prototype1_LevelUp___LvUp)
     call TriggerAddCondition(st___prototype1[10],Condition(function sa___prototype1_LevelUp___LvUp))
     set st___prototype1[11]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[11],function sa___prototype1_PlayerChat___Chat)
-    call TriggerAddCondition(st___prototype1[11],Condition(function sa___prototype1_PlayerChat___Chat))
+    call TriggerAddAction(st___prototype1[11],function sa___prototype1_PlayerChat__Chat)
+    call TriggerAddCondition(st___prototype1[11],Condition(function sa___prototype1_PlayerChat__Chat))
     set st___prototype1[14]=CreateTrigger()
     call TriggerAddAction(st___prototype1[14],function sa___prototype1_Ai___onDmg)
     call TriggerAddCondition(st___prototype1[14],Condition(function sa___prototype1_Ai___onDmg))
@@ -13489,14 +13499,14 @@ function jasshelper__initstructs556028515 takes nothing returns nothing
     call TriggerAddAction(st___prototype1[112],function sa___prototype1_s__ZZ___ZZ_HERO_STOP)
     call TriggerAddCondition(st___prototype1[112],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_STOP))
     set st___prototype46[6]=CreateTrigger()
-    call TriggerAddAction(st___prototype46[6],function sa___prototype46_s__Respawn___Respawn_Death)
-    call TriggerAddCondition(st___prototype46[6],Condition(function sa___prototype46_s__Respawn___Respawn_Death))
+    call TriggerAddAction(st___prototype46[6],function sa___prototype46_s__Respawn__Respawn_Death)
+    call TriggerAddCondition(st___prototype46[6],Condition(function sa___prototype46_s__Respawn__Respawn_Death))
     set st___prototype35[5]=CreateTrigger()
-    call TriggerAddAction(st___prototype35[5],function sa___prototype35_s__Respawn___Respawn_Press)
-    call TriggerAddCondition(st___prototype35[5],Condition(function sa___prototype35_s__Respawn___Respawn_Press))
+    call TriggerAddAction(st___prototype35[5],function sa___prototype35_s__Respawn__Respawn_Press)
+    call TriggerAddCondition(st___prototype35[5],Condition(function sa___prototype35_s__Respawn__Respawn_Press))
     set st___prototype35[6]=CreateTrigger()
-    call TriggerAddAction(st___prototype35[6],function sa___prototype35_s__Respawn___Respawn_PressSnyc)
-    call TriggerAddCondition(st___prototype35[6],Condition(function sa___prototype35_s__Respawn___Respawn_PressSnyc))
+    call TriggerAddAction(st___prototype35[6],function sa___prototype35_s__Respawn__Respawn_PressSnyc)
+    call TriggerAddCondition(st___prototype35[6],Condition(function sa___prototype35_s__Respawn__Respawn_PressSnyc))
 
 
 
@@ -13572,6 +13582,6 @@ function jasshelper__initstructs556028515 takes nothing returns nothing
     call ExecuteFunc("s__SL___SL_onInit")
     call ExecuteFunc("s__WindWalk___WindWalk_onInit")
     call ExecuteFunc("s__ZZ___ZZ_onInit")
-    call ExecuteFunc("s__Respawn___Respawn_onInit")
+    call ExecuteFunc("s__Respawn__Respawn_onInit")
 endfunction
 
