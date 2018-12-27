@@ -41,7 +41,7 @@ library SL requires Groups{
                         dash.Stop(); 
                         u.AnimeSpeed(1);
                         u.AnimeId(1);
-                        u.Alpha(0);
+                        u.DelayAlpha(255,0,0.5);
                         Units.MJ(u.player.player,'e008','A018',0,u.X()+Util.XY2(u.unit,k)/2*CosBJ(Util.XY(u.unit,k)),u.Y()+Util.XY2(u.unit,k)/2*SinBJ(Util.XY(u.unit,k)),u.F(),2,1,1, "stand","qqqqq.mdl").SetH(100); 
                         Dash.Start(u.unit,Util.XY(k,u.unit),200,Dash.SUB,10,true,false);
                         Dash.Start(k,Util.XY(u.unit,k),300,Dash.SUB,5,true,true);
@@ -68,70 +68,29 @@ library SL requires Groups{
                             u.Size(0.75);
                             u.Alpha(200);
                             u.AnimeId(3);
-                            u.AnimeSpeed(3);
+                            //u.AnimeSpeed(3);
                             data.i[2]=5;
                             SetTimerData(t,data);
                             TimerStart(t,0.05,true,function(){
                                 Data data=Data(GetTimerData(GetExpiredTimer()));
                                 Units u=Units(data.c[2]);
                                 Units m=Units(data.c[0]);
-                                Dash dash;
+                                Dash dash; 
                                 if(data.i[2]==0){                  
-                                    u.RemoveAbility('A019');
+                                    //u.RemoveAbility('A019');
                                     u.AnimeSpeed(1);
                                     u.AnimeId(8);
-                                    u.Life(0.8);
+                                    u.Life(0.8); 
+                                    u.DelayAlpha(200,0,0.7);
                                     ReleaseTimer(GetExpiredTimer());
                                     data.i[1]-=1;
-                                    if(data.i[1]==0){ 
-                                        if(m.Alive()==true){
-                                            data.r[0]=GetUnitX(data.u[0]);
-                                            data.r[1]=GetUnitY(data.u[0]);
-                                            dash=Dash.Start(m.unit,Util.XY(m.unit,data.u[0]),Util.XY2(m.unit,data.u[0])+300,Dash.SUB,125,true,false);
-                                            dash.Obj=data;
-                                            dash.onMove=function(Dash dash){
-                                                Data data=Data(dash.Obj);
-                                                Units u=Units(data.c[0]);
-                                                SetUnitX(data.u[0],data.r[0]);
-                                                SetUnitY(data.u[0],data.r[1]);
-                                                if(Util.XY2(u.unit,data.u[0])<150){
-                                                    data.r[0]=data.r[0]+10*CosBJ(dash.Angle+180);
-                                                    data.r[1]=data.r[1]+10*SinBJ(dash.Angle+180);
-                                                    Units.MJ(u.player.player,'e008','A018',0,GetUnitX(data.u[0]),GetUnitY(data.u[0]),0,2,1.5,2, "stand","az-blood-hit.mdl").SetH(100); 
-                            
-                                                    Units.MJ(u.player.player,'e008','A018',0,GetUnitX(data.u[0]),GetUnitY(data.u[0]),0,2,1.5,2, "stand","yooobug_hit_blue.mdl").SetH(100); 
-                            
-                                                }
-                                                if(dash.Speed<4){
-                                                    dash.Stop();
-                                                }
-                                            };
-                                            dash.onEnd=function(Dash dash){
-                                                Data data=Data(dash.Obj);
-                                                Units u=Units(data.c[0]);  
-                                                u.SetF(Util.XY(u.unit,data.u[0]),true);
-                                                u.Alpha(255);
-                                                u.AnimeSpeed(1.5);
-                                                u.AnimeId(8);
-                                                u.DelayReleaseAnimePause(0.4);
-                                                data.u[0]=null; 
-                                                Spell(data.c[1]).Destroy();
-                                                data.Destroy();
-                                            };
-                                        }else{
-                                            m.Alpha(255);
-                                            m.Pause(false); 
-                                            data.u[0]=null; 
-                                            Spell(data.c[1]).Destroy();
-                                            data.Destroy();
-                                        }
-                                    } 
                                 }else{
                                     u.Position(GetUnitX(data.u[0])+225*CosBJ(Util.XY(u.unit,data.u[0])+45),GetUnitY(data.u[0])+225*SinBJ(Util.XY(u.unit,data.u[0])+45),false);
                                     u.SetF(Util.XY(u.unit,data.u[0]),true); 
                                     u.AnimeId(3);
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",data.u[0], "chest") );
-                                    data.i[2]-=1;
+                                    data.i[2]-=1;  
+                                    u.Damage(data.u[0],Damage.Physics,'A018',u.Agi(true)*0.5); 
                                 }
                             }); 
                             t=null;
@@ -156,26 +115,35 @@ library SL requires Groups{
                             u.Size(0.75);
                             u.Alpha(200);
                             u.AnimeId(3);
-                            u.AnimeSpeed(3);
+                            //u.AnimeSpeed(3);
                             data.i[3]=5;
+                            data.i[4]=0;
                             SetTimerData(t,data);
                             TimerStart(t,0.05,true,function(){
                                 Data data=Data(GetTimerData(GetExpiredTimer()));
                                 Units u=Units(data.c[3]);
                                 Units m=Units(data.c[0]);
-                                Dash dash;
+                                Dash dash; 
                                 if(data.i[3]==0){
-                                    u.RemoveAbility('A019');
-                                    u.AnimeSpeed(1);
-                                    u.AnimeId(8);
-                                    u.Life(0.8);
-                                    ReleaseTimer(GetExpiredTimer());
-                                    data.i[1]-=1;
-                                    if(data.i[1]==0){ 
+                                    if(data.i[4]==0){
+                                        data.i[4]=1;
+                                        //u.RemoveAbility('A019');
+                                        u.AnimeSpeed(1);
+                                        u.AnimeId(8);
+                                        u.Life(0.8);
+                                        u.DelayAlpha(200,0,0.7); 
+                                        data.i[1]-=1;
+                                    } 
+                                    if(data.i[1]==0){  
+                                        ReleaseTimer(GetExpiredTimer());
                                         if(m.Alive()==true){
+                                            //DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", m.X(),m.Y()) );
+                                            Units.MJ(u.player.player,'e008','A018',0,m.X(),m.Y(),Util.XY(m.unit,data.u[0]),2,1,2, "stand","chongfeng2.mdl"); 
+                                            Util.Duang(m.X(),m.Y(),0.5,150,150,-36,0.02,50);
                                             data.r[0]=GetUnitX(data.u[0]);
                                             data.r[1]=GetUnitY(data.u[0]);
-                                            dash=Dash.Start(m.unit,Util.XY(m.unit,data.u[0]),Util.XY2(m.unit,data.u[0])+300,Dash.SUB,125,true,false);
+                                            data.r[4]=0;
+                                            dash=Dash.Start(m.unit,Util.XY(m.unit,data.u[0]),Util.XY2(m.unit,data.u[0])+200,Dash.SUB,125,true,false);
                                             dash.Obj=data;
                                             dash.onMove=function(Dash dash){
                                                 Data data=Data(dash.Obj);
@@ -186,9 +154,11 @@ library SL requires Groups{
                                                     data.r[0]=data.r[0]+10*CosBJ(dash.Angle+180);
                                                     data.r[1]=data.r[1]+10*SinBJ(dash.Angle+180);
                                                     Units.MJ(u.player.player,'e008','A018',0,GetUnitX(data.u[0]),GetUnitY(data.u[0]),0,2,1.5,2, "stand","az-blood-hit.mdl").SetH(100); 
-                            
                                                     Units.MJ(u.player.player,'e008','A018',0,GetUnitX(data.u[0]),GetUnitY(data.u[0]),0,2,1.5,2, "stand","yooobug_hit_blue.mdl").SetH(100); 
-                            
+                                                    if(data.r[4]==0){
+                                                        data.r[4]=1; 
+                                                        u.Damage(data.u[0],Damage.Physics,'A018',u.Agi(true)*5.0); 
+                                                    }
                                                 }
                                                 if(dash.Speed<4){
                                                     dash.Stop();
@@ -196,10 +166,11 @@ library SL requires Groups{
                                             };
                                             dash.onEnd=function(Dash dash){
                                                 Data data=Data(dash.Obj);
-                                                Units u=Units(data.c[0]);  
+                                                Units u=Units(data.c[0]); 
+                                                Dash.Start(u.unit,dash.Angle,100,Dash.SUB,7,true,false); 
                                                 u.SetF(Util.XY(u.unit,data.u[0]),true);
-                                                u.AnimeSpeed(1.5);
-                                                u.Alpha(255); 
+                                                u.AnimeSpeed(2.5);
+                                                u.DelayAlpha(0,255,0.2);
                                                 u.AnimeId(8);
                                                 u.DelayReleaseAnimePause(0.4);
                                                 data.u[0]=null; 
@@ -219,7 +190,8 @@ library SL requires Groups{
                                     u.SetF(Util.XY(u.unit,data.u[0]),true); 
                                     u.AnimeId(3);
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",data.u[0], "chest") );
-                                    data.i[3]-=1;
+                                    data.i[3]-=1; 
+                                    u.Damage(data.u[0],Damage.Physics,'A018',u.Agi(true)*0.5);  
                                 }
                             });
                             t=null;
@@ -234,18 +206,14 @@ library SL requires Groups{
                 if(data.i[0]==0){ 
                     u.AnimeId(0);
                     u.AnimeSpeed(1);
-                    u.Pause(false); 
-                    
-                        BJDebugMsg("1111");
+                    u.Pause(false);  
                 }
                 if(data.i[0]<=1){ 
                     if(data.i[1]!=0){
                         BJDebugMsg("!!!!!!!!!!!!!!!!!!!!");
                     }
                     Spell(data.c[1]).Destroy();
-                    data.Destroy(); 
-                    
-                        BJDebugMsg("3333");
+                    data.Destroy();  
                 } 
             };
         }
@@ -304,9 +272,12 @@ library SL requires Groups{
         }
 
         static method HERO_STOP(Spell e){ 
-            Units u=Units.Get(e.Spell);
-            
+            Units u=Units.Get(e.Spell); 
             e.Destroy();
+        }
+
+        static method test(DamageArgs e){
+            BJDebugMsg(e.TriggerUnit.name+"="+R2S(e.Damage));
         }
 
         static method onInit(){ 
@@ -314,6 +285,7 @@ library SL requires Groups{
             Spell.On(Spell.onSpell,'A018',SL.W);  
             Spell.On(Spell.onReady,'A018',SL.HERO_START);
             Spell.On(Spell.onStop,'A018',SL.HERO_STOP);   
+            Damage.On(Damage.onHeroDamageed,SL.test);
         }
     }
 }
