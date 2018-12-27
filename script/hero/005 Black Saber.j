@@ -221,7 +221,7 @@ library BlackSaber requires Groups{
                                         Units.MJ(u.player.player,'e00C','A012',0,x,y,Util.XY(u.unit,m.unit),5,2,2.5, "stand","devilslam.mdl").SetH(150);
                                         x=x+200*CosBJ(u.F());
                                         y=y+200*SinBJ(u.F());
-                                        u.Damage(m.unit,'A012',Damage.Chaos,u.Str(true)*15.0);
+                                        u.Damage(m.unit,'A012',Damage.Chaos,u.Str(true)*12.0);
                                         GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
                                         while(FirstOfGroup(tmp_group)!=null){
                                             mj=Units.Get(FirstOfGroup(tmp_group));
