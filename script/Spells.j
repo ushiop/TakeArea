@@ -66,7 +66,7 @@ library Spells requires SpellNameText{
             Spell tmp;
             if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){
                 tmp=Spell.allocate();
-                SpellNameText(u.unit,GetAbilityName(e.SpellId),3,10);
+                SpellText(u.unit,e.SpellId,3,10);
                 tmp.Spell=u.unit;
                 tmp.Target=e.SpellTargetUnit;
                 tmp.X=e.SpellTargetX;
