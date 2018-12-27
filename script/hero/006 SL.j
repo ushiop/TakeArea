@@ -33,7 +33,7 @@ library SL requires Groups{
                         }
                     }
                     GroupClear(tmp_group);      
-                    mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f,5,0.75,1, "stand","bladewave.mdl"); 
+                    mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f,5,0.75,1, "stand","bladewave_yellow.mdl"); 
                     dash=Dash.Start(mj.unit,f,1600,Dash.SUB,40,true,false);
                     dash.Obj=2;
                     dash.onMove=function(Dash dash){
