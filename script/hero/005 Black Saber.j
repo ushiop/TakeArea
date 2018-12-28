@@ -511,8 +511,8 @@ library BlackSaber requires Groups{
                     e.Destroy();
                 }else{
                     if(u.MP()>=250){
-                        if(u.GetAbilityCD('A015')==0){
-                            SpellNameText(u.unit,"! 魔力爆发 !",3,15);
+                        if(u.GetAbilityCD('A015')==0){ 
+                            SpellText(u.unit,'A015',3,15);
                             u.SetMP(u.MP()-250);
                             u.SetAbilityCD('A015',25);
                             BlackSaber.D(e); 
