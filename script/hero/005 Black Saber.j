@@ -159,7 +159,7 @@ library BlackSaber requires Groups{
                             if(u.Alive()==true&&m.Alive()){
                                 HitFlys.Remove(m.unit);
                                 if(data.r[1]==0){ 
-                                    if(data.r[0]<360){
+                                    if(data.r[0]<540){
                                         data.r[0]+=15;
                                         m.Position(u.X()+80*CosBJ(u.F()),u.Y()+80*SinBJ(u.F()),false);
                                         m.SetH(125*Util.GetPwx(3.99,data.r[0],720));
