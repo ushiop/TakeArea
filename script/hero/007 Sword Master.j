@@ -212,10 +212,44 @@ library SwordMaster requires Groups{
 
         }
 
+
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);
+
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true); 
+                    IssueImmediateOrder( u.unit, "fanofknives" );//快乐风暴
+                }  
+ 
+                IssueImmediateOrder( u.unit, "hex" );//快乐蹦迪
+                
+                IssueImmediateOrder( u.unit, "heal" );//快乐冲刺
+            }
+            target=null;
+            no=null;
+        }
+
+
+        //绑定AI施法
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A01F')==true){
+                u.ai=SwordMaster.AI;
+            }
+        }
+
         static method onInit(){
             Spell.On(Spell.onSpell,'A01E',SwordMaster.W); 
             Spell.On(Spell.onSpell,'A01D',SwordMaster.E);  
-            Spell.On(Spell.onSpell,'A01F',SwordMaster.R);
+            Spell.On(Spell.onSpell,'A01F',SwordMaster.R);   
+            Units.On(Units.onHeroSpawn,SwordMaster.Spawn);
         }
     }
 }
