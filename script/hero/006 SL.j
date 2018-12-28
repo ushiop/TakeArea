@@ -30,7 +30,7 @@ library SL requires Groups{
                         Units.MJ(u.player.player,'e008','A01B',0,x,y,dash.Angle+45,1,1.5,1.5, "stand","dg4.mdl").SetH(75);
                         data.i[0]=1;
                         mj=Units.MJ(u.player.player,'e008','A01B',0,x,y,e.Angle,10,0.75,1, "stand",".mdl");
-                        dash=Dash.Start(mj.unit,e.Angle,800,Dash.NORMAL,80,true,false);
+                        dash=Dash.Start(mj.unit,e.Angle,1200,Dash.NORMAL,80,true,false);
                         dash.Obj=e.State;
                         dash.onMove=function(Dash dash){
                             Units u=Units.Get(dash.Unit);
@@ -82,7 +82,7 @@ library SL requires Groups{
                                             DestroyEffect( AddSpecialEffectTarget("hiteffect10white.mdl", tmp.unit, "chest") );
                                             mj.Damage(tmp.unit,Damage.Physics,'A01B',mj.Agi(true)*1.428); 
                                              //敏捷X20伤害 14次      
-                                        }
+                                        } 
                                     }
                                     GroupClear(tmp_group);  
                                    
@@ -501,8 +501,7 @@ library SL requires Groups{
             Spell.On(Spell.onSpell,'A017',SL.Q);  
             Spell.On(Spell.onSpell,'A018',SL.W);  
             Spell.On(Spell.onReady,'A018',SL.HERO_START); 
-            Spell.On(Spell.onReady,'A01B',SL.HERO_START); 
-            Damage.On(Damage.onHeroDamageed,SL.test);
+            Spell.On(Spell.onReady,'A01B',SL.HERO_START);  
         }
     }
 }
