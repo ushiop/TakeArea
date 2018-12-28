@@ -98,8 +98,14 @@ library SL requires Groups{
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
-                u.DelayAlpha(0,255,0.7);
-                u.DelayReleaseAnimePause(0.8);
+                if(Spell(data.c[1]).State==Spell.ReadyState){ 
+                    u.AnimeSpeed(4);
+                    u.DelayAlpha(0,255,0.1);
+                    u.DelayReleaseAnimePause(0.2);                                 
+                }else{ 
+                    u.DelayAlpha(0,255,0.7);
+                    u.DelayReleaseAnimePause(0.8);
+                }
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };
