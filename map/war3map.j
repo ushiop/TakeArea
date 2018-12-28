@@ -282,6 +282,9 @@ constant boolean LIBRARY_OrdinaryWizard=true
 //globals from SL:
 constant boolean LIBRARY_SL=true
 //endglobals from SL
+//globals from SwordMaster:
+constant boolean LIBRARY_SwordMaster=true
+//endglobals from SwordMaster
 //globals from WindWalk:
 constant boolean LIBRARY_WindWalk=true
 //endglobals from WindWalk
@@ -692,15 +695,19 @@ constant integer si__SL___SL=42
 integer si__SL___SL_F=0
 integer si__SL___SL_I=0
 integer array si__SL___SL_V
-constant integer si__WindWalk__WindWalk=43
-integer si__WindWalk__WindWalk_F=0
-integer si__WindWalk__WindWalk_I=0
-integer array si__WindWalk__WindWalk_V
-constant integer si__ZZ___ZZ=44
+constant integer si__SwordMaster___SwordMaster=43
+integer si__SwordMaster___SwordMaster_F=0
+integer si__SwordMaster___SwordMaster_I=0
+integer array si__SwordMaster___SwordMaster_V
+constant integer si__WindWalk___WindWalk=44
+integer si__WindWalk___WindWalk_F=0
+integer si__WindWalk___WindWalk_I=0
+integer array si__WindWalk___WindWalk_V
+constant integer si__ZZ___ZZ=45
 integer si__ZZ___ZZ_F=0
 integer si__ZZ___ZZ_I=0
 integer array si__ZZ___ZZ_V
-constant integer si__Respawn__Respawn=45
+constant integer si__Respawn__Respawn=46
 integer si__Respawn__Respawn_F=0
 integer si__Respawn__Respawn_I=0
 integer array si__Respawn__Respawn_V
@@ -1061,35 +1068,66 @@ function s__ZZ___ZZ_deallocate takes integer this returns nothing
     set si__ZZ___ZZ_F=this
 endfunction
 
-//Generated allocator of WindWalk__WindWalk
-function s__WindWalk__WindWalk__allocate takes nothing returns integer
- local integer this=si__WindWalk__WindWalk_F
+//Generated allocator of WindWalk___WindWalk
+function s__WindWalk___WindWalk__allocate takes nothing returns integer
+ local integer this=si__WindWalk___WindWalk_F
     if (this!=0) then
-        set si__WindWalk__WindWalk_F=si__WindWalk__WindWalk_V[this]
+        set si__WindWalk___WindWalk_F=si__WindWalk___WindWalk_V[this]
     else
-        set si__WindWalk__WindWalk_I=si__WindWalk__WindWalk_I+1
-        set this=si__WindWalk__WindWalk_I
+        set si__WindWalk___WindWalk_I=si__WindWalk___WindWalk_I+1
+        set this=si__WindWalk___WindWalk_I
     endif
     if (this>8190) then
-        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: WindWalk__WindWalk")
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: WindWalk___WindWalk")
         return 0
     endif
 
-    set si__WindWalk__WindWalk_V[this]=-1
+    set si__WindWalk___WindWalk_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of WindWalk__WindWalk
-function s__WindWalk__WindWalk_deallocate takes integer this returns nothing
+//Generated destructor of WindWalk___WindWalk
+function s__WindWalk___WindWalk_deallocate takes integer this returns nothing
     if this==null then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: WindWalk__WindWalk")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: WindWalk___WindWalk")
         return
-    elseif (si__WindWalk__WindWalk_V[this]!=-1) then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: WindWalk__WindWalk")
+    elseif (si__WindWalk___WindWalk_V[this]!=-1) then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: WindWalk___WindWalk")
         return
     endif
-    set si__WindWalk__WindWalk_V[this]=si__WindWalk__WindWalk_F
-    set si__WindWalk__WindWalk_F=this
+    set si__WindWalk___WindWalk_V[this]=si__WindWalk___WindWalk_F
+    set si__WindWalk___WindWalk_F=this
+endfunction
+
+//Generated allocator of SwordMaster___SwordMaster
+function s__SwordMaster___SwordMaster__allocate takes nothing returns integer
+ local integer this=si__SwordMaster___SwordMaster_F
+    if (this!=0) then
+        set si__SwordMaster___SwordMaster_F=si__SwordMaster___SwordMaster_V[this]
+    else
+        set si__SwordMaster___SwordMaster_I=si__SwordMaster___SwordMaster_I+1
+        set this=si__SwordMaster___SwordMaster_I
+    endif
+    if (this>8190) then
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: SwordMaster___SwordMaster")
+        return 0
+    endif
+
+    set si__SwordMaster___SwordMaster_V[this]=-1
+ return this
+endfunction
+
+//Generated destructor of SwordMaster___SwordMaster
+function s__SwordMaster___SwordMaster_deallocate takes integer this returns nothing
+    if this==null then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: SwordMaster___SwordMaster")
+        return
+    elseif (si__SwordMaster___SwordMaster_V[this]!=-1) then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: SwordMaster___SwordMaster")
+        return
+    endif
+    set si__SwordMaster___SwordMaster_V[this]=si__SwordMaster___SwordMaster_F
+    set si__SwordMaster___SwordMaster_F=this
 endfunction
 
 //Generated allocator of SL___SL
@@ -7846,7 +7884,7 @@ endfunction
             local unit u
             local integer p=s__Players_Set(GetEnumPlayer())
             call UnitShareVision(Origin_Ball, s__Players_player[p], true)
-            set u=s__Units_Spawn(s__Players_player[p] , 'H006' , 0 , 0 , 0)
+            set u=s__Units_Spawn(s__Players_player[p] , 'H007' , 0 , 0 , 0)
             set s__Players_hero[p]=s__Units_Get(u)
             call SetUnitPosition(u, GetRectCenterX(s__Teams_GetTeamRect(s__Players_player[p])), GetRectCenterY(s__Teams_GetTeamRect(s__Players_player[p])))
             set u=null
@@ -8831,8 +8869,225 @@ endfunction
         endfunction
 
 //library SL ends
+//library SwordMaster:
+                    function s__SwordMaster___SwordMaster_anon__110 takes integer dash returns nothing
+                        set s__Dash_Angle[dash]=s__Units_F(s__Units_Get(s__Dash_Unit[dash]))
+                    endfunction
+                function s__SwordMaster___SwordMaster_anon__109 takes nothing returns nothing
+                    local integer data=(GetTimerData(GetExpiredTimer()))
+                    local integer u=(s___Data_c[s__Data_c[data]])
+                    local integer mj
+                    if ( s___Data_r[s__Data_r[data]+1] == 1 ) then
+                        call s__Units_RemoveAbility(u,'A01J')
+                        call s__Units_RemoveAbility(u,'A01H')
+                        call s__Units_SetH(u,0)
+                        call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                        call s__Data_Destroy(data)
+                        call ReleaseTimer(GetExpiredTimer())
+                    elseif ( s___Data_r[s__Data_r[data]+2] == 0 ) then
+                        if ( s__Units_Alive(u) == false or s__Units_IsAbility(u,'B009') == false ) then
+                            set s___Data_r[s__Data_r[data]+1]=1
+                        else
+                            set s___Data_r[s__Data_r[data]]=25
+                            set s___Data_r[s__Data_r[data]+2]=1
+                            call s__Util_Duang(s__Units_X(u) , s__Units_Y(u) , 0.3 , 150 , 150 , - 256 , 0.02 , 50)
+                            set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , s__Units_F(u) , 300 , s__Dash_SUB , 10 , true , false)]=(80)
+                            call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", s__Units_X(u), s__Units_Y(u)))
+                            call GroupEnumUnitsInRange(tmp_group, s__Units_X(u), s__Units_Y(u), 200, Condition(function GroupIsAliveNotAloc))
+                            loop
+                            exitwhen ( FirstOfGroup(tmp_group) == null )
+                                set mj=s__Units_Get(FirstOfGroup(tmp_group))
+                                call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                                if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then //DestroyEffect( AddSpecialEffectTarget("qqqqq.mdl", mj.unit, "chest") );
+                                    call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Physics , 'A01F' , s__Units_Agi(u,true) * 5.0)
+                                    call s__HitFlys_Add(s__Units_unit[mj] , 25)
+                                    call s__Buffs_Add(s__Units_unit[mj] , 'A01I' , 'B00A' , 2 , false)
+                                endif
+                            endloop
+                            call GroupClear(tmp_group)
+                        endif
+                    else
+                        call s__Units_SetH(u,s__Units_H(u) + s___Data_r[s__Data_r[data]])
+                        if ( s__Units_H(u) <= 20 ) then
+                            set s___Data_r[s__Data_r[data]+2]=0
+                        endif
+                        set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] - 0.98
+                    endif
+                endfunction
+            function s__SwordMaster___SwordMaster_anon__108 takes nothing returns nothing
+                local integer data=(GetTimerData(GetExpiredTimer()))
+                local integer u=(s___Data_c[s__Data_c[data]])
+                call s__Units_Pause(u,false)
+                if ( s__Units_Alive(u) == true ) then
+                    call s__Buffs_Add(s__Units_unit[u] , 'A01G' , 'B009' , 10 , false)
+                    call s__Units_AddAbility(u,'A01H')
+                    call s__Units_AddAbility(u,'A01J')
+                    call TimerStart(GetExpiredTimer(), 0.01, true, function s__SwordMaster___SwordMaster_anon__109)
+                else
+                    call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                    call s__Data_Destroy(data)
+                    call ReleaseTimer(GetExpiredTimer())
+                endif
+            endfunction
+        function s__SwordMaster___SwordMaster_R takes integer e returns nothing
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer data=s__Data_create('A01F')
+            local timer t=NewTimer()
+            call s__Units_Pause(u,true)
+            call s__Units_AnimeId(u,10)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_r[s__Data_r[data]]=45
+            set s___Data_r[s__Data_r[data]+1]=0
+            set s___Data_r[s__Data_r[data]+2]=0
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", s__Units_unit[u], "hand right"))
+            call SetTimerData(t , data)
+            call TimerStart(t, 1, false, function s__SwordMaster___SwordMaster_anon__108)
+            set t=null
+        endfunction
+            function s__SwordMaster___SwordMaster_anon__111 takes integer dash returns nothing
+                local integer data=(s__Dash_Obj[dash])
+                local integer u=(s___Data_c[s__Data_c[data]])
+                local integer mj
+                set s__Dash_Angle[dash]=s__Units_F(u)
+                if ( s__Dash_Speed[dash] < 2 ) then
+                    call s__Dash_Stop(dash)
+                else
+                    call GroupEnumUnitsInRange(tmp_group, s__Dash_X[dash], s__Dash_Y[dash], 150, Condition(function GroupIsAliveNotAloc))
+                    loop
+                    exitwhen ( FirstOfGroup(tmp_group) == null )
+                        set mj=s__Units_Get(FirstOfGroup(tmp_group))
+                        call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                        if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then
+                            if ( IsUnitInGroup(s__Units_unit[mj], s___Data_g[s__Data_g[data]]) != true ) then
+                                call GroupAddUnit(s___Data_g[s__Data_g[data]], s__Units_unit[mj])
+                                call DestroyEffect(AddSpecialEffectTarget("qqqqq.mdl", s__Units_unit[mj], "chest"))
+                                call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Physics , 'A01D' , s__Units_Agi(u,true) * 15.0)
+                                call s__HitFlys_Add(s__Units_unit[mj] , 25)
+                            endif
+                        endif
+                    endloop
+                    call GroupClear(tmp_group)
+                endif
+            endfunction
+            function s__SwordMaster___SwordMaster_anon__112 takes integer dash returns nothing
+                local integer data=(s__Dash_Obj[dash])
+                local integer u=(s___Data_c[s__Data_c[data]])
+                call DestroyGroup(s___Data_g[s__Data_g[data]])
+                set s___Data_g[s__Data_g[data]]=null
+                call s__Units_AnimeSpeed(u,1)
+                call s__Units_Pause(u,false)
+                call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                call s__Data_Destroy(data)
+            endfunction
+        function s__SwordMaster___SwordMaster_E takes integer e returns nothing
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer data=s__Data_create('A01D')
+            local integer dash
+            call s__Units_Pause(u,true)
+            call s__Units_AnimeId(u,10)
+            call s__Units_AnimeSpeed(u,1.5)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_g[s__Data_g[data]]=CreateGroup()
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", s__Units_unit[u], "hand right"))
+            call s__HitFlys_Add(s__Units_unit[u] , 25)
+            set dash=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) , 1200 , s__Dash_SUB , 45 , true , false)
+            set s__Dash_Obj[dash]=data
+            set s__Dash_onMove[dash]=(81)
+            set s__Dash_onEnd[dash]=(82)
+        endfunction
+                function s__SwordMaster___SwordMaster_anon__114 takes integer dash returns nothing
+                    set s__Dash_Angle[dash]=s__Dash_Angle[dash] + 4
+                    if ( s__Dash_Obj[dash] == 0 ) then
+                        set s__Dash_Obj[dash]=3
+                        call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", s__Dash_X[dash], s__Dash_Y[dash]))
+                    else
+                        set s__Dash_Obj[dash]=s__Dash_Obj[dash] - 1
+                    endif
+                endfunction
+            function s__SwordMaster___SwordMaster_anon__113 takes nothing returns nothing
+                local integer data=(GetTimerData(GetExpiredTimer()))
+                local integer u=(s___Data_c[s__Data_c[data]])
+                local integer mj=(s___Data_c[s__Data_c[data]+2])
+                local integer dash
+                local real x=s__Units_X(u)
+                local real y=s__Units_Y(u)
+                if ( s__Units_IsAbility(u,'B009') == true ) then
+                    if ( s__Units_GetAbilityCD(u,'A01E') > 1 ) then
+                        call s__Units_SetAbilityCD(u,'A01E' , 1)
+                        call s__Units_SetMP(u,s__Units_MP(u) + 75)
+                        call BJDebugMsg("!")
+                    endif
+                endif
+                if ( s__Units_Alive(u) == false or s___Data_r[s__Data_r[data]] <= 0 ) then
+                    call DestroyGroup(s___Data_g[s__Data_g[data]])
+                    set s___Data_g[s__Data_g[data]]=null
+                    call s__Units_Alpha(mj,0)
+                    call s__Units_Anime(mj,"stand")
+                    call s__Units_Life(mj,2)
+                    call SetUnitMoveSpeed(s__Units_unit[u], GetUnitMoveSpeed(s__Units_unit[u]) - 100)
+                    call s__Units_Alpha(u,255)
+                    call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                    call s__Data_Destroy(data)
+                    call ReleaseTimer(GetExpiredTimer())
+                else
+                    call s__Units_SetH(mj,s__Units_H(u))
+                    call s__Units_Position(mj,x , y , false)
+                    call GroupEnumUnitsInRange(tmp_group, x, y, 300, Condition(function GroupIsAliveNotAloc))
+                    loop
+                    exitwhen ( FirstOfGroup(tmp_group) == null )
+                        set mj=s__Units_Get(FirstOfGroup(tmp_group))
+                        call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                        if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then
+                            if ( IsUnitInGroup(s__Units_unit[mj], s___Data_g[s__Data_g[data]]) != true ) then
+                                call GroupAddUnit(s___Data_g[s__Data_g[data]], s__Units_unit[mj])
+                                call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", s__Units_unit[mj], "origin"))
+                                if ( s__Units_IsAbility(u,'B009') == true ) then
+                                    call s__HitFlys_Add(s__Units_unit[mj] , 20)
+                                    call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Physics , 'A01E' , s__Units_Agi(u,true) * 2.0)
+                                else
+                                    call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Physics , 'A01E' , s__Units_Agi(u,true) * 10.0)
+                                endif
+                                set dash=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , s__Units_unit[mj]) - 45 , 600 , s__Dash_PWX , 25 , true , true)
+                                set s__Dash_Obj[dash]=3
+                                set s__Dash_onMove[dash]=(83)
+                            endif
+                            call s__Units_Position(mj,s__Units_X(mj) + 10 * CosBJ(s__Util_XY(s__Units_unit[u] , s__Units_unit[mj])) , s__Units_Y(mj) + 10 * SinBJ(s__Util_XY(s__Units_unit[u] , s__Units_unit[mj])) , true)
+                        endif
+                    endloop
+                    call GroupClear(tmp_group)
+                    set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] - 0.02
+                endif
+            endfunction
+        function s__SwordMaster___SwordMaster_W takes integer e returns nothing
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local timer t=NewTimer()
+            local integer data=s__Data_create('A01E')
+            call s__Units_Pause(u,true)
+            call s__Units_Pause(u,false)
+            call SetUnitMoveSpeed(s__Units_unit[u], GetUnitMoveSpeed(s__Units_unit[u]) + 100)
+            call s__Units_Alpha(u,0)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_g[s__Data_g[data]]=CreateGroup()
+            set u=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01E' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 10 , 1.15 , 2 , "stand" , "units\\orc\\HeroBladeMaster\\HeroBladeMaster.mdl")
+            call s__Units_AnimeId(u,13)
+            set s___Data_c[s__Data_c[data]+2]=u
+            set s___Data_r[s__Data_r[data]]=1
+            call SetTimerData(t , data)
+            call TimerStart(t, 0.02, true, function s__SwordMaster___SwordMaster_anon__113)
+            set t=null
+        endfunction
+        function s__SwordMaster___SwordMaster_onInit takes nothing returns nothing
+            call s__Spell_On(s__Spell_onSpell , 'A01E' , (84))
+            call s__Spell_On(s__Spell_onSpell , 'A01D' , (85))
+            call s__Spell_On(s__Spell_onSpell , 'A01F' , (86))
+        endfunction
+
+//library SwordMaster ends
 //library WindWalk:
-                function s__WindWalk__WindWalk_anon__54 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__54 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer k=s__Units_Get(s___Data_u[s__Data_u[data]])
@@ -8857,7 +9112,7 @@ endfunction
                         set s__Dash_Angle[dash]=s__Util_XY(s__Units_unit[u] , s__Units_unit[k])
                     endif
                 endfunction
-                function s__WindWalk__WindWalk_anon__55 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__55 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer c=(s___Data_c[s__Data_c[data]+2])
@@ -8868,7 +9123,7 @@ endfunction
                     call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                     call s__Data_Destroy(data)
                 endfunction
-            function s__WindWalk__WindWalk_anon__53 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__53 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer dash1
@@ -8883,15 +9138,15 @@ endfunction
                     set s___Data_c[s__Data_c[data]+2]=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00M' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , s__Dash_Angle[dash] , 3600 , 1.5 , 1 , "stand" , "wind2.mdx")
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Util_XY(s__Units_unit[u] , k) , 1600 , s__Dash_SUB , 60 , true , false)
                     set s__Dash_Obj[dash1]=data
-                    set s__Dash_onMove[dash1]=(80)
-                    set s__Dash_onEnd[dash1]=(81)
+                    set s__Dash_onMove[dash1]=(87)
+                    set s__Dash_onEnd[dash1]=(88)
                 endif
                 set k=null
                 if ( s__Dash_Speed[dash] < 4 ) then
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-            function s__WindWalk__WindWalk_anon__56 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__56 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer data=(s__Dash_Obj[dash])
                 call s__Units_AnimeSpeed(u,3)
@@ -8902,7 +9157,7 @@ endfunction
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__WindWalk__WindWalk_R takes integer e returns nothing
+        function s__WindWalk___WindWalk_R takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer mj
             local integer dash
@@ -8914,10 +9169,10 @@ endfunction
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(82)
-            set s__Dash_onEnd[dash]=(83)
+            set s__Dash_onMove[dash]=(89)
+            set s__Dash_onEnd[dash]=(90)
         endfunction
-                function s__WindWalk__WindWalk_anon__58 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__58 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     local unit k=GroupFind(s__Units_unit[u] , s__Units_X(u) , s__Units_Y(u) , 60 , false , false)
                     if ( k != null ) then
@@ -8928,12 +9183,12 @@ endfunction
                     endif
                     set k=null
                 endfunction
-                function s__WindWalk__WindWalk_anon__59 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__59 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     call s__Units_Anime(u,"death")
                     call s__Units_Life(u,0.5)
                 endfunction
-            function s__WindWalk__WindWalk_anon__57 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__57 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer mj
                 local integer dash1
@@ -8944,10 +9199,10 @@ endfunction
                 call s__Units_SetH(mj,70)
                 call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                 set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_ADD , 60 , true , false)
-                set s__Dash_onMove[dash1]=(84)
-                set s__Dash_onEnd[dash1]=(85)
+                set s__Dash_onMove[dash1]=(91)
+                set s__Dash_onEnd[dash1]=(92)
             endfunction
-        function s__WindWalk__WindWalk_E1 takes nothing returns nothing
+        function s__WindWalk___WindWalk_E1 takes nothing returns nothing
             local integer data=(GetTimerData(GetExpiredTimer()))
             local integer u=(s___Data_c[s__Data_c[data]])
             local integer e=(s___Data_c[s__Data_c[data]+1])
@@ -8962,13 +9217,13 @@ endfunction
                         if ( s___Data_r[s__Data_r[data]] < 0.02 ) then
                             set s___Data_r[s__Data_r[data]]=0.02
                         endif
-                        call TimerStart(GetExpiredTimer(), s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
+                        call TimerStart(GetExpiredTimer(), s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
                     endif
                 endif
                 call s__Units_Position(u,s___Data_r[s__Data_r[data]+2] , s___Data_r[s__Data_r[data]+3] , false)
                 call s__Units_Alpha(u,0)
                 set dash=s__Dash_Start(s__Units_unit[u] , GetRandomReal(0, 360) , 200 , s__Dash_SUB , 60 , true , false)
-                set s__Dash_onEnd[dash]=(86)
+                set s__Dash_onEnd[dash]=(93)
                 set s___Data_i[s__Data_i[data]]=s___Data_i[s__Data_i[data]] - 1
             else
                 call ReleaseTimer(GetExpiredTimer())
@@ -8978,7 +9233,7 @@ endfunction
                 call s__Data_Destroy(data)
             endif
         endfunction
-        function s__WindWalk__WindWalk_E takes integer e returns nothing
+        function s__WindWalk___WindWalk_E takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local timer t=NewTimer()
             local integer data=s__Data_create('A00L')
@@ -8993,10 +9248,10 @@ endfunction
                 set s___Data_r[s__Data_r[data]]=0.02
             endif
             call SetTimerData(t , data)
-            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
+            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
             set t=null
         endfunction
-            function s__WindWalk__WindWalk_anon__60 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__60 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local unit k=GroupFind(s__Units_unit[u] , s__Units_X(u) , s__Units_Y(u) , 60 , false , false)
                 if ( k != null ) then
@@ -9010,12 +9265,12 @@ endfunction
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-            function s__WindWalk__WindWalk_anon__61 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__61 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 call s__Units_Anime(u,"death")
                 call s__Units_Life(u,0.5)
             endfunction
-                function s__WindWalk__WindWalk_anon__63 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__63 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     local unit k=GroupFind(s__Units_unit[u] , s__Units_X(u) , s__Units_Y(u) , 60 , false , false)
                     if ( k != null ) then
@@ -9026,12 +9281,12 @@ endfunction
                     endif
                     set k=null
                 endfunction
-                function s__WindWalk__WindWalk_anon__64 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__64 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     call s__Units_Anime(u,"death")
                     call s__Units_Life(u,0.5)
                 endfunction
-            function s__WindWalk__WindWalk_anon__62 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__62 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer mj
                 local integer dash1
@@ -9044,8 +9299,8 @@ endfunction
                         call s__Units_SetH(mj,70)
                         call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_ADD , 80 , true , false)
-                        set s__Dash_onMove[dash1]=(87)
-                        set s__Dash_onEnd[dash1]=(88)
+                        set s__Dash_onMove[dash1]=(94)
+                        set s__Dash_onEnd[dash1]=(95)
                     set i=i + 1
                     endloop
                 endif
@@ -9053,7 +9308,7 @@ endfunction
                 call s__Units_AnimeSpeed(u,1)
                 call s__Units_Pause(u,false)
             endfunction
-        function s__WindWalk__WindWalk_W takes integer e returns nothing
+        function s__WindWalk___WindWalk_W takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer i
             local integer dash
@@ -9066,8 +9321,8 @@ endfunction
                 call s__Units_SetH(mj,70)
                 call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                 set dash=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_SUB , 40 , true , false)
-                set s__Dash_onMove[dash]=(89)
-                set s__Dash_onEnd[dash]=(90)
+                set s__Dash_onMove[dash]=(96)
+                set s__Dash_onEnd[dash]=(97)
             set i=i + 1
             endloop
             call s__Units_SetH(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e009' , 'A00K' , 0 , s__Units_X(u) , s__Units_Y(u) , s__Units_F(u) , 2 , 0.5 , 2.5 , "stand" , "tx.mdx"),80)
@@ -9075,13 +9330,13 @@ endfunction
             call s__Units_AnimeId(u,6)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) + 180 , 300 , s__Dash_SUB , 50 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onEnd[dash]=(91)
+            set s__Dash_onEnd[dash]=(98)
         endfunction
-            function s__WindWalk__WindWalk_anon__65 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__65 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 call s__Units_Alpha(u,0)
             endfunction
-                    function s__WindWalk__WindWalk_anon__68 takes integer dash returns nothing
+                    function s__WindWalk___WindWalk_anon__68 takes integer dash returns nothing
                         local integer u=s__Units_Get(s__Dash_Unit[dash])
                         local unit k=GroupFind(s__Units_unit[u] , s__Units_X(u) , s__Units_Y(u) , 60 , false , false)
                         if ( k != null ) then
@@ -9092,12 +9347,12 @@ endfunction
                         endif
                         set k=null
                     endfunction
-                    function s__WindWalk__WindWalk_anon__69 takes integer dash returns nothing
+                    function s__WindWalk___WindWalk_anon__69 takes integer dash returns nothing
                         local integer u=s__Units_Get(s__Dash_Unit[dash])
                         call s__Units_Anime(u,"death")
                         call s__Units_Life(u,0.5)
                     endfunction
-                function s__WindWalk__WindWalk_anon__67 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__67 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     local integer mj
                     local integer dash1
@@ -9107,17 +9362,17 @@ endfunction
                         call s__Units_Position(mj,s__Units_X(u) , s__Units_Y(u) , true)
                         call s__Units_SetH(mj,50)
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(u) , 900 , s__Dash_ADD , 50 , true , false)
-                        set s__Dash_onMove[dash1]=(92)
-                        set s__Dash_onEnd[dash1]=(93)
+                        set s__Dash_onMove[dash1]=(99)
+                        set s__Dash_onEnd[dash1]=(100)
                     endif
                 endfunction
-                function s__WindWalk__WindWalk_anon__70 takes integer dash returns nothing
+                function s__WindWalk___WindWalk_anon__70 takes integer dash returns nothing
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                     call s__Units_AnimeSpeed(u,1)
                     call s__Units_Alpha(u,255)
                 endfunction
-            function s__WindWalk__WindWalk_anon__66 takes integer dash returns nothing
+            function s__WindWalk___WindWalk_anon__66 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer dash1
                 call s__Units_Alpha(u,255)
@@ -9127,22 +9382,22 @@ endfunction
                     call s__Units_AnimeId(u,6)
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) - 90 , 400 , s__Dash_ADD , 100 , true , false)
                     set s__Dash_Obj[dash1]=s__Dash_Obj[dash]
-                    set s__Dash_onMove[dash1]=(94)
-                    set s__Dash_onEnd[dash1]=(95)
+                    set s__Dash_onMove[dash1]=(101)
+                    set s__Dash_onEnd[dash1]=(102)
                 else
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                 endif
             endfunction
-        function s__WindWalk__WindWalk_Q takes integer e returns nothing
+        function s__WindWalk___WindWalk_Q takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer dash
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl", s__Spell_Spell[e], "origin"))
             set dash=s__Dash_Start(s__Spell_Spell[e] , s__Units_F(u) + 90 , 200 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(96)
-            set s__Dash_onEnd[dash]=(97)
+            set s__Dash_onMove[dash]=(103)
+            set s__Dash_onEnd[dash]=(104)
         endfunction
-        function s__WindWalk__WindWalk_HERO_START takes integer e returns nothing
+        function s__WindWalk___WindWalk_HERO_START takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             if ( s__Spell_Id[e] == 'A00K' ) then
                 call s__Units_AnimeSpeed(u,4)
@@ -9154,20 +9409,20 @@ endfunction
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__WindWalk__WindWalk_HERO_STOP takes integer e returns nothing
+        function s__WindWalk___WindWalk_HERO_STOP takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             call s__Units_AnimeSpeed(u,1)
             call s__Spell_Destroy(e)
         endfunction
-        function s__WindWalk__WindWalk_onInit takes nothing returns nothing
-            call s__Spell_On(s__Spell_onSpell , 'A00M' , (98))
-            call s__Spell_On(s__Spell_onSpell , 'A00L' , (99))
-            call s__Spell_On(s__Spell_onSpell , 'A00J' , (100))
-            call s__Spell_On(s__Spell_onSpell , 'A00K' , (101))
-            call s__Spell_On(s__Spell_onReady , 'A00K' , (102))
-            call s__Spell_On(s__Spell_onStop , 'A00K' , (103))
-            call s__Spell_On(s__Spell_onReady , 'A00M' , (102))
-            call s__Spell_On(s__Spell_onStop , 'A00M' , (103))
+        function s__WindWalk___WindWalk_onInit takes nothing returns nothing
+            call s__Spell_On(s__Spell_onSpell , 'A00M' , (105))
+            call s__Spell_On(s__Spell_onSpell , 'A00L' , (106))
+            call s__Spell_On(s__Spell_onSpell , 'A00J' , (107))
+            call s__Spell_On(s__Spell_onSpell , 'A00K' , (108))
+            call s__Spell_On(s__Spell_onReady , 'A00K' , (109))
+            call s__Spell_On(s__Spell_onStop , 'A00K' , (110))
+            call s__Spell_On(s__Spell_onReady , 'A00M' , (109))
+            call s__Spell_On(s__Spell_onStop , 'A00M' , (110))
         endfunction
 
 //library WindWalk ends
@@ -9251,8 +9506,8 @@ endfunction
                             call s__Units_Position(mj,s__Dash_X[dash] , s__Dash_Y[dash] , true)
                             set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 1800 , s__Dash_SUB , 13 , true , false)
                             set s__Dash_Obj[dash1]=s__Units_Get(k)
-                            set s__Dash_onMove[dash1]=(104)
-                            set s__Dash_onEnd[dash1]=(105)
+                            set s__Dash_onMove[dash1]=(111)
+                            set s__Dash_onEnd[dash1]=(112)
                         endif
                     endif
                     set k=null
@@ -9285,8 +9540,8 @@ endfunction
                 call s__Units_SetH(mj,100)
                 call s__Units_Position(mj,x , y , true)
                 set dash=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 1800 , s__Dash_SUB , 60 , true , false)
-                set s__Dash_onMove[dash]=(106)
-                set s__Dash_onEnd[dash]=(107)
+                set s__Dash_onMove[dash]=(113)
+                set s__Dash_onEnd[dash]=(114)
             set i=i + 1
             endloop
             call s__Spell_Destroy(e)
@@ -9400,8 +9655,8 @@ endfunction
             call s__Units_AnimeId(u,9)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(108)
-            set s__Dash_onEnd[dash]=(109)
+            set s__Dash_onMove[dash]=(115)
+            set s__Dash_onEnd[dash]=(116)
         endfunction
         function s__ZZ___ZZ_Q takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -9452,16 +9707,16 @@ endfunction
             call s__Spell_Destroy(e)
         endfunction
         function s__ZZ___ZZ_onInit takes nothing returns nothing
-            call s__Spell_On(s__Spell_onSpell , 'A00S' , (110))
-            call s__Spell_On(s__Spell_onSpell , 'A00R' , (111))
-            call s__Spell_On(s__Spell_onSpell , 'A00P' , (112))
-            call s__Spell_On(s__Spell_onSpell , 'A00O' , (113))
-            call s__Spell_On(s__Spell_onStart , 'A00O' , (114))
-            call s__Spell_On(s__Spell_onStop , 'A00O' , (115))
-            call s__Spell_On(s__Spell_onStart , 'A00R' , (114))
-            call s__Spell_On(s__Spell_onStop , 'A00R' , (115))
-            call s__Spell_On(s__Spell_onStart , 'A00S' , (114))
-            call s__Spell_On(s__Spell_onStop , 'A00S' , (115))
+            call s__Spell_On(s__Spell_onSpell , 'A00S' , (117))
+            call s__Spell_On(s__Spell_onSpell , 'A00R' , (118))
+            call s__Spell_On(s__Spell_onSpell , 'A00P' , (119))
+            call s__Spell_On(s__Spell_onSpell , 'A00O' , (120))
+            call s__Spell_On(s__Spell_onStart , 'A00O' , (121))
+            call s__Spell_On(s__Spell_onStop , 'A00O' , (122))
+            call s__Spell_On(s__Spell_onStart , 'A00R' , (121))
+            call s__Spell_On(s__Spell_onStop , 'A00R' , (122))
+            call s__Spell_On(s__Spell_onStart , 'A00S' , (121))
+            call s__Spell_On(s__Spell_onStop , 'A00S' , (122))
         endfunction
 
 //library ZZ ends
@@ -9738,7 +9993,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Fri Dec 28 18:26:50 2018
+//   Date: Fri Dec 28 22:01:44 2018
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -9847,6 +10102,7 @@ function CreateNeutralPassive takes nothing returns nothing
     set u=CreateUnit(p, 'H004', - 260.0, - 183.6, 345.630)
     set u=CreateUnit(p, 'H005', - 383.1, - 187.9, 244.660)
     set u=CreateUnit(p, 'H006', - 35.1, - 364.2, 273.830)
+    set u=CreateUnit(p, 'H007', - 173.7, - 357.1, 351.410)
 endfunction
 //===========================================================================
 function CreatePlayerBuildings takes nothing returns nothing
@@ -10161,7 +10417,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs629983593")
+call ExecuteFunc("jasshelper__initstructs642874421")
 call ExecuteFunc("BuyStrAgiInt__onInit")
 call ExecuteFunc("Teams__onInit")
 call ExecuteFunc("TerrainPathability__Init")
@@ -12603,7 +12859,127 @@ function sa___prototype1_s__SL___SL_HERO_START takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__54 takes nothing returns boolean
+function sa___prototype1_s__SwordMaster___SwordMaster_anon__110 takes nothing returns boolean
+ local integer dash=f__arg_integer1
+
+                        set s__Dash_Angle[dash]=s__Units_F(s__Units_Get(s__Dash_Unit[dash]))
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_anon__111 takes nothing returns boolean
+ local integer dash=f__arg_integer1
+
+                local integer data=(s__Dash_Obj[dash])
+                local integer u=(s___Data_c[s__Data_c[data]])
+                local integer mj
+                set s__Dash_Angle[dash]=s__Units_F(u)
+                if ( s__Dash_Speed[dash] < 2 ) then
+                    call s__Dash_Stop(dash)
+                else
+                    call GroupEnumUnitsInRange(tmp_group, s__Dash_X[dash], s__Dash_Y[dash], 150, Condition(function GroupIsAliveNotAloc))
+                    loop
+                    exitwhen ( FirstOfGroup(tmp_group) == null )
+                        set mj=s__Units_Get(FirstOfGroup(tmp_group))
+                        call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                        if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then
+                            if ( IsUnitInGroup(s__Units_unit[mj], s___Data_g[s__Data_g[data]]) != true ) then
+                                call GroupAddUnit(s___Data_g[s__Data_g[data]], s__Units_unit[mj])
+                                call DestroyEffect(AddSpecialEffectTarget("qqqqq.mdl", s__Units_unit[mj], "chest"))
+                                call s__Units_Damage(u,s__Units_unit[mj] , s__Damage_Physics , 'A01D' , s__Units_Agi(u,true) * 15.0)
+                                call s__HitFlys_Add(s__Units_unit[mj] , 25)
+                            endif
+                        endif
+                    endloop
+                    call GroupClear(tmp_group)
+                endif
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_anon__112 takes nothing returns boolean
+ local integer dash=f__arg_integer1
+
+                local integer data=(s__Dash_Obj[dash])
+                local integer u=(s___Data_c[s__Data_c[data]])
+                call DestroyGroup(s___Data_g[s__Data_g[data]])
+                set s___Data_g[s__Data_g[data]]=null
+                call s__Units_AnimeSpeed(u,1)
+                call s__Units_Pause(u,false)
+                call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                call s__Data_Destroy(data)
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_anon__114 takes nothing returns boolean
+ local integer dash=f__arg_integer1
+
+                    set s__Dash_Angle[dash]=s__Dash_Angle[dash] + 4
+                    if ( s__Dash_Obj[dash] == 0 ) then
+                        set s__Dash_Obj[dash]=3
+                        call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", s__Dash_X[dash], s__Dash_Y[dash]))
+                    else
+                        set s__Dash_Obj[dash]=s__Dash_Obj[dash] - 1
+                    endif
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_W takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local timer t=NewTimer()
+            local integer data=s__Data_create('A01E')
+            call s__Units_Pause(u,true)
+            call s__Units_Pause(u,false)
+            call SetUnitMoveSpeed(s__Units_unit[u], GetUnitMoveSpeed(s__Units_unit[u]) + 100)
+            call s__Units_Alpha(u,0)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_g[s__Data_g[data]]=CreateGroup()
+            set u=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01E' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 10 , 1.15 , 2 , "stand" , "units\\orc\\HeroBladeMaster\\HeroBladeMaster.mdl")
+            call s__Units_AnimeId(u,13)
+            set s___Data_c[s__Data_c[data]+2]=u
+            set s___Data_r[s__Data_r[data]]=1
+            call SetTimerData(t , data)
+            call TimerStart(t, 0.02, true, function s__SwordMaster___SwordMaster_anon__113)
+            set t=null
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_E takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer data=s__Data_create('A01D')
+            local integer dash
+            call s__Units_Pause(u,true)
+            call s__Units_AnimeId(u,10)
+            call s__Units_AnimeSpeed(u,1.5)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_g[s__Data_g[data]]=CreateGroup()
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", s__Units_unit[u], "hand right"))
+            call s__HitFlys_Add(s__Units_unit[u] , 25)
+            set dash=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) , 1200 , s__Dash_SUB , 45 , true , false)
+            set s__Dash_Obj[dash]=data
+            set s__Dash_onMove[dash]=(81)
+            set s__Dash_onEnd[dash]=(82)
+    return true
+endfunction
+function sa___prototype1_s__SwordMaster___SwordMaster_R takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+            local integer u=s__Units_Get(s__Spell_Spell[e])
+            local integer data=s__Data_create('A01F')
+            local timer t=NewTimer()
+            call s__Units_Pause(u,true)
+            call s__Units_AnimeId(u,10)
+            set s___Data_c[s__Data_c[data]]=u
+            set s___Data_c[s__Data_c[data]+1]=e
+            set s___Data_r[s__Data_r[data]]=45
+            set s___Data_r[s__Data_r[data]+1]=0
+            set s___Data_r[s__Data_r[data]+2]=0
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", s__Units_unit[u], "hand right"))
+            call SetTimerData(t , data)
+            call TimerStart(t, 1, false, function s__SwordMaster___SwordMaster_anon__108)
+            set t=null
+    return true
+endfunction
+function sa___prototype1_s__WindWalk___WindWalk_anon__54 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -12631,7 +13007,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__54 takes nothing returns bo
                     endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__55 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__55 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -12645,7 +13021,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__55 takes nothing returns bo
                     call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__53 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__53 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -12662,8 +13038,8 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__53 takes nothing returns bo
                     set s___Data_c[s__Data_c[data]+2]=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00M' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , s__Dash_Angle[dash] , 3600 , 1.5 , 1 , "stand" , "wind2.mdx")
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Util_XY(s__Units_unit[u] , k) , 1600 , s__Dash_SUB , 60 , true , false)
                     set s__Dash_Obj[dash1]=data
-                    set s__Dash_onMove[dash1]=(80)
-                    set s__Dash_onEnd[dash1]=(81)
+                    set s__Dash_onMove[dash1]=(87)
+                    set s__Dash_onEnd[dash1]=(88)
                 endif
                 set k=null
                 if ( s__Dash_Speed[dash] < 4 ) then
@@ -12671,7 +13047,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__53 takes nothing returns bo
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__56 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__56 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12685,7 +13061,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__56 takes nothing returns bo
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__58 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__58 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12699,7 +13075,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__58 takes nothing returns bo
                     set k=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__59 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__59 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12707,7 +13083,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__59 takes nothing returns bo
                     call s__Units_Life(u,0.5)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__57 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__57 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12720,11 +13096,11 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__57 takes nothing returns bo
                 call s__Units_SetH(mj,70)
                 call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                 set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_ADD , 60 , true , false)
-                set s__Dash_onMove[dash1]=(84)
-                set s__Dash_onEnd[dash1]=(85)
+                set s__Dash_onMove[dash1]=(91)
+                set s__Dash_onEnd[dash1]=(92)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__63 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__63 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12738,7 +13114,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__63 takes nothing returns bo
                     set k=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__64 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__64 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12746,7 +13122,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__64 takes nothing returns bo
                     call s__Units_Life(u,0.5)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__60 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__60 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12763,7 +13139,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__60 takes nothing returns bo
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__61 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__61 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12771,7 +13147,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__61 takes nothing returns bo
                 call s__Units_Life(u,0.5)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__62 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__62 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12786,8 +13162,8 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__62 takes nothing returns bo
                         call s__Units_SetH(mj,70)
                         call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_ADD , 80 , true , false)
-                        set s__Dash_onMove[dash1]=(87)
-                        set s__Dash_onEnd[dash1]=(88)
+                        set s__Dash_onMove[dash1]=(94)
+                        set s__Dash_onEnd[dash1]=(95)
                     set i=i + 1
                     endloop
                 endif
@@ -12796,7 +13172,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__62 takes nothing returns bo
                 call s__Units_Pause(u,false)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__68 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__68 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12810,7 +13186,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__68 takes nothing returns bo
                         set k=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__69 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__69 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12818,7 +13194,7 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__69 takes nothing returns bo
                         call s__Units_Life(u,0.5)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__67 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__67 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12830,12 +13206,12 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__67 takes nothing returns bo
                         call s__Units_Position(mj,s__Units_X(u) , s__Units_Y(u) , true)
                         call s__Units_SetH(mj,50)
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(u) , 900 , s__Dash_ADD , 50 , true , false)
-                        set s__Dash_onMove[dash1]=(92)
-                        set s__Dash_onEnd[dash1]=(93)
+                        set s__Dash_onMove[dash1]=(99)
+                        set s__Dash_onEnd[dash1]=(100)
                     endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__70 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__70 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12844,14 +13220,14 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__70 takes nothing returns bo
                     call s__Units_Alpha(u,255)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__65 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__65 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 call s__Units_Alpha(u,0)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_anon__66 takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_anon__66 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -12863,14 +13239,14 @@ function sa___prototype1_s__WindWalk__WindWalk_anon__66 takes nothing returns bo
                     call s__Units_AnimeId(u,6)
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) - 90 , 400 , s__Dash_ADD , 100 , true , false)
                     set s__Dash_Obj[dash1]=s__Dash_Obj[dash]
-                    set s__Dash_onMove[dash1]=(94)
-                    set s__Dash_onEnd[dash1]=(95)
+                    set s__Dash_onMove[dash1]=(101)
+                    set s__Dash_onEnd[dash1]=(102)
                 else
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_R takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -12884,11 +13260,11 @@ function sa___prototype1_s__WindWalk__WindWalk_R takes nothing returns boolean
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(82)
-            set s__Dash_onEnd[dash]=(83)
+            set s__Dash_onMove[dash]=(89)
+            set s__Dash_onEnd[dash]=(90)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_E takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -12905,11 +13281,11 @@ function sa___prototype1_s__WindWalk__WindWalk_E takes nothing returns boolean
                 set s___Data_r[s__Data_r[data]]=0.02
             endif
             call SetTimerData(t , data)
-            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
+            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
             set t=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_Q takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -12917,11 +13293,11 @@ function sa___prototype1_s__WindWalk__WindWalk_Q takes nothing returns boolean
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl", s__Spell_Spell[e], "origin"))
             set dash=s__Dash_Start(s__Spell_Spell[e] , s__Units_F(u) + 90 , 200 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(96)
-            set s__Dash_onEnd[dash]=(97)
+            set s__Dash_onMove[dash]=(103)
+            set s__Dash_onEnd[dash]=(104)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_W takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -12936,8 +13312,8 @@ function sa___prototype1_s__WindWalk__WindWalk_W takes nothing returns boolean
                 call s__Units_SetH(mj,70)
                 call s__Units_Position(mj,s__Units_X(mj) , s__Units_Y(mj) , true)
                 set dash=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 900 , s__Dash_SUB , 40 , true , false)
-                set s__Dash_onMove[dash]=(89)
-                set s__Dash_onEnd[dash]=(90)
+                set s__Dash_onMove[dash]=(96)
+                set s__Dash_onEnd[dash]=(97)
             set i=i + 1
             endloop
             call s__Units_SetH(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e009' , 'A00K' , 0 , s__Units_X(u) , s__Units_Y(u) , s__Units_F(u) , 2 , 0.5 , 2.5 , "stand" , "tx.mdx"),80)
@@ -12945,10 +13321,10 @@ function sa___prototype1_s__WindWalk__WindWalk_W takes nothing returns boolean
             call s__Units_AnimeId(u,6)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Units_F(u) + 180 , 300 , s__Dash_SUB , 50 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onEnd[dash]=(91)
+            set s__Dash_onEnd[dash]=(98)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_HERO_START takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -12963,7 +13339,7 @@ function sa___prototype1_s__WindWalk__WindWalk_HERO_START takes nothing returns 
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -13031,8 +13407,8 @@ function sa___prototype1_s__ZZ___ZZ_anon__71 takes nothing returns boolean
                             call s__Units_Position(mj,s__Dash_X[dash] , s__Dash_Y[dash] , true)
                             set dash1=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 1800 , s__Dash_SUB , 13 , true , false)
                             set s__Dash_Obj[dash1]=s__Units_Get(k)
-                            set s__Dash_onMove[dash1]=(104)
-                            set s__Dash_onEnd[dash1]=(105)
+                            set s__Dash_onMove[dash1]=(111)
+                            set s__Dash_onEnd[dash1]=(112)
                         endif
                     endif
                     set k=null
@@ -13121,8 +13497,8 @@ function sa___prototype1_s__ZZ___ZZ_R takes nothing returns boolean
                 call s__Units_SetH(mj,100)
                 call s__Units_Position(mj,x , y , true)
                 set dash=s__Dash_Start(s__Units_unit[mj] , s__Units_F(mj) , 1800 , s__Dash_SUB , 60 , true , false)
-                set s__Dash_onMove[dash]=(106)
-                set s__Dash_onEnd[dash]=(107)
+                set s__Dash_onMove[dash]=(113)
+                set s__Dash_onEnd[dash]=(114)
             set i=i + 1
             endloop
             call s__Spell_Destroy(e)
@@ -13158,8 +13534,8 @@ function sa___prototype1_s__ZZ___ZZ_W takes nothing returns boolean
             call s__Units_AnimeId(u,9)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(108)
-            set s__Dash_onEnd[dash]=(109)
+            set s__Dash_onMove[dash]=(115)
+            set s__Dash_onEnd[dash]=(116)
     return true
 endfunction
 function sa___prototype1_s__ZZ___ZZ_Q takes nothing returns boolean
@@ -13287,7 +13663,7 @@ function sa___prototype35_s__Respawn__Respawn_PressSnyc takes nothing returns bo
     return true
 endfunction
 
-function jasshelper__initstructs629983593 takes nothing returns nothing
+function jasshelper__initstructs642874421 takes nothing returns nothing
     set st__Respawn__Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn__Respawn_Flush,Condition( function sa__Respawn__Respawn_Flush))
     set st__Respawn__Respawn_Show=CreateTrigger()
@@ -13649,113 +14025,134 @@ function jasshelper__initstructs629983593 takes nothing returns nothing
     call TriggerAddAction(st___prototype1[79],function sa___prototype1_s__SL___SL_HERO_START)
     call TriggerAddCondition(st___prototype1[79],Condition(function sa___prototype1_s__SL___SL_HERO_START))
     set st___prototype1[80]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[80],function sa___prototype1_s__WindWalk__WindWalk_anon__54)
-    call TriggerAddCondition(st___prototype1[80],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__54))
+    call TriggerAddAction(st___prototype1[80],function sa___prototype1_s__SwordMaster___SwordMaster_anon__110)
+    call TriggerAddCondition(st___prototype1[80],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_anon__110))
     set st___prototype1[81]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[81],function sa___prototype1_s__WindWalk__WindWalk_anon__55)
-    call TriggerAddCondition(st___prototype1[81],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__55))
+    call TriggerAddAction(st___prototype1[81],function sa___prototype1_s__SwordMaster___SwordMaster_anon__111)
+    call TriggerAddCondition(st___prototype1[81],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_anon__111))
     set st___prototype1[82]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[82],function sa___prototype1_s__WindWalk__WindWalk_anon__53)
-    call TriggerAddCondition(st___prototype1[82],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__53))
+    call TriggerAddAction(st___prototype1[82],function sa___prototype1_s__SwordMaster___SwordMaster_anon__112)
+    call TriggerAddCondition(st___prototype1[82],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_anon__112))
     set st___prototype1[83]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[83],function sa___prototype1_s__WindWalk__WindWalk_anon__56)
-    call TriggerAddCondition(st___prototype1[83],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__56))
+    call TriggerAddAction(st___prototype1[83],function sa___prototype1_s__SwordMaster___SwordMaster_anon__114)
+    call TriggerAddCondition(st___prototype1[83],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_anon__114))
     set st___prototype1[84]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[84],function sa___prototype1_s__WindWalk__WindWalk_anon__58)
-    call TriggerAddCondition(st___prototype1[84],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__58))
+    call TriggerAddAction(st___prototype1[84],function sa___prototype1_s__SwordMaster___SwordMaster_W)
+    call TriggerAddCondition(st___prototype1[84],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_W))
     set st___prototype1[85]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[85],function sa___prototype1_s__WindWalk__WindWalk_anon__59)
-    call TriggerAddCondition(st___prototype1[85],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__59))
+    call TriggerAddAction(st___prototype1[85],function sa___prototype1_s__SwordMaster___SwordMaster_E)
+    call TriggerAddCondition(st___prototype1[85],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_E))
     set st___prototype1[86]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[86],function sa___prototype1_s__WindWalk__WindWalk_anon__57)
-    call TriggerAddCondition(st___prototype1[86],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__57))
+    call TriggerAddAction(st___prototype1[86],function sa___prototype1_s__SwordMaster___SwordMaster_R)
+    call TriggerAddCondition(st___prototype1[86],Condition(function sa___prototype1_s__SwordMaster___SwordMaster_R))
     set st___prototype1[87]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[87],function sa___prototype1_s__WindWalk__WindWalk_anon__63)
-    call TriggerAddCondition(st___prototype1[87],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__63))
+    call TriggerAddAction(st___prototype1[87],function sa___prototype1_s__WindWalk___WindWalk_anon__54)
+    call TriggerAddCondition(st___prototype1[87],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__54))
     set st___prototype1[88]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[88],function sa___prototype1_s__WindWalk__WindWalk_anon__64)
-    call TriggerAddCondition(st___prototype1[88],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__64))
+    call TriggerAddAction(st___prototype1[88],function sa___prototype1_s__WindWalk___WindWalk_anon__55)
+    call TriggerAddCondition(st___prototype1[88],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__55))
     set st___prototype1[89]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[89],function sa___prototype1_s__WindWalk__WindWalk_anon__60)
-    call TriggerAddCondition(st___prototype1[89],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__60))
+    call TriggerAddAction(st___prototype1[89],function sa___prototype1_s__WindWalk___WindWalk_anon__53)
+    call TriggerAddCondition(st___prototype1[89],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__53))
     set st___prototype1[90]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[90],function sa___prototype1_s__WindWalk__WindWalk_anon__61)
-    call TriggerAddCondition(st___prototype1[90],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__61))
+    call TriggerAddAction(st___prototype1[90],function sa___prototype1_s__WindWalk___WindWalk_anon__56)
+    call TriggerAddCondition(st___prototype1[90],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__56))
     set st___prototype1[91]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[91],function sa___prototype1_s__WindWalk__WindWalk_anon__62)
-    call TriggerAddCondition(st___prototype1[91],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__62))
+    call TriggerAddAction(st___prototype1[91],function sa___prototype1_s__WindWalk___WindWalk_anon__58)
+    call TriggerAddCondition(st___prototype1[91],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__58))
     set st___prototype1[92]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[92],function sa___prototype1_s__WindWalk__WindWalk_anon__68)
-    call TriggerAddCondition(st___prototype1[92],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__68))
+    call TriggerAddAction(st___prototype1[92],function sa___prototype1_s__WindWalk___WindWalk_anon__59)
+    call TriggerAddCondition(st___prototype1[92],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__59))
     set st___prototype1[93]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[93],function sa___prototype1_s__WindWalk__WindWalk_anon__69)
-    call TriggerAddCondition(st___prototype1[93],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__69))
+    call TriggerAddAction(st___prototype1[93],function sa___prototype1_s__WindWalk___WindWalk_anon__57)
+    call TriggerAddCondition(st___prototype1[93],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__57))
     set st___prototype1[94]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[94],function sa___prototype1_s__WindWalk__WindWalk_anon__67)
-    call TriggerAddCondition(st___prototype1[94],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__67))
+    call TriggerAddAction(st___prototype1[94],function sa___prototype1_s__WindWalk___WindWalk_anon__63)
+    call TriggerAddCondition(st___prototype1[94],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__63))
     set st___prototype1[95]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[95],function sa___prototype1_s__WindWalk__WindWalk_anon__70)
-    call TriggerAddCondition(st___prototype1[95],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__70))
+    call TriggerAddAction(st___prototype1[95],function sa___prototype1_s__WindWalk___WindWalk_anon__64)
+    call TriggerAddCondition(st___prototype1[95],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__64))
     set st___prototype1[96]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[96],function sa___prototype1_s__WindWalk__WindWalk_anon__65)
-    call TriggerAddCondition(st___prototype1[96],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__65))
+    call TriggerAddAction(st___prototype1[96],function sa___prototype1_s__WindWalk___WindWalk_anon__60)
+    call TriggerAddCondition(st___prototype1[96],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__60))
     set st___prototype1[97]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__WindWalk__WindWalk_anon__66)
-    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__66))
+    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__WindWalk___WindWalk_anon__61)
+    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__61))
     set st___prototype1[98]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__WindWalk__WindWalk_R)
-    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__WindWalk__WindWalk_R))
+    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__WindWalk___WindWalk_anon__62)
+    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__62))
     set st___prototype1[99]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__WindWalk__WindWalk_E)
-    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__WindWalk__WindWalk_E))
+    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__WindWalk___WindWalk_anon__68)
+    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__68))
     set st___prototype1[100]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__WindWalk__WindWalk_Q)
-    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__WindWalk__WindWalk_Q))
+    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__WindWalk___WindWalk_anon__69)
+    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__69))
     set st___prototype1[101]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__WindWalk__WindWalk_W)
-    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__WindWalk__WindWalk_W))
+    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__WindWalk___WindWalk_anon__67)
+    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__67))
     set st___prototype1[102]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[102],function sa___prototype1_s__WindWalk__WindWalk_HERO_START)
-    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_s__WindWalk__WindWalk_HERO_START))
+    call TriggerAddAction(st___prototype1[102],function sa___prototype1_s__WindWalk___WindWalk_anon__70)
+    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__70))
     set st___prototype1[103]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[103],function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP))
+    call TriggerAddAction(st___prototype1[103],function sa___prototype1_s__WindWalk___WindWalk_anon__65)
+    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__65))
     set st___prototype1[104]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[104],function sa___prototype1_s__ZZ___ZZ_anon__72)
-    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_s__ZZ___ZZ_anon__72))
+    call TriggerAddAction(st___prototype1[104],function sa___prototype1_s__WindWalk___WindWalk_anon__66)
+    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__66))
     set st___prototype1[105]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[105],function sa___prototype1_s__ZZ___ZZ_anon__73)
-    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_s__ZZ___ZZ_anon__73))
+    call TriggerAddAction(st___prototype1[105],function sa___prototype1_s__WindWalk___WindWalk_R)
+    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_s__WindWalk___WindWalk_R))
     set st___prototype1[106]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[106],function sa___prototype1_s__ZZ___ZZ_anon__71)
-    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_s__ZZ___ZZ_anon__71))
+    call TriggerAddAction(st___prototype1[106],function sa___prototype1_s__WindWalk___WindWalk_E)
+    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_s__WindWalk___WindWalk_E))
     set st___prototype1[107]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[107],function sa___prototype1_s__ZZ___ZZ_anon__74)
-    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_s__ZZ___ZZ_anon__74))
+    call TriggerAddAction(st___prototype1[107],function sa___prototype1_s__WindWalk___WindWalk_Q)
+    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_s__WindWalk___WindWalk_Q))
     set st___prototype1[108]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[108],function sa___prototype1_s__ZZ___ZZ_anon__76)
-    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_s__ZZ___ZZ_anon__76))
+    call TriggerAddAction(st___prototype1[108],function sa___prototype1_s__WindWalk___WindWalk_W)
+    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_s__WindWalk___WindWalk_W))
     set st___prototype1[109]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[109],function sa___prototype1_s__ZZ___ZZ_anon__77)
-    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_s__ZZ___ZZ_anon__77))
+    call TriggerAddAction(st___prototype1[109],function sa___prototype1_s__WindWalk___WindWalk_HERO_START)
+    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_s__WindWalk___WindWalk_HERO_START))
     set st___prototype1[110]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[110],function sa___prototype1_s__ZZ___ZZ_R)
-    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_s__ZZ___ZZ_R))
+    call TriggerAddAction(st___prototype1[110],function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP))
     set st___prototype1[111]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[111],function sa___prototype1_s__ZZ___ZZ_E)
-    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_s__ZZ___ZZ_E))
+    call TriggerAddAction(st___prototype1[111],function sa___prototype1_s__ZZ___ZZ_anon__72)
+    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_s__ZZ___ZZ_anon__72))
     set st___prototype1[112]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[112],function sa___prototype1_s__ZZ___ZZ_W)
-    call TriggerAddCondition(st___prototype1[112],Condition(function sa___prototype1_s__ZZ___ZZ_W))
+    call TriggerAddAction(st___prototype1[112],function sa___prototype1_s__ZZ___ZZ_anon__73)
+    call TriggerAddCondition(st___prototype1[112],Condition(function sa___prototype1_s__ZZ___ZZ_anon__73))
     set st___prototype1[113]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[113],function sa___prototype1_s__ZZ___ZZ_Q)
-    call TriggerAddCondition(st___prototype1[113],Condition(function sa___prototype1_s__ZZ___ZZ_Q))
+    call TriggerAddAction(st___prototype1[113],function sa___prototype1_s__ZZ___ZZ_anon__71)
+    call TriggerAddCondition(st___prototype1[113],Condition(function sa___prototype1_s__ZZ___ZZ_anon__71))
     set st___prototype1[114]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[114],function sa___prototype1_s__ZZ___ZZ_HERO_START)
-    call TriggerAddCondition(st___prototype1[114],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_START))
+    call TriggerAddAction(st___prototype1[114],function sa___prototype1_s__ZZ___ZZ_anon__74)
+    call TriggerAddCondition(st___prototype1[114],Condition(function sa___prototype1_s__ZZ___ZZ_anon__74))
     set st___prototype1[115]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[115],function sa___prototype1_s__ZZ___ZZ_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[115],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_STOP))
+    call TriggerAddAction(st___prototype1[115],function sa___prototype1_s__ZZ___ZZ_anon__76)
+    call TriggerAddCondition(st___prototype1[115],Condition(function sa___prototype1_s__ZZ___ZZ_anon__76))
+    set st___prototype1[116]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[116],function sa___prototype1_s__ZZ___ZZ_anon__77)
+    call TriggerAddCondition(st___prototype1[116],Condition(function sa___prototype1_s__ZZ___ZZ_anon__77))
+    set st___prototype1[117]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[117],function sa___prototype1_s__ZZ___ZZ_R)
+    call TriggerAddCondition(st___prototype1[117],Condition(function sa___prototype1_s__ZZ___ZZ_R))
+    set st___prototype1[118]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[118],function sa___prototype1_s__ZZ___ZZ_E)
+    call TriggerAddCondition(st___prototype1[118],Condition(function sa___prototype1_s__ZZ___ZZ_E))
+    set st___prototype1[119]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[119],function sa___prototype1_s__ZZ___ZZ_W)
+    call TriggerAddCondition(st___prototype1[119],Condition(function sa___prototype1_s__ZZ___ZZ_W))
+    set st___prototype1[120]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[120],function sa___prototype1_s__ZZ___ZZ_Q)
+    call TriggerAddCondition(st___prototype1[120],Condition(function sa___prototype1_s__ZZ___ZZ_Q))
+    set st___prototype1[121]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[121],function sa___prototype1_s__ZZ___ZZ_HERO_START)
+    call TriggerAddCondition(st___prototype1[121],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_START))
+    set st___prototype1[122]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[122],function sa___prototype1_s__ZZ___ZZ_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[122],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_STOP))
     set st___prototype46[6]=CreateTrigger()
     call TriggerAddAction(st___prototype46[6],function sa___prototype46_s__Respawn__Respawn_Death)
     call TriggerAddCondition(st___prototype46[6],Condition(function sa___prototype46_s__Respawn__Respawn_Death))
@@ -13765,6 +14162,7 @@ function jasshelper__initstructs629983593 takes nothing returns nothing
     set st___prototype35[6]=CreateTrigger()
     call TriggerAddAction(st___prototype35[6],function sa___prototype35_s__Respawn__Respawn_PressSnyc)
     call TriggerAddCondition(st___prototype35[6],Condition(function sa___prototype35_s__Respawn__Respawn_PressSnyc))
+
 
 
 
@@ -13838,7 +14236,8 @@ function jasshelper__initstructs629983593 takes nothing returns nothing
     call ExecuteFunc("s__KillUi_onInit")
     call ExecuteFunc("s__OrdinaryWizard__OrdinaryWizard_onInit")
     call ExecuteFunc("s__SL___SL_onInit")
-    call ExecuteFunc("s__WindWalk__WindWalk_onInit")
+    call ExecuteFunc("s__SwordMaster___SwordMaster_onInit")
+    call ExecuteFunc("s__WindWalk___WindWalk_onInit")
     call ExecuteFunc("s__ZZ___ZZ_onInit")
     call ExecuteFunc("s__Respawn__Respawn_onInit")
 endfunction
