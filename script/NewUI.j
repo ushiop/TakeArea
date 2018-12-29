@@ -22,7 +22,7 @@ library NewUI requires KillUi{
         DzFrameSetAllPoints(DzFrameGetUpperButtonBarButton(0) ,LeftTopButton); 
         //修正击杀框的位置
         KillUi.Move(0.378); 
-        //消息框
+        //消息框 
         DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, 0, 0 );
         //显示小地图 war3mapMap.blp 小地图透明问题暂时解决不了
         MiniMapBackground= DzCreateFrameByTagName("BACKDROP", "NewUI_MiniMap_Background",GameUI, "ShowInfo", 0);
