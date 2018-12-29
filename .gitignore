@@ -2,3 +2,4 @@ map/war3map.j
 sound/resource/
 /resource/
 !/resource/skill_name_*
+!/resource/UI_*
