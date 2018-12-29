@@ -14,7 +14,7 @@ library SpellNameText{
     public function SpellText(unit ua,integer aid,real time,real text){
         Units u=Units.Get(ua);
         Units mj;
-
+ 
         if(aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'){
             if(aid=='A006'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_huangyanluo.mdx");
