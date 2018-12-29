@@ -24,6 +24,13 @@ library NewUI requires KillUi{
         KillUi.Move(0.378); 
         //消息框 
         DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, 0, 0 );
+        //技能按钮
+        /*TimerStart(NewTimer(),0.1,false,function(){
+            integer tmp=DzFrameGetCommandBarButton(2, 0);
+            DzFrameSetPoint( tmp, 0, MiniMapBackground, 4, 0, 0 );
+            DzFrameSetSize( tmp, 0.05, 0.05 );
+        });
+        */
         //显示小地图 war3mapMap.blp 小地图透明问题暂时解决不了
         MiniMapBackground= DzCreateFrameByTagName("BACKDROP", "NewUI_MiniMap_Background",GameUI, "ShowInfo", 0);
         DzFrameSetSize( MiniMapBackground, 0.15, 0.15 );
