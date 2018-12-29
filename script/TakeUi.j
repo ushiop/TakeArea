@@ -25,7 +25,7 @@ library TakeUi {
             DzFrameSetSize( TakeMoveBar, 0.001+0.278*acc, 0.009 ) ;
         }
 
-        static method onInit(){
+        static method onInit(){ 
             TakeBackground=DzCreateFrameByTagName("BACKDROP", "TakeBackground", DzGetGameUI(), "Panel", 0);
             DzFrameSetSize( TakeBackground, 0.349, 0.024 );
             DzFrameSetPoint( TakeBackground, 3, DzFrameGetUpperButtonBarButton(0), 3, -0.01, 0 );

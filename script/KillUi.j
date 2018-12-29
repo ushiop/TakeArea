@@ -120,8 +120,13 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             if(e=="F2"){  
                     DzFrameShow(KillBackgroundMaxLine,false);
             } 
+        } 
+
+        //设置最小化状态的击杀条的位置
+        static method Move(real x){
+            DzFrameSetPoint( KillBackground, 3, DzFrameGetUpperButtonBarButton(0), 5, x, 0.00 );
         }
-            
+
         static method onInit(){ 
             KillBackground = DzCreateFrameByTagName("BACKDROP", "KillBackground", DzGetGameUI(), "Panel", 0);
             DzFrameSetSize( KillBackground, 0.254, 0.024 );
