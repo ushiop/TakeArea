@@ -236,7 +236,7 @@ library SwordMaster requires Groups{
             target=null;
             no=null;
         }
-
+ 
 
         //绑定AI施法
         static method Spawn(Units u,Units m){
