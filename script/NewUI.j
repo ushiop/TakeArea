@@ -5,6 +5,7 @@ library NewUI requires KillUi{
     integer MiniMapRightLine;//迷你地图的左侧边框
     integer MiniMapDownBorder;//迷你地图的底边框
     integer MiniMapBackground;//迷你地图的底图
+    integer ChatMessageFixed;//聊天框的重定位
     integer LeftTopButton;//F9的位置，用于显示上方UI
     integer GameUI;//游戏UI
 
@@ -18,20 +19,21 @@ library NewUI requires KillUi{
         LeftTopButton=DzCreateFrameByTagName("BACKDROP", "NewUI_LeftTopButton",GameUI, "ShowInfo", 0);
         DzFrameSetTexture( LeftTopButton, "nothing.blp", 0 );
         DzFrameSetSize( LeftTopButton, 0.03, 0.03 );
-        DzFrameSetPoint( LeftTopButton,0,GameUI,0, 0.02,0); 
+        DzFrameSetPoint( LeftTopButton,0,GameUI,0, 0.24,0); 
         DzFrameSetAllPoints(DzFrameGetUpperButtonBarButton(0) ,LeftTopButton); 
         //修正击杀框的位置
-        KillUi.Move(0.378); 
-        //消息框 
-        DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, 0, 0 );
-        //技能按钮
-        /*TimerStart(NewTimer(),0.1,false,function(){
-            integer tmp=DzFrameGetCommandBarButton(2, 0);
-            DzFrameSetPoint( tmp, 0, MiniMapBackground, 4, 0, 0 );
-            DzFrameSetSize( tmp, 0.05, 0.05 );
-        });
-        */
-        //显示小地图 war3mapMap.blp 小地图透明问题暂时解决不了
+        KillUi.Move(0.004,-0.024); 
+        //系统消息框 
+        DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, -0.145, 0 );
+        //玩家聊天框
+        ChatMessageFixed=DzCreateFrameByTagName("BACKDROP", "NewUI_ChatMessage",GameUI, "ShowInfo", 0);
+        DzFrameSetTexture( ChatMessageFixed, "nothing.blp", 0 );
+        DzFrameSetSize( ChatMessageFixed, 0.37, 0.1 );
+        DzFrameSetPoint( ChatMessageFixed,4,GameUI,4, -0.013,-0.075);       
+        DzFrameSetAllPoints( DzFrameGetChatMessage(), ChatMessageFixed);    
+        //禁用黑色阴影
+        FogMaskEnableOff();
+        //显示小地图 war3mapMap.blp 小地图透明禁用黑色阴影+战争迷雾可完全解决,暂时禁用黑色阴影
         MiniMapBackground= DzCreateFrameByTagName("BACKDROP", "NewUI_MiniMap_Background",GameUI, "ShowInfo", 0);
         DzFrameSetSize( MiniMapBackground, 0.15, 0.15 );
         DzFrameSetPoint( MiniMapBackground,6,GameUI, 6, 0.00, 0.005 );  
@@ -60,8 +62,7 @@ library NewUI requires KillUi{
     }
 
     function Chat(EventArgs e){
-        real r=S2R(e.ChatString);
-   
+        real r=S2R(e.ChatString); 
     }
 
     function onInit(){ 
