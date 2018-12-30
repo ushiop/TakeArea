@@ -1,4 +1,4 @@
-library NewUI requires KillUi{
+library NewUI requires KillUi,Util{
 
     integer MiniMapTopBorder;//迷你地图的上边框
     integer MiniMapLeftLine;//迷你地图的左侧边框
@@ -7,11 +7,16 @@ library NewUI requires KillUi{
     integer MiniMapBackground;//迷你地图的底图
     integer ChatMessageFixed;//聊天框的重定位
     integer LeftTopButton;//F9的位置，用于显示上方UI
+    integer UnitInfoBackground;//单位信息面板的背景图
+    integer UnitInfoTopBorder;//单位信息面板上边框
+    integer UnitInfoTX;//单位信息面板的头像
+    integer UnitInfoName;//单位信息面板的名字
+    integer UnitInfoLine;//单位信息面板数据与技能的分割线
     integer GameUI;//游戏UI
-
+    integer LvExp[];//每一级需要的经验;
+    unit UISelectUnit;//本地玩家选择的单位
 
     function Reg(){  
-        integer tmp;
         //隐藏原界面 
         DzFrameHideInterface();
         DzFrameEditBlackBorders( 0, 0 );    
@@ -58,17 +63,70 @@ library NewUI requires KillUi{
         MiniMapDownBorder=DzCreateFrameByTagName("BACKDROP", "NewUI_MiniMap_Down_Border",MiniMapBackground, "ShowInfo", 0);
         DzFrameSetTexture( MiniMapDownBorder, "UI_RightDownPanelBorder.blp", 0 );
         DzFrameSetSize( MiniMapDownBorder, 0.152,0.003 );
-        DzFrameSetPoint( MiniMapDownBorder,0,MiniMapBackground,6, 0.00,0 );             
+        DzFrameSetPoint( MiniMapDownBorder,0,MiniMapBackground,6, 0.00,0 );  
+        //单位信息面板低图
+        UnitInfoBackground=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Background",GameUI, "ShowInfo", 0);
+        DzFrameSetSize( UnitInfoBackground, 0.4, 0.125 );
+        DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, 0.00, -0.245);  
+        DzFrameSetTexture( UnitInfoBackground, "UI_RightDownPanelLine.blp", 0 );
+        //单位信息面板上边框
+        UnitInfoTopBorder=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Top_Border",UnitInfoBackground, "ShowInfo", 0);
+        DzFrameSetTexture( UnitInfoTopBorder, "UI_TopBorder.blp", 0 );
+        DzFrameSetSize( UnitInfoTopBorder, 0.4,0.003 );
+        DzFrameSetPoint( UnitInfoTopBorder,0,UnitInfoBackground,0, 0.00,0.003); 
+        //单位信息面板的头像框
+        UnitInfoTX=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_TX",UnitInfoTopBorder, "ShowInfo", 0);
+        DzFrameSetTexture( UnitInfoTX, "nothing.blp", 0 );
+        DzFrameSetSize( UnitInfoTX, 0.1,0.12 );
+        DzFrameSetPoint( UnitInfoTX,0,UnitInfoTopBorder,0, 0.005,-0.005); 
+        //单位信息面板的名字
+        UnitInfoName=DzCreateFrameByTagName("TEXT", "NewUI_UnitInfo_NAME",UnitInfoTX, "ShowInfo", 0);
+        DzFrameSetSize( UnitInfoName, 0.06,0.1 );
+        DzFrameSetPoint( UnitInfoName,0,UnitInfoTX,2, 0.001,-0.01);         
+        DzFrameSetText(UnitInfoName, "");    
+        //单位信息面板数据技能分割线
+        UnitInfoLine=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Line",UnitInfoName, "ShowInfo", 0);
+        DzFrameSetTexture( UnitInfoLine, "UI_WHITEBLOCK.blp", 0 );
+        DzFrameSetSize( UnitInfoLine, 0.002,0.095 );
+        DzFrameSetPoint( UnitInfoLine,0,UnitInfoName,2, 0.00,0); 
     }
 
     function Chat(EventArgs e){
-        real r=S2R(e.ChatString); 
+        real r=S2R(e.ChatString);    
+    }
+
+
+    function Select(EventArgs e){
+        real exp;
+        if(e.TriggerPlayer==Players.localplayer){
+            UISelectUnit=e.TriggerUnit;   
+            DzFrameSetTexture( UnitInfoTX, Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Art"), 0 );     
+            exp=(GetHeroXP(UISelectUnit)/LvExp[GetHeroLevel(UISelectUnit)])*100;
+            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(GetTriggerUnit(), ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(GetTriggerUnit(), ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(GetTriggerUnit(), ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+        } 
+    }
+
+    function Loop(){
+        if(UISelectUnit!=null){ 
+            if(IsUnitAliveBJ(UISelectUnit)==true){ 
+            }else{
+                UISelectUnit=null;
+            }
+        }
     }
 
     function onInit(){ 
+        integer i;
+        LvExp[1]=200;
+        for(2<=i<=24){
+            LvExp[i]=LvExp[i-1]+((i+1)*50); 
+        }
+        LvExp[25]=LvExp[24];
         GameUI=DzGetGameUI();  
-        Reg();
-        
-        Events.On(Events.onPlayerChat,Chat);
+        UISelectUnit=null;
+        Reg(); 
+        TimerStart(NewTimer(),0.01,true,function Loop);
+        Events.On(Events.onPlayerChat,Chat); 
+        Events.On(Events.onPlayerSelectUnit,Select);
     }
 }
