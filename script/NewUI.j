@@ -30,6 +30,7 @@ library NewUI requires TakeUi,KillUi,Util{
         DzFrameSetAllPoints(DzFrameGetUpperButtonBarButton(0) ,LeftTopButton); 
         //修正击杀框的位置
         KillUi.Move(0.004,-0.024); 
+        //修正争夺条的背景图
         TakeUi.ChangeTexture("UI_LeftUpperBackgroundNew.blp");
         //系统消息框 
         DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, -0.145, 0 );
