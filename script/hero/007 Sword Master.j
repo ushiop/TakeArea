@@ -89,6 +89,7 @@ library SwordMaster requires Groups{
             data.c[0]=u; 
             data.c[1]=e;
             data.g[0]=CreateGroup();
+            data.i[0]=0;
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Items\\AIvi\\AIviTarget.mdl", u.unit, "hand right") );
             HitFlys.Add(u.unit,25); 
             dash=Dash.Start(u.unit,u.F(),1200,Dash.SUB,45,true,false);
@@ -115,6 +116,12 @@ library SwordMaster requires Groups{
                         }
                     }
                     GroupClear(tmp_group);   
+                    if(u.H()<=20){
+                        if(data.i[0]==0){
+                            data.i[0]=1;
+                            u.Pause(false);
+                        }
+                    }
                 }
             };
             dash.onEnd=function(Dash dash){
@@ -123,7 +130,9 @@ library SwordMaster requires Groups{
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
                 u.AnimeSpeed(1);
-                u.Pause(false);
+                if(data.i[0]==0){ 
+                    u.Pause(false);
+                }
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };
