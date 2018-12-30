@@ -123,8 +123,8 @@ library KillUi requires Teams,Winner,BzAPI,Util{
         } 
 
         //设置最小化状态的击杀条的位置
-        static method Move(real x){
-            DzFrameSetPoint( KillBackground, 3, DzFrameGetUpperButtonBarButton(0), 5, x, 0.00 );
+        static method Move(real x,real y){
+            DzFrameSetPoint( KillBackground, 3, DzFrameGetUpperButtonBarButton(0), 5, x,y );
         }
 
         static method onInit(){ 
