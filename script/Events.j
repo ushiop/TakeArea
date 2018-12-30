@@ -58,6 +58,7 @@ library Events requires Table{
             static constant string onHeroLevelUp="Events.onHeroLevelUp";//任意英雄升级 
             static constant string onUnitSellItem="Events.onUnitSellItem";//任意单位出售物品
             static constant string onPlayerChat="Events.onPlayerChat";//任意玩家发消息
+            static constant string onPlayerSelectUnit="Events.onPlayerSelectUnit";//任意玩家选择单位
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -113,6 +114,8 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitDeacy") 
 //! runtextmacro RegisterAction("onUnitSellItem") 
 //! runtextmacro RegisterAction("onPlayerChat") 
+//! runtextmacro RegisterAction("onPlayerSelectUnit") 
+
 
     function onInit(){
         trigger t; 
@@ -148,6 +151,7 @@ library Events requires Table{
         //! endtextmacro
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerEventLeave","","Event_onPlayerDisconnect","")
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerChatEvent","","Event_onPlayerChat",",\"\",false")
+        //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerSelectionEventBJ","","Event_onPlayerSelectUnit",",true")
 
         t=CreateTrigger();
         YDWESyStemAnyUnitDamagedRegistTrigger( t );
