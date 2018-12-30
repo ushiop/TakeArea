@@ -1,4 +1,4 @@
-library NewUI requires KillUi,Util{
+library NewUI requires TakeUi,KillUi,Util{
 
     integer MiniMapTopBorder;//迷你地图的上边框
     integer MiniMapLeftLine;//迷你地图的左侧边框
@@ -12,6 +12,8 @@ library NewUI requires KillUi,Util{
     integer UnitInfoTX;//单位信息面板的头像
     integer UnitInfoName;//单位信息面板的名字
     integer UnitInfoLine;//单位信息面板数据与技能的分割线
+    integer UnitInfoHPBar;//血条框框
+    integer UnitInfoHP;//血条
     integer GameUI;//游戏UI
     integer LvExp[];//每一级需要的经验;
     unit UISelectUnit;//本地玩家选择的单位
@@ -28,6 +30,7 @@ library NewUI requires KillUi,Util{
         DzFrameSetAllPoints(DzFrameGetUpperButtonBarButton(0) ,LeftTopButton); 
         //修正击杀框的位置
         KillUi.Move(0.004,-0.024); 
+        TakeUi.ChangeTexture("UI_LeftUpperBackgroundNew.blp");
         //系统消息框 
         DzFrameSetPoint( DzFrameGetUnitMessage(), 4,GameUI, 4, -0.145, 0 );
         //玩家聊天框
@@ -87,8 +90,13 @@ library NewUI requires KillUi,Util{
         //单位信息面板数据技能分割线
         UnitInfoLine=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Line",UnitInfoName, "ShowInfo", 0);
         DzFrameSetTexture( UnitInfoLine, "UI_WHITEBLOCK.blp", 0 );
-        DzFrameSetSize( UnitInfoLine, 0.002,0.095 );
+        DzFrameSetSize( UnitInfoLine, 0.001,0.095 );
         DzFrameSetPoint( UnitInfoLine,0,UnitInfoName,2, 0.00,0); 
+        //单位信息面板的血条框
+        UnitInfoHPBar=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_HPBar",UnitInfoLine, "ShowInfo", 0);
+        DzFrameSetTexture( UnitInfoHPBar, "UI_LeftUpperBackgroundNew.blp", 0 );
+        DzFrameSetSize( UnitInfoHPBar, 0.2,0.02 );
+        DzFrameSetPoint( UnitInfoHPBar,0,UnitInfoLine,2, 0.005,-0.05); 
     }
 
     function Chat(EventArgs e){
