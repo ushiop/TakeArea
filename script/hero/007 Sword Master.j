@@ -116,7 +116,7 @@ library SwordMaster requires Groups{
                         }
                     }
                     GroupClear(tmp_group);   
-                    if(u.H()<=20){
+                    if(dash.Speed<10){
                         if(data.i[0]==0){
                             data.i[0]=1;
                             u.Pause(false);
