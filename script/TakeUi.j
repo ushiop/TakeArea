@@ -29,7 +29,7 @@ library TakeUi {
             TakeBackground=DzCreateFrameByTagName("BACKDROP", "TakeBackground", DzGetGameUI(), "Panel", 0);
             DzFrameSetSize( TakeBackground, 0.349, 0.024 );
             DzFrameSetPoint( TakeBackground, 3, DzFrameGetUpperButtonBarButton(0), 3, -0.01, 0 );
-            DzFrameSetTexture( TakeBackground, "UI_LeftUpperBackground.blp", 0 );
+            DzFrameSetTexture( TakeBackground, "UI_LeftUpperBackgroundNew.blp", 0 );
             TakeLeftText= DzCreateFrameByTagName("TEXT", "TakeLeftText", TakeBackground, "TextInfo", 0);
             DzFrameSetPoint( TakeLeftText, 3, TakeBackground, 3, 0.005, -0.003);
             DzFrameSetSize( TakeLeftText, 0.02, 0.02 );
