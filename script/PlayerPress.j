@@ -6,11 +6,17 @@ library PlayerPress requires Press{
 
     public struct PlayerPress{
         boolean Q;
+        real Qt;//最后一次按键状态更新的时间
         boolean W;
+        real Wt;
         boolean E;
+        real Et;
         boolean R;
+        real Rt;
         boolean D;
+        real Dt;
         boolean F;
+        real Ft;
         real MouseX;
         real MouseY; 
 
@@ -51,16 +57,22 @@ library PlayerPress requires Press{
             Players p=Players.Get(ps);
             if(e=="Q"){
                 p.press.Q=true;
+                p.press.Qt=GameTime;
             }else if(e=="W"){
                 p.press.W=true;
+                p.press.Wt=GameTime;
             }else if(e=="E"){
                 p.press.E=true;
+                p.press.Et=GameTime;
             }else if(e=="R"){
                 p.press.R=true;
+                p.press.Rt=GameTime;
             }else if(e=="D"){
                 p.press.D=true;
+                p.press.Dt=GameTime;
             }else if(e=="F"){
                 p.press.F=true;
+                p.press.Ft=GameTime;
             }
         }
 
@@ -68,16 +80,22 @@ library PlayerPress requires Press{
             Players p=Players.Get(ps);
             if(e=="Q"){
                 p.press.Q=false;
+                p.press.Qt=GameTime;
             }else if(e=="W"){
                 p.press.W=false;
+                p.press.Wt=GameTime;
             }else if(e=="E"){
                 p.press.E=false;
+                p.press.Et=GameTime;
             }else if(e=="R"){
                 p.press.R=false;
+                p.press.Rt=GameTime;
             }else if(e=="D"){
                 p.press.D=false;
+                p.press.Dt=GameTime;
             }else if(e=="F"){
                 p.press.F=false;
+                p.press.Ft=GameTime;
             }            
         } 
         static method onInit(){
