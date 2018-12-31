@@ -15,8 +15,10 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
 
         //英雄死亡, u 死亡单位, m 凶手单位
         public static method Death(Units u,Units m){ 
-            u.player.deaths=u.player.deaths+1;
-            KillUi.FlushPlayerData(u.player.player);
+            if(u.player.hero!=null){ 
+                u.player.deaths=u.player.deaths+1;
+                KillUi.FlushPlayerData(u.player.player);
+            }
             if(m.player.hero!=null){
                 if(u.player.teamid!=m.player.teamid){ 
                     m.player.kills=m.player.kills+1;

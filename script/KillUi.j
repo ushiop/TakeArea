@@ -44,11 +44,12 @@ library KillUi requires Teams,Winner,BzAPI,Util{
                 if(tp.isonline==false){
                     DzFrameSetTexture( this.TeamNumberHeroIcon[x],"ReplaceableTextures\\CommandButtons\\BTNCancel.blp",0);
                     DzFrameSetText( this.TeamNumberName[x],"[离线]"+DzFrameGetText(this.TeamNumberName[x]) );
-                }else{
+                }else{  
                     DzFrameSetTexture( this.TeamNumberHeroIcon[x], Util.GetUnitValue(tp.hero.uid ,"Art"),0);
+                    DzFrameSetText(this.TeamNumberHeroName[x],tp.hero.name);
                 }
                 DzFrameSetText(this.TeamNumberInfo[x],"击杀/死亡   "+I2S(tp.kills)+"/"+I2S(tp.deaths));
-                DzFrameSetText(this.TeamNumberHeroName[x],tp.hero.name);
+                
             }
         }
 
