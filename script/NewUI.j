@@ -1,4 +1,4 @@
-library NewUI requires TakeUi,KillUi,Util{
+library NewUI requires TakeUi,KillUi,Util,BuffUI{
 
     integer MiniMapTopBorder;//迷你地图的上边框
     integer MiniMapLeftLine;//迷你地图的左侧边框
