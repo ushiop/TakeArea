@@ -96,32 +96,35 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         }
 
         static method Death(Units u,Units m){
-            Respawn r=Respawn.allocate();
-            if(m.player.hero!=null){
-                if(u.player.teamid!=m.player.teamid&&m.unit!=null){
-                    m.player.lifekill=m.player.lifekill+1;
-                    ForForce(Teams.GetTeamForce(m.player.player),function(){
-                        AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD )  ;          
-                    });
-                    DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,m.player.name+"与队友 因击杀 "+u.player.name+" 而获得了|cffffcc00$300|r");
-                    if(m.player.randomhero>0){
-                        m.player.randomhero=m.player.randomhero-5.0;
+            Respawn r;
+            if(u.player.hero!=null){ 
+                r=Respawn.allocate();
+                if(m.player.hero!=null){
+                    if(u.player.teamid!=m.player.teamid&&m.unit!=null){
+                        m.player.lifekill=m.player.lifekill+1;
+                        ForForce(Teams.GetTeamForce(m.player.player),function(){
+                            AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD )  ;          
+                        });
+                        DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,m.player.name+"与队友 因击杀 "+u.player.name+" 而获得了|cffffcc00$300|r");
+                        if(m.player.randomhero>0){
+                            m.player.randomhero=m.player.randomhero-5.0;
+                        }
+                    } 
+                    if(u.player.randomhero<100){
+                        u.player.randomhero=u.player.randomhero+5.0;
                     }
-                } 
-                if(u.player.randomhero<100){
-                    u.player.randomhero=u.player.randomhero+5.0;
+                }else{
+                    DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,u.player.name+"死在了野怪的手里...");    
                 }
-            }else{
-                DisplayTimedTextToForce(Teams.GetAllPlayers(), 5.00,u.player.name+"死在了野怪的手里...");    
+                r.RespawnTime=Respawn.MaxRespawnTime;
+                r.RespawnSaveMoney= 200 + R2I((u.player.lifekill *300) *1.2);
+                r.RespawnSelect=0;
+                r.RespawnSelectLast=0; 
+                u.player.isdeath=true; 
+                u.player.lifekill=0;
+                u.player.respawn=r;  
+                Respawn.Show(u.player.player,true); 
             }
-            r.RespawnTime=Respawn.MaxRespawnTime;
-            r.RespawnSaveMoney= 200 + R2I((u.player.lifekill *300) *1.2);
-            r.RespawnSelect=0;
-            r.RespawnSelectLast=0; 
-            u.player.isdeath=true; 
-            u.player.lifekill=0;
-            u.player.respawn=r;  
-            Respawn.Show(u.player.player,true); 
         }
 
         //刷新死亡面板的信息

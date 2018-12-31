@@ -43,6 +43,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
                 tp=this.TeamPlayer[x];
                 if(tp.isonline==false){
                     DzFrameSetTexture( this.TeamNumberHeroIcon[x],"ReplaceableTextures\\CommandButtons\\BTNCancel.blp",0);
+                    DzFrameSetText(this.TeamNumberHeroName[x],"????");
                     DzFrameSetText( this.TeamNumberName[x],"[离线]"+DzFrameGetText(this.TeamNumberName[x]) );
                 }else{  
                     DzFrameSetTexture( this.TeamNumberHeroIcon[x], Util.GetUnitValue(tp.hero.uid ,"Art"),0);
