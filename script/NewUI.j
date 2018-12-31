@@ -29,7 +29,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
     integer LvExp[];//每一级需要的经验;
     public unit UISelectUnit;//本地玩家选择的单位
     integer UIType;//目前显示的UI类型
-
+ 
     function Reg(){  
         integer i;
         //隐藏原界面 
