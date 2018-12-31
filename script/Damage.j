@@ -35,12 +35,10 @@ library Damage requires Table,Events{
         static constant integer Attack=3;//普攻伤害
 
         //自定义事件
-        public {
+        public { 
 
-            static constant string onUnitDamageed="Damage.UnitDamageed";//任意非英雄单位造成伤害
-            static constant string onHeroDamageed="Damage.HeroDamageed";//任意英雄单位造成伤害;
-            static constant string onHeroDamage="Damage.HeroDamage";//任意英雄单位受到伤害
-            static constant string onUnitDamage="Damage.UnitDamage";//任意非英雄单位受到伤害
+            static constant string onItemDamage="Damage.onItemDamage";//任意单位受到伤害（触发该事件时计算各种物品的加减伤)
+            static constant string onUnitDamage="Damage.onUnitDamage";//任意单位受到伤害(触发该事件时计算单位各种技能的加减伤)
 
             //触发指定事件名
             static method Trigger(string eName,DamageArgs e){
@@ -67,7 +65,6 @@ library Damage requires Table,Events{
             DamageArgs dmg;
             if(e.Damage>0){
                 dmg=DamageArgs.create(); 
-                dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
                 dmg.TriggerUnit=Units.Get(e.TriggerUnit);
                 dmg.DamageUnit=Units.Get(e.DamageUnit);
                 dmg.Damage=e.Damage; 
@@ -84,16 +81,14 @@ library Damage requires Table,Events{
                 }else{
                     dmg.DamageType=Damage.Attack;
                 }
-                dmg.isRange=e.RangeDamage;
-                if(dmg.TriggerUnit.isHero==true){
-                    Damage.Trigger(Damage.onHeroDamage,dmg);
-                }else{
-                    Damage.Trigger(Damage.onUnitDamage,dmg);
+                if(dmg.DamageType!=Damage.Attack){ 
+                    dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
                 }
-                if(dmg.DamageUnit.isHero==true){
-                    Damage.Trigger(Damage.onHeroDamageed,dmg);
-                }else{
-                    Damage.Trigger(Damage.onUnitDamageed,dmg);
+                dmg.isRange=e.RangeDamage; 
+                Damage.Trigger(Damage.onItemDamage,dmg);//进行物品效果结算
+                Damage.Trigger(Damage.onUnitDamage,dmg); //进行单位技能效果结算
+                if(dmg.Damage!=e.Damage){//如果结算伤害不等于原伤害，则用JAPI进行设置 
+                    YDWESetEventDamage(dmg.Damage);//设置本次伤害为进行结算后的伤害 
                 }
                 dmg.Destroy(); 
             } 
