@@ -51,7 +51,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         ChatMessageFixed=DzCreateFrameByTagName("BACKDROP", "NewUI_ChatMessage",GameUI, "ShowInfo", 0);
         DzFrameSetTexture( ChatMessageFixed, "nothing.blp", 0 );
         DzFrameSetSize( ChatMessageFixed, 0.37, 0.1 );
-        DzFrameSetPoint( ChatMessageFixed,4,GameUI,4, -0.010,-0.075);       
+        DzFrameSetPoint( ChatMessageFixed,4,GameUI,4, -0.013,-0.075);       
         DzFrameSetAllPoints( DzFrameGetChatMessage(), ChatMessageFixed);    
         //禁用黑色阴影
         FogMaskEnableOff();
