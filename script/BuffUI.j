@@ -67,13 +67,13 @@ library BuffUI requires BzAPI{
                 DzFrameSetScriptByCode(b.BuffUIButton, 1,function(){
                     integer tUI=DzF2I(DzGetTriggerUIEventFrame());
                     BuffUI b=BuffUI(indexht[tUI]); 
-                    if(UISelectUnit==Players.Get(Players.localplayer).hero.unit){ 
-                        YDWEDisplayChat( DzGetTriggerUIEventPlayer(), 1,"|cff00FF00我|r 正处于 ["+b.BuffName+"] 状态下!" );
+                    if(UISelectUnit==Players.Get(Players.localplayer).hero.unit){  
+                        DzSyncData( "BuffTip","|cff00FF00我|r 正处于 ["+b.BuffName+"] 状态下!" ); 
                     }else{ 
                         if(IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
-                            YDWEDisplayChat( DzGetTriggerUIEventPlayer(), 1,"|cffFF0000"+GetUnitName(UISelectUnit)+"|r 正处于 ["+b.BuffName+"] 状态下!" );
+                            DzSyncData( "BuffTip","|cffFF0000"+GetUnitName(UISelectUnit)+"|r 正处于 ["+b.BuffName+"] 状态下!" );  
                         }else{ 
-                            YDWEDisplayChat( DzGetTriggerUIEventPlayer(), 1,"|cff00FF00"+GetUnitName(UISelectUnit)+"|r 正处于 ["+b.BuffName+"] 状态下!" );
+                            DzSyncData( "BuffTip","|cff00FF00"+GetUnitName(UISelectUnit)+"|r 正处于 ["+b.BuffName+"] 状态下!" );
                         }
                     }
                 }, false);
@@ -128,7 +128,12 @@ library BuffUI requires BzAPI{
             DzFrameSetText(BuffTipText, text); 
         }
 
+        static method onTip(){
+            YDWEDisplayChat( DzGetTriggerSyncPlayer(), 1, DzGetTriggerSyncData() );
+        }
+
         static method onInit(){ 
+            trigger t=CreateTrigger();  
             MaxBuffUI=0;
             idht=Table.create();
             indexht=Table.create();
@@ -143,6 +148,10 @@ library BuffUI requires BzAPI{
             DzFrameSetSize( BuffTipText, 0.4,0.015 ); 
             DzFrameSetPoint( BuffTipText,0,BuffTipBackground,0,0,-0.001);   
             BackgroundTipSize(0.28,0.015);
+                  
+            DzTriggerRegisterSyncData( t, "BuffTip", false );
+            TriggerAddAction(t, function BuffUI.onTip);
+            t=null;
         }
     }
 }
