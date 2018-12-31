@@ -44,7 +44,7 @@ library WindWalk requires Groups{
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
-                                    Buffs.Add(tmp.unit,'A00N','B004',3,false);
+                                    Buffs.Add(tmp.unit,'A00N','B004',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                     YDWESetUnitAbilityState( u.unit, 'A00M', 1, YDWEGetUnitAbilityState(u.unit,'A00M', 1)-4  );
                                 }
                             }

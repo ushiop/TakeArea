@@ -55,7 +55,7 @@ library SwordMaster requires Groups{
                                             //DestroyEffect( AddSpecialEffectTarget("qqqqq.mdl", mj.unit, "chest") );
                                             u.Damage(mj.unit,Damage.Physics,'A01F',u.Agi(true)*5.0);  
                                             HitFlys.Add(mj.unit,25);
-                                            Buffs.Add(mj.unit,'A01I','B00A',2,false);
+                                            Buffs.Add(mj.unit,'A01I','B00A',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                         }
                                     }
                                     GroupClear(tmp_group);   
