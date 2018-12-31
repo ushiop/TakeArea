@@ -27,7 +27,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
     integer BagItemBackground[];//物品栏没有物品时的图标
     integer GameUI;//游戏UI
     integer LvExp[];//每一级需要的经验;
-    unit UISelectUnit;//本地玩家选择的单位
+    public unit UISelectUnit;//本地玩家选择的单位
     integer UIType;//目前显示的UI类型
 
     function Reg(){  
@@ -51,7 +51,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         ChatMessageFixed=DzCreateFrameByTagName("BACKDROP", "NewUI_ChatMessage",GameUI, "ShowInfo", 0);
         DzFrameSetTexture( ChatMessageFixed, "nothing.blp", 0 );
         DzFrameSetSize( ChatMessageFixed, 0.37, 0.1 );
-        DzFrameSetPoint( ChatMessageFixed,4,GameUI,4, -0.013,-0.075);       
+        DzFrameSetPoint( ChatMessageFixed,4,GameUI,4, -0.010,-0.075);       
         DzFrameSetAllPoints( DzFrameGetChatMessage(), ChatMessageFixed);    
         //禁用黑色阴影
         FogMaskEnableOff();
@@ -150,7 +150,9 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         UnitInfoMPText=DzCreateFrameByTagName("TEXT", "NewUI_UnitInfo_MP_TEXT",UnitInfoMPBar, "ShowInfo", 0);
         DzFrameSetSize( UnitInfoMPText, 0.06,0.016 );
         DzFrameSetPoint( UnitInfoMPText,4,UnitInfoMPBar,4,0,-0.002);         
-        DzFrameSetText(UnitInfoMPText, ""); 
+        DzFrameSetText(UnitInfoMPText, "");
+        //隐藏信息面板 
+        DzFrameShow(UnitInfoBackground,false); 
 
         //魔兽原版提示
         War3ToolTip=DzCreateFrameByTagName("BACKDROP", "NewUI_ToolTip",GameUI, "ShowInfo", 0);
@@ -183,11 +185,30 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         DzFrameSetPoint( MoneyText,0,MoneyRightBackground,0,0,-0.001);         
         DzFrameSetText(MoneyText, "$44444"); 
 
+        //注册会显示的BUFF
+        BuffUI.RegBuff('BPSE');
+        BuffUI.RegBuff('Bprg');
+        BuffUI.RegBuff('B003');
+        BuffUI.RegBuff('B005');
+        BuffUI.RegBuff('B004');
+        BuffUI.RegBuff('B000');
+        BuffUI.RegBuff('B007');
+        BuffUI.RegBuff('B009');
+        BuffUI.RegBuff('B00A');
+        BuffUI.RegBuff('B006');
+        BuffUI.RegBuff('B008');
+        BuffUI.RegBuff('B002');
+        BuffUI.RegBuff('B001');
+        //BUFF条
+        BuffUI.BackgroundSize(0.18,0.024); 
+        BuffUI.BackgroundMove(-0.06,-0.186); 
+        BuffUI.BackgroundShow(false);
+    
     }
 
     function Chat(EventArgs e){
         real r=S2R(e.ChatString);   
-         
+          
     }
 
 
@@ -200,8 +221,11 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             DzFrameSetTexture( UnitInfoTX, Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Art"), 0 ); 
             DzFrameShow(UnitInfoBarBackground,true); 
             DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.245);  
-            DzFrameShow(UnitInfoBackground,true); 
+            DzFrameShow(UnitInfoBackground,true);  
+            BuffUI.BackgroundShow(true);
             if(IsUnitType(UISelectUnit,UNIT_TYPE_HERO)==true){
+                
+                BuffUI.BackgroundMove(-0.06,-0.186); 
                 UIType=1;
                 DzFrameSetPoint( UnitInfoName,0,UnitInfoTX,2, 0.001,-0.01);                        
                 for(0<=i<4){
@@ -246,6 +270,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 }
 
             }else{
+                
+                BuffUI.BackgroundMove(-0.06,-0.226); 
                 UIType=2;         
                 for(0<=i<6){ 
                     DzFrameShow(BagItemBackground[i],false);
@@ -258,6 +284,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.24);  
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n"+Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Description"));        
                     DzFrameShow(UnitInfoBarBackground,false);
+                    BuffUI.BackgroundShow(false);
                     for(0<=i<4){
                         for(0<=s<3){ 
                             DzFrameSetPoint( DzFrameGetCommandBarButton(s,i), 0, UnitInfoLine, 2, 0.002+(0.04*i),0.01+(-0.04*s));
@@ -295,6 +322,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                             DzFrameShow(BagItemBackground[i],false);
                         }
                     }        
+                    BuffUI.Flush(UISelectUnit);
                 }else if(UIType==2){
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     hp=GetUnitLifePercent(UISelectUnit)/100;
@@ -303,6 +331,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     DzFrameSetSize( UnitInfoMP,mp*0.2525,0.016 );
                     DzFrameSetText(UnitInfoHPText,"|cffFF0000"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_LIFE))+"|r"); 
                     DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");     
+                    BuffUI.Flush(UISelectUnit);
                     /*for(0<=i<6){ 
                         if(UnitItemInSlot(UISelectUnit,i) == null){
                             DzFrameShow(BagItemBackground[i],true);
