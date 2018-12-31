@@ -81,7 +81,7 @@ library BuffUI requires BzAPI{
                     integer tUI=DzF2I(DzGetTriggerUIEventFrame());
                     BuffUI b=BuffUI(indexht[tUI]);
                     BackgroundTipShow(true);
-                    BackgroundTipText(b.BuffName+"|n|n"+b.BuffTip);
+                    BackgroundTipText(b.BuffName+" "+b.BuffTip);
                 }, false);
                 DzFrameSetScriptByCode(b.BuffUIButton, 3,function(){ 
                     BackgroundTipShow(false); 
@@ -135,13 +135,14 @@ library BuffUI requires BzAPI{
             BuffBackground=DzCreateFrameByTagName("BACKDROP", "BuffUI_Background",DzGetGameUI(), "ShowInfo", 0);
             DzFrameSetTexture( BuffBackground, "nothing.blp", 0 ); 
             BuffTipBackground=DzCreateFrameByTagName("BACKDROP", "BuffUI_Background_Tip",DzGetGameUI(), "ShowInfo", 0);
-            BackgroundTipSize(0.15,0.15);
-            BackgroundTipMove(0.248,-0.148);
+            BackgroundTipSize(0.4,0.015);
+            BackgroundTipMove(-0.06,-0.172);
             BackgroundTipShow(false);
             DzFrameSetTexture( BuffTipBackground, "UI\\Widgets\\EscMenu\\Human\\editbox-background.blp", 0 ); 
             BuffTipText=DzCreateFrameByTagName("TEXT", "BuffUI_Background_Tip_TEXT",BuffTipBackground, "ShowInfo", 0);
-            DzFrameSetSize( BuffTipText, 0.15,0.15 );
+            DzFrameSetSize( BuffTipText, 0.4,0.015 ); 
             DzFrameSetPoint( BuffTipText,0,BuffTipBackground,0,0,-0.001);   
+            BackgroundTipSize(0.28,0.015);
         }
     }
 }

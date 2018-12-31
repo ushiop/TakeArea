@@ -208,10 +208,10 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
 
     function Chat(EventArgs e){
         real r=S2R(e.ChatString);   
-          
+           
     }
 
-
+ 
     function Select(EventArgs e){ 
         integer i;
         integer s;
@@ -222,18 +222,20 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             DzFrameShow(UnitInfoBarBackground,true); 
             DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.245);  
             DzFrameShow(UnitInfoBackground,true);  
-            BuffUI.BackgroundShow(true);
+            BuffUI.BackgroundShow(true);                
+            for(0<=i<4){
+                for(0<=s<3){ 
+                    DzFrameSetPoint( DzFrameGetCommandBarButton(s,i), 0, UnitInfoLine, 2, 0.001+(0.045*i),-0.2);
+                        
+                }
+            } 
             if(IsUnitType(UISelectUnit,UNIT_TYPE_HERO)==true){
                 
                 BuffUI.BackgroundMove(-0.06,-0.186); 
+                BuffUI.BackgroundTipMove(-0.06,-0.172);
                 UIType=1;
                 DzFrameSetPoint( UnitInfoName,0,UnitInfoTX,2, 0.001,-0.01);                        
-                for(0<=i<4){
-                        for(0<=s<3){ 
-                            DzFrameSetPoint( DzFrameGetCommandBarButton(s,i), 0, UnitInfoLine, 2, 0.001+(0.045*i),-0.2);
-                             
-                        }
-                    } 
+
                 //Q
                 DzFrameSetPoint( DzFrameGetCommandBarButton(2, 0), 0, UnitInfoLine, 2, 0.001,-0.016);
                 DzFrameSetSize( DzFrameGetCommandBarButton(2, 0), 0.04, 0.04 );
@@ -271,7 +273,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
 
             }else{
                 
-                BuffUI.BackgroundMove(-0.06,-0.226); 
+                BuffUI.BackgroundMove(-0.06,-0.226);  
+                BuffUI.BackgroundTipMove(-0.06,-0.212);
                 UIType=2;         
                 for(0<=i<6){ 
                     DzFrameShow(BagItemBackground[i],false);
@@ -342,6 +345,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     */                     
                 }
             }else{ 
+                BuffUI.BackgroundShow(false);
                 DzFrameShow(UnitInfoBackground,false);
                 UIType=0;
                 UISelectUnit=null;
