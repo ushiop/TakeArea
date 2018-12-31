@@ -860,7 +860,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Spell.On(Spell.onSpell,'A00E',DazzleMaster.R);
         Spell.On(Spell.onReady,'A009',DazzleMaster.HERO_START);
         Spell.On(Spell.onStop,'A009',DazzleMaster.HERO_STOP);    
-        Damage.On(Damage.onHeroDamageed,DazzleMaster.Attack);
+        Damage.On(Damage.onUnitDamage,DazzleMaster.Attack);
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
         DazzleMaster.DazzlePath[0]="ball_nothing.mdx";
