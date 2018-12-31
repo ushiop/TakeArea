@@ -27,6 +27,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
     integer BagItemBackground[];//物品栏没有物品时的图标
     integer GameUI;//游戏UI
     integer LvExp[];//每一级需要的经验;
+    integer Logo[];//LOGO低图;
     public unit UISelectUnit;//本地玩家选择的单位
     integer UIType;//目前显示的UI类型
  
@@ -203,14 +204,24 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         BuffUI.BackgroundSize(0.18,0.024); 
         BuffUI.BackgroundMove(-0.06,-0.186); 
         BuffUI.BackgroundShow(false);
-    
-    }
 
-    function Chat(EventArgs e){
-        real r=S2R(e.ChatString);   
-           
-    }
+        //LOGO
+        Logo[0]=DzCreateFrameByTagName("BACKDROP", "Logo_Penhuolong",GameUI, "ShowInfo", 0);
+        DzFrameSetTexture( Logo[0], "UI_penhuolong.blp", 0 );
+        DzFrameSetSize(Logo[0],0.04,0.04 );
+        DzFrameSetPoint(Logo[0],0,GameUI,4,-0.168,0.27);  
 
+        Logo[1]=DzCreateFrameByTagName("BACKDROP", "Logo_Zhadan",GameUI, "ShowInfo", 0);
+        DzFrameSetTexture( Logo[1], "UI_zhadan.blp", 0 );
+        DzFrameSetSize(Logo[1],0.04,0.04 );
+        DzFrameSetPoint(Logo[1],0,GameUI,4,0.13,0.27);  
+
+        Logo[2]=DzCreateFrameByTagName("BACKDROP", "Logo_Xiazi",GameUI, "ShowInfo", 0);
+        DzFrameSetTexture( Logo[2], "UI_xiazi.blp", 0 );
+        DzFrameSetSize(Logo[2],0.04,0.04 );
+        DzFrameSetPoint(Logo[2],0,GameUI,4,0.14,0.29);  
+     
+    } 
  
     function Select(EventArgs e){ 
         integer i;
@@ -314,8 +325,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     }
                     hp=GetUnitLifePercent(UISelectUnit)/100;
                     mp=GetUnitManaPercent(UISelectUnit)/100;
-                    DzFrameSetSize( UnitInfoHP,hp*0.2525,0.016 );
-                    DzFrameSetSize( UnitInfoMP,mp*0.2525,0.016 );
+                    DzFrameSetSize( UnitInfoHP,0.0001+(hp*0.2524),0.016 );
+                    DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 );
                     DzFrameSetText(UnitInfoHPText,"|cffFF0000"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_LIFE))+"|r"); 
                     DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");     
                     for(0<=i<6){ 
@@ -330,8 +341,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     hp=GetUnitLifePercent(UISelectUnit)/100;
                     mp=GetUnitManaPercent(UISelectUnit)/100;
-                    DzFrameSetSize( UnitInfoHP,hp*0.2525,0.016 );
-                    DzFrameSetSize( UnitInfoMP,mp*0.2525,0.016 );
+                    DzFrameSetSize( UnitInfoHP,0.0001+(hp*0.2524),0.016 );
+                    DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 );
                     DzFrameSetText(UnitInfoHPText,"|cffFF0000"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_LIFE))+"|r"); 
                     DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");     
                     BuffUI.Flush(UISelectUnit);
@@ -365,8 +376,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         UIType=0;  
         UISelectUnit=null;
         Reg();  
-        TimerStart(NewTimer(),0.01,true,function Loop);
-        Events.On(Events.onPlayerChat,Chat); 
+        TimerStart(NewTimer(),0.01,true,function Loop); 
         Events.On(Events.onPlayerSelectUnit,Select);
     }
 }
