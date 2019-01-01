@@ -415,6 +415,7 @@ library Units requires Table,Players,Events,Util{
                     SetUnitState( e.TriggerUnit, UNIT_STATE_LIFE, -0.001 ); 
                     Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
                 }else{
+                    //英雄蝗虫单位死亡
                     Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 
                 }
             }else{
