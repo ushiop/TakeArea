@@ -178,11 +178,11 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         //金币文字的背景图
         MoneyRightBackground=DzCreateFrameByTagName("BACKDROP", "NewUI_Money_Right",MoneyBackground, "ShowInfo", 0);
         DzFrameSetTexture( MoneyRightBackground, "UI_RightDownPanelLine.blp", 0 );
-        DzFrameSetSize( MoneyRightBackground, 0.038,0.015 );
+        DzFrameSetSize( MoneyRightBackground, 0.05,0.015 );
         DzFrameSetPoint( MoneyRightBackground,0,MoneyBackground,2,-0.001,0);  
         //金币文字
         MoneyText=DzCreateFrameByTagName("TEXT", "NewUI_Money_Text",MoneyRightBackground, "ShowInfo", 0);
-        DzFrameSetSize( MoneyText, 0.038,0.016 );
+        DzFrameSetSize( MoneyText, 0.05,0.016 );
         DzFrameSetPoint( MoneyText,0,MoneyRightBackground,0,0,-0.001);         
         DzFrameSetText(MoneyText, "$44444"); 
 
@@ -231,7 +231,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             UISelectUnit=e.TriggerUnit;   
             DzFrameSetTexture( UnitInfoTX, Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Art"), 0 ); 
             DzFrameShow(UnitInfoBarBackground,true); 
-            DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.245);  
+            DzFrameSetPoint( UnitInfoBackground,4,GameUI,4,-0.02, -0.245);  
             DzFrameShow(UnitInfoBackground,true);  
             BuffUI.BackgroundShow(true);                
             for(0<=i<4){
@@ -267,11 +267,11 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 DzFrameSetSize( DzFrameGetCommandBarButton(1, 3), 0.04, 0.04 );
                 //物品栏
                 if(GetOwningPlayer(UISelectUnit)==Players.localplayer){
-                    idx=0;
+                    idx=0; 
                     for(0<=i<3){ 
                         for(0<=s<2){
-                            DzFrameSetPoint( BagItemBackground[idx],0,UnitInfoLine,2,-0.335+(0.032*i),0.12+(-0.032*s)); 
-                            DzFrameSetPoint( DzFrameGetItemBarButton(idx), 0, UnitInfoLine, 2,-0.335+(0.032*i),0.12+(-0.032*s));
+                            DzFrameSetPoint( BagItemBackground[idx],0,MiniMapRightLine,2,0.00+(0.032*s),-0.0403+(-0.032*i)); 
+                            DzFrameSetPoint( DzFrameGetItemBarButton(idx), 0, MiniMapRightLine, 2,0.00+(0.032*s),-0.0403+(-0.032*i));
                             idx+=1;
                         } 
                     }
@@ -294,8 +294,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 }//非英雄单位暂时没有物品栏
                 
                 if(GetUnitAbilityLevel(UISelectUnit,'Apit')==1){
-                    UIType=3; 
-                    DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.24);  
+                    UIType=3;  
+                    DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.02, -0.24);  
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n"+Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Description"));        
                     DzFrameShow(UnitInfoBarBackground,false);
                     BuffUI.BackgroundShow(false);
@@ -315,7 +315,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         integer i;
         DzFrameSetText(MoneyText,"|cffFFFF00$" +I2S(GetPlayerState(Players.localplayer, PLAYER_STATE_RESOURCE_GOLD))+"|r"); 
         if(UISelectUnit!=null){ 
-            if(IsUnitAliveBJ(UISelectUnit)==true){ 
+            if(IsUnitAliveBJ(UISelectUnit)==true&&IsUnitVisible(UISelectUnit,Players.localplayer)==true){ 
                 if(UIType==1){ 
                     exp=(GetHeroXP(UISelectUnit)/LvExp[GetHeroLevel(UISelectUnit)])*100;
                     if(IsUnitEnemy(UISelectUnit,Players.localplayer)==false){
