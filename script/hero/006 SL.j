@@ -100,8 +100,8 @@ library SL requires Groups{
                 Units u=Units(data.c[0]); 
                 if(Spell(data.c[1]).State==Spell.ReadyState){ 
                     u.AnimeSpeed(4);
-                    u.DelayAlpha(0,255,0.1);
-                    u.DelayReleaseAnimePause(0.2);                                 
+                    u.DelayAlpha(0,255,0.09);
+                    u.DelayReleaseAnimePause(0.1);                                 
                 }else{ 
                     u.DelayAlpha(0,255,0.7);
                     u.DelayReleaseAnimePause(0.8);
