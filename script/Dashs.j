@@ -12,6 +12,10 @@ library Dashs requires TimerUtils{
             static constant integer ADD=2;//加速冲锋
             static constant integer SUB=3;//减速冲锋
 
+            static method Death(Units u,Units m){
+                Dash.AllStop(u.unit);
+            }
+
 
             //停止指定单位身上的所有冲锋类特效,会触发onend以及onremove
             static method AllStop(unit u){
@@ -191,7 +195,7 @@ library Dashs requires TimerUtils{
     }
 
     function onInit(){
-        
+        Units.On(Units.onAlocDeath,Dash.Death);
         TimerStart(NewTimer(),0.01,true,function Dash.onLoop);  
     }
 }
