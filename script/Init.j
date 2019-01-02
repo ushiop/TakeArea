@@ -42,6 +42,8 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
                 SetPlayerAllianceStateBJ( Player(11), p.player, bj_ALLIANCE_ALLIED_VISION );
                 SetPlayerAllianceStateBJ( p.player,Player(11), bj_ALLIANCE_ALLIED_VISION );                     
             }
+            p.hero.Lock(p.player);
+            p.hero.Select(p.player);
         }); 
 
 
