@@ -278,6 +278,11 @@ library Units requires Table,Players,Events,Util{
                     PanCameraToTimed(GetUnitX(this.unit),GetUnitY(this.unit), 0 );           
                 }     
             }
+
+            //让某玩家选择单位
+            method Select(player p){
+                SelectUnitForPlayerSingle(this.unit,p );
+            }
  
             //设置单位面向角度,ex为是否使用JAPI（立即转身)
             method SetF(real f,boolean ex){
