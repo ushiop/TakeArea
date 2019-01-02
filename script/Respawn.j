@@ -74,6 +74,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
             ps.hero.Lock(p); 
+            ps.hero.Select(p);
             ps.respawn=0; 
             KillUi.FlushPlayerData(ps.player);
             r.deallocate(); 
