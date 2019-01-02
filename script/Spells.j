@@ -114,8 +114,11 @@ library Spells requires SpellNameText{
                 tmp.Kill=false;
                 tmp.Use=1; 
                 tmp.State=$type$;
-                
                 BJDebugMsg(GetAbilityName(tmp.Id)+"生成-阶段:"+I2S(tmp.State));
+                if(u.spell!=0){
+                    tmp.Use=2;
+                    SpellEventInterface(u.spell).evaluate(tmp);
+                } 
                 Spell.Trigger(Spell.on$ev$,tmp.Id,tmp);
             }
 
