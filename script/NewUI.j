@@ -202,7 +202,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         BuffUI.RegBuff('B001');
         //BUFF条
         BuffUI.BackgroundSize(0.18,0.024); 
-        BuffUI.BackgroundMove(-0.06,-0.186); 
+        BuffUI.BackgroundMove(0.02,-0.186); 
         BuffUI.BackgroundShow(false);
 
         //LOGO
@@ -242,8 +242,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             } 
             if(IsUnitType(UISelectUnit,UNIT_TYPE_HERO)==true){
                 
-                BuffUI.BackgroundMove(-0.06,-0.186); 
-                BuffUI.BackgroundTipMove(-0.06,-0.172);
+                BuffUI.BackgroundMove(-0.0518,-0.186); 
+                BuffUI.BackgroundTipMove(-0.0518,-0.172);
                 UIType=1;
                 DzFrameSetPoint( UnitInfoName,0,UnitInfoTX,2, 0.001,-0.01);                        
 
@@ -284,8 +284,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
 
             }else{
                 
-                BuffUI.BackgroundMove(-0.06,-0.226);  
-                BuffUI.BackgroundTipMove(-0.06,-0.212);
+                BuffUI.BackgroundMove(-0.0518,-0.226);  
+                BuffUI.BackgroundTipMove(-0.0518,-0.212);
                 UIType=2;         
                 for(0<=i<6){ 
                     DzFrameShow(BagItemBackground[i],false);
