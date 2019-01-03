@@ -257,8 +257,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 DzFrameSetPoint( DzFrameGetCommandBarButton(2, 2), 0, UnitInfoLine, 2, 0.081,-0.016);
                 DzFrameSetSize( DzFrameGetCommandBarButton(2, 2), 0.04, 0.04 );
                 //R
-                DzFrameSetPoint( DzFrameGetCommandBarButton(2,3), 0, UnitInfoLine, 2, 0.121,-0.016);
-                DzFrameSetSize( DzFrameGetCommandBarButton(2, 3), 0.04, 0.04 );
+                DzFrameSetPoint( DzFrameGetCommandBarButton(1,1), 0, UnitInfoLine, 2, 0.121,-0.016);
+                DzFrameSetSize( DzFrameGetCommandBarButton(1, 1), 0.04, 0.04 );
                 //D
                 DzFrameSetPoint( DzFrameGetCommandBarButton(1,2), 0, UnitInfoLine, 2, 0.161,-0.016);
                 DzFrameSetSize( DzFrameGetCommandBarButton(1, 2), 0.04, 0.04 );
