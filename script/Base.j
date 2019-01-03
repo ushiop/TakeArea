@@ -45,3 +45,4 @@
 //! import zinc "map/script/hero/005 Black Saber.j"
 //! import zinc "map/script/hero/006 SL.j"
 //! import zinc "map/script/hero/007 Sword Master.j"
+//! import zinc "map/script/hero/008 MR.j"
