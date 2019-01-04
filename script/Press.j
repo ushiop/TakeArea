@@ -1,4 +1,4 @@
-  library Press requires Table,Teams{
+  library Press requires Table,Teams,Players{
     //按键数据异步/同步类
     //主要用于同步玩家的按键
     //网易提供的事件延迟太高了
@@ -35,55 +35,81 @@
 
     }
  
-    public string PressType="";//按键类型 
-    public string PressName="";//按键名
-    public integer PressCode=0; 
-    public gamecache gc;
-    public string keys[];//键码
-    public string keynames[];//键名
+    public boolean keys[];//按键的状态
 
-    //用计时器每0.01秒获取同步的键盘值
-    public function GCSnyc(){
-        Teams.ActionsForAllPlayer(function(){
-            Players p=Players.Get(GetEnumPlayer());
-            integer i,s;  
-            for(0<=i<9){
-                s=GetStoredInteger(gc,p.playerids,keys[i]);
-                if(s!=0){
-                    if(s==1){
-                        Press.TriggerSnyc(Press.onSnycPressKeyUp,p.player,keynames[i]);
-                    }else{
-                        Press.TriggerSnyc(Press.onSnycPressKeyDown,p.player,keynames[i]);
-                    }
-                    StoreInteger(gc,p.playerids,keys[i],0);
-                }
-            } 
-        });
+    //收到按键同步，触发事件
+    function PressSnyc(){ 
+        player p=DzGetTriggerSyncPlayer(); 
+        string d=DzGetTriggerSyncData();
+        string t=SubString(d,0,1);
+        string msg=SubString(d,1,StringLength(d)); 
+        BJDebugMsg(msg);
+        if(t=="D"){ 
+            Press.TriggerSnyc(Press.onSnycPressKeyDown,p,msg);
+        }else if(t=="U"){ 
+            Press.TriggerSnyc(Press.onSnycPressKeyUp,p,msg);
+        }
+        p=null;       
     }
-  
+    
+    //! textmacro RegisterKeyActions takes idx,name
+    function $name$_Down(){
+        if(keys[$idx$]==false){
+            keys[$idx$]=true;
+            DzSyncData( "Press", "D$name$");
+        }
+    }
 
+    function $name$_Up(){
+        if(keys[$idx$]==true){
+            keys[$idx$]=false; 
+            DzSyncData( "Press", "U$name$");
+        }
+    }
+    //! endtextmacro
+    //! runtextmacro RegisterKeyActions("1","Q");
+    //! runtextmacro RegisterKeyActions("2","W");
+    //! runtextmacro RegisterKeyActions("3","E");
+    //! runtextmacro RegisterKeyActions("4","R");
+    //! runtextmacro RegisterKeyActions("5","D");
+    //! runtextmacro RegisterKeyActions("6","F");
+    //! runtextmacro RegisterKeyActions("7","C");
+    //! runtextmacro RegisterKeyActions("8","SPACE");
+    //! runtextmacro RegisterKeyActions("9","F2");
+    
     function onInit(){ 
-        keys[0]="769";
-        keynames[0]="F2";
-        keys[1]="81";
-        keynames[1]="Q";
-        keys[2]="87";
-        keynames[2]="W";
-        keys[3]="69";
-        keynames[3]="E";
-        keys[4]="82";
-        keynames[4]="R";
-        keys[5]="68";
-        keynames[5]="D";
-        keys[6]="70";
-        keynames[6]="F";
-        keys[7]="67";
-        keynames[7]="C";
-        keys[8]="32";
-        keynames[8]="SPACE";
-        gc=InitGameCache("press");
-        Cheat("exec-lua:init");
-        TimerStart(NewTimer(),0.01,true,function GCSnyc);
+        trigger t;
+
+        //! textmacro RegisterKey takes idx,key,name 
+        //$name$的按下与释放
+        keys[$idx$]=false; 
+        
+        if(Players.localplayer==Players.localplayer){ 
+            t= CreateTrigger();
+            DzTriggerRegisterKeyEventTrg( t, 1, $key$ );
+            TriggerAddAction(t, function $name$_Down);
+        }
+               
+        if(Players.localplayer==Players.localplayer){ 
+            t=CreateTrigger(); 
+            DzTriggerRegisterKeyEventTrg( t, 0, $key$ );
+            TriggerAddAction(t, function $name$_Up);
+        }
+        //! endtextmacro
+        //! runtextmacro RegisterKey("1","81","Q");
+        //! runtextmacro RegisterKey("2","87","W");
+        //! runtextmacro RegisterKey("3","69","E");
+        //! runtextmacro RegisterKey("4","82","R");
+        //! runtextmacro RegisterKey("5","68","D");
+        //! runtextmacro RegisterKey("6","70","F");
+        //! runtextmacro RegisterKey("7","67","C");
+        //! runtextmacro RegisterKey("8","32","SPACE");
+        //! runtextmacro RegisterKey("9","113","F2");
+
+        t=CreateTrigger();        
+        DzTriggerRegisterSyncData( t, "Press", false );
+        TriggerAddAction(t, function PressSnyc);
+        t=null;
     }
 }  
 
