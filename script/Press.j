@@ -3,6 +3,7 @@
     //主要用于同步玩家的按键
     //网易提供的事件延迟太高了
     //改为使用YDWE-LUA引擎的message.hook+GC实现
+    //发现网易和LUA.MESSAGE不兼容，重新用网易事件实现
  
     type PressSnycEventInterface extends function(player,string);
 
