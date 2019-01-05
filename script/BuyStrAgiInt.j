@@ -55,8 +55,8 @@ library BuyStrAgiInt{
                     ModifyHeroStat( bj_HEROSTAT_AGI, p.hero.unit, bj_MODIFYMETHOD_ADD, add );
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Items\\AIam\\AIamTarget.mdl",p.hero.X(),p.hero.Y()) );
                 }
-            }    
-            DisplayTimedTextFromPlayer(p.player,0,0,5,"属性转换完成~！现在的属性是: 力量("+I2S(p.hero.Str(true))+")  敏捷("+I2S(p.hero.Agi(true))+")   智力("+I2S(p.hero.Int(true))+")");                    
+            }     
+            DisplayTextToPlayer(p.player,0,0,"属性转换完成~！现在的属性是: 力量("+I2S(p.hero.Str(true))+")  敏捷("+I2S(p.hero.Agi(true))+")   智力("+I2S(p.hero.Int(true))+")");                    
         }
     }
 
