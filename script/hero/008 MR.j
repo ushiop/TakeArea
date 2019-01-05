@@ -99,11 +99,12 @@ library MR requires Groups{
                 }
             } 
         }
+ 
 
         static method onInit(){ 
             Units.On(Units.onHeroDeath,MR.Death);
             Units.On(Units.onHeroSpawn,MR.Spawn);
-            Damage.On(Damage.onUnitDamage,MR.Damage);
+            Damage.On(Damage.onUnitDamage,MR.Damage); 
         }
     }
 }
