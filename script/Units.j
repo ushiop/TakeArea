@@ -526,7 +526,7 @@ library Units requires Table,Players,Events,Util{
                 ShowUnit(u,false);
                 ShowUnit(u,true);
                 t.AddAbility('Aloc');
-            }
+            } 
             SetUnitAnimation( u,animname);
             SetUnitScale( u,modsize,modsize,modsize);
             SetUnitTimeScale( u,animspeed);
