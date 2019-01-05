@@ -27,6 +27,17 @@ library Units requires Table,Players,Events,Util{
             real createtime;//被创建时间
             real movespeed;//理论移动速度（只是用于计算，并没有突破522的实际移动速度)
 
+
+            method Sex()->integer{
+                if(this.IsAbility('A021')==true){
+                    return Units.SexMan;
+                }else if(this.IsAbility('A022')==true){
+                    return Units.SexWomen;
+                }else{
+                    return Units.SexUnknow;
+                }
+            }
+
             //返回单位的移动速度
             method MoveSpeed()->real{
                 return GetUnitMoveSpeed(this.unit);
@@ -395,6 +406,11 @@ library Units requires Table,Players,Events,Util{
 
         //自定义事件
         public {
+
+            static constant integer SexUnknow=0;//未知性别..
+            static constant integer SexMan=1;//男性角色
+            static constant integer SexWomen=2;//女性角色
+
 
             static constant string onUnitDeath="Units.UnitDeath";//非英雄单位死亡
             static constant string onHeroDeath="Units.HeroDeath";//英雄单位死亡
