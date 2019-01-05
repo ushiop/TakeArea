@@ -25,6 +25,24 @@ library Units requires Table,Players,Events,Util{
             integer moves;//位移计数
             integer ai;//AI施法的接口
             real createtime;//被创建时间
+            real movespeed;//理论移动速度（只是用于计算，并没有突破522的实际移动速度)
+
+            //返回单位的移动速度
+            method MoveSpeed()->real{
+                return GetUnitMoveSpeed(this.unit);
+            }
+
+            //设置单位移动速度，可以超过522，但仅用于计算，游戏中不会实际超过522
+            method SetMoveSpeed(real r){
+                this.movespeed+=r;
+                if(this.movespped>=522){
+                    SetUnitMoveSpeed(this.unit,522);
+                }else if(this.movespeed<=0){
+                    SetUnitMoveSpeed(this.unit,0);
+                }else{
+                    SetUnitMoveSpeed(this.unit,this.movespeed);
+                }
+            }
 
             method SetMP(real r){
                 SetUnitState(this.unit,UNIT_STATE_MANA,r);
@@ -469,6 +487,7 @@ library Units requires Table,Players,Events,Util{
             ud.Obj=0;
             ud.pauses=0;
             ud.moves=0;
+            ud.movespeed=GetUnitMoveSpeed(u);
             ud.createtime=GameTime;
             Units.ht[u]=ud; 
             return ud;
