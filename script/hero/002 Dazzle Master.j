@@ -215,14 +215,14 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
             Buffs.Add(u.unit,'A00G','B002',5,false).onEnd=function(Buffs b){
                 Data data=Data(Units.Get(b.Unit).Obj); 
-                SetUnitMoveSpeed(b.Unit, GetUnitMoveSpeed(b.Unit)-data.r[0] );
+                Units.Get(b.Unit).SetMoveSpeed(-data.r[0] );
                 SetUnitState(b.Unit, ConvertUnitState(0x51), GetUnitState(b.Unit, ConvertUnitState(0x51))-data.r[1] );
                 data.r[0]=0;
                 data.r[1]=0;
             }; 
             if(data.r[0]<80){
                 data.r[0]+=20;    
-                SetUnitMoveSpeed(u.unit, GetUnitMoveSpeed(u.unit)+20 );
+                u.SetMoveSpeed(20);
             }
             if(data.r[1]<1.2){
                 data.r[1]+=0.3;
