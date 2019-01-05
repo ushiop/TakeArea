@@ -580,7 +580,11 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 Units mj;
                 Units u=Units(data.c[0]);
                 Dash dash; 
-                if(u.player.press.E==true&&data.r[0]<=2&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
+                boolean pr=true;
+                if(data.r[0]>=0.1){
+                    pr=u.player.press.E;
+                }
+                if(pr==true&&data.r[0]<=2&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
                         u.AnimeId(14);
