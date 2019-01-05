@@ -51,5 +51,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
         for(0<=i<=5){
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
         }
+
+        Cheat("exec-lua:init");
     }
 }
