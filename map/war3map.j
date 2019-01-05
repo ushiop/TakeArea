@@ -2495,7 +2495,7 @@ endfunction
                     call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Items\\AIam\\AIamTarget.mdl", (GetUnitX(s__Units_unit[(s__Players_hero[p])])), (GetUnitY(s__Units_unit[(s__Players_hero[p])])))) // INLINED!!
                 endif
             endif
-            call DisplayTimedTextFromPlayer(s__Players_player[p], 0, 0, 5, "属性转换完成~！现在的属性是: 力量(" + I2S((GetHeroStr(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")  敏捷(" + I2S((GetHeroAgi(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")   智力(" + I2S((GetHeroInt(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")") // INLINED!!
+            call DisplayTextToPlayer(s__Players_player[p], 0, 0, "属性转换完成~！现在的属性是: 力量(" + I2S((GetHeroStr(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")  敏捷(" + I2S((GetHeroAgi(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")   智力(" + I2S((GetHeroInt(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")") // INLINED!!
         endif
     endfunction
     function BuyStrAgiInt___onInit takes nothing returns nothing
@@ -5590,7 +5590,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
             call ForForce((s__Teams___Team_Players[GetPlayerTeam((s__Players_player[Disconnect___tmp]))]), function Disconnect___anon__16) // INLINED!!
         endif
         call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
-        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
+        call DisplayTextToForce((Teams___AllPlayers), s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
         set s__Players_isonline[Disconnect___tmp]=false
         call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
         set u=null
@@ -6687,7 +6687,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                 endif
                 if ( (s__Teams___Team_Kills[(s__Players_teamid[s__Units_player[m]])]) >= s__Winner_MaxKills ) then // INLINED!!
                     set s__Winner_GameEnd=true
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Players_teamid[s__Units_player[m]])]) + " 获得了最终的胜利！！") // INLINED!!
+                    call DisplayTextToForce((Teams___AllPlayers), "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Players_teamid[s__Units_player[m]])]) + " 获得了最终的胜利！！") // INLINED!!
                     call sc__Winner_ShowWin(s__Players_teamid[s__Units_player[m]])
                 endif
             endif
@@ -6747,7 +6747,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                             call s__Winner_ShowTip()
                             set s__Winner_NowTime=0.001
                             set s__Winner_Team=ntmp
-                            call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "中央球已被" + (s__Teams___Team_Name[(ntmp)]) + "占领！") // INLINED!!
+                            call DisplayTextToForce((Teams___AllPlayers), "中央球已被" + (s__Teams___Team_Name[(ntmp)]) + "占领！") // INLINED!!
                             call s__TakeUi_ShowTakeBar((s__Teams___Team_Name[(ntmp)])) // INLINED!!
                         endif
                     endif
@@ -6755,7 +6755,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                     if ( s__Winner_NowTime >= s__Winner_MaxTime ) then
                         set s__Winner_GameEnd=true
                         call PlaySoundBJ(gg_snd_Winner)
-                        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
+                        call DisplayTextToForce((Teams___AllPlayers), "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Winner_Team)]) + " 获得了最终的胜利！！") // INLINED!!
                         call s__Winner_ShowWin(s__Winner_Team)
                     else
                         if ( numbers == 0 ) then
@@ -6767,7 +6767,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                         call s__TakeUi_SetTakeBarStep(s__Winner_NowTime / s__Winner_MaxTime)
                     endif
                 else
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, (s__Teams___Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
+                    call DisplayTextToForce((Teams___AllPlayers), (s__Teams___Team_Name[(s__Winner_Team)]) + " 已经丢失了中央球的控制权，中央球现在是中立状态！") // INLINED!!
                     set s__Winner_NowTime=0
                     set s__Winner_Team=- 1
                     call s__Winner_ShowTip()
@@ -10325,7 +10325,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
 //library Camera:
 
         function Camera___anon__12 takes nothing returns nothing
-            call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 2250.00, 0) //游戏时间轴，方便计算时间;
+            call SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 2650.00, 0) //游戏时间轴，方便计算时间;
             set GameTime=GameTime + 0.01
         endfunction
     function Camera___onInit takes nothing returns nothing
@@ -10733,7 +10733,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                     if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                         set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
                         call ForForce((s__Teams___Team_Players[GetPlayerTeam((s__Players_player[s__Units_player[m]]))]), function s__Respawn___Respawn_anon__23) // INLINED!!
-                        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r") // INLINED!!
+                        call DisplayTextToForce((Teams___AllPlayers), s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r") // INLINED!!
                         if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                             set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
                         endif
@@ -10742,7 +10742,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
                         set s__Players_randomhero[s__Units_player[u]]=s__Players_randomhero[s__Units_player[u]] + 5.0
                     endif
                 else
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[s__Units_player[u]] + "死在了野怪的手里...") // INLINED!!
+                    call DisplayTextToForce((Teams___AllPlayers), s__Players_name[s__Units_player[u]] + "死在了野怪的手里...") // INLINED!!
                 endif
                 set s__Respawn___Respawn_RespawnTime[r]=s__Respawn___Respawn_MaxRespawnTime
                 set s__Respawn___Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
@@ -10913,7 +10913,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) // INLINED!!
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Sat Jan 05 14:33:04 2019
+//   Date: Sat Jan 05 15:06:32 2019
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -11336,7 +11336,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs1307150078")
+call ExecuteFunc("jasshelper__initstructs1309158078")
 call ExecuteFunc("BuyStrAgiInt___onInit")
 call ExecuteFunc("Teams___onInit")
 call ExecuteFunc("TerrainPathability___Init")
@@ -11886,7 +11886,7 @@ function sa___prototype1_BuyStrAgiInt___Buy takes nothing returns boolean
                     call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Items\\AIam\\AIamTarget.mdl", (GetUnitX(s__Units_unit[(s__Players_hero[p])])), (GetUnitY(s__Units_unit[(s__Players_hero[p])])))) // INLINED!!
                 endif
             endif
-            call DisplayTimedTextFromPlayer(s__Players_player[p], 0, 0, 5, "属性转换完成~！现在的属性是: 力量(" + I2S((GetHeroStr(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")  敏捷(" + I2S((GetHeroAgi(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")   智力(" + I2S((GetHeroInt(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")") // INLINED!!
+            call DisplayTextToPlayer(s__Players_player[p], 0, 0, "属性转换完成~！现在的属性是: 力量(" + I2S((GetHeroStr(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")  敏捷(" + I2S((GetHeroAgi(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")   智力(" + I2S((GetHeroInt(s__Units_unit[s__Players_hero[s__Units_player[(s__Players_hero[p])]]], (true)))) + ")") // INLINED!!
         endif
     return true
 endfunction
@@ -11935,7 +11935,7 @@ function sa___prototype1_Disconnect___onDisconnect takes nothing returns boolean
             call ForForce((s__Teams___Team_Players[GetPlayerTeam((s__Players_player[Disconnect___tmp]))]), function Disconnect___anon__16) // INLINED!!
         endif
         call s__Teams_PlayerRemoveForce(s__Players_player[Disconnect___tmp])
-        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
+        call DisplayTextToForce((Teams___AllPlayers), s__Players_name[Disconnect___tmp] + " 离开了游戏，金钱将平分给他的队友。") // INLINED!!
         set s__Players_isonline[Disconnect___tmp]=false
         call sc__KillUi_FlushPlayerData(s__Players_player[Disconnect___tmp])
         set u=null
@@ -12366,7 +12366,7 @@ function sa___prototype47_s__Winner_Death takes nothing returns boolean
                 endif
                 if ( (s__Teams___Team_Kills[(s__Players_teamid[s__Units_player[m]])]) >= s__Winner_MaxKills ) then // INLINED!!
                     set s__Winner_GameEnd=true
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Players_teamid[s__Units_player[m]])]) + " 获得了最终的胜利！！") // INLINED!!
+                    call DisplayTextToForce((Teams___AllPlayers), "游戏结束啦！！！！！！！！！！！ " + (s__Teams___Team_Name[(s__Players_teamid[s__Units_player[m]])]) + " 获得了最终的胜利！！") // INLINED!!
                     call sc__Winner_ShowWin(s__Players_teamid[s__Units_player[m]])
                 endif
             endif
@@ -14776,7 +14776,7 @@ function sa___prototype47_s__Respawn___Respawn_Death takes nothing returns boole
                     if ( s__Players_teamid[s__Units_player[u]] != s__Players_teamid[s__Units_player[m]] and s__Units_unit[m] != null ) then
                         set s__Players_lifekill[s__Units_player[m]]=s__Players_lifekill[s__Units_player[m]] + 1
                         call ForForce((s__Teams___Team_Players[GetPlayerTeam((s__Players_player[s__Units_player[m]]))]), function s__Respawn___Respawn_anon__23) // INLINED!!
-                        call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r") // INLINED!!
+                        call DisplayTextToForce((Teams___AllPlayers), s__Players_name[s__Units_player[m]] + "与队友 因击杀 " + s__Players_name[s__Units_player[u]] + " 而获得了|cffffcc00$300|r") // INLINED!!
                         if ( s__Players_randomhero[s__Units_player[m]] > 0 ) then
                             set s__Players_randomhero[s__Units_player[m]]=s__Players_randomhero[s__Units_player[m]] - 5.0
                         endif
@@ -14785,7 +14785,7 @@ function sa___prototype47_s__Respawn___Respawn_Death takes nothing returns boole
                         set s__Players_randomhero[s__Units_player[u]]=s__Players_randomhero[s__Units_player[u]] + 5.0
                     endif
                 else
-                    call DisplayTimedTextToForce((Teams___AllPlayers), 5.00, s__Players_name[s__Units_player[u]] + "死在了野怪的手里...") // INLINED!!
+                    call DisplayTextToForce((Teams___AllPlayers), s__Players_name[s__Units_player[u]] + "死在了野怪的手里...") // INLINED!!
                 endif
                 set s__Respawn___Respawn_RespawnTime[r]=s__Respawn___Respawn_MaxRespawnTime
                 set s__Respawn___Respawn_RespawnSaveMoney[r]=200 + R2I(( s__Players_lifekill[s__Units_player[u]] * 300 ) * 1.2)
@@ -14836,7 +14836,7 @@ function sa___prototype46_s__Respawn___Respawn_PressSnyc takes nothing returns b
     return true
 endfunction
 
-function jasshelper__initstructs1307150078 takes nothing returns nothing
+function jasshelper__initstructs1309158078 takes nothing returns nothing
     set st__Respawn___Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn___Respawn_Flush,Condition( function sa__Respawn___Respawn_Flush))
     set st__Respawn___Respawn_Show=CreateTrigger()
