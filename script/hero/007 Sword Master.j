@@ -147,7 +147,7 @@ library SwordMaster requires Groups{
             Data data=Data.create('A01E');  
             u.Pause(true);
             u.Pause(false); 
-            SetUnitMoveSpeed(u.unit, GetUnitMoveSpeed(u.unit)+100 ); 
+            u.SetMoveSpeed(100);
             u.Alpha(0); 
             data.c[0]=u;
             data.c[1]=e;
@@ -176,7 +176,7 @@ library SwordMaster requires Groups{
                     mj.Alpha(0);
                     mj.Anime("stand");
                     mj.Life(2);
-                    SetUnitMoveSpeed(u.unit, GetUnitMoveSpeed(u.unit)-100 );
+                    u.SetMoveSpeed(-100);
                     u.Alpha(255);
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
