@@ -47,14 +47,14 @@ library MR requires Groups{
                             data.r[3]=0;
                             if((u.HP()/u.MaxHP())<=0.3){
                                 Buffs.Add(u.unit,'A01Y','B00B',30,false);
-                            } 
+                            }  
                             if(u.IsAbility('B00B')==true){
                                 GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
                                 while(FirstOfGroup(tmp_group)!=null){
                                     tmp=Units.Get(FirstOfGroup(tmp_group));
                                     GroupRemoveUnit(tmp_group,tmp.unit);
                                     if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
-                                        u.Damage(tmp.unit,Damage.Chaos,'A01X',u.Str(true)*1.0);
+                                        u.Damage(tmp.unit,Damage.Chaos,'A01X',u.Str(true)*3.0);
                                         DestroyEffect( AddSpecialEffectTarget("fire4.mdl",tmp.unit, "chest") );
                                     }
                                 }
