@@ -32,10 +32,10 @@ library Units requires Table,Players,Events,Util{
                 return GetUnitMoveSpeed(this.unit);
             }
 
-            //设置单位移动速度，可以超过522，但仅用于计算，游戏中不会实际超过522
+            //增加/减少单位移动速度，可以超过522，但仅用于计算，游戏中不会实际超过522
             method SetMoveSpeed(real r){
                 this.movespeed+=r;
-                if(this.movespped>=522){
+                if(this.movespeed>=522){
                     SetUnitMoveSpeed(this.unit,522);
                 }else if(this.movespeed<=0){
                     SetUnitMoveSpeed(this.unit,0);
