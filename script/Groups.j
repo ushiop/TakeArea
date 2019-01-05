@@ -26,12 +26,12 @@ library Groups requires Units,Damage{
 
     //是否不是蝗虫单位
     public function GroupIsNotAloc()->boolean{
-        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==0;
+        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==0&&GetUnitAbilityLevel(GetFilterUnit(),'A01Z')==0;
     }
 
     //是否是蝗虫单位
     public function GroupIsAloc()->boolean{
-        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==1;
+        return GetUnitAbilityLevel(GetFilterUnit(),'Aloc')==1||GetUnitAbilityLevel(GetFilterUnit(),'A01Z')==1;
     }
 
     //存活且是蝗虫单位
