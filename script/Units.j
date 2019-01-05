@@ -520,6 +520,13 @@ library Units requires Table,Players,Events,Util{
             t.aidindex=aindex;
             Util.UnitAddRemoveAbility(u,'Amrf'); 
             DzSetUnitModel( u, modpath);
+            if(t.IsAbility('A01Z')==true){
+                //是伪蝗虫单位，需要进行隐藏/显示处理，来修复替换模型后不会播放动画的问题
+                //目前该问题只在我电脑上出现过，原因不明。
+                ShowUnit(u,false);
+                ShowUnit(u,true);
+                t.AddAbility('Aloc');
+            }
             SetUnitAnimation( u,animname);
             SetUnitScale( u,modsize,modsize,modsize);
             SetUnitTimeScale( u,animspeed);
