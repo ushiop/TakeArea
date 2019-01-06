@@ -106,10 +106,10 @@ library MR requires Groups{
             integer targetSex=Units.SexWomen;
             Buffs b; 
             if(u.player.press.W==true){
-                TextAngle(u.unit,"       逆",3,10,90);
+                TextAngle(u.unit,"  逆",3,10,270);
                 targetSex=Units.SexMan;
             }
-            Util.Range(u.X(),u.Y(),600);
+            //Util.Range(u.X(),u.Y(),600);
             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),600,function GroupIsAliveNotAloc);     
             while(FirstOfGroup(tmp_group)!=null){
                 mj=Units.Get(FirstOfGroup(tmp_group));
