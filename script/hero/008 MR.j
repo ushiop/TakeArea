@@ -100,8 +100,51 @@ library MR requires Groups{
             } 
         }
  
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Units mj;
+            integer targetSex=Units.SexWomen;
+            Buffs b; 
+            if(u.player.press.W==true){
+                TextAngle(u.unit,"       逆",3,10,90);
+                targetSex=Units.SexMan;
+            }
+            Util.Range(u.X(),u.Y(),600);
+            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),600,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,mj.unit);
+                if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.Sex()==targetSex){ 
+                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",u.unit, "origin") );
+                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
+                    u.Damage(mj.unit,Damage.Chaos,'A020',u.Str(true)*5.0+u.Agi(true)*2.0+u.Int(true)*3.0);
+                    if(targetSex==Units.SexWomen){
+                        b=Buffs.Add(mj.unit,'A023','B00C',5,false);
+                    }else{
+                        b=Buffs.Add(mj.unit,'A024','B00C',5,false);
+                    }
+                    b.Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                    mj.AddAbility('Abun');
+                    b.onEnd=function(Buffs b){
+                        Units u=Units.Get(b.Unit);
+                        u.RemoveAbility('Abun');
+                    };
+                }
+            }
+            GroupClear(tmp_group);            
+        }
+
+        static method HERO_START(Spell e){
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A020'){
+                u.FlushAnimeId(2);
+            }
+            e.Destroy();
+        }
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A020',MR.W);
+            Spell.On(Spell.onReady,'A020',MR.HERO_START);
             Units.On(Units.onHeroDeath,MR.Death);
             Units.On(Units.onHeroSpawn,MR.Spawn);
             Damage.On(Damage.onUnitDamage,MR.Damage); 
