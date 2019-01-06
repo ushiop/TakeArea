@@ -5,7 +5,7 @@ library SpellNameText{
         texttag t= CreateTextTagUnitBJ(name, u, 0, text, 100, 100, 0, 0 ); 
         SetTextTagLifespan( t,time);
         SetTextTagVisibility( t, true );
-        SetTextTagVelocityBJ(t, 128.00, 90 );
+        SetTextTagVelocityBJ(t, 128.00, angle );
         SetTextTagPermanent( t, false );
         SetTextTagFadepoint(t,time*0.1); 
         t=null;
