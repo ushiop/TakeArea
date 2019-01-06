@@ -1,7 +1,7 @@
 library SpellNameText{
-    //创建一个向上漂浮的漂浮文字
- 
-    public function SpellNameText(unit u,string name,real time,real text){
+
+    //创建一个漂浮文字 
+    public function TextAngle(unit u,string name,real time,real text,real angle){
         texttag t= CreateTextTagUnitBJ(name, u, 0, text, 100, 100, 0, 0 ); 
         SetTextTagLifespan( t,time);
         SetTextTagVisibility( t, true );
@@ -9,6 +9,11 @@ library SpellNameText{
         SetTextTagPermanent( t, false );
         SetTextTagFadepoint(t,time*0.1); 
         t=null;
+    }
+
+    //创建一个向上漂浮的漂浮文字
+    public function SpellNameText(unit u,string name,real time,real text){
+        TextAngle(u,name,time,text,90);
     }
 
     public function SpellText(unit ua,integer aid,real time,real text){
