@@ -21,8 +21,8 @@ library Buff requires Util{
             integer Type;//可否被驱散(默认为增益,不可驱散)
             unit Unit;//BUFF的携带者  
             BuffEventInterface onTime;//BUFF计时时触发的事件
-            BuffEventInterface onEnd;//BUFF正常到期时触发的事件
-            BuffEventInterface onRemove;//BUFF被移除时触发的事件(不会触发onEnd),被驱散时也会触发
+            BuffEventInterface onEnd;//BUFF到期时触发的事件
+            BuffEventInterface onRemove;//BUFF被驱散/移除时触发的事件,然后再触发onEnd
             BuffEventInterface onDelay;//BUFF被增加最大持续时间时触发
             BuffEventInterface onFlush;//BUFF被刷新时间时触发
             Buffs Prev;//上一个BUFF节点，为0则无
@@ -52,7 +52,8 @@ library Buff requires Util{
                         if(tmp.Unit==u&&((tmp.Type==btype)||btype==-1)){                    
                             UnitRemoveAbility(tmp.Unit,tmp.Ability);
                             UnitRemoveAbility(tmp.Unit,tmp.Buff);
-                            if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
+                            if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp);  
+                            if(tmp.onEnd!=0) BuffEventInterface(tmp.onEnd).evaluate(tmp); 
                             tmp.Destroy();
                         }
                     } 
@@ -68,6 +69,7 @@ library Buff requires Util{
                     UnitRemoveAbility(u,aid);
                     UnitRemoveAbility(u,bid);
                     if(tmp.onRemove!=0) BuffEventInterface(tmp.onRemove).evaluate(tmp); 
+                    if(tmp.onEnd!=0) BuffEventInterface(tmp.onEnd).evaluate(tmp); 
                     tmp.Destroy();
                 }
             }
