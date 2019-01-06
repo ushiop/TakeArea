@@ -100,14 +100,63 @@ library MR requires Groups{
             } 
         }
  
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Units mj;
+            Units tmp;
+            Buffs b;
+            Data data;
+            real f;
+            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),600,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,mj.unit);
+                if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                    f=Util.XY(mj.unit,u.unit);
+                    tmp=Units.MJ(u.player.player,'e008','A025',0,mj.X()+115*CosBJ(f+180),mj.Y()+115*SinBJ(f+180),f,1.1,1.2,2, "Spell Two","mr.mdl"); 
+                    tmp.DelayAlpha(255,0,1);
+                    DestroyEffect( AddSpecialEffectTarget("kuriyamaq.mdl",mj.unit, "chest") );
+                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",tmp.unit, "origin") );
+                    Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(mj.unit,u.unit)+100,Dash.SUB,20,true,true);
+                    HitFlys.Add(mj.unit,45);
+                    u.Damage(mj.unit,Damage.Physics,'A025',u.Str(true)*10.0);
+                    data=Data.create('A025');
+                    data.c[0]=u;
+                    data.c[1]=mj;
+                    data.r[0]=0;
+                    b=Buffs.Add(mj.unit,'A026','B00D',5,false);
+                    b.Obj=data;
+                    b.Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE; 
+                    b.onTime=function(Buffs b){ 
+                        Data data=Data(b.Obj);
+                        Units u=Units(data.c[0]);
+                        Units mj=Units(data.c[1]);
+                        if(data.r[0]==0){
+                            DestroyEffect( AddSpecialEffectTarget("StampedeMissileDeath_stand.mdx",mj.unit, "chest") ); 
+                            u.Damage(mj.unit,Damage.Chaos,'A025',u.Str(true));
+                            data.r[0]=1; 
+                        }else{
+                            data.r[0]-=0.01;
+                        }
+                    };
+                    b.onEnd=function(Buffs b){ 
+                        Data data=Data(b.Obj);
+                        data.Destroy();
+                    };
+                }
+            }
+            GroupClear(tmp_group); 
+            e.Destroy();         
+        }
+ 
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Units mj;
-            integer targetSex=Units.SexWomen;
+            integer targetSex=Units.SexMan;
             Buffs b; 
             if(u.player.press.W==true){
                 TextAngle(u.unit,"  逆",3,10,270);
-                targetSex=Units.SexMan;
+                targetSex=Units.SexWomen;
             }
             //Util.Range(u.X(),u.Y(),600);
             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),600,function GroupIsAliveNotAloc);     
@@ -131,12 +180,13 @@ library MR requires Groups{
                     };
                 }
             }
-            GroupClear(tmp_group);            
+            GroupClear(tmp_group);   
+            e.Destroy();         
         }
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            if(e.Id=='A020'){
+            if(e.Id=='A020'||e.Id=='A025'){
                 u.FlushAnimeId(2);
             }
             e.Destroy();
@@ -144,7 +194,9 @@ library MR requires Groups{
 
         static method onInit(){ 
             Spell.On(Spell.onSpell,'A020',MR.W);
+            Spell.On(Spell.onSpell,'A025',MR.E);
             Spell.On(Spell.onReady,'A020',MR.HERO_START);
+            Spell.On(Spell.onReady,'A025',MR.HERO_START);
             Units.On(Units.onHeroDeath,MR.Death);
             Units.On(Units.onHeroSpawn,MR.Spawn);
             Damage.On(Damage.onUnitDamage,MR.Damage); 
