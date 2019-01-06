@@ -140,7 +140,7 @@ library MR requires Groups{
                 u.FlushAnimeId(2);
             }
             e.Destroy();
-        }
+        } 
 
         static method onInit(){ 
             Spell.On(Spell.onSpell,'A020',MR.W);
