@@ -184,19 +184,30 @@ library MR requires Groups{
             e.Destroy();         
         }
 
+
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+        }
+
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A020'||e.Id=='A025'){
                 u.FlushAnimeId(2);
+                e.Destroy();
             }
-            e.Destroy();
+            if(e.Id=='A027'){
+                u.FlushAnimeId(2);
+                e.Destroy();
+            }
         } 
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A027',MR.R);
             Spell.On(Spell.onSpell,'A020',MR.W);
             Spell.On(Spell.onSpell,'A025',MR.E);
             Spell.On(Spell.onReady,'A020',MR.HERO_START);
             Spell.On(Spell.onReady,'A025',MR.HERO_START);
+            Spell.On(Spell.onReady,'A027',MR.HERO_START);
             Units.On(Units.onHeroDeath,MR.Death);
             Units.On(Units.onHeroSpawn,MR.Spawn);
             Damage.On(Damage.onUnitDamage,MR.Damage); 
