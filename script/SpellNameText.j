@@ -20,7 +20,7 @@ library SpellNameText{
         Units u=Units.Get(ua);
         Units mj;
  
-        if(aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'){
+        if(aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'||aid=='A027'){
             if(aid=='A006'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_huangyanluo.mdx");
             }
@@ -41,6 +41,9 @@ library SpellNameText{
             }            
             if(aid=='A01F'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_kuailebengdi.mdx");
+            }
+            if(aid=='A027'){
+                mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_mr_dayuluoxuanwan.mdx");
             }
             mj.SetH(75);
             mj.DelayAnime(2,0.7);  
