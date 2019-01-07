@@ -297,8 +297,7 @@ library MR requires Groups{
                 data.Destroy();
                 ReleaseTimer(GetExpiredTimer());
             }
-        }
-
+        } 
         //1
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
