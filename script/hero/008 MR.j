@@ -5,7 +5,7 @@ library MR requires Groups{
   
         static method Spawn(Units u,Units m){
             timer t;
-            Data data;
+            Data data; 
             if(u.IsAbility('A01X')==true){
                 t=NewTimer();
                 data=Data.create('A01X');
@@ -185,8 +185,137 @@ library MR requires Groups{
         }
 
 
+        static method R1(){ 
+            Data data=Data(GetTimerData(GetExpiredTimer()));
+            Units u=Units(data.c[0]);     
+            Units mj;
+            Dash dash;
+            real f=u.F(),x=u.X()+150*CosBJ(f),y=u.Y()+150*SinBJ(f),dis,fa; 
+            if(data.i[0]==0){//后撤搓丸子与前冲
+                Dash.Start(u.unit,f,200,Dash.ADD,25,true,false);
+                u.AddAbility('A028');
+                if(u.IsAbility('B00B')==true){ 
+                    u.AddAbility('A029');
+                } 
+                data.i[0]=1;
+                TimerStart(GetExpiredTimer(),0.35,true,function MR.R1);
+            }else if(data.i[0]==1){//冲到了！  
+                TimerStart(GetExpiredTimer(),data.r[1],true,function MR.R1); 
+                Dash.Start(u.unit,f,80-(data.r[0]*30),Dash.SUB,5,true,false);
+                mj=Units.MJ(u.player.player,'e00B','A027',0,x,y,GetRandomReal(0,360),1,1.5,2, "stand","Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl"); 
+                mj.SetH(50);
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),1,1.5,2, "death","wind2.mdl");
+                mj.SetH(25); 
+                mj=Units.MJ(u.player.player,'e009','A027',0,x,y,f+180,5,0.8,1+data.r[0], "stand","tx_white2.mdl"); 
+                mj.SetH(150);
+                Dash.Start(mj.unit,f+180,600,Dash.SUB,40,true,false);
+                if(u.IsAbility('B00B')==true){
+                    mj=Units.MJ(u.player.player,'e009','A027',0,x,y,f+180,5,0.8,1+data.r[0], "stand","tx_white2.mdl"); 
+                    mj.SetH(150);
+                    Dash.Start(mj.unit,f+180,600,Dash.SUB,40,true,false);          
+                    mj.Color(255,120,120);         
+                }
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),0.3,1.25+data.r[0],1, "birth","t_lxw.mdl");  
+                mj.SetH(100);
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),0.3,1.25+data.r[0],3, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
+                mj.Color(0,155,255);
+                if(u.IsAbility('B00B')==true){
+                    mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),0.3,1.25+data.r[0],1, "birth","t_lxw_red.mdx");  
+                    mj.SetH(100);
+                    mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),0.3,1.25+data.r[0],3, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
+                    mj.Color(255,0,0);
+                }
+                Util.Duang(x,y,0.3,250,250,-48,0.02,50);
+                //11次伤害
+                //Util.Range(x,y,200);
+                GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                        dis=Util.XY2EX(mj.X(),mj.Y(),x,y);
+                        fa=Util.XYEX(mj.X(),mj.Y(),x,y);
+                        if(dis<=200){ 
+                            u.Damage(mj.unit,Damage.Chaos,'A027',u.Str(true)*0.91); //一共11次,10倍
+                            mj.Position(mj.X()+4.22*CosBJ(fa),mj.Y()+4.22*SinBJ(fa),true);
+                        }else{
+                            Dash.Start(mj.unit,fa,dis/10,Dash.NORMAL,4,true,false);
+                        }
+                    }
+                }
+                GroupClear(tmp_group);   
+                data.r[0]+=0.15;//2.65
+                data.r[1]-=(data.r[1]*0.2); 
+                if(data.r[1]<0.02){
+                    data.i[0]=2;
+                }
+            }else if(data.i[0]==2){//最后一发！ 
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),1,1.5,0.5, "stand","by_wood_effect_yuanbanlin_sand2.mdl"); 
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),2,1.25+data.r[0],2.5, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
+                mj.Color(0,155,255);
+                mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),1,2,2, "stand","white-qiquan-new.mdl");  
+                if(u.IsAbility('B00B')==true){                
+                    mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),2,1.25+data.r[0],2.5, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
+                    mj.Color(255,0,0);
+                }
+                Util.Duang(x,y,0.8,250,250,-256,0.02,50);
+                //Util.Range(x,y,300); 
+                GroupEnumUnitsInRange(tmp_group,x,y,375,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                        u.Damage(mj.unit,Damage.Chaos,'A027',u.Str(true)*10.0); 
+                    }
+                    dash=Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),450,Dash.PWX,30,true,false);
+                    dash.Obj=3;
+                    dash.onMove=function(Dash dash){
+                        if(dash.Obj==0){
+                            dash.Obj=3;
+                            DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", dash.X,dash.Y) );
+                        }else{
+                            dash.Obj-=1;
+                        }
+                    };
+                }
+                GroupClear(tmp_group);                     
+                data.i[0]=3; 
+                TimerStart(GetExpiredTimer(),0.2,true,function MR.R1); 
+                
+            }
+            if(data.i[0]==3){
+                data.i[0]=18;
+            }
+            if(u.Alive()==false){
+                data.i[0]=18;
+            }
+            if(data.i[0]==18){//技能结束
+                u.RemoveAbility('A029');
+                u.RemoveAbility('A028');
+                u.Pause(false);
+                Spell(data.c[1]).Destroy();
+                data.Destroy();
+                ReleaseTimer(GetExpiredTimer());
+            }
+        }
+
+        //1
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
+            timer t=NewTimer();
+            Data data=Data.create('A027');
+            u.Pause(true); 
+            u.SetF(u.F(),true);
+            u.AnimeId(1);
+            Dash.Start(u.unit,u.F()+180,100,Dash.ADD,25,true,false);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0; 
+            data.r[0]=1;
+            data.r[1]=0.2;
+            SetTimerData(t,data); 
+            TimerStart(t,0.3,true,function MR.R1);
+            t=null;
         }
 
         static method HERO_START(Spell e){
@@ -196,8 +325,23 @@ library MR requires Groups{
                 e.Destroy();
             }
             if(e.Id=='A027'){
-                u.FlushAnimeId(2);
-                e.Destroy();
+                if(u.IsAbility('B00B')==false){
+                    u.FlushAnimeId(2);
+                    e.Destroy();
+                }else{
+                    if(u.MP()>=200.0){
+                        if(u.GetAbilityCD('A027')==0){ 
+                            SpellText(u.unit,'A027',3,15);
+                            u.SetMP(u.MP()-200);
+                            u.SetAbilityCD('A027',20);
+                            MR.R(e); 
+                        }else{
+                            e.Destroy();
+                        }
+                    }else{
+                        e.Destroy();
+                    }
+                }
             }
         } 
 
@@ -209,8 +353,9 @@ library MR requires Groups{
             Spell.On(Spell.onReady,'A025',MR.HERO_START);
             Spell.On(Spell.onReady,'A027',MR.HERO_START);
             Units.On(Units.onHeroDeath,MR.Death);
-            Units.On(Units.onHeroSpawn,MR.Spawn);
             Damage.On(Damage.onUnitDamage,MR.Damage); 
+            Units.On(Units.onHeroSpawn,MR.Spawn);
         }
     }
+
 }
