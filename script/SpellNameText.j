@@ -1,4 +1,70 @@
-library SpellNameText{
+library SpellNameText requires TimerUtils{
+
+    struct TagText{
+        unit u;
+        string fullmsg;
+        real time;
+        integer now=0;
+        integer max;
+        integer steep;
+        real angle;
+        texttag txg;
+        real font;
+        real timertime;
+
+        static method Create()->TagText{
+            return TagText.allocate();
+        }
+
+        method Destroy(){
+            this.u=null;
+            this.txg=null;
+            this.deallocate();
+        }
+    }
+
+    //让单位喊话,文字会逐渐出现，steep为一次多出的字数 
+    //delay为延迟多久出现
+    //font为字体大小
+    function RuaText1(){
+        timer t=GetExpiredTimer();
+        TagText this=TagText(GetTimerData(t)); 
+        TimerStart(t,this.timertime,true,function RuaText1);
+        SetTextTagVisibility(this.txg,true);
+        if(this.now<this.max){
+            this.now+=this.steep;
+            SetTextTagPosUnit(this.txg,this.u,0 );
+            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font); 
+        }else{
+            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font);
+            SetTextTagLifespan(this.txg,this.time);
+            SetTextTagFadepoint(this.txg,this.time*0.1); 
+            this.Destroy();
+            ReleaseTimer(t);
+            BJDebugMsg("结束了");
+        }
+    }
+
+    public function RuaText(unit u,string msg,real font,real time,integer steep,real angle,real delay,real timertime){
+        TagText t=TagText.Create();
+        timer t1=NewTimer();
+        t.txg=CreateTextTagUnitBJ("", u, 0, font, 100, 100, 0, 0 );  
+        SetTextTagVisibility( t.txg, false );
+        SetTextTagVelocityBJ(t.txg, 128.00,angle );
+        SetTextTagPermanent( t.txg, false );   
+        t.u=u;
+        t.fullmsg=msg;
+        t.time=time;
+        t.max=StringLength(msg);
+        t.steep=steep;
+        t.angle=angle;
+        t.font=font;
+        t.timertime=timertime;
+        SetTimerData(t1,t);
+        TimerStart(t1,delay,true,function RuaText1);
+        t1=null;
+    }
+
 
     //创建一个漂浮文字 
     public function TextAngle(unit u,string name,real time,real text,real angle){
