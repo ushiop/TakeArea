@@ -106,6 +106,11 @@ library Units requires Table,Players,Events,Util{
                 t=null;                     
             }
 
+            //设置单位颜色,0-255
+            method Color(integer r,integer g,integer b){ 
+                SetUnitVertexColor(this.unit, r, g, b, 255 );
+            }
+
             //设置单位透明度,0-255,0为不可见
             method Alpha(integer a){
                 SetUnitVertexColor(this.unit, 255, 255, 255, a );
