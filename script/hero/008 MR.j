@@ -21,12 +21,13 @@ library MR requires Groups{
                     Units u=Units(data.c[0]);
                     Units tmp;
                     real speed;
-                    if(u.Alive()==false){
-                        BJDebugMsg("死了");
+                    integer tte=0;
+                    real x=u.X(),y=u.Y(),f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F())),f1; 
+                    if(u.Alive()==false){ 
                         data.Destroy();
                         ReleaseTimer(GetExpiredTimer());
                     }else{
-                        speed=Util.XY2EX(u.X(),u.Y(),data.r[0],data.r[1]);
+                        speed=Util.XY2EX(x,y,data.r[0],data.r[1]);
                         if(speed>5){
                             data.r[2]+=0.01;
                         }else{ 
@@ -41,15 +42,15 @@ library MR requires Groups{
                         if(data.r[2]>=1.0){
                             data.i[0]=1;
                         } 
-                        data.r[0]=u.X();
-                        data.r[1]=u.Y();
+                        data.r[0]=x;
+                        data.r[1]=y;
                         if(data.r[3]==1.0){
                             data.r[3]=0;
                             if((u.HP()/u.MaxHP())<=0.3){
                                 Buffs.Add(u.unit,'A01Y','B00B',30,false);
                             }  
                             if(u.IsAbility('B00B')==true){
-                                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
+                                GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
                                 while(FirstOfGroup(tmp_group)!=null){
                                     tmp=Units.Get(FirstOfGroup(tmp_group));
                                     GroupRemoveUnit(tmp_group,tmp.unit);
@@ -60,9 +61,30 @@ library MR requires Groups{
                                 }
                                 GroupClear(tmp_group); 
                             }
-  
                         }else{
                             data.r[3]+=0.01;
+                        }
+                        if(data.r[4]==1.5){
+                            data.r[4]=0;
+                            GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(tmp.IsAbility('A00P')==true){
+                                    if(Util.FAN(tmp.unit,u.unit,Util.XYEX(tmp.X(),tmp.Y(),tmp.X()+20*CosBJ(tmp.F()),tmp.Y()+20*SinBJ(tmp.F())),60)==true){
+                                        RuaText(tmp.unit,"narutoooo！!",10,2,1,90,0.3,0.05);
+                                    } 
+                                    if(tte==0){  
+                                        if(Util.FAN(u.unit,tmp.unit,f,60)==true){ 
+                                            RuaText(u.unit,"sasukeeeeeeee！！！！！!",10,2,1,90,0,0.03);
+                                            tte=1;
+                                        } 
+                                    }
+                                }
+                            }
+                            GroupClear(tmp_group);  
+                        }else{
+                            data.r[4]+=0.01;
                         }
                     }
                 });
