@@ -316,9 +316,20 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
     function Loop(){
         real exp,hp,mp;
         integer i;
+        integer show=0;
         DzFrameSetText(MoneyText,"|cffFFFF00$" +I2S(GetPlayerState(Players.localplayer, PLAYER_STATE_RESOURCE_GOLD))+"|r"); 
         if(UISelectUnit!=null){ 
-            if(IsUnitAliveBJ(UISelectUnit)==true&&IsUnitVisible(UISelectUnit,Players.localplayer)==true){ 
+            if(IsUnitAliveBJ(UISelectUnit)==true){
+                show=1;
+                if(IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
+                    if(IsUnitVisible(UISelectUnit,Players.localplayer)==false){
+                        show=0;
+                    }
+                }
+            }else{
+                show=0;
+            }
+            if(show==1){ 
                 if(UIType==1){ 
                     exp=(GetHeroXP(UISelectUnit)/LvExp[GetHeroLevel(UISelectUnit)])*100;
                     if(IsUnitEnemy(UISelectUnit,Players.localplayer)==false){
