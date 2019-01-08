@@ -49,7 +49,7 @@ library SpellNameText requires TimerUtils{
         timer t1=NewTimer();
         t.txg=CreateTextTagUnitBJ("", u, 0, font, 100, 100, 0, 0 );  
         SetTextTagVisibility( t.txg, false );
-        SetTextTagVelocityBJ(t.txg, 128.00,angle );
+        SetTextTagVelocityBJ(t.txg, 32.00,angle );
         SetTextTagPermanent( t.txg, false );   
         t.u=u;
         t.fullmsg=msg;
