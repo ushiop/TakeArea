@@ -218,7 +218,7 @@ library MR requires Groups{
 
                 //data.i[0]=1;
                 TimerStart(GetExpiredTimer(),0.02,true,function MR.R1);
-                mj=Units.MJ(u.player.player,'e008','A027',0,u.X()+110*CosBJ(f-135),u.Y()+110*SinBJ(f-135),0,1.1,1.2,3, "stand","mr.mdl"); 
+                mj=Units.MJ(u.player.player,'e008','A027',0,u.X()+110*CosBJ(f-135),u.Y()+110*SinBJ(f-135),0,1.5,1.2,1.5, "stand","mr.mdl"); 
                 DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
                 mj.SetF(Util.XY(mj.unit,u.unit),true);
                 mj.AnimeId(12);   
@@ -316,6 +316,9 @@ library MR requires Groups{
                     u.AnimeSpeed(1); 
                     Dash.Start(u.unit,f,200,Dash.ADD,25,true,false); 
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
+                    mj.DelayAlpha(255,0,0.4);
+                    mj.AnimeSpeed(1);
+                    mj.AnimeId(4);
                     TimerStart(GetExpiredTimer(),0.35,true,function MR.R1);
                 }else{
                     mj.Position(u.X()+125*CosBJ(f-135),u.Y()+125*SinBJ(f-135),false);
