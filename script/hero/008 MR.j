@@ -13,11 +13,11 @@ library MR requires Groups{
                 GroupRemoveUnit(tmp_group,tmp.unit);
                 if(tmp.IsAbility('A00P')==true){
                     if(Util.FAN(tmp.unit,u.unit,Util.XYEX(tmp.X(),tmp.Y(),tmp.X()+20*CosBJ(tmp.F()),tmp.Y()+20*SinBJ(tmp.F())),60)==true){
-                        RuaText(tmp.unit,"narutoooo！!",10,2,1,90,0.3,0.05);
+                        RuaText(tmp.unit,"narutoooo！!",10,2,1,180,0.3,0.05);
                     } 
                     if(rus==false){  
                         if(Util.FAN(u.unit,tmp.unit,f,60)==true){ 
-                            RuaText(u.unit,"sasukeeeeeeee！！！！！!",10,2,1,90,0,0.03);
+                            RuaText(u.unit,"sasukeeeeeeee！！！！！!",10,2,1,180,0,0.03);
                             rus=true;
                         } 
                     }
