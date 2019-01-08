@@ -40,8 +40,7 @@ library SpellNameText requires TimerUtils{
             SetTextTagLifespan(this.txg,this.time);
             SetTextTagFadepoint(this.txg,this.time*0.1); 
             this.Destroy();
-            ReleaseTimer(t);
-            BJDebugMsg("结束了");
+            ReleaseTimer(t); 
         }
     }
 
