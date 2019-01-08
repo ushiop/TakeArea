@@ -214,13 +214,18 @@ library MR requires Groups{
             Dash dash;
             real f=u.F(),x=u.X()+150*CosBJ(f),y=u.Y()+150*SinBJ(f),dis,fa; 
             if(data.i[0]==0){//后撤搓丸子与前冲
-                Dash.Start(u.unit,f,200,Dash.ADD,25,true,false);
-                u.AddAbility('A028');
-                if(u.IsAbility('B00B')==true){ 
-                    u.AddAbility('A029');
-                } 
-                data.i[0]=1;
-                TimerStart(GetExpiredTimer(),0.35,true,function MR.R1);
+                //
+
+                //data.i[0]=1;
+                TimerStart(GetExpiredTimer(),0.02,true,function MR.R1);
+                mj=Units.MJ(u.player.player,'e008','A027',0,u.X()+110*CosBJ(f-135),u.Y()+110*SinBJ(f-135),0,1.1,1.2,3, "stand","mr.mdl"); 
+                DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
+                mj.SetF(Util.XY(mj.unit,u.unit),true);
+                mj.AnimeId(12);   
+                u.AnimeSpeed(0);
+                data.c[2]=mj;
+                data.r[4]=1;
+                data.i[0]=4;
             }else if(data.i[0]==1){//冲到了！  
                 TimerStart(GetExpiredTimer(),data.r[1],true,function MR.R1); 
                 Dash.Start(u.unit,f,80-(data.r[0]*30),Dash.SUB,5,true,false);
@@ -304,8 +309,27 @@ library MR requires Groups{
                 data.i[0]=3; 
                 TimerStart(GetExpiredTimer(),0.2,true,function MR.R1); 
                 
+            }else if(data.i[0]==4){//分身搓丸子
+                mj=Units(data.c[2]);
+                if(data.r[4]<=0){
+                    data.i[0]=1;
+                    u.AnimeSpeed(1); 
+                    Dash.Start(u.unit,f,200,Dash.ADD,25,true,false); 
+                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
+                    TimerStart(GetExpiredTimer(),0.35,true,function MR.R1);
+                }else{
+                    mj.Position(u.X()+125*CosBJ(f-135),u.Y()+125*SinBJ(f-135),false);
+                    mj.SetF(Util.XY(mj.unit,u.unit),true);
+                    if(data.r[4]==0.5){
+                        u.AddAbility('A028');
+                        if(u.IsAbility('B00B')==true){ 
+                            u.AddAbility('A029');
+                        }  
+                    } 
+                    data.r[4]-=0.02;
+                }
             }
-            if(data.i[0]==3){
+            if(data.i[0]==3){//结束硬直
                 data.i[0]=18;
             }
             if(u.Alive()==false){
@@ -314,6 +338,7 @@ library MR requires Groups{
             if(data.i[0]==18){//技能结束
                 u.RemoveAbility('A029');
                 u.RemoveAbility('A028');
+                u.AnimeSpeed(1);
                 u.Pause(false);
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
