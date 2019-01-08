@@ -324,8 +324,7 @@ library MR requires Groups{
                     data.i[0]=1;
                     u.AnimeSpeed(1); 
                     Dash.Start(u.unit,f,200,Dash.ADD,25,true,false).onMove=function(Dash dash){
-                        if(dash.Speed>1&&dash.Speed<1.25){
-                            BJDebugMsg("??"); 
+                        if(dash.Speed>1&&dash.Speed<1.25){ 
                             HitFlys.Add(dash.Unit,13);
                         }
                     }; 
