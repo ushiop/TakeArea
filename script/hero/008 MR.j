@@ -3,7 +3,7 @@ library MR requires Groups{
     //R级
     struct MR{
 
-        static method Rua(Units u){
+        static method Rua(Units u)->boolean{
             real x=u.X(),y=u.Y(),f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F())),f1;
             Units tmp;
             boolean rus=false;
@@ -24,6 +24,7 @@ library MR requires Groups{
                 }
             }
             GroupClear(tmp_group);  
+            return rus;
         }
   
         static method Spawn(Units u,Units m){
@@ -278,14 +279,20 @@ library MR requires Groups{
                     }
                 }
                 GroupClear(tmp_group);   
+                if(data.i[4]==0){
+                    if(MR.Rua(u)==true){
+                        data.i[4]=1;
+                    }
+                }
                 data.r[0]+=0.15;//2.65
                 data.r[1]-=(data.r[1]*0.2); 
                 if(data.r[1]<0.02){
                     data.i[0]=2;
                 }
             }else if(data.i[0]==2){//最后一发！ 
-            
-                MR.Rua(u);
+                if(data.i[4]==0){ 
+                    MR.Rua(u);
+                }
                 mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),1,1.5,0.5, "stand","by_wood_effect_yuanbanlin_sand2.mdl"); 
                 mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),2,1.25+data.r[0],2.5, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
                 mj.Color(0,155,255);
@@ -375,6 +382,7 @@ library MR requires Groups{
             data.i[0]=0; 
             data.r[0]=1;
             data.r[1]=0.2;
+            data.i[4]=0;
             SetTimerData(t,data); 
             TimerStart(t,0.3,true,function MR.R1);
             t=null;
