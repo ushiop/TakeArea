@@ -34,7 +34,7 @@ library SpellNameText requires TimerUtils{
         if(this.now<this.max){
             this.now+=this.steep;
             SetTextTagPosUnit(this.txg,this.u,0 );
-            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font); 
+            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font+(GetRandomReal(0,0.75)*this.font)); 
         }else{
             SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font);
             SetTextTagLifespan(this.txg,this.time);
@@ -49,7 +49,6 @@ library SpellNameText requires TimerUtils{
         timer t1=NewTimer();
         t.txg=CreateTextTagUnitBJ("", u, 0, font, 100, 100, 0, 0 );  
         SetTextTagVisibility( t.txg, false );
-        SetTextTagVelocityBJ(t.txg, 32.00,angle );
         SetTextTagPermanent( t.txg, false );   
         t.u=u;
         t.fullmsg=msg;
@@ -59,6 +58,7 @@ library SpellNameText requires TimerUtils{
         t.angle=angle;
         t.font=font;
         t.timertime=timertime;
+        SetTextTagVelocityBJ(t.txg,t.max*4,angle );
         SetTimerData(t1,t);
         TimerStart(t1,delay,true,function RuaText1);
         t1=null;
