@@ -2,6 +2,29 @@ library MR requires Groups{
     //英雄‘鸣人’的技能
     //R级
     struct MR{
+
+        static method Rua(Units u){
+            real x=u.X(),y=u.Y(),f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F())),f1;
+            Units tmp;
+            boolean rus=false;
+            GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                tmp=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,tmp.unit);
+                if(tmp.IsAbility('A00P')==true){
+                    if(Util.FAN(tmp.unit,u.unit,Util.XYEX(tmp.X(),tmp.Y(),tmp.X()+20*CosBJ(tmp.F()),tmp.Y()+20*SinBJ(tmp.F())),60)==true){
+                        RuaText(tmp.unit,"narutoooo！!",10,2,1,90,0.3,0.05);
+                    } 
+                    if(rus==false){  
+                        if(Util.FAN(u.unit,tmp.unit,f,60)==true){ 
+                            RuaText(u.unit,"sasukeeeeeeee！！！！！!",10,2,1,90,0,0.03);
+                            rus=true;
+                        } 
+                    }
+                }
+            }
+            GroupClear(tmp_group);  
+        }
   
         static method Spawn(Units u,Units m){
             timer t;
@@ -66,23 +89,7 @@ library MR requires Groups{
                         }
                         if(data.r[4]==1.5){
                             data.r[4]=0;
-                            GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
-                            while(FirstOfGroup(tmp_group)!=null){
-                                tmp=Units.Get(FirstOfGroup(tmp_group));
-                                GroupRemoveUnit(tmp_group,tmp.unit);
-                                if(tmp.IsAbility('A00P')==true){
-                                    if(Util.FAN(tmp.unit,u.unit,Util.XYEX(tmp.X(),tmp.Y(),tmp.X()+20*CosBJ(tmp.F()),tmp.Y()+20*SinBJ(tmp.F())),60)==true){
-                                        RuaText(tmp.unit,"narutoooo！!",10,2,1,90,0.3,0.05);
-                                    } 
-                                    if(tte==0){  
-                                        if(Util.FAN(u.unit,tmp.unit,f,60)==true){ 
-                                            RuaText(u.unit,"sasukeeeeeeee！！！！！!",10,2,1,90,0,0.03);
-                                            tte=1;
-                                        } 
-                                    }
-                                }
-                            }
-                            GroupClear(tmp_group);  
+                            MR.Rua(u);
                         }else{
                             data.r[4]+=0.01;
                         }
@@ -277,6 +284,8 @@ library MR requires Groups{
                     data.i[0]=2;
                 }
             }else if(data.i[0]==2){//最后一发！ 
+            
+                MR.Rua(u);
                 mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),1,1.5,0.5, "stand","by_wood_effect_yuanbanlin_sand2.mdl"); 
                 mj=Units.MJ(u.player.player,'e008','A027',0,x,y,GetRandomReal(0,360),2,1.25+data.r[0],2.5, "stand","Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl");  
                 mj.Color(0,155,255);
@@ -314,7 +323,12 @@ library MR requires Groups{
                 if(data.r[4]<=0){
                     data.i[0]=1;
                     u.AnimeSpeed(1); 
-                    Dash.Start(u.unit,f,200,Dash.ADD,25,true,false); 
+                    Dash.Start(u.unit,f,200,Dash.ADD,25,true,false).onMove=function(Dash dash){
+                        if(dash.Speed>1&&dash.Speed<1.25){
+                            BJDebugMsg("??"); 
+                            HitFlys.Add(dash.Unit,13);
+                        }
+                    }; 
                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl",mj.unit, "origin") );
                     mj.DelayAlpha(255,0,0.4);
                     mj.AnimeSpeed(1);
