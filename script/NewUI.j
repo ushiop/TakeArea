@@ -269,7 +269,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 DzFrameSetPoint( DzFrameGetCommandBarButton(1,3), 0, UnitInfoLine, 2, 0.201,-0.016);
                 DzFrameSetSize( DzFrameGetCommandBarButton(1, 3), 0.04, 0.04 );
                 //物品栏
-                if(GetOwningPlayer(UISelectUnit)==Players.localplayer){
+                if(GetOwningPlayer(UISelectUnit)==Players.localplayer||GetPlayerAlliance(GetOwningPlayer(UISelectUnit), Players.localplayer, ALLIANCE_SHARED_CONTROL) == true){
                     idx=0; 
                     for(0<=i<3){ 
                         for(0<=s<2){
