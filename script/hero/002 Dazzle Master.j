@@ -241,6 +241,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             YDWESetUnitAbilityState( u.unit, 'A00D', 1, YDWEGetUnitAbilityState(u.unit,'A00D', 1)-cd );
             YDWESetUnitAbilityState( u.unit, 'A00E', 1, YDWEGetUnitAbilityState(u.unit,'A00E', 1)-cd  );
             Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,0.5,0.5,1, "birth",DazzlePath[id]).SetH(h);
+            Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,0.5,0.5,1, "birth",DazzlePath[id]).SetH(h);
             first=Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,15,1.5,1, "stand",DazzlePath[id]);
             first.SetH(h);
             first.Position(x,y,true); 
@@ -874,15 +875,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         Damage.On(Damage.onUnitDamage,DazzleMaster.Attack);
         Units.On(Units.onHeroSpawn,DazzleMaster.Spawn);
         Units.On(Units.onAlocDeath,DazzleMaster.Death);
-        DazzleMaster.DazzlePath[0]="ball_nothing.mdx";
+        DazzleMaster.DazzlePath[0]="ball_nothing_ex.mdx";
         DazzleMaster.DazzleName[0]="无属性";
-        DazzleMaster.DazzlePath[1]="ball_light.mdx";
+        DazzleMaster.DazzlePath[1]="ball_light_ex.mdx";
         DazzleMaster.DazzleName[1]="光属性";
-        DazzleMaster.DazzlePath[2]="ball_ice.mdx";
+        DazzleMaster.DazzlePath[2]="ball_ice_ex.mdx";
         DazzleMaster.DazzleName[2]="冰属性";
         DazzleMaster.DazzlePath[3]="ball_fire_ex.mdx";
         DazzleMaster.DazzleName[3]="火属性";
-        DazzleMaster.DazzlePath[4]="ball_dark.mdx";
+        DazzleMaster.DazzlePath[4]="ball_dark_ex.mdx";
         DazzleMaster.DazzleName[4]="暗属性";
         DazzleMaster.E_sound[0] = DefineSound("resource\\sound_effect_xuanwendashi_e_0.wav",1000, false, true);
         DazzleMaster.E_sound[1] = DefineSound("resource\\sound_effect_xuanwendashi_e_1.wav",1000, false, true);
