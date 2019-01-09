@@ -240,15 +240,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             YDWESetUnitAbilityState( u.unit, 'A00B', 1, YDWEGetUnitAbilityState(u.unit,'A00B', 1)-cd  );
             YDWESetUnitAbilityState( u.unit, 'A00D', 1, YDWEGetUnitAbilityState(u.unit,'A00D', 1)-cd );
             YDWESetUnitAbilityState( u.unit, 'A00E', 1, YDWEGetUnitAbilityState(u.unit,'A00E', 1)-cd  );
-
+            Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,0.5,0.5,1, "birth",DazzlePath[id]).SetH(h);
             first=Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,15,1.5,1, "stand",DazzlePath[id]);
             first.SetH(h);
-            first.Position(x,y,true);
+            first.Position(x,y,true); 
             id=Dash.ADD;
             dash=Dash.Start(first.unit,Util.XYEX(first.X(),first.Y(),e.X,e.Y),Util.XY2EX(first.X(),first.Y(),e.X,e.Y),id,50,true,false);
             dash.Obj=R2I(first.H());
             dash.onMove=function(Dash dash){
-                Units u=Units.Get(dash.Unit);
+                Units u=Units.Get(dash.Unit); 
                 u.SetH(50+(R2I(dash.Obj)*(1-Util.GetPwx(3.99,dash.NowDis/2,dash.MaxDis))));   
             };
             dash.onEnd=function(Dash dash){
@@ -880,7 +880,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
         DazzleMaster.DazzleName[1]="光属性";
         DazzleMaster.DazzlePath[2]="ball_ice.mdx";
         DazzleMaster.DazzleName[2]="冰属性";
-        DazzleMaster.DazzlePath[3]="ball_fire.mdx";
+        DazzleMaster.DazzlePath[3]="ball_fire_ex.mdx";
         DazzleMaster.DazzleName[3]="火属性";
         DazzleMaster.DazzlePath[4]="ball_dark.mdx";
         DazzleMaster.DazzleName[4]="暗属性";
