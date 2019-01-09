@@ -19,6 +19,7 @@ library Buff requires Util{
             integer Buff;//作为BUFF图标的技能ID
             integer Obj;//这个BUFF携带的实例化对象ID，由对应类自己转化为实例 
             integer Type;//可否被驱散(默认为增益,不可驱散)
+            integer Level;//BUFF层数，添加BUFF时手动设置，所有BUFF默认为1
             unit Unit;//BUFF的携带者  
             BuffEventInterface onTime;//BUFF计时时触发的事件
             BuffEventInterface onEnd;//BUFF到期时触发的事件
@@ -75,16 +76,15 @@ library Buff requires Util{
             }
 
             //在所有BUFF中寻找u身上的aidbuff实例并返回
-            static method Find(unit u,integer aid,integer bid)->Buffs{ 
+            static method Find(unit u,integer bid)->Buffs{ 
                 Buffs tmp=Buffs.Root;
                 while(tmp!=0){ 
-                    if(tmp.Unit==u&&tmp.Buff==bid&&tmp.Ability==aid){
+                    if(tmp.Unit==u&&tmp.Buff==bid){
                         break;
                     }else{
                         tmp=tmp.Next;
                     }
-                }
-                
+                } 
                 return tmp;
             }
 
@@ -98,7 +98,7 @@ library Buff requires Util{
                 Buffs tmp;
                 
                 if(target=="self"){
-                    tmp=Buffs.Find(u,aid,bid); 
+                    tmp=Buffs.Find(u,bid); 
                     if(tmp==0){ 
                         tmp=Buffs.allocate();
                         tmp.NowTime=time;
@@ -112,6 +112,7 @@ library Buff requires Util{
                         tmp.onRemove=0;
                         tmp.onDelay=0;
                         tmp.onFlush=0;
+                        tmp.Level=1;
                         tmp.Type=Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_FALSE;
                         tmp.Prev=Buffs.Last;
                         tmp.Next=0; 
