@@ -65,7 +65,7 @@ library Buff requires Util{
             //从单位身上删除buff,会触发onRemove
             //无视驱散
             static method Remove(unit u,integer aid,integer bid){ 
-                Buffs tmp=Buffs.Find(u,aid,bid);
+                Buffs tmp=Buffs.Find(u,bid);
                 if(tmp!=0){
                     UnitRemoveAbility(u,aid);
                     UnitRemoveAbility(u,bid);
@@ -76,6 +76,7 @@ library Buff requires Util{
             }
 
             //在所有BUFF中寻找u身上的aidbuff实例并返回
+            //只要BUFF相同就视作同一个BUFF，即使光环技能不同
             static method Find(unit u,integer bid)->Buffs{ 
                 Buffs tmp=Buffs.Root;
                 while(tmp!=0){ 
