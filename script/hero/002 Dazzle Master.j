@@ -206,6 +206,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Dash dash;
             real cd,x=first.X(),y=first.Y(),h=first.H();
             integer id;             
+            Buffs b;
             id=first.aidindex;
             Units.Kill(first.unit);
             if(x==0){
@@ -213,13 +214,20 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 BJDebugMsg("---这是一条错误提示,如果提示了这个提示,请保存录像并联系作者");
             }
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
-            Buffs.Add(u.unit,'A00G','B002',5,false).onEnd=function(Buffs b){
+            b=Buffs.Add(u.unit,'A00G','B002',5,false);
+            b.onEnd=function(Buffs b){
                 Data data=Data(Units.Get(b.Unit).Obj); 
+                BJDebugMsg("结束了了");
                 Units.Get(b.Unit).SetMoveSpeed(-data.r[0] );
                 SetUnitState(b.Unit, ConvertUnitState(0x51), GetUnitState(b.Unit, ConvertUnitState(0x51))-data.r[1] );
                 data.r[0]=0;
                 data.r[1]=0;
             }; 
+            b.onFlush=function(Buffs b){
+                if(b.Level<4){
+                    b.Level+=1;
+                }
+            };
             if(data.r[0]<80){
                 data.r[0]+=20;    
                 u.SetMoveSpeed(20);
