@@ -216,8 +216,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
             b=Buffs.Add(u.unit,'A00G','B002',5,false);
             b.onEnd=function(Buffs b){
-                Data data=Data(Units.Get(b.Unit).Obj); 
-                BJDebugMsg("结束了了");
+                Data data=Data(Units.Get(b.Unit).Obj);  
                 Units.Get(b.Unit).SetMoveSpeed(-data.r[0] );
                 SetUnitState(b.Unit, ConvertUnitState(0x51), GetUnitState(b.Unit, ConvertUnitState(0x51))-data.r[1] );
                 data.r[0]=0;
