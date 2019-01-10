@@ -67,7 +67,7 @@ library HeroRare requires Units{
             }else if(r1>=71){
                 index=2;
             }
-            
+            BJDebugMsg("本次随机池:"+I2S(index));
             HeroRare_LastRandomUnit=PlaceRandomUnit(HeroRare[index], p, 0,0,0);
             Units.Set(HeroRare_LastRandomUnit);
             if(GetRepeat()==false){

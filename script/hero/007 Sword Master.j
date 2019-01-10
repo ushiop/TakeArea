@@ -166,8 +166,7 @@ library SwordMaster requires Groups{
                 if(u.IsAbility('B009')==true){
                     if(u.GetAbilityCD('A01E')>1){ 
                         u.SetAbilityCD('A01E',1);
-                        u.SetMP(u.MP()+75);
-                        BJDebugMsg("!");
+                        u.SetMP(u.MP()+75); 
                     }
                 }
                 if(u.Alive()==false||data.r[0]<=0){
