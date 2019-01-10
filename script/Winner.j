@@ -15,35 +15,38 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
 
         //英雄死亡, u 死亡单位, m 凶手单位
         public static method Death(Units u,Units m){ 
-            if(u.player.hero!=null){ 
-                u.player.deaths=u.player.deaths+1;
-                KillUi.FlushPlayerData(u.player.player);
-            }
-            if(m.player.hero!=null){
-                if(u.player.teamid!=m.player.teamid){ 
-                    m.player.kills=m.player.kills+1;
-                    Teams.AddTeamKills(m.player.teamid,1);
-                    KillUi.FlushKillData(m.player.teamid);
+            if(Winner.GameEnd==false){ 
+                if(u.player.hero!=null){ 
+                    u.player.deaths=u.player.deaths+1;
+                    KillUi.FlushPlayerData(u.player.player);
                 }
-                if(Teams.GetTeamKills(m.player.teamid)>=Winner.MaxKills){
-                    Winner.GameEnd=true;
-                    DisplayTextToForce(Teams.GetAllPlayers(),"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(m.player.teamid)+" 获得了最终的胜利！！");
-                    Winner.ShowWin(m.player.teamid);
+                if(m.player.hero!=null){
+                    if(u.player.teamid!=m.player.teamid){ 
+                        m.player.kills=m.player.kills+1;
+                        Teams.AddTeamKills(m.player.teamid,1);
+                        KillUi.FlushKillData(m.player.teamid);
+                    }
+                    if(Teams.GetTeamKills(m.player.teamid)>=Winner.MaxKills){
+                        Winner.GameEnd=true;
+                        DisplayTextToForce(Teams.GetAllPlayers(),"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(m.player.teamid)+" 获得了最终的胜利！！");
+                        Winner.ShowWin(m.player.teamid);
+                    }
                 }
             }
-
         }
 
         //设置指定阵营序号胜利
         private static method ShowWin(integer teamid){
             Winner.WinTeam=teamid;
-            ForForce(Teams.GetAllPlayers(),function(){
+            PauseGameOn();
+            //游戏结束时暂停游戏，而不是设置游戏胜利
+            /*ForForce(Teams.GetAllPlayers(),function(){
                 if(IsPlayerInForce(GetEnumPlayer(),Teams.GetTeamForceByIndex(Winner.WinTeam))==true){
                     CustomVictoryBJ( GetEnumPlayer(), true, false );
                 }else{
                      CustomDefeatBJ( GetEnumPlayer(), "失败！" );
                 }
-            });
+            });*/
         }
 
         private static method ShowTip(){
