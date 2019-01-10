@@ -322,8 +322,7 @@ library BlackSaber requires Groups{
                         u.RemoveAbility('A00Z');
                         u.AnimeSpeed(1);
                         if(data.i[4]==0){ 
-                            u.Pause(false);
-                                    BJDebugMsg("EXX1122221");
+                            u.Pause(false); 
                         }
                         Spell(data.c[1]).Destroy();
                         data.Destroy();
@@ -368,8 +367,7 @@ library BlackSaber requires Groups{
                                 if(data.i[4]==0){
                                     data.i[4]=1;
                                     u.Pause(false);
-                                    u.AddAbility('A02A');
-                                    BJDebugMsg("EXX");
+                                    u.AddAbility('A02A'); 
                                 }
                             }                            
                         }else{
@@ -381,9 +379,7 @@ library BlackSaber requires Groups{
                     u.RemoveAbility('A00Z');
                     u.AnimeSpeed(1);
                     if(data.i[4]==0){ 
-                        u.Pause(false);
-                        
-                                    BJDebugMsg("EXX111");
+                        u.Pause(false); 
                     }
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
