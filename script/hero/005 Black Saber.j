@@ -297,6 +297,7 @@ library BlackSaber requires Groups{
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
+            data.i[4]=0;
             data.r[0]=0;
             data.r[1]=0;
             data.r[2]=0;
@@ -317,9 +318,13 @@ library BlackSaber requires Groups{
                     }
                     if(data.r[0]>0.5){ 
                         Buffs.Add(u.unit,'A016','B007',0.2,false);
+                        u.RemoveAbility('A02A');
                         u.RemoveAbility('A00Z');
                         u.AnimeSpeed(1);
-                        u.Pause(false);
+                        if(data.i[4]==0){ 
+                            u.Pause(false);
+                                    BJDebugMsg("EXX1122221");
+                        }
                         Spell(data.c[1]).Destroy();
                         data.Destroy();
                         ReleaseTimer(GetExpiredTimer());
@@ -358,15 +363,28 @@ library BlackSaber requires Groups{
                                     } 
                                 }
                             }
-                            GroupClear(tmp_group);                               
+                            GroupClear(tmp_group);   
+                            if(data.r[2]>=2){
+                                if(data.i[4]==0){
+                                    data.i[4]=1;
+                                    u.Pause(false);
+                                    u.AddAbility('A02A');
+                                    BJDebugMsg("EXX");
+                                }
+                            }                            
                         }else{
                             data.r[1]-=0.01;
                         }
                     }
                 }else{ 
+                    u.RemoveAbility('A02A');
                     u.RemoveAbility('A00Z');
                     u.AnimeSpeed(1);
-                    u.Pause(false);
+                    if(data.i[4]==0){ 
+                        u.Pause(false);
+                        
+                                    BJDebugMsg("EXX111");
+                    }
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
                     ReleaseTimer(GetExpiredTimer());
@@ -481,6 +499,11 @@ library BlackSaber requires Groups{
         } 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            if(u.IsAbility('A02A')==true){
+                if(e.Id!='A012'&&e.Id!='A00U'){
+                    IssueImmediateOrder( u.unit, "stop" );
+                }
+            }
             if(e.Id=='A00V'){
                 u.AnimeSpeed(1.75);
                 u.FlushAnimeId(7); 
