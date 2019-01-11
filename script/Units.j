@@ -26,6 +26,12 @@ library Units requires Table,Players,Events,Util{
             integer ai;//AI施法的接口
             real createtime;//被创建时间
             real movespeed;//理论移动速度（只是用于计算，并没有突破522的实际移动速度)
+            real animespeed;//动画播放速度(仅用于记录,实际上没啥用)
+            integer color_red;//红色的值
+            integer color_green;//绿色
+            integer color_blue;//蓝色
+            integer color_alpha//透明度
+            real modelsize;//模型缩放
 
 
             method Sex()->integer{
@@ -108,12 +114,16 @@ library Units requires Table,Players,Events,Util{
 
             //设置单位颜色,0-255
             method Color(integer r,integer g,integer b){ 
-                SetUnitVertexColor(this.unit, r, g, b, 255 );
+                this.color_red=r;
+                this.color_green=g;
+                this.color_blue=b;
+                SetUnitVertexColor(this.unit, r, g, b, this.color_alpha );
             }
 
             //设置单位透明度,0-255,0为不可见
             method Alpha(integer a){
-                SetUnitVertexColor(this.unit, 255, 255, 255, a );
+                this.color_alpha=a;
+                SetUnitVertexColor(this.unit, this.color_red,this.color_green,this.color_blue,a );
             }
 
             //暂停单位
@@ -173,6 +183,7 @@ library Units requires Table,Players,Events,Util{
 
             //设置单位模型大小
             method Size(real s){ 
+                this.modelsize=s;
                 SetUnitScale( this.unit,s,s,s);
             }
 
@@ -293,6 +304,7 @@ library Units requires Table,Players,Events,Util{
 
             //设置单位动画播放速率
             method AnimeSpeed(real sp){
+                this.animespeed=sp;
                 SetUnitTimeScale(this.unit,sp);
             }
 
@@ -510,6 +522,12 @@ library Units requires Table,Players,Events,Util{
             ud.moves=0;
             ud.movespeed=GetUnitMoveSpeed(u);
             ud.createtime=GameTime;
+            ud.animespeed=1;
+            ud.modelsize=1;
+            ud.color_red=255;
+            ud.color_green=255;
+            ud.color_blue=255;
+            ud.color_alpha=255;
             Units.ht[u]=ud; 
             return ud;
         }
@@ -558,6 +576,8 @@ library Units requires Table,Players,Events,Util{
             Units t=Units.Create(u);
             t.aid=aid;
             t.aidindex=aindex;
+            t.animespeed=animspeed;
+            t.modelsize=modsize;
             Util.UnitAddRemoveAbility(u,'Amrf'); 
             DzSetUnitModel( u, modpath);
             if(t.IsAbility('A01Z')==true){
