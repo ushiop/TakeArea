@@ -43,7 +43,7 @@ library TakeUi {
             //右侧文字提示，未争夺状态的设置
             TakeRightText = DzCreateFrameByTagName("TEXT", "TakeRightText", TakeBackground, "TextInfo", 0);
             DzFrameSetPoint( TakeRightText, 3, TakeBackground, 3, 0.26/*争夺状态为0.3*/ , -0.003);
-            DzFrameSetSize( TakeRightText, 0.08, 0.02 );
+            DzFrameSetSize( TakeRightText, 0.085, 0.02 );
             DzFrameSetText( TakeRightText, "中央区域尚未被占领" );
 
             //争夺进度条

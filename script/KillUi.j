@@ -105,7 +105,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
 
         //刷新最小化状态的杀敌指示器与战绩榜内的阵营数据,-1为初始化时使用
         public static method FlushKillData(integer tid){
-            DzFrameSetText( KillBackgroundText, " 杀敌数   "+Teams.GetTeamNameByIndex(0)+":"+I2S(Teams.GetTeamKills(0))+"    "+Teams.GetTeamNameByIndex(1)+":"+I2S(Teams.GetTeamKills(1))+"    "+Teams.GetTeamNameByIndex(2)+":"+I2S(Teams.GetTeamKills(2))+"    胜利:"+I2S(Winner.GetMaxKills())+"    ↓F2↓" );
+            DzFrameSetText( KillBackgroundText, "F2展开|杀敌数   "+Teams.GetTeamNameByIndex(0)+":"+I2S(Teams.GetTeamKills(0))+"    "+Teams.GetTeamNameByIndex(1)+":"+I2S(Teams.GetTeamKills(1))+"    "+Teams.GetTeamNameByIndex(2)+":"+I2S(Teams.GetTeamKills(2))+"    胜利:"+I2S(Winner.GetMaxKills()));
             if(tid!=-1){ 
                 FlushData(tid);
             }
@@ -136,7 +136,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             DzFrameSetTexture( KillBackground, "UI_RightUpperBackground.blp", 0 );
             KillBackgroundText = DzCreateFrameByTagName("TEXT", "KillBackgroundText", KillBackground, "TextInfo", 0);
             DzFrameSetPoint( KillBackgroundText, 3, KillBackground, 3,0.001,-0.004);
-            DzFrameSetSize( KillBackgroundText,0.25, 0.021 );
+            DzFrameSetSize( KillBackgroundText,0.26, 0.021 );
 
 
             KillBackgroundMaxLine = DzCreateFrameByTagName("BACKDROP", "KillBackgroundMaxLine", KillBackground, "ShowInfo", 0);
