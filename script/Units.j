@@ -30,7 +30,7 @@ library Units requires Table,Players,Events,Util{
             integer color_red;//红色的值
             integer color_green;//绿色
             integer color_blue;//蓝色
-            integer color_alpha//透明度
+            integer color_alpha;//透明度
             real modelsize;//模型缩放
 
 
