@@ -32,6 +32,17 @@ library Units requires Table,Players,Events,Util{
             integer color_blue;//蓝色
             integer color_alpha;//透明度
             real modelsize;//模型缩放
+            real dashspeedscale;//冲锋速度系数,仅用于Dash类的速度计算,默认为1,单位是百分比
+
+            //获取单位的冲锋速度系数
+            method DashSpeedScale()->real{
+                return dashspeedscale;
+            }
+
+            //在当前的冲锋速度系数上增减x
+            method SetDashSpeedScale(real x){
+                this.dashspeedscale+=x;
+            }
 
 
             method Sex()->integer{
@@ -528,6 +539,7 @@ library Units requires Table,Players,Events,Util{
             ud.color_green=255;
             ud.color_blue=255;
             ud.color_alpha=255;
+            ud.dashspeedscale=1;
             Units.ht[u]=ud; 
             return ud;
         }
