@@ -74,22 +74,25 @@ library Dashs requires TimerUtils{
                 Dash tmp=Root,tmp1;
                 boolean walk=false;
                 real speed;  
+                real tmpMaxSpeed;
                 while(tmp!=0){
                     tmp1=tmp.Next;
                     if(tmp!=Root){
                         walk=false;
                         speed=0;   
+                        tmpMaxSpeed=tmp.MaxSpeed;
                         if(tmp.NowDis<tmp.MaxDis&&IsUnitAliveBJ(tmp.Unit)==true){
                             tmp.LastX=tmp.X;
                             tmp.LastY=tmp.Y;
+                            tmpMaxSpeed=tmpMaxSpeed*tmp.dashspeedscale;
                             if(tmp.DashType==Dash.NORMAL){
-                                speed=tmp.MaxSpeed;
+                                speed=tmpMaxSpeed;
                             }else if(tmp.DashType==Dash.PWX){
-                                speed=tmp.MaxSpeed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
+                                speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
                             }else if(tmp.DashType==Dash.ADD){
-                                speed=tmp.MaxSpeed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
+                                speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
                             }else if(tmp.DashType==Dash.SUB){
-                                speed=tmp.MaxSpeed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis));  
+                                speed=tmpMaxSpeed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis));  
                             }
                             tmp.X=GetUnitX(tmp.Unit)+speed*CosBJ(tmp.Angle);
                             tmp.Y=GetUnitY(tmp.Unit)+speed*SinBJ(tmp.Angle); 
