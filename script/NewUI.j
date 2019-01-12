@@ -26,7 +26,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
     integer MoneyText;//金币
     integer BagItemBackground[];//物品栏没有物品时的图标
     integer GameUI;//游戏UI
-    integer LvExp[];//每一级需要的经验;
+    real LvExp[];//每一级需要的经验;
     integer Logo[];//LOGO低图;
     public unit UISelectUnit;//本地玩家选择的单位
     integer UIType;//目前显示的UI类型
@@ -331,7 +331,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             }
             if(show==1){ 
                 if(UIType==1){ 
-                    exp=(GetHeroXP(UISelectUnit)/LvExp[GetHeroLevel(UISelectUnit)])*100;
+                    exp=(GetHeroXP(UISelectUnit)/LvExp[GetHeroLevel(UISelectUnit)])*100; 
                     if(IsUnitEnemy(UISelectUnit,Players.localplayer)==false){
                         DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     }else{
