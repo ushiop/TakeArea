@@ -23,6 +23,7 @@ library Players requires TimerUtils{
             boolean isdeath;//是否死亡
             PlayerPress press;//玩家QWERDF的按键状态以及鼠标坐标（鼠标延迟很大)
             boolean isai;//玩家是否是电脑
+            boolean pcmode;//玩家是否是电脑控制模式
             unit lv5;//技能等级5-25的解锁单位
             unit lv10;
             unit lv15;
@@ -76,6 +77,7 @@ library Players requires TimerUtils{
             p.playerids=I2S(GetPlayerId(ps));
             p.teamid=GetPlayerTeam(ps);
             p.isai=GetPlayerController(ps) == MAP_CONTROL_COMPUTER;
+            p.pcmode=false;
             p.isonline=true;
             p.randomhero=100;
             p.lifekill=0;
