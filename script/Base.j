@@ -37,6 +37,7 @@
 //! import zinc "map/script/Ai.j"
 //! import zinc "map/script/BuffUI.j"
 //! import zinc "map/script/NewUI.j"
+//! import zinc "map/script/Item.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
 //! import zinc "map/script/hero/002 Dazzle Master.j"
