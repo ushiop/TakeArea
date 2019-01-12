@@ -56,7 +56,7 @@ library Effect requires TimerUtils{
             TimerStart(this.t,time,false,function(){
                 Effect e=Effect(GetTimerData(GetExpiredTimer()));
                 e.Destroy();
-            })
+            });
         }
 
         //在坐标处创建特效
