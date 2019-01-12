@@ -293,7 +293,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                 for(0<=i<6){ 
                     DzFrameShow(BagItemBackground[i],false);
                     //DzFrameSetPoint( BagItemBackground[i],0,UnitInfoLine,2,0.003+(0.032*i),-0.018); 
-                    //DzFrameSetPoint( DzFrameGetItemBarButton(i), 0, UnitInfoLine, 2,0.003+(0.032*i),-0.018 );
+                    DzFrameSetPoint( DzFrameGetItemBarButton(i), 0, UnitInfoLine, 2,0.003+(0.032*i),-0.218 );
                 }//非英雄单位暂时没有物品栏
                 
                 if(GetUnitAbilityLevel(UISelectUnit,'Apit')==1){
@@ -308,6 +308,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                             DzFrameSetSize( DzFrameGetCommandBarButton(s,i), 0.04, 0.04 );
                         }
                     }
+                    
                 }
             } 
         } 
