@@ -39,9 +39,11 @@ library Effect requires TimerUtils{
         method Destroy(){
             DestroyEffect(this.e);
             if(this.t!=null){
+                BJDebugMsg("计时器删除");
                 ReleaseTimer(this.t);
                 this.t=null;
             }
+            BJDebugMsg("特效删除");
             this.u=null;
             this.e=null;
             this.deallocate();
@@ -50,9 +52,10 @@ library Effect requires TimerUtils{
         //该特效在延迟time秒后删除,重复调用可以修改延迟时间
         method Delay(real time){
             if(this.t==null){
+                BJDebugMsg("创建计时器");
                 this.t=NewTimer();
+                SetTimerData(this.t,this);
             }
-            SetTimerData(this.t,this);
             TimerStart(this.t,time,false,function(){
                 Effect e=Effect(GetTimerData(GetExpiredTimer()));
                 e.Destroy();
