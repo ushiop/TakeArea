@@ -24,10 +24,10 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
             unit u;
             Players p=Players.Set(GetEnumPlayer());
             UnitShareVision(Origin_Ball,p.player, true );
-            /*
-                测试时不随机英雄
-            u=HeroRares.GetRandomHero(p.player,20);//目前没有SR、SSR池英雄，随机上限定位R级
-            */  
+            
+            /*测试时不随机英雄
+            u=HeroRares.GetRandomHero(p.player,p.randomhero);
+            */
             u=Units.Spawn(p.player,'H008',0,0,0);
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
