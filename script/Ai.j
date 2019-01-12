@@ -106,7 +106,7 @@ library Ai requires Teams,Groups{
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
         Units u=dmg.TriggerUnit;        
-        if((p.isai==true||p.pcmode==true)){ 
+        if((u.player.isai==true||u.player.pcmode==true)){ 
             AISpell(u.unit);
         }
     }
