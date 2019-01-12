@@ -5,11 +5,11 @@ library PlayerChat requires Events,Players{
     function Chat(EventArgs e){
         Players p=Players.Get(e.TriggerPlayer); 
         if(e.ChatString=="-PC"){
-            if(p.isai==true){
-                p.isai=false;
+            if(p.pcmode==true){
+                p.pcmode=false;
                 DisplayTextToPlayer(p.player,0,0,"你已关闭电脑托管~!");
             }else{
-                p.isai=true;
+                p.pcmode=true;
                 DisplayTextToPlayer(p.player,0,0,"你已开启电脑托管~!"); 
             }
         }
