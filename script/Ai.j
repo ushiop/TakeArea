@@ -96,7 +96,7 @@ library Ai requires Teams,Groups{
     function onLoop(){
         ForForce(Teams.GetAllPlayers(),function(){
             Players p=Players.Get(GetEnumPlayer());
-            if(p.isai==true&&p.hero.Alive()){ 
+            if((p.isai==true||p.pcmode==true)&&p.hero.Alive()){ 
                 AISpell(p.hero.unit);
             }
         });
@@ -106,7 +106,7 @@ library Ai requires Teams,Groups{
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
         Units u=dmg.TriggerUnit;        
-        if(u.player.isai==true){ 
+        if((p.isai==true||p.pcmode==true)){ 
             AISpell(u.unit);
         }
     }
