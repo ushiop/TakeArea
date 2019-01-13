@@ -42,6 +42,11 @@ library Buff requires Util{
                 this.deallocate();         
             }
 
+            //立即停止一个BUFF，其实就是设置他到期
+            method Stop(){
+                this.NowTime=0;
+            }
+
             //移除一个单位身上的所有满足条件的BUFF
             //btype指示BUFF类型,由Buffs类定义
             //指示为-1则表示清除所有BUFF
