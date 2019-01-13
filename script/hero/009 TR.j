@@ -4,41 +4,117 @@ library TR requires Groups{
 
     struct TR{
         //发动刀光冲击的实际效果 2
-        static method W2(unit ua,real f,integer i){
+        static method W2(unit ua,real f,integer i,integer tp){
             Units u=Units.Get(ua);
             Dash dash;
             real x=u.X(),y=u.Y(); 
-            u.Pause(true);
+            Data data=Data.create('A02D');
+            Units mj;
+            if(tp==2){ 
+                u.Pause(true);
+                IssueImmediateOrder(u.unit,"stop");
+            }
             u.AnimeId(2);
-            u.AnimeSpeed(1.5);
+            if(i==1){ 
+                u.AnimeSpeed(1.75);
+            }else{ 
+                u.AnimeSpeed(2.25);
+            }
             u.SetF(f,true);
-            IssueImmediateOrder(u.unit,"stop");
+            Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.5,1.1, "stand","cf2.mdl").SetH(75);
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,1.25,2, "stand","dust2.mdl");
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,2,1,0.5, "stand","chongfeng2.mdl");
+            mj=Units.MJ(u.player.player,'e008','A02D',0,x,y,f,2,2.5,1, "birth","az_lxj_blue.mdl");
+            mj.SetH(75); 
+            data.c[1]=mj;
+            data.c[0]=u;
+            data.i[0]=i; 
+            data.i[1]=0; 
+            data.i[2]=1;
+            data.i[3]=tp;
+            data.g[0]=CreateGroup();
             dash=Dash.Start(u.unit,f,600,Dash.SUB,80,true,false); 
-            if(i==1){ 
-                dash.Obj=-1;
-            }else{
-                dash.Obj=0;
-            }
+            dash.Obj=data;
             dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
+                Units mj=Units(data.c[1]);
+                real x=dash.X+85*CosBJ(dash.Angle),y=dash.Y+85*SinBJ(dash.Angle);
                 u.SetF(dash.Angle,true);
+                mj.Position(x,y,false);
+                mj.SetF(dash.Angle,true);  
                 if(dash.NowDis>300){
-                    if(dash.Obj==0){
-                        dash.Obj=1;
-                        u.Pause(false); 
+                    if(data.i[0]!=1){
+                        if(data.i[1]==0){   
+                            mj.Life(0.5);
+                            data.i[1]=1;
+                            if(data.i[3]==2){ 
+                                u.Pause(false);  
+                            }
+                        }
                     }
                 }
+                if(dash.Speed<5){
+                    mj.Anime("death");
+                }else{
+                    if(data.i[2]==0){
+                        data.i[2]=1;
+                        Units.MJ(u.player.player,'e008','A02D',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1, "stand","dg4.mdl").SetH(75);
+                    }else{
+                        data.i[2]-=1;
+                    }
+                }
+                if(data.i[0]==1&&dash.Speed<1.5){
+                    dash.Stop();
+                }else{
+                    GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                            if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                GroupAddUnit(data.g[0],mj.unit);
+                                u.Damage(mj.unit,Damage.Physics,'A02D',u.Agi(true)*3);
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                Dash.Start(mj.unit,dash.Angle,600-dash.NowDis,Dash.SUB,45,true,true);
+                            }
+                        }
+                    }
+                    GroupClear(tmp_group);   
+                }
+
             };
             dash.onEnd=function(Dash dash){
-                Units u=Units.Get(dash.Unit);
-                if(dash.Obj<=0){  
+                Data data=Data(dash.Obj);
+                Units u=Units.Get(dash.Unit);  
+                Units mj=Units(data.c[1]);
+                if(data.i[0]==1||(data.i[0]!=1&&data.i[1]==0)){  
                     u.AnimeSpeed(1);
-                    u.Pause(false);  
+                    if(data.i[3]==2){ 
+                        u.Pause(false);  
+                    }
                 }
+                mj.Life(0.5);
+                mj.Anime("death");
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
+                data.Destroy();
             };
+        }
+        //伤害触发刀光冲击
+        static method W3(DamageArgs e){
+            Buffs b;
+            if(e.DamageUnit.IsAbility('B00E')==true&&e.DamageType==Damage.Attack){
+                b=Buffs.Find(e.DamageUnit.unit,'B00E'); 
+                if(b.NowTime<4.990){ 
+                    TR.W2(e.DamageUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),b.Level,1);
+                    b.Level-=1;
+                    if(b.Level<=0){
+                        b.Stop();
+                    } 
+                }                
+            }
         }
         //命令触发刀光冲击
         static method W1(EventArgs e){ 
@@ -54,7 +130,7 @@ library TR requires Groups{
                     }
                     b=Buffs.Find(u.unit,'B00E'); 
                     if(b.NowTime<4.990){ 
-                        TR.W2(u.unit,f,b.Level);
+                        TR.W2(u.unit,f,b.Level,2);
                         b.Level-=1;
                         if(b.Level<=0){
                             b.Stop();
@@ -131,6 +207,7 @@ library TR requires Groups{
             Spell.On(Spell.onSpell,'A02D',TR.W);
             Events.On(Events.onUnitOrderToUnit,TR.W1);
             Events.On(Events.onUnitOrderToLocation,TR.W1);
+            Damage.On(Damage.onUnitDamage,TR.W3);
         }
     }
 }
