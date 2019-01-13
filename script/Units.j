@@ -34,6 +34,16 @@ library Units requires Table,Players,Events,Util{
             real modelsize;//模型缩放
             real dashspeedscale;//冲锋速度系数,仅用于Dash类的速度计算,默认为1,单位是百分比
 
+            //返回单位的自定义值
+            method Data()->integer{
+                return GetUnitUserData(this.unit);
+            }
+
+            //设置单位的自定义值
+            method SetData(integer i){
+                SetUnitUserData(this.unit,i);
+            }
+
             //获取单位的冲锋速度系数
             method DashSpeedScale()->real{
                 return dashspeedscale;
