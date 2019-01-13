@@ -76,13 +76,13 @@ library TR requires Groups{
                             timer t;
                             mj.AnimeSpeed(0);
                             mj.Position(dash.X,dash.Y,true);
-                            if(mj.Obj!=-1){
+                            if(mj.Data()!=-1){
                                 t=NewTimer();
-                                mj.Obj=100;
+                                mj.SetData(100);
                                 SetTimerData(t,mj);
                                 TimerStart(t,0.05,true,function(){
                                     Units u=Units(GetTimerData(GetExpiredTimer()));
-                                    if(u.Obj==-1){
+                                    if(u.Data()==-1){
                                         BJDebugMsg("滚");
                                         ReleaseTimer(GetExpiredTimer());
                                         u.AnimeId(4);
@@ -90,7 +90,7 @@ library TR requires Groups{
                                         u.DelayAlpha(155,0,0.2);
                                         u.Life(0.4);
                                     }else{
-                                        u.Obj-=1;
+                                        u.SetData(u.Data()-1);
                                     }
                                 });
                                 t=null;
@@ -103,7 +103,6 @@ library TR requires Groups{
                             Units(data.c[1]).Life(5);
                             DestroyGroup(data.g[0]);
                             data.g[0]=null;
-                            BJDebugMsg("你会飞吗");
                             data.Destroy();
                         };
                     }
@@ -263,7 +262,7 @@ library TR requires Groups{
                     GroupRemoveUnit(tmp_group,mj.unit);
                     if(mj.aid=='A02F'&&mj.aidindex==115){ 
                         u.Position(mj.X(),mj.Y(),false);
-                        mj.Obj=-1;
+                        mj.SetData(-1);
                         mj.aidindex=0;  
                     }
                 }
