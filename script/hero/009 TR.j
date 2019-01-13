@@ -3,6 +3,115 @@ library TR requires Groups{
     //R级
 
     struct TR{
+
+        //E 3
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            timer t=NewTimer();
+            u.Pause(true);
+            u.AnimeSpeed(2.5);
+            u.AnimeId(3);
+            SetTimerData(t,e);
+            TimerStart(t,0.3,false,function(){
+                Spell e=Spell(GetTimerData(GetExpiredTimer()));
+                Units u=Units.Get(e.Spell);
+                integer i;
+                Data data;
+                Dash dash;
+                Units mj;
+                real x=u.X(),y=u.Y(),f;
+                u.AnimeSpeed(1);
+                u.Pause(false);
+                e.Destroy();
+                ReleaseTimer(GetExpiredTimer());
+                if(u.Alive()==true){
+                    //5
+                    Units.MJ(u.player.player,'e008','A02F',0,x,y,0,1,1.5,1, "stand","white-qiquan.mdl");
+                    for(0<=i<4){
+                        data=Data.create('A02F');
+                        f=u.F()+(i*90.0);
+                        mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand","ls tong ren.mdl");
+                        mj.DelayAlpha(255,155,0.5);
+                        mj.AnimeId(5);
+                        data.c[0]=mj;
+                        dash=Dash.Start(mj.unit,f,600,Dash.PWX,50,true,false);
+                        mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1,"stand", "tk knockin' on heaven's door by deckai.mdl");
+                        mj.SetH(100);
+                        mj.AnimeSpeed(0);
+                        data.c[1]=mj;
+                        data.g[0]=CreateGroup();
+                        dash.Obj=data;
+                        dash.onMove=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units mj=Units(data.c[0]);
+                            Units dg=Units(data.c[1]);
+                            Units tmp;
+                            if(dash.NowDis>50){ 
+                                dash.Angle+=2;
+                                dg.AnimeSpeed(1.5);
+                            }
+                            if(dash.NowDis>500&&dash.NowDis<530){ 
+                                mj.Position(dash.X,dash.Y,true);
+                            }
+                            mj.SetF(dash.Angle,true);
+                            dg.Position(dash.X,dash.Y,false);
+                            dg.SetF(dash.Angle,true);
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(IsUnitEnemy(tmp.unit,mj.player.player)==true){ 
+                                    if(IsUnitInGroup(tmp.unit,data.g[0])==false){
+                                        GroupAddUnit(data.g[0],tmp.unit);
+                                        mj.Damage(tmp.unit,Damage.Physics,'A02F',mj.Agi(true)*5);
+                                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",tmp.unit, "chest").Destroy();
+                                    }
+                                }
+                            }
+                            GroupClear(tmp_group);   
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units mj=Units(data.c[0]); 
+                            timer t;
+                            mj.AnimeSpeed(0);
+                            mj.Position(dash.X,dash.Y,true);
+                            if(mj.Obj!=-1){
+                                t=NewTimer();
+                                mj.Obj=100;
+                                SetTimerData(t,mj);
+                                TimerStart(t,0.05,true,function(){
+                                    Units u=Units(GetTimerData(GetExpiredTimer()));
+                                    if(u.Obj==-1){
+                                        BJDebugMsg("滚");
+                                        ReleaseTimer(GetExpiredTimer());
+                                        u.AnimeId(4);
+                                        u.AnimeSpeed(1);
+                                        u.DelayAlpha(155,0,0.2);
+                                        u.Life(0.4);
+                                    }else{
+                                        u.Obj-=1;
+                                    }
+                                });
+                                t=null;
+                            }else{
+                                mj.AnimeId(4);
+                                mj.AnimeSpeed(1);
+                                mj.DelayAlpha(155,0,0.2);
+                                mj.Life(0.4);
+                            }
+                            Units(data.c[1]).Life(5);
+                            DestroyGroup(data.g[0]);
+                            data.g[0]=null;
+                            data.Destroy();
+                        };
+                    }
+                }
+            });
+            t=null;
+        }
+
+
         //发动刀光冲击的实际效果 2
         static method W2(unit ua,real f,integer i,integer tp){
             Units u=Units.Get(ua);
@@ -34,7 +143,7 @@ library TR requires Groups{
             data.i[2]=1;
             data.i[3]=tp;
             data.g[0]=CreateGroup();
-            dash=Dash.Start(u.unit,f,600,Dash.SUB,80,true,false); 
+            dash=Dash.Start(u.unit,f,400,Dash.SUB,80,true,false); 
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -44,7 +153,7 @@ library TR requires Groups{
                 u.SetF(dash.Angle,true);
                 mj.Position(x,y,false);
                 mj.SetF(dash.Angle,true);  
-                if(dash.NowDis>300){
+                if(dash.NowDis>200){
                     if(data.i[0]!=1){
                         if(data.i[1]==0){   
                             mj.Life(0.5);
@@ -68,7 +177,7 @@ library TR requires Groups{
                 if(data.i[0]==1&&dash.Speed<1.5){
                     dash.Stop();
                 }else{
-                    GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);     
+                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
@@ -77,7 +186,8 @@ library TR requires Groups{
                                 GroupAddUnit(data.g[0],mj.unit);
                                 u.Damage(mj.unit,Damage.Physics,'A02D',u.Agi(true)*3);
                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                                Dash.Start(mj.unit,dash.Angle,600-dash.NowDis,Dash.SUB,45,true,true);
+                                Dash.Start(mj.unit,dash.Angle,400-dash.NowDis,Dash.SUB,45,true,true);
+                                Buffs.Add(mj.unit,'A02G','B00F',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                             }
                         }
                     }
@@ -121,7 +231,8 @@ library TR requires Groups{
             Units u=Units.Get(e.TriggerUnit);
             real f;
             Buffs b; 
-            if(u.IsAbility('B00E')==true){
+            Units mj;
+            if(u.IsAbility('B00E')==true){//刀光冲击
                 if(e.OrderId==851983||e.OrderId==851986||e.OrderId==851971){
                     if(e.OrderTargetUnit==null){ 
                         f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
@@ -137,6 +248,24 @@ library TR requires Groups{
                         } 
                     }
                 }  
+            }
+            if(e.OrderId==851971&&u.IsAbility('A02F')==true&&u.player.lv15!=null){
+                //四方斩残影
+                if(e.OrderTargetUnit==null){ 
+                    GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,150,function GroupIsAliveAloc);  
+                }else{
+                    GroupEnumUnitsInRange(tmp_group,GetUnitX(e.OrderTargetUnit),GetUnitY(e.OrderTargetUnit),150,function GroupIsAliveAloc);  
+                }
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(mj.aid=='A02F'&&mj.aidindex==115){ 
+                        u.Position(mj.X(),mj.Y(),false);
+                        mj.Obj=-1;
+                        mj.aidindex=0;  
+                    }
+                }
+                GroupClear(tmp_group);                   
             }
         }
         //获得刀光BUFF
@@ -205,6 +334,7 @@ library TR requires Groups{
         static method onInit(){
             Spell.On(Spell.onSpell,'A02C',TR.Q);
             Spell.On(Spell.onSpell,'A02D',TR.W);
+            Spell.On(Spell.onSpell,'A02F',TR.E);
             Events.On(Events.onUnitOrderToUnit,TR.W1);
             Events.On(Events.onUnitOrderToLocation,TR.W1);
             Damage.On(Damage.onUnitDamage,TR.W3);
