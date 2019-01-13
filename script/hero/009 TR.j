@@ -125,9 +125,9 @@ library TR requires Groups{
             }
             u.AnimeId(2);
             if(i==1){ 
-                u.AnimeSpeed(1.75);
+                u.AnimeSpeed(2);
             }else{ 
-                u.AnimeSpeed(2.25);
+                u.AnimeSpeed(2.75);
             }
             u.SetF(f,true);
             Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
