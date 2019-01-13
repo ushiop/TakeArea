@@ -43,7 +43,7 @@ library Effect requires TimerUtils{
                 ReleaseTimer(this.t);
                 this.t=null;
             }
-            BJDebugMsg("特效删除");
+            //BJDebugMsg("特效删除");
             this.u=null;
             this.e=null;
             this.deallocate();
