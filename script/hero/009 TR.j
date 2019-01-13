@@ -103,6 +103,7 @@ library TR requires Groups{
                             Units(data.c[1]).Life(5);
                             DestroyGroup(data.g[0]);
                             data.g[0]=null;
+                            BJDebugMsg("你会飞吗");
                             data.Destroy();
                         };
                     }
@@ -209,6 +210,7 @@ library TR requires Groups{
                 mj.Anime("death");
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
+                BJDebugMsg(" PPPPPPPPPP"+I2S(data.i[0]));
                 data.Destroy();
             };
         }
