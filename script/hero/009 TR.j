@@ -4,19 +4,40 @@ library TR requires Groups{
 
     struct TR{
         //发动刀光冲击的实际效果 2
-        static method W2(unit ua,real f){
+        static method W2(unit ua,real f,integer i){
             Units u=Units.Get(ua);
             Dash dash;
+            real x=u.X(),y=u.Y(); 
             u.Pause(true);
             u.AnimeId(2);
-            u.AnimeSpeed(2);
-            
-            dash=Dash.Start(u.unit,f,600,Dash.SUB,60,true,false);
-            dash.Obj=u;
+            u.AnimeSpeed(1.5);
+            u.SetF(f,true);
+            IssueImmediateOrder(u.unit,"stop");
+            Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.5,1.1, "stand","cf2.mdl").SetH(75);
+            Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,1.25,2, "stand","dust2.mdl");
+            Units.MJ(u.player.player,'e008','A02D',0,x,y,f,2,1,0.5, "stand","chongfeng2.mdl");
+            dash=Dash.Start(u.unit,f,600,Dash.SUB,80,true,false); 
+            if(i==1){ 
+                dash.Obj=-1;
+            }else{
+                dash.Obj=0;
+            }
+            dash.onMove=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                u.SetF(dash.Angle,true);
+                if(dash.NowDis>300){
+                    if(dash.Obj==0){
+                        dash.Obj=1;
+                        u.Pause(false); 
+                    }
+                }
+            };
             dash.onEnd=function(Dash dash){
-                Units u=Units(dash.Obj);
-                u.Pause(false);
-                u.AnimeSpeed(1);
+                Units u=Units.Get(dash.Unit);
+                if(dash.Obj<=0){  
+                    u.AnimeSpeed(1);
+                    u.Pause(false);  
+                }
             };
         }
         //命令触发刀光冲击
@@ -33,7 +54,7 @@ library TR requires Groups{
                     }
                     b=Buffs.Find(u.unit,'B00E'); 
                     if(b.NowTime<4.990){ 
-                        TR.W2(u.unit,f);
+                        TR.W2(u.unit,f,b.Level);
                         b.Level-=1;
                         if(b.Level<=0){
                             b.Stop();
