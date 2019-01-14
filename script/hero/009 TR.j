@@ -31,7 +31,7 @@ library TR requires Groups{
                         data=Data.create('A02F');
                         f=u.F()+(i*90.0);
                         mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand","ls tong ren.mdl");
-                        mj.DelayAlpha(255,155,0.5);
+                        //mj.DelayAlpha(255,155,0.5);
                         mj.AnimeId(5);
                         data.c[0]=mj;
                         dash=Dash.Start(mj.unit,f,600,Dash.PWX,50,true,false);
@@ -47,15 +47,15 @@ library TR requires Groups{
                             Units dg=Units(data.c[1]);
                             Units tmp;
                             if(dash.NowDis>50){ 
-                                dash.Angle+=2;
-                                dg.AnimeSpeed(1.5);
+                                dash.Angle+=2; //+6
+                                dg.AnimeSpeed(1);
                             }
                             if(dash.NowDis>500&&dash.NowDis<530){ 
                                 mj.Position(dash.X,dash.Y,true);
                             }
                             mj.SetF(dash.Angle,true);
                             dg.Position(dash.X,dash.Y,false);
-                            dg.SetF(dash.Angle,true);
+                            dg.SetF(dash.Angle+180,true);
                             GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -87,7 +87,7 @@ library TR requires Groups{
                                         ReleaseTimer(GetExpiredTimer());
                                         u.AnimeId(4);
                                         u.AnimeSpeed(1);
-                                        u.DelayAlpha(155,0,0.2);
+                                        u.DelayAlpha(255,0,0.2);
                                         u.Life(0.4);
                                     }else{
                                         u.SetData(u.Data()-1);
@@ -125,9 +125,9 @@ library TR requires Groups{
             }
             u.AnimeId(2);
             if(i==1){ 
-                u.AnimeSpeed(2);
+                u.AnimeSpeed(2.4);
             }else{ 
-                u.AnimeSpeed(2.75);
+                u.AnimeSpeed(3);
             }
             u.SetF(f,true);
             Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
@@ -208,8 +208,7 @@ library TR requires Groups{
                 mj.Life(0.5);
                 mj.Anime("death");
                 DestroyGroup(data.g[0]);
-                data.g[0]=null;
-                BJDebugMsg(" PPPPPPPPPP"+I2S(data.i[0]));
+                data.g[0]=null; 
                 data.Destroy();
             };
         }
@@ -253,9 +252,9 @@ library TR requires Groups{
             if(e.OrderId==851971&&u.IsAbility('A02F')==true&&u.player.lv15!=null){
                 //四方斩残影
                 if(e.OrderTargetUnit==null){ 
-                    GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,150,function GroupIsAliveAloc);  
+                    GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,200,function GroupIsAliveAloc);  
                 }else{
-                    GroupEnumUnitsInRange(tmp_group,GetUnitX(e.OrderTargetUnit),GetUnitY(e.OrderTargetUnit),150,function GroupIsAliveAloc);  
+                    GroupEnumUnitsInRange(tmp_group,GetUnitX(e.OrderTargetUnit),GetUnitY(e.OrderTargetUnit),200,function GroupIsAliveAloc);  
                 }
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
@@ -264,6 +263,7 @@ library TR requires Groups{
                         u.Position(mj.X(),mj.Y(),false);
                         mj.SetData(-1);
                         mj.aidindex=0;  
+                        break;
                     }
                 }
                 GroupClear(tmp_group);                   
