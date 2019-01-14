@@ -137,6 +137,7 @@ library TR requires Groups{
             }
             u.AnimeId(2);
             if(i==1){ 
+                u.AddAbility('A02H');
                 u.AnimeSpeed(2.4);
             }else{ 
                 u.AnimeSpeed(3);
@@ -189,7 +190,7 @@ library TR requires Groups{
                 if(data.i[0]==1&&dash.Speed<1.5){
                     dash.Stop();
                 }else{
-                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
@@ -219,6 +220,7 @@ library TR requires Groups{
                 }
                 mj.Life(0.5);
                 mj.Anime("death");
+                u.RemoveAbility('A02H');
                 DestroyGroup(data.g[0]);
                 data.g[0]=null; 
                 data.Destroy();
