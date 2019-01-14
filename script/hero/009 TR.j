@@ -35,36 +35,48 @@ library TR requires Groups{
                         mj.AnimeId(5);
                         data.c[0]=mj;
                         dash=Dash.Start(mj.unit,f,600,Dash.PWX,50,true,false);
-                        mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1,"stand", "tk knockin' on heaven's door by deckai.mdl");
+                        mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1,"stand", "tk knockin' on heaven's door by deckai_darkblue.mdl");
                         mj.SetH(100);
                         mj.AnimeSpeed(0);
                         data.c[1]=mj;
+                        /*mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1.5,"stand", "tk knockin' on heaven's door by deckai.mdl");
+                        mj.SetH(100);
+                        mj.AnimeSpeed(0);
+                        data.c[2]=mj;*/
                         data.g[0]=CreateGroup();
                         dash.Obj=data;
                         dash.onMove=function(Dash dash){
                             Data data=Data(dash.Obj);
                             Units mj=Units(data.c[0]);
                             Units dg=Units(data.c[1]);
+                            real f;
+                            //Units dgs=Units(data.c[2]);
                             Units tmp;
                             if(dash.NowDis>50){ 
                                 dash.Angle+=6; //+2
-                                dg.AnimeSpeed(1);
+                                dg.AnimeSpeed(0.75);
+                                //dgs.AnimeSpeed(2);
                             }
                             if(dash.NowDis>500&&dash.NowDis<530){ 
                                 mj.Position(dash.X,dash.Y,true);
                             }
                             mj.SetF(dash.Angle,true);
                             dg.Position(dash.X,dash.Y,false);
-                            dg.SetF(dash.Angle+180,true);
-                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
+                            dg.SetF(dash.Angle+90,true);
+                            /*dgs.Position(dash.X,dash.Y,false);
+                            dgs.SetF(dash.Angle,true);*/
+                            f=Util.XYEX(dash.X,dash.Y,dash.X+100*CosBJ(dash.Angle),dash.Y+100*SinBJ(dash.Angle));
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,300,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(IsUnitEnemy(tmp.unit,mj.player.player)==true){ 
-                                    if(IsUnitInGroup(tmp.unit,data.g[0])==false){
-                                        GroupAddUnit(data.g[0],tmp.unit);
-                                        mj.Damage(tmp.unit,Damage.Physics,'A02F',mj.Agi(true)*5);
-                                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",tmp.unit, "chest").Destroy();
+                                    if(Util.FAN(mj.unit,tmp.unit,f,80)==true||dash.NowDis<50){ 
+                                        if(IsUnitInGroup(tmp.unit,data.g[0])==false){
+                                            GroupAddUnit(data.g[0],tmp.unit);
+                                            mj.Damage(tmp.unit,Damage.Physics,'A02F',mj.Agi(true)*5);
+                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",tmp.unit, "chest").Destroy();
+                                        }
                                     }
                                 }
                             }
@@ -75,15 +87,14 @@ library TR requires Groups{
                             Units mj=Units(data.c[0]); 
                             timer t;
                             mj.AnimeSpeed(0);
-                            mj.Position(dash.X,dash.Y,true);
+                            mj.Position(dash.X,dash.Y,true); 
                             if(mj.Data()!=-1){
                                 t=NewTimer();
                                 mj.SetData(100);
                                 SetTimerData(t,mj);
                                 TimerStart(t,0.05,true,function(){
                                     Units u=Units(GetTimerData(GetExpiredTimer()));
-                                    if(u.Data()==-1){
-                                        BJDebugMsg("滚");
+                                    if(u.Data()==-1){ 
                                         ReleaseTimer(GetExpiredTimer());
                                         u.AnimeId(4);
                                         u.AnimeSpeed(1);
@@ -101,6 +112,7 @@ library TR requires Groups{
                                 mj.Life(0.4);
                             }
                             Units(data.c[1]).Life(5);
+                            //Units(data.c[2]).Life(5);
                             DestroyGroup(data.g[0]);
                             data.g[0]=null;
                             data.Destroy();
