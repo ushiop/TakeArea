@@ -47,7 +47,7 @@ library TR requires Groups{
                             Units dg=Units(data.c[1]);
                             Units tmp;
                             if(dash.NowDis>50){ 
-                                dash.Angle+=2; //+6
+                                dash.Angle+=6; //+2
                                 dg.AnimeSpeed(1);
                             }
                             if(dash.NowDis>500&&dash.NowDis<530){ 
