@@ -11,6 +11,8 @@ library TR requires Groups{
             Dash dash;
             real f=Util.XY(u.unit,m.unit);
             timer t=NewTimer();
+            RuaText(u.unit,"斯塔巴斯托死托利姆！！！！！",10,2,1,0,0,0.01);
+             
             u.Pause(true);
             u.AnimeId(3);
             u.AddAbility('A02M');
@@ -149,7 +151,7 @@ library TR requires Groups{
             if(GameTime>data.r[4]){//连击时间限制
                 data.i[4]=0;//连击中断 
             } 
-            data.r[4]=GameTime+0.2;//连击限制
+            data.r[4]=GameTime+0.3;//连击限制
             data.i[4]+=1;
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
@@ -173,7 +175,7 @@ library TR requires Groups{
             mj.DelayAlpha(255,0,1.99);
             Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
             if(b.Level==10){
-                data.r[4]+=0.3;
+                data.r[4]+=0.4;
                 mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
                 mj.SetH(200); 
                 Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
