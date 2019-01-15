@@ -106,7 +106,7 @@ library TR requires Groups{
                         Units u=Units.Get(dash.Unit);  
                         u.AnimeSpeed(1);
                         u.Alpha(255);
-                        u.Pause(false); 
+                        u.Pause(false);  
                         u.RemoveAbility('A02M');
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
