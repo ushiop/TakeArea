@@ -18,9 +18,17 @@ library TR requires Groups{
             u.SetF(f,true);
             Effect.ToUnit("supershinythingy.mdl",u.unit,"weapon").Destroy();
             dash=Dash.Start(u.unit,f+180,250,Dash.SUB,25,true,false);
+            dash.Obj=0;
             dash.onMove=function(Dash dash){
                 if(dash.Speed>20){ 
                     Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
+                }
+                if(dash.Obj==0){
+                    dash.Obj=1;
+                    
+                    Util.Duang(dash.X,dash.Y,0.4,250,250,-32,0.02,50); 
+                }else{
+                    dash.Obj-=1;
                 }
             }; 
             SetTimerData(t,u);
@@ -349,6 +357,7 @@ library TR requires Groups{
                             Units mj=Units(data.c[0]); 
                             timer t;
                             mj.AnimeSpeed(0);
+                            mj.PositionEnabled(false);
                             mj.Position(dash.X,dash.Y,true); 
                             if(mj.Data()!=-1){
                                 t=NewTimer();
