@@ -22,14 +22,7 @@ library TR requires Groups{
             dash.onMove=function(Dash dash){
                 if(dash.Speed>20){ 
                     Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
-                }
-                if(dash.Obj==0){
-                    dash.Obj=1;
-                    
-                    Util.Duang(dash.X,dash.Y,0.4,250,250,-32,0.02,50); 
-                }else{
-                    dash.Obj-=1;
-                }
+                } 
             }; 
             SetTimerData(t,u);
             TimerStart(t,0.6,true,function(){//终结刺击！
