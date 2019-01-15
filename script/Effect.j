@@ -62,6 +62,12 @@ library Effect requires TimerUtils{
             });
         }
 
+        //设置特效大小
+        method Size(real s){
+            this.size=s;
+            EXSetEffectSize( this.e,this.size);
+        }
+
         //在坐标处创建特效
         static method To(string model,real x,real y)->Effect{
             Effect e=Effect.create();
