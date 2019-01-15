@@ -496,7 +496,7 @@ library TR requires Groups{
             if(e.DamageUnit.IsAbility('B00E')==true&&e.DamageType==Damage.Attack){
                 b=Buffs.Find(e.DamageUnit.unit,'B00E'); 
                 if(b.NowTime<4.990){ 
-                    TR.W2(e.DamageUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),b.Level,3);
+                    TR.W2(e.DamageUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),b.Level,1);
                     b.Level-=1;
                     if(b.Level<=0){
                         b.Stop();
