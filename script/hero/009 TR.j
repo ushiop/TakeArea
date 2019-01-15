@@ -136,8 +136,7 @@ library TR requires Groups{
                 IssueImmediateOrder(u.unit,"stop");
             }
             u.AnimeId(2);
-            if(i==1){ 
-                u.AddAbility('A02H');
+            if(i==1){  
                 u.AnimeSpeed(2.4);
             }else{ 
                 u.AnimeSpeed(3);
@@ -219,8 +218,7 @@ library TR requires Groups{
                     }
                 }
                 mj.Life(0.5);
-                mj.Anime("death");
-                u.RemoveAbility('A02H');
+                mj.Anime("death"); 
                 DestroyGroup(data.g[0]);
                 data.g[0]=null; 
                 data.Destroy();
@@ -246,7 +244,7 @@ library TR requires Groups{
             real f;
             Buffs b; 
             Units mj;
-            if(u.IsAbility('B00E')==true){//刀光冲击
+            if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
                 if(e.OrderId==851983||e.OrderId==851986||e.OrderId==851971){
                     if(e.OrderTargetUnit==null){ 
                         f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
@@ -300,11 +298,19 @@ library TR requires Groups{
                 ReleaseTimer(GetExpiredTimer());
             });
             t=null;
+            u.AddAbility('A02H');
             b=Buffs.Add(u.unit,'A02E','B00E',5,false);
             b.Level=4;
             b.Obj=e;
             b.onEnd=function(Buffs b){
+                timer t=NewTimer();
                 Spell(b.Obj).Destroy();
+                SetTimerData(t,Units.Get(b.Unit));
+                TimerStart(t,0.1,false,function(){
+                    Units(GetTimerData(GetExpiredTimer())).RemoveAbility('A02H');
+                    ReleaseTimer(GetExpiredTimer());
+                });
+                t=null;
             };
         }
 
@@ -312,6 +318,7 @@ library TR requires Groups{
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A02C');
             Dash dash;
+            Buffs.Add(u.unit,'A02I','B00G',0.03,false);
             u.Pause(true);
             u.Pause(false);
             data.c[0]=u;
