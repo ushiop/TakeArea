@@ -147,8 +147,7 @@ library TR requires Groups{
                 anime=6;
             }  
             if(GameTime>data.r[4]){//连击时间限制
-                data.i[4]=0;//连击中断
-                BJDebugMsg("断了断了");
+                data.i[4]=0;//连击中断 
             } 
             data.r[4]=GameTime+0.2;//连击限制
             data.i[4]+=1;
@@ -174,7 +173,7 @@ library TR requires Groups{
             mj.DelayAlpha(255,0,1.99);
             Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
             if(b.Level==10){
-                data.r[4]+=0.4;
+                data.r[4]+=0.3;
                 mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
                 mj.SetH(200); 
                 Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
@@ -222,7 +221,7 @@ library TR requires Groups{
                 }
             }
             GroupClear(tmp_group);  
-            if(b.Level==1){  
+            if(b.Level==1&&data.i[4]==16){  
                 TR.R3(u,m);
             }
         }
@@ -472,7 +471,7 @@ library TR requires Groups{
                                 GroupAddUnit(data.g[0],mj.unit);
                                 u.Damage(mj.unit,Damage.Physics,'A02D',u.Agi(true)*3);
                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                                Dash.Start(mj.unit,dash.Angle,150,Dash.SUB,45,true,true);
+                                Dash.Start(mj.unit,dash.Angle,400-dash.NowDis,Dash.SUB,45,true,true);
                                 Buffs.Add(mj.unit,'A02G','B00F',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                             }
                         }
