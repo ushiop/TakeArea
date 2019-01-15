@@ -6,6 +6,98 @@ library TR requires Groups{
 
         static string XBM[];//星爆特效路径
         
+        //星爆最后一下终结 
+        static method R3(Units u,Units m){ 
+            Dash dash;
+            real f=Util.XY(u.unit,m.unit);
+            timer t=NewTimer();
+            u.Pause(true);
+            u.AnimeId(3);
+            u.AddAbility('A02M');
+            u.AnimeSpeed(0.5);
+            u.SetF(f,true);
+            Effect.ToUnit("supershinythingy.mdl",u.unit,"weapon").Destroy();
+            dash=Dash.Start(u.unit,f+180,500,Dash.SUB,25,true,false);
+            dash.onMove=function(Dash dash){
+                if(dash.Speed>20){ 
+                    Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
+                }
+            }; 
+            SetTimerData(t,u);
+            TimerStart(t,0.8,true,function(){//终结刺击！
+                Data data;
+                Units u=Units(GetTimerData(GetExpiredTimer()));
+                Dash dash;
+                Units mj;
+                real x=u.X(),y=u.Y(),f=u.F();
+                ReleaseTimer(GetExpiredTimer());
+                if(u.Alive()==true){
+                    u.AnimeId(6);
+                    u.AnimeSpeed(0.8);
+                    u.DelayAlpha(0,255,0.3); 
+                    Util.Duang(x,y,0.4,250,250,-220,0.02,50); 
+                    Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.75,1.1, "stand","cf2.mdl").SetH(75);
+                    mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,2,1,1, "stand","blue-daoguang-new.mdl");//birth dg4.mdx
+                    mj.SetH(100);   
+                    data=Data.create('A02J');
+                    data.c[0]=u;
+                    data.c[1]=mj;
+                    data.i[0]=0;
+                    data.r[0]=f;
+                    dash=Dash.Start(u.unit,f,1000,Dash.SUB,60,true,false);
+                    dash.Obj=data;
+                    dash.onMove=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        Units u=Units(data.c[0]);
+                        Units mj=Units(data.c[1]); 
+                        real f;
+                        mj.Position(dash.X,dash.Y,false);
+                        mj.SetF(dash.Angle,true);
+                        u.SetF(dash.Angle,true);
+                        if(dash.Speed>7.5){ 
+                            if(data.i[0]==0){ 
+                                data.i[0]=1;
+                                data.r[0]=GetRandomReal(0,360);
+                                f=Util.XYEX(dash.X+100*SinBJ(data.r[0]),dash.Y+100*SinBJ(data.r[0]),dash.X,dash.Y);
+                                mj=Units.MJ(u.player.player,'e008','A02J',0,dash.X+5*CosBJ(data.r[0]),dash.Y+5*SinBJ(data.r[0]),f,1,1,1.5, "attack","ls tong ren.mdl");   
+                                mj.AnimeId(5);
+                                mj.AnimeSpeed(2); 
+                                mj.Color(u.color_alpha,u.color_alpha,u.color_alpha);
+                                mj.DelayAlpha(255,0,0.9);  
+                                Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1, "stand","dg4.mdl").SetH(75);
+                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),170,Dash.SUB,25,true,false);
+                                dash.Obj=u;
+                                dash.onMove=function(Dash dash){
+                                    Units u=Units(dash.Obj);
+                                    Units m=Units.Get(dash.Unit);
+                                    m.SetF(Util.XY(m.unit,u.unit),true); 
+                                };
+                                dash.onEnd=function(Dash dash){
+                                    Units u=Units.Get(dash.Unit);
+                                    u.AnimeSpeed(0);
+                                };
+                            }else{
+                                data.i[0]-=1;
+                            }
+                        }  
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        Units u=Units.Get(dash.Unit);  
+                        u.AnimeSpeed(1);
+                        u.Alpha(255);
+                        u.Pause(false); 
+                        u.RemoveAbility('A02M');
+                        data.Destroy();
+                    };
+                }else{
+                    u.Pause(false);
+                    u.AnimeSpeed(1);
+                    u.RemoveAbility('A02M');
+                }
+            });
+            t=null;
+        }
         //星爆状态打到人了 3,5
         static method R2(unit ua,unit ma){
             Units u=Units.Get(ua);
@@ -95,8 +187,8 @@ library TR requires Groups{
                 }
             }
             GroupClear(tmp_group);  
-            if(b.Level==1){
-                BJDebugMsg("??");
+            if(b.Level==1){  
+                TR.R3(u,m);
             }
         }
 
@@ -129,7 +221,7 @@ library TR requires Groups{
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
-            data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1;  
+            data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1; //0.1 
             SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) - data.r[0] );
             b=Buffs.Add(u.unit,'A02K','B00H',10,false);
             b.Level=16;
