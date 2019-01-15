@@ -52,6 +52,7 @@ library TR requires Groups{
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]); 
                         real f;
+                        Effect ef;
                         mj.Position(dash.X,dash.Y,false);
                         mj.SetF(dash.Angle,true);
                         u.SetF(dash.Angle,true);
@@ -84,7 +85,8 @@ library TR requires Groups{
                                 data.i[0]-=1;
                             }
                         }  
-                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                        
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,175,function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
@@ -93,7 +95,9 @@ library TR requires Groups{
                                     GroupAddUnit(data.g[0],mj.unit);
                                     u.Damage(mj.unit,Damage.Physics,'A02J',u.Agi(true)*5.0);
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                                    Effect.ToUnit("dg4.mdl",mj.unit, "chest").Destroy();
+                                    ef=Effect.ToUnit("dg4.mdl",mj.unit, "chest");
+                                    ef.Size(2);
+                                    ef.Destroy();
                                     Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,45,true,true);
                                      
                                 }
@@ -106,7 +110,7 @@ library TR requires Groups{
                         Units u=Units.Get(dash.Unit);  
                         u.AnimeSpeed(1);
                         u.Alpha(255);
-                        u.Pause(false);  
+                        u.Pause(false);   
                         u.RemoveAbility('A02M');
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
