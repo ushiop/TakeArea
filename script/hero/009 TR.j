@@ -94,7 +94,7 @@ library TR requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                                 if(IsUnitInGroup(mj.unit,data.g[0])==false){
                                     GroupAddUnit(data.g[0],mj.unit);
-                                    u.Damage(mj.unit,Damage.Physics,'A02J',u.Agi(true)*5.0);
+                                    u.Damage(mj.unit,Damage.Chaos,'A02J',u.Agi(true)*5.0);
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                     ef=Effect.ToUnit("dg4.mdl",mj.unit, "chest");
                                     ef.Size(2);
@@ -529,6 +529,7 @@ library TR requires Groups{
             real f;
             Buffs b; 
             Units mj; 
+            
             if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
                 if(e.OrderId==851983||e.OrderId==851986||e.OrderId==851971){
                     if(e.OrderTargetUnit==null){ 
@@ -546,7 +547,7 @@ library TR requires Groups{
                     }
                 }  
             }
-            if(e.OrderId==851971&&u.IsAbility('A02F')==true&&u.player.lv15!=null){
+            if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv15!=null){
                 //四方斩残影
                 if(e.OrderTargetUnit==null){ 
                     GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,200,function GroupIsAliveAloc);  
