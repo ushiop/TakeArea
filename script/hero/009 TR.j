@@ -501,6 +501,7 @@ library TR requires Groups{
         //伤害触发刀光冲击
         static method W3(DamageArgs e){
             Buffs b;
+            /*普攻触发刀光冲击，暂时取消了
             if(e.DamageUnit.IsAbility('B00E')==true&&e.DamageType==Damage.Attack){
                 b=Buffs.Find(e.DamageUnit.unit,'B00E'); 
                 if(b.NowTime<4.990){ 
@@ -509,8 +510,8 @@ library TR requires Groups{
                     if(b.Level<=0){
                         b.Stop();
                     } 
-                }                
-            }
+                }     
+            }*/
             if(e.DamageUnit.IsAbility('B00H')==true&&e.DamageType==Damage.Attack){
                 if(e.DamageUnit.IsAbility('B00I')==true){
                     b=Buffs.Find(e.DamageUnit.unit,'B00H');
