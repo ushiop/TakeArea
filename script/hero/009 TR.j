@@ -151,7 +151,7 @@ library TR requires Groups{
             if(GameTime>data.r[4]){//连击时间限制
                 data.i[4]=0;//连击中断 
             } 
-            data.r[4]=GameTime+0.3;//连击限制
+            data.r[4]=GameTime+0.5;//连击限制
             data.i[4]+=1;
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
