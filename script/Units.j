@@ -120,7 +120,7 @@ library Units requires Table,Players,Events,Util{
                 TimerStart(t,0.01,true,function(){
                     Data data=Data(GetTimerData(GetExpiredTimer())); 
                     Units u=Units(data.c[0]);
-                    if(data.r[3]<=0){
+                    if(data.r[3]<=0||u.Alive()==false){
                         u.Alpha(data.i[2]);
                         data.Destroy();
                         ReleaseTimer(GetExpiredTimer());
@@ -239,12 +239,17 @@ library Units requires Table,Players,Events,Util{
                     data=Data.create('A001');
                     data.c[0]=this;
                     data.s[0]=path;
+                    data.r[0]=delay;
                     SetTimerData(t,data);
-                    TimerStart(t,delay,false,function(){
+                    TimerStart(t,0.01,true,function(){
                         Data d=Data(GetTimerData(GetExpiredTimer()));
-                        Units(d.c[0]).Model(d.s[0]);
-                        ReleaseTimer(GetExpiredTimer());
-                        d.Destroy();
+                        if(d.r[0]<=0||Units(d.c[0]).Alive==false){ 
+                            Units(d.c[0]).Model(d.s[0]); 
+                            ReleaseTimer(GetExpiredTimer());
+                            d.Destroy();
+                        }else{
+                            d.r[0]-=0.01;
+                        }
                     });
                     t=null;
                 }
@@ -256,13 +261,18 @@ library Units requires Table,Players,Events,Util{
                 Data data=Data.create('A000');
                 data.c[0]=this;
                 data.i[0]=id;
+                data.r[0]=delay;
                 SetTimerData(t,data);
-                TimerStart(t,delay,false,function(){
+                TimerStart(t,0.01,true,function(){
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
-                    u.AnimeId(d.i[0]);
-                    d.Destroy(); 
-                    ReleaseTimer(GetExpiredTimer());
+                    if(d.r[0]<=0||u.Alive()==false){ 
+                        u.AnimeId(d.i[0]);
+                        d.Destroy(); 
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        d.r[0]-=0.01;
+                    }
                 });
                 t=null;               
             }
@@ -273,13 +283,19 @@ library Units requires Table,Players,Events,Util{
                 Data data=Data.create('A003');
                 data.c[0]=this;
                 data.r[0]=s;
+                data.r[1]=delay;
                 SetTimerData(t,data);
-                TimerStart(t,delay,false,function(){
+                TimerStart(t,0.01,true,function(){
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
-                    u.Size(d.r[0]);
-                    d.Destroy(); 
-                    ReleaseTimer(GetExpiredTimer());
+                    if(d.r[1]<=0||u.Alive()==false){
+
+                        u.Size(d.r[0]);
+                        d.Destroy(); 
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        d.r[1]-=0.01;
+                    }
                 });
                 t=null;                    
             }
@@ -290,13 +306,18 @@ library Units requires Table,Players,Events,Util{
                 Data data=Data.create('A002');
                 data.c[0]=this;
                 data.r[0]=speed;
+                data.r[1]=delay;
                 SetTimerData(t,data);
-                TimerStart(t,delay,false,function(){
+                TimerStart(t,0.01,true,function(){
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
-                    u.AnimeSpeed(d.r[0]);
-                    d.Destroy(); 
-                    ReleaseTimer(GetExpiredTimer());
+                    if(d.r[1]<=0||u.Alive()==false){ 
+                        u.AnimeSpeed(d.r[0]);
+                        d.Destroy(); 
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        d.r[1]-=0.01;
+                    }
                 });
                 t=null;               
             } 
@@ -306,14 +327,20 @@ library Units requires Table,Players,Events,Util{
                 timer t=NewTimer();
                 Data data=Data.create('A004');
                 data.c[0]=this;
+                data.r[0]=delay;
                 SetTimerData(t,data);
-                TimerStart(t,delay,false,function(){
+                TimerStart(t,0.01,true,function(){
                     Data d=Data(GetTimerData(GetExpiredTimer()));  
                     Units u=Units(d.c[0]);
-                    u.AnimeSpeed(1);
-                    u.Pause(false);
-                    d.Destroy(); 
-                    ReleaseTimer(GetExpiredTimer());
+                    if(d.r[0]<=0||u.Alive()==false){
+
+                        u.AnimeSpeed(1);
+                        u.Pause(false);
+                        d.Destroy(); 
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        d.r[0]-=0.01;
+                    }
                 });
                 t=null;       
             }
