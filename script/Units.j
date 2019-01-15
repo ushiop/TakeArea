@@ -243,7 +243,7 @@ library Units requires Table,Players,Events,Util{
                     SetTimerData(t,data);
                     TimerStart(t,0.01,true,function(){
                         Data d=Data(GetTimerData(GetExpiredTimer()));
-                        if(d.r[0]<=0||Units(d.c[0]).Alive==false){ 
+                        if(d.r[0]<=0||Units(d.c[0]).Alive()==false){ 
                             Units(d.c[0]).Model(d.s[0]); 
                             ReleaseTimer(GetExpiredTimer());
                             d.Destroy();
