@@ -154,7 +154,7 @@ library TR requires Groups{
                 anime=6;
             } 
             Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
-            Dash.Start(m.unit,f,30,Dash.SUB,5,true,false);  
+            Dash.Start(m.unit,f,30,Dash.SUB,5,true,true);  
             mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
             mj.AnimeId(anime);
             mj.AnimeSpeed(2.5);
