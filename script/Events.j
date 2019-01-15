@@ -12,6 +12,7 @@ library Events requires Table{
         unit BuyingUnit;//购买单位
         unit OrderTargetUnit;//命令目标单位
         unit SpellTargetUnit;//技能目标单位
+        unit AttackUnit;//攻击单位
         real OrderTargetX;//命令目标X坐标
         real OrderTargetY;//命令目标Y坐标
         real SpellTargetX;//技能目标X
@@ -34,6 +35,7 @@ library Events requires Table{
 
         method Destroy(){
             this.KillUnit=null;
+            this.AttackUnit=null;
             this.OrderTargetUnit=null;
             this.SpellTargetUnit=null;
             this.LevelUpUnit=null;
@@ -66,6 +68,7 @@ library Events requires Table{
             static constant string onUnitOrderToUnit="Events.onUnitOrderToUnit";//任意单位朝指定物体发布命令
             static constant string onUnitOrderToLocation="Events.onUnitOrderToLocation";//任意单位朝指定点发布命令
             static constant string onUnitOrder="Events.onUnitOrder";//任意单位发布无目标命令
+            static constant string onUnitAttack="Events.onUnitAttack";//任意单位被攻击
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -105,6 +108,7 @@ library Events requires Table{
         e.OrderTargetX=GetOrderPointX();
         e.OrderTargetY=GetOrderPointY();
         e.OrderId=GetIssuedOrderId();
+        e.AttackUnit=GetAttacker();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
             callback.evaluate(e);
@@ -129,6 +133,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitOrderToUnit") 
 //! runtextmacro RegisterAction("onUnitOrderToLocation") 
 //! runtextmacro RegisterAction("onUnitOrder") 
+//! runtextmacro RegisterAction("onUnitAttack") 
 
 
     function onInit(){
@@ -150,6 +155,7 @@ library Events requires Table{
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER","Event_onUnitOrderToUnit")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER","Event_onUnitOrderToLocation")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ISSUED_ORDER","Event_onUnitOrder")
+        //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ATTACKED","Event_onUnitAttack")
  
   
         //! textmacro RegisterArgsEvent takes tri,args,event,action
