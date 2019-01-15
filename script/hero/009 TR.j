@@ -13,32 +13,91 @@ library TR requires Groups{
             Buffs b=Buffs.Find(u.unit,'B00H');
             Data data=Data(b.Obj);
             Units mj;
+            Units tmp;
             real f=Util.XY(u.unit,m.unit),x=u.X(),y=u.Y();
-            integer anime;
+            real f1=GetRandomReal(0,360);
+            integer anime,i;
             if(data.i[0]==0){
                 data.i[0]=1;
                 anime=3;
+            }else if(data.i[0]==1){
+                data.i[0]=2;
+                anime=5;
             }else{
                 data.i[0]=0;
-                anime=5;
+                anime=6;
             } 
             Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
-            Dash.Start(m.unit,f,30,Dash.SUB,5,true,false);
-            mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");
+            Dash.Start(m.unit,f,30,Dash.SUB,5,true,false);  
+            mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
             mj.AnimeId(anime);
-            mj.AnimeSpeed(2);
-            mj.DelayAnimeSpeed(0,0.3);
-            //mj.Color(0,0,0); 
-            mj.DelayAlpha(255,0,0.9);
+            mj.AnimeSpeed(2.5);
+            mj.DelayAnimeSpeed(0,0.3); 
+            mj.DelayAlpha(255,0,0.9);  
             if(anime==5){//左边
                 Units.MJ(u.player.player,'e00D','A02J',0,x,y,f+180,5,1,1,"stand",XBM[GetRandomInt(0,1)]).SetH(100);
-            }else{
+            }else if(anime==3){//右边
                 Units.MJ(u.player.player,'e008','A02J',0,x,y,f,5,1,1,"stand",XBM[GetRandomInt(0,1)]);
-            }
-            Units.MJ(u.player.player,'e00B','A02J',0,x,y,GetRandomReal(0,360),1,2,2, "stand","Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl").SetH(50);
+            }else{//前方
+                Units.MJ(u.player.player,'e00B','A02J',0,x,y,f+90,5,1,0.5,"stand","tk knockin' on heaven's door by deckai_nomore.mdl");
+            } 
+            //Units.MJ(u.player.player,'e00B','A02J',0,x,y,GetRandomReal(0,360),1,2,2, "stand","Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl").SetH(50);
             Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),1,3,2, "stand","dg4.mdl").SetH(75);
             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",m.unit, "chest").Destroy();
-            Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+GetRandomReal(-45,45),2,1,1,"stand", "blood-2.mdl");
+            mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+GetRandomReal(-45,45),2,1,1,"stand", "blood-2.mdl");
+            mj.DelayAlpha(255,0,1.99);
+            Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
+            if(b.Level==8){
+                mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
+                mj.SetH(200); 
+                Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
+                Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false).onMove=function(Dash dash){
+                    IssueImmediateOrder(dash.Unit,"stop");
+                };        
+                //Util.Duang(x,y,0.4,115,115,-520,0.02,50); 
+                Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl").SetH(150);
+                GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(IsUnitEnemy(tmp.unit,u.player.player)==true&&tmp.unit!=m.unit){   
+                        Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),300,Dash.SUB,25,true,false);  
+                    }
+                }
+                GroupClear(tmp_group);               
+            } 
+            if(b.Level<8){
+                //Util.Duang(m.X(),m.Y(),0.4,115,115,-160,0.02,50); 
+                for(0<=i<2){
+                    mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180+GetRandomReal(-45,45),2,1,1,"stand", ".mdl");
+                    Dash.Start(mj.unit,mj.F(),800,Dash.SUB,GetRandomReal(50,75),true,false).onMove=function(Dash dash){
+                        if(dash.Speed>5&&dash.Obj>=3){
+                            dash.Obj=0;
+                            Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
+                        }
+                        dash.Obj+=1;
+                    };
+                }
+            }
+            Units.MJ(u.player.player,'e008','A02J',0,x,y,f+30,1,1.15,2, "birth","az_dg01.mdl");
+            Units.MJ(u.player.player,'e008','A02J',0,x,y,f-30,1,1.15,2, "birth","az_dg01.mdl"); 
+            GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                tmp=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,tmp.unit);
+                if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                    if(Util.FAN(u.unit,tmp.unit,f,80)==true){ 
+                        u.Damage(tmp.unit,Damage.Physics,'A02J',u.Agi(true)*1.25);
+                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",tmp.unit, "chest").Destroy();
+                        Units.MJ(u.player.player,'e008','A02J',0,tmp.X(),tmp.Y(),GetRandomReal(0,360),1,1,2, "stand","dg4.mdl").SetH(75);   
+                        Dash.Start(tmp.unit,f,30,Dash.SUB,5,true,false); 
+                    }
+                }
+            }
+            GroupClear(tmp_group);  
+            if(b.Level==1){
+                BJDebugMsg("??");
+            }
         }
 
         //星爆状态开始攻击
@@ -70,14 +129,14 @@ library TR requires Groups{
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
-            data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1; 
+            data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1;  
             SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) - data.r[0] );
             b=Buffs.Add(u.unit,'A02K','B00H',10,false);
             b.Level=16;
             b.Obj=data;
             b.onEnd=function(Buffs b){ 
                 Data data=Data(b.Obj);
-                Units u=Units(data.c[0]);
+                Units u=Units(data.c[0]); 
                 SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) + data.r[0] );
                 Spell(data.c[1]).Destroy(); 
                 data.Destroy();
@@ -212,9 +271,11 @@ library TR requires Groups{
             real x=u.X(),y=u.Y(); 
             Data data=Data.create('A02D');
             Units mj;
-            if(tp==2){ 
+            if(tp>=2){ 
                 u.Pause(true);
-                IssueImmediateOrder(u.unit,"stop");
+                if(tp!=3){ 
+                    IssueImmediateOrder(u.unit,"stop");
+                }
             }
             u.AnimeId(2);
             if(i==1){  
@@ -251,7 +312,7 @@ library TR requires Groups{
                         if(data.i[1]==0){   
                             mj.Life(0.5);
                             data.i[1]=1;
-                            if(data.i[3]==2){ 
+                            if(data.i[3]>=2){ 
                                 u.Pause(false);  
                             }
                         }
@@ -279,7 +340,7 @@ library TR requires Groups{
                                 GroupAddUnit(data.g[0],mj.unit);
                                 u.Damage(mj.unit,Damage.Physics,'A02D',u.Agi(true)*3);
                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                                Dash.Start(mj.unit,dash.Angle,400-dash.NowDis,Dash.SUB,45,true,true);
+                                Dash.Start(mj.unit,dash.Angle,150,Dash.SUB,45,true,true);
                                 Buffs.Add(mj.unit,'A02G','B00F',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                             }
                         }
@@ -294,7 +355,7 @@ library TR requires Groups{
                 Units mj=Units(data.c[1]);
                 if(data.i[0]==1||(data.i[0]!=1&&data.i[1]==0)){  
                     u.AnimeSpeed(1);
-                    if(data.i[3]==2){ 
+                    if(data.i[3]>=2){ 
                         u.Pause(false);  
                     }
                 }
@@ -311,7 +372,7 @@ library TR requires Groups{
             if(e.DamageUnit.IsAbility('B00E')==true&&e.DamageType==Damage.Attack){
                 b=Buffs.Find(e.DamageUnit.unit,'B00E'); 
                 if(b.NowTime<4.990){ 
-                    TR.W2(e.DamageUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),b.Level,1);
+                    TR.W2(e.DamageUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),b.Level,3);
                     b.Level-=1;
                     if(b.Level<=0){
                         b.Stop();
@@ -446,8 +507,8 @@ library TR requires Groups{
 
 
         static method onInit(){
-            XBM[0]="tk knockin' on heaven's door by deckai_darkblue.mdl";
-            XBM[1]="tk knockin' on heaven's door by deckai.mdl";
+            XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore.mdl";
+            XBM[1]="tk knockin' on heaven's door by deckai_nomore.mdl";
             Spell.On(Spell.onSpell,'A02C',TR.Q);
             Spell.On(Spell.onSpell,'A02D',TR.W);
             Spell.On(Spell.onSpell,'A02F',TR.E);
