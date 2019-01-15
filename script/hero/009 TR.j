@@ -17,14 +17,14 @@ library TR requires Groups{
             u.AnimeSpeed(0.5);
             u.SetF(f,true);
             Effect.ToUnit("supershinythingy.mdl",u.unit,"weapon").Destroy();
-            dash=Dash.Start(u.unit,f+180,500,Dash.SUB,25,true,false);
+            dash=Dash.Start(u.unit,f+180,250,Dash.SUB,25,true,false);
             dash.onMove=function(Dash dash){
                 if(dash.Speed>20){ 
                     Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
                 }
             }; 
             SetTimerData(t,u);
-            TimerStart(t,0.8,true,function(){//终结刺击！
+            TimerStart(t,0.6,true,function(){//终结刺击！
                 Data data;
                 Units u=Units(GetTimerData(GetExpiredTimer()));
                 Dash dash;
@@ -37,13 +37,14 @@ library TR requires Groups{
                     u.DelayAlpha(0,255,0.3); 
                     Util.Duang(x,y,0.4,250,250,-220,0.02,50); 
                     Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.75,1.1, "stand","cf2.mdl").SetH(75);
-                    mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,2,1,1, "stand","blue-daoguang-new.mdl");//birth dg4.mdx
+                    mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,2,1,2, "birth","dg.mdl");//birth dg.mdx stand blue-daoguang-new.mdl
                     mj.SetH(100);   
                     data=Data.create('A02J');
                     data.c[0]=u;
                     data.c[1]=mj;
                     data.i[0]=0;
                     data.r[0]=f;
+                    data.g[0]=CreateGroup();
                     dash=Dash.Start(u.unit,f,1000,Dash.SUB,60,true,false);
                     dash.Obj=data;
                     dash.onMove=function(Dash dash){
@@ -58,28 +59,47 @@ library TR requires Groups{
                             if(data.i[0]==0){ 
                                 data.i[0]=1;
                                 data.r[0]=GetRandomReal(0,360);
-                                f=Util.XYEX(dash.X+100*SinBJ(data.r[0]),dash.Y+100*SinBJ(data.r[0]),dash.X,dash.Y);
-                                mj=Units.MJ(u.player.player,'e008','A02J',0,dash.X+5*CosBJ(data.r[0]),dash.Y+5*SinBJ(data.r[0]),f,1,1,1.5, "attack","ls tong ren.mdl");   
+                                
+                                mj=Units.MJ(u.player.player,'e008','A02J',0,dash.X+5*CosBJ(data.r[0]),dash.Y+5*SinBJ(data.r[0]),0,1,1,1.5, "attack","ls tong ren.mdl");   
                                 mj.AnimeId(5);
                                 mj.AnimeSpeed(2); 
                                 mj.Color(u.color_alpha,u.color_alpha,u.color_alpha);
                                 mj.DelayAlpha(255,0,0.9);  
                                 Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1, "stand","dg4.mdl").SetH(75);
-                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),170,Dash.SUB,25,true,false);
+                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),170,Dash.SUB,8,true,false);
                                 dash.Obj=u;
                                 dash.onMove=function(Dash dash){
                                     Units u=Units(dash.Obj);
                                     Units m=Units.Get(dash.Unit);
-                                    m.SetF(Util.XY(m.unit,u.unit),true); 
+                                    m.SetF(Util.XY(m.unit,u.unit),false); 
+                                    if(dash.Speed>2&&dash.Speed<2.2){
+                                        Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,dash.Angle,1,0.75,2, "birth","az_dg01.mdl");
+                                    }
                                 };
                                 dash.onEnd=function(Dash dash){
-                                    Units u=Units.Get(dash.Unit);
+                                    Units u=Units.Get(dash.Unit); 
                                     u.AnimeSpeed(0);
                                 };
                             }else{
                                 data.i[0]-=1;
                             }
                         }  
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                    GroupAddUnit(data.g[0],mj.unit);
+                                    u.Damage(mj.unit,Damage.Physics,'A02J',u.Agi(true)*5.0);
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                    Effect.ToUnit("dg4.mdl",mj.unit, "chest").Destroy();
+                                    Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,45,true,true);
+                                     
+                                }
+                            }
+                        }
+                        GroupClear(tmp_group);  
                     };
                     dash.onEnd=function(Dash dash){
                         Data data=Data(dash.Obj);
@@ -88,6 +108,8 @@ library TR requires Groups{
                         u.Alpha(255);
                         u.Pause(false); 
                         u.RemoveAbility('A02M');
+                        DestroyGroup(data.g[0]);
+                        data.g[0]=null;
                         data.Destroy();
                     };
                 }else{
@@ -139,7 +161,7 @@ library TR requires Groups{
             mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+GetRandomReal(-45,45),2,1,1,"stand", "blood-2.mdl");
             mj.DelayAlpha(255,0,1.99);
             Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
-            if(b.Level==8){
+            if(b.Level==10){
                 mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
                 mj.SetH(200); 
                 Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
@@ -158,7 +180,7 @@ library TR requires Groups{
                 }
                 GroupClear(tmp_group);               
             } 
-            if(b.Level<8){
+            if(b.Level<10){
                 //Util.Duang(m.X(),m.Y(),0.4,115,115,-160,0.02,50); 
                 for(0<=i<2){
                     mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180+GetRandomReal(-45,45),2,1,1,"stand", ".mdl");
@@ -218,6 +240,10 @@ library TR requires Groups{
                 ReleaseTimer(GetExpiredTimer());
             });
             t=null;
+            Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,3,1,1, "stand","boom.mdl").SetH(100); 
+            Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,1,1.15,1.25, "stand","white-qiquan.mdl"); 
+            Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,1,2.5,1, "stand","by_wood_gongchengsipai_2.mdl");
+            
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
