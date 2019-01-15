@@ -145,7 +145,14 @@ library TR requires Groups{
             }else{
                 data.i[0]=0;
                 anime=6;
+            }  
+            if(GameTime>data.r[4]){//连击时间限制
+                data.i[4]=0;//连击中断
+                BJDebugMsg("断了断了");
             } 
+            data.r[4]=GameTime+0.2;//连击限制
+            data.i[4]+=1;
+            TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
             Dash.Start(m.unit,f,30,Dash.SUB,5,true,true);  
             mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
@@ -167,6 +174,7 @@ library TR requires Groups{
             mj.DelayAlpha(255,0,1.99);
             Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
             if(b.Level==10){
+                data.r[4]+=0.4;
                 mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
                 mj.SetH(200); 
                 Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
@@ -520,7 +528,7 @@ library TR requires Groups{
             Units u=Units.Get(e.TriggerUnit);
             real f;
             Buffs b; 
-            Units mj;
+            Units mj; 
             if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
                 if(e.OrderId==851983||e.OrderId==851986||e.OrderId==851971){
                     if(e.OrderTargetUnit==null){ 
