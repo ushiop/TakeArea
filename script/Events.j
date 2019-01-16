@@ -69,6 +69,7 @@ library Events requires Table{
             static constant string onUnitOrderToLocation="Events.onUnitOrderToLocation";//任意单位朝指定点发布命令
             static constant string onUnitOrder="Events.onUnitOrder";//任意单位发布无目标命令
             static constant string onUnitAttack="Events.onUnitAttack";//任意单位被攻击
+            static constant string onPlayerPressEsc="Events.onPlayerPressEsc";//任意玩家按下ESC
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -134,6 +135,7 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitOrderToLocation") 
 //! runtextmacro RegisterAction("onUnitOrder") 
 //! runtextmacro RegisterAction("onUnitAttack") 
+//! runtextmacro RegisterAction("onPlayerPressEsc") 
 
 
     function onInit(){
@@ -156,6 +158,7 @@ library Events requires Table{
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER","Event_onUnitOrderToLocation")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ISSUED_ORDER","Event_onUnitOrder")
         //! runtextmacro RegisterEvent("TriggerRegisterAnyUnitEventBJ","EVENT_PLAYER_UNIT_ATTACKED","Event_onUnitAttack")
+
  
   
         //! textmacro RegisterArgsEvent takes tri,args,event,action
@@ -175,6 +178,7 @@ library Events requires Table{
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerEventLeave","","Event_onPlayerDisconnect","")
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerChatEvent","","Event_onPlayerChat",",\"\",false")
         //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerSelectionEventBJ","","Event_onPlayerSelectUnit",",true")
+        //! runtextmacro AllPlayerRegisterEvent("TriggerRegisterPlayerEventEndCinematic","","Event_onPlayerPressEsc","")
 
         t=CreateTrigger();
         YDWESyStemAnyUnitDamagedRegistTrigger( t );
