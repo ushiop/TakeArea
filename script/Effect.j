@@ -38,8 +38,7 @@ library Effect requires TimerUtils{
         //删除特效
         method Destroy(){
             DestroyEffect(this.e);
-            if(this.t!=null){
-                BJDebugMsg("计时器删除");
+            if(this.t!=null){ 
                 ReleaseTimer(this.t);
                 this.t=null;
             }
@@ -51,8 +50,7 @@ library Effect requires TimerUtils{
 
         //该特效在延迟time秒后删除,重复调用可以修改延迟时间
         method Delay(real time){
-            if(this.t==null){
-                BJDebugMsg("创建计时器");
+            if(this.t==null){ 
                 this.t=NewTimer();
                 SetTimerData(this.t,this);
             }
