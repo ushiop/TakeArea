@@ -282,10 +282,18 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                         } 
                     }
                 }else{
-                    for(0<=i<6){ 
-                        DzFrameSetPoint( BagItemBackground[i],0,UnitInfoLine,2,0.003+(0.032*i),-0.018); 
-                        DzFrameSetPoint( DzFrameGetItemBarButton(i), 0, UnitInfoLine, 2,0.003+(0.032*i),-0.018 );
+                    if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1&&IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
+                        for(0<=i<6){ 
+                            DzFrameShow(BagItemBackground[i],false); 
+                            DzFrameSetPoint( DzFrameGetItemBarButton(i), 0, UnitInfoLine, 2,0.003+(0.032*i),-0.218 );
+                        }//看不到敌对TR的物品栏
+                    }else{
+                        for(0<=i<6){ 
+                            DzFrameSetPoint( BagItemBackground[i],0,UnitInfoLine,2,0.003+(0.032*i),-0.018); 
+                            DzFrameSetPoint( DzFrameGetItemBarButton(i), 0, UnitInfoLine, 2,0.003+(0.032*i),-0.018 );
+                        }
                     }
+
                 }
 
             }else{
@@ -339,22 +347,31 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     if(IsUnitEnemy(UISelectUnit,Players.localplayer)==false){
                         DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     }else{
-                        DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+                        if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1){
+                            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetRandomInt(1,50))+"|n攻击 "+I2S(GetRandomInt(1,999))+"~"+I2S(GetRandomInt(1,999))+"|n防御 "+I2S(GetRandomInt(1,999))+"|n力量 "+I2S(GetRandomInt(1,999))+"|n敏捷 "+I2S(GetRandomInt(1,999))+"|n智力 "+I2S(GetRandomInt(1,999))+"|n移速 "+I2S(GetRandomInt(1,999))+"|n攻速 "+I2S(GetRandomInt(1,999)));        
+                        }else{
+                            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+                        }
                     }
                     hp=GetUnitLifePercent(UISelectUnit)/100;
                     mp=GetUnitManaPercent(UISelectUnit)/100;
+                    if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1&&IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
+                        hp=GetRandomReal(0,1);
+                        mp=GetRandomReal(0,1);
+                    }else{  
+                        for(0<=i<6){ 
+                            if(UnitItemInSlot(UISelectUnit,i) == null){
+                                DzFrameShow(BagItemBackground[i],true);
+                            }else{
+                                DzFrameShow(BagItemBackground[i],false);
+                            }
+                        }        
+                        BuffUI.Flush(UISelectUnit);
+                    }
                     DzFrameSetSize( UnitInfoHP,0.0001+(hp*0.2524),0.016 );
                     DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 );
                     DzFrameSetText(UnitInfoHPText,"|cffFF0000"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_LIFE))+"|r"); 
-                    DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");     
-                    for(0<=i<6){ 
-                        if(UnitItemInSlot(UISelectUnit,i) == null){
-                            DzFrameShow(BagItemBackground[i],true);
-                        }else{
-                            DzFrameShow(BagItemBackground[i],false);
-                        }
-                    }        
-                    BuffUI.Flush(UISelectUnit);
+                    DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");  
                 }else if(UIType==2){
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     hp=GetUnitLifePercent(UISelectUnit)/100;
