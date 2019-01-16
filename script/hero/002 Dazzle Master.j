@@ -662,7 +662,26 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.SetF(dash.Angle,true);
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
-                        GroupEnumUnitsInRange(tmp_group,dash.X+140*CosBJ(dash.Angle),dash.Y+140*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);
+                        //枪头判定
+                        GroupEnumUnitsInRange(tmp_group,dash.X+160*CosBJ(dash.Angle),dash.Y+160*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
+                                GroupAddUnit(data.g[0],tmp.unit);  
+                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
+                                DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
+                                DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
+                                Dash.Start(tmp.unit,dash.Angle,350+(data.r[0]*2)*50,Dash.SUB,15+(15*data.r[0]),true,true);
+                                if(data.i[0]==0){
+                                    data.i[0]=1;
+                                    AddDazzle(u.unit,3);
+                                } 
+                            }
+                        }
+                        GroupClear(tmp_group);
+                        //身周判定
+                        GroupEnumUnitsInRange(tmp_group,dash.X+80*CosBJ(dash.Angle),dash.Y+80*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
