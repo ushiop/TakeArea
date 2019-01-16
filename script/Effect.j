@@ -68,6 +68,11 @@ library Effect requires TimerUtils{
             EXSetEffectSize( this.e,this.size);
         }
 
+        method AnimeSpeed(real s){
+            this.animespeed=s;
+            EXSetEffectSpeed(this.e, this.animespeed );
+        }
+
         //在坐标处创建特效
         static method To(string model,real x,real y)->Effect{
             Effect e=Effect.create();
