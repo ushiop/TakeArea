@@ -80,7 +80,7 @@ library Util{
                 ef=Effect.To("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",x+dis*CosBJ(i*10),y+dis*SinBJ(i*10));
                 ef.AnimeSpeed(0);
                 ef.Size(0.5);
-                ef.Delay(2);
+                ef.Delay(5);
             }
         }
 
