@@ -69,13 +69,13 @@ library TR requires Groups{
                                 mj.AnimeSpeed(2); 
                                 mj.Color(u.color_alpha,u.color_alpha,u.color_alpha);
                                 mj.DelayAlpha(255,0,0.9);  
+                                mj.SetF(Util.XY(mj.unit,u.unit),false);
                                 Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1, "stand","dg4.mdl").SetH(75);
                                 dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),170,Dash.SUB,8,true,false);
                                 dash.Obj=u;
                                 dash.onMove=function(Dash dash){
                                     Units u=Units(dash.Obj);
-                                    Units m=Units.Get(dash.Unit);
-                                    m.SetF(Util.XY(m.unit,u.unit),false); 
+                                    Units m=Units.Get(dash.Unit); 
                                     if(dash.Speed>2&&dash.Speed<2.2){
                                         Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,dash.Angle,1,0.75,2, "birth","az_dg01.mdl");
                                     }
