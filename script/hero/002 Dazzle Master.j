@@ -668,8 +668,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
-                                GroupAddUnit(data.g[0],tmp.unit);  
-                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
+                                GroupAddUnit(data.g[0],tmp.unit);   
+                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12+(data.r[0]*2.5)));
                                 DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
                                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
                                 Dash.Start(tmp.unit,dash.Angle,350+(data.r[0]*2)*50,Dash.SUB,15+(15*data.r[0]),true,true);
@@ -686,8 +686,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true&&IsUnitInGroup(tmp.unit,data.g[0])==false){ 
-                                GroupAddUnit(data.g[0],tmp.unit);  
-                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12*(data.r[0]*2.5)));
+                                GroupAddUnit(data.g[0],tmp.unit);   
+                                u.Damage(tmp.unit,Damage.Chaos,'A00D',u.Agi(true)*(12+(data.r[0]*2.5)));
                                 DestroyEffect( AddSpecialEffectTarget("hit_b.mdx", tmp.unit, "chest") );
                                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", tmp.X(),tmp.Y()) );
                                 Dash.Start(tmp.unit,dash.Angle,350+(data.r[0]*2)*50,Dash.SUB,15+(15*data.r[0]),true,true);
