@@ -86,7 +86,7 @@ library TR requires Groups{
                             }
                         }  
                         
-                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,175,function GroupIsAliveNotAloc);     
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,225,function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
