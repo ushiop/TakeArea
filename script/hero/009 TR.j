@@ -71,19 +71,16 @@ library TR requires Groups{
                                 mj.DelayAlpha(255,0,0.9);  
                                 mj.SetF(Util.XY(mj.unit,u.unit),false);
                                 Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1, "stand","dg4.mdl").SetH(75);
-                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),170,Dash.SUB,8,true,false);
+                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,10,true,false);
                                 dash.Obj=u;
                                 dash.onMove=function(Dash dash){
                                     Units u=Units(dash.Obj);
                                     Units m=Units.Get(dash.Unit); 
-                                    if(dash.Speed>2&&dash.Speed<2.2){
+                                    if(dash.Speed>2&&dash.Speed<2.2){  
+                                        m.AnimeSpeed(0);
                                         Units.MJ(u.player.player,'e008','A02J',0,dash.X,dash.Y,dash.Angle,1,0.75,2, "birth","az_dg01.mdl");
                                     }
-                                };
-                                dash.onEnd=function(Dash dash){
-                                    Units u=Units.Get(dash.Unit); 
-                                    u.AnimeSpeed(0);
-                                };
+                                }; 
                             }else{
                                 data.i[0]-=1;
                             }
