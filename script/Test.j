@@ -21,10 +21,12 @@ library Test requires Util{
             }
         }
         if(SubString(e.ChatString,0,7)=="-ranged"){//特效距离
-            RangeDis[p.playerid]=SubString(e.ChatString,7,1);
+            RangeDis[p.playerid]=S2R(SubString(e.ChatString,7,1));
+            BJDebugMsg("特效距离已设为:"+R2S(RangeDis[p.playerid]));
         }
         if(SubString(e.ChatString,0,7)=="-ranger"){//特效角度
-            RangeR[p.playerid]=SubString(e.ChatString,7,1);
+            RangeR[p.playerid]=S2R(SubString(e.ChatString,7,1));
+            BJDebugMsg("特效范围已设为:"+R2S(RangeR[p.playerid]));
         }
         if(e.ChatString=="-range"){
             if(p.hero.unit!=null){//创建特效
