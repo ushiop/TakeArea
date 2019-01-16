@@ -75,8 +75,12 @@ library Util{
         //显示指定范围大小的特效，用来测试范围
         public static method Range(real x,real y,real dis){
             integer i;
+            Effect ef;
             for(0<=i<36){
-                DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\SpiritOfVengeanceMissile\\SpiritOfVengeanceMissile.mdl",x+dis*CosBJ(i*10),y+dis*SinBJ(i*10)) );
+                ef=Effect.To("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",x+dis*CosBJ(i*10),y+dis*SinBJ(i*10));
+                ef.AnimeSpeed(0);
+                ef.Size(0.5);
+                ef.Delay(2);
             }
         }
 
@@ -86,7 +90,7 @@ library Util{
             location d=Location(x,y);
             TerrainDeformationRippleBJ(time, true, d,startrange,endrange,deep,loops,dis );
             RemoveLocation(d);
+            d=null;
         }
- 
     }
 }
