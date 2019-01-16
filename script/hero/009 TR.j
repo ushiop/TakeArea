@@ -154,8 +154,10 @@ library TR requires Groups{
             data.r[4]=GameTime+0.5;//连击限制
             data.i[4]+=1;
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
-            Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
-            Dash.Start(m.unit,f,30,Dash.SUB,5,true,true);  
+            if(m.IsAbility('B00H')==false){ 
+                Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
+                Dash.Start(m.unit,f,30,Dash.SUB,5,true,true); 
+            } 
             mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
             mj.AnimeId(anime);
             mj.AnimeSpeed(2.5);
@@ -179,9 +181,11 @@ library TR requires Groups{
                 mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
                 mj.SetH(200); 
                 Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
-                Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false).onMove=function(Dash dash){
-                    IssueImmediateOrder(dash.Unit,"stop");
-                };        
+                if(m.IsAbility('B00H')==false){
+                    Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false).onMove=function(Dash dash){
+                        IssueImmediateOrder(dash.Unit,"stop");
+                    };      
+                } 
                 //Util.Duang(x,y,0.4,115,115,-520,0.02,50); 
                 Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl").SetH(150);
                 GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
