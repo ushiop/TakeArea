@@ -86,24 +86,26 @@ library TR requires Groups{
                             }
                         }  
                         
-                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,225,function GroupIsAliveNotAloc);     
-                        while(FirstOfGroup(tmp_group)!=null){
-                            mj=Units.Get(FirstOfGroup(tmp_group));
-                            GroupRemoveUnit(tmp_group,mj.unit);
-                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                if(IsUnitInGroup(mj.unit,data.g[0])==false){
-                                    GroupAddUnit(data.g[0],mj.unit);
-                                    u.Damage(mj.unit,Damage.Chaos,'A02J',u.Agi(true)*5.0);
-                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                                    ef=Effect.ToUnit("dg4.mdl",mj.unit, "chest");
-                                    ef.Size(2);
-                                    ef.Destroy();
-                                    Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,45,true,true);
-                                     
+                        if(dash.Speed>3){ 
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                    if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                        GroupAddUnit(data.g[0],mj.unit);
+                                        u.Damage(mj.unit,Damage.Chaos,'A02J',u.Agi(true)*5.0);
+                                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                        ef=Effect.ToUnit("dg4.mdl",mj.unit, "chest");
+                                        ef.Size(2);
+                                        ef.Destroy();
+                                        Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,45,true,true);
+                                        
+                                    }
                                 }
                             }
+                            GroupClear(tmp_group);  
                         }
-                        GroupClear(tmp_group);  
                     };
                     dash.onEnd=function(Dash dash){
                         Data data=Data(dash.Obj);
@@ -132,6 +134,8 @@ library TR requires Groups{
             Data data=Data(b.Obj);
             Units mj;
             Units tmp;
+            Units dgs=-1;
+            Dash dash;
             real f=Util.XY(u.unit,m.unit),x=u.X(),y=u.Y();
             real f1=GetRandomReal(0,360);
             integer anime,i;
@@ -181,8 +185,9 @@ library TR requires Groups{
                     Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
 
                     //Util.Duang(x,y,0.4,115,115,-520,0.02,50); 
-                    Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl").SetH(150);
-                    GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                    dgs=Units.MJ(u.player.player,'e008','A02J',0,x,y,GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl");
+                    dgs.SetH(150);
+                    GroupEnumUnitsInRange(tmp_group,m.X(),m.Y(),350,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,tmp.unit);
@@ -193,8 +198,16 @@ library TR requires Groups{
                     GroupClear(tmp_group);  
                 } 
                 if(m.IsAbility('B00H')==false){
-                    Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false).onMove=function(Dash dash){
+                    dash=Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false);
+                    dash.Obj=-1;
+                    if(dgs!=-1){
+                        dash.Obj=dgs;
+                    }
+                    dash.onMove=function(Dash dash){
                         IssueImmediateOrder(dash.Unit,"stop");
+                        if(dash.Obj!=-1){
+                            Units(dash.Obj).Position(dash.X,dash.Y,false);
+                        }
                     };      
                 } 
             } 
