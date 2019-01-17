@@ -158,7 +158,7 @@ library TR requires Groups{
             mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
             mj.AnimeId(anime);
             mj.AnimeSpeed(2.5);
-            mj.DelayAnimeSpeed(0,0.3); 
+            mj.DelayAnimeSpeed(0,0.3);  
             mj.DelayAlpha(255,0,0.9);  
             if(anime==5){//左边
                 Units.MJ(u.player.player,'e00D','A02J',0,x,y,f+180,5,1,1,"stand",XBM[GetRandomInt(0,1)]).SetH(100);
@@ -203,9 +203,10 @@ library TR requires Groups{
                 if(data.i[4]>2){ 
                     //连击数大于2次才会有尘土特效
                     //for(0<=i<3){
-                        mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180,2.5,2.25,1,"birth", "dust2.mdl");
+                        mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180,2.5,2.25,2,"birth", "dust2.mdl");
                         Dash.Start(mj.unit,mj.F(),800,Dash.SUB,GetRandomReal(50,75),true,false);
                         mj.SetF(mj.F()+180,true);
+                        mj.Alpha(155);
                     //}
                 }
             }
