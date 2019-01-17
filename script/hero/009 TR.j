@@ -740,7 +740,7 @@ library TR requires Groups{
 
         static method onInit(){
             XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore.mdl";
-            XBM[1]="tk knockin' on heaven's door by deckai_nomore.mdl";
+            XBM[1]="tk knockin' on heaven's door by deckai_blue_nomore.mdl";
             Spell.On(Spell.onSpell,'A02C',TR.Q);
             Spell.On(Spell.onSpell,'A02D',TR.W);
             Spell.On(Spell.onSpell,'A02F',TR.E);
