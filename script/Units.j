@@ -571,7 +571,7 @@ library Units requires Table,Players,Events,Util{
             ud.movespeed=GetUnitMoveSpeed(u);
             ud.createtime=GameTime;
             ud.animespeed=1;
-            ud.modelsize=1;
+            ud.modelsize=S2R(Util.GetUnitValue(ud.uid,"modelScale"));
             ud.color_red=255;
             ud.color_green=255;
             ud.color_blue=255;
