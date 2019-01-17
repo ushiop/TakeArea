@@ -698,11 +698,9 @@ library TR requires Groups{
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
-                    if(mj.aid=='A02F'&&mj.aidindex==115){ 
-                        BJDebugMsg("分身");
+                    if(mj.aid=='A02F'&&mj.aidindex==115){  
                         no1=GroupFind(u.unit,mj.X(),mj.Y(),300,true,false);
-                        if(no1!=null){ 
-                            BJDebugMsg("分身！");
+                        if(no1!=null){  
                             no1=null;
                             u.Position(mj.X(),mj.Y(),false);
                             mj.SetData(-1);
