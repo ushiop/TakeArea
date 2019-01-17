@@ -175,37 +175,38 @@ library TR requires Groups{
             Units.MJ(u.player.player,'e008','A02J',0,x,y,0,1,0.75,1.25, "stand","white-qiquan.mdl"); 
             if(b.Level==10){
                 data.r[4]+=0.4;
-                mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
-                mj.SetH(200); 
-                Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
+                if(data.i[4]>4){//转场时连击数大于4次才会击退周围单位/有特效
+                    mj=Units.MJ(u.player.player,'e009','A02J',0,x,y,f,2,2.5,2, "stand","wind.mdx");
+                    mj.SetH(200); 
+                    Dash.Start(mj.unit,f+180,450,Dash.SUB,60,true,false);   
+
+                    //Util.Duang(x,y,0.4,115,115,-520,0.02,50); 
+                    Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl").SetH(150);
+                    GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(IsUnitEnemy(tmp.unit,u.player.player)==true&&tmp.unit!=m.unit){   
+                            Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),300,Dash.SUB,25,true,false);  
+                        }
+                    }
+                    GroupClear(tmp_group);  
+                } 
                 if(m.IsAbility('B00H')==false){
                     Dash.Start(u.unit,f,150,Dash.NORMAL,25,true,false).onMove=function(Dash dash){
                         IssueImmediateOrder(dash.Unit,"stop");
                     };      
                 } 
-                //Util.Duang(x,y,0.4,115,115,-520,0.02,50); 
-                Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),GetRandomReal(0,360),2,1.5,1, "stand","blue-daoguang-new.mdl").SetH(150);
-                GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
-                while(FirstOfGroup(tmp_group)!=null){
-                    tmp=Units.Get(FirstOfGroup(tmp_group));
-                    GroupRemoveUnit(tmp_group,tmp.unit);
-                    if(IsUnitEnemy(tmp.unit,u.player.player)==true&&tmp.unit!=m.unit){   
-                        Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),300,Dash.SUB,25,true,false);  
-                    }
-                }
-                GroupClear(tmp_group);               
             } 
             if(b.Level<10){
                 //Util.Duang(m.X(),m.Y(),0.4,115,115,-160,0.02,50); 
-                for(0<=i<2){
-                    mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180+GetRandomReal(-45,45),2,1,1,"stand", ".mdl");
-                    Dash.Start(mj.unit,mj.F(),800,Dash.SUB,GetRandomReal(50,75),true,false).onMove=function(Dash dash){
-                        if(dash.Speed>5&&dash.Obj>=3){
-                            dash.Obj=0;
-                            Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
-                        }
-                        dash.Obj+=1;
-                    };
+                if(data.i[4]>2){ 
+                    //连击数大于2次才会有尘土特效
+                    //for(0<=i<3){
+                        mj=Units.MJ(u.player.player,'e008','A02J',0,m.X(),m.Y(),f+180,2.5,2.25,1,"birth", "dust2.mdl");
+                        Dash.Start(mj.unit,mj.F(),800,Dash.SUB,GetRandomReal(50,75),true,false);
+                        mj.SetF(mj.F()+180,true);
+                    //}
                 }
             }
             Units.MJ(u.player.player,'e008','A02J',0,x,y,f+30,1,1.15,2, "birth","az_dg01.mdl");
