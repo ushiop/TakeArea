@@ -642,6 +642,89 @@ library TR requires Groups{
         }
 
 
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no,no1;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);
+
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no==null){ 
+                    GroupEnumUnitsInRange(tmp_group,x,y,800,function GroupIsAliveAloc);   
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(mj.aid=='A02F'&&mj.aidindex==115){ 
+                            no1=GroupFind(u.unit,mj.X(),mj.Y(),300,true,false);
+                            if(no1!=null){ 
+                                no1=null;
+                                u.Position(mj.X(),mj.Y(),false);
+                                mj.SetData(-1);
+                                mj.aidindex=0;  
+                                break;
+                            }
+                        }
+                    }
+                    GroupClear(tmp_group);
+                }  
+
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);  
+                    IssueImmediateOrder( u.unit, "impale" );//四方斩！ 
+                }  
+
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);  
+                    IssueImmediateOrder( u.unit, "roar" );//刀光冲击!! 
+                }  
+
+                no=GroupFind(u.unit,x,y,150,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);  
+                    IssueImmediateOrder( u.unit, "berserk" );//寺塔巴斯托斯托里姆！!! 
+                }  
+  
+                IssueImmediateOrder( u.unit, "fanofknives" );//冲啊！！！
+                      
+            }else{
+                GroupEnumUnitsInRange(tmp_group,x,y,65535,function GroupIsAliveAloc);   
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(mj.aid=='A02F'&&mj.aidindex==115){ 
+                        BJDebugMsg("分身");
+                        no1=GroupFind(u.unit,mj.X(),mj.Y(),300,true,false);
+                        if(no1!=null){ 
+                            BJDebugMsg("分身！");
+                            no1=null;
+                            u.Position(mj.X(),mj.Y(),false);
+                            mj.SetData(-1);
+                            mj.aidindex=0;  
+                            break;
+                        }
+                    }
+                }
+                GroupClear(tmp_group);
+            }
+            target=null;
+            no=null;
+        }
+
+
+        //设置AI
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A02C')==true){
+                u.ai=TR.AI;
+            }
+        }
+
         static method onInit(){
             XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore.mdl";
             XBM[1]="tk knockin' on heaven's door by deckai_nomore.mdl";
@@ -653,6 +736,7 @@ library TR requires Groups{
             Events.On(Events.onUnitOrderToLocation,TR.W1);
             Damage.On(Damage.onUnitDamage,TR.W3);
             Events.On(Events.onUnitAttack,TR.R1);
+            Units.On(Units.onHeroSpawn,TR.Spawn);
         }
     }
 }
