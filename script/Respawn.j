@@ -110,13 +110,16 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                         if(m.player.randomhero>0){
                             m.player.randomhero=m.player.randomhero-5.0;
                         }
-                    } 
+                    }else{
+                        DisplayTextToForce(Teams.GetAllPlayers(),u.player.name+"死了...");   
+                    }
                     if(u.player.randomhero<100){
                         u.player.randomhero=u.player.randomhero+5.0;
                     }
                 }else{
                     DisplayTextToForce(Teams.GetAllPlayers(),u.player.name+"死在了野怪的手里...");    
                 }
+                Units.MJ(u.player.player,'e008','Aloc',0,u.X(),u.Y(),GetRandomReal(0,360),2,1,2, "stand","bloodex.mdl");
                 r.RespawnTime=Respawn.MaxRespawnTime;
                 r.RespawnSaveMoney= 200 + R2I((u.player.lifekill *300) *1.2);
                 r.RespawnSelect=0;
