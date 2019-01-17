@@ -165,9 +165,9 @@ library TR requires Groups{
             mj.DelayAnimeSpeed(0,0.3);  
             mj.DelayAlpha(255,0,0.9);  
             if(anime==5){//左边
-                Units.MJ(u.player.player,'e00D','A02J',0,x,y,f+180,5,1,1,"stand",XBM[GetRandomInt(0,1)]).SetH(100);
+                Units.MJ(u.player.player,'e00D','A02J',0,x,y,f+180,5,0.85,1,"stand",XBM[GetRandomInt(0,1)]).SetH(100);
             }else if(anime==3){//右边
-                Units.MJ(u.player.player,'e008','A02J',0,x,y,f,5,1,1,"stand",XBM[GetRandomInt(0,1)]);
+                Units.MJ(u.player.player,'e008','A02J',0,x,y,f,5,0.85,1,"stand",XBM[GetRandomInt(0,1)]);
             }else{//前方
                 Units.MJ(u.player.player,'e00B','A02J',0,x,y,f+90,5,1,0.5,"stand","tk knockin' on heaven's door by deckai_nomore.mdl");
             } 
@@ -739,8 +739,8 @@ library TR requires Groups{
         }
 
         static method onInit(){
-            XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore.mdl";
-            XBM[1]="tk knockin' on heaven's door by deckai_blue_nomore.mdl";
+            XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore_big1.5.mdl";
+            XBM[1]="tk knockin' on heaven's door by deckai_blue_nomore_big1.5.mdl";
             Spell.On(Spell.onSpell,'A02C',TR.Q);
             Spell.On(Spell.onSpell,'A02D',TR.W);
             Spell.On(Spell.onSpell,'A02F',TR.E);
