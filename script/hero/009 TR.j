@@ -666,7 +666,10 @@ library TR requires Groups{
             target=GroupFind(u.unit,x,y,1000,true,false);
             if(target!=null){
                 x1=GetUnitX(target);
-                y1=GetUnitY(target);
+                y1=GetUnitY(target); 
+
+                u.SetF(Util.XY(u.unit,target),true);
+                IssueImmediateOrder( u.unit, "fanofknives" );//冲啊！！！
 
                 no=GroupFind(u.unit,x,y,600,true,false);
                 if(no==null){ 
@@ -705,8 +708,7 @@ library TR requires Groups{
                     u.SetF(Util.XY(u.unit,no),true);  
                     IssueImmediateOrder( u.unit, "berserk" );//寺塔巴斯托斯托里姆！!! 
                 }  
-  
-                IssueImmediateOrder( u.unit, "fanofknives" );//冲啊！！！
+    
                       
             }else{
                 GroupEnumUnitsInRange(tmp_group,x,y,65535,function GroupIsAliveAloc);   
