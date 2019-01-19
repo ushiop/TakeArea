@@ -100,7 +100,7 @@ library KillUi requires Teams,Winner,BzAPI,Util{
             }
             KillBackgroundMaxHeight=KillBackgroundMaxHeight+0.01;
             return tmp;
-        }
+        } 
  
 
         //刷新最小化状态的杀敌指示器与战绩榜内的阵营数据,-1为初始化时使用
@@ -112,14 +112,14 @@ library KillUi requires Teams,Winner,BzAPI,Util{
         }
 
         static method Show(player p,string e){
-            if(e=="F2"){  
+            if(e=="F2"&&p==Players.localplayer){  
                     DzFrameShow(KillBackgroundMaxLine,true);
             } 
         }
 
         
         static method Hide(player p,string e){
-            if(e=="F2"){  
+            if(e=="F2"&&p==Players.localplayer){  
                     DzFrameShow(KillBackgroundMaxLine,false);
             } 
         } 
