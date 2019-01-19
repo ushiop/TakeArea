@@ -1,4 +1,4 @@
-library Test requires Util{
+library Test requires Util,japi{
     //测试类
     //提供各种测试命令及小工具
 
@@ -31,6 +31,17 @@ library Test requires Util{
         if(e.ChatString=="-range"){
             if(p.hero.unit!=null){//创建特效
                 Util.Range(p.hero.X()+RangeDis[p.playerid]*CosBJ(p.hero.F()),p.hero.Y()+RangeDis[p.playerid]*SinBJ(p.hero.F()),RangeR[p.playerid]);
+            }
+        }
+        if(e.ChatString=="955"){
+            BJDebugMsg(GetMapName()+"/"+GetPluginVersion());
+        }
+        if(e.ChatString=="966"){//打开掉线跟踪器
+            open_code_run_logs(true);
+        }
+        if(e.ChatString=="977"){//故意异步
+            if(p.player==Players.localplayer){
+                Units.Spawn(p.player,'H00A',0,0,0);
             }
         }
     }
