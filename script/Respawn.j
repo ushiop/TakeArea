@@ -37,6 +37,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Respawn r=ps.respawn; 
             integer r_i,r_lv,r_str,r_agi,r_int;
             integer r_it[];
+            BJDebugMsg(ps.playerids+"准备复活了！");
             ps.isdeath=false;  
             Respawn.Show(p,false); 
             if(r.RespawnSelect==1){
@@ -47,6 +48,8 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 money=r.RespawnSaveMoney*2; 
                 ps.nextherotype=-1;
             }                
+            
+            BJDebugMsg(ps.playerids+"正在复活了！");
             r_lv=GetUnitLevel(ps.hero.unit);
             r_str=ps.hero.Str(false);
             r_agi=ps.hero.Agi(false);
@@ -55,12 +58,16 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
             HeroRares.AddRandomHero(ps.hero.unit); 
+            
+            BJDebugMsg(ps.playerids+"正在投胎！");
             if(r.RespawnSelect==0)
             {
                 ps.hero=Units.Get(HeroRares.GetRandomHero(ps.player,ps.randomhero));   
             }else{
                 ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
             }
+            
+            BJDebugMsg(ps.playerids+"正在抽取新的英雄！");
             if(r_lv!=1){ 
                 SetHeroLevel(ps.hero.unit,r_lv,false);
             }
@@ -70,14 +77,20 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             for(0<=r_i<6){
                 UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
             }
+            
+            BJDebugMsg(ps.playerids+"正在继承前世记忆！！");
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
+            
+            BJDebugMsg(ps.playerids+"正在扣钱！！");
             ps.hero.Lock(p); 
             ps.hero.Select(p);
             ps.respawn=0; 
             KillUi.FlushPlayerData(ps.player);
             r.deallocate(); 
+            
+            BJDebugMsg(ps.playerids+"复活结束了！！");
         }
 
         //减少所有玩家的复活时间
