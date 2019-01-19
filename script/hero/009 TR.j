@@ -565,7 +565,7 @@ library TR requires Groups{
                     }
                 }  
             }
-            if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv15!=null){
+            if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv10!=null){
                 //四方斩残影
                 if(e.OrderTargetUnit==null){ 
                     GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,200,function GroupIsAliveAloc);  
