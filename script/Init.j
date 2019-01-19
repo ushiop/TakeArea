@@ -25,10 +25,10 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
             Players p=Players.Set(GetEnumPlayer());
             UnitShareVision(Origin_Ball,p.player, true );
             
-            /*测试时不随机英雄
+            //测试时不随机英雄
             u=HeroRares.GetRandomHero(p.player,p.randomhero);
-            */
-            u=Units.Spawn(p.player,'H00A',0,0,0);
+            
+            //u=Units.Spawn(p.player,'H00A',0,0,0);
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
@@ -46,13 +46,13 @@ library Init requires Teams,HeroRare,Winner,Players,Units{
             p.hero.Select(p.player);
         }); 
 
-
+/*
         //测试
         for(0<=i<=5){
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h009',-4464,-3641,0));
         }
-
+*/
         Cheat("exec-lua:init");
     }
 }
