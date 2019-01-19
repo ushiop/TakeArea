@@ -87,7 +87,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 Respawn r=Respawn(p.respawn);
                 if(r.RespawnTime>0){
                     r.RespawnTime=r.RespawnTime-1;
-                    //测试
+                    //测试 
                     BJDebugMsg(p.playerids+"死亡剩余:"+I2S(r.RespawnTime));
                     Respawn.Flush(p.player);
                 }else{
