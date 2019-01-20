@@ -1,4 +1,4 @@
-library Test requires Util,japi{
+library Test requires Util{
     //测试类
     //提供各种测试命令及小工具
 
@@ -33,7 +33,7 @@ library Test requires Util,japi{
                 Util.Range(p.hero.X()+RangeDis[p.playerid]*CosBJ(p.hero.F()),p.hero.Y()+RangeDis[p.playerid]*SinBJ(p.hero.F()),RangeR[p.playerid]);
             }
         }
-        if(e.ChatString=="955"){
+        /*if(e.ChatString=="955"){
             BJDebugMsg(GetMapName()+"/"+GetPluginVersion());
         }
         if(e.ChatString=="966"){//打开掉线跟踪器
@@ -43,7 +43,7 @@ library Test requires Util,japi{
             if(p.player==Players.localplayer){
                 Units.Spawn(p.player,'H00A',0,0,0);
             }
-        }
+        }*/
     }
 
     //ESC功能，满级，重置CD，开启共享，播放动画
