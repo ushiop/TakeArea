@@ -19,7 +19,6 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         private static string RespawnType[3];//复活类型的提示
         private static real MaxRespawnTime=5.0;//复活时间
         private static boolean RespawnShow=false;//是否显示面板
-        private static real RespawnShowTime=0.0;//上一次切换显示的时间
 
         public{
             real RespawnTime;
