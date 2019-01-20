@@ -65,7 +65,7 @@ library Test requires Util,japi{
     }
 
     function onInit(){
-        //Events.On(Events.onPlayerPressEsc,Esc);
-        //Events.On(Events.onPlayerChat,Chat);
+        Events.On(Events.onPlayerPressEsc,Esc);
+        Events.On(Events.onPlayerChat,Chat);
     }
 }
