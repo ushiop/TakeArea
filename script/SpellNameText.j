@@ -85,7 +85,7 @@ library SpellNameText requires TimerUtils{
         Units u=Units.Get(ua);
         Units mj;
  
-        if(aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'||aid=='A027'){
+        if(aid=='A02J'||aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'||aid=='A027'){
             if(aid=='A006'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_huangyanluo.mdx");
             }
@@ -109,6 +109,9 @@ library SpellNameText requires TimerUtils{
             }
             if(aid=='A027'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_mr_dayuluoxuanwan.mdx");
+            }
+            if(aid=='A02J'){
+                mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_tr_xingbao.mdx");            
             }
             mj.SetH(75);
             mj.DelayAnime(2,0.7);  
