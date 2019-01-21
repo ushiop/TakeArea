@@ -197,6 +197,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             mj=Units.MJ(u.player.player,'e008','A002',2,x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,2,1, "stand","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
             mj.SetH(120);      
             SetUnitPosition(mj.unit,mj.X(),mj.Y());
+            mj.AddAbility('A02O');
             dash=Dash.Start(mj.unit,f,1300,Dash.ADD,50,true,false);
             dash.Obj=u;             
             dash.NowDis=10;
