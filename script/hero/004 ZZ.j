@@ -14,6 +14,7 @@ library ZZ requires Groups{
                 mj=Units.MJ(u.player.player,'e008','A00S',0,x,y,e.Angle-30+(i*6.667),5,0.3,1, "birth","az_lxj_blue.mdx"); 
                 mj.SetH(100);
                 mj.Position(x,y,true);
+                mj.AddAbility('A02O');
                 dash=Dash.Start(mj.unit,mj.F(),1800,Dash.SUB,60,true,false);
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
