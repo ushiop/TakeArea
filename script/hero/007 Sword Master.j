@@ -253,11 +253,18 @@ library SwordMaster requires Groups{
             }
         }
 
+        static method Damage(DamageArgs e){
+            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A01E')==true&&e.TriggerUnit.IsAbility('B00J')==true){
+                HitFlys.Add(e.TriggerUnit.unit,15);              
+            }
+        }
+
         static method onInit(){
             Spell.On(Spell.onSpell,'A01E',SwordMaster.W); 
             Spell.On(Spell.onSpell,'A01D',SwordMaster.E);  
             Spell.On(Spell.onSpell,'A01F',SwordMaster.R);   
             Units.On(Units.onHeroSpawn,SwordMaster.Spawn);
+            Damage.On(Damage.onUnitDamage,SwordMaster.Damage);
         }
     }
 }
