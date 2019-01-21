@@ -9,6 +9,8 @@ library WindWalk requires Groups{
             Dash dash;
             Data data=Data.create('A00M');
             mj=Units.MJ(u.player.player,'e008','A00M',0,u.X()+50*CosBJ(e.Angle),u.Y()+50*SinBJ(e.Angle),e.Angle,4,1.5,1, "stand","wind2.mdx"); 
+            mj.AddAbility('A02O');
+            mj.Position(mj.X(),mj.Y(),true);
             mj.SetH(50);
             data.c[0]=u;
             data.c[1]=e;
@@ -116,6 +118,7 @@ library WindWalk requires Groups{
                     mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,6,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                     mj.SetH(70);
                     mj.Position(mj.X(),mj.Y(),true);
+                    mj.AddAbility('A02O');
                     dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
                     dash1.onMove=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
@@ -173,6 +176,7 @@ library WindWalk requires Groups{
                 mj=Units.MJ(u.player.player,'e008','A00K',0,u.X()+50*CosBJ(u.F()),u.Y()+50*SinBJ(u.F()),u.F()+(-15+(i*15)),3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                 mj.SetH(70);
                 mj.Position(mj.X(),mj.Y(),true);
+                mj.AddAbility('A02O');
                 dash=Dash.Start(mj.unit,mj.F(),900,Dash.SUB,40,true,false);
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
@@ -208,6 +212,7 @@ library WindWalk requires Groups{
                         mj=Units.MJ(u.player.player,'e008','A00K',0,u.X()+125*CosBJ(u.F()),u.Y()+125*SinBJ(u.F()),dash.Angle+180+(-30+(i*15)),3,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                         mj.SetH(70);
                         mj.Position(mj.X(),mj.Y(),true);
+                        mj.AddAbility('A02O');
                         dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,80,true,false);
                         dash1.onMove=function(Dash dash){
                             Units u=Units.Get(dash.Unit);
@@ -262,6 +267,7 @@ library WindWalk requires Groups{
                         if(GetRandomInt(0,1)==0){ 
                             mj=Units.MJ(u.player.player,'e008','A00J',0,u.X(),u.Y(),u.F(),10,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
                             mj.Position(u.X(),u.Y(),true); 
+                            mj.AddAbility('A02O');
                             mj.SetH(50);
                             dash1=Dash.Start(mj.unit,u.F(),900,Dash.ADD,50,true,false);
                             dash1.onMove=function(Dash dash){
