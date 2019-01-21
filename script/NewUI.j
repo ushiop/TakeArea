@@ -348,7 +348,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                         DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     }else{
                         if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1){
-                            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetRandomInt(1,50))+"|n攻击 "+I2S(GetRandomInt(1,999))+"~"+I2S(GetRandomInt(1,999))+"|n防御 "+I2S(GetRandomInt(1,999))+"|n力量 "+I2S(GetRandomInt(1,999))+"|n敏捷 "+I2S(GetRandomInt(1,999))+"|n智力 "+I2S(GetRandomInt(1,999))+"|n移速 "+I2S(GetRandomInt(1,999))+"|n攻速 "+I2S(GetRandomInt(1,999)));        
+                            DzFrameSetText(UnitInfoName,"等级 ???|n攻击 ???|n防御 ???|n力量 ???|n敏捷 ???|n智力 ???|n移速 ???|n攻速 ???");        
                         }else{
                             DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                         }
@@ -356,8 +356,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     hp=GetUnitLifePercent(UISelectUnit)/100;
                     mp=GetUnitManaPercent(UISelectUnit)/100;
                     if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1&&IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
-                        hp=GetRandomReal(0,1);
-                        mp=GetRandomReal(0,1);
+                        hp=1;
+                        mp=1;
                     }else{  
                         for(0<=i<6){ 
                             if(UnitItemInSlot(UISelectUnit,i) == null){
