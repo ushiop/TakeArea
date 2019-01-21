@@ -1,4 +1,4 @@
-library Init requires Teams,HeroRare,Winner,Players,Units,japi{
+library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
     
     //中央球、阵初始化、杂物初始化类
 
@@ -54,8 +54,8 @@ library Init requires Teams,HeroRare,Winner,Players,Units,japi{
         }
  
         //JAPI测试异步
-        BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
-        open_code_run_logs(true);
+        /*BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
+        open_code_run_logs(true);*/
 
         
         Cheat("exec-lua:init");
