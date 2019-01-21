@@ -105,7 +105,11 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                             if(numbers==0){
                                 Winner.NowTime=Winner.NowTime-(0.02*Teams.GetTeamNumberByIndex(Winner.Team));
                             }else{ 
-                                rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
+                                if(team_numbers[Winner.Team]==0){//中间区域内没有占领队伍的人员时
+                                    rtmp=(-0.02*Teams.GetTeamNumberByIndex(Winner.Team))-(0.01*numbers);
+                                }else{ 
+                                    rtmp=(0.02*team_numbers[Winner.Team])-(0.01*(numbers-team_numbers[Winner.Team]));
+                                }
                                 Winner.NowTime=Winner.NowTime+rtmp;
                             }
                             TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
