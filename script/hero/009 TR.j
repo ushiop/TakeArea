@@ -321,6 +321,7 @@ library TR requires Groups{
                         mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand","ls tong ren.mdl");
                         //mj.DelayAlpha(255,155,0.5);
                         mj.AnimeId(5);
+                        mj.AddAbility('A02P');
                         data.c[0]=mj;
                         dash=Dash.Start(mj.unit,f,600,Dash.PWX,50,true,false);
                         mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1,"stand", "tk knockin' on heaven's door by deckai_darkblue.mdl");
