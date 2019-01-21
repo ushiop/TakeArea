@@ -178,7 +178,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         //金币文字的背景图
         MoneyRightBackground=DzCreateFrameByTagName("BACKDROP", "NewUI_Money_Right",MoneyBackground, "ShowInfo", 0);
         DzFrameSetTexture( MoneyRightBackground, "UI_RightDownPanelLine.blp", 0 );
-        DzFrameSetSize( MoneyRightBackground, 0.05,0.015 );
+        DzFrameSetSize( MoneyRightBackground, 0.049,0.015 );
         DzFrameSetPoint( MoneyRightBackground,0,MoneyBackground,2,-0.001,0);  
         //金币文字
         MoneyText=DzCreateFrameByTagName("TEXT", "NewUI_Money_Text",MoneyRightBackground, "ShowInfo", 0);
