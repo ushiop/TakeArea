@@ -243,7 +243,6 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             for(0<=i<4){
                 for(0<=s<3){ 
                     DzFrameSetPoint( DzFrameGetCommandBarButton(s,i), 0, UnitInfoLine, 2, 0.001+(0.045*i),-0.2);
-                        
                 }
             } 
             if(IsUnitType(UISelectUnit,UNIT_TYPE_HERO)==true){
