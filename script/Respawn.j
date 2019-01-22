@@ -34,7 +34,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             integer hid=0,money=0;
             Players ps=Players.Get(p);
             Respawn r=ps.respawn; 
-            integer r_i,r_lv,r_str,r_agi,r_int;
+            integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int;
             integer r_it[];
             BJDebugMsg(ps.playerids+"准备复活了！");
             ps.isdeath=false;  
@@ -53,6 +53,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             r_str=ps.hero.Str(false);
             r_agi=ps.hero.Agi(false);
             r_int=ps.hero.Int(false);
+            ex_str=ps.hero.ExStr();
+            ex_agi=ps.hero.ExAgi();
+            ex_int=ps.hero.ExInt();
             for(0<=r_i<6){
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
@@ -73,6 +76,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             SetHeroAgi(ps.hero.unit,r_agi,true);
             SetHeroStr(ps.hero.unit,r_str,true);
             SetHeroInt(ps.hero.unit,r_int,true);
+            ps.hero.SetExStr(ex_str);
+            ps.hero.SetExAgi(ex_agi);
+            ps.hero.SetExInt(ex_int);
             for(0<=r_i<6){
                 UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
             }
