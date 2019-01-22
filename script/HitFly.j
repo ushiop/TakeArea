@@ -62,6 +62,7 @@ library HitFly requires Util{
                     tmp=HitFlys.allocate();
                     tmp.Unit=u;
                     tmp.UpPower=up;
+                    tmp.Down=false;
                     tmp.Obj=0;
                     tmp.onEnd=0;
                     tmp.onRemove=0;

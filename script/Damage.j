@@ -83,6 +83,8 @@ library Damage requires Table,Events{
                 }
                 if(dmg.DamageType!=Damage.Attack){ 
                     dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
+                }else{
+                    dmg.Spell=0;
                 }
                 dmg.isRange=e.RangeDamage; 
                 Damage.Trigger(Damage.onItemDamage,dmg);//进行物品效果结算

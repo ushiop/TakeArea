@@ -53,6 +53,7 @@ library SpellNameText requires TimerUtils{
         t.u=u;
         t.fullmsg=msg;
         t.time=time;
+        t.now=0;
         t.max=StringLength(msg);
         t.steep=steep;
         t.angle=angle;
