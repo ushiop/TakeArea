@@ -33,6 +33,9 @@ library Units requires Table,Players,Events,Util{
             integer color_alpha;//透明度
             real modelsize;//模型缩放
             real dashspeedscale;//冲锋速度系数,仅用于Dash类的速度计算,默认为1,单位是百分比
+            integer ex_str;//额外力量
+            integer ex_agi;//额外敏捷
+            integer ex_int;//额外智力
 
             //返回单位的自定义值
             method Data()->integer{
@@ -180,20 +183,63 @@ library Units requires Table,Players,Events,Util{
                 return IsUnitAliveBJ(this.unit);
             }
 
+            //返回额外力量
+            method ExStr()->integer{
+                return this.ex_str;
+            }
+
+            //返回额外敏捷
+            method ExAgi()->integer{
+                return this.ex_agi;
+            }
+
+            //返回额外智力
+            method ExInt()->integer{
+                return this.ex_int;
+            }
+
+            //设置额外力量
+            method SetExStr(integer s){
+                this.ex_str+=s;
+                ModifyHeroStat( bj_HEROSTAT_STR,this.unit, bj_MODIFYMETHOD_ADD, s );
+            }
+            //设置额外敏捷
+            method SetExAgi(integer s){ 
+                this.ex_agi+=s;
+                ModifyHeroStat( bj_HEROSTAT_AGI,this.unit, bj_MODIFYMETHOD_ADD, s );
+            }            
+            //设置额外智力
+            method SetExInt(integer s){
+                this.ex_int+=s;
+                ModifyHeroStat( bj_HEROSTAT_INT,this.unit, bj_MODIFYMETHOD_ADD, s );
+            }
+
             //返回英雄力量
-            //true为包含绿字
+            //true为包含额外属性
             method Str(boolean f)->integer{
+                if(f==true){ 
                     return GetHeroStr(this.player.hero.unit,f);
+                }else{
+                    return GetHeroStr(this.player.hero.unit,true) - this.player.hero.ExStr();
+                }
             }
 
             //返回英雄敏捷
             method Agi(boolean f)->integer{
-                return GetHeroAgi(this.player.hero.unit,f);
+                if(f==true){ 
+                    return GetHeroAgi(this.player.hero.unit,f);
+                }else{ 
+                    return GetHeroAgi(this.player.hero.unit,true) - this.player.hero.ExAgi();
+                }
             }
 
             //返回英雄智力
             method Int(boolean f)->integer{
-                return GetHeroInt(this.player.hero.unit,f);
+                if(f==true){ 
+                    return GetHeroInt(this.player.hero.unit,f);
+                }else{ 
+                    return GetHeroInt(this.player.hero.unit,true) - this.player.hero.ExInt();
+                }
             }
 
             //隐藏或者显示单位
