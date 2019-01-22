@@ -84,6 +84,9 @@ library BuyStrAgiInt{
                 DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Items\\AIim\\AIimTarget.mdl",p.hero.X(),p.hero.Y()) );
                 DisplayTextToPlayer(p.player,0,0,"属性购买完成~！你现在的智力是"+I2S(p.hero.Int(true))+"(|cff00FF00"+I2S(p.hero.ExInt())+"|r/"+I2S(p.hero.Int(false))+")");   
             }
+            if(id=='I00N'){
+                DisplayTextToPlayer(p.player,0,0,"你的属性目前为 力量("+I2S(p.hero.Str(true))+"[|cff00FF00"+I2S(p.hero.ExStr())+"|r/"+I2S(p.hero.Str(false))+"]) 敏捷("+I2S(p.hero.Agi(true))+"[|cff00FF00"+I2S(p.hero.ExAgi())+"|r/"+I2S(p.hero.Agi(false))+"]) 智力("+I2S(p.hero.Int(true))+"[|cff00FF00"+I2S(p.hero.ExInt())+"|r/"+I2S(p.hero.Int(false))+")");   
+            }
         }
     }
 
