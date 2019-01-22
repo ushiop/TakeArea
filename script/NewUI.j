@@ -87,7 +87,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         //单位信息面板低图
         UnitInfoBackground=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Background",GameUI, "ShowInfo", 0);
         DzFrameSetSize( UnitInfoBackground, 0.4, 0.125 );
-        DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.03, -0.245);  
+        DzFrameSetPoint( UnitInfoBackground,4,GameUI,4, -0.025, -0.245);  
         DzFrameSetTexture( UnitInfoBackground, "nothing.blp", 0 );
         //单位信息面板上边框
         UnitInfoTopBorder=DzCreateFrameByTagName("BACKDROP", "NewUI_UnitInfo_Top_Border",UnitInfoBackground, "ShowInfo", 0);
@@ -237,7 +237,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             UISelectUnit=e.TriggerUnit;   
             DzFrameSetTexture( UnitInfoTX, Util.GetUnitValue(GetUnitTypeId(UISelectUnit),"Art"), 0 ); 
             DzFrameShow(UnitInfoBarBackground,true); 
-            DzFrameSetPoint( UnitInfoBackground,4,GameUI,4,-0.02, -0.245);  
+            DzFrameSetPoint( UnitInfoBackground,4,GameUI,4,-0.019, -0.245);  
             DzFrameShow(UnitInfoBackground,true);  
             BuffUI.BackgroundShow(true);                
             for(0<=i<4){
