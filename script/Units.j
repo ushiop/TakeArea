@@ -200,7 +200,7 @@ library Units requires Table,Players,Events,Util{
 
             //设置额外力量
             method SetExStr(integer s){
-                this.ex_str+=s;
+                this.ex_str+=s; 
                 ModifyHeroStat( bj_HEROSTAT_STR,this.unit, bj_MODIFYMETHOD_ADD, s );
             }
             //设置额外敏捷
@@ -609,6 +609,8 @@ library Units requires Table,Players,Events,Util{
             ud.uid=GetUnitTypeId(u);
             ud.unit=u;
             ud.spell=0;
+            ud.aid=0;
+            ud.aidindex=0;
             ud.ai=0;
             ud.move=true;
             ud.Obj=0;
@@ -623,6 +625,9 @@ library Units requires Table,Players,Events,Util{
             ud.color_blue=255;
             ud.color_alpha=255;
             ud.dashspeedscale=1;
+            ud.ex_str=0;
+            ud.ex_agi=0;
+            ud.ex_int=0;
             Units.ht[u]=ud; 
             return ud;
         }
