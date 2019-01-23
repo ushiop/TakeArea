@@ -50,3 +50,4 @@
 //! import zinc "map/script/hero/007 Sword Master.j"
 //! import zinc "map/script/hero/008 MR.j"
 //! import zinc "map/script/hero/009 TR.j"
+//! import zinc "map/script/hero/010 ASN.j"
