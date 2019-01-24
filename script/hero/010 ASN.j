@@ -36,34 +36,81 @@ library ASN requires Groups{
             Units u=Units.Get(e.Spell);
             Dash dash;
             Data data=Data.create('A02R');
-            real x=u.X(),y=u.Y(),f=e.Angle;
+            real x=u.X(),y=u.Y(),f=e.Angle; 
+            Units mj=Units.MJ(u.player.player,'e008','A02R',0,x+100*CosBJ(f),y+100*SinBJ(f),f,1,0.9,4,"birth", "dg1.mdl");//akiha claw.mdl
+            mj.SetH(100); 
+            data.c[2]=mj;
             Units.MJ(u.player.player,'e008','A02R',0,x,y,f,1,1,1.25,"stand", "dust2_white.mdl");
             Util.Duang(x,y,0.4,100,100,-115,0.02,50);
             u.Pause(true);
             u.AnimeId(12);
+            u.SetF(e.Angle,true);
+            mj=Units.MJ(u.player.player,'e008','A02R',0,x,y,GetRandomReal(0,360),3,3,5,"stand", "arcdirve02b1.mdl");
+            mj.SetH(75);     
             data.c[0]=u;
             data.c[1]=e;
-            data.i[0]=0;
+            data.c[3]=mj; 
+            data.g[0]=CreateGroup();
+            data.r[0]=0;
             dash=Dash.Start(u.unit,f,300,Dash.SUB,100,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]); 
-                real x=dash.X,y=dash.Y,dis=GetRandomReal(0,100),f=dash.Angle+180+GetRandomReal(45,-45);
-                if((dash.NowDis>130&&dash.NowDis<145)||(dash.NowDis>160&&dash.NowDis<175)||(dash.NowDis>225&&dash.NowDis<230)){
-                    Units.MJ(u.player.player,'e008','A02R',0,x+dis*CosBJ(f),y+dis*SinBJ(f),f,0.6,1,2,"birth", "az_lxj_blue.mdl").SetH(75);
-                }
-                if(dash.NowDis>250){
-                    if(data.i[0]==0){  
-                        data.i[0]=1;
-                        Units.MJ(u.player.player,'e008','A02R',0,dash.X,dash.Y,GetRandomReal(0,360),1,3,5,"stand", "arcdirve02b1.mdl").SetH(75);
-                    }
+                Units u=Units(data.c[0]);
+                Units mj; 
+                real x=dash.X,y=dash.Y,dis=50,f=dash.Angle+180;
+                if(dash.NowDis>130&&dash.NowDis<145){ 
+                    mj=Units.MJ(u.player.player,'e008','A02R',0,x+dis*CosBJ(f),y+dis*SinBJ(f),f,1.5,2,0.75,"birth", "az_lxj_blue_ex.mdl");
+                    mj.SetH(75);
+                    Dash.Start(mj.unit,dash.Angle,250,Dash.SUB,100,true,false);
+                } 
+                Units(data.c[2]).Position(dash.X,dash.Y,false);
+                Units(data.c[3]).Position(dash.X,dash.Y,false);
+                Units(data.c[3]).SetF(Units(data.c[3]).F()+3,true);
+                if(dash.Speed>5){ 
+                    if(data.r[0]<=0){
+                        data.r[0]=0.05; 
+                        //剑尖
+                        GroupEnumUnitsInRange(tmp_group,dash.X+125*CosBJ(dash.Angle),dash.Y+125*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                    GroupAddUnit(data.g[0],mj.unit); 
+                                    u.Damage(mj.unit,Damage.Physics,'A02R',u.Agi(true)*5);
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                    Dash.Start(mj.unit,dash.Angle,200,Dash.SUB,75,true,true);
+                                }
+                            }
+                        }
+                        GroupClear(tmp_group);  
+                        //身体周围
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                    GroupAddUnit(data.g[0],mj.unit); 
+                                    u.Damage(mj.unit,Damage.Physics,'A02R',u.Agi(true)*5);
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                    Dash.Start(mj.unit,dash.Angle,300,Dash.SUB,75,true,true);
+                                }
+                            }
+                        }
+                        GroupClear(tmp_group);  
+                    }else{
+                        data.r[0]-=0.01;
+                    }  
                 }
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 u.Pause(false);
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };
