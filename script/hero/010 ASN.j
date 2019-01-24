@@ -32,6 +32,157 @@ library ASN requires Groups{
             }
         }
 
+        //受到伤害
+        static method Damage(DamageArgs e){
+            Buffs b;
+            real f;
+            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('B00K')==true&&e.DamageUnit.IsAbility('B00L')==true){
+                //普攻触发剑光冲击
+                f=Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit);
+                b=Buffs.Find(e.DamageUnit.unit,'B00K'); 
+                ASN.W2(e.DamageUnit.unit,e.TriggerUnit.unit,f,2);
+                b.Level-=1;
+                if(b.Level<=0){
+                    b.Stop();
+                }  
+            }
+        }
+
+        //剑光冲击状态开始普攻
+        static method W3(EventArgs e){ 
+            Units u=Units.Get(e.AttackUnit); 
+            if(u.IsAbility('B00K')==true){
+                u.Alpha(0);
+                Buffs.Add(u.unit,'A02T','B00L',0.2,false).onEnd=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    u.DelayAlpha(0,255,0.6);
+                    BJDebugMsg("结束了");
+                };
+            } 
+        }
+
+        //发动剑光冲击
+        //stype==1 命令触发 ==2 普攻触发
+        static method W2(unit ua,unit target,real f,integer stype){
+            Units u=Units.Get(ua);
+            Data data=Data.create('A02S');
+            Units mj;
+            Dash dash;
+            real x=u.X(),y=u.Y(),a;
+            data.c[0]=u;
+            if(stype==1){ //命令触发 
+                //u.Position(x+300*CosBJ(f),y+300*SinBJ(f),false);
+                u.SetF(f,true); 
+                u.DelayAlpha(0,255,0.5);
+                mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,3,0.25,1,"stand", "bule-dark-salsh_red.mdl");//akiha claw.mdl
+                mj.SetH(100);
+                data.c[1]=mj;
+                mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,2,2,1,"birth", "az_lxj_blue_ex.mdl");//akiha claw.mdl
+                mj.SetH(100);
+                data.c[2]=mj;
+                mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,10,u.modelsize,1,"stand", "Asuna.mdl");//akiha claw.mdl
+                mj.AnimeId(12);
+                data.c[3]=mj; 
+                Units.MJ(u.player.player,'e009','A02S',0,x,y,f,2,0.85,1.75,"stand", "rasengan_eff4.mdl").SetH(75);//akiha claw.mdl
+                Units.MJ(u.player.player,'e008','A02S',0,x,y,f,1,0.75,2,"stand", "dust2_white.mdl");
+                dash=Dash.Start(mj.unit,f,400,Dash.SUB,150,true,false);
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    //Units(data.c[1]).Position(dash.X,dash.Y,false);
+                    Units(data.c[2]).Position(dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),false);
+                    if(dash.Speed<6){
+                        dash.Stop();
+                    }
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj); 
+                    Units mj=Units(data.c[3]);
+                    Units(data.c[0]).Position(dash.X,dash.Y,false); 
+                    mj.Life(0.5);
+                    mj.DelayAlpha(255,0,0.4);
+                    data.Destroy();
+                };
+            }else{//攻击触发
+                a=GetRandomReal(-60,60);
+                u.Position(u.X()+100*CosBJ(f+a),u.Y()+100*SinBJ(f+a),false);
+                u.SetF(Util.XY(u.unit,target),true);
+                mj=Units.MJ(u.player.player,'e009','A02S',0,x,y,f,1,1.15,0.65,"birth", "az_lxj_blue_ex.mdl");//akiha claw.mdl
+                mj.SetH(100);
+                data.c[1]=mj;
+                mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,10,u.modelsize,1,"stand", "Asuna.mdl");//akiha claw.mdl
+                mj.AnimeId(12);
+                data.c[2]=mj; 
+                Units.MJ(u.player.player,'e008','A02S',0,x,y,f,3,0.15,1,"stand", "bule-dark-salsh_red.mdl").SetH(100);
+                //Units.MJ(u.player.player,'e009','A02S',0,x,y,f,1,1,1,"stand", "by_wood_gongchengsipai_2.mdl").SetH(75);//akiha claw.mdl
+                dash=Dash.Start(mj.unit,f,250,Dash.SUB,50,true,false);
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units(data.c[1]).Position(dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),false);
+ 
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj); 
+                    Units mj=Units(data.c[2]);
+                    mj.Life(0.5);
+                    mj.DelayAlpha(255,0,0.4);
+                    data.Destroy();
+                };                
+                
+            }
+        }
+
+        //命令触发剑光冲击
+        static method W1(EventArgs e){ 
+            Units u=Units.Get(e.TriggerUnit);
+            real f;
+            Buffs b;  
+            if(u.IsAbility('B00K')==true){//剑光冲击
+                if(e.OrderId==851983){
+                    if(e.OrderTargetUnit==null){ 
+                        f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
+                    }else{
+                        f=Util.XY(u.unit,e.OrderTargetUnit);
+                    }
+                    b=Buffs.Find(u.unit,'B00K'); 
+                    ASN.W2(u.unit,null,f,1);
+                    b.Level-=1;
+                    if(b.Level<=0){
+                        b.Stop();
+                    }  
+                }  
+            } 
+        }
+
+        //发动剑光冲击
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Buffs b; 
+            Data data;
+            u.Pause(true);
+            u.Pause(false);
+            if(u.IsAbility('B00K')==true){
+                Buffs.Add(u.unit,'A02U','B00K',7,false).Level=8;
+                e.Destroy();
+            }else{
+                data=Data.create('A02S');
+                data.c[0]=e;
+                data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.4; //0.4 
+                SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) - data.r[0] );
+                b=Buffs.Add(u.unit,'A02U','B00K',7,false);
+                b.Level=8;
+                b.Obj=data;
+                b.onEnd=function(Buffs b){
+                    Data data=Data(b.Obj);
+                    Units u=Units.Get(b.Unit);
+                    SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) + data.r[0] );
+                    Spell(data.c[0]).Destroy();
+                    data.Destroy();
+                };
+            }
+        }
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
@@ -124,8 +275,13 @@ library ASN requires Groups{
 
         static method onInit(){ 
             Spell.On(Spell.onSpell,'A02R',ASN.Q);
+            Spell.On(Spell.onSpell,'A02S',ASN.W);
             Spell.On(Spell.onReady,'A02R',ASN.HERO_START);
             Units.On(Units.onHeroSpawn,ASN.Spawn);
+            Events.On(Events.onUnitOrderToUnit,ASN.W1);
+            Events.On(Events.onUnitOrderToLocation,ASN.W1); 
+            Events.On(Events.onUnitAttack,ASN.W3);
+            Damage.On(Damage.onUnitDamage,ASN.Damage);
         }
     }
 }
