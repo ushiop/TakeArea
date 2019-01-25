@@ -83,16 +83,35 @@ library ASN requires Groups{
                 mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,10,u.modelsize,1,"stand", "Asuna.mdl");//akiha claw.mdl
                 mj.AnimeId(12);
                 data.c[3]=mj; 
+                data.g[0]=CreateGroup();
                 Units.MJ(u.player.player,'e009','A02S',0,x,y,f,2,0.85,1.75,"stand", "rasengan_eff4.mdl").SetH(75);//akiha claw.mdl
                 Units.MJ(u.player.player,'e008','A02S',0,x,y,f,1,0.75,2,"stand", "dust2_white.mdl");
                 dash=Dash.Start(mj.unit,f,400,Dash.SUB,150,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    Units mj;
                     //Units(data.c[1]).Position(dash.X,dash.Y,false);
                     Units(data.c[2]).Position(dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),false);
                     if(dash.Speed<6){
                         dash.Stop();
+                    }else{
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                if(IsUnitInGroup(mj.unit,data.g[0])==false){
+                                    GroupAddUnit(data.g[0],mj.unit);
+                                    u.Damage(mj.unit,Damage.Physics,'A02S',u.Agi(true)*1.4);
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                    Dash.Start(mj.unit,dash.Angle,100,Dash.SUB,25,true,true); 
+                                }
+
+                            }
+                        }
+                        GroupClear(tmp_group);   
                     }
                 };
                 dash.onEnd=function(Dash dash){
@@ -101,26 +120,29 @@ library ASN requires Groups{
                     Units(data.c[0]).Position(dash.X,dash.Y,false); 
                     mj.Life(0.5);
                     mj.DelayAlpha(255,0,0.4);
+                    DestroyGroup(data.g[0]);
+                    data.g[0]=null;
                     data.Destroy();
                 };
             }else{//攻击触发
                 a=GetRandomReal(-60,60);
                 u.Position(u.X()+100*CosBJ(f+a),u.Y()+100*SinBJ(f+a),false);
                 u.SetF(Util.XY(u.unit,target),true);
+                Dash.Start(target,u.F(),75,Dash.SUB,5,true,false); 
                 mj=Units.MJ(u.player.player,'e009','A02S',0,x,y,f,1,1.15,0.65,"birth", "az_lxj_blue_ex.mdl");//akiha claw.mdl
                 mj.SetH(100);
                 data.c[1]=mj;
                 mj=Units.MJ(u.player.player,'e008','A02S',0,x,y,f,10,u.modelsize,1,"stand", "Asuna.mdl");//akiha claw.mdl
                 mj.AnimeId(12);
-                data.c[2]=mj; 
+                data.c[2]=mj;   
                 Units.MJ(u.player.player,'e008','A02S',0,x,y,f,3,0.15,1,"stand", "bule-dark-salsh_red.mdl").SetH(100);
                 //Units.MJ(u.player.player,'e009','A02S',0,x,y,f,1,1,1,"stand", "by_wood_gongchengsipai_2.mdl").SetH(75);//akiha claw.mdl
+                
                 dash=Dash.Start(mj.unit,f,250,Dash.SUB,50,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
                     Units(data.c[1]).Position(dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),false);
- 
                 };
                 dash.onEnd=function(Dash dash){
                     Data data=Data(dash.Obj); 
@@ -128,8 +150,18 @@ library ASN requires Groups{
                     mj.Life(0.5);
                     mj.DelayAlpha(255,0,0.4);
                     data.Destroy();
-                };                
-                
+                };       
+                Units.MJ(u.player.player,'e008','A02S',0,GetUnitX(target),GetUnitY(target),f,1,1.5,1.5,"death", "by_wood_gongchengsipai_3.mdl").SetH(100);//akiha claw.mdl
+                GroupEnumUnitsInRange(tmp_group,GetUnitX(target),GetUnitY(target),150,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                        u.Damage(mj.unit,Damage.Physics,'A02S',u.Agi(true)*1.4);
+                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                    }
+                }
+                GroupClear(tmp_group);
             }
         }
 
@@ -146,11 +178,13 @@ library ASN requires Groups{
                         f=Util.XY(u.unit,e.OrderTargetUnit);
                     }
                     b=Buffs.Find(u.unit,'B00K'); 
-                    ASN.W2(u.unit,null,f,1);
-                    b.Level-=1;
-                    if(b.Level<=0){
-                        b.Stop();
-                    }  
+                    if(b.NowTime<6.990){ 
+                        ASN.W2(u.unit,null,f,1);
+                        b.Level-=1;
+                        if(b.Level<=0){
+                            b.Stop();
+                        }  
+                    }
                 }  
             } 
         }
