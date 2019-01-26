@@ -47,8 +47,29 @@ library ASN requires Groups{
                 }  
             }
             if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
+                //E的普攻减CD
                 e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
                 e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
+            }
+            if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
+                //E的移速BUFF
+                b=Buffs.Add(e.DamageUnit.unit,'A02W','B00M',5,false);
+                b.onFlush=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    b.Level+=1; 
+                    u.SetMoveSpeed(10);
+                };
+                b.onEnd=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    u.SetMoveSpeed(-(b.Level*10));
+                };
+                if(b.Level==1){
+                    e.DamageUnit.SetMoveSpeed(10);
+                }
+                if(e.DamageUnit.movespeed>522.0){
+                    //大于522的移速转化为伤害
+                    e.Damage+=e.Damage*((e.DamageUnit.movespeed-522.0)*0.001); 
+                }
             }
         }
 
@@ -241,6 +262,13 @@ library ASN requires Groups{
             data.c[3]=mj; 
             data.g[0]=CreateGroup();
             data.r[0]=0;
+            data.i[0]=Damage.Physics;
+            if(e.State!=Spell.SpellState){
+                data.i[0]=Damage.Chaos; 
+                mj=Units.MJ(u.player.player,'e009','A02R',0,x,y,f,2,1.5,2, "stand","wind.mdx");
+                mj.SetH(100); 
+                Dash.Start(mj.unit,f,250,Dash.SUB,60,true,false);
+            }
             dash=Dash.Start(u.unit,f,300,Dash.SUB,100,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
@@ -282,7 +310,7 @@ library ASN requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 if(IsUnitInGroup(mj.unit,data.g[0])==false){
                                     GroupAddUnit(data.g[0],mj.unit); 
-                                    u.Damage(mj.unit,Damage.Physics,'A02R',u.Agi(true)*5);
+                                    u.Damage(mj.unit,data.i[0],'A02R',u.Agi(true)*5);
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                     Dash.Start(mj.unit,dash.Angle,300,Dash.SUB,75,true,true);
                                 }
@@ -292,6 +320,11 @@ library ASN requires Groups{
                     }else{
                         data.r[0]-=0.01;
                     }  
+                }else{
+                    if(Spell(data.c[1]).State!=Spell.SpellState){
+                        dash.Stop(); 
+                        Dash.Start(u.unit,dash.Angle,200,Dash.SUB,20,true,false); 
+                    }
                 }
             };
             dash.onEnd=function(Dash dash){
@@ -307,8 +340,15 @@ library ASN requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            u.FlushAnimeId(14);
-            e.Destroy();
+            if(u.MoveSpeed()>=500){ 
+                SpellNameText(u.unit,"! 闪光穿刺 !",3,10);
+                u.SetAbilityCD('A02R',5);
+                u.SetMP(u.MP()-50);
+                ASN.Q(e);
+            }else{ 
+                u.FlushAnimeId(14);
+                e.Destroy();
+            }
         }
 
         static method onInit(){ 
