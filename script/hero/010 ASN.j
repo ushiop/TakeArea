@@ -46,6 +46,10 @@ library ASN requires Groups{
                     b.Stop();
                 }  
             }
+            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
+                e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
+                e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
+            }
         }
 
         //剑光冲击状态开始普攻
