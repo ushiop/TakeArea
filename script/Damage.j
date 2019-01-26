@@ -89,8 +89,10 @@ library Damage requires Table,Events{
                 dmg.isRange=e.RangeDamage; 
                 Damage.Trigger(Damage.onItemDamage,dmg);//进行物品效果结算
                 Damage.Trigger(Damage.onUnitDamage,dmg); //进行单位技能效果结算
+                //测试 BJDebugMsg("伤害:"+R2S(e.Damage));
                 if(dmg.Damage!=e.Damage){//如果结算伤害不等于原伤害，则用JAPI进行设置 
-                    YDWESetEventDamage(dmg.Damage);//设置本次伤害为进行结算后的伤害 
+                    YDWESetEventDamage(dmg.Damage);//设置本次伤害为进行结算后的伤害  
+                    //测试 BJDebugMsg("最终伤害:"+R2S(dmg.Damage));
                 }
                 dmg.Destroy(); 
             } 
