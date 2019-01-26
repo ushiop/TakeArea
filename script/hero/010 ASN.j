@@ -4,7 +4,7 @@ library ASN requires Groups{
     //12 13 -戳  14-前摇
     struct ASN{
 
-        static method R(Spell e){
+        /*static method R(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A02X');
             Dash dash;
@@ -68,7 +68,7 @@ library ASN requires Groups{
                     data.Destroy();
                 };
             };
-        }
+        }*/
 
         static method Spawn(Units u,Units m){
             timer t;
@@ -417,8 +417,7 @@ library ASN requires Groups{
             }
         }
 
-        static method onInit(){ 
-            Spell.On(Spell.onSpell,'A02X',ASN.R);
+        static method onInit(){  
             Spell.On(Spell.onSpell,'A02R',ASN.Q);
             Spell.On(Spell.onSpell,'A02S',ASN.W);
             Spell.On(Spell.onReady,'A02R',ASN.HERO_START);
