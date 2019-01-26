@@ -4,6 +4,72 @@ library ASN requires Groups{
     //12 13 -戳  14-前摇
     struct ASN{
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A02X');
+            Dash dash;
+            real x=u.X(),y=u.Y(),f=u.F();
+            Units mj;
+            u.Pause(true);
+            u.SetF(u.F(),true);
+            u.AnimeId(12);
+            data.c[0]=u;
+            data.c[1]=e;
+            mj=Units.MJ(u.player.player,'e008','A02X',0,x,y,f,2,2.5,0.5,"birth", "az_lxj_blue_ex.mdl");//akiha claw.mdl
+            mj.SetH(100);
+            data.c[2]=mj;
+            Effect.ToUnit("az-blue-lizi-shangsheng.mdl",u.unit,"weapon").Destroy();
+            Units.MJ(u.player.player,'e008','A02X',0,x+250*CosBJ(f),y+250*SinBJ(f),f,5,1.25,1,"stand", "cf2.mdl"); 
+            Units.MJ(u.player.player,'e008','A02X',0,x+600*CosBJ(f),y+600*SinBJ(f),f,2,3.5,2,"stand", "akiha claw.mdl");
+            Units.MJ(u.player.player,'e009','A02X',0,x+300*CosBJ(f),y+300*SinBJ(f),f,5,1.5,1,"stand", "white-qiquan-new.mdl");
+            Units.MJ(u.player.player,'e008','A02X',0,x+400*CosBJ(f),y+400*SinBJ(f),f,0.334,1.5,1,"stand", "dash.mdl");//akiha claw.mdl
+            mj=Units.MJ(u.player.player,'e008','A02X',0,x,y,f,10,u.modelsize,1,"stand", "Asuna.mdl");//akiha claw.mdl
+            mj.AnimeId(14);
+            mj.DelayAlpha(0,255,0.3); 
+            Units.MJ(u.player.player,'e008','A02X',0,x,y,f,5,1.25,1.15,"stand", "az-blue-lizi-shangsheng.mdl");
+            data.c[3]=mj;
+            dash=Dash.Start(u.unit,f,1500,Dash.PWX,200,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units(data.c[2]).Position(dash.X,dash.Y,false);
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Dash dash1;
+                Units mj=Units(data.c[3]);
+                Units(data.c[0]).Pause(false);
+                Spell(data.c[1]).Destroy(); 
+                mj.AnimeId(4);
+                data.i[0]=0;
+                Util.Duang(mj.X(),mj.Y(),0.4,150,150,-286,0.02,50);
+                Units.MJ(mj.player.player,'e008','A02S',0,mj.X(),mj.Y(),dash.Angle,3,1,1,"stand", "bule-dark-salsh_red.mdl").SetH(100);
+                dash1=Dash.Start(mj.unit,Util.XY(mj.unit,mj.player.hero.unit),Util.XY2(mj.unit,mj.player.hero.unit),Dash.NORMAL,100,true,false);
+                dash1.Obj=data;
+                dash1.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    if(data.i[0]==0){
+                        data.i[0]=2;
+                        Units.MJ(u.player.player,'e008','A02X',0,dash.X,dash.Y,90+GetRandomReal(-15,15),2,1,1,"stand", "akiha claw.mdl").SetH(100);
+                        //Units.MJ(u.player.player,'e008','A02X',0,dash.X,dash.Y,dash.Angle,2,0.75,1,"stand", "dust2.mdl");
+                        Units.MJ(u.player.player,'e008','A02S',0,dash.X,dash.Y,GetRandomReal(0,360),2,2.5,1,"death", "by_wood_gongchengsipai_3.mdl").SetH(100);//akiha claw.mdl
+                    }else{
+                        data.i[0]-=1;
+                    }
+                    Units.Get(dash.Unit).Alpha(150+R2I(105*(dash.Speed/150.0)));
+                     
+                };
+                dash1.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units mj=Units(data.c[3]);
+                    mj.Life(0.5);
+                    mj.DelayAlpha(mj.color_alpha,0,0.4);
+                    data.Destroy();
+                };
+            };
+        }
+
         static method Spawn(Units u,Units m){
             timer t;
             if(u.IsAbility('A02R')==true){
@@ -352,6 +418,7 @@ library ASN requires Groups{
         }
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A02X',ASN.R);
             Spell.On(Spell.onSpell,'A02R',ASN.Q);
             Spell.On(Spell.onSpell,'A02S',ASN.W);
             Spell.On(Spell.onReady,'A02R',ASN.HERO_START);
