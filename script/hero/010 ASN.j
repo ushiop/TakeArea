@@ -3,7 +3,7 @@ library ASN requires Groups{
     //R级
     //12 13 -戳  14-前摇
     struct ASN{
-
+        static integer R_attack;
         /*static method R(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A02X');
@@ -155,7 +155,8 @@ library ASN requires Groups{
                             e.TriggerUnit.Damage(e.DamageUnit.unit,Damage.Physics,'A02X',GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15))*2);
                             mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),0.5,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
                             Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
-                            mj.DelayAlpha(255,0,0.4); 
+                            mj.DelayAlpha(255,0,0.4);  
+                            RunSoundOnUnit(ASN.R_attack,mj.unit); 
                         }else{
                             //有武器，音波与腿颤
 
@@ -487,6 +488,7 @@ library ASN requires Groups{
             Events.On(Events.onUnitOrderToLocation,ASN.W1); 
             Events.On(Events.onUnitAttack,ASN.W3);
             Damage.On(Damage.onUnitDamage,ASN.Damage);
+            R_attack=DefineSound("Sound\\Units\\Combat\\MetalMediumSliceMetal3.wav",1000, false, true);
         }
     }
 }
