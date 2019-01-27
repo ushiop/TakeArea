@@ -57,7 +57,26 @@ library Units requires Table,Players,Events,Util{
                 this.dashspeedscale+=x;
             }
 
+            //返回单位武器类型
+            method Weapon()->integer{
+                if(this.IsAbility('A02Z')==true){
+                    return Units.WeaponKnife;//刀
+                }else if(this.IsAbility('A031')==true){
+                    return Units.WeaponBow;//弓
+                }else if(this.IsAbility('A033')==true){
+                    return Units.WeaponAxe;//斧
+                }else if(this.IsAbility('A02Y')==true){
+                    return Units.WeaponSword;//剑
+                }else if(this.IsAbility('A030')==true){
+                    return Units.WeaponFist;//拳（空手）
+                }else if(this.IsAbility('A032')==true){
+                    return Units.WeaponPike;//长枪
+                }else{
+                    return Units.WeaponUnknow;//未知武器
+                }
+            }
 
+            //返回单位性别
             method Sex()->integer{
                 if(this.IsAbility('A021')==true){
                     return Units.SexMan;
@@ -517,6 +536,15 @@ library Units requires Table,Players,Events,Util{
 
         //自定义事件
         public {
+
+            static constant integer WeaponUnknow=0;//未知武器
+            static constant integer WeaponSword=1;//剑
+            static constant integer WeaponKnife=2;//刀
+            static constant integer WeaponAxe=3;//斧
+            static constant integer WeaponBow=4;//弓
+            static constant integer WeaponFist=5;//拳(空手)
+            static constant integer WeaponPike=6;//长枪
+
 
             static constant integer SexUnknow=0;//未知性别..
             static constant integer SexMan=1;//男性角色
