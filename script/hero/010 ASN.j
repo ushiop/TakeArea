@@ -101,7 +101,7 @@ library ASN requires Groups{
         //受到伤害
         static method Damage(DamageArgs e){
             Buffs b;
-            real f;
+            real f,cd;
             Units mj;
             if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('B00K')==true&&e.DamageUnit.IsAbility('B00L')==true){
                 //普攻触发剑光冲击
@@ -152,7 +152,7 @@ library ASN requires Groups{
                         };
                         if(e.DamageUnit.Weapon()==Units.WeaponFist){
                             //对方没武器,额外伤害
-                            e.TriggerUnit.Damage(e.DamageUnit.unit,Damage.Physics,'A02X',f*2);
+                            e.TriggerUnit.Damage(e.DamageUnit.unit,Damage.Physics,'A02X',GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15))*2);
                             mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),0.5,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
                             Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
                             mj.DelayAlpha(255,0,0.4); 
@@ -193,7 +193,9 @@ library ASN requires Groups{
                             }
                             GroupClear(tmp_group);                               
                         }
-                        Buffs.Add(e.TriggerUnit.unit,'A035','B00O',GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x25)),false);
+                        cd=2-(GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x51))/10);
+                        if(cd<0.4||e.TriggerUnit.IsAbility('B00K')==true) cd=0.4; 
+                        Buffs.Add(e.TriggerUnit.unit,'A035','B00O',cd,false);
                     }
                 }
             }
@@ -206,8 +208,7 @@ library ASN requires Groups{
                 u.Alpha(0);
                 Buffs.Add(u.unit,'A02T','B00L',0.2,false).onEnd=function(Buffs b){
                     Units u=Units.Get(b.Unit);
-                    u.DelayAlpha(0,255,0.6);
-                    BJDebugMsg("结束了");
+                    u.DelayAlpha(0,255,0.6); 
                 };
             } 
         }
