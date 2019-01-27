@@ -187,6 +187,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         DzFrameSetText(MoneyText, "$44444"); 
 
         //注册会显示的BUFF
+        BuffUI.RegBuff('Bcrs');
         BuffUI.RegBuff('BPSE');
         BuffUI.RegBuff('Bprg');
         BuffUI.RegBuff('B003');
