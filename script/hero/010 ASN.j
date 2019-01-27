@@ -102,6 +102,7 @@ library ASN requires Groups{
         static method Damage(DamageArgs e){
             Buffs b;
             real f;
+            Units mj;
             if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('B00K')==true&&e.DamageUnit.IsAbility('B00L')==true){
                 //普攻触发剑光冲击
                 f=Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit);
@@ -135,6 +136,52 @@ library ASN requires Groups{
                 if(e.DamageUnit.movespeed>522.0){
                     //大于522的移速转化为伤害
                     e.Damage+=e.Damage*((e.DamageUnit.movespeed-522.0)*0.001); 
+                }
+            }
+            if(e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
+                if(e.isRange==false){//仅抵挡近战攻击
+                    f=e.Damage+GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15));
+                    e.Damage=0;//抵消伤害
+                    if(e.DamageUnit.Weapon()==Units.WeaponUnknow){
+                        BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:"+e.DamageUnit.name+"/D"+e.TriggerUnit.name);
+                    }else{
+                        e.TriggerUnit.DelayAlpha(0,255,0.4);
+                        if(e.DamageUnit.Weapon()==Units.WeaponFist){
+                            //对方没武器,额外伤害
+                            e.TriggerUnit.Damage(e.DamageUnit.unit,Damage.Physics,'A02X',f*2);
+                            mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),0.5,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
+                            Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
+                            mj.DelayAlpha(255,0,0.4);
+                            BJDebugMsg("欺负！");
+                        }else{
+                            //有武器，音波与腿颤
+
+                            //腿颤效果
+                            if(e.TriggerUnit.IsAbility('B00N')==false){
+                                e.TriggerUnit.SetMoveSpeed(-500);
+                            }
+                            Buffs.Add(e.TriggerUnit.unit,'A034','B00N',1,false).onEnd=function(Buffs b){
+                                Units u=Units.Get(b.Unit);
+                                u.SetMoveSpeed(500);
+                            };
+ 
+                            //分身格挡
+                            mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),10,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
+                            Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
+                            mj.AnimeId(15);
+                            Dash.Start(mj.unit,mj.F()+180,100,Dash.SUB,10,true,false).onEnd=function(Dash dash){
+                                Units u=Units.Get(dash.Unit);
+                                u.DelayAlpha(255,0,0.4);
+                                u.Life(0.5);
+                            };
+
+                            //音波效果
+                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.75,1,"stand", "white-qiquan.mdl");
+                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.5,1.5,"stand", "kc.mdl");
+                            
+                        }
+                        Buffs.Add(e.TriggerUnit.unit,'A035','B00O',GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x25)),false);
+                    }
                 }
             }
         }
