@@ -36,7 +36,7 @@ library BuffUI requires BzAPI,Buff{
                     if(GetUnitAbilityLevel(u,b.Aid)==0){
                         b.Show(false);
                     }else{
-                        if(b.Aid=='BPSE'||b.Aid=='Bprg'){
+                        if(b.Aid=='BPSE'||b.Aid=='Bprg'||b.Aid=='Bcrs'){
                             //原生BUFF的处理，眩晕/麻痹等
                             b.BuffLevels=1;
                         }else{

@@ -145,14 +145,17 @@ library ASN requires Groups{
                     if(e.DamageUnit.Weapon()==Units.WeaponUnknow){
                         BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:"+e.DamageUnit.name+"/D"+e.TriggerUnit.name);
                     }else{
-                        e.TriggerUnit.DelayAlpha(0,255,0.4);
+                        e.TriggerUnit.Alpha(0);
+                        Buffs.Add(e.TriggerUnit.unit,'A036','B00P',0.4,false).onEnd=function(Buffs b){
+                            Units u=Units.Get(b.Unit);
+                            u.DelayAlpha(0,255,0.4);
+                        };
                         if(e.DamageUnit.Weapon()==Units.WeaponFist){
                             //对方没武器,额外伤害
                             e.TriggerUnit.Damage(e.DamageUnit.unit,Damage.Physics,'A02X',f*2);
                             mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),0.5,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
                             Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
-                            mj.DelayAlpha(255,0,0.4);
-                            BJDebugMsg("欺负！");
+                            mj.DelayAlpha(255,0,0.4); 
                         }else{
                             //有武器，音波与腿颤
 
@@ -169,16 +172,26 @@ library ASN requires Groups{
                             mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),10,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
                             Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
                             mj.AnimeId(15);
-                            Dash.Start(mj.unit,mj.F()+180,100,Dash.SUB,10,true,false).onEnd=function(Dash dash){
+                            Dash.Start(mj.unit,mj.F()+180,150,Dash.SUB,10,true,false).onEnd=function(Dash dash){
                                 Units u=Units.Get(dash.Unit);
                                 u.DelayAlpha(255,0,0.4);
                                 u.Life(0.5);
                             };
 
                             //音波效果
-                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.75,1,"stand", "white-qiquan.mdl");
-                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.5,1.5,"stand", "kc.mdl");
-                            
+                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.6,1,"stand", "white-qiquan.mdl");
+                            Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),0,2,0.5,1,"stand", "kc_ex.mdl");
+ 
+                            GroupEnumUnitsInRange(tmp_group,e.TriggerUnit.X(),e.TriggerUnit.Y(),200,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,e.TriggerUnit.player.player)==true){    
+                                    e.TriggerUnit.Damage(mj.unit,Damage.Physics,'A02X',f);
+                                    Buffs.Skill(mj.unit,'A037',1); 
+                                }
+                            }
+                            GroupClear(tmp_group);                               
                         }
                         Buffs.Add(e.TriggerUnit.unit,'A035','B00O',GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x25)),false);
                     }
