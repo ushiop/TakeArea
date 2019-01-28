@@ -36,9 +36,13 @@ library Damage requires Table,Events{
 
         //自定义事件
         public { 
-
-            static constant string onItemDamage="Damage.onItemDamage";//任意单位受到伤害（触发该事件时计算各种物品的加减伤)
-            static constant string onUnitDamage="Damage.onUnitDamage";//任意单位受到伤害(触发该事件时计算单位各种技能的加减伤)
+            static constant string onItemDamage_AddDamage="Damage.onItemDamage_AddDamage";//任意单位受到伤害时，进行物品增伤结算
+            static constant string onItemDamage_SubDamage="Damage.onItemDamage_SubDamage";//任意单位受到伤害时，进行物品减伤结算
+            static constant string onItemDamage_EndDamage="Damage.onItemDamage_EndDamage";//任意单位受到伤害,已经计算完物品的加减伤,触发物品其他效果
+            static constant string onUnitDamage_AddDamage="Damage.onUnitDamage_AddDamage";//任意单位受到伤害时,进行单位之间的增伤结算
+            static constant string onUnitDamage_SubDamage="Damage.onUnitDamage_SubDamage";//任意单位受到伤害时,进行单位之间的减伤结算
+            static constant string onUnitDamage_EndDamage="Damage.onUnitDamage_EndDamage";//任意单位受到伤害,已经计算完单位之间的加减伤,触发其他伤害类效果
+            static constant string onDamageEnd="Damage.onDamageEnd";//计算完所有加减伤之后的最终伤害,如无意外,就是单位受到的伤害
 
             //触发指定事件名
             static method Trigger(string eName,DamageArgs e){
@@ -87,13 +91,18 @@ library Damage requires Table,Events{
                     dmg.Spell=0;
                 }
                 dmg.isRange=e.RangeDamage; 
-                Damage.Trigger(Damage.onItemDamage,dmg);//进行物品效果结算
-                Damage.Trigger(Damage.onUnitDamage,dmg); //进行单位技能效果结算
+                Damage.Trigger(Damage.onItemDamage_AddDamage,dmg);//物品增伤计算
+                Damage.Trigger(Damage.onItemDamage_SubDamage,dmg);//物品减伤计算
+                Damage.Trigger(Damage.onItemDamage_EndDamage,dmg);//进行物品效果结算
+                Damage.Trigger(Damage.onUnitDamage_AddDamage,dmg);//单位之间的增伤计算
+                Damage.Trigger(Damage.onUnitDamage_SubDamage,dmg);//单位之间的减伤计算
+                Damage.Trigger(Damage.onUnitDamage_EndDamage,dmg); //单位技能效果结算,不涉及伤害变化了
                 //测试 BJDebugMsg("伤害:"+R2S(e.Damage));
                 if(dmg.Damage!=e.Damage){//如果结算伤害不等于原伤害，则用JAPI进行设置 
                     YDWESetEventDamage(dmg.Damage);//设置本次伤害为进行结算后的伤害  
                     //测试 BJDebugMsg("最终伤害:"+R2S(dmg.Damage));
                 }
+                Damage.Trigger(Damage.onDamageEnd,dmg);
                 dmg.Destroy(); 
             } 
         }
