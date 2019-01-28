@@ -11,6 +11,6 @@ library Item{
     }
 
     function onInit(){
-        Damage.On(Damage.onItemDamage,TiaoDao);
+        Damage.On(Damage.onItemDamage_EndDamage,TiaoDao);
     }
 }
