@@ -105,8 +105,61 @@ library ASN requires Groups{
             Units mj;
             if(e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
                 if(e.isRange==false){//仅抵挡近战攻击
-                    f=e.Damage+GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15));
                     e.Damage=0;//抵消伤害
+                }
+            }
+        }
+
+        //增伤
+        static method Damage_Add(DamageArgs e){
+            if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){ 
+                //E的移速转伤害
+                if(e.DamageUnit.movespeed>522.0){
+                    //大于522的移速转化为伤害
+                    e.Damage+=e.Damage*((e.DamageUnit.movespeed-522.0)*0.001); 
+                }
+            }
+        }
+
+        //受到伤害
+        static method Damage(DamageArgs e){
+            Buffs b;
+            real f,cd;
+            Units mj;
+            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('B00K')==true&&e.DamageUnit.IsAbility('B00L')==true){
+                //普攻触发剑光冲击
+                f=Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit);
+                b=Buffs.Find(e.DamageUnit.unit,'B00K'); 
+                ASN.W2(e.DamageUnit.unit,e.TriggerUnit.unit,f,2);
+                b.Level-=1;
+                if(b.Level<=0){
+                    b.Stop();
+                }  
+            }
+            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
+                //E的普攻减CD
+                e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
+                e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
+            }
+            if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
+                //E的移速BUFF
+                b=Buffs.Add(e.DamageUnit.unit,'A02W','B00M',5,false);
+                b.onFlush=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    b.Level+=1; 
+                    u.SetMoveSpeed(10);
+                };
+                b.onEnd=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    u.SetMoveSpeed(-(b.Level*10));
+                };
+                if(b.Level==1){
+                    e.DamageUnit.SetMoveSpeed(10);
+                }
+            }
+            if(e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
+                if(e.isRange==false){//仅抵挡近战攻击
+                    f=e.OriginDamage+GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15));
                     if(e.DamageUnit.Weapon()==Units.WeaponUnknow){
                         BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:"+e.DamageUnit.name+"/D"+e.TriggerUnit.name);
                     }else{
@@ -165,55 +218,6 @@ library ASN requires Groups{
                         if(cd<0.4||e.TriggerUnit.IsAbility('B00K')==true) cd=0.4; 
                         Buffs.Add(e.TriggerUnit.unit,'A035','B00O',cd,false);
                     }
-                }
-            }
-        }
-
-        //增伤
-        static method Damage_Add(DamageArgs e){
-            if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){ 
-                //E的移速转伤害
-                if(e.DamageUnit.movespeed>522.0){
-                    //大于522的移速转化为伤害
-                    e.Damage+=e.Damage*((e.DamageUnit.movespeed-522.0)*0.001); 
-                }
-            }
-        }
-
-        //受到伤害
-        static method Damage(DamageArgs e){
-            Buffs b;
-            real f,cd;
-            Units mj;
-            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('B00K')==true&&e.DamageUnit.IsAbility('B00L')==true){
-                //普攻触发剑光冲击
-                f=Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit);
-                b=Buffs.Find(e.DamageUnit.unit,'B00K'); 
-                ASN.W2(e.DamageUnit.unit,e.TriggerUnit.unit,f,2);
-                b.Level-=1;
-                if(b.Level<=0){
-                    b.Stop();
-                }  
-            }
-            if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
-                //E的普攻减CD
-                e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
-                e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
-            }
-            if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
-                //E的移速BUFF
-                b=Buffs.Add(e.DamageUnit.unit,'A02W','B00M',5,false);
-                b.onFlush=function(Buffs b){
-                    Units u=Units.Get(b.Unit);
-                    b.Level+=1; 
-                    u.SetMoveSpeed(10);
-                };
-                b.onEnd=function(Buffs b){
-                    Units u=Units.Get(b.Unit);
-                    u.SetMoveSpeed(-(b.Level*10));
-                };
-                if(b.Level==1){
-                    e.DamageUnit.SetMoveSpeed(10);
                 }
             }
         }
