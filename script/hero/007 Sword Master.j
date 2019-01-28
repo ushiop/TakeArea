@@ -264,7 +264,7 @@ library SwordMaster requires Groups{
             Spell.On(Spell.onSpell,'A01D',SwordMaster.E);  
             Spell.On(Spell.onSpell,'A01F',SwordMaster.R);   
             Units.On(Units.onHeroSpawn,SwordMaster.Spawn);
-            Damage.On(Damage.onUnitDamage,SwordMaster.Damage);
+            Damage.On(Damage.onUnitDamage_EndDamage,SwordMaster.Damage);
         }
     }
 }

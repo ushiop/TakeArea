@@ -750,7 +750,7 @@ library TR requires Groups{
             Spell.On(Spell.onSpell,'A02J',TR.R);
             Events.On(Events.onUnitOrderToUnit,TR.W1);
             Events.On(Events.onUnitOrderToLocation,TR.W1);
-            Damage.On(Damage.onUnitDamage,TR.W3);
+            Damage.On(Damage.onUnitDamage_EndDamage,TR.W3);
             Events.On(Events.onUnitAttack,TR.R1);
             Units.On(Units.onHeroSpawn,TR.Spawn);
         }

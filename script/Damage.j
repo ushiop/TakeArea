@@ -98,11 +98,12 @@ library Damage requires Table,Events{
                 Damage.Trigger(Damage.onUnitDamage_SubDamage,dmg);//单位之间的减伤计算
                 Damage.Trigger(Damage.onUnitDamage_EndDamage,dmg); //单位技能效果结算,不涉及伤害变化了
                 //测试 BJDebugMsg("伤害:"+R2S(e.Damage));
+                if(dmg.Damage<0) dmg.Damage=0;//如果减伤到负数,则设为0
                 if(dmg.Damage!=e.Damage){//如果结算伤害不等于原伤害，则用JAPI进行设置 
                     YDWESetEventDamage(dmg.Damage);//设置本次伤害为进行结算后的伤害  
                     //测试 BJDebugMsg("最终伤害:"+R2S(dmg.Damage));
                 }
-                Damage.Trigger(Damage.onDamageEnd,dmg);
+                Damage.Trigger(Damage.onDamageEnd,dmg);//最终伤害,计算完加减伤了,如果大于生命就肯定会死
                 dmg.Destroy(); 
             } 
         }

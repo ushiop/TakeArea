@@ -113,7 +113,7 @@ library Ai requires Teams,Groups{
 
 
     function onInit(){
-        Damage.On(Damage.onUnitDamage,onDmg);
+        Damage.On(Damage.onUnitDamage_EndDamage,onDmg);
         TimerStart(NewTimer(),1,true,function onLoop);
     }
 }

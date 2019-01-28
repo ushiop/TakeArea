@@ -423,7 +423,7 @@ library MR requires Groups{
             Spell.On(Spell.onReady,'A025',MR.HERO_START);
             Spell.On(Spell.onReady,'A027',MR.HERO_START);
             Units.On(Units.onHeroDeath,MR.Death);
-            Damage.On(Damage.onUnitDamage,MR.Damage); 
+            Damage.On(Damage.onUnitDamage_SubDamage,MR.Damage); 
             Units.On(Units.onHeroSpawn,MR.Spawn);
         }
     }
