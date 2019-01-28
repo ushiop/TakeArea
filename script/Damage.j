@@ -93,7 +93,7 @@ library Damage requires Table,Events{
                 dmg.isRange=e.RangeDamage; 
                 Damage.Trigger(Damage.onItemDamage_AddDamage,dmg);//物品增伤计算
                 Damage.Trigger(Damage.onItemDamage_SubDamage,dmg);//物品减伤计算
-                Damage.Trigger(Damage.onItemDamage_EndDamage,dmg);//进行物品效果结算
+                Damage.Trigger(Damage.onItemDamage_EndDamage,dmg);//进行物品效果结算,不涉及物品导致的伤害变化了
                 Damage.Trigger(Damage.onUnitDamage_AddDamage,dmg);//单位之间的增伤计算
                 Damage.Trigger(Damage.onUnitDamage_SubDamage,dmg);//单位之间的减伤计算
                 Damage.Trigger(Damage.onUnitDamage_EndDamage,dmg); //单位技能效果结算,不涉及伤害变化了
