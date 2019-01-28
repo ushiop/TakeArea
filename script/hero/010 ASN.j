@@ -4,6 +4,7 @@ library ASN requires Groups{
     //12 13 -戳  14-前摇
     struct ASN{
         static integer R_attack;
+        static integer R_defend;
         /*static method R(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A02X');
@@ -172,12 +173,14 @@ library ASN requires Groups{
                             //分身格挡
                             mj=Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),Util.XY(e.TriggerUnit.unit,e.DamageUnit.unit),10,e.TriggerUnit.modelsize,3,"attack", "Asuna.mdl");//akiha claw.mdl
                             Effect.ToUnit("az_lxj_blue_ex.mdl",mj.unit,"weapon");
-                            mj.AnimeId(15);
+                            mj.AnimeId(15); 
+                            RunSoundOnUnit(ASN.R_defend,mj.unit); 
                             Dash.Start(mj.unit,mj.F()+180,150,Dash.SUB,10,true,false).onEnd=function(Dash dash){
                                 Units u=Units.Get(dash.Unit);
                                 u.DelayAlpha(255,0,0.4);
                                 u.Life(0.5);
                             };
+
 
                             //音波效果
                             Units.MJ(e.TriggerUnit.player.player,'e008','A02X',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),GetRandomReal(0,360),2,0.6,1,"stand", "white-qiquan.mdl");
@@ -489,6 +492,7 @@ library ASN requires Groups{
             Events.On(Events.onUnitAttack,ASN.W3);
             Damage.On(Damage.onUnitDamage,ASN.Damage);
             R_attack=DefineSound("Sound\\Units\\Combat\\MetalMediumSliceMetal3.wav",1000, false, true);
+            R_defend=DefineSound("resource\\sound_effect_asn_r.wav",1000, false, true);
         }
     }
 }
