@@ -64,6 +64,11 @@ library Players requires TimerUtils{
             method AddMoney(integer addm){
                 AdjustPlayerStateBJ(addm,this.player, PLAYER_STATE_RESOURCE_GOLD );
             }
+
+            //返回玩家是否处于英雄托管模式/AI托管模式
+            method AI()->boolean{
+                return this.isai==true||this.pcmode==true;
+            }
         }
 
         //为玩家创建对象实例

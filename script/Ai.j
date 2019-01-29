@@ -96,7 +96,7 @@ library Ai requires Teams,Groups{
     function onLoop(){
         ForForce(Teams.GetAllPlayers(),function(){
             Players p=Players.Get(GetEnumPlayer());
-            if((p.isai==true||p.pcmode==true)&&p.hero.Alive()){ 
+            if(p.AI()==true&&p.hero.Alive()){ 
                 AISpell(p.hero.unit);
             }
         });
