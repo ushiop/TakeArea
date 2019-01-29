@@ -70,10 +70,39 @@ library ASN requires Groups{
                 };
             };
         }*/
+        //ASN AI
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no,no1;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target); 
+
+                
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "charm",GetUnitX(no),GetUnitY(no)); //流星
+                }  
+
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no),true);  
+                    IssueImmediateOrder( u.unit, "fanofknives" );//剑光冲击
+                }  
+            }
+            target=null;
+            no=null;
+        }
 
         static method Spawn(Units u,Units m){
             timer t;
             if(u.IsAbility('A02R')==true){
+                u.ai=ASN.AI;
                 t=NewTimer();
                 SetTimerData(t,u);
                 TimerStart(t,0.1,true,function(){
@@ -342,9 +371,9 @@ library ASN requires Groups{
         static method W1(EventArgs e){ 
             Units u=Units.Get(e.TriggerUnit);
             real f;
-            Buffs b;  
+            Buffs b;   
             if(u.IsAbility('B00K')==true){//剑光冲击
-                if(e.OrderId==851983){
+                if(e.OrderId==851983&&u.player.AI()==false){
                     if(e.OrderTargetUnit==null){ 
                         f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
                     }else{
