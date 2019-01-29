@@ -550,7 +550,8 @@ library TR requires Groups{
             Units mj; 
             
             if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
-                if(e.OrderId==851983||e.OrderId==851986||e.OrderId==851971){
+                if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986||e.OrderId==851971){
+                     
                     if(e.OrderTargetUnit==null){ 
                         f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
                     }else{
@@ -703,6 +704,14 @@ library TR requires Groups{
                     u.SetF(Util.XY(u.unit,no),true);  
                     IssueImmediateOrder( u.unit, "roar" );//刀光冲击!! 
                 }  
+
+                if(u.IsAbility('B00E')==true){ 
+                    no=GroupFind(u.unit,x,y,500,true,false);
+                    if(no!=null){ 
+                        u.SetF(Util.XY(u.unit,no),true);   
+                        IssuePointOrder(u.unit, "move",GetUnitX(no),GetUnitY(no));
+                    }  
+                }
 
                 no=GroupFind(u.unit,x,y,150,true,false);
                 if(no!=null){ 
