@@ -81,8 +81,7 @@ library ASN requires Groups{
             if(target!=null){
                 x1=GetUnitX(target);
                 y1=GetUnitY(target); 
-
-                
+ 
                 no=GroupFind(u.unit,x,y,600,true,false);
                 if(no!=null){ 
                     u.SetF(Util.XY(u.unit,no),true);   
