@@ -94,7 +94,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             ps.respawn=0; 
             KillUi.FlushPlayerData(ps.player);
             r.deallocate();  
-            DisplayTextToForce(Teams.GetAllPlayers(),u.player.name+"复活了!!!");    
+            DisplayTextToForce(Teams.GetAllPlayers(),ps.name+"复活了!!!");     
         }
 
         //减少所有玩家的复活时间
