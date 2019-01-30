@@ -106,13 +106,21 @@ library Ai requires Teams,Groups{
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
         Units u=dmg.TriggerUnit;        
-        if((u.player.isai==true||u.player.pcmode==true)){ 
+        if(u.player.AI()==true){ 
             AISpell(u.unit);
+        }
+    }
+
+    //AI英雄出生时增加500点魔法值
+    function AiSpawn(Units u,Units m){
+        if(u.player.isai==true){
+            u.AddAbility('A038');
         }
     }
 
 
     function onInit(){
+        Units.On(Units.onHeroSpawn,AiSpawn);
         Damage.On(Damage.onUnitDamage_EndDamage,onDmg);
         TimerStart(NewTimer(),1,true,function onLoop);
     }
