@@ -88,7 +88,7 @@ library Damage requires Table,Events{
                     dmg.DamageType=Damage.Attack;
                 }
                 if(dmg.DamageType!=Damage.Attack){ 
-                    dmg.Spell=ht[Units.Get(e.DamageUnit).player.player];
+                    dmg.Spell=ht[e.DamageUnit.player.player];
                 }else{
                     dmg.Spell=0;
                 }
