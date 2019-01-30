@@ -581,7 +581,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             data.r[0]=0;//蓄力时间
             data.i[3]=2; 
             if(u.player.isai==true){
-                data.r[0]=2;
+                data.r[0]=1;
             } 
             SetTimerData(t,data);  
             TimerStart(t,0.1,true,function(){
