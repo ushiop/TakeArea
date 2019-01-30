@@ -85,7 +85,7 @@ library BlackSaber requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                    u.Damage(mj.unit,'A015',Damage.Magic,u.Int(true)*2.2);
+                                    u.Damage(mj.unit,Damage.Magic,'A015',u.Int(true)*2.2);
                                     HitFlys.Add(mj.unit,20);
                                     Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(u.unit,mj.unit),Dash.SUB,10,true,true);
                                     Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(mj.H());
@@ -190,7 +190,7 @@ library BlackSaber requires Groups{
                                         mj.SetH(m.H());                            
                                         mj.DelayAnime(2,0.2);
                                         Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
-                                        u.Damage(m.unit,'A012',Damage.Magic,u.Str(true)*5.0);
+                                        u.Damage(m.unit,Damage.Magic,'A012',u.Str(true)*5.0);
                                         u.AnimeId(20);
                                         u.AnimeSpeed(1);
                                     }
@@ -221,13 +221,13 @@ library BlackSaber requires Groups{
                                         Units.MJ(u.player.player,'e00C','A012',0,x,y,Util.XY(u.unit,m.unit),5,2,2.5, "stand","devilslam.mdl").SetH(150);
                                         x=x+200*CosBJ(u.F());
                                         y=y+200*SinBJ(u.F());
-                                        u.Damage(m.unit,'A012',Damage.Chaos,u.Str(true)*12.0);
+                                        u.Damage(m.unit,Damage.Chaos,'A012',u.Str(true)*12.0);
                                         GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
                                         while(FirstOfGroup(tmp_group)!=null){
                                             mj=Units.Get(FirstOfGroup(tmp_group));
                                             GroupRemoveUnit(tmp_group,mj.unit);
                                             if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.unit!=m.unit){ 
-                                                u.Damage(mj.unit,'A012',Damage.Chaos,u.Str(true)*12);
+                                                u.Damage(mj.unit,Damage.Chaos,'A012',u.Str(true)*12);
                                                 Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1.5,1, "death","fire-boom-new-darkblue-3.mdl").SetH(70);
                                         
                                             }
@@ -348,14 +348,14 @@ library BlackSaber requires Groups{
                                         if(data.r[2]==1){
                                             HitFlys.Add(mj.unit,20);
                                         }
-                                        u.Damage(mj.unit,'A00X',Damage.Magic,u.Int(true)*2.4);
+                                        u.Damage(mj.unit,Damage.Magic,'A00X',u.Int(true)*2.4);
                                         DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
                                         mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
                                     }
                                     if(data.r[2]>=2&&data.r[2]<=4){
                                         if(mj.H()>10){ 
                                             HitFlys.Add(mj.unit,7);
-                                            u.Damage(mj.unit,'A00X',Damage.Chaos,u.Int(true)*2.4);
+                                            u.Damage(mj.unit,Damage.Chaos,'A00X',u.Int(true)*2.4);
                                             DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
                                             mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
                                         }
@@ -411,7 +411,7 @@ library BlackSaber requires Groups{
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                            u.Damage(mj.unit,'A00V',Damage.Magic,u.Int(true)*7);
+                            u.Damage(mj.unit,Damage.Magic,'A00V',u.Int(true)*7);
                         }
                     }
                     GroupClear(tmp_group);    
