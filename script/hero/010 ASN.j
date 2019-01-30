@@ -131,7 +131,7 @@ library ASN requires Groups{
         static method Damage_Sub(DamageArgs e){
             real f,cd;
             Units mj;
-            if(e.DamageType=Damage.Attack&&e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
+            if(e.DamageType==Damage.Attack&&e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
                 if(e.isRange==false){//仅抵挡近战攻击
                     e.Damage=0;//抵消伤害
                 }
