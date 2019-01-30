@@ -12,7 +12,7 @@ library Damage requires Table,Events{
         Units TriggerUnit;//触发单位
         Units DamageUnit;//伤害来源
         integer Spell;//如果是技能伤害，则为技能ID，为0的情况可能是普攻或者被动;
-        integer DamageType;//伤害类型，由Damage类定义 
+        real DamageType;//伤害类型，由Damage类定义 
         boolean isRange;//是否是远程 
 
         static method create()->DamageArgs{
@@ -30,10 +30,10 @@ library Damage requires Table,Events{
 
         private static HandleTable ht;
 
-        static constant integer Magic=0;//法术伤害
-        static constant integer Chaos=1;//混乱伤害
-        static constant integer Physics=2;//物理伤害
-        static constant integer Attack=3;//普攻伤害
+        static constant real Magic=0;//法术伤害
+        static constant real Chaos=1;//混乱伤害
+        static constant real Physics=2;//物理伤害
+        static constant real Attack=3;//普攻伤害
 
         //自定义事件
         public { 
@@ -93,7 +93,7 @@ library Damage requires Table,Events{
                     dmg.Spell=0;
                 }
                 dmg.isRange=e.RangeDamage; 
-                BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+I2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name);
+                BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+R2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name);
                 Damage.Trigger(Damage.onItemDamage_AddDamage,dmg);//物品增伤计算
                 Damage.Trigger(Damage.onUnitDamage_AddDamage,dmg);//单位之间的增伤计算
                 Damage.Trigger(Damage.onItemDamage_SubDamage,dmg);//物品减伤计算
@@ -114,12 +114,10 @@ library Damage requires Table,Events{
         }
 
         //使U对M造成dmg点dtype类型伤害，伤害来源于spellid技能,被动填0
-        static method To(unit u,unit m,integer dtype,integer spellid,real dmg){
+        static method To(unit u,unit m,real dtype,integer spellid,real dmg){
             Units t=Units.Get(u);
-            ht[t.player.player]=spellid;
-            BJDebugMsg("发动伤害-类型:"+I2S(dtype));
-            if(dtype==Damage.Magic){
-                BJDebugMsg("??");
+            ht[t.player.player]=spellid; 
+            if(dtype==Damage.Magic){ 
                 UnitDamageTarget(u,m,dmg,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS);
             }else if(dtype==Damage.Chaos){
                 UnitDamageTarget(u,m,dmg,false,false,ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL,WEAPON_TYPE_WHOKNOWS);
