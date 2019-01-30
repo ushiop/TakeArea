@@ -17,7 +17,17 @@ library Test requires Util{
         }
         if(e.ChatString=="1"){
             if(p.hero.unit!=null){//对自己造成伤害
-                p.hero.Damage(p.hero.unit,Damage.Chaos,0,500);
+                p.hero.Damage(p.hero.unit,Damage.Chaos,'A02F',500);
+            }
+        }
+        if(e.ChatString=="2"){
+            if(p.hero.unit!=null){//对自己造成伤害
+                p.hero.Damage(p.hero.unit,Damage.Magic,'A02A',500);
+            }
+        }
+        if(e.ChatString=="3"){
+            if(p.hero.unit!=null){//对自己造成伤害
+                p.hero.Damage(p.hero.unit,Damage.Physics,'A02B',500);
             }
         }
         if(SubString(e.ChatString,0,7)=="-ranged"){//特效距离
