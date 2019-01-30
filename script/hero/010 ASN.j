@@ -438,9 +438,9 @@ library ASN requires Groups{
             data.c[3]=mj; 
             data.g[0]=CreateGroup();
             data.r[0]=0;
-            data.i[0]=Damage.Physics;
+            data.r[4]=Damage.Physics;
             if(e.State!=Spell.SpellState){
-                data.i[0]=Damage.Chaos; 
+                data.r[4]=Damage.Chaos; 
                 mj=Units.MJ(u.player.player,'e009','A02R',0,x,y,f,2,1.5,2, "stand","wind.mdx");
                 mj.SetH(100); 
                 Dash.Start(mj.unit,f,250,Dash.SUB,60,true,false);
@@ -471,7 +471,7 @@ library ASN requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 if(IsUnitInGroup(mj.unit,data.g[0])==false){
                                     GroupAddUnit(data.g[0],mj.unit); 
-                                    u.Damage(mj.unit,Damage.Physics,'A02R',u.Agi(true)*5);
+                                    u.Damage(mj.unit,data.r[4],'A02R',u.Agi(true)*5);
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                     Dash.Start(mj.unit,dash.Angle,200,Dash.SUB,75,true,true);
                                 }
@@ -486,7 +486,7 @@ library ASN requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 if(IsUnitInGroup(mj.unit,data.g[0])==false){
                                     GroupAddUnit(data.g[0],mj.unit); 
-                                    u.Damage(mj.unit,data.i[0],'A02R',u.Agi(true)*5);
+                                    u.Damage(mj.unit,data.r[4],'A02R',u.Agi(true)*5);
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                     Dash.Start(mj.unit,dash.Angle,300,Dash.SUB,75,true,true);
                                 }
