@@ -166,8 +166,12 @@ library ASN requires Groups{
             }
             if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
                 //E的普攻减CD
-                e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
-                e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
+                if(e.DamageUnit.GetAbilityCD('A02R')>0){ 
+                    e.DamageUnit.SetAbilityCD('A02R',e.DamageUnit.GetAbilityCD('A02R')-1);
+                }
+                if(e.DamageUnit.GetAbilityCD('A02S')>0){ 
+                    e.DamageUnit.SetAbilityCD('A02S',e.DamageUnit.GetAbilityCD('A02S')-1);
+                }
             }
             if(e.DamageUnit.IsAbility('A02V')&&e.DamageUnit.player.lv10!=null){
                 //E的移速BUFF
@@ -353,7 +357,7 @@ library ASN requires Groups{
                     data.Destroy();
                 };       
                 Units.MJ(u.player.player,'e008','A02S',0,GetUnitX(target),GetUnitY(target),f,1,1.5,1.5,"death", "by_wood_gongchengsipai_3.mdl").SetH(100);//akiha claw.mdl
-                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",target, "chest").Destroy();
                 /*GroupEnumUnitsInRange(tmp_group,GetUnitX(target),GetUnitY(target),150,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
