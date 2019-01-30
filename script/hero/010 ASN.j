@@ -353,7 +353,8 @@ library ASN requires Groups{
                     data.Destroy();
                 };       
                 Units.MJ(u.player.player,'e008','A02S',0,GetUnitX(target),GetUnitY(target),f,1,1.5,1.5,"death", "by_wood_gongchengsipai_3.mdl").SetH(100);//akiha claw.mdl
-                GroupEnumUnitsInRange(tmp_group,GetUnitX(target),GetUnitY(target),150,function GroupIsAliveNotAloc);     
+                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                /*GroupEnumUnitsInRange(tmp_group,GetUnitX(target),GetUnitY(target),150,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
@@ -362,7 +363,7 @@ library ASN requires Groups{
                         Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                     }
                 }
-                GroupClear(tmp_group);
+                GroupClear(tmp_group);*/
             }
         }
 
