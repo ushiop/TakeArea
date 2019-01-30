@@ -500,7 +500,7 @@ library Units requires Table,Players,Events,Util{
             }
 
             //使单位对m造成伤害,dtype,spell为本次伤害所属技能，被动填0
-            method Damage(unit m,integer dtype,integer spell,real dmg){ 
+            method Damage(unit m,real dtype,integer spell,real dmg){ 
                 Damage.To(this.player.hero.unit,m,dtype,spell,dmg);
             }
 

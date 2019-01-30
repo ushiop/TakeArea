@@ -71,7 +71,7 @@ library Groups requires Units,Damage{
     }
 
     //让U对范围内的单位造成一次伤害
-    public function GroupDamage(Units u,real x,real y,real dis,real dmg,integer dmgtype,integer aid,boolean hero)
+    public function GroupDamage(Units u,real x,real y,real dis,real dmg,real dmgtype,integer aid,boolean hero)
     {  
         Units tmp;
         boolean f=false;
