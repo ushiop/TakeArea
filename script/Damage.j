@@ -30,7 +30,7 @@ library Damage requires Table,Events{
 
         private static HandleTable ht;
 
-        static constant real Magic=0;//法术伤害
+        static constant real Magic=0;//魔法伤害
         static constant real Chaos=1;//混乱伤害
         static constant real Physics=2;//物理伤害
         static constant real Attack=3;//普攻伤害
