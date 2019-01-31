@@ -106,8 +106,7 @@ library ASN requires Groups{
                 SetTimerData(t,u);
                 TimerStart(t,0.1,true,function(){
                     Units u=Units(GetTimerData(GetExpiredTimer()));
-                    if(u.Alive()==false){
-                        BJDebugMsg("结束");
+                    if(u.Alive()==false){ 
                         ReleaseTimer(GetExpiredTimer());
                     }else{
                         if(u.MoveSpeed()>500){ 
