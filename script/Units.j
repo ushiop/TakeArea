@@ -539,6 +539,10 @@ library Units requires Table,Players,Events,Util{
         //自定义事件
         public {
 
+            static constant integer MJType_TSW='A02O';//马甲投射物标记
+            static constant integer MJType_FZW='A02P';//马甲放置物标记
+            static constant integer MJType_CDW='A02Q';//马甲场地物标记
+
             static constant integer WeaponUnknow=0;//未知武器
             static constant integer WeaponSword=1;//剑
             static constant integer WeaponKnife=2;//刀
