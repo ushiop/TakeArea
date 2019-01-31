@@ -8,7 +8,7 @@ library Data{
         integer i[5];//整数型数据
         real r[5];//实数型数据
         integer c[5];//实例型数据(实例ID，由使用方自己转换)
-        unit u[2];//单位型数据
+        unit u[4];//单位型数据
         group g[2];//单位组型数据
         string s[2];//字符串型数据
         
@@ -22,12 +22,11 @@ library Data{
             }
             this.s[0]=null;
             this.s[1]=null;
-            if(this.u[0]!=null){
-                BJDebugMsg("DATA异常:u[0]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
-            }
-            if(this.u[1]!=null){
-                BJDebugMsg("DATA异常:u[1]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
-            }
+            for(0<=x<4){ 
+                if(this.u[x]!=null){
+                    BJDebugMsg("DATA异常:u["+I2S(x)+"]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
+                }
+            } 
             if(this.g[0]!=null){
                 BJDebugMsg("DATA异常:g[0]未设空,ID:"+GetAbilityName(this.id)+"/index:"+I2S(this));
             }
