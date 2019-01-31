@@ -192,9 +192,9 @@ library GAD requires Groups{
                     Units tf=Units(data.c[1]);
                     Units gz=Units(data.c[2]);
                     Units gz1=Units(data.c[3]);
-                    gz1.Life(0.1);
+                    gz1.Life(0.6);
                     gz1.Anime("death");
-                    gz.Life(0.1);
+                    gz.Life(0.6);
                     gz.Anime("death");
                     tf.AnimeSpeed(2.25);
                     tf.AnimeId(4);
