@@ -106,6 +106,7 @@ library GAD requires Groups{
             Units mj;
             Dash dash;
             Data data;
+            
             u.AnimeSpeed(1);
             //降低尸体层数
             if(u.IsAbility('B00Q')==true){
@@ -136,6 +137,7 @@ library GAD requires Groups{
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units mj=Units(data.c[3]);
+                Effect e;
                 unit k;
                 if(data.i[0]==0){
                     data.i[0]=2;
@@ -149,7 +151,9 @@ library GAD requires Groups{
                 }else{
                     k=GroupFind(dash.Unit,dash.X,dash.Y,80,true,false);
                     if(k!=null){
-                        Effect.ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",k,"origin");
+                        e=Effect.ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",k,"origin");
+                        e.AnimeSpeed(2);
+                        e.Destroy();
                         data.u[0]=k;
                         k=null;
                         dash.Stop();
@@ -197,8 +201,8 @@ library GAD requires Groups{
                     tf.Life(0.7);
                     tf.DelayAlpha(255,0,0.65);
                     if(data.u[0]!=null){
-                        u.Damage(data.u[0],Damage.Physics,'A03C',u.Int(true)*10);
                         Buffs.Skill(data.u[0],'A00F',1);
+                        u.Damage(data.u[0],Damage.Physics,'A03C',u.Int(true)*10);
                     }
                     data.u[0]=null;
                     data.Destroy();
