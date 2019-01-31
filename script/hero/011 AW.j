@@ -1,7 +1,7 @@
-library GAD requires Groups{
-    //英雄‘骨傲地’的技能
+library AW requires Groups{
+    //英雄‘阿伟’的技能
     //SR英雄
-    struct GAD{
+    struct AW{
 
         //死灵法师出生，绑定数据
         static method Spawn(Units u,Units m){
@@ -226,14 +226,14 @@ library GAD requires Groups{
 
 
         static method onInit(){
-            Spell.On(Spell.onSpell,'A03C',GAD.W); 
-            Spell.On(Spell.onReady,'A03C',GAD.HERO_START);
-            Spell.On(Spell.onStop,'A03C',GAD.HERO_STOP);   
-            Damage.On(Damage.onUnitDamage_AddDamage,GAD.Damage_Add);
-            Damage.On(Damage.onUnitDamage_SubDamage,GAD.Damage_Sub);
-            Units.On(Units.onHeroDeath,GAD.Death);
-            Units.On(Units.onUnitDeath,GAD.Death);
-            Units.On(Units.onHeroSpawn,GAD.Spawn);
+            Spell.On(Spell.onSpell,'A03C',AW.W); 
+            Spell.On(Spell.onReady,'A03C',AW.HERO_START);
+            Spell.On(Spell.onStop,'A03C',AW.HERO_STOP);   
+            Damage.On(Damage.onUnitDamage_AddDamage,AW.Damage_Add);
+            Damage.On(Damage.onUnitDamage_SubDamage,AW.Damage_Sub);
+            Units.On(Units.onHeroDeath,AW.Death);
+            Units.On(Units.onUnitDeath,AW.Death);
+            Units.On(Units.onHeroSpawn,AW.Spawn);
         }
     }
 }
