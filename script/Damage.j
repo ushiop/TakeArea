@@ -93,7 +93,7 @@ library Damage requires Table,Events{
                     dmg.Spell=0;
                 }
                 dmg.isRange=e.RangeDamage; 
-                //测试 BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+R2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name);
+                //测试 BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+R2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name+"/伤害:"+R2S(dmg.Damage));
                 Damage.Trigger(Damage.onItemDamage_AddDamage,dmg);//物品增伤计算
                 Damage.Trigger(Damage.onUnitDamage_AddDamage,dmg);//单位之间的增伤计算
                 Damage.Trigger(Damage.onItemDamage_SubDamage,dmg);//物品减伤计算
@@ -117,7 +117,7 @@ library Damage requires Table,Events{
         static method To(unit u,unit m,real dtype,integer spellid,real dmg){
             Units t=Units.Get(u);
             ht[t.player.player]=spellid; 
-            if(dtype==Damage.Magic){ 
+            if(dtype==Damage.Magic){//是平衡常数种的‘法术’伤害类型，而不是‘魔法’伤害类型
                 UnitDamageTarget(u,m,dmg,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS);
             }else if(dtype==Damage.Chaos){
                 UnitDamageTarget(u,m,dmg,false,false,ATTACK_TYPE_CHAOS,DAMAGE_TYPE_UNIVERSAL,WEAPON_TYPE_WHOKNOWS);
