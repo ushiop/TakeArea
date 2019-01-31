@@ -138,7 +138,7 @@ library AW requires Groups{
                 Data data=Data(dash.Obj);
                 Units mj=Units(data.c[3]);
                 Effect e;
-                unit k;
+                unit k; 
                 if(data.i[0]==0){
                     data.i[0]=2;
                     mj.Position(Units(data.c[1]).X()+100*CosBJ(dash.Angle),Units(data.c[1]).Y()+100*SinBJ(dash.Angle),false);
@@ -152,7 +152,7 @@ library AW requires Groups{
                     k=GroupFind(dash.Unit,dash.X,dash.Y,80,true,false);
                     if(k!=null){
                         e=Effect.ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",k,"origin");
-                        e.AnimeSpeed(2);
+                        e.AnimeSpeed(4);
                         e.Destroy();
                         data.u[0]=k;
                         k=null;
