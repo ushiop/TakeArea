@@ -51,4 +51,4 @@
 //! import zinc "map/script/hero/008 MR.j"
 //! import zinc "map/script/hero/009 TR.j"
 //! import zinc "map/script/hero/010 ASN.j"
-//! import zinc "map/script/hero/011 GAD.j"
+//! import zinc "map/script/hero/011 AW.j"
