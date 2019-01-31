@@ -93,7 +93,6 @@ library Damage requires Table,Events{
                     dmg.Spell=0;
                 }
                 dmg.isRange=e.RangeDamage; 
-                //测试 BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+R2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name+"/伤害:"+R2S(dmg.Damage));
                 Damage.Trigger(Damage.onItemDamage_AddDamage,dmg);//物品增伤计算
                 Damage.Trigger(Damage.onUnitDamage_AddDamage,dmg);//单位之间的增伤计算
                 Damage.Trigger(Damage.onItemDamage_SubDamage,dmg);//物品减伤计算
@@ -109,6 +108,8 @@ library Damage requires Table,Events{
                     //测试 BJDebugMsg("最终伤害:"+R2S(dmg.Damage));
                 }
                 Damage.Trigger(Damage.onDamageEnd,dmg);//最终伤害,计算完加减伤了,如果大于生命就肯定会死
+                //测试 BJDebugMsg("是否远程:"+Util.B2S(dmg.isRange)+"/是否攻击:"+Util.B2S(e.AttackDamage)+"/伤害类型:"+R2S(dmg.DamageType)+"/技能:"+GetAbilityName(dmg.Spell)+"/伤害者:"+dmg.DamageUnit.name+"/被伤害:"+dmg.TriggerUnit.name+"/伤害:"+R2S(dmg.Damage)+"/原始伤害:"+R2S(dmg.OriginDamage));
+                
                 dmg.Destroy(); 
             } 
         }
