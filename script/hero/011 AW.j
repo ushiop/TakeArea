@@ -266,7 +266,7 @@ library AW requires Groups{
                         if(IsUnitEnemy(mj.unit,u.player.player)==true){    
                             Dash.Start(mj.unit,Util.XY(mj.unit,shou.unit),25,Dash.SUB,10,true,false);               
                         }
-                    }
+                    }  
                     GroupClear(tmp_group); 
                 }
             });
