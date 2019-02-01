@@ -30,7 +30,7 @@ library AW requires Groups{
                     }else{
                         if(u.IsAbility('B00Q')==true){
                             b=Buffs.Find(u.unit,'B00Q');
-                            if(b.Level>=5){
+                            if(b.Level>=5){//5层尸体
                                 if(data.u[0]==null){
                                     data.u[0]=Units.MJ(u.player.player,'e00F','A03A',5,0,0,0,86400,1,1, "stand",".mdx").unit; 
                                 }
@@ -38,6 +38,16 @@ library AW requires Groups{
                                 if(data.u[0]!=null){
                                     Units.Remove(data.u[0]); 
                                     data.u[0]=null;
+                                }
+                            }                            
+                            if(b.Level>=10){//10层尸体
+                                if(data.u[1]==null){
+                                    data.u[1]=Units.MJ(u.player.player,'e00G','A03A',10,0,0,0,86400,1,1, "stand",".mdx").unit; 
+                                }
+                            }else{ 
+                                if(data.u[1]!=null){
+                                    Units.Remove(data.u[1]); 
+                                    data.u[1]=null;
                                 }
                             }
                             if(b.Level<=0){
@@ -216,10 +226,61 @@ library AW requires Groups{
             e.Destroy();
         }
 
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A03D');
+            timer t=NewTimer();
+            Units mj;
+            Buffs b;
+            //降低尸体层数
+            if(u.IsAbility('B00Q')==true){
+                b=Buffs.Find(u.unit,'B00Q');
+                if(b.Level>=10){
+                    b.Level-=10;
+                }
+            }
+            Units.MJ(u.player.player,'e008','A03D',0,e.X,e.Y,e.Angle,3,2,1, "stand","Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl"); 
+            mj=Units.MJ(u.player.player,'e008','A03D',0,e.X,e.Y,45,4,2.5,4.5, "stand","Abilities\\Spells\\Items\\AIso\\AIsoTarget.mdl"); 
+            data.c[0]=u;
+            data.c[1]=mj;
+            data.i[0]=5;
+            data.r[0]=e.X;
+            data.r[1]=e.Y;
+            SetTimerData(t,data);
+            TimerStart(t,0.1,true,function(){
+                Data data=Data(GetTimerData(GetExpiredTimer()));
+                Units mj;
+                Units u=Units(data.c[0]);
+                Units shou=Units(data.c[1]);
+                real x=data.r[0],y=data.r[1];
+                if(data.i[0]==0){ 
+                    shou.AnimeSpeed(1); 
+                    ReleaseTimer(GetExpiredTimer());
+                    data.Destroy();
+                }else{
+                    data.i[0]-=1;
+                    GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                            Dash.Start(mj.unit,Util.XY(mj.unit,shou.unit),25,Dash.SUB,10,true,false);               
+                        }
+                    }
+                    GroupClear(tmp_group); 
+                }
+            });
+            t=null;
+            e.Destroy();
+            
+        }
+
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            u.FlushAnimeId(4);
-            u.AnimeSpeed(1.3);
+            if(e.Id=='A03C'||e.Id=='A03D'){ 
+                u.FlushAnimeId(4);
+                u.AnimeSpeed(1.3);
+            }
             e.Destroy();
         }
 
@@ -231,9 +292,12 @@ library AW requires Groups{
 
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A03D',AW.E); 
             Spell.On(Spell.onSpell,'A03C',AW.W); 
             Spell.On(Spell.onReady,'A03C',AW.HERO_START);
             Spell.On(Spell.onStop,'A03C',AW.HERO_STOP);   
+            Spell.On(Spell.onReady,'A03D',AW.HERO_START);
+            Spell.On(Spell.onStop,'A03D',AW.HERO_STOP);  
             Damage.On(Damage.onUnitDamage_AddDamage,AW.Damage_Add);
             Damage.On(Damage.onUnitDamage_SubDamage,AW.Damage_Sub);
             Units.On(Units.onHeroDeath,AW.Death);
