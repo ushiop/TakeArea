@@ -40,6 +40,9 @@ library AW requires Groups{
                                     data.u[0]=null;
                                 }
                             }
+                            if(b.Level<=0){
+                                b.Stop();
+                            }
                         }else{
                             for(0<=x<4){
                                 if(data.u[x]!=null){
@@ -106,7 +109,7 @@ library AW requires Groups{
             Units mj;
             Dash dash;
             Data data;
-            
+            Effect ef;
             u.AnimeSpeed(1);
             //降低尸体层数
             if(u.IsAbility('B00Q')==true){
@@ -118,7 +121,9 @@ library AW requires Groups{
             mj=Units.MJ(u.player.player,'e008','A03C',0,u.X()+125*CosBJ(e.Angle+180),u.Y()+125*SinBJ(e.Angle+180),e.Angle,10,1.1,1, "attack","units\\undead\\Abomination\\Abomination.mdl"); 
             mj.AnimeId(2);
             //mj.DelayAnimeSpeed(0,0.2);
-            Effect.ToUnit("Abilities\\Spells\\Undead\\RaiseSkeletonWarrior\\RaiseSkeleton.mdl",mj.unit,"chest").Destroy();
+            ef=Effect.To("Abilities\\Spells\\Undead\\RaiseSkeletonWarrior\\RaiseSkeleton.mdl",mj.X(),mj.Y());
+            ef.Size(1.5);
+            ef.Destroy();
             data=Data.create('A03C');
             data.c[0]=u;
             data.c[1]=mj;
