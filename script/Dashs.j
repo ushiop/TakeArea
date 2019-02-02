@@ -13,7 +13,7 @@ library Dashs requires TimerUtils{
             static constant integer SUB=3;//减速冲锋
 
             static method Death(Units u,Units m){
-                //Dash.AllStop(u.unit);
+                Dash.AllStop(u.unit);
             }
 
 
