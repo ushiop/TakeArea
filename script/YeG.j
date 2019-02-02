@@ -8,8 +8,9 @@ library YeG requires Groups{
         TimerStart(NewTimer(),20,true,function(){
             integer s;
             location d;
-            GroupEnumUnitsInRange(tmp_group,0,0,9999999999,function()->boolean{ return GetUnitTypeId(GetFilterUnit()) == 'n001'; });
-            s=200-GroupNumber(tmp_group);
+            group g=CreateGroup();
+            GroupEnumUnitsInRange(g,0,0,9999999999,function()->boolean{ return GetUnitTypeId(GetFilterUnit()) == 'n001'; });
+            s=200-GroupNumber(g);
             while(s>0){
                 d=GetRandomLocInRect(rec[GetRandomInt(0,1)]);
                 Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'n001',GetLocationX(d),GetLocationY(d),0);
@@ -17,8 +18,8 @@ library YeG requires Groups{
                 d=null;    
                 s-=1;
             }
-            GroupClear(tmp_group);
-
+            DestroyGroup(g);
+            g=null;
 
         });
     }
