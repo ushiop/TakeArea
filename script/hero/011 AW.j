@@ -259,7 +259,7 @@ library AW requires Groups{
                     if(data.i[1]==0){//抓人阶段
                         shou.AnimeSpeed(1); 
                         Util.Range(x,y,100);
-                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);   
+                        GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
                         if(GroupNumber(tmp_group)==0){//没抓到人
                             BJDebugMsg("结束了");
                             GroupClear(tmp_group); 
@@ -284,7 +284,7 @@ library AW requires Groups{
                             BJDebugMsg("结束了");
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,1, "stand","bloodex.mdl").SetH(100); 
                             
-                            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);   
+                            GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
