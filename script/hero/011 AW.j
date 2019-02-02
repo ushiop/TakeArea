@@ -283,7 +283,7 @@ library AW requires Groups{
                         if(data.i[2]==0){//抓爆阶段
                             BJDebugMsg("结束了");
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,1, "stand","bloodex.mdl").SetH(100); 
-                            
+                             
                             GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
