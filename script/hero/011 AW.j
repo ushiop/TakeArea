@@ -243,7 +243,9 @@ library AW requires Groups{
             mj=Units.MJ(u.player.player,'e008','A03D',0,e.X,e.Y,45,4,2.5,4.5, "stand","Abilities\\Spells\\Items\\AIso\\AIsoTarget.mdl"); 
             data.c[0]=u;
             data.c[1]=mj;
-            data.i[0]=5;
+            data.i[0]=4;
+            data.i[1]=0;//阶段
+            data.i[2]=2;//阶段2的计时
             data.r[0]=e.X;
             data.r[1]=e.Y;
             SetTimerData(t,data);
@@ -254,9 +256,56 @@ library AW requires Groups{
                 Units shou=Units(data.c[1]);
                 real x=data.r[0],y=data.r[1];
                 if(data.i[0]==0){ 
-                    shou.AnimeSpeed(1); 
-                    ReleaseTimer(GetExpiredTimer());
-                    data.Destroy();
+                    if(data.i[1]==0){//抓人阶段
+                        shou.AnimeSpeed(1); 
+                        Util.Range(x,y,100);
+                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);   
+                        if(GroupNumber(tmp_group)==0){//没抓到人
+                            BJDebugMsg("结束了");
+                            GroupClear(tmp_group); 
+                            ReleaseTimer(GetExpiredTimer());
+                            data.Destroy();
+                        }else{
+                            
+                            //Units.MJ(u.player.player,'e008','A03D',0,x,y,0,3,1.5,1.5, "stand","blood1.mdl"); 
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                    Buffs.Skill(mj.unit,'A00F',1);
+                                    u.Damage(mj.unit,Damage.Physics,'A03D',u.Int(true)*15);     
+                                }
+                            }  
+                            GroupClear(tmp_group); 
+                            data.i[1]=1; 
+                        }
+                    }else{
+                        if(data.i[2]==0){//抓爆阶段
+                            BJDebugMsg("结束了");
+                            Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,1, "stand","bloodex.mdl").SetH(100); 
+                            
+                            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);   
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){     
+                                    u.Damage(mj.unit,Damage.Chaos,'A03D',mj.MaxHP()*0.04);     
+                                }
+                            }  
+                            GroupClear(tmp_group); 
+                            shou.AnimeSpeed(1);
+                            ReleaseTimer(GetExpiredTimer());
+                            data.Destroy();
+                        }else{
+                            if(data.i[2]==2){
+                                Units.MJ(u.player.player,'e008','A03D',0,x,y,0,1,5,1, "stand","Abilities\\Spells\\NightElf\\shadowstrike\\shadowstrike.mdl").SetH(250);
+                                shou.AnimeSpeed(0);
+                            }
+                            data.i[2]-=1;
+                        }
+
+                    }
+                    
                 }else{
                     data.i[0]-=1;
                     GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
