@@ -18,6 +18,7 @@ library AW requires Groups{
                     Data data=Data(GetTimerData(GetExpiredTimer()));
                     Units u=Units(data.c[0]);
                     Buffs b;
+                    Units mj;
                     if(u.Alive()==false){
                         BJDebugMsg("结束了");
                         for(0<=x<4){
@@ -55,6 +56,19 @@ library AW requires Groups{
                                 u.AddAbility('A03F');
                                 if(data.r[0]<=0){
                                     BJDebugMsg("埃文斯了");
+                                    //450
+                                    Effect.ToUnit("blood-zhendi_green.mdl",u.unit,"origin").Destroy();
+                                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),450,function GroupIsAliveNotAloc);   
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){     
+                                            BJDebugMsg(mj.name);
+                                            u.Damage(mj.unit,Damage.Chaos,'A03E',b.Level*5.0);     
+                                            Effect.ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",mj.unit,"origin");
+                                        }
+                                    }  
+                                    GroupClear(tmp_group); 
                                     data.r[0]=1;
                                 }else{
                                     data.r[0]-=0.1;
@@ -82,10 +96,11 @@ library AW requires Groups{
         static method Death(Units u,Units m){
             Units mj;
             integer s=0;
-            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),900,function GroupIsAliveNotAloc);     
-            while(FirstOfGroup(tmp_group)!=null){
-                mj=Units.Get(FirstOfGroup(tmp_group));
-                GroupRemoveUnit(tmp_group,mj.unit);
+            group g=CreateGroup();
+            GroupEnumUnitsInRange(g,u.X(),u.Y(),900,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(g)!=null){
+                mj=Units.Get(FirstOfGroup(g));
+                GroupRemoveUnit(g,mj.unit);
                 if(mj.IsAbility('A03A')==true){   
                     if(s==0){
                         s=1;
@@ -97,7 +112,8 @@ library AW requires Groups{
                     Effect.ToUnit("Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl",mj.unit,"chest");
                 }
             }
-            GroupClear(tmp_group);   
+            DestroyGroup(g);
+            g=null;
         }
 
         //Q被动增伤
@@ -269,10 +285,9 @@ library AW requires Groups{
                 if(data.i[0]==0){ 
                     if(data.i[1]==0){//抓人阶段
                         shou.AnimeSpeed(1); 
-                        Util.Range(x,y,100);
+                        //Util.Range(x,y,100);
                         GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
-                        if(GroupNumber(tmp_group)==0){//没抓到人
-                            BJDebugMsg("结束了");
+                        if(GroupNumber(tmp_group)==0){//没抓到人 
                             GroupClear(tmp_group); 
                             ReleaseTimer(GetExpiredTimer());
                             data.Destroy();
@@ -293,8 +308,9 @@ library AW requires Groups{
                     }else{
                         if(data.i[2]==0){//抓爆阶段
                             BJDebugMsg("结束了");
-                            Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,1, "stand","bloodex.mdl").SetH(100); 
-                             
+                            Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,2,1, "stand","blood-boom.mdl"); 
+                            //Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1,1, "stand","blood-zhendi.mdl").SetH(50); 
+                            Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,2, "stand","bloodex.mdl").SetH(100); 
                             GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -308,10 +324,10 @@ library AW requires Groups{
                             ReleaseTimer(GetExpiredTimer());
                             data.Destroy();
                         }else{
-                            if(data.i[2]==2){
-                                Units.MJ(u.player.player,'e008','A03D',0,x,y,0,1,5,1, "stand","Abilities\\Spells\\NightElf\\shadowstrike\\shadowstrike.mdl").SetH(250);
-                                shou.AnimeSpeed(0);
-                            }
+                            /*if(data.i[2]==2){
+                                //Units.MJ(u.player.player,'e008','A03D',0,x,y,0,1,5,1, "stand","Abilities\\Spells\\NightElf\\shadowstrike\\shadowstrike.mdl").SetH(250);
+                                //shou.AnimeSpeed(0);
+                            }*/
                             data.i[2]-=1;
                         }
 
