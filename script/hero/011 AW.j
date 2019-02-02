@@ -11,6 +11,7 @@ library AW requires Groups{
                 t=NewTimer();
                 data=Data.create('A03A');
                 data.c[0]=u;
+                data.r[0]=1;
                 SetTimerData(t,data);
                 TimerStart(t,0.1,true,function(){
                     integer x;
@@ -49,7 +50,16 @@ library AW requires Groups{
                                     Units.Remove(data.u[1]); 
                                     data.u[1]=null;
                                 }
-                            }
+                            } 
+                            if(u.player.lv15!=null){ 
+                                u.AddAbility('A03F');
+                                if(data.r[0]<=0){
+                                    BJDebugMsg("埃文斯了");
+                                    data.r[0]=1;
+                                }else{
+                                    data.r[0]-=0.1;
+                                }
+                            } 
                             if(b.Level<=0){
                                 b.Stop();
                             }
@@ -60,6 +70,7 @@ library AW requires Groups{
                                     data.u[x]=null;
                                 }
                             }   
+                            u.RemoveAbility('A03F');
                         }
                     }
                 });
