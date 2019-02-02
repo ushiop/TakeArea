@@ -55,6 +55,7 @@ library AW requires Groups{
                             if(u.player.lv15!=null){ 
                                 u.AddAbility('A03F');
                                 if(data.r[0]<=0){
+
                                     BJDebugMsg("埃文斯了");
                                     //450
                                     Effect.ToUnit("blood-zhendi_green.mdl",u.unit,"origin").Destroy();
@@ -308,6 +309,8 @@ library AW requires Groups{
                     }else{
                         if(data.i[2]==0){//抓爆阶段
                             BJDebugMsg("结束了");
+                            
+                            u.player.Duang(40,0.2);
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,2,1, "stand","blood-boom.mdl"); 
                             //Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1,1, "stand","blood-zhendi.mdl").SetH(50); 
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,2, "stand","bloodex.mdl").SetH(100); 
@@ -316,7 +319,8 @@ library AW requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){     
-                                    u.Damage(mj.unit,Damage.Chaos,'A03D',mj.MaxHP()*0.04);     
+                                    u.Damage(mj.unit,Damage.Chaos,'A03D',mj.MaxHP()*0.04);   
+                                    mj.player.Duang(40,0.2); 
                                 }
                             }  
                             GroupClear(tmp_group); 
