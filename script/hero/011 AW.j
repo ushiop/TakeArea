@@ -359,7 +359,7 @@ library AW requires Groups{
             Units u=Units.Get(e.Spell);
             timer t=NewTimer();
             Data data=Data.create('A03G');
-            Units mj=Units.MJ(u.player.player,'e008','A03G',0,u.X(),u.Y(),0,5,1,2, "stand","magic.mdl"); 
+            Units mj=Units.MJ(u.player.player,'e008','A03G',0,u.X(),u.Y(),0,5,1,3, "stand","magic_ex.mdl"); 
             data.c[0]=u;
             data.c[1]=e;
             data.c[2]=mj;
@@ -375,7 +375,8 @@ library AW requires Groups{
                 if(data.i[0]==0){
                     if(u.IsAbility('B00R')==false){
                         BJDebugMsg("失败了"); 
-                        Units(data.c[2]).Life(0.3);
+                        Units(data.c[2]).Anime("death");
+                        Units(data.c[2]).Alpha(0);
                         Spell(data.c[1]).Destroy();
                         ReleaseTimer(GetExpiredTimer());
                         data.Destroy();
@@ -383,7 +384,7 @@ library AW requires Groups{
                         data.r[0]-=0.01;
                         if(data.r[0]==0.5){
                             u.AnimeId(4);
-                        }
+                        } 
                         if(data.r[0]<=0){
                             BJDebugMsg("施放成功!");
                             data.i[0]=1;
