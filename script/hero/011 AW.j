@@ -355,6 +355,48 @@ library AW requires Groups{
             
         }
 
+        static method D(Spell e){
+            Units u=Units.Get(e.Spell);
+            timer t=NewTimer();
+            Data data=Data.create('A03G');
+            Units mj=Units.MJ(u.player.player,'e008','A03G',0,u.X(),u.Y(),0,5,1,2, "stand","magic.mdl"); 
+            data.c[0]=u;
+            data.c[1]=e;
+            data.c[2]=mj;
+            data.r[0]=1.5;
+            data.i[0]=0;//蓄力阶段
+            SetTimerData(t,data);
+            Buffs.Add(u.unit,'A03H','B00R',1.5,false);
+            u.FlushAnimeId(5);
+            //4 出手 5 蓄力
+            TimerStart(t,0.01,true,function(){
+                Data data=Data(GetTimerData(GetExpiredTimer()));
+                Units u=Units(data.c[0]);
+                if(data.i[0]==0){
+                    if(u.IsAbility('B00R')==false){
+                        BJDebugMsg("失败了"); 
+                        Units(data.c[2]).Life(0.3);
+                        Spell(data.c[1]).Destroy();
+                        ReleaseTimer(GetExpiredTimer());
+                        data.Destroy();
+                    }else{
+                        data.r[0]-=0.01;
+                        if(data.r[0]==0.5){
+                            u.AnimeId(4);
+                        }
+                        if(data.r[0]<=0){
+                            BJDebugMsg("施放成功!");
+                            data.i[0]=1;
+                        }
+                    }
+                }else{
+
+                }
+                
+            });
+            t=null;
+        }
+
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A03C'||e.Id=='A03D'){ 
@@ -367,17 +409,24 @@ library AW requires Groups{
         static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
             u.AnimeSpeed(1);
+            if(e.Id=='A03G'){
+                if(u.IsAbility('B00R')==true){
+                    Buffs.Find(u.unit,'B00R').Stop();
+                }
+            }
             e.Destroy();
         }
 
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A03G',AW.D); 
             Spell.On(Spell.onSpell,'A03D',AW.E); 
             Spell.On(Spell.onSpell,'A03C',AW.W); 
             Spell.On(Spell.onReady,'A03C',AW.HERO_START);
             Spell.On(Spell.onStop,'A03C',AW.HERO_STOP);   
             Spell.On(Spell.onReady,'A03D',AW.HERO_START);
             Spell.On(Spell.onStop,'A03D',AW.HERO_STOP);  
+            Spell.On(Spell.onStop,'A03G',AW.HERO_STOP); 
             Damage.On(Damage.onUnitDamage_AddDamage,AW.Damage_Add);
             Damage.On(Damage.onUnitDamage_SubDamage,AW.Damage_Sub);
             Units.On(Units.onHeroDeath,AW.Death);
