@@ -131,30 +131,27 @@ library Units requires Table,Players,Events,Util{
             }
 
             //在time秒内将透明度由nowA转变为maxA
-            method DelayAlpha(integer nowA,integer maxA,real time){
-                timer t=NewTimer();
+            method DelayAlpha(integer nowA,integer maxA,real time){ 
                 Data data=Data.create('A010');
                 data.c[0]=this;
                 data.i[0]=R2I((maxA-nowA) / (time/0.01));
                 data.i[1]=nowA;
                 data.i[2]=maxA;
                 data.r[3]=time;
-                this.Alpha(nowA);
-                SetTimerData(t,data);
-                TimerStart(t,0.01,true,function(){
-                    Data data=Data(GetTimerData(GetExpiredTimer())); 
+                this.Alpha(nowA);  
+                Timers.Start(0.01,data,function(Timers t){
+                    Data data=Data(t.Data()); 
                     Units u=Units(data.c[0]);
                     if(data.r[3]<=0||u.Alive()==false){
-                        u.Alpha(data.i[2]);
+                        u.Alpha(data.i[2]);  
                         data.Destroy();
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                     }else{
                         data.r[3]-=0.01;
                         data.i[1]+=data.i[0];
                         u.Alpha(data.i[1]);
                     }
-                });
-                t=null;                     
+                });                     
             }
 
             //设置单位颜色,0-255
@@ -296,120 +293,104 @@ library Units requires Table,Players,Events,Util{
             }
 
             //延迟一定时间后替换单位模型,0秒为立即替换（不开启计时器)
-            method DelayModel(string path,real delay){
-                timer t;
+            method DelayModel(string path,real delay){ 
                 Data data;
                 if(delay==0){
                     this.Model(path);
-                }else{
-                    t=NewTimer();
+                }else{ 
                     data=Data.create('A001');
                     data.c[0]=this;
                     data.s[0]=path;
-                    data.r[0]=delay;
-                    SetTimerData(t,data);
-                    TimerStart(t,0.01,true,function(){
-                        Data d=Data(GetTimerData(GetExpiredTimer()));
+                    data.r[0]=delay; 
+                    Timers.Start(0.01,data,function(Timers t){
+                        Data d=Data(t.Data());
                         if(d.r[0]<=0||Units(d.c[0]).Alive()==false){ 
                             Units(d.c[0]).Model(d.s[0]); 
-                            ReleaseTimer(GetExpiredTimer());
+                            t.Destroy();
                             d.Destroy();
                         }else{
                             d.r[0]-=0.01;
                         }
-                    });
-                    t=null;
+                    }); 
                 }
             }
 
             //延迟一定时间后播放动画
-            method DelayAnime(integer id,real delay){
-                timer t=NewTimer();
+            method DelayAnime(integer id,real delay){ 
                 Data data=Data.create('A000');
                 data.c[0]=this;
                 data.i[0]=id;
-                data.r[0]=delay;
-                SetTimerData(t,data);
-                TimerStart(t,0.01,true,function(){
-                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                data.r[0]=delay; 
+                Timers.Start(0.01,data,function(Timers t){
+                    Data d=Data(t.Data());  
                     Units u=Units(d.c[0]);
                     if(d.r[0]<=0||u.Alive()==false){ 
                         u.AnimeId(d.i[0]);
                         d.Destroy(); 
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                     }else{
                         d.r[0]-=0.01;
                     }
-                });
-                t=null;               
+                });       
             }
 
             //延迟一定时间后设置模型大小
-            method DelaySize(real s,real delay){
-                timer t=NewTimer();
+            method DelaySize(real s,real delay){ 
                 Data data=Data.create('A003');
                 data.c[0]=this;
                 data.r[0]=s;
-                data.r[1]=delay;
-                SetTimerData(t,data);
-                TimerStart(t,0.01,true,function(){
-                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                data.r[1]=delay; 
+                Timers.Start(0.01,data,function(Timers t){
+                    Data d=Data(t.Data());  
                     Units u=Units(d.c[0]);
                     if(d.r[1]<=0||u.Alive()==false){
 
                         u.Size(d.r[0]);
                         d.Destroy(); 
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                     }else{
                         d.r[1]-=0.01;
                     }
-                });
-                t=null;                    
+                });                    
             }
 
             //延迟一定时间后设置动画播放速度
-            method DelayAnimeSpeed(real speed,real delay){
-                timer t=NewTimer();
+            method DelayAnimeSpeed(real speed,real delay){ 
                 Data data=Data.create('A002');
                 data.c[0]=this;
                 data.r[0]=speed;
-                data.r[1]=delay;
-                SetTimerData(t,data);
-                TimerStart(t,0.01,true,function(){
-                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                data.r[1]=delay; 
+                Timers.Start(0.01,data,function(Timers t){
+                    Data d=Data(t.Data());  
                     Units u=Units(d.c[0]);
                     if(d.r[1]<=0||u.Alive()==false){ 
                         u.AnimeSpeed(d.r[0]);
                         d.Destroy(); 
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                     }else{
                         d.r[1]-=0.01;
                     }
-                });
-                t=null;               
+                });               
             } 
 
             //延迟一定时间后解除暂停并设置动画速度为1倍
-            method DelayReleaseAnimePause(real delay){
-                timer t=NewTimer();
+            method DelayReleaseAnimePause(real delay){ 
                 Data data=Data.create('A004');
                 data.c[0]=this;
-                data.r[0]=delay;
-                SetTimerData(t,data);
-                TimerStart(t,0.01,true,function(){
-                    Data d=Data(GetTimerData(GetExpiredTimer()));  
+                data.r[0]=delay; 
+                Timers.Start(0.01,data,function(Timers t){
+                    Data d=Data(t.Data());  
                     Units u=Units(d.c[0]);
                     if(d.r[0]<=0||u.Alive()==false){
 
                         u.AnimeSpeed(1);
                         u.Pause(false);
                         d.Destroy(); 
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                     }else{
                         d.r[0]-=0.01;
                     }
-                });
-                t=null;       
+                });       
             }
 
             //播放单位动画名
