@@ -240,7 +240,7 @@ library Groups requires Units,Damage{
         while(FirstOfGroup(tmp_cdj_group)!=null){
             tmp=FirstOfGroup(tmp_cdj_group);
             GroupRemoveUnit(tmp_cdj_group,tmp);
-            if(GetUnitAbilityLevel(tmp,Units.MJType_CDJ)==1){
+            if(GetUnitAbilityLevel(tmp,Units.MJType_CDW)==1){
                 SetUnitUserData(tmp,0);
             }
         }         
