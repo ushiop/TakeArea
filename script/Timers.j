@@ -31,6 +31,30 @@ library Timers requires TimerUtils{
                 this.deallocate();         
             } 
 
+            //暂停或解除一个计时器的暂停
+            method ChangePause(){
+                if(this.Pause==false){
+                    this.Pause=true;
+                }else{
+                    this.Pause=false;
+                }
+            }
+
+            //设置计时器的触发间隔，将在该次间隔后生效
+            method SetTime(real delay){
+                this.MaxTime=delay;
+            }
+
+            //返回计时器的当前触发间隔
+            method Time()->real{
+                return this.MaxTime;
+            }
+
+            //返回该计时器已触发的次数
+            method Expired()->integer{
+                return this.TimerExpired;
+            }
+
             //创建一个计时器返回，该方法创建的计时器处于暂停状态，所有参数为默认值
             static method New()->Timers{ 
                 Timers tmp=Timers.allocate();
@@ -47,7 +71,7 @@ library Timers requires TimerUtils{
                 return tmp;
             } 
 
-            //创建一个计时器并以指定参数设置，并返回，该方法创建的计时器处于非暂停状态
+            //创建一个计时器并以指定参数设置，并返回，该方法创建的计时器处于非暂停状态(即直接运行)
             static method Start(real delay,integer Obj,TimersEventInterface on)->Timers{
                 Timers tmp=Timers.New();
                 tmp.Pause=false;

@@ -5,6 +5,7 @@
 //! import vjass "map/script/Stack.j"
 //! import vjass "map/script/SoundUtils.j"
 //<?import("init.lua")  ("map\\script\\Press.lua", true)?>  LUA文件要在地图里导入，不能用J文件
+//! import zinc "map/script/Timers.j"
 //! import zinc "map/script/Press.j"
 //! import zinc "map/script/Events.j"
 //! import zinc "map/script/Players.j"
