@@ -242,7 +242,7 @@ library AW requires Groups{
                     tf.AnimeSpeed(2.25);
                     tf.AnimeId(4);
                     tf.Life(0.7);
-                    tf.DelayAlpha(255,0,0.65);
+                    tf.DelayAlpha(255,0,0.6);
                     if(data.u[0]!=null){
                         Buffs.Skill(data.u[0],'A00F',1);
                         u.Damage(data.u[0],Damage.Physics,'A03C',u.Int(true)*10);
