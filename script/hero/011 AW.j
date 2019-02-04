@@ -356,29 +356,29 @@ library AW requires Groups{
         }
 
         static method D(Spell e){
-            Units u=Units.Get(e.Spell);
-            timer t=NewTimer();
+            Units u=Units.Get(e.Spell); 
             Data data=Data.create('A03G');
             Units mj=Units.MJ(u.player.player,'e008','A03G',0,u.X(),u.Y(),0,5,1,3, "stand","magic_ex.mdl"); 
             data.c[0]=u;
             data.c[1]=e;
             data.c[2]=mj;
             data.r[0]=1.5;
-            data.i[0]=0;//蓄力阶段
-            SetTimerData(t,data);
+            data.i[0]=0;//蓄力阶段 
             Buffs.Add(u.unit,'A03H','B00R',1.5,false);
             u.FlushAnimeId(5);
             //4 出手 5 蓄力
-            TimerStart(t,0.01,true,function(){
-                Data data=Data(GetTimerData(GetExpiredTimer()));
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
+                Units mj;
+                real x=u.X(),y=u.Y();
                 if(data.i[0]==0){
                     if(u.IsAbility('B00R')==false){
                         BJDebugMsg("失败了"); 
                         Units(data.c[2]).Anime("death");
                         Units(data.c[2]).Alpha(0);
                         Spell(data.c[1]).Destroy();
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                         data.Destroy();
                     }else{
                         data.r[0]-=0.01;
@@ -388,14 +388,33 @@ library AW requires Groups{
                         if(data.r[0]<=0){
                             BJDebugMsg("施放成功!");
                             data.i[0]=1;
+                            mj=Units.MJ(u.player.player,'e008','A03G',0,x,y,0,25,2.5,1, "stand","[spell]0012.mdl"); 
+                            mj.SetData(700);//持续7秒 (7/0.01)
+                            mj.Position(x,y,true);//可选取
+                            mj.AddAbility(Units.MJType_CDW);//添加场地技标记
+                            data.c[2]=mj;//场地技‘亡灵之国度’本体
+                            mj=Units.MJ(u.player.player,'e008','A03G',0,x,y,0,12,1.1,1, "stand","dark3.mdl"); 
+                            data.c[3]=mj;//黑圈圈
+                            mj.DelayAnimeSpeed(0,0.3);
                         }
                     }
-                }else{
-
+                }else{ 
+                    mj=Units(data.c[2]);
+                    if(mj.Data()<=0){
+                        BJDebugMsg("又结束了");
+                        mj.Life(3);
+                        mj.Anime("death");
+                        Units(data.c[3]).Life(1); 
+                        Units(data.c[3]).AnimeSpeed(3);
+                        Spell(data.c[1]).Destroy();
+                        t.Destroy();
+                        data.Destroy();                        
+                    }else{
+                        mj.SetData(mj.Data()-1);
+                    }
                 }
                 
-            });
-            t=null;
+            }); 
         }
 
         static method HERO_START(Spell e){
