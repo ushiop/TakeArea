@@ -245,6 +245,7 @@ library Groups requires Units,Damage{
             }
         }         
         GroupClear(tmp_cdj_group);
+        tmp=null;
          
     }
 }
