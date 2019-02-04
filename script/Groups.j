@@ -8,6 +8,7 @@ library Groups requires Units,Damage{
     group tmp_create_group=CreateGroup();//寻找最早单位用的临时租
     group tmp_damage_group=CreateGroup();//范围伤害用的临时组
     group tmp_random_group=CreateGroup();//寻找随机单位用的临时租
+    group tmp_cdj_group=CreateGroup();//场地技寻找周围场地技的临时租
 
     //返回单位组内单位数量
     public function GroupNumber(group g)->integer{
@@ -232,5 +233,18 @@ library Groups requires Units,Damage{
         return null;
     }
 
-
+    //杀死x,y为圆心，范围1200码内的所有场地技
+    public function KillCDJ(real x,real y){
+        unit tmp;  
+        GroupEnumUnitsInRange(tmp_cdj_group,x,y,1200,function GroupIsAliveAloc);  
+        while(FirstOfGroup(tmp_cdj_group)!=null){
+            tmp=FirstOfGroup(tmp_cdj_group);
+            GroupRemoveUnit(tmp_cdj_group,tmp);
+            if(GetUnitAbilityLevel(tmp,Units.MJType_CDJ)==1){
+                SetUnitUserData(tmp,0);
+            }
+        }         
+        GroupClear(tmp_cdj_group);
+         
+    }
 }
