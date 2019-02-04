@@ -398,7 +398,7 @@ library AW requires Groups{
                             mj.DelayAnimeSpeed(0,0.3);
                         }
                     }
-                }else{ 
+                }else{  
                     mj=Units(data.c[2]);
                     if(mj.Data()<=0){
                         BJDebugMsg("又结束了");
