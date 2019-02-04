@@ -13,7 +13,7 @@ library Effect requires TimerUtils{
         real sizeY;//Y轴缩放
         real sizeZ;//Z轴缩放
         unit u;//绑定的单位 
-        timer t;//延迟删除计时器
+        Timers t;//延迟删除计时器
         effect e;//特效 
 
         static method create()->Effect{
@@ -29,7 +29,7 @@ library Effect requires TimerUtils{
             v.sizeX=0;
             v.sizeY=0;
             v.sizeZ=0;
-            v.t=null;
+            v.t=0;
             v.u=null;
             v.e=null;
             return v;
@@ -38,9 +38,9 @@ library Effect requires TimerUtils{
         //删除特效
         method Destroy(){
             DestroyEffect(this.e);
-            if(this.t!=null){ 
-                ReleaseTimer(this.t);
-                this.t=null;
+            if(this.t!=0){ 
+                this.t.Destroy();
+                this.t=0;
             }
             //BJDebugMsg("特效删除");
             this.u=null;
@@ -50,14 +50,14 @@ library Effect requires TimerUtils{
 
         //该特效在延迟time秒后删除,重复调用可以修改延迟时间
         method Delay(real time){
-            if(this.t==null){ 
-                this.t=NewTimer();
-                SetTimerData(this.t,this);
-            }
-            TimerStart(this.t,time,false,function(){
-                Effect e=Effect(GetTimerData(GetExpiredTimer()));
-                e.Destroy();
-            });
+            if(this.t==0){ 
+                this.t=Timers.Start(time,this,function(Timers t){
+                    Effect e=Effect(t.Data());   
+                    e.Destroy();  
+                }); 
+            }else{
+                this.t.SetTime(time);
+            } 
         }
 
         //设置特效大小
