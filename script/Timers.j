@@ -55,6 +55,11 @@ library Timers requires TimerUtils{
                 return this.TimerExpired;
             }
 
+            //返回该计时器携带的数据类
+            method Data()->integer{
+                return this.Obj;
+            }
+
             //创建一个计时器返回，该方法创建的计时器处于暂停状态，所有参数为默认值
             static method New()->Timers{ 
                 Timers tmp=Timers.allocate();
@@ -90,13 +95,12 @@ library Timers requires TimerUtils{
                 tmp1=tmp.Next;
                 if(tmp!=Root){
                     if(tmp.Pause==false){
+                        tmp.NowTime-=0.01;
                         if(tmp.NowTime<=0){
                             TimersEventInterface(tmp.onTime).evaluate(tmp);
                             tmp.NowTime=tmp.MaxTime;
                             tmp.TimerExpired+=1;
-                        }else{
-                            tmp.NowTime-=0.01;
-                        }
+                        } 
                     }
                 } 
                 tmp=tmp1;
@@ -105,7 +109,7 @@ library Timers requires TimerUtils{
  
 
         static method onInit(){
-            Root=Timers.New();
+            Root=Timers.allocate();
             Last=Root;
         }
     }
