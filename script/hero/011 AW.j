@@ -419,7 +419,7 @@ library AW requires Groups{
                         if(data.r[1]<=0){
                             x=mj.X();
                             y=mj.Y();
-                            data.r[1]=0.2;
+                            data.r[1]=0.2; 
                             GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
                             //场地技的效果范围固定为600码
                             while(FirstOfGroup(tmp_group)!=null){
