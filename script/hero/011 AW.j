@@ -4,18 +4,16 @@ library AW requires Groups{
     struct AW{
 
         //死灵法师出生，绑定数据
-        static method Spawn(Units u,Units m){
-            timer t;
+        static method Spawn(Units u,Units m){ 
             Data data;
             if(u.IsAbility('A03A')==true){
                 t=NewTimer();
                 data=Data.create('A03A');
                 data.c[0]=u;
                 data.r[0]=1;
-                SetTimerData(t,data);
-                TimerStart(t,0.1,true,function(){
+                Timers.Start(0.1,data,function(Timers t){
                     integer x;
-                    Data data=Data(GetTimerData(GetExpiredTimer()));
+                    Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
                     Buffs b;
                     Units mj;
@@ -27,7 +25,7 @@ library AW requires Groups{
                                 data.u[x]=null;
                             }
                         }
-                        ReleaseTimer(GetExpiredTimer());
+                        t.Destroy();
                         data.Destroy();
                     }else{
                         if(u.IsAbility('B00Q')==true){
@@ -50,6 +48,16 @@ library AW requires Groups{
                                 if(data.u[1]!=null){
                                     Units.Remove(data.u[1]); 
                                     data.u[1]=null;
+                                }
+                            }                           
+                            if(b.Level>=30){//30层尸体
+                                if(data.u[2]==null){
+                                    data.u[2]=Units.MJ(u.player.player,'e00H','A03A',10,0,0,0,86400,1,1, "stand",".mdx").unit; 
+                                }
+                            }else{ 
+                                if(data.u[2]!=null){
+                                    Units.Remove(data.u[2]); 
+                                    data.u[2]=null;
                                 }
                             } 
                             if(u.player.lv15!=null){ 
@@ -87,8 +95,7 @@ library AW requires Groups{
                             u.RemoveAbility('A03F');
                         }
                     }
-                });
-                t=null;
+                }); 
             }
         }
 
@@ -255,8 +262,7 @@ library AW requires Groups{
 
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
-            Data data=Data.create('A03D');
-            timer t=NewTimer();
+            Data data=Data.create('A03D'); 
             Units mj;
             Buffs b;
             //降低尸体层数
@@ -274,10 +280,9 @@ library AW requires Groups{
             data.i[1]=0;//阶段
             data.i[2]=2;//阶段2的计时
             data.r[0]=e.X;
-            data.r[1]=e.Y;
-            SetTimerData(t,data);
-            TimerStart(t,0.1,true,function(){
-                Data data=Data(GetTimerData(GetExpiredTimer()));
+            data.r[1]=e.Y; 
+            Timers.Start(0.1,data,function(Timers t){
+                Data data=Data(t.Data());
                 Units mj;
                 Units u=Units(data.c[0]);
                 Units shou=Units(data.c[1]);
@@ -289,7 +294,7 @@ library AW requires Groups{
                         GroupEnumUnitsInRange(tmp_group,x,y,100,function GroupIsAliveNotAloc);   
                         if(GroupNumber(tmp_group)==0){//没抓到人 
                             GroupClear(tmp_group); 
-                            ReleaseTimer(GetExpiredTimer());
+                            t.Destroy();
                             data.Destroy();
                         }else{
                             
@@ -305,11 +310,11 @@ library AW requires Groups{
                             GroupClear(tmp_group); 
                             data.i[1]=1; 
                         }
-                    }else{
+                    }else{ 
                         if(data.i[2]==0){//抓爆阶段
                             BJDebugMsg("结束了");
                             
-                            u.player.Duang(40,0.2);
+                            u.player.Duang(60,0.4);
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,2,1, "stand","blood-boom.mdl"); 
                             //Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1,1, "stand","blood-zhendi.mdl").SetH(50); 
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,1.5,2, "stand","bloodex.mdl").SetH(100); 
@@ -319,12 +324,12 @@ library AW requires Groups{
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){     
                                     u.Damage(mj.unit,Damage.Chaos,'A03D',mj.MaxHP()*0.04);   
-                                    mj.player.Duang(40,0.2); 
+                                    mj.player.Duang(60,0.4); 
                                 }
                             }  
                             GroupClear(tmp_group); 
                             shou.AnimeSpeed(1);
-                            ReleaseTimer(GetExpiredTimer());
+                            t.Destroy();
                             data.Destroy();
                         }else{
                             /*if(data.i[2]==2){
@@ -348,8 +353,7 @@ library AW requires Groups{
                     }  
                     GroupClear(tmp_group); 
                 }
-            });
-            t=null;
+            }); 
             e.Destroy();
             
         }
@@ -358,6 +362,14 @@ library AW requires Groups{
             Units u=Units.Get(e.Spell); 
             Data data=Data.create('A03G');
             Units mj=Units.MJ(u.player.player,'e008','A03G',0,u.X(),u.Y(),0,5,1,3, "stand","magic_ex.mdl"); 
+            Buffs b;
+            //降低尸体层数
+            if(u.IsAbility('B00Q')==true){
+                b=Buffs.Find(u.unit,'B00Q');
+                if(b.Level>=30){
+                    b.Level-=30;
+                }
+            }
             data.c[0]=u;
             data.c[1]=e;
             data.c[2]=mj;
