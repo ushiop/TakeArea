@@ -63,8 +63,7 @@ library AW requires Groups{
                                     while(FirstOfGroup(tmp_group)!=null){
                                         mj=Units.Get(FirstOfGroup(tmp_group));
                                         GroupRemoveUnit(tmp_group,mj.unit);
-                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){     
-                                            BJDebugMsg(mj.name);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){      
                                             u.Damage(mj.unit,Damage.Chaos,'A03E',b.Level*5.0);     
                                             Effect.ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",mj.unit,"origin");
                                         }
@@ -363,6 +362,7 @@ library AW requires Groups{
             data.c[1]=e;
             data.c[2]=mj;
             data.r[0]=1.5;
+            data.r[1]=0;//伤害/牵引间隔
             data.i[0]=0;//蓄力阶段 
             Buffs.Add(u.unit,'A03H','B00R',1.5,false);
             u.FlushAnimeId(5);
@@ -386,7 +386,9 @@ library AW requires Groups{
                             u.AnimeId(4);
                         } 
                         if(data.r[0]<=0){
-                            BJDebugMsg("施放成功!");
+                            BJDebugMsg("施放成功!"); 
+                            KillCDJ(x,y);
+                            Spell(data.c[1]).Destroy();
                             data.i[0]=1;
                             mj=Units.MJ(u.player.player,'e008','A03G',0,x,y,0,25,2.5,1, "stand","[spell]0012.mdl"); 
                             mj.SetData(700);//持续7秒 (7/0.01)
@@ -395,7 +397,9 @@ library AW requires Groups{
                             data.c[2]=mj;//场地技‘亡灵之国度’本体
                             mj=Units.MJ(u.player.player,'e008','A03G',0,x,y,0,12,1.1,1, "stand","dark3.mdl"); 
                             data.c[3]=mj;//黑圈圈
-                            mj.DelayAnimeSpeed(0,0.3);
+                            mj.DelayAnimeSpeed(0,0.3); 
+                            mj=Units.MJ(u.player.player,'e008','A03G',0,x,y,0,12,3.5,1, "stand","dark2.mdl");
+                            data.c[4]=mj; 
                         }
                     }
                 }else{  
@@ -406,11 +410,33 @@ library AW requires Groups{
                         mj.Anime("death");
                         Units(data.c[3]).Life(1); 
                         Units(data.c[3]).AnimeSpeed(3);
-                        Spell(data.c[1]).Destroy();
+                        Units(data.c[4]).Life(1); 
+                        Units(data.c[4]).Anime("death");
                         t.Destroy();
                         data.Destroy();                        
                     }else{
                         mj.SetData(mj.Data()-1);
+                        if(data.r[1]<=0){
+                            x=mj.X();
+                            y=mj.Y();
+                            data.r[1]=0.2;
+                            GroupEnumUnitsInRange(tmp_group,x,y,600,function GroupIsAliveNotAloc);     
+                            //场地技的效果范围固定为600码
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(mj.IsAbility('A03C')==false){    
+                                    Dash.Start(mj.unit,Util.XY(mj.unit,Units(data.c[2]).unit),100,Dash.SUB,5,true,false);
+                                    if(Util.XY2(mj.unit,Units(data.c[2]).unit)<=150){ 
+                                        u.Damage(mj.unit,Damage.Chaos,'A03G',99999);  
+                                        Effect.To("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl",mj.X(),mj.Y()).Destroy();
+                                    }               
+                                }
+                            }  
+                            GroupClear(tmp_group); 
+                        }else{
+                            data.r[1]-=0.01;
+                        }
                     }
                 }
                 
