@@ -341,7 +341,7 @@ library AW requires Groups{
 
                     }
                     
-                }else{
+                }else{ 
                     data.i[0]-=1;
                     GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
