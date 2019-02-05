@@ -8542,7 +8542,6 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 set mj=(LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId(((FirstOfGroup(tmp_group)))))) // INLINED!!
                                 call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
                                 if ( IsUnitEnemy(s__Units_unit[mj], s__Players_player[s__Units_player[u]]) == true ) then
-                                    call BJDebugMsg(s__Units_name[mj])
                                     call s__Damage_To(s__Units_unit[s__Players_hero[s__Units_player[(u)]]] , (s__Units_unit[mj] ) , (( s__Damage_Chaos )*1.0) , ( 'A03E' ) , (( s__Buffs_Level[b] * 5.0)*1.0)) // INLINED!!
                                     call s__Effect_ToUnit("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl" , s__Units_unit[mj] , "origin")
                                 endif
@@ -8848,6 +8847,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         endif
                         if ( s___Data_r[s__Data_r[data]] <= 0 ) then
                             call BJDebugMsg("施放成功!")
+                            call KillCDJ(x , y)
+                            call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                             set s___Data_i[s__Data_i[data]]=1
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 25 , 2.5 , 1 , "stand" , "[spell]0012.mdl") //持续7秒 (7/0.01)
                             call SetUnitUserData(s__Units_unit[(mj)], (700)) //可选取 // INLINED!!
@@ -8857,6 +8858,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 12 , 1.1 , 1 , "stand" , "dark3.mdl") //黑圈圈
                             set s___Data_c[s__Data_c[data]+3]=mj
                             call s__Units_DelayAnimeSpeed(mj,0 , 0.3)
+                            set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 12 , 3.5 , 1 , "stand" , "dark2.mdl")
+                            set s___Data_c[s__Data_c[data]+4]=mj
                         endif
                     endif
                 else
@@ -8867,11 +8870,33 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call SetUnitAnimation(s__Units_unit[(mj)], ("death")) // INLINED!!
                         call UnitApplyTimedLife(s__Units_unit[((s___Data_c[s__Data_c[data]+3]))], 'BHwe', ((1)*1.0)) // INLINED!!
                         call s__Units_AnimeSpeed((s___Data_c[s__Data_c[data]+3]),3)
-                        call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                        call UnitApplyTimedLife(s__Units_unit[((s___Data_c[s__Data_c[data]+4]))], 'BHwe', ((1)*1.0)) // INLINED!!
+                        call SetUnitAnimation(s__Units_unit[((s___Data_c[s__Data_c[data]+4]))], ("death")) // INLINED!!
                         call s__Timers_Destroy(t)
                         call s__Data_Destroy(data)
                     else
                         call SetUnitUserData(s__Units_unit[(mj)], ((GetUnitUserData(s__Units_unit[(mj)])) - 1)) // INLINED!!
+                        if ( s___Data_r[s__Data_r[data]+1] <= 0 ) then
+                            set x=(GetUnitX(s__Units_unit[(mj)])) // INLINED!!
+                            set y=(GetUnitY(s__Units_unit[(mj)])) // INLINED!!
+                            set s___Data_r[s__Data_r[data]+1]=0.2
+                            call GroupEnumUnitsInRange(tmp_group, x, y, 600, Condition(function GroupIsAliveNotAloc)) //场地技的效果范围固定为600码
+                            loop
+                            exitwhen ( FirstOfGroup(tmp_group) == null )
+                                set mj=(LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId(((FirstOfGroup(tmp_group)))))) // INLINED!!
+                                call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                                if ( (GetUnitAbilityLevel(s__Units_unit[(mj)], ('A03C')) > 0) == false ) then // INLINED!!
+                                    call s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[mj] , s__Units_unit[(s___Data_c[s__Data_c[data]+2])]) , 100 , s__Dash_SUB , 5 , true , false)
+                                    if ( s__Util_XY2(s__Units_unit[mj] , s__Units_unit[(s___Data_c[s__Data_c[data]+2])]) <= 150 ) then
+                                        call s__Damage_To(s__Units_unit[s__Players_hero[s__Units_player[(u)]]] , (s__Units_unit[mj] ) , (( s__Damage_Chaos )*1.0) , ( 'A03G' ) , (( 99999)*1.0)) // INLINED!!
+                                        call s__Effect_Destroy(s__Effect_To("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl" , (GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])))) // INLINED!!
+                                    endif
+                                endif
+                            endloop
+                            call GroupClear(tmp_group)
+                        else
+                            set s___Data_r[s__Data_r[data]+1]=s___Data_r[s__Data_r[data]+1] - 0.01
+                        endif
                     endif
                 endif
             endfunction
@@ -8883,6 +8908,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_c[s__Data_c[data]+1]=e
             set s___Data_c[s__Data_c[data]+2]=mj
             set s___Data_r[s__Data_r[data]]=1.5
+            set s___Data_r[s__Data_r[data]+1]=0
             set s___Data_i[s__Data_i[data]]=0
             call s__Buffs_Add(s__Units_unit[u] , 'A03H' , 'B00R' , 1.5 , false)
             call sc__Units_DelayAnime((u),(5) , 0) // INLINED!!
@@ -14249,7 +14275,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Mon Feb 04 23:43:22 2019
+//   Date: Tue Feb 05 11:08:11 2019
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -14643,7 +14669,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs288744718")
+call ExecuteFunc("jasshelper__initstructs329834281")
 call ExecuteFunc("BuyStrAgiInt__onInit")
 call ExecuteFunc("Item___onInit")
 call ExecuteFunc("Teams__onInit")
@@ -16660,6 +16686,8 @@ function sa___prototype1_s__AW___AW_anon__166 takes nothing returns boolean
                         endif
                         if ( s___Data_r[s__Data_r[data]] <= 0 ) then
                             call BJDebugMsg("施放成功!")
+                            call KillCDJ(x , y)
+                            call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                             set s___Data_i[s__Data_i[data]]=1
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 25 , 2.5 , 1 , "stand" , "[spell]0012.mdl") //持续7秒 (7/0.01)
                             call SetUnitUserData(s__Units_unit[(mj)], (700)) //可选取 // INLINED!!
@@ -16669,6 +16697,8 @@ function sa___prototype1_s__AW___AW_anon__166 takes nothing returns boolean
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 12 , 1.1 , 1 , "stand" , "dark3.mdl") //黑圈圈
                             set s___Data_c[s__Data_c[data]+3]=mj
                             call s__Units_DelayAnimeSpeed(mj,0 , 0.3)
+                            set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , x , y , 0 , 12 , 3.5 , 1 , "stand" , "dark2.mdl")
+                            set s___Data_c[s__Data_c[data]+4]=mj
                         endif
                     endif
                 else
@@ -16679,11 +16709,33 @@ function sa___prototype1_s__AW___AW_anon__166 takes nothing returns boolean
                         call SetUnitAnimation(s__Units_unit[(mj)], ("death")) // INLINED!!
                         call UnitApplyTimedLife(s__Units_unit[((s___Data_c[s__Data_c[data]+3]))], 'BHwe', ((1)*1.0)) // INLINED!!
                         call s__Units_AnimeSpeed((s___Data_c[s__Data_c[data]+3]),3)
-                        call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
+                        call UnitApplyTimedLife(s__Units_unit[((s___Data_c[s__Data_c[data]+4]))], 'BHwe', ((1)*1.0)) // INLINED!!
+                        call SetUnitAnimation(s__Units_unit[((s___Data_c[s__Data_c[data]+4]))], ("death")) // INLINED!!
                         call s__Timers_Destroy(t)
                         call s__Data_Destroy(data)
                     else
                         call SetUnitUserData(s__Units_unit[(mj)], ((GetUnitUserData(s__Units_unit[(mj)])) - 1)) // INLINED!!
+                        if ( s___Data_r[s__Data_r[data]+1] <= 0 ) then
+                            set x=(GetUnitX(s__Units_unit[(mj)])) // INLINED!!
+                            set y=(GetUnitY(s__Units_unit[(mj)])) // INLINED!!
+                            set s___Data_r[s__Data_r[data]+1]=0.2
+                            call GroupEnumUnitsInRange(tmp_group, x, y, 600, Condition(function GroupIsAliveNotAloc)) //场地技的效果范围固定为600码
+                            loop
+                            exitwhen ( FirstOfGroup(tmp_group) == null )
+                                set mj=(LoadInteger(Table__ht, ((s__Units_ht)), GetHandleId(((FirstOfGroup(tmp_group)))))) // INLINED!!
+                                call GroupRemoveUnit(tmp_group, s__Units_unit[mj])
+                                if ( (GetUnitAbilityLevel(s__Units_unit[(mj)], ('A03C')) > 0) == false ) then // INLINED!!
+                                    call s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[mj] , s__Units_unit[(s___Data_c[s__Data_c[data]+2])]) , 100 , s__Dash_SUB , 5 , true , false)
+                                    if ( s__Util_XY2(s__Units_unit[mj] , s__Units_unit[(s___Data_c[s__Data_c[data]+2])]) <= 150 ) then
+                                        call s__Damage_To(s__Units_unit[s__Players_hero[s__Units_player[(u)]]] , (s__Units_unit[mj] ) , (( s__Damage_Chaos )*1.0) , ( 'A03G' ) , (( 99999)*1.0)) // INLINED!!
+                                        call s__Effect_Destroy(s__Effect_To("Abilities\\Spells\\Undead\\DeathCoil\\DeathCoilSpecialArt.mdl" , (GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])))) // INLINED!!
+                                    endif
+                                endif
+                            endloop
+                            call GroupClear(tmp_group)
+                        else
+                            set s___Data_r[s__Data_r[data]+1]=s___Data_r[s__Data_r[data]+1] - 0.01
+                        endif
                     endif
                 endif
     return true
@@ -16698,6 +16750,7 @@ function sa___prototype1_s__AW___AW_D takes nothing returns boolean
             set s___Data_c[s__Data_c[data]+1]=e
             set s___Data_c[s__Data_c[data]+2]=mj
             set s___Data_r[s__Data_r[data]]=1.5
+            set s___Data_r[s__Data_r[data]+1]=0
             set s___Data_i[s__Data_i[data]]=0
             call s__Buffs_Add(s__Units_unit[u] , 'A03H' , 'B00R' , 1.5 , false)
             call sc__Units_DelayAnime((u),(5) , 0) // INLINED!!
@@ -19998,7 +20051,7 @@ function sa___prototype46_s__Respawn__Respawn_PressSnyc takes nothing returns bo
     return true
 endfunction
 
-function jasshelper__initstructs288744718 takes nothing returns nothing
+function jasshelper__initstructs329834281 takes nothing returns nothing
     set st__Respawn__Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn__Respawn_Flush,Condition( function sa__Respawn__Respawn_Flush))
     set st__Respawn__Respawn_Show=CreateTrigger()
