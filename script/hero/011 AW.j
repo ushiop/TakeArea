@@ -468,7 +468,7 @@ library AW requires Groups{
             Units u=Units.Get(e.Spell);
             u.AnimeSpeed(1);
             if(e.Id=='A03G'){
-                if(u.IsAbility('B00R')==true){
+                if(u.IsAbility('B00R')==true&&u.player.isai==false){
                     Buffs.Find(u.unit,'B00R').Stop();
                 }
             }
