@@ -7,7 +7,7 @@ library AW requires Groups{
         static method Spawn(Units u,Units m){ 
             Data data;
             if(u.IsAbility('A03A')==true){
-                t=NewTimer();
+                 
                 data=Data.create('A03A');
                 data.c[0]=u;
                 data.r[0]=1;
