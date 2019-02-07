@@ -15,6 +15,19 @@ library Groups requires Units,Damage{
         return CountUnitsInGroup(g);
     }
 
+    //是否是投射物单位
+    public function GroupIsTSW()->boolean{
+        return GetUnitAbilityLevel(GetFilterUnit(),Units.MJType_TSW)==1;
+    }
+    //是否是放置物单位
+    public function GroupIsFZW()->boolean{
+        return GetUnitAbilityLevel(GetFilterUnit(),Units.MJType_FZW)==1;
+    }
+    //是否是场地物单位
+    public function GroupIsCDW()->boolean{
+        return GetUnitAbilityLevel(GetFilterUnit(),Units.MJType_CDW)==1;
+    }
+
     //是否是建筑
     public function GroupIsNotHouse()->boolean{
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE);
@@ -39,6 +52,7 @@ library Groups requires Units,Damage{
     public function GroupIsAliveAloc()->boolean{
         return GroupIsAloc()&&GroupIsNotAlive();
     }
+    
 
 
     //存活并且不是蝗虫单位
@@ -236,7 +250,7 @@ library Groups requires Units,Damage{
     //杀死x,y为圆心，范围1200码内的所有场地技
     public function KillCDJ(real x,real y){
         unit tmp;  
-        GroupEnumUnitsInRange(tmp_cdj_group,x,y,1200,function GroupIsAliveAloc);  
+        GroupEnumUnitsInRange(tmp_cdj_group,x,y,1200,function GroupIsCDW);  
         while(FirstOfGroup(tmp_cdj_group)!=null){
             tmp=FirstOfGroup(tmp_cdj_group);
             GroupRemoveUnit(tmp_cdj_group,tmp);
