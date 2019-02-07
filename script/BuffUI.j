@@ -70,7 +70,7 @@ library BuffUI requires BzAPI,Buff{
             ui[1]=this.BuffUILevel_1;
             ui[2]=this.BuffUILevel_2;
             ui[3]=this.BuffUILevel_3;
-            if(lv=="1"||lv=="0"){
+            if(this.BuffLevels<=1){
                 len=-1;
             }
             for(0<=i<4){
