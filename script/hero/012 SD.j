@@ -49,7 +49,7 @@ library SD requires Groups{
                 });
             }  
         }
-
+ 
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Buffs b;
