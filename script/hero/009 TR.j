@@ -321,7 +321,7 @@ library TR requires Groups{
                         mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand","ls tong ren.mdl");
                         //mj.DelayAlpha(255,155,0.5);
                         mj.AnimeId(5);
-                        mj.AddAbility('A02P');
+                        mj.AddAbility(Units.MJType_FZW);
                         data.c[0]=mj;
                         dash=Dash.Start(mj.unit,f,600,Dash.PWX,50,true,false);
                         mj=Units.MJ(u.player.player,'e00D','A02F',0,x,y,f+180,666,0.7,1,"stand", "tk knockin' on heaven's door by deckai_darkblue.mdl");
@@ -570,9 +570,9 @@ library TR requires Groups{
             if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv10!=null){
                 //四方斩残影
                 if(e.OrderTargetUnit==null){ 
-                    GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,200,function GroupIsAliveAloc);  
+                    GroupEnumUnitsInRange(tmp_group,e.OrderTargetX,e.OrderTargetY,200,function GroupIsFZW);  
                 }else{
-                    GroupEnumUnitsInRange(tmp_group,GetUnitX(e.OrderTargetUnit),GetUnitY(e.OrderTargetUnit),200,function GroupIsAliveAloc);  
+                    GroupEnumUnitsInRange(tmp_group,GetUnitX(e.OrderTargetUnit),GetUnitY(e.OrderTargetUnit),200,function GroupIsFZW);  
                 }
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
