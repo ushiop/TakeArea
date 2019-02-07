@@ -67,7 +67,7 @@ library SD requires Groups{
             }
             e.Destroy();
         }
-
+ 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A03K'){
