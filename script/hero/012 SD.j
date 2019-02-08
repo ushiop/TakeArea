@@ -16,8 +16,15 @@ library SD requires Groups{
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
                     Units mj;
+                    integer x;
                     if(u.Alive()==false){
                         BJDebugMsg("结束了-4D");
+                        for(0<=x<4){
+                            if(data.u[x]!=null){
+                                Units.Remove(data.u[x]);
+                                data.u[x]=null;
+                            }
+                        }
                         t.Destroy();
                         data.Destroy();
                     }else{
@@ -49,8 +56,6 @@ library SD requires Groups{
                 });
             }  
         }
-
-        //5 前摇  6 平地前推  12 旋转前推  13 输出抖动  14 反冲
  
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
@@ -68,6 +73,151 @@ library SD requires Groups{
                 
             }
             e.Destroy();
+        }
+
+        //5 前摇  6 平地前推  12 旋转前推  13 输出抖动  14 反冲
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A03M');
+            Units mj;
+            u.Pause(true); 
+            u.FlushAnimeId(13);
+            u.SetF(u.F(),true);
+            u.PositionEnabled(false);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;//技能阶段
+            data.r[0]=0.3;//输出时间  
+            mj=Units.MJ(u.player.player,'e008','A03M',0,u.X()+150*CosBJ(u.F()),u.Y()+150*SinBJ(u.F()),u.F(),5,4,3, "stand","t_lxw.mdl"); 
+            mj.SetH(120);
+            
+            data.c[2]=mj;
+            mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,1,2, "stand","az_airfloww12_ex.mdl"); 
+            mj.SetH(150);
+            data.c[3]=mj;
+            Timers.Start(0.06,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Units mj; 
+                real x,y; 
+                Dash dash;
+                if(u.Alive()==false){
+                    data.i[0]=-1;
+                }else{ 
+                    if(data.r[0]<=0){
+                        data.i[0]=-1;
+                        
+                        mj=Units(data.c[3]); 
+                        mj.DelayAlpha(255,0,0.3);
+                        mj.Life(0.35);
+                        u.AnimeId(14);  
+                        u.PositionEnabled(true);
+                        Dash.Start(u.unit,u.F()+180,200,Dash.SUB,10,true,false);
+                        u.DelayReleaseAnimePause(0.3);
+                        mj=Units.MJ(u.player.player,'e009','A03M',0,u.X(),u.Y(),u.F()+180,2,2,1.5, "stand","wind.mdx");
+                        mj.SetH(200);
+                        Dash.Start(mj.unit,mj.F(),200,Dash.SUB,15,true,false);
+                        mj=Units(data.c[2]);
+                        mj.Anime("stand");  
+                        mj.DelaySizeEx(3,1,0.3);
+                        mj.Position(mj.X(),mj.Y(),true);
+                        mj.AddAbility(Units.MJType_TSW);
+                        dash=Dash.Start(mj.unit,mj.F(),600,Dash.SUB,25,true,false);
+                        dash.Obj=6;
+                        dash.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit); 
+                            Units mj;
+                            if(dash.Obj<=0){
+                                dash.Obj=6;
+                                Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,GetRandomReal(0,360),2,1,GetRandomReal(0.5,2), "stand","BlinkCaster.mdl");
+                                Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,GetRandomReal(0,360),2,0.4,1, "stand","white-qiquan.mdl");
+                                 
+                            }else{
+                                dash.Obj-=1;
+                            }
+                            if(dash.Speed<3){
+                                dash.Stop();
+                            }else{
+                                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                        mj.Position(dash.X,dash.Y,true);           
+                                    }
+                                }  
+                                GroupClear(tmp_group); 
+                            }
+
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            Units mj;
+                            u.Life(0.5);
+                            u.Anime("death");
+                            
+                            Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,1, "stand","boom1.mdl").SetH(150);
+                            Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,1,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
+                            Util.Duang(dash.X,dash.Y,0.8,250,250,-128,0.02,50);
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                    u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*5.0);        
+                                }
+                            }  
+                            GroupClear(tmp_group); 
+                        };
+                    }else{ 
+                        data.r[0]-=0.06;
+                        x=Units(data.c[2]).X();
+                        y=Units(data.c[2]).Y();  
+                        //Units(data.c[2]).Anime("birth");
+                        Units.MJ(u.player.player,'e008','A03M',0,x,y,GetRandomReal(0,360),2,1,GetRandomReal(0.5,2), "stand","BlinkCaster.mdl");
+                        //Units.MJ(u.player.player,'e009','A03M',0,x,y,u.F(),2,1+(3*(1-(data.r[0]/0.3))),1, "stand","by_wood_gongchengsipai_2.mdl").SetH(75); 
+                        if(data.r[0]==0.24||data.r[0]==0.06){
+                            Units.MJ(u.player.player,'e00B','A03M',0,x,y,GetRandomReal(0,360),2,1.5,1, "stand","by_wood_gongchengsipai_3_b.mdl").SetH(150);   
+                        }
+                        
+                        Units.MJ(u.player.player,'e008','A03M',0,x,y,GetRandomReal(0,360),2,2,1, "stand","hiteffect07bluea.mdl").SetH(100);
+                        //Units.MJ(u.player.player,'e00B','A03M',0,x,y,u.F()+90,1,1.5,1, "stand","az_airfloww12_ex.mdl").SetH(100);   
+                        //Util.Duang(x,y,0.8,250,250,-32,0.02,50);
+                        //牵引阶段，5次伤害
+                        Util.Duang(x,y,0.3,150,150,-48,0.02,50);
+                        GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                if(Util.XY2(mj.unit,Units(data.c[2]).unit)<100){
+                                    mj.Position(mj.X(),mj.Y(),true);
+                                    u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*1.0);
+                                    Buffs.Add(mj.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;
+                                }else{ 
+                                    Dash.Start(mj.unit,Util.XY(mj.unit,Units(data.c[2]).unit),50,Dash.SUB,10,true,false);
+                                }               
+                            }
+                        }  
+                        GroupClear(tmp_group); 
+                    } 
+                }
+                
+                if(data.i[0]==-1){ 
+                    if(u.Alive()==false){ 
+                        BJDebugMsg("解除暂停");
+                        u.Pause(false); 
+                        u.PositionEnabled(true);
+                        Units(data.c[2]).Life(0.5);
+                        Units(data.c[2]).Anime("death");
+                        Units(data.c[3]).Life(0.3);
+                        Units(data.c[3]).DelayAlpha(255,0,0.2);
+                    }
+                    t.Destroy();
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                }
+            });
         }
  
         static method HERO_START(Spell e){
@@ -103,6 +253,7 @@ library SD requires Groups{
         }
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A03M',SD.E);
             Spell.On(Spell.onSpell,'A03K',SD.W);
             Spell.On(Spell.onReady,'A03K',SD.HERO_START);
             Spell.On(Spell.onStop,'A03K',SD.HERO_STOP);   
