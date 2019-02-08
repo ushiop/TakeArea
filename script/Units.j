@@ -272,6 +272,30 @@ library Units requires Table,Players,Events,Util{
                 SetUnitScale( this.unit,s,s,s);
             }
 
+            //在time秒内将缩放由nowA转变为maxA
+            method DelaySize(real nowA,real maxA,real time){ 
+                Data data=Data.create('A011');
+                data.c[0]=this;
+                data.r[0]=((maxA-nowA) / (time/0.01));
+                data.r[1]=nowA;
+                data.r[2]=maxA;
+                data.r[3]=time;
+                this.Size(nowA);  
+                Timers.Start(0.01,data,function(Timers t){
+                    Data data=Data(t.Data()); 
+                    Units u=Units(data.c[0]);
+                    if(data.r[3]<=0||u.Alive()==false){
+                        u.Size(data.r[2]);  
+                        data.Destroy();
+                        t.Destroy();
+                    }else{
+                        data.r[3]-=0.01;
+                        data.r[1]+=data.r[0];
+                        u.Size(data.r[1]);
+                    }
+                });                     
+            }
+
             //设置单位生存时间
             method Life(real time){ 
                 UnitApplyTimedLife(this.unit, 'BHwe',time);
