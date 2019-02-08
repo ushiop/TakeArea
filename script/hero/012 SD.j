@@ -49,6 +49,8 @@ library SD requires Groups{
                 });
             }  
         }
+
+        //5 前摇  6 平地前推  12 旋转前推  13 输出抖动  14 反冲
  
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
@@ -70,16 +72,33 @@ library SD requires Groups{
  
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            Dash dash;
             if(e.Id=='A03K'){
                 u.FlushAnimeId(8);
                 u.AnimeSpeed(0.5);
             }
+            if(e.Id=='A03M'){
+                u.FlushAnimeId(12);
+                u.AnimeSpeed(1.7);
+                u.AddAbility('A03N');
+                dash=Dash.Start(u.unit,e.Angle,150,Dash.NORMAL,u.MoveSpeed()/100,true,false);
+                dash.onMove=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    if(u.IsAbility('A03N')==false){
+                        dash.Stop();
+                    }
+                };
+            }
             e.Destroy();
         }
-
+ 
         static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
+            u.FlushAnimeId(1);
             u.AnimeSpeed(1);
+            if(e.Id=='A03M'){
+                u.RemoveAbility('A03N');
+            }
             e.Destroy();
         }
 
@@ -87,6 +106,8 @@ library SD requires Groups{
             Spell.On(Spell.onSpell,'A03K',SD.W);
             Spell.On(Spell.onReady,'A03K',SD.HERO_START);
             Spell.On(Spell.onStop,'A03K',SD.HERO_STOP);   
+            Spell.On(Spell.onReady,'A03M',SD.HERO_START);
+            Spell.On(Spell.onStop,'A03M',SD.HERO_STOP);   
             Units.On(Units.onHeroSpawn,SD.Spawn);
         }
     }
