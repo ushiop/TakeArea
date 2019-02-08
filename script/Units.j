@@ -273,7 +273,7 @@ library Units requires Table,Players,Events,Util{
             }
 
             //在time秒内将缩放由nowA转变为maxA
-            method DelaySize(real nowA,real maxA,real time){ 
+            method DelaySizeEx(real nowA,real maxA,real time){ 
                 Data data=Data.create('A011');
                 data.c[0]=this;
                 data.r[0]=((maxA-nowA) / (time/0.01));
