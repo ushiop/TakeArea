@@ -105,8 +105,7 @@ library SD requires Groups{
                     data.i[0]=-1;
                 }else{ 
                     if(data.r[0]<=0){
-                        data.i[0]=-1;
-                        
+                        data.i[0]=-1; 
                         mj=Units(data.c[3]); 
                         mj.DelayAlpha(255,0,0.3);
                         mj.Life(0.35);
@@ -204,8 +203,7 @@ library SD requires Groups{
                 }
                 
                 if(data.i[0]==-1){ 
-                    if(u.Alive()==false){ 
-                        BJDebugMsg("解除暂停");
+                    if(u.Alive()==false){  
                         u.Pause(false); 
                         u.PositionEnabled(true);
                         Units(data.c[2]).Life(0.5);
@@ -219,27 +217,108 @@ library SD requires Groups{
                 }
             });
         }
+
+        //飞雷丸 15
+        static method E1(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A03M');
+            u.Pause(true);
+            u.FlushAnimeId(15);
+            u.AddAbility('A03P');
+            u.AddAbility('A03Q');
+            u.SetF(e.Angle,true);
+            Dash.Start(u.unit,e.Angle,75,Dash.NORMAL,3,true,false);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0.3;
+            Timers.Start(0.3,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Dash dash;
+                Units mj;
+                if(u.Alive()==true){
+                    u.AnimeId(14);  
+                    dash=Dash.Start(u.unit,u.F()+180,100,Dash.SUB,7,true,false); 
+                    dash.onEnd=function(Dash dash){
+                        Units u=Units.Get(dash.Unit); 
+                        u.RemoveAbility('A03P');
+                        u.RemoveAbility('A03Q');
+                    };
+                    u.DelayReleaseAnimePause(0.3); 
+                    
+                    mj=Units.MJ(u.player.player,'e008','A03M',0,u.X()+75*CosBJ(u.F()),u.Y()+75*SinBJ(u.F()),u.F(),5,1,0.5, "stand","t_lxw_ex_y.mdl"); 
+                    mj.SetH(120);
+                    mj.DelaySizeEx(1,4,0.5); 
+                    mj.Position(mj.X(),mj.Y(),true);
+                    mj.AddAbility(Units.MJType_TSW);  
+                    Util.Duang(mj.X(),mj.Y(),0.3,150,150,-215,0.02,50);
+                    data.c[2]=mj;
+                    mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,1,2, "stand","az_airfloww12_ex.mdl"); 
+                    mj.SetH(150);
+                    mj.DelayAlpha(255,0,0.5); 
+                    data.c[3]=mj;
+                    mj=Units(data.c[2]);
+                    dash=Dash.Start(mj.unit,mj.F(),600,Dash.SUB,35,true,false);
+                    dash.Obj=data.c[3];
+                    dash.onMove=function(Dash dash){
+                        Units f=Units(dash.Obj);
+                        f.Position(dash.X,dash.Y,false);
+                        if(dash.Speed<4){
+                            dash.Stop();
+                        }
+                    }; 
+                    dash.onEnd=function(Dash dash){
+                        Units w=Units.Get(dash.Unit);
+                        Units f=Units(dash.Obj);
+                        f.Life(0.5);
+                        w.Life(0.5);
+                        w.Anime("death");
+                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,1, "stand","boom1_ex.mdl").SetH(150);
+                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,1,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
+                        Util.Duang(dash.X,dash.Y,0.8,250,250,-215,0.02,50);
+                    };
+
+            
+                }else{ 
+                    u.Pause(false); 
+                    u.RemoveAbility('A03P');
+                    u.RemoveAbility('A03Q');
+                } 
+                Spell(data.c[1]).Destroy();
+                t.Destroy();
+                data.Destroy();
+            });
+        }
  
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
             if(e.Id=='A03K'){
                 u.FlushAnimeId(8);
-                u.AnimeSpeed(0.5);
+                u.AnimeSpeed(0.5); 
+                e.Destroy();
             }
             if(e.Id=='A03M'){
-                u.FlushAnimeId(12);
-                u.AnimeSpeed(1.7);
-                u.AddAbility('A03N');
-                dash=Dash.Start(u.unit,e.Angle,150,Dash.NORMAL,u.MoveSpeed()/100,true,false);
-                dash.onMove=function(Dash dash){
-                    Units u=Units.Get(dash.Unit);
-                    if(u.IsAbility('A03N')==false){
-                        dash.Stop();
-                    }
-                };
+                if(1==2){//普通螺旋丸
+                    u.FlushAnimeId(12);
+                    u.AnimeSpeed(1.7);
+                    u.AddAbility('A03N');
+                    dash=Dash.Start(u.unit,e.Angle,150,Dash.NORMAL,u.MoveSpeed()/100,true,false);
+                    dash.onMove=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        if(u.IsAbility('A03N')==false){
+                            dash.Stop();
+                        }
+                    }; 
+                    e.Destroy();
+                }else{//飞雷丸
+                    SpellNameText(u.unit,"! 螺旋丸 !",3,10);
+                    u.SetAbilityCD('A03M',10);
+                    u.SetMP(u.MP()-150);
+                    SD.E1(e);
+                }
+                
             }
-            e.Destroy();
         }
  
         static method HERO_STOP(Spell e){
