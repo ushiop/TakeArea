@@ -235,7 +235,7 @@ library SD requires Groups{
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Dash dash;
-                Units mj;
+                Units mj,tmp;
                 if(u.Alive()==true){
                     u.AnimeId(14);  
                     dash=Dash.Start(u.unit,u.F()+180,100,Dash.SUB,7,true,false); 
@@ -244,16 +244,25 @@ library SD requires Groups{
                         u.RemoveAbility('A03P');
                         u.RemoveAbility('A03Q');
                     };
-                    u.DelayReleaseAnimePause(0.3); 
-                    
+                    u.DelayReleaseAnimePause(0.3);  
                     mj=Units.MJ(u.player.player,'e008','A03M',0,u.X()+75*CosBJ(u.F()),u.Y()+75*SinBJ(u.F()),u.F(),5,1,0.5, "stand","t_lxw_ex_y.mdl"); 
                     mj.SetH(120);
-                    mj.DelaySizeEx(1,4,0.5); 
+                    mj.DelaySizeEx(1,4,0.2); 
                     mj.Position(mj.X(),mj.Y(),true);
                     mj.AddAbility(Units.MJType_TSW);  
+                    GroupEnumUnitsInRange(tmp_group,mj.X(),mj.Y(),125,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(IsUnitEnemy(tmp.unit,u.player.player)==true){   
+                            u.Damage(tmp.unit,Damage.Magic,'A03M',u.Agi(true)*5.0);
+                            Buffs.Add(tmp.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;       
+                        }
+                    }  
+                    GroupClear(tmp_group); 
                     Util.Duang(mj.X(),mj.Y(),0.3,150,150,-215,0.02,50);
                     data.c[2]=mj;
-                    mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,1,2, "stand","az_airfloww12_ex.mdl"); 
+                    mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,0.7,2, "stand","az_airfloww12_ex.mdl"); 
                     mj.SetH(150);
                     mj.DelayAlpha(255,0,0.5); 
                     data.c[3]=mj;
@@ -262,7 +271,17 @@ library SD requires Groups{
                     dash.Obj=data.c[3];
                     dash.onMove=function(Dash dash){
                         Units f=Units(dash.Obj);
+                        Units tmp;
                         f.Position(dash.X,dash.Y,false);
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,175,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,f.player.player)==true){   
+                                tmp.Position(dash.X,dash.Y,true);
+                            }
+                        }  
+                        GroupClear(tmp_group); 
                         if(dash.Speed<4){
                             dash.Stop();
                         }
@@ -270,12 +289,23 @@ library SD requires Groups{
                     dash.onEnd=function(Dash dash){
                         Units w=Units.Get(dash.Unit);
                         Units f=Units(dash.Obj);
+                        Units tmp;
                         f.Life(0.5);
                         w.Life(0.5);
                         w.Anime("death");
-                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,1, "stand","boom1_ex.mdl").SetH(150);
+                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,0.4,4,1, "birth","t_lxw_ex.mdl").SetH(250);
+                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,1, "stand","boom1.mdl").SetH(150);
                         Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,1,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
                         Util.Duang(dash.X,dash.Y,0.8,250,250,-215,0.02,50);
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(IsUnitEnemy(tmp.unit,w.player.player)==true){   
+                                w.Damage(tmp.unit,Damage.Magic,'A03M',w.Agi(true)*5.0);      
+                            }
+                        }  
+                        GroupClear(tmp_group); 
                     };
 
             
