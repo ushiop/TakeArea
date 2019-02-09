@@ -319,7 +319,7 @@ library SD requires Groups{
                 data.Destroy();
             });
         }
-  
+   
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
