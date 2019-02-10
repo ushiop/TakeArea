@@ -319,6 +319,45 @@ library SD requires Groups{
                 data.Destroy();
             });
         }
+
+        //二段 7
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A03R');
+            real x=u.X(),y=u.Y();
+            u.Pause(true);
+            u.AnimeId(7);
+            u.AnimeSpeed(0.5);
+            u.AddAbility('A03S');
+            u.AddAbility('A03T');
+            u.AddAbility('A03U');
+            u.PositionEnabled(false);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;//技能阶段
+            data.r[0]=0.6;//技能牵引阶段持续时间
+            Timers.Start(0.4,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                if(data.i[0]==0){//缓慢蓄力阶段
+                    u.AnimeSpeed(1);
+                    data.i[0]=1;
+                    t.SetTime(0.03);
+                }else if(data.i[0]==1){//牵引阶段
+ 
+                }
+                if(u.Alive()==false){
+                    u.Pause(false);
+                    u.AnimeSpeed(1);
+                    u.PositionEnabled(true);
+                    u.RemoveAbility('A03S');
+                    u.RemoveAbility('A03T');
+                    u.RemoveAbility('A03U');
+                    t.Destroy();
+                    data.Destroy();
+                }
+            });
+        }
    
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
@@ -362,6 +401,7 @@ library SD requires Groups{
         }
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A03R',SD.R);
             Spell.On(Spell.onSpell,'A03M',SD.E);
             Spell.On(Spell.onSpell,'A03K',SD.W);
             Spell.On(Spell.onReady,'A03K',SD.HERO_START);
