@@ -330,37 +330,95 @@ library SD requires Groups{
             //u.AnimeSpeed(0.5);
             u.AddAbility('A03S');
             u.AddAbility('A03T'); 
-            u.PositionEnabled(false);
+            u.PositionEnabled(false); 
             data.c[0]=u;
-            data.c[1]=e;
-            data.i[0]=0;//技能阶段
+            data.c[1]=e;  
             
-            Timers.Start(0.3,data,function(Timers t){
+            Timers.Start(0.5,data,function(Timers t){
                 Data data=Data(t.Data());
-                Units u=Units(data.c[0]);
-                integer at=0;
-                if(data.i[0]==0){//缓慢蓄力阶段
-                    //u.AnimeSpeed(1);
-                    data.i[0]=1;
-                    t.SetTime(0.03);
-                }else if(data.i[0]==1){//爆炸
-                    at=-1;
-                } 
-                if(u.Alive()==false){
-                    at=-2;
-                }
-                if(at<0){
-                    if(at==-2){ 
-                        u.Pause(false);
-                        u.AnimeSpeed(1);
-                        u.PositionEnabled(true);
-                        u.RemoveAbility('A03S');
-                        u.RemoveAbility('A03T'); 
-                    }
+                Units u=Units(data.c[0]);  
+                Units mj;
+                Data data1;
+                real x=u.X(),y=u.Y();
+                if(u.Alive()==true){  
+                    data1=Data.create('A03R');
+                    mj=Units.MJ(u.player.player,'e008','A03R',0,x,y,0,1.5,2,2, "stand","az_airfloww12.mdl");
+                    mj.DelaySizeEx(1,3,0.38);
+                    data1.c[2]=mj;
+                    Units.MJ(u.player.player,'e008','A03R',0,x,y,0,1.5,2,1, "stand","boom_ex.mdl").SetH(50);
+                    //Units.MJ(u.player.player,'e008','A03R',0,x,y,0,1,0.75,2, "stand","fire-qiquan_y.mdl").SetH(50);
+                    
+                    mj=Units.MJ(u.player.player,'e008','A03R',0,x,y,0,3,1,2, "stand","rasenganimpact.mdl");
+                    mj.SetH(50);
+                    mj.DelaySizeEx(1,6,0.3); 
+                    data1.r[0]=0.4;
+                    data1.c[0]=u;
+                    data1.c[1]=mj;
+                    data1.c[3]=data.c[1];
+                    Timers.Start(0.02,data1,function(Timers t){
+                        Data data=Data(t.Data());
+                        Units u=Units(data.c[0]);
+                        Units mj=Units(data.c[1]);
+                        Units tmp;
+                        real x=mj.X(),y=mj.Y(); 
+                        if(data.r[0]<=0){ 
+                            GroupEnumUnitsInRange(tmp_group,x,y,450,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(IsUnitEnemy(tmp.unit,u.player.player)==true){   
+                                    u.Damage(tmp.unit,Damage.Chaos,'A03R',u.Agi(true)*15.0);
+                                    Buffs.Skill(tmp.unit,'A00F',1);
+                                    Dash.Start(tmp.unit,Util.XY(tmp.unit,mj.unit),600,Dash.SUB,40,true,false);
+                                    HitFlys.Add(tmp.unit,22.5);             
+                                }
+                            }  
+                            GroupClear(tmp_group);  
+                            u.Anime("stand");
+                            u.DelayAlpha(0,255,1.2);
+                            Units.MJ(u.player.player,'e008','A03R',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
+                            u.Pause(false); 
+                            u.PositionEnabled(true); 
+                            Spell(data.c[3]).Destroy();
+                            Units.MJ(u.player.player,'e008','A03R',0,x,y,0,2,2,1, "stand","boom1.mdl").SetH(50);
+                            Units.MJ(u.player.player,'e008','A03R',0,x,y,0,2,1.25,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
+                            //Units.MJ(u.player.player,'e008','A03R',0,x,y,0,2,2,1, "stand","by_wood_sand_yuekongji.mdl").SetH(100);
+                            Util.Duang(x,y,0.8,250,250,-215,0.02,50); 
+                            mj.Life(0.5);
+                            mj.Size(0);
+                            //mj.DelaySizeEx(6,0.5,0.2); 
+                            t.Destroy();
+                            data.Destroy();
+                        }else{
+                            data.r[0]-=0.02;
+                            Units.MJ(u.player.player,'e008','A03R',0,x,y,GetRandomReal(0,360),1,1,GetRandomReal(0.8,1.2), "stand","white-qiquan.mdl");
+                            //Util.Duang(x,y,0.8,250,250,-16,0.02,50);
+                            if(data.r[0]==0.22){
+                                mj=Units(data.c[2]);  
+                                mj.Life(0.5);
+                                mj.DelayAlpha(255,0,0.45);
+                            } 
+                            GroupEnumUnitsInRange(tmp_group,x,y,450,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(IsUnitEnemy(tmp.unit,u.player.player)==true){   
+                                    Dash.Start(tmp.unit,Util.XY(tmp.unit,mj.unit),70,Dash.SUB,5,true,false);          
+                                }
+                            }  
+                            GroupClear(tmp_group);  
+                        }
+                    });
+                }else{ 
+                    u.Pause(false); 
+                    u.PositionEnabled(true); 
                     Spell(data.c[1]).Destroy();
-                    t.Destroy();
-                    data.Destroy();
-                }
+                } 
+                u.AnimeSpeed(1);
+                u.RemoveAbility('A03S');
+                u.RemoveAbility('A03T');  
+                t.Destroy();
+                data.Destroy(); 
             });
         }
    
