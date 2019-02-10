@@ -327,32 +327,37 @@ library SD requires Groups{
             real x=u.X(),y=u.Y();
             u.Pause(true);
             u.AnimeId(7);
-            u.AnimeSpeed(0.5);
+            //u.AnimeSpeed(0.5);
             u.AddAbility('A03S');
-            u.AddAbility('A03T');
-            u.AddAbility('A03U');
+            u.AddAbility('A03T'); 
             u.PositionEnabled(false);
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;//技能阶段
-            data.r[0]=0.6;//技能牵引阶段持续时间
-            Timers.Start(0.4,data,function(Timers t){
+            
+            Timers.Start(0.3,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
+                integer at=0;
                 if(data.i[0]==0){//缓慢蓄力阶段
-                    u.AnimeSpeed(1);
+                    //u.AnimeSpeed(1);
                     data.i[0]=1;
                     t.SetTime(0.03);
-                }else if(data.i[0]==1){//牵引阶段
- 
-                }
+                }else if(data.i[0]==1){//爆炸
+                    at=-1;
+                } 
                 if(u.Alive()==false){
-                    u.Pause(false);
-                    u.AnimeSpeed(1);
-                    u.PositionEnabled(true);
-                    u.RemoveAbility('A03S');
-                    u.RemoveAbility('A03T');
-                    u.RemoveAbility('A03U');
+                    at=-2;
+                }
+                if(at<0){
+                    if(at==-2){ 
+                        u.Pause(false);
+                        u.AnimeSpeed(1);
+                        u.PositionEnabled(true);
+                        u.RemoveAbility('A03S');
+                        u.RemoveAbility('A03T'); 
+                    }
+                    Spell(data.c[1]).Destroy();
                     t.Destroy();
                     data.Destroy();
                 }
