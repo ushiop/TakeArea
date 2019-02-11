@@ -421,6 +421,14 @@ library SD requires Groups{
                 data.Destroy(); 
             });
         }
+
+        //飞雷神 851971 右键 851983 A键
+        static method Q(EventArgs e){
+            Units u=Units.Get(e.TriggerUnit);
+            if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
+                
+            }
+        }
    
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
@@ -431,7 +439,7 @@ library SD requires Groups{
                 e.Destroy();
             }
             if(e.Id=='A03M'){
-                if(1==2){//普通螺旋丸
+                if(u.IsAbility('B00W')==false){//普通螺旋丸
                     u.FlushAnimeId(12);
                     u.AnimeSpeed(1.7);
                     u.AddAbility('A03N');
@@ -471,7 +479,9 @@ library SD requires Groups{
             Spell.On(Spell.onStop,'A03K',SD.HERO_STOP);   
             Spell.On(Spell.onReady,'A03M',SD.HERO_START);
             Spell.On(Spell.onStop,'A03M',SD.HERO_STOP);   
-            Units.On(Units.onHeroSpawn,SD.Spawn);
+            Units.On(Units.onHeroSpawn,SD.Spawn); 
+            Events.On(Events.onUnitOrderToUnit,SD.Q);
+            Events.On(Events.onUnitOrderToLocation,SD.Q);
         }
     }
 }
