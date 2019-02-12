@@ -762,7 +762,6 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                 u.Pause(false);
                             }
                             Buffs.Add(u.unit,'A011','B006',0.5,false);
-                            GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             AddDazzle(u.unit,2); 
                             //刀光特效版          
                             mj=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),dash.Angle,0.6,0.8,1.5, "birth","dg.mdx");
@@ -772,6 +771,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             tmp=Units.MJ(u.player.player,'e009','A002',0,dash.X,dash.Y,dash.Angle,2,2.5,2, "stand","wind.mdx");
                             tmp.SetH(200); 
                             Dash.Start(tmp.unit,dash.Angle+180,450,Dash.SUB,60,true,false);
+                            
+                            GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,tmp.unit);
