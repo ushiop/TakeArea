@@ -473,7 +473,7 @@ library SD requires Groups{
                                     dis=Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp));
                                 }
                             }  
-                        }  
+                        }   
                         GroupClear(tmp_group); 
                         if(target!=null){//找到符合条件的目标
                             ft=1;//飞雷神-螺旋丸触发
