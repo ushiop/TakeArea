@@ -102,12 +102,11 @@ library AW requires Groups{
         //任意单位死亡时增加900码内死灵法师的尸体层数
         static method Death(Units u,Units m){
             Units mj;
-            integer s=0;
-            group g=CreateGroup();
-            GroupEnumUnitsInRange(g,u.X(),u.Y(),900,function GroupIsAliveNotAloc);     
-            while(FirstOfGroup(g)!=null){
-                mj=Units.Get(FirstOfGroup(g));
-                GroupRemoveUnit(g,mj.unit);
+            integer s=0; 
+            GroupEnumUnitsInRange(tmp_death_group,u.X(),u.Y(),900,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_death_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_death_group));
+                GroupRemoveUnit(tmp_death_group,mj.unit);
                 if(mj.IsAbility('A03A')==true){   
                     if(s==0){
                         s=1;
@@ -119,8 +118,7 @@ library AW requires Groups{
                     Effect.ToUnit("Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl",mj.unit,"chest");
                 }
             }
-            DestroyGroup(g);
-            g=null;
+            GroupClear(tmp_death_group);
         }
 
         //Q被动增伤

@@ -102,20 +102,18 @@ library MR requires Groups{
 
         //友军死亡触发九尾
         static method Death(Units u,Units m){ 
-            Units mj;
-            group g=CreateGroup();
-            GroupEnumUnitsInRange(g,u.X(),u.Y(),1200,function GroupIsAliveNotAloc);     
-            while(FirstOfGroup(g)!=null){
-                mj=Units.Get(FirstOfGroup(g));
-                GroupRemoveUnit(g,mj.unit);
+            Units mj; 
+            GroupEnumUnitsInRange(tmp_death_group,u.X(),u.Y(),1200,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_death_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_death_group));
+                GroupRemoveUnit(tmp_death_group,mj.unit);
                 if(IsUnitEnemy(mj.unit,u.player.player)==false){ 
                     if(mj.IsAbility('A01X')==true){
                         Buffs.Add(mj.unit,'A01Y','B00B',30,false);
                     }
                 }
             }
-            DestroyGroup(g);
-            g=null;
+            GroupClear(tmp_death_group);
         }
 
         static method Damage(DamageArgs e){
