@@ -425,8 +425,112 @@ library SD requires Groups{
         //飞雷神 851971 右键 851983 A键
         static method Q(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
+            real x,y,dis,range,cd;
+            integer ft;
+            unit target,tmp;
+            Buffs b;
+            Units mj;
             if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
-                
+                range=100,dis=999999999;//选取范围，最近距离
+                ft=-1;//发动的飞雷神类型
+                if(e.OrderTargetUnit==null){//点击的地方
+                    x=e.OrderTargetX,y=e.OrderTargetY;
+                }else{
+                    x=GetUnitX(e.OrderTargetUnit),y=GetUnitY(e.OrderTargetUnit);
+                }
+                if(ft==-1){//优先找螺旋丸标记
+                    target=null;
+                    GroupEnumUnitsInRange(tmp_group,x,y,range,function GroupIsAliveNotAloc); 
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=FirstOfGroup(tmp_group);  
+                        GroupRemoveUnit(tmp_group,tmp);
+                        if(GetUnitAbilityLevel(tmp,'B00U')==1){  
+                            if(Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp))<dis){
+                                target=tmp;
+                                dis=Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp));
+                            }
+                        }  
+                    }  
+                    GroupClear(tmp_group); 
+                    if(target!=null){//找到符合条件的目标
+                        ft=1;//飞雷神-螺旋丸触发
+                    }    
+                }
+                if(ft==-1){//找爆破苦无
+                    //还没做，空着
+                }
+                if(ft==-1){//找友军标记
+                    target=null;
+                    dis=999999999;
+                    GroupEnumUnitsInRange(tmp_group,x,y,range,function GroupIsAliveNotAloc); 
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=FirstOfGroup(tmp_group);  
+                        GroupRemoveUnit(tmp_group,tmp);
+                        if(GetUnitAbilityLevel(tmp,'B00S')==1){  
+                            if(Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp))<dis){
+                                target=tmp;
+                                dis=Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp));
+                            }
+                        }  
+                    }  
+                    GroupClear(tmp_group); 
+                    if(target!=null){//找到符合条件的目标
+                        ft=3;//飞雷神-友军标记触发
+                    }                        
+                }
+                if(ft==-1){//找苦无
+                    target=null;
+                    dis=999999999;
+                    GroupEnumUnitsInRange(tmp_group,x,y,range,function GroupIsFZW); 
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=FirstOfGroup(tmp_group);  
+                        GroupRemoveUnit(tmp_group,tmp);
+                        if(Units.Get(tmp).aid=='A03K'){  
+                            if(Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp))<dis){
+                                target=tmp;
+                                dis=Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp));
+                            }
+                        }  
+                    }  
+                    GroupClear(tmp_group); 
+                    if(target!=null){//找到符合条件的目标
+                        ft=4;//飞雷神-苦无触发
+                    }                        
+                }
+                if(ft!=-1){//可触发飞雷神 ,16 后摇 18 披风
+                    if(ft==4){//苦无触发
+                        cd=2;
+                        Units.Remove(target);
+                        if(u.IsAbility('B00T')==false){ 
+                            Buffs.Add(u.unit,'A03L','B00T',86400,false);
+                        }else{
+                            Buffs.Add(u.unit,'A03L','B00T',86400,false).Level+=1;
+                        } 
+                        x=u.X(),y=u.Y();
+                        mj=Units.MJ(u.player.player,'e008','A03I',0,x,y,u.F(),2.5,u.modelsize,0.85, "stand","4d_ex.mdl");
+                        mj.AnimeId(18);
+                        mj.DelayAlpha(255,0,1.95);
+                        Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
+                        u.Position(GetUnitX(target),GetUnitY(target),false);
+                        x=u.X(),y=u.Y();
+                        Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,2,1, "stand","fire-lizi-texiao_y.mdl");
+                        Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,1.5,1, "stand","az_pafeathermoon_b.mdl");
+                         
+                    }
+
+                    //----设置冷却和渐隐
+                    Buffs.Add(u.unit,'A03U','B00V',cd,false);
+                    if(u.IsAbility('B00W')==false){
+                        u.Alpha(0);
+                        b=Buffs.Add(u.unit,'A03V','B00W',0.1,false); 
+                        b.onEnd=function(Buffs b){
+                            Units u=Units.Get(b.Unit);
+                            u.DelayAlpha(0,255,0.5); 
+                        };
+                    }else{
+                        Buffs.Add(u.unit,'A03V','B00W',0.1,false);
+                    }
+                }
             }
         }
    
