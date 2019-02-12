@@ -9,6 +9,7 @@ library Groups requires Units,Damage{
     group tmp_damage_group=CreateGroup();//范围伤害用的临时组
     group tmp_random_group=CreateGroup();//寻找随机单位用的临时租
     group tmp_cdj_group=CreateGroup();//场地技寻找周围场地技的临时租
+    group tmp_death_group=CreateGroup();//在死亡事件中使用的临时组
 
     //返回单位组内单位数量
     public function GroupNumber(group g)->integer{
