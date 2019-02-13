@@ -445,8 +445,9 @@ library SD requires Groups{
                             u.Anime("stand");
                             u.DelayAlpha(0,255,1.2);
                             Units.MJ(u.player.player,'e008','A03W',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
-                            u.Pause(false); 
                             u.PositionEnabled(true); 
+                            u.Position(u.X(),u.Y(),true);
+                            u.Pause(false); 
                             Spell(data.c[3]).Destroy();
                             Units.MJ(u.player.player,'e008','A03W',0,x,y,0,2,2,1, "stand","boom1.mdl").SetH(50);
                             Units.MJ(u.player.player,'e008','A03W',0,x,y,0,2,1.25,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
@@ -497,10 +498,12 @@ library SD requires Groups{
             integer ft;
             unit target,tmp;
             Buffs b;
-            Units mj;
+            Units mj,tmp1;
             group g;
             boolean team;
             real x1,y1;
+            Data data;
+            Dash dash;
             if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
                     range=150,dis=999999999;//选取范围，最近距离
@@ -531,7 +534,23 @@ library SD requires Groups{
                         }    
                     }
                     if(ft==-1){//找爆破苦无
-                        //还没做，空着
+                        target=null;
+                        dis=999999999;
+                        GroupEnumUnitsInRange(tmp_group,x,y,range,function GroupIsFZW); 
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=FirstOfGroup(tmp_group);  
+                            GroupRemoveUnit(tmp_group,tmp);
+                            if(Units.Get(tmp).aid=='A03Z'){  
+                                if(Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp))<dis){
+                                    target=tmp;
+                                    dis=Util.XY2EX(x,y,GetUnitX(tmp),GetUnitY(tmp));
+                                }
+                            }  
+                        }  
+                        GroupClear(tmp_group); 
+                        if(target!=null){//找到符合条件的目标
+                            ft=2;//飞雷神-爆破苦无触发
+                        }            
                     }
                     if(ft==-1){//找友军标记
                         target=null;
@@ -549,7 +568,7 @@ library SD requires Groups{
                         }  
                         GroupClear(tmp_group); 
                         if(target!=null){//找到符合条件的目标
-                            ft=3;//飞雷神-友军标记触发
+                            ft=3;    
                         }                        
                     }
                     if(ft==-1){//找苦无
@@ -588,7 +607,7 @@ library SD requires Groups{
                                 if(IsUnitEnemy(mj.unit,u.player.player)==team&&mj.unit!=u.unit){    
                                     if(mj.move==true){ 
                                         Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,2,1, "stand","ss1.mdl").SetH(50);
-                                        mj.Position(x1,y1,false);
+                                        mj.Position(x1,y1,true);
                                         //Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,1.5,1, "stand","y_blinkcaster.mdl").SetH(50);
                                         if(team==true){
                                             Buffs.Skill(mj.unit,'A00F',1);
@@ -606,7 +625,7 @@ library SD requires Groups{
 
                         Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
                         if(ft==1){//螺旋丸触发
-                            cd=1;
+                            cd=0.5;
                             Buffs.Find(target,'B00U').Stop();
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
@@ -625,7 +644,7 @@ library SD requires Groups{
                             GroupClear(tmp_group);   
                         }
                         if(ft==3){//飞雷神标记触发
-                            cd=2;
+                            cd=0.5;
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y();
@@ -666,8 +685,35 @@ library SD requires Groups{
                                 GroupClear(tmp_group);  
                             }
                         }
+                        if(ft==2){//爆破苦无触发
+                            cd=0.0; 
+                            u.Position(x1,y1,false); 
+                            x=u.X(),y=u.Y(); 
+                            mj=Units.Get(target);
+                            data=Data(mj.Obj);
+                            Units.MJ(u.player.player,'e008','A03I',0,x1,y1,0,4,1,1, "stand","kc4.mdl");
+                            GroupEnumUnitsInRange(tmp_group,x1,y1,250,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=FirstOfGroup(tmp_group);
+                                GroupRemoveUnit(tmp_group,tmp);
+                                if(GetUnitAbilityLevel(tmp,'A03I')==0){      
+                                    Dash.Start(tmp,Util.XYEX(GetUnitX(tmp),GetUnitY(tmp),data.r[0],data.r[1]),600,Dash.SUB,40,true,true);
+                                }
+                            }  
+                            GroupClear(tmp_group);
+                            if(Util.XY2(data.u[0],mj.unit)>400&&data.u[0]!=null){
+                                tmp1=Units.MJ(u.player.player,'e008','A03I',0,x1,y1,0,4,1,1, "stand","t_tai.mdl");
+                                dash=Dash.Start(tmp1.unit,Util.XY(mj.unit,data.u[0]),Util.XY2(mj.unit,data.u[0]),Dash.NORMAL,70,true,false);
+                                dash.onEnd=function(Dash dash){
+                                    Units u=Units.Get(dash.Unit);
+                                    u.Life(0.5);
+                                    u.Anime("death");
+                                };
+                            }
+                            data.u[0]=mj.unit;  
+                        }
                         if(ft==4){//苦无触发
-                            cd=1;
+                            cd=0.5;
                             mj=Units.Get(target);
                             if(mj.Data()==0){//等于0表示掉地上了
                                 Units.Remove(target);
@@ -680,10 +726,6 @@ library SD requires Groups{
                                 Buffs.Add(u.unit,'A03L','B00T',86400,false).Level+=1;
                             } 
                             
-                            /* 披风落下，以后挪到F里用
-                            mj=Units.MJ(u.player.player,'e008','A03I',0,x,y,u.F(),2.5,u.modelsize,0.85, "stand","4d_ex.mdl");
-                            mj.AnimeId(18);
-                            mj.DelayAlpha(255,0,1.95);*/  
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y(); 
@@ -743,6 +785,155 @@ library SD requires Groups{
             Buffs.Add(u.unit,'A03X','B00X',10,false);
             e.Destroy();
         }
+
+        // 0 施法 18 披风
+        static method F(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A03Z');
+            real x=u.X(),y=u.Y();
+            u.Pause(true);
+            u.AnimeId(0);
+            u.AnimeSpeed(0.5);
+            Units.MJ(u.player.player,'e008','A03Z',0,x,y,GetRandomReal(0,360),2,0.5,1, "stand","kc12.mdl").SetH(100);
+            Util.Duang(x,y,1,250,250,-32,0.02,50);   
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=16;//剩余次数
+            data.i[1]=-1;//角度系数 
+            data.i[2]=0;//是否已删除丝带
+            data.r[0]=x;//X
+            data.r[1]=y;//Y
+            data.g[0]=CreateGroup();
+            data.u[0]=null;//上一个被触发的爆破苦无
+            Timers.Start(0.3,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Units mj;
+                if(u.Alive()==true){
+                    Units.MJ(u.player.player,'e008','A03Z',0,data.r[0],data.r[1],GetRandomReal(0,360),2,1,1, "stand","t_ss.mdl").SetH(150);
+                    Units.MJ(u.player.player,'e008','A03Z',0,data.r[0],data.r[1],GetRandomReal(0,360),2,0.7,1, "stand","white-qiquan.mdl");
+                    Util.Duang(data.r[0],data.r[1],1,250,250,-196,0.02,50);   
+                    mj=Units.MJ(u.player.player,'e008','A03Z',0,data.r[0],data.r[1],u.F(),2.5,u.modelsize,0.3, "stand","4d_ex.mdl");
+                    mj.SetH(75);
+                    mj.AnimeId(18);
+                    data.c[3]=mj;
+                    u.AddAbility('A040');
+                    u.Alpha(0); 
+                    Timers.Start(0.04,data,function(Timers t){
+                        Data data=Data(t.Data());
+                        Units u=Units(data.c[0]);
+                        Units mj;
+                        real x=data.r[0],y=data.r[1];
+                        group g;
+                        if(u.Alive()==true&&data.i[0]>0){
+                            if(ModuloInteger(data.i[0],4)==0){
+                                data.i[1]+=1;
+                            }
+                            x=x+600*CosBJ((22.5*data.i[1])+(90*ModuloInteger(data.i[0],4)));
+                            y=y+600*SinBJ((22.5*data.i[1])+(90*ModuloInteger(data.i[0],4)));
+                            u.Position(x,y,false);
+                            BJDebugMsg(I2S(data.i[0]));
+                            mj=Units.MJ(u.player.player,'e008','A03Z',data.i[0],x,y,0,86400,1.5,1, "stand","fls_kw.mdl"); 
+                            GroupAddUnit(data.g[0],mj.unit);
+                            data.i[0]-=1; 
+                        }else{//
+                            if(u.Alive()==false){
+                                g=CreateGroup();
+                                GroupAddGroup(data.g[0],g);
+                                while(FirstOfGroup(g)!=null){
+                                    mj=Units.Get(FirstOfGroup(g));
+                                    GroupRemoveUnit(g,mj.unit);
+                                    mj.Life(0.5); 
+                                    mj.DelayAlpha(255,0,0.45);
+                                }  
+                                DestroyGroup(g);
+                                g=null; 
+                                u.Pause(false);
+                                u.RemoveAbility('A040');
+                                u.Alpha(255); 
+                                DestroyGroup(data.g[0]);
+                                data.g[0]=null;
+                                Spell(data.c[1]).Destroy();
+                                t.Destroy();
+                                data.Destroy();
+                            }else{
+                                t.Destroy();
+                                Spell(data.c[1]).Destroy();
+                                KillCDJ(x,y); 
+                                Units.MJ(u.player.player,'e008','A03Z',0,data.r[0],data.r[1],0,2,3.5,1, "stand","fire-qiquan_y.mdl"); 
+                                Units.MJ(u.player.player,'e008','A03Z',0,data.r[0],data.r[1],GetRandomReal(0,360),2,1,1, "stand","t_ss.mdl").SetH(150);
+                                u.AnimeSpeed(1);
+                                u.Position(data.r[0],data.r[1],false);
+                                u.SetH(200);
+                                HitFlys.Add(u.unit,0.01);
+                                u.SetF(45,true);
+                                u.Alpha(255);
+                                u.AnimeId(17);
+                                u.DelayReleaseAnimePause(0.5);
+                                Units(data.c[3]).Life(0.01);
+                                mj=Units.MJ(u.player.player,'e008','A03Z',0,x,y,0,25,2.5,1, "stand",".mdl"); 
+                                mj.SetData(1000);//持续10秒 (10/0.01)
+                                mj.Position(x,y,true);//可选取
+                                mj.AddAbility(Units.MJType_CDW);//添加场地技标记
+                                data.c[3]=mj;
+                                g=CreateGroup();
+                                GroupAddGroup(data.g[0],g);
+                                while(FirstOfGroup(g)!=null){
+                                    mj=Units.Get(FirstOfGroup(g));
+                                    GroupRemoveUnit(g,mj.unit);
+                                    mj.Position(mj.X(),mj.Y(),true);
+                                    mj.AddAbility(Units.MJType_FZW);
+                                    mj.AddObj(data);
+                                }  
+                                DestroyGroup(g);
+                                g=null;
+                                Timers.Start(0.01,data,function(Timers t){
+                                    Data data=Data(t.Data());
+                                    Units cd=Units(data.c[3]);
+                                    Units mj;
+                                    group g;
+                                    if(cd.Data()<=0){
+                                        if(data.i[2]==0){ 
+                                            Units(data.c[0]).RemoveAbility('A040');
+                                        }
+                                        cd.RemoveAbility(Units.MJType_CDW);
+                                        g=CreateGroup();
+                                        GroupAddGroup(data.g[0],g);
+                                        while(FirstOfGroup(g)!=null){
+                                            mj=Units.Get(FirstOfGroup(g));
+                                            GroupRemoveUnit(g,mj.unit);
+                                            mj.Life(0.5);
+                                            mj.RemoveAbility(Units.MJType_FZW);
+                                            mj.DelayAlpha(255,0,0.45);
+                                        }  
+                                        DestroyGroup(g);
+                                        g=null;
+                                        DestroyGroup(data.g[0]);
+                                        data.g[0]=null;
+                                        data.u[0]=null;
+                                        t.Destroy();
+                                        data.Destroy();
+                                    }else{ 
+                                        if(cd.Data()<900&&data.i[2]==0){
+                                            data.i[2]=1;
+                                            Units(data.c[0]).RemoveAbility('A040');
+                                        }
+                                        cd.SetData(cd.Data()-1);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    t.Destroy();
+                }else{
+                    u.Pause(false);
+                    u.AnimeSpeed(1);
+                    Spell(data.c[1]).Destroy();
+                    t.Destroy();
+                    data.Destroy();
+                }
+            });
+        }
    
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
@@ -789,12 +980,12 @@ library SD requires Groups{
             e.Destroy();
         }
 
-        static method onInit(){  
+        static method onInit(){   
+            Spell.On(Spell.onSpell,'A03Z',SD.F);
             Spell.On(Spell.onSpell,'A03R',SD.D);
             Spell.On(Spell.onSpell,'A03W',SD.R);
             Spell.On(Spell.onSpell,'A03M',SD.E);
-            Spell.On(Spell.onSpell,'A03K',SD.W); 
-            Spell.On(Spell.onReady,'A03W',SD.HERO_START);
+            Spell.On(Spell.onSpell,'A03K',SD.W);  
             Spell.On(Spell.onReady,'A03K',SD.HERO_START);
             Spell.On(Spell.onStop,'A03K',SD.HERO_STOP);   
             Spell.On(Spell.onReady,'A03M',SD.HERO_START);
