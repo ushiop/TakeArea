@@ -81,34 +81,42 @@ library SD requires Groups{
                 mj=Units.MJ(u.player.player,'e008','A03K',0,u.X()+75*CosBJ(u.F()),u.Y()+75*SinBJ(u.F()),e.Angle-90,86400,1.5,1, "stand","fls_kw_ex.mdl"); 
                 mj.Position(mj.X(),mj.Y(),true);
                 mj.AddAbility(Units.MJType_FZW);
-                mj.AddAbility(Units.MJType_TSW);
-                mj.AddAbility('A03Y');
-                mj.SetData(1);
-                mj.SetH(100);
-                mj.Anime("one");
-                dash=Dash.Start(mj.unit,e.Angle,1600,Dash.SUB,30,true,false);
-                dash.onMove=function(Dash dash){
-                    Units u=Units.Get(dash.Unit);
-                    if(u.Data()==4){
-                        dash.Stop();
-                    }else{
-                        u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
-                    }
-                };
-                dash.onEnd=function(Dash dash){
-                    Units u=Units.Get(dash.Unit);
-                    if(u.Data()==4){ 
-                        Units.Remove(u.unit);
-                    }else{ 
-                        Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,GetRandomReal(0,360),4,1,1, "stand","y_blinkcaster.mdl");
-                        BJDebugMsg("没触发，掉地上了");
-                        u.RemoveAbility(Units.MJType_TSW);
-                        u.RemoveAbility('A03Y');
-                        u.Anime("stand");
-                        u.SetData(0);
-                        u.SetH(0);
-                    }
-                };
+                if(e.State==e.SpellState){ 
+                    mj.AddAbility(Units.MJType_TSW);
+                    mj.AddAbility('A03Y');
+                    mj.SetData(1);
+                    mj.SetH(100);
+                    mj.Anime("one");
+                    dash=Dash.Start(mj.unit,e.Angle,1600,Dash.SUB,30,true,false);
+                    dash.onMove=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        if(u.Data()==4){
+                            dash.Stop();
+                        }else{
+                            u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
+                        }
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        if(u.Data()==4){ 
+                            Units.Remove(u.unit);
+                        }else{ 
+                            Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,GetRandomReal(0,360),4,1,1, "stand","y_blinkcaster.mdl");
+                            BJDebugMsg("没触发，掉地上了");
+                            u.RemoveAbility(Units.MJType_TSW);
+                            u.RemoveAbility('A03Y');
+                            u.Anime("stand");
+                            u.SetData(0);
+                            u.SetH(0);
+                        }
+                    };
+                }else{
+                    u.Pause(true);
+                    u.SetF(u.F(),true);
+                    u.FlushAnimeId(8);
+                    u.AnimeSpeed(0.6);  
+                    u.DelayReleaseAnimePause(0.5);
+                }
             }
             e.Destroy();
         }
@@ -740,10 +748,15 @@ library SD requires Groups{
             Units u=Units.Get(e.Spell);
             Dash dash;
             if(e.Id=='A03K'){
-                u.FlushAnimeId(2);
-                u.AnimeSpeed(1.25); 
-                e.Destroy();
-            }
+                if(e.Dis>200){ 
+                    u.FlushAnimeId(2);
+                    u.AnimeSpeed(1.25);  
+                    e.Destroy();
+                }else{  
+                    u.SetAbilityCD('A03K',1);
+                    SD.W(e);
+                } 
+            } 
             if(e.Id=='A03M'){
                 if(u.IsAbility('B00W')==false){//普通螺旋丸
                     u.FlushAnimeId(12);
