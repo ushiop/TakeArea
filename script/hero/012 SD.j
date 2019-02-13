@@ -349,6 +349,8 @@ library SD requires Groups{
                         w.Anime("death");
                         Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,0.4,4,1, "birth","t_lxw_ex.mdl").SetH(250);
                         Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,1, "stand","boom1.mdl").SetH(150);
+                        Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,2,0.5, "stand","boom_ex.mdl").SetH(150);
+                        
                         Units.MJ(w.player.player,'e008','A03M',0,dash.X,dash.Y,0,2,1,1, "stand","by_wood_effect_yuanbanlin_sand2.mdl").SetH(100);
                         Util.Duang(dash.X,dash.Y,0.8,250,250,-215,0.02,50);
                         GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsAliveNotAloc);     
@@ -743,7 +745,7 @@ library SD requires Groups{
                 e.Destroy();
             }
             if(e.Id=='A03M'){
-                if(u.IsAbility('B00W')==true){//普通螺旋丸
+                if(u.IsAbility('B00W')==false){//普通螺旋丸
                     u.FlushAnimeId(12);
                     u.AnimeSpeed(1.7);
                     u.AddAbility('A03N');
