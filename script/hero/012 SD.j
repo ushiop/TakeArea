@@ -450,6 +450,9 @@ library SD requires Groups{
             unit target,tmp;
             Buffs b;
             Units mj;
+            group g;
+            boolean team;
+            real x1,y1;
             if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
                     range=150,dis=999999999;//选取范围，最近距离
@@ -520,14 +523,45 @@ library SD requires Groups{
                             ft=4;//飞雷神-苦无触发
                         }                        
                     }
-                    if(ft!=-1){//可触发飞雷神 ,16 后摇 18 披风
-                        x=u.X(),y=u.Y(); 
+                    if(ft!=-1){//可触发飞雷神 ,16 后摇 18 披风 B00X 时空转移BUFF
+                        u.SetAbilityCD('A03R',u.GetAbilityCD('A03R')-1);
+                        x=u.X(),y=u.Y();  
+                        x1=GetUnitX(target),y1=GetUnitY(target);
+                        if(u.IsAbility('B00X')==true){//时空转移
+                            g=CreateGroup();
+                            team=false;
+                            if(u.player.press.D==true){
+                                team=true; 
+                            }
+                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==team&&mj.unit!=u.unit){    
+                                    if(mj.move==true){ 
+                                        Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,2,1, "stand","ss1.mdl").SetH(50);
+                                        mj.Position(x1,y1,false);
+                                        //Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,1.5,1, "stand","y_blinkcaster.mdl").SetH(50);
+                                        if(team==true){
+                                            Buffs.Skill(mj.unit,'A00F',1);
+                                        }else{
+                                            u.SetMP(u.MP()-25);
+                                        }
+                                    }
+                                }
+                            }  
+                            GroupClear(tmp_group);   
+                            DestroyGroup(g);
+                            g=null; 
+                        }
+
+
                         Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
                         if(ft==1){//螺旋丸触发
                             cd=1;
                             Buffs.Find(target,'B00U').Stop();
                             u.SetF(f,true);
-                            u.Position(GetUnitX(target),GetUnitY(target),false); 
+                            u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y();
                             Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,1,1, "stand","boom_ex.mdl");
                             GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
@@ -545,7 +579,7 @@ library SD requires Groups{
                         if(ft==3){//飞雷神标记触发
                             cd=2;
                             u.SetF(f,true);
-                            u.Position(GetUnitX(target),GetUnitY(target),false); 
+                            u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y();
                             if(IsUnitEnemy(target,u.player.player)==true){//是敌人触发
                                 GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
@@ -598,7 +632,7 @@ library SD requires Groups{
                             mj.AnimeId(18);
                             mj.DelayAlpha(255,0,1.95);*/  
                             u.SetF(f,true);
-                            u.Position(GetUnitX(target),GetUnitY(target),false); 
+                            u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y(); 
                             GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
@@ -620,7 +654,12 @@ library SD requires Groups{
                         //Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,0.75,1, "stand","ThunderClapCaster_ex.mdl");
                         
                         //----设置冷却和渐隐
-                        Buffs.Add(u.unit,'A03U','B00V',cd,false);
+                        Buffs.Add(u.unit,'A03U','B00V',cd,false).onEnd=function(Buffs b){
+                            Units u=Units.Get(b.Unit);
+                            if(u.IsAbility('B00X')==true){
+                                Buffs.Find(u.unit,'B00X').Stop();
+                            }
+                        };
                         if(u.IsAbility('B00W')==false){
                             u.Alpha(0);
                             b=Buffs.Add(u.unit,'A03V','B00W',0.15,false); 
@@ -634,6 +673,22 @@ library SD requires Groups{
                     }
                 }
             }
+        }
+
+        static method D(Spell e){
+            Units u=Units.Get(e.Spell);
+            timer t=NewTimer();
+            SetTimerData(t,u);
+            TimerStart(t,0,false,function(){
+                Units u=Units(GetTimerData(GetExpiredTimer())); 
+                if(u.IsAbility('Bbsk')==true){ 
+                    u.RemoveAbility('Bbsk'); 
+                }
+                ReleaseTimer(GetExpiredTimer());
+            });
+            t=null;
+            Buffs.Add(u.unit,'A03X','B00X',10,false);
+            e.Destroy();
         }
    
         static method HERO_START(Spell e){
@@ -677,7 +732,8 @@ library SD requires Groups{
             e.Destroy();
         }
 
-        static method onInit(){ 
+        static method onInit(){  
+            Spell.On(Spell.onSpell,'A03R',SD.D);
             Spell.On(Spell.onSpell,'A03W',SD.R);
             Spell.On(Spell.onSpell,'A03M',SD.E);
             Spell.On(Spell.onSpell,'A03K',SD.W);
