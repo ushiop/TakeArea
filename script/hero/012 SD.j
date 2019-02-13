@@ -306,9 +306,10 @@ library SD requires Groups{
                     GroupClear(tmp_group); 
                     Util.Duang(mj.X(),mj.Y(),0.3,150,150,-215,0.02,50);
                     data.c[2]=mj;
-                    mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,0.7,2, "stand","az_airfloww12_ex.mdl"); 
+                    mj=Units.MJ(u.player.player,'e008','A03M',0,mj.X(),mj.Y(),mj.F()+90,5,0.7,1, "stand","az_airfloww12_ex.mdl"); 
                     mj.SetH(150);
                     mj.DelayAlpha(255,0,0.5); 
+                    mj.SetData(2);
                     data.c[3]=mj;
                     mj=Units(data.c[2]);
                     dash=Dash.Start(mj.unit,mj.F(),600,Dash.SUB,35,true,false);
@@ -317,6 +318,15 @@ library SD requires Groups{
                         Units f=Units(dash.Obj);
                         Units tmp;
                         f.Position(dash.X,dash.Y,false);
+                        if(f.Data()==0){
+                            f.SetData(2);
+                            tmp=Units.MJ(f.player.player,'e008','A03M',0,dash.X,dash.Y,dash.Angle+90,0.5,0.7,GetRandomReal(1,3), "stand","az_airfloww12_ex.mdl"); 
+                            tmp.SetH(150);
+                            tmp.DelayAlpha(255,0,0.45);
+                            tmp.DelaySizeEx(0.7,1.2,0.4);
+                        }else{
+                            f.SetData(f.Data()-1);
+                        }
                         GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,175,function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -695,13 +705,13 @@ library SD requires Groups{
                         }; 
                         if(u.IsAbility('B00W')==false){
                             u.Alpha(0);
-                            b=Buffs.Add(u.unit,'A03V','B00W',0.18,false); 
+                            b=Buffs.Add(u.unit,'A03V','B00W',0.2,false); 
                             b.onEnd=function(Buffs b){
                                 Units u=Units.Get(b.Unit);
                                 u.DelayAlpha(0,255,0.5); 
                             };
                         }else{
-                            Buffs.Add(u.unit,'A03V','B00W',0.18,false);
+                            Buffs.Add(u.unit,'A03V','B00W',0.2,false);
                         }
                     }
                 }
@@ -733,7 +743,7 @@ library SD requires Groups{
                 e.Destroy();
             }
             if(e.Id=='A03M'){
-                if(u.IsAbility('B00W')==false){//普通螺旋丸
+                if(u.IsAbility('B00W')==true){//普通螺旋丸
                     u.FlushAnimeId(12);
                     u.AnimeSpeed(1.7);
                     u.AddAbility('A03N');
