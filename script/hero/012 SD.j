@@ -11,7 +11,7 @@ library SD requires Groups{
                 data.c[0]=u;
                 data.u[0]=null;//W-苦无需求
                 data.r[0]=0;//上友军BUFF的间隔
-                Buffs.Add(u.unit,'A03L','B00T',86400,false);
+                Buffs.Add(u.unit,'A03L','B00T',86400,false).Level=2;
                 Timers.Start(0.01,data,function(Timers t){
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
