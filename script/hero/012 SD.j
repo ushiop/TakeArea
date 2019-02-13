@@ -442,7 +442,7 @@ library SD requires Groups{
             });
         }
 
-        //飞雷神 851971 右键 851983 A键
+        //飞雷神 851971 右键
         static method Q(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             real x,y,dis,range,cd,f;
@@ -450,9 +450,9 @@ library SD requires Groups{
             unit target,tmp;
             Buffs b;
             Units mj;
-            if(e.OrderId==851971||e.OrderId==851983){ 
+            if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
-                    range=200,dis=999999999;//选取范围，最近距离
+                    range=150,dis=999999999;//选取范围，最近距离
                     ft=-1;//发动的飞雷神类型
                     if(e.OrderTargetUnit==null){//点击的地方
                         x=e.OrderTargetX,y=e.OrderTargetY;
