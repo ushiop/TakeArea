@@ -416,6 +416,7 @@ library AW requires Groups{
                     mj=Units(data.c[2]);
                     if(mj.Data()<=0){
                         BJDebugMsg("又结束了");
+                        mj.RemoveAbility(Units.MJType_CDW);
                         mj.Life(3);
                         mj.Anime("death");
                         Units(data.c[3]).Life(1); 
