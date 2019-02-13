@@ -659,16 +659,16 @@ library SD requires Groups{
                             if(u.IsAbility('B00X')==true){
                                 Buffs.Find(u.unit,'B00X').Stop();
                             }
-                        };
+                        }; 
                         if(u.IsAbility('B00W')==false){
                             u.Alpha(0);
-                            b=Buffs.Add(u.unit,'A03V','B00W',0.15,false); 
+                            b=Buffs.Add(u.unit,'A03V','B00W',0.18,false); 
                             b.onEnd=function(Buffs b){
                                 Units u=Units.Get(b.Unit);
                                 u.DelayAlpha(0,255,0.5); 
                             };
                         }else{
-                            Buffs.Add(u.unit,'A03V','B00W',0.15,false);
+                            Buffs.Add(u.unit,'A03V','B00W',0.18,false);
                         }
                     }
                 }
@@ -717,9 +717,8 @@ library SD requires Groups{
                     u.SetAbilityCD('A03M',10);
                     u.SetMP(u.MP()-150);
                     SD.E1(e);
-                }
-                
-            }
+                } 
+            } 
         }
  
         static method HERO_STOP(Spell e){
@@ -736,7 +735,8 @@ library SD requires Groups{
             Spell.On(Spell.onSpell,'A03R',SD.D);
             Spell.On(Spell.onSpell,'A03W',SD.R);
             Spell.On(Spell.onSpell,'A03M',SD.E);
-            Spell.On(Spell.onSpell,'A03K',SD.W);
+            Spell.On(Spell.onSpell,'A03K',SD.W); 
+            Spell.On(Spell.onReady,'A03W',SD.HERO_START);
             Spell.On(Spell.onReady,'A03K',SD.HERO_START);
             Spell.On(Spell.onStop,'A03K',SD.HERO_STOP);   
             Spell.On(Spell.onReady,'A03M',SD.HERO_START);
