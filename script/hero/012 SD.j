@@ -732,6 +732,7 @@ library SD requires Groups{
                                 GroupRemoveUnit(tmp_group,tmp);
                                 if(GetUnitAbilityLevel(tmp,'A03I')==0){      
                                     Dash.Start(tmp,Util.XYEX(GetUnitX(tmp),GetUnitY(tmp),data.r[0],data.r[1]),600,Dash.SUB,40,true,true);
+                                    Effect.ToUnit("hiteffect10white_ex.mdl",tmp,"origin").Destroy();
                                 }
                             }  
                             GroupClear(tmp_group);
