@@ -3,10 +3,22 @@ library SD requires Groups{
     //SSR
     struct SD{
 
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            if(u.player.isai==true){
+                Units.Kill(u.unit);
+            }else{
+                DisplayTextToPlayer(u.player.player,0,0,"抱歉~！这个英雄不支持电脑托管,已自动取消托管模式");
+                u.player.pcmode=false;
+                u.Position(u.X(),u.Y(),true);
+            }
+        }
+
         //友军标记
         static method Spawn(Units u,Units m){
             Data data;
             if(u.IsAbility('A03I')==true){
+                u.ai=SD.AI;
                 data=Data.create('A03I');
                 data.c[0]=u;
                 data.u[0]=null;//W-苦无需求
