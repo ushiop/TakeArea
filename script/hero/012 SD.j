@@ -524,7 +524,7 @@ library SD requires Groups{
             group g;
             boolean team;
             real x1,y1;
-            Data data;
+            Data data,data1;
             Dash dash;
             if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
@@ -724,12 +724,35 @@ library SD requires Groups{
                             }  
                             GroupClear(tmp_group);
                             if(Util.XY2(data.u[0],mj.unit)>400&&data.u[0]!=null){
-                                tmp1=Units.MJ(u.player.player,'e008','A03I',0,x1,y1,0,4,1,1, "stand","t_tai.mdl");
-                                dash=Dash.Start(tmp1.unit,Util.XY(mj.unit,data.u[0]),Util.XY2(mj.unit,data.u[0]),Dash.NORMAL,70,true,false);
+                                data1=Data.create('A03Z');
+                                data1.g[0]=CreateGroup();
+                                tmp1=Units.MJ(mj.player.player,'e008','A03I',0,x1,y1,0,4,1,1, "stand","t_tai.mdl");
+                                dash=Dash.Start(tmp1.unit,Util.XY(mj.unit,data.u[0]),Util.XY2(mj.unit,data.u[0]),Dash.NORMAL,40,true,false);
+                                dash.Obj=data1;
+                                dash.onMove=function(Dash dash){
+                                    Data data=Data(dash.Obj);
+                                    Units u=Units.Get(dash.Unit);
+                                    unit tmp;
+                                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);        
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        tmp=FirstOfGroup(tmp_group);
+                                        GroupRemoveUnit(tmp_group,tmp);
+                                        if(GetUnitAbilityLevel(tmp,'A03I')==0&&IsUnitInGroup(tmp,data.g[0])==false){      
+                                             GroupAddUnit(data.g[0],tmp);
+                                             u.Damage(tmp,Damage.Chaos,'A03Z',4.0*u.Agi(true));
+                                             Effect.To("abilities\\weapons\\catapult\\catapultmissile.mdl",GetUnitX(tmp),GetUnitY(tmp)).Destroy();
+                                        }
+                                    }  
+                                    GroupClear(tmp_group);
+                                };
                                 dash.onEnd=function(Dash dash){
+                                    Data data=Data(dash.Obj);
                                     Units u=Units.Get(dash.Unit);
                                     u.Life(0.5);
                                     u.Anime("death");
+                                    DestroyGroup(data.g[0]);
+                                    data.g[0]=null;
+                                    data.Destroy();
                                 };
                             }
                             data.u[0]=mj.unit;  
