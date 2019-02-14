@@ -72,6 +72,7 @@ library SD requires Groups{
             Buffs b;
             Units mj;
             Dash dash;
+            Data data;
             if(u.IsAbility('B00T')==true){
                 b=Buffs.Find(u.unit,'B00T');
                 b.Level-=1;
@@ -87,21 +88,42 @@ library SD requires Groups{
                     mj.SetData(1);
                     mj.SetH(100);
                     mj.Anime("one");
+                    data=Data.create('A03K');
+                    data.c[0]=u;
+                    data.g[0]=CreateGroup();
                     dash=Dash.Start(mj.unit,e.Angle,1600,Dash.SUB,30,true,false);
+                    dash.Obj=data;
                     dash.onMove=function(Dash dash){
+                        Data data=Data(dash.Obj);
                         Units u=Units.Get(dash.Unit);
+                        Units mj;
                         if(u.Data()==4){
                             dash.Stop();
                         }else{
                             u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){
+                                    GroupAddUnit(data.g[0],mj.unit);   
+                                    u.Damage(mj.unit,Damage.Physics,'A03K',3.0*u.Agi(true));     
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                }
+                            }  
+                            GroupClear(tmp_group); 
                         }
                     };
                     dash.onEnd=function(Dash dash){
+                        Data data=Data(dash.Obj);
                         Units u=Units.Get(dash.Unit);
+                        DestroyGroup(data.g[0]);
+                        data.g[0]=null;
+                        data.Destroy();
                         if(u.Data()==4){ 
                             Units.Remove(u.unit);
                         }else{ 
-                            Units.MJ(u.player.player,'e008','A03M',0,dash.X,dash.Y,GetRandomReal(0,360),4,1,1, "stand","y_blinkcaster.mdl");
+                            Units.MJ(u.player.player,'e008','A03K',0,dash.X,dash.Y,GetRandomReal(0,360),4,1,1, "stand","y_blinkcaster.mdl");
                             BJDebugMsg("没触发，掉地上了");
                             u.RemoveAbility(Units.MJType_TSW);
                             u.RemoveAbility('A03Y');
@@ -644,7 +666,7 @@ library SD requires Groups{
                             GroupClear(tmp_group);   
                         }
                         if(ft==3){//飞雷神标记触发
-                            cd=0.5;
+                            cd=2;
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y();
