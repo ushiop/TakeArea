@@ -3,6 +3,9 @@ library SD requires Groups{
     //SSR
     struct SD{
 
+        
+        static integer Q_Sound;
+
         static method AI(unit ua){
             Units u=Units.Get(ua);
             if(u.player.isai==true){
@@ -625,6 +628,7 @@ library SD requires Groups{
                         }                        
                     }
                     if(ft!=-1){//可触发飞雷神 ,16 后摇 18 披风 B00X 时空转移BUFF
+                        RunSoundOnUnit(Q_Sound,u.unit); 
                         u.SetAbilityCD('A03R',u.GetAbilityCD('A03R')-1);
                         x=u.X(),y=u.Y();  
                         x1=GetUnitX(target),y1=GetUnitY(target);
@@ -1051,6 +1055,7 @@ library SD requires Groups{
             Units.On(Units.onHeroSpawn,SD.Spawn); 
             Events.On(Events.onUnitOrderToUnit,SD.Q);
             Events.On(Events.onUnitOrderToLocation,SD.Q);
+            Q_Sound=DefineSound("resource\\sound_effect_sd_fls.wav",1000, false, true);
         }
     }
 }
