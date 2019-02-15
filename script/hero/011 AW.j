@@ -11,6 +11,7 @@ library AW requires Groups{
                 data=Data.create('A03A');
                 data.c[0]=u;
                 data.r[0]=1;
+                data.r[1]=3;
                 Timers.Start(0.1,data,function(Timers t){
                     integer x;
                     Data data=Data(t.Data());
@@ -82,6 +83,16 @@ library AW requires Groups{
                                     data.r[0]-=0.1;
                                 }
                             } 
+                            if(u.player.isai==true){//AI作弊，每3秒增加1层尸体
+                                if(data.r[1]<=0){
+                                    data.r[1]=3;
+                                    Buffs.Add(u.unit,'A03B','B00Q',86400,false).onFlush=function(Buffs b){
+                                        b.Level+=1;
+                                    }; 
+                                }else{
+                                    data.r[1]-=0.1;
+                                }
+                            }
                             if(b.Level<=0){
                                 b.Stop();
                             }
