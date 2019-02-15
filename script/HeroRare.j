@@ -57,8 +57,8 @@ library HeroRare requires Units{
 
         //为玩家从英雄池中随机一个英雄，随机范围为0-r,r最大为100
         public static method GetRandomHero(player p,real r)->unit{
-            //测试 real r1=GetRandomReal(0,r);
-            real r1=GetRandomReal(0,50);
+            real r1=GetRandomReal(0,r);
+            //real r1=GetRandomReal(0,50);
             integer index=-1;
             if(r1>0&&r1<=30){
                 index=0;
