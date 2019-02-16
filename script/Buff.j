@@ -14,7 +14,8 @@ library Buff requires Util{
 
         public{
             real MaxTime;//总持续时间
-            real NowTime;//当前持续时间
+            real NowTime;//剩余持续时间
+            real Time;//已持续的时间
             integer Ability;//作为主体的技能ID
             integer Buff;//作为BUFF图标的技能ID
             integer Obj;//这个BUFF携带的实例化对象ID，由对应类自己转化为实例 
@@ -109,6 +110,7 @@ library Buff requires Util{
                         tmp=Buffs.allocate();
                         tmp.NowTime=time;
                         tmp.MaxTime=time;
+                        tmp.Time=0;
                         tmp.Ability=aid;
                         tmp.Buff=bid;
                         tmp.Unit=u; 
@@ -191,6 +193,7 @@ library Buff requires Util{
                 if(tmp!=Root){
                     if(tmp.NowTime>0&&IsUnitAliveBJ(tmp.Unit)==true){ 
                         tmp.NowTime=tmp.NowTime-0.01;
+                        tmp.Time=tmp.Time+0.01;
                         if(tmp.onTime!=0) BuffEventInterface(tmp.onTime).evaluate(tmp); 
                     }else{
                         UnitRemoveAbility(tmp.Unit,tmp.Ability);
