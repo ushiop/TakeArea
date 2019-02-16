@@ -12,7 +12,7 @@ library Item{
             Buffs.Find(e.TriggerUnit.unit,'B00Y').Stop();
         }
     }
-
+ 
     //自杀球的使用
     function ZiShaQiu(Spell e){
         Buffs.Add(e.Spell,'A042','B00Y',5,false).onEnd=function(Buffs b){
