@@ -217,7 +217,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         BuffUI.RegBuff('B00T');
         BuffUI.RegBuff('B00U');
         BuffUI.RegBuff('B00V');
-        BuffUI.RegBuff('B00X');
+        BuffUI.RegBuff('B00X'); 
+        BuffUI.RegBuff('B00Y');
         //BUFF条
         BuffUI.BackgroundSize(0.18,0.024); 
         BuffUI.BackgroundMove(0.02,-0.186); 
