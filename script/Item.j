@@ -8,8 +8,11 @@ library Item{
                 e.TriggerUnit.SetAbilityCD('A02B',10);
             }
         }
-        if(e.TriggerUnit.IsAbility('B00Y')==true){//自杀球停止自杀
+        if(e.TriggerUnit.IsAbility('B00Y')==true){//自杀球受伤停止自杀
             Buffs.Find(e.TriggerUnit.unit,'B00Y').Stop();
+        }
+        if(e.DamageUnit.IsAbility('B00Y')==true){//自杀球造成伤害停止自杀
+            Buffs.Find(e.DamageUnit.unit,'B00Y').Stop();
         }
     }
  

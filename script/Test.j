@@ -73,9 +73,9 @@ library Test requires Util{
             SetPlayerAlliance( Player(1),p.player, ALLIANCE_SHARED_CONTROL, true );
         }
     }
-
+ 
     function onInit(){
-        Events.On(Events.onPlayerPressEsc,Esc);
-        Events.On(Events.onPlayerChat,Chat);
+        //Events.On(Events.onPlayerPressEsc,Esc);
+        //Events.On(Events.onPlayerChat,Chat);
     }
 } 
