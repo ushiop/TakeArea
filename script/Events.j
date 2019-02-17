@@ -70,6 +70,8 @@ library Events requires Table{
             static constant string onUnitOrder="Events.onUnitOrder";//任意单位发布无目标命令
             static constant string onUnitAttack="Events.onUnitAttack";//任意单位被攻击
             static constant string onPlayerPressEsc="Events.onPlayerPressEsc";//任意玩家按下ESC
+            static constant string onNight="Events.onNight";//当夜晚开始
+            static constant string onSun="Events.onSun";//当白天开始
 
             //注册事件，触发时调用callback
             static method On(string eName,EventInterface callback){  
@@ -136,6 +138,8 @@ library Events requires Table{
 //! runtextmacro RegisterAction("onUnitOrder") 
 //! runtextmacro RegisterAction("onUnitAttack") 
 //! runtextmacro RegisterAction("onPlayerPressEsc") 
+//! runtextmacro RegisterAction("onNight")
+//! runtextmacro RegisterAction("onSun") 
 
 
     function onInit(){
@@ -166,7 +170,8 @@ library Events requires Table{
         $tri$(t,$args$, $event$ );
         TriggerAddAction(t,function $action$); 
         //! endtextmacro 
-
+        //! runtextmacro RegisterArgsEvent("TriggerRegisterGameStateEventTimeOfDay","EQUAL","6.00","Event_onSun");
+        //! runtextmacro RegisterArgsEvent("TriggerRegisterGameStateEventTimeOfDay","EQUAL","18.00","Event_onNight");
             
         //! textmacro AllPlayerRegisterEvent takes tri,event,action,args
         t=CreateTrigger();
