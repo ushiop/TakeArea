@@ -40,7 +40,8 @@
 //! import zinc "map/script/NewUI.j"
 //! import zinc "map/script/Item.j"
 //! import zinc "map/script/Effect.j" 
-//! import zinc "map/script/Test.j"
+//! import zinc "map/script/Test.j" 
+//! import zinc "map/script/TianQi.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
 //! import zinc "map/script/hero/002 Dazzle Master.j"
