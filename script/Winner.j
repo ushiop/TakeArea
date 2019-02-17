@@ -8,6 +8,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         private static integer MaxKills=100;
         private static real OX,OY,NowTime=0,MaxTime=180; 
         private static integer Team=-1,WinTeam=-1; 
+        private static real TimeTips=0;
 
         public static method GetMaxKills()->integer{
                 return MaxKills;
@@ -36,7 +37,8 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         }
 
         //设置指定阵营序号胜利
-        private static method ShowWin(integer teamid){
+        private static method ShowWin(integer teamid){ 
+            PlaySoundBJ( gg_snd_Winner );
             Winner.WinTeam=teamid;
             PauseGameOn();
             //游戏结束时暂停游戏，而不是设置游戏胜利
@@ -98,7 +100,6 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                     if(Winner.NowTime>0){
                         if(Winner.NowTime>=Winner.MaxTime){
                             Winner.GameEnd=true;
-                            PlaySoundBJ( gg_snd_Winner );
                             DisplayTextToForce(Teams.GetAllPlayers(),"游戏结束啦！！！！！！！！！！！ "+ Teams.GetTeamNameByIndex(Winner.Team)+" 获得了最终的胜利！！");
                             Winner.ShowWin(Winner.Team);
                         }else{
@@ -113,6 +114,15 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                                 Winner.NowTime=Winner.NowTime+rtmp;
                             }
                             TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
+                            if(Winner.NowTime>=160){//MaxTime-20 = 160
+                                if(Winner.TimeTips<=0){
+                                    StopSoundBJ( gg_snd_TimeTips, false );
+                                    PlaySoundBJ( gg_snd_TimeTips );
+                                    Winner.TimeTips=3;
+                                }else{
+                                    Winner.TimeTips-=0.01;
+                                }
+                            }
                         } 
                     }else{
                         DisplayTextToForce(Teams.GetAllPlayers(), Teams.GetTeamNameByIndex(Winner.Team)+" 已经丢失了中央球的控制权，中央球现在是中立状态！" );
