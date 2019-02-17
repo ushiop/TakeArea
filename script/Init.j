@@ -57,6 +57,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
         /*BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
         open_code_run_logs(true);*/
 
+        SetTimeOfDay(6.0);//设置游戏时间为夜晚
         
         Cheat("exec-lua:init");
     }
