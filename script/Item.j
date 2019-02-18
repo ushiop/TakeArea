@@ -25,9 +25,23 @@ library Item{
         };
         e.Destroy();
     }
+
+    //太阳石
+    function TaiYangShi(Spell e){
+        SetTimeOfDay(6);
+        e.Destroy();
+    }
+
+    //月亮石
+    function YueLiangShi(Spell e){
+        SetTimeOfDay(18);
+        e.Destroy();
+    }
  
     function onInit(){
         Damage.On(Damage.onItemDamage_EndDamage,Item_Damage);
         Spell.On(Spell.onSpell,'A041',ZiShaQiu);
+        Spell.On(Spell.onSpell,'A043',TaiYangShi);
+        Spell.On(Spell.onSpell,'A044',YueLiangShi);
     }
 }
