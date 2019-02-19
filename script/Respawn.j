@@ -34,7 +34,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             integer hid=0,money=0;
             Players ps=Players.Get(p);
             Respawn r=ps.respawn; 
-            integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int;
+            integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int,ai;
             integer r_it[];
             BJDebugMsg(ps.playerids+"准备复活了！");
             ps.isdeath=false;  
@@ -55,7 +55,16 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             r_int=ps.hero.Int(false);
             ex_str=ps.hero.ExStr();
             ex_agi=ps.hero.ExAgi();
-            ex_int=ps.hero.ExInt(); 
+            ex_int=ps.hero.ExInt();
+            if(ps.isai==true){//如果是AI，则买属性
+                if(ps.Money()>=300){
+                    ai=ps.Money()/300; 
+                    ps.AddMoney(-300*ai); 
+                    ex_str+=3*ai;
+                    ex_agi+=3*ai;
+                    ex_int+=3*ai; 
+                }
+            } 
             for(0<=r_i<6){
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
@@ -87,8 +96,6 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
-            
-            BJDebugMsg(ps.playerids+"正在扣钱！！");
             ps.hero.Lock(p); 
             ps.hero.Select(p);
             ps.respawn=0; 
@@ -105,7 +112,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 if(r.RespawnTime>0){
                     r.RespawnTime=r.RespawnTime-1;
                     //测试 
-                    BJDebugMsg(p.playerids+"死亡剩余:"+R2S(r.RespawnTime));
+                    BJDebugMsg(p.playerids+p.name+"死亡剩余:"+R2S(r.RespawnTime));
                     Respawn.Flush(p.player);
                 }else{
                     if(p.isdeath==true){ 
