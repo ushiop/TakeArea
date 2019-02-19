@@ -682,7 +682,8 @@ library SD requires Groups{
                             GroupClear(tmp_group);   
                         }
                         if(ft==3){//飞雷神标记触发
-                            cd=2;
+                            cd=2; 
+                            Buffs.Find(target,'B00S').Stop();
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
                             x=u.X(),y=u.Y();
