@@ -30,6 +30,14 @@ library TianQi {
             day_tq=GetRandomInt(0,4);//所有天气中随机一个
             day_first_start_time=GetRandomInt(7,14);//在白天的第一波天气变化，7点到18点随机时间开始，持续4小时
             day_second_start_time=GetRandomInt(15,20);//晚上的第二波变化，15~20点随机开始，持续4小时 
+            if(day_tq==3){//随机到日光，特殊处理，只会出现在白天
+                day_first_start_time=GetRandomInt(7,10);
+                day_second_start_time=GetRandomInt(10,14);
+            }
+            if(day_tq==4){//随机到月光，同上 
+                day_first_start_time=18;
+                day_second_start_time=1;
+            }
             //DisplayTextToForce(Teams.GetAllPlayers(), "[天气预告]今天的天气可能是"+I2S(day_tq)+",预计为"+I2S(day_first_start_time)+"/"+I2S(day_second_start_time));
         }else{
             day_tq=0;
