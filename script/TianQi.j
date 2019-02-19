@@ -61,7 +61,7 @@ library TianQi {
                     }
                     if(day_tq==2){//大风
                         Buffs.Add(p.hero.unit,'A047','B011',1.1,false);
-                        Dash.Start(p.hero.unit,200,200,Dash.NORMAL,3,true,false);
+                        Dash.Start(p.hero.unit,200,100,Dash.NORMAL,1.5,true,false);
                     }
                     if(day_tq==3){//大日,每秒回复3%生命
                         p.hero.SetHP(p.hero.HP()+p.hero.MaxHP()*0.03);
