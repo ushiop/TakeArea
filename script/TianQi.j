@@ -13,8 +13,8 @@ library TianQi {
         SetTimeOfDay(18.1);
         FogEnable( true );
         FogMaskEnable( true );
-        EnableWeatherEffect(tq_night ,true);
-        EnableWeatherEffect(tq_sun, false );
+        //EnableWeatherEffect(tq_night ,true);
+        //EnableWeatherEffect(tq_sun, false );
     }
 
     function Sun(EventArgs e){
@@ -23,11 +23,11 @@ library TianQi {
         DisplayTextToForce(Teams.GetAllPlayers(), "第"+I2S(day)+"天开始了~" );
         FogEnable( false );
         FogMaskEnable( false );
-        EnableWeatherEffect(tq_night ,false);
-        EnableWeatherEffect(tq_sun, true );
+        //EnableWeatherEffect(tq_night ,false);
+        //EnableWeatherEffect(tq_sun, true );
         EnableWeatherEffect(tq_effect[day_tq],false);//立即结束上一个天气效果
         if(GetRandomInt(0,1)==1){//50%的几率是没有天气效果的
-            day_tq=GetRandomInt(0,2);//所有天气中随机一个
+            day_tq=GetRandomInt(0,4);//所有天气中随机一个
             day_first_start_time=GetRandomInt(7,14);//在白天的第一波天气变化，7点到18点随机时间开始，持续4小时
             day_second_start_time=GetRandomInt(15,20);//晚上的第二波变化，15~20点随机开始，持续4小时 
             //DisplayTextToForce(Teams.GetAllPlayers(), "[天气预告]今天的天气可能是"+I2S(day_tq)+",预计为"+I2S(day_first_start_time)+"/"+I2S(day_second_start_time));
@@ -54,6 +54,12 @@ library TianQi {
                     if(day_tq==2){//大风
                         Buffs.Add(p.hero.unit,'A047','B011',1.1,false);
                         Dash.Start(p.hero.unit,200,200,Dash.NORMAL,3,true,false);
+                    }
+                    if(day_tq==3){//大日,每秒回复3%生命
+                        p.hero.SetHP(p.hero.HP()+p.hero.MaxHP()*0.03);
+                    }
+                    if(day_tq==4){//大夜,每秒回复2%魔法
+                        p.hero.SetMP(p.hero.MP()+p.hero.MaxMP()*0.02);
                     }
                 });
             }else{
@@ -86,12 +92,14 @@ library TianQi {
     }
   
     function onInit(){ 
-        tq_sun=AddWeatherEffect(gg_rct_main, 'LRaa');//日光
-        tq_night=AddWeatherEffect(gg_rct_main, 'LRma');//月光
+        //tq_sun=AddWeatherEffect(gg_rct_main, 'LRaa');//日光
+        //tq_night=AddWeatherEffect(gg_rct_main, 'LRma');//月光
 
         tq_effect[0]=AddWeatherEffect(gg_rct_main, 'RAhr');//大雨
         tq_effect[1]=AddWeatherEffect(gg_rct_main, 'SNbs');//暴风雪
         tq_effect[2]=AddWeatherEffect(gg_rct_main, 'WOcw');//大风
+        tq_effect[3]=AddWeatherEffect(gg_rct_main, 'LRaa');//日光
+        tq_effect[4]=AddWeatherEffect(gg_rct_main, 'LRma');//月光
         
         Events.On(Events.onNight,Night);
         Events.On(Events.onSun,Sun); 
