@@ -19,7 +19,7 @@ library AW requires Groups{
                     Buffs b;
                     Units mj;
                     if(u.Alive()==false){
-                        BJDebugMsg("结束了");
+                        //BJDebugMsg("结束了");
                         for(0<=x<4){
                             if(data.u[x]!=null){
                                 Units.Remove(data.u[x]);
@@ -65,7 +65,7 @@ library AW requires Groups{
                                 u.AddAbility('A03F');
                                 if(data.r[0]<=0){
 
-                                    BJDebugMsg("埃文斯了");
+                                    //BJDebugMsg("埃文斯了");
                                     //450
                                     Effect.ToUnit("blood-zhendi_green.mdl",u.unit,"origin").Destroy();
                                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),450,function GroupIsAliveNotAloc);   
@@ -321,7 +321,7 @@ library AW requires Groups{
                         }
                     }else{ 
                         if(data.i[2]==0){//抓爆阶段
-                            BJDebugMsg("结束了");
+                            //BJDebugMsg("结束了");
                             
                             u.player.Duang(60,0.4);
                             Units.MJ(u.player.player,'e008','A03D',0,x,y,0,5,2,1, "stand","blood-boom.mdl"); 
@@ -395,7 +395,7 @@ library AW requires Groups{
                 real x=u.X(),y=u.Y();
                 if(data.i[0]==0){
                     if(u.IsAbility('B00R')==false){
-                        BJDebugMsg("失败了"); 
+                        //BJDebugMsg("失败了"); 
                         Units(data.c[2]).Anime("death");
                         Units(data.c[2]).Alpha(0);
                         Spell(data.c[1]).Destroy();
@@ -407,7 +407,7 @@ library AW requires Groups{
                             u.AnimeId(4);
                         } 
                         if(data.r[0]<=0){
-                            BJDebugMsg("施放成功!"); 
+                            //BJDebugMsg("施放成功!"); 
                             KillCDJ(x,y);
                             Spell(data.c[1]).Destroy();
                             data.i[0]=1;
@@ -426,7 +426,7 @@ library AW requires Groups{
                 }else{  
                     mj=Units(data.c[2]);
                     if(mj.Data()<=0){
-                        BJDebugMsg("又结束了");
+                        //BJDebugMsg("又结束了");
                         mj.RemoveAbility(Units.MJType_CDW);
                         mj.Life(3);
                         mj.Anime("death");

@@ -33,7 +33,7 @@ library SD requires Groups{
                     Units mj;
                     integer x;
                     if(u.Alive()==false){
-                        BJDebugMsg("结束了-4D");
+                        //BJDebugMsg("结束了-4D");
                         for(0<=x<4){
                             if(data.u[x]!=null){
                                 Units.Remove(data.u[x]);
@@ -139,7 +139,7 @@ library SD requires Groups{
                             Units.Remove(u.unit);
                         }else{ 
                             Units.MJ(u.player.player,'e008','A03K',0,dash.X,dash.Y,GetRandomReal(0,360),4,1,1, "stand","y_blinkcaster.mdl");
-                            BJDebugMsg("没触发，掉地上了");
+                            //BJDebugMsg("没触发，掉地上了");
                             u.RemoveAbility(Units.MJType_TSW);
                             u.RemoveAbility('A03Y');
                             u.Anime("stand");
@@ -894,7 +894,7 @@ library SD requires Groups{
                             x=x+600*CosBJ((22.5*data.i[1])+(90*ModuloInteger(data.i[0],4)));
                             y=y+600*SinBJ((22.5*data.i[1])+(90*ModuloInteger(data.i[0],4)));
                             u.Position(x,y,false);
-                            BJDebugMsg(I2S(data.i[0]));
+                            //BJDebugMsg(I2S(data.i[0]));
                             mj=Units.MJ(u.player.player,'e008','A03Z',data.i[0],x,y,0,86400,1.5,1, "stand","fls_kw.mdl"); 
                             GroupAddUnit(data.g[0],mj.unit);
                             data.i[0]-=1; 
