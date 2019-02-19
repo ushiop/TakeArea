@@ -216,7 +216,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }
         }
 
-        public static method Press(player ps,string e){
+        /*public static method Press(player ps,string e){
             Players p=Players.Get(Players.localplayer);
             Respawn r=p.respawn;
             if( p.isdeath==true){
@@ -228,7 +228,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     }
                 }
             }
-        }
+        }*/
 
         public static method PressSnyc(player ps,string e){
             Players p=Players.Get(ps);
@@ -250,7 +250,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         static method onInit(){
             DeathUIMainTop = DzCreateFrameByTagName("BACKDROP", "DeathUIMainTop", DzGetGameUI(), "Panel", 0);
             DzFrameSetSize( DeathUIMainTop, 0.18, 0.003);
-            DzFrameSetPoint( DeathUIMainTop, 4, DzGetGameUI(), 4, 0, 0.18 );
+            DzFrameSetPoint( DeathUIMainTop, 0, DzGetGameUI(), 0, 0, 0 );
             DzFrameSetTexture( DeathUIMainTop, "UI_TopBorder.blp", 0 ) ;
  
             DeathUIMainLine = DzCreateFrameByTagName("BACKDROP", "DeathUIMainLine", DeathUIMainTop, "ShowInfo", 0);
@@ -266,7 +266,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             DeathUIMainTitle = DzCreateFrameByTagName("TEXT", "DeathUIMainTitle", DeathUIMainLine, "TextInfo", 0);
             DzFrameSetSize( DeathUIMainTitle, 0.18, 0.12 );
             DzFrameSetPoint(DeathUIMainTitle, 1, DeathUIMainLine, 1, 0.045,-0.01) ;
-            DzFrameSetText( DeathUIMainTitle, "↓请选择复活方式↓  \n按|cff00ff00C|r键可以开关该面板" );
+            DzFrameSetText( DeathUIMainTitle, "↓请选择复活方式↓  \n按键请多按几次(有延迟)" );
 
             DeathUIMainRoll = DzCreateFrameByTagName("TEXT", "DeathUIMainRoll", DeathUIMainLine, "TextInfo", 0);
             DzFrameSetSize( DeathUIMainRoll, 0.18, 0.12 );
@@ -326,7 +326,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             
             Units.On(Units.onHeroDeath,Respawn.Death);
 
-            Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.Press);
+            //Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.Press);
             Press.OnSnyc(Press.onSnycPressKeyDown,Respawn.PressSnyc);
 
         }
