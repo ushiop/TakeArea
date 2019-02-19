@@ -36,7 +36,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             Respawn r=ps.respawn; 
             integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int,ai;
             integer r_it[];
-            BJDebugMsg(ps.playerids+"准备复活了！");
+            //BJDebugMsg(ps.playerids+"准备复活了！");
             ps.isdeath=false;  
             Respawn.Show(p,false); 
             if(r.RespawnSelect==1){
@@ -48,7 +48,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 ps.nextherotype=-1;
             }                
             
-            BJDebugMsg(ps.playerids+"正在复活了！");
+            //BJDebugMsg(ps.playerids+"正在复活了！");
             r_lv=GetUnitLevel(ps.hero.unit);
             r_str=ps.hero.Str(false);
             r_agi=ps.hero.Agi(false);
@@ -70,16 +70,19 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             } 
             HeroRares.AddRandomHero(ps.hero.unit); 
             
-            BJDebugMsg(ps.playerids+"正在投胎！");
+            //BJDebugMsg(ps.playerids+"正在投胎！");
             if(r.RespawnSelect==0)
             {
                 ps.hero=Units.Get(HeroRares.GetRandomHero(ps.player,ps.randomhero));   
             }else{
                 ps.hero=Units.Get(Units.Spawn(ps.player,hid,0,0,0));   
             }
-            
-            BJDebugMsg(ps.playerids+"正在抽取新的英雄！");
-            if(r_lv!=1){ 
+            if(ps.hero.unit==null){
+                BJDebugMsg("【警告】"+ps.name+"没有英雄！如看到这条提示，如果愿意，请截图并发送给作者");
+                BJDebugMsg("Rs:"+R2S(r.RespawnTime)+"/Pid:"+ps.playerids);
+            }
+            //BJDebugMsg(ps.playerids+"正在抽取新的英雄！");
+            if(r_lv!=1){  
                 SetHeroLevel(ps.hero.unit,r_lv,false);
             }
             SetHeroAgi(ps.hero.unit,r_agi,true);
@@ -92,7 +95,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
             }
             
-            BJDebugMsg(ps.playerids+"正在继承前世记忆！！");
+            //BJDebugMsg(ps.playerids+"正在继承前世记忆！！");
             ps.hero.Position(GetRectCenterX(Teams.GetTeamRect(ps.player)),GetRectCenterY(Teams.GetTeamRect(ps.player)),true);
             DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Awaken\\Awaken.mdl",ps.hero.unit, "origin") );
             ps.AddMoney(-money);
@@ -111,8 +114,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 Respawn r=Respawn(p.respawn);
                 if(r.RespawnTime>0){
                     r.RespawnTime=r.RespawnTime-1;
-                    //测试 
-                    BJDebugMsg(p.playerids+p.name+"死亡剩余:"+R2S(r.RespawnTime));
+                    //测试 BJDebugMsg(p.playerids+p.name+"死亡剩余:"+R2S(r.RespawnTime));
                     Respawn.Flush(p.player);
                 }else{
                     if(p.isdeath==true){ 
