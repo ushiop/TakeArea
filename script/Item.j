@@ -3,7 +3,7 @@ library Item{
 
     //跳刀的受伤冷却
     function Item_Damage(DamageArgs e){
-        if(e.TriggerUnit.IsAbility('A02B')==true){//跳刀冷却
+        if(e.TriggerUnit.IsAbility('A02B')==true&&e.DamageUnit.isHero==true){//跳刀冷却
             if(e.TriggerUnit.GetAbilityCD('A02B')>2||e.TriggerUnit.GetAbilityCD('A02B')==0){
                 e.TriggerUnit.SetAbilityCD('A02B',10);
             }
