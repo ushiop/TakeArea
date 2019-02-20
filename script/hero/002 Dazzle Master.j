@@ -205,14 +205,15 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units first=Units.Get(GroupFirst(data.g[0]));
             Dash dash;
             real cd,x=first.X(),y=first.Y(),h=first.H();
-            integer id;             
+            integer id=first.aidindex;          
             Buffs b;
-            id=first.aidindex;
-            Units.Kill(first.unit);
-            if(x==0){
-                BJDebugMsg(first.name+R2S(x)+"/"+R2S(y)+":::"+R2S(e.X)+"/"+R2S(e.Y)+"/类型："+I2S(id)+"/炫纹组："+I2S(GroupNumber(data.g[0])));
-                BJDebugMsg("---这是一条错误提示,如果提示了这个提示,请保存录像并联系作者");
-            }
+            if(GroupNumber(data.g[0])==0){
+                BJDebugMsg(first.name+R2S(x)+"/"+R2S(y)+":::"+R2S(e.X)+"/"+R2S(e.Y)+"/类型："+I2S(id)+"/炫纹组："+I2S(GroupNumber(data.g[0]))+"/A:"+Util.B2S(first.Alive())+"/AID:"+I2S(first.aid)+"/AID2:"+I2S(first.aidindex));
+                BJDebugMsg("---这是一条错误提示,如果看到了这条提示且你愿意,请保存录像并联系作者");
+                e.Destroy();
+                return;
+            } 
+            Units.Kill(first.unit); 
             TextForPlayer(u.player.player,u.unit,DazzleMaster.DazzleName[first.aidindex]+"!",0.8,14,300); 
             b=Buffs.Add(u.unit,'A00G','B002',5,false);
             b.onEnd=function(Buffs b){
