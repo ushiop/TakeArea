@@ -93,7 +93,7 @@ library WindWalk requires Groups{
             Spell e=Spell(data.c[1]);
             Dash dash;  
             if(u.Alive()==true&&data.i[0]>0){
-                if(u.player.press.E==true){
+                if(u.player.press.E==true||u.player.isai==true){
                     if(data.r[1]!=0){
                         data.r[1]-=1;
                     }else{
@@ -157,10 +157,7 @@ library WindWalk requires Groups{
             data.r[1]=2;
             data.r[2]=u.X();
             data.r[3]=u.Y();
-            data.i[0]=30;
-            if(u.player.isai==true){
-                data.r[0]=0.02;
-            }
+            data.i[0]=20;
             SetTimerData(t,data);
             TimerStart(t,data.r[0],true,function WindWalk.E1);
             t=null;
