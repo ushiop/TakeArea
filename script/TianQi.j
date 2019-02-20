@@ -53,21 +53,23 @@ library TianQi {
                 EnableWeatherEffect(tq_effect[day_tq],true);    
                 Teams.ActionsForAllPlayer(function(){//天气效果
                     Players p=Players.Get(GetEnumPlayer());
-                    if(day_tq==0){//雨天
-                        Buffs.Add(p.hero.unit,'A045','B00Z',1.1,false);
-                    }
-                    if(day_tq==1){//暴风雪
-                        Buffs.Add(p.hero.unit,'A046','B010',1.1,false); 
-                    }
-                    if(day_tq==2){//大风
-                        Buffs.Add(p.hero.unit,'A047','B011',1.1,false);
-                        Dash.Start(p.hero.unit,200,100,Dash.NORMAL,1.5,true,false);
-                    }
-                    if(day_tq==3){//大日,每秒回复3%生命
-                        p.hero.SetHP(p.hero.HP()+p.hero.MaxHP()*0.03);
-                    }
-                    if(day_tq==4){//大夜,每秒回复2%魔法
-                        p.hero.SetMP(p.hero.MP()+p.hero.MaxMP()*0.02);
+                    if(p.hero.Alive()==true){ 
+                        if(day_tq==0){//雨天
+                            Buffs.Add(p.hero.unit,'A045','B00Z',1.1,false);
+                        }
+                        if(day_tq==1){//暴风雪
+                            Buffs.Add(p.hero.unit,'A046','B010',1.1,false); 
+                        }
+                        if(day_tq==2){//大风
+                            Buffs.Add(p.hero.unit,'A047','B011',1.1,false);
+                            Dash.Start(p.hero.unit,200,100,Dash.NORMAL,1.5,true,false);
+                        }
+                        if(day_tq==3){//大日,每秒回复3%生命
+                            p.hero.SetHP(p.hero.HP()+p.hero.MaxHP()*0.03);
+                        }
+                        if(day_tq==4){//大夜,每秒回复2%魔法
+                            p.hero.SetMP(p.hero.MP()+p.hero.MaxMP()*0.02);
+                        }
                     }
                 });
             }else{
