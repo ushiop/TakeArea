@@ -48,6 +48,11 @@ library Buff requires Util{
                 this.NowTime=0;
             }
 
+            //设置一个BUFF的剩余时间
+            method Delay(real time){
+                this.NowTime=time;
+            }
+
             //移除一个单位身上的所有满足条件的BUFF
             //btype指示BUFF类型,由Buffs类定义
             //指示为-1则表示清除所有BUFF
