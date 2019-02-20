@@ -118,6 +118,10 @@ library Damage requires Table,Events{
         static method To(unit u,unit m,real dtype,integer spellid,real dmg){
             Units t=Units.Get(u);
             ht[t.player.player]=spellid; 
+            if(GetUnitAbilityLevel(m,'Aloc')==1||GetUnitAbilityLevel(m,'A01Z')==1){
+                BJDebugMsg("----这是一条错误消息，如果你愿意，请截图并联系作者");
+                BJDebugMsg("-------D-A/u:"+GetUnitName(u)+"/m:"+GetUnitName(m)+"/S:"+GetAbilityName(spellid));
+            }
             if(dtype==Damage.Magic){//是平衡常数种的‘法术’伤害类型，而不是‘魔法’伤害类型
                 UnitDamageTarget(u,m,dmg,false,false,ATTACK_TYPE_NORMAL,DAMAGE_TYPE_MAGIC,WEAPON_TYPE_WHOKNOWS);
             }else if(dtype==Damage.Chaos){
