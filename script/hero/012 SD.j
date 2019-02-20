@@ -636,7 +636,7 @@ library SD requires Groups{
                             if(Buffs.Find(u.unit,'B00X').Obj==1){ 
                                 b=Buffs.Find(u.unit,'B00X');
                                 b.Obj=0;
-                                b.Delay(0.2);
+                                b.Delay(0.75);
                                 g=CreateGroup();
                                 team=false;
                                 if(u.player.press.D==true){
