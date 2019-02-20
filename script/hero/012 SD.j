@@ -633,31 +633,36 @@ library SD requires Groups{
                         x=u.X(),y=u.Y();  
                         x1=GetUnitX(target),y1=GetUnitY(target);
                         if(u.IsAbility('B00X')==true){//时空转移
-                            g=CreateGroup();
-                            team=false;
-                            if(u.player.press.D==true){
-                                team=true; 
-                            }
-                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
-                            while(FirstOfGroup(tmp_group)!=null){
-                                mj=Units.Get(FirstOfGroup(tmp_group));
-                                GroupRemoveUnit(tmp_group,mj.unit);
-                                if(IsUnitEnemy(mj.unit,u.player.player)==team&&mj.unit!=u.unit){    
-                                    if(mj.move==true){ 
-                                        Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,2,1, "stand","ss1.mdl").SetH(50);
-                                        mj.Position(x1,y1,true);
-                                        //Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,1.5,1, "stand","y_blinkcaster.mdl").SetH(50);
-                                        if(team==true){
-                                            Buffs.Skill(mj.unit,'A00F',1);
-                                        }else{
-                                            u.SetMP(u.MP()-25);
+                            if(Buffs.Find(u.unit,'B00X').Obj==1){ 
+                                b=Buffs.Find(u.unit,'B00X');
+                                b.Obj=0;
+                                b.Delay(0.2);
+                                g=CreateGroup();
+                                team=false;
+                                if(u.player.press.D==true){
+                                    team=true; 
+                                }
+                                GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==team&&mj.unit!=u.unit){    
+                                        if(mj.move==true){ 
+                                            Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,2,1, "stand","ss1.mdl").SetH(50);
+                                            mj.Position(x1,y1,true);
+                                            //Units.MJ(u.player.player,'e008','A03I',0,mj.X(),mj.Y(),0,2,1.5,1, "stand","y_blinkcaster.mdl").SetH(50);
+                                            if(team==true){
+                                                Buffs.Skill(mj.unit,'A00F',1);
+                                            }else{
+                                                u.SetMP(u.MP()-25);
+                                            }
                                         }
                                     }
-                                }
-                            }  
-                            GroupClear(tmp_group);   
-                            DestroyGroup(g);
-                            g=null; 
+                                }  
+                                GroupClear(tmp_group);   
+                                DestroyGroup(g);
+                                g=null; 
+                            }
                         }
 
 
@@ -812,12 +817,7 @@ library SD requires Groups{
                         //Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,0.75,1, "stand","ThunderClapCaster_ex.mdl");
                         
                         //----设置冷却和渐隐
-                        Buffs.Add(u.unit,'A03U','B00V',cd,false).onEnd=function(Buffs b){
-                            Units u=Units.Get(b.Unit);
-                            if(u.IsAbility('B00X')==true){
-                                Buffs.Find(u.unit,'B00X').Stop();
-                            }
-                        }; 
+                        Buffs.Add(u.unit,'A03U','B00V',cd,false); 
                         if(u.IsAbility('B00W')==false){
                             u.Alpha(0);
                             b=Buffs.Add(u.unit,'A03V','B00W',0.2,false); 
@@ -845,7 +845,7 @@ library SD requires Groups{
                 ReleaseTimer(GetExpiredTimer());
             });
             t=null;
-            Buffs.Add(u.unit,'A03X','B00X',10,false);
+            Buffs.Add(u.unit,'A03X','B00X',10,false).Obj=1;
             e.Destroy();
         }
 
