@@ -105,10 +105,14 @@ library Ai requires Teams,Groups{
 
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
-        Units u=dmg.TriggerUnit;        
-        if(u.player.AI()==true){ 
-            AISpell(u.unit);
-        }
+        Units u=dmg.TriggerUnit; 
+        if(u.IsAbility('B012')==false){
+            Buffs.Add(u.unit,'A048','B012',0.2,false);
+            if(u.player.AI()==true){ 
+                AISpell(u.unit);
+            }
+        }       
+        
     }
 
     //AI英雄出生时增加500点魔法值
