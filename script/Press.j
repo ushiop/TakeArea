@@ -85,16 +85,11 @@
         //$name$的按下与释放
         keys[$idx$]=false; 
         
-        if(Players.localplayer==Players.localplayer){ 
-            t= CreateTrigger();
-            DzTriggerRegisterKeyEventTrg( t, 1, $key$ );
-            TriggerAddAction(t, function $name$_Down);
-        }
-               
-        if(Players.localplayer==Players.localplayer){ 
-            t=CreateTrigger(); 
-            DzTriggerRegisterKeyEventTrg( t, 0, $key$ );
-            TriggerAddAction(t, function $name$_Up);
+        if(Players.localplayer==Players.localplayer){  
+            DzTriggerRegisterKeyEventByCode(null,$key$, 1 ,false ,function $name$_Down);
+
+            DzTriggerRegisterKeyEventByCode(null,$key$, 0 ,false ,function $name$_Up);
+                 
         }
         //! endtextmacro
         //! runtextmacro RegisterKey("1","81","Q");
