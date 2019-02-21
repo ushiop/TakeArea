@@ -641,7 +641,7 @@ library SD requires Groups{
                                 team=false;
                                 if(u.player.press.D==true){
                                     team=true; 
-                                }
+                                } 
                                 GroupEnumUnitsInRange(tmp_group,x,y,325,function GroupIsAliveNotAloc);     
                                 while(FirstOfGroup(tmp_group)!=null){
                                     mj=Units.Get(FirstOfGroup(tmp_group));
