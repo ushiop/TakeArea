@@ -64,7 +64,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     ex_agi+=ps.ailv;
                     ex_int+=ps.ailv; 
                 }
-            } 
+            }  
             for(0<=r_i<6){
                 r_it[r_i]=GetItemTypeId(UnitItemInSlot(ps.hero.unit,r_i));
             } 
