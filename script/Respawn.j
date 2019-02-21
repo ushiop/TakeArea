@@ -60,9 +60,9 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 if(ps.Money()>=300){
                     ai=ps.Money()/300; 
                     ps.AddMoney(-300*ai); 
-                    ex_str+=1*ai;
-                    ex_agi+=1*ai;
-                    ex_int+=1*ai; 
+                    ex_str+=ps.ailv;
+                    ex_agi+=ps.ailv;
+                    ex_int+=ps.ailv; 
                 }
             } 
             for(0<=r_i<6){

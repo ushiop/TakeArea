@@ -32,6 +32,7 @@ library Players requires TimerUtils{
             timer duangtimer=null;//震屏计时器
             real duanglv;//震屏幅度
             real duangtime;//震屏时间
+            integer ailv;//AI等级
 
             //使玩家屏幕震荡，幅度可叠加，时间可叠加
             method Duang(real lv,real time){
@@ -89,6 +90,18 @@ library Players requires TimerUtils{
             p.nextherotype=-1;
             p.isdeath=false;
             p.press=PlayerPress.create();
+            p.ailv=0;
+            if(p.isai==true){//如果是AI，则获取AI等级
+                if(GetAIDifficulty(p.player) == AI_DIFFICULTY_NEWBIE){
+                    p.ailv=1;
+                }
+                if(GetAIDifficulty(p.player) == AI_DIFFICULTY_NORMAL){
+                    p.ailv=2;
+                }
+                if(GetAIDifficulty(p.player) == AI_DIFFICULTY_INSANE){
+                    p.ailv=3;
+                }
+            }
             ht[ps]=p;
             return p;
         }
