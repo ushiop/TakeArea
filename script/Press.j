@@ -44,7 +44,7 @@
         string d=DzGetTriggerSyncData();
         string t=SubString(d,0,1);
         string msg=SubString(d,1,StringLength(d));  
-        BJDebugMsg(GetPlayerName(p));
+        //BJDebugMsg(GetPlayerName(p));
         if(t=="D"){ 
             Press.TriggerSnyc(Press.onSnycPressKeyDown,p,msg);
         }else if(t=="U"){ 
