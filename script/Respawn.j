@@ -217,7 +217,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
         }
 
         public static method Press(player ps,string e){
-            Players p=Players.Get(Players.localplayer);
+            Players p=Players.Get(ps);
             Respawn r=p.respawn;
             if( p.isdeath==true){
                 if(e=="C"){ 
