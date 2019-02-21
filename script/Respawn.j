@@ -204,7 +204,7 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                 DzFrameSetText( DeathUIMainSelect, "已选择:|cff00ff00"+Respawn.RespawnType[r.RespawnSelect]+"|r" ) ; 
                 DzFrameSetSize( DeathUIMainMoveBar,0.001+( 0.136 * (1-(r.RespawnTime/Respawn.MaxRespawnTime))), 0.006 );
             }
-        }
+        } 
 
         //向玩家显示或者隐藏死亡面板并显示相关数据
         private static method Show(player p,boolean show){
