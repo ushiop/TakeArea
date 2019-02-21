@@ -249,7 +249,7 @@ library SD requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                    u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*5.0);        
+                                    u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*10.0);        
                                 }
                             }  
                             GroupClear(tmp_group); 
@@ -403,7 +403,7 @@ library SD requires Groups{
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,w.player.player)==true){   
-                                w.Damage(tmp.unit,Damage.Magic,'A03M',w.Agi(true)*5.0);      
+                                w.Damage(tmp.unit,Damage.Magic,'A03M',w.Agi(true)*10.0);      
                             }
                         }  
                         GroupClear(tmp_group); 
