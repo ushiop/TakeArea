@@ -175,7 +175,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units u=Units.Get(e.Spell);
             if(e.Id=='A009'){ 
                 if(u.IsAbility('B006')==false){ 
-                    u.FlushAnimeId(5);
+                    u.FlushAnimeId(2);
                     e.Destroy();
                 }else{
                     if(u.MP()>=100){
@@ -377,7 +377,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             //Util.Range(x,y,150);
             u.Pause(true);
             u.PositionEnabled(false);   
-            u.AnimeId(18);
+            u.AnimeId(12);
             data.c[0]=u;
             data.c[1]=e;
             SetTimerData(t,data); 
@@ -470,7 +470,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                                 ReleaseTimer(GetExpiredTimer());                                
                                             }                      
                                         }else{
-                                            u.AnimeId(19); 
+                                            u.AnimeId(13); 
                                             data.i[0]=0;
                                             if(u.player.press.R==true){ 
                                                 x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
@@ -576,7 +576,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Data data=Data.create('A00D');
             timer t=NewTimer();
             u.Pause(true);
-            u.AnimeId(16);
+            u.AnimeId(10);
             data.c[0]=u;
             data.c[2]=e;
             data.r[0]=0;//蓄力时间
@@ -597,7 +597,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 if(pr==true&&data.r[0]<=2&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
                     data.r[0]+=0.1;
                     if(data.r[0]==0.2){
-                        u.AnimeId(14);
+                        u.AnimeId(8);
                         u.AnimeSpeed(2); 
                         RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
                     } 
@@ -645,7 +645,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Dash.Start(mj.unit,u.F(),200,Dash.ADD,60,true,false);
                     }
                     u.AnimeSpeed(2);
-                    u.AnimeId(17);
+                    u.AnimeId(11);
                     mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_blue.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
@@ -746,7 +746,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 real x,y;
                 if(dash.NowDis>100&&dash.NowDis<115){ 
                     u.SetF(dash.Angle,true); 
-                    u.AnimeId(13);                    
+                    u.AnimeId(7);                    
                     
                     mj=Units.MJ(u.player.player,'e009','A00B',0,u.X(),u.Y(),dash.Angle,2,0.7,2, "death","wind1.mdx");
                     mj.SetH(150);
@@ -819,13 +819,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             Units ts;
             u.Pause(true);
             u.Alpha(0);
-            u.AnimeId(6);
+            u.AnimeId(3);
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
             data.g[0]=CreateGroup();    
             ts=Units.MJ(u.player.player,'e008','A00B',0,u.X(),u.Y(),e.Angle,10,1,0.7, "stand","kiyohime_lancer.mdl");  
-            ts.AnimeId(6); 
+            ts.AnimeId(3); 
             ts.AnimeSpeed(0.7);
             data.c[2]=ts;
             data.i[1]=0;
