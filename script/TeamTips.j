@@ -13,4 +13,4 @@ library TeamTips {
         aid[2]='A04B';
         Units.On(Units.onHeroSpawn,Spawn);
     }
-}
+} 
