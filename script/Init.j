@@ -54,7 +54,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h009',-4464,-3641,0));
         } */
  
-        //JAPI测试异步
+        //JAPI测试异步 
         /*BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
         open_code_run_logs(true);*/
 
