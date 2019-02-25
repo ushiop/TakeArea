@@ -757,7 +757,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     x=dash.X+100*CosBJ(dash.Angle);
                     y=dash.Y+100*SinBJ(dash.Angle);
          
-                        if(GroupFind(u.unit,x,y,200,false,false)!=null){ 
+                        if(GroupFind(u.unit,x,y,250,false,false)!=null){ 
                             if(data.i[0]==0){
                                 data.i[0]=1;
                                 u.Pause(false);
@@ -773,7 +773,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             tmp.SetH(200); 
                             Dash.Start(tmp.unit,dash.Angle+180,450,Dash.SUB,60,true,false);
                             
-                            GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);
+                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);
                             while(FirstOfGroup(tmp_group)!=null){
                                 tmp=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,tmp.unit);
