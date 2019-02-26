@@ -41,6 +41,15 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             PlaySoundBJ( gg_snd_Winner );
             Winner.WinTeam=teamid;
             PauseGameOn();
+            Timers.Start(1,0,function(Timers t){
+                Teams.ActionsForAllPlayer(function(){ 
+                    Players p=Players.Get(GetEnumPlayer());
+                    if(p.hero.Alive()==true){
+                        p.hero.Pause(true);
+                        SetUnitInvulnerable(p.hero.unit, true );
+                    }
+                });
+            });
             //游戏结束时暂停游戏，而不是设置游戏胜利
             /*ForForce(Teams.GetAllPlayers(),function(){
                 if(IsPlayerInForce(GetEnumPlayer(),Teams.GetTeamForceByIndex(Winner.WinTeam))==true){
