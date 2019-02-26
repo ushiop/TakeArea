@@ -12,5 +12,6 @@ library TeamTips {
         aid[1]='A04A';
         aid[2]='A04B';
         Units.On(Units.onHeroSpawn,Spawn);
+        Units.On(Units.onHeroChangeModel,Spawn);
     }
 } 
