@@ -4,7 +4,8 @@ library TeamTips {
     integer aid[];//技能标志的ID
 
     function Spawn(Units u,Units m){
-        u.AddAbility(aid[u.player.teamid]);
+        u.RemoveAbility(aid[u.player.teamid]);
+        u.AddAbility(aid[u.player.teamid]); 
     }
 
     function onInit(){
