@@ -37,11 +37,27 @@ library Item{
         SetTimeOfDay(18);
         e.Destroy();
     }
+
+    function TuiTuiBang(Spell e){
+        Units u=Units.Get(e.Spell);
+        Dash.Start(u.unit,u.F(),1000,Dash.PWX,30,true,false).onMove=function(Dash dash){
+            if(dash.Speed>5){ 
+                if(dash.Obj==0){
+                    dash.Obj=2;
+                    Effect.To("Abilities\\Weapons\\GlaiveMissile\\GlaiveMissile.mdl",dash.X,dash.Y).Destroy();
+                }else{
+                    dash.Obj-=1;
+                }
+            }
+        };
+        e.Destroy();
+    }
  
     function onInit(){
         Damage.On(Damage.onItemDamage_EndDamage,Item_Damage);
         Spell.On(Spell.onSpell,'A041',ZiShaQiu);
         Spell.On(Spell.onSpell,'A043',TaiYangShi);
         Spell.On(Spell.onSpell,'A044',YueLiangShi);
+        Spell.On(Spell.onSpell,'A04C',TuiTuiBang);
     }
 }
