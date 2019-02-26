@@ -357,7 +357,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     }
                 }
             }else{
-                show=0;
+                show=0; 
             }
             if(show==1){ 
                 if(UIType==1){ 
