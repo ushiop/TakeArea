@@ -346,6 +346,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         integer show=0;
         real def;
         real defs;
+        string str_s,agi_s,int_s,mps; 
         DzFrameSetText(MoneyText,"|cffFFFF00$" +I2S(GetPlayerState(Players.localplayer, PLAYER_STATE_RESOURCE_GOLD))+"|r"); 
         if(UISelectUnit!=null){ 
             if(IsUnitAliveBJ(UISelectUnit)==true){
@@ -368,13 +369,26 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                         defs=2-Pow((1-0.04),def);
                     }
                     defs=defs*100;
+                    str_s=I2S(GetHeroStr(UISelectUnit,true));
+                    agi_s=I2S(GetHeroAgi(UISelectUnit,true));
+                    int_s=I2S(GetHeroInt(UISelectUnit,true));
+                    mps=Units.Get(UISelectUnit).mainpower;
+                    if(mps=="STR"){
+                        str_s="|cffFF0000"+str_s+"|r";
+                    }
+                    if(mps=="AGI"){
+                        agi_s="|cffFF0000"+agi_s+"|r";
+                    }
+                    if(mps=="INT"){
+                        int_s="|cffFF0000"+int_s+"|r";
+                    }
                     if(IsUnitEnemy(UISelectUnit,Players.localplayer)==false){
-                        DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(defs))+"%"+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+                        DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"("+I2S(R2I(exp)) +"%)"+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(defs))+"%"+"|n力量 "+str_s+"|n敏捷 "+agi_s+"|n智力 "+int_s+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     }else{
                         if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1){
                             DzFrameSetText(UnitInfoName,"等级 ???|n攻击 ???|n防御 ???|n力量 ???|n敏捷 ???|n智力 ???|n移速 ???|n攻速 ???");        
                         }else{
-                            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(defs))+"%"+"|n力量 "+I2S(GetHeroStr(UISelectUnit,true))+"|n敏捷 "+I2S(GetHeroAgi(UISelectUnit,true))+"|n智力 "+I2S(GetHeroInt(UISelectUnit,true))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+                            DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(defs))+"%"+"|n力量 "+str_s+"|n敏捷 "+agi_s+"|n智力 "+int_s+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                         }
                     }
                     hp=GetUnitLifePercent(UISelectUnit)/100;
