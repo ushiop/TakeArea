@@ -1,10 +1,19 @@
 library Item requires Groups{
     //物品效果
 
+    //物品增伤效果
+    function Item_AddDamage(DamageArgs e){
+        if(e.TriggerUnit.IsAbility('A04F')==true){//低力石
+            if((e.TriggerUnit.HP()/e.TriggerUnit.MaxHP())<=0.3){//生命值低于30%增伤17%
+                e.Damage+=e.Damage*0.17;
+            }
+        }
+    }
+
     //物品减伤效果
     function  Item_SubDamage(DamageArgs e){
-        if(e.TriggerUnit.IsAbility('A04E')==true){//血法的大护盾
-            if(e.TriggerUnit.IsAbility('BPSE')==true){//有眩晕则减伤物理/魔法
+        if(e.TriggerUnit.IsAbility('BPSE')==true){//血法的大护盾 有眩晕则减伤物理/魔法
+            if(e.TriggerUnit.IsAbility('A04E')==true){//
                 if(e.DamageType==Damage.Attack||e.DamageType==Damage.Magic||e.DamageType==Damage.Physics){
                     e.Damage-=e.Damage*0.4;
                     Effect.ToUnit("Abilities\\Spells\\Items\\SpellShieldAmulet\\SpellShieldCaster.mdl",e.TriggerUnit.unit,"origin").Destroy();
@@ -114,6 +123,7 @@ library Item requires Groups{
     }
  
     function onInit(){
+        Damage.On(Damage.onItemDamage_AddDamage,Item_AddDamage);
         Damage.On(Damage.onItemDamage_SubDamage,Item_SubDamage);
         Damage.On(Damage.onItemDamage_EndDamage,Item_Damage);
         Spell.On(Spell.onSpell,'A041',ZiShaQiu);
