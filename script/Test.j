@@ -29,6 +29,11 @@ library Test requires Util{
             if(p.hero.unit!=null){//对自己造成伤害
                 p.hero.Damage(p.hero.unit,Damage.Physics,'A02B',500);
             }
+        }  
+        if(e.ChatString=="4"){
+            if(p.hero.unit!=null){//对自己造成伤害
+                Buffs.Skill(p.hero.unit,'A00F',1);
+            }
         } 
         if(SubString(e.ChatString,0,7)=="-ranged"){//特效距离
             RangeDis[p.playerid]=S2R(SubString(e.ChatString,7,1));
