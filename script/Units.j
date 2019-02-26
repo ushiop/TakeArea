@@ -36,6 +36,7 @@ library Units requires Table,Players,Events,Util{
             integer ex_str;//额外力量
             integer ex_agi;//额外敏捷
             integer ex_int;//额外智力
+            string mainpower;//主属性
 
             //返回单位的自定义值
             method Data()->integer{
@@ -668,6 +669,7 @@ library Units requires Table,Players,Events,Util{
             ud.ex_str=0;
             ud.ex_agi=0;
             ud.ex_int=0;
+            ud.mainpower=Util.GetUnitValue(ud.uid,"Primary");
             Units.ht[u]=ud; 
             return ud;
         }
