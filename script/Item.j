@@ -1,4 +1,4 @@
-library Item{
+library Item requires Groups{
     //物品效果
 
     //跳刀的受伤冷却
@@ -52,6 +52,54 @@ library Item{
         };
         e.Destroy();
     }
+
+    function ShanQiuZhiChui(Spell e){
+        Units u=Units.Get(e.Spell);
+        Dash dash;
+        Units mj=Units.MJ(u.player.player,'e008','A04D',0,u.X(),u.Y(),e.Angle,5,1.5,1,"birth","Abilities\\Spells\\Human\\StormBolt\\StormBoltMissile.mdl");
+        mj.SetH(100); 
+        mj.AddAbility(Units.MJType_TSW);
+        mj.Position(mj.X(),mj.Y(),true);
+        dash=Dash.Start(mj.unit,mj.F(),1600,Dash.SUB,30,true,false);
+        dash.onMove=function(Dash dash){
+            unit k=null;
+            if(dash.Speed<3.5){
+                dash.Stop();
+            }else{ 
+                if(dash.Obj==0){
+                    dash.Obj=3;
+                    k=GroupFind(dash.Unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),125,true,false);
+                    if(k!=null){ 
+                        Units.Get(dash.Unit).SetData(1);
+                        k=null;
+                        dash.Stop();
+                    }
+                }else{
+                    dash.Obj-=1;
+                } 
+            }
+        };
+        dash.onEnd=function(Dash dash){
+            Units u=Units.Get(dash.Unit);
+            Units mj;
+            u.Life(0.75);
+            u.Anime("death");
+            if(u.Data()==0){
+                Dash.Start(u.unit,u.F(),200,Dash.SUB,10,true,false);
+            }else{
+                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                        Buffs.Skill(mj.unit,'A00F',1);   
+                    }
+                }  
+                GroupClear(tmp_group);
+            }
+        };
+        e.Destroy();
+    }
  
     function onInit(){
         Damage.On(Damage.onItemDamage_EndDamage,Item_Damage);
@@ -59,5 +107,6 @@ library Item{
         Spell.On(Spell.onSpell,'A043',TaiYangShi);
         Spell.On(Spell.onSpell,'A044',YueLiangShi);
         Spell.On(Spell.onSpell,'A04C',TuiTuiBang);
+        Spell.On(Spell.onSpell,'A04D',ShanQiuZhiChui);
     }
 }
