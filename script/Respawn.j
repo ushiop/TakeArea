@@ -79,7 +79,8 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
             }
             if(ps.hero.unit==null){
                 BJDebugMsg("【警告】"+ps.name+"没有英雄！如看到这条提示，如果愿意，请截图并发送给作者");
-                BJDebugMsg("Rs:"+R2S(r.RespawnTime)+"/Pid:"+ps.playerids);
+                BJDebugMsg("Rs:"+R2S(r.RespawnTime)+"/Pid:"+ps.playerids+"/Random:"+R2S(ps.randomhero)); 
+                BJDebugMsg("Select:"+I2S(r.RespawnSelect));
             }
             //BJDebugMsg(ps.playerids+"正在抽取新的英雄！");
             if(r_lv!=1){  
