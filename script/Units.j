@@ -315,6 +315,9 @@ library Units requires Table,Players,Events,Util{
             //替换模型为path
             method Model(string path){
                 DzSetUnitModel(this.unit,path);
+                if(this.isHero==true){ 
+                    Units.Trigger(Units.onHeroChangeModel,this.unit,null);
+                }
             }
 
             //延迟一定时间后替换单位模型,0秒为立即替换（不开启计时器)
@@ -570,6 +573,7 @@ library Units requires Table,Players,Events,Util{
             static constant string onHeroSpawn="Units.HeroSpawn";//英雄单位被创建
             static constant string onAlocDeath="Units.AlocDeath";//蝗虫单位死亡
             static constant string onAlocSpawn="Units.AlocSpawn";//蝗虫单位出生
+            static constant string onHeroChangeModel="Units.HeroChangeModel";//英雄单位改变模型
 
             //触发指定事件名
             static method Trigger(string eName,unit u,unit m){
