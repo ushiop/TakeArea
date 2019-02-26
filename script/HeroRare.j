@@ -59,12 +59,12 @@ library HeroRare requires Units{
         public static method GetRandomHero(player p,real r)->unit{
             real r1=GetRandomReal(0,r);
             //real r1=GetRandomReal(0,50);
-            integer index=-1;
-            if(r1>0&&r1<=30){
+            integer index=-1; 
+            if(r1>=0&&r1<=30){
                 index=0;
-            }else if(r1>30&&r1<=70){
+            }else if(r1>30&&r1<=80){
                 index=1;
-            }else if(r1>70){
+            }else if(r1>80){
                 index=2;
             }
             //测试 BJDebugMsg("本次随机池:"+I2S(index));
