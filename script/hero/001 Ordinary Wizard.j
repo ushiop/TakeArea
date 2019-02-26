@@ -76,7 +76,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 }else{
                     Units.MJ(u.player.player,'e008','A006',0,u.X(),u.Y(),e.Angle,2,2.5,1,"death","Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl");
                     DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl", u.X(),u.Y()) );
-                    DzSetUnitModel(u.unit, "units\\human\\HeroBloodElf\\HeroBloodElf.mdx" ); 
+                    u.Model("units\\human\\HeroBloodElf\\HeroBloodElf.mdx" ); 
                     if(u.Alive()==false){
                         u.Anime("death");
                     }
