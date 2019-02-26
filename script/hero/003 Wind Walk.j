@@ -119,17 +119,23 @@ library WindWalk requires Groups{
                     mj.SetH(70);
                     mj.Position(mj.X(),mj.Y(),true);
                     mj.AddAbility('A02O');
-                    dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false);
+                    dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false); 
                     dash1.onMove=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
-                        unit k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
-                        if(k!=null){
-                            DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
-                            Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
-                            dash.Stop(); 
-                            u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
-                        }     
-                        k=null; 
+                        unit k;
+                        if(dash.Obj==0){ 
+                            dash.Obj=2;
+                            k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
+                            if(k!=null){
+                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
+                                Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
+                                dash.Stop(); 
+                                u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
+                            }     
+                            k=null; 
+                        }else{
+                            dash.Obj-=1;
+                        }
                     }; 
                     dash1.onEnd=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
