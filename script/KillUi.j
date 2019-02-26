@@ -92,7 +92,11 @@ library KillUi requires Teams,Winner,BzAPI,Util{
                 tmp.TeamNumberName[i] = DzCreateFrameByTagName("TEXT","TEAMNAME_TITLE_"+I2S(tid)+"_PLAYERNAME_"+I2S(i), tmp.TeamName, "TextInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberName[i], 0.2, 0.1 );
                 DzFrameSetPoint(tmp.TeamNumberName[i], 0, tmp.TeamName, 0, 0.036,-0.034 + (I2R(i)*-0.035)) ;
-                DzFrameSetText( tmp.TeamNumberName[i],tmp.TeamPlayer[i].name );
+                if(tmp.TeamPlayer[i].isai==true){
+                    DzFrameSetText( tmp.TeamNumberName[i],tmp.TeamPlayer[i].name+"(难度"+I2S(tmp.TeamPlayer[i].ailv)+")" );
+                }else{ 
+                    DzFrameSetText( tmp.TeamNumberName[i],tmp.TeamPlayer[i].name );
+                }
                 tmp.TeamNumberInfo[i] = DzCreateFrameByTagName("TEXT","TEAMNAME_TITLE_"+I2S(tid)+"_INFO_"+I2S(i), tmp.TeamName, "TextInfo", 0);
                 DzFrameSetSize( tmp.TeamNumberInfo[i], 0.2, 0.1 );
                 DzFrameSetPoint(tmp.TeamNumberInfo[i], 0, tmp.TeamName, 0, 0.123,-0.027 + (I2R(i)*-0.034)) ;
