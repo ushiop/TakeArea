@@ -37,6 +37,26 @@ library Units requires Table,Players,Events,Util{
             integer ex_agi;//额外敏捷
             integer ex_int;//额外智力
             string mainpower;//主属性
+            real def;//护甲值,只有敏捷/护甲会影响这个
+            integer defs;//护甲抗性百分比
+
+            //更新护甲值与护甲百分比，用于敏捷/护甲变化
+            method ArmorUpdata(){
+                this.def=GetUnitState(this.unit, ConvertUnitState(0x20));
+                this.defs=this.ArmorAcc();
+            }
+
+            //返回取整后的护甲抗性百分比
+            method ArmorAcc()->integer{ 
+                real defs;
+                if(this.def>0){
+                    defs=0.04*this.def/((0.04*this.def)+1);
+                }else{
+                    defs=2-Pow((1-0.04),this.def);
+                }
+                defs=defs*100; 
+                return R2I(defs);
+            }
 
             //返回单位的自定义值
             method Data()->integer{
@@ -226,6 +246,7 @@ library Units requires Table,Players,Events,Util{
             method SetExAgi(integer s){ 
                 this.ex_agi+=s;
                 ModifyHeroStat( bj_HEROSTAT_AGI,this.unit, bj_MODIFYMETHOD_ADD, s );
+                this.ArmorUpdata();//敏捷变化，因此获得新护甲
             }            
             //设置额外智力
             method SetExInt(integer s){
@@ -674,6 +695,8 @@ library Units requires Table,Players,Events,Util{
             ud.ex_agi=0;
             ud.ex_int=0;
             ud.mainpower=Util.GetUnitValue(ud.uid,"Primary");
+            ud.def=GetUnitState(u, ConvertUnitState(0x20));
+            ud.defs=ud.ArmorAcc();
             Units.ht[u]=ud; 
             return ud;
         }
