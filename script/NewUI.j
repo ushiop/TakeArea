@@ -361,17 +361,14 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
             if(show==1){ 
                 if(UIType==1){ 
                     u=Units.Get(UISelectUnit);
-                    if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1){
-                        DzFrameSetText(UnitInfoName,UIStr[0]);        
-                    }else{
-                        DzFrameSetText(UnitInfoName,UIStr[1]+u.str_lv+UIStr[2]+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+UIStr[3]+I2S(u.defs)+"%"+UIStr[4]+u.str_str+UIStr[5]+u.str_agi+UIStr[6]+u.str_int+UIStr[7]+R2S(GetUnitMoveSpeed(UISelectUnit))+UIStr[8]+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
-                    } 
-                    hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
-                    mp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_MANA, UNIT_STATE_MAX_MANA)/100;
                     if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1&&IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
                         hp=1;
                         mp=1;
+                        DzFrameSetText(UnitInfoName,UIStr[0]);   
                     }else{  
+                        DzFrameSetText(UnitInfoName,UIStr[1]+u.str_lv+UIStr[2]+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+UIStr[3]+I2S(u.defs)+"%"+UIStr[4]+u.str_str+UIStr[5]+u.str_agi+UIStr[6]+u.str_int+UIStr[7]+R2S(GetUnitMoveSpeed(UISelectUnit))+UIStr[8]+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
+                        hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
+                        mp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_MANA, UNIT_STATE_MAX_MANA)/100;
                         for(0<=i<6){ 
                             if(UnitItemInSlot(UISelectUnit,i) == null){
                                 DzFrameShow(BagItemBackground[i],true);
