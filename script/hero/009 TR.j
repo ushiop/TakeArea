@@ -421,19 +421,19 @@ library TR requires Groups{
             real x=u.X(),y=u.Y(); 
             Data data=Data.create('A02D');
             Units mj;
-            if(tp>=2){ 
+            Units ts;
+            /*if(tp>=2){ 
                 u.Pause(true);
                 if(tp!=3){ 
                     IssueImmediateOrder(u.unit,"stop");
                 }
-            }
-            u.AnimeId(2);
-            if(i==1){  
-                u.AnimeSpeed(2.4);
-            }else{ 
-                u.AnimeSpeed(3);
-            }
+            }*/
+            ts=Units.MJ(u.player.player,'e008','A02D',0,x,y,f,3,u.modelsize,1,"stand","ls tong ren.mdl");
+            ts.AnimeId(2);
+            ts.AddAbility('A02H'); 
+            ts.AnimeSpeed(4);
             u.SetF(f,true);
+            u.Alpha(0);
             Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.5,1.1, "stand","cf2.mdl").SetH(75);
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,1.25,2, "stand","dust2.mdl");
@@ -442,12 +442,13 @@ library TR requires Groups{
             mj.SetH(75); 
             data.c[1]=mj;
             data.c[0]=u;
+            data.c[2]=ts;
             data.i[0]=i; 
             data.i[1]=0; 
             data.i[2]=1;
             data.i[3]=tp;
             data.g[0]=CreateGroup();
-            dash=Dash.Start(u.unit,f,400,Dash.SUB,80,true,false); 
+            dash=Dash.Start(ts.unit,f,400,Dash.SUB,80,true,false); 
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -457,7 +458,7 @@ library TR requires Groups{
                 u.SetF(dash.Angle,true);
                 mj.Position(x,y,false);
                 mj.SetF(dash.Angle,true);  
-                if(dash.NowDis>200){
+                /*if(dash.NowDis>200){
                     if(data.i[0]!=1){
                         if(data.i[1]==0){   
                             mj.Life(0.5);
@@ -467,7 +468,7 @@ library TR requires Groups{
                             }
                         }
                     }
-                }
+                }*/
                 if(dash.Speed<5){
                     mj.Anime("death");
                 }else{
@@ -478,7 +479,7 @@ library TR requires Groups{
                         data.i[2]-=1;
                     }
                 }
-                if(data.i[0]==1&&dash.Speed<1.5){
+                if(dash.Speed<4){
                     dash.Stop();
                 }else{
                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
@@ -503,12 +504,21 @@ library TR requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);  
                 Units mj=Units(data.c[1]);
-                if(data.i[0]==1||(data.i[0]!=1&&data.i[1]==0)){  
+                Units tr=Units(data.c[0]);
+                /*if(data.i[0]==1||(data.i[0]!=1&&data.i[1]==0)){  
                     u.AnimeSpeed(1);
                     if(data.i[3]>=2){ 
                         u.Pause(false);  
                     }
-                }
+                }*/
+                
+                //调用原生坐标，避免‘不受位移状态’导致不能位移
+                SetUnitX(tr.unit,dash.X);
+                SetUnitY(tr.unit,dash.Y);
+                tr.DelayAlpha(0,255,0.5);
+                u.Life(0.7);
+                u.DelayAlpha(255,0,0.65);
+                u.AnimeSpeed(0);
                 mj.Life(0.5);
                 mj.Anime("death"); 
                 DestroyGroup(data.g[0]);
