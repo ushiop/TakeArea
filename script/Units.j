@@ -40,6 +40,16 @@ library Units requires Table,Players,Events,Util{
             real def;//护甲值,只有敏捷/护甲会影响这个
             integer defs;//护甲抗性百分比
 
+            //获取护甲
+            method Armor()->real{
+                return this.def;
+            }
+
+            //设置护甲，正为加，负为减
+            method AddArmor(real armor){
+                SetUnitState( this.unit, ConvertUnitState(0x20), this.Armor()+armor );
+            }
+
             //更新护甲值与护甲百分比，用于敏捷/护甲变化
             method ArmorUpdata(){
                 this.def=GetUnitState(this.unit, ConvertUnitState(0x20));
