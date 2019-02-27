@@ -88,7 +88,7 @@ library Item requires Groups{
                 dash.Stop();
             }else{ 
                 if(dash.Obj==0){
-                    dash.Obj=3;
+                    dash.Obj=1;
                     k=GroupFind(dash.Unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),125,true,false);
                     if(k!=null){ 
                         Units.Get(dash.Unit).SetData(1);
