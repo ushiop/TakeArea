@@ -15,6 +15,7 @@ library LevelUp requires Events{
                 }
             });
         }
+        p.hero.ArmorUpdata();//升级，因此重新获取护甲和计算护甲值
         if(lv>=5&&p.lv5==null){
             p.lv5=Units.Spawn(p.player,'e003',0,0,0);
         }        
