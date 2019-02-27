@@ -547,10 +547,9 @@ library TR requires Groups{
             Units u=Units.Get(e.TriggerUnit);
             real f;
             Buffs b; 
-            Units mj; 
-            
+            Units mj;  
             if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
-                if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986||e.OrderId==851971){
+                if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986){
                      
                     if(e.OrderTargetUnit==null){ 
                         f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
