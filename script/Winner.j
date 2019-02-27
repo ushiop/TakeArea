@@ -61,7 +61,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         }
 
         private static method ShowTip(){ 
-            StopSound(gg_snd_ItemReceived, false, false)
+            StopSound(gg_snd_ItemReceived, false, false);
             StartSound( gg_snd_ItemReceived );
             PingMinimap(Winner.OX,Winner.OY, 3.00 );
         }

@@ -16,7 +16,7 @@ library Disconnect requires Teams,Players{
         ReviveHero(u, GetUnitX(u), GetUnitY(u), false );
         SetUnitPosition(u, GetRectCenterX(Teams.GetTeamRect(tmp.player)), GetRectCenterY(Teams.GetTeamRect(tmp.player)) );
         for(0<=x<=5){ 
-            UnitRemoveItemFromSlot(u, x)
+            UnitRemoveItemFromSlot(u, x);
         } 
         Units.Kill(u);
         t=NewTimer();

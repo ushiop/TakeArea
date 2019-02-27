@@ -64,7 +64,7 @@ library Players requires TimerUtils{
             //增加玩家金钱
             method AddMoney(integer addm){
                 //AdjustPlayerStateBJ(addm,this.player, PLAYER_STATE_RESOURCE_GOLD );
-                SetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(whichPlayer, PLAYER_STATE_RESOURCE_GOLD) + addm);
+                SetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD) + addm);
             }
 
             //返回玩家是否处于英雄托管模式/AI托管模式
