@@ -558,24 +558,6 @@ library TR requires Groups{
             real f;
             Buffs b; 
             Units mj;  
-            if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
-                if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986){
-                     
-                    if(e.OrderTargetUnit==null){ 
-                        f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
-                    }else{
-                        f=Util.XY(u.unit,e.OrderTargetUnit);
-                    }
-                    b=Buffs.Find(u.unit,'B00E'); 
-                    if(b.NowTime<4.990){ 
-                        TR.W2(u.unit,f,b.Level,2);
-                        b.Level-=1;
-                        if(b.Level<=0){
-                            b.Stop();
-                        } 
-                    }
-                }  
-            }
             if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv10!=null){
                 //四方斩残影
                 if(e.OrderTargetUnit==null){ 
@@ -594,7 +576,26 @@ library TR requires Groups{
                     }
                 }
                 GroupClear(tmp_group);                   
+            } 
+            if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
+                if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986){
+                     
+                    if(e.OrderTargetUnit==null){ 
+                        f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
+                    }else{
+                        f=Util.XY(u.unit,e.OrderTargetUnit);
+                    }
+                    b=Buffs.Find(u.unit,'B00E'); 
+                    if(b.NowTime<4.990){ 
+                        TR.W2(u.unit,f,b.Level,2);
+                        b.Level-=1;
+                        if(b.Level<=0){
+                            b.Stop();
+                        } 
+                    }
+                }  
             }
+
         }
         //获得刀光BUFF
         static method W(Spell e){ 
