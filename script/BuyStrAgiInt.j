@@ -65,6 +65,7 @@ library BuyStrAgiInt{
             }     
             if(bt==1){
                 DisplayTextToPlayer(p.player,0,0,"属性转换完成~！现在的属性是: 力量("+I2S(p.hero.Str(true))+")  敏捷("+I2S(p.hero.Agi(true))+")   智力("+I2S(p.hero.Int(true))+")");                    
+                p.hero.PowerStringUpdata();
             }
             if(bt==2){
                 DisplayTextToPlayer(p.player,0,0,"属性转换失败~！想转换的属性不足10点");                    

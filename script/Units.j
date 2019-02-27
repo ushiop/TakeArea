@@ -39,6 +39,24 @@ library Units requires Table,Players,Events,Util{
             string mainpower;//主属性
             real def;//护甲值,只有敏捷/护甲会影响这个
             integer defs;//护甲抗性百分比
+            string str_str;//力量值的文本形态
+            string str_agi;//敏捷值的文本形态
+            string str_int;//智力值的文本形态
+            string str_lv;//英雄等级的文本形态
+
+            //更新该单位的文本形态的三围值
+            method PowerStringUpdata(){ 
+                this.str_str=I2S(GetHeroStr(this.unit,true));
+                this.str_agi=I2S(GetHeroAgi(this.unit,true));
+                this.str_int=I2S(GetHeroInt(this.unit,true)); 
+                if(this.mainpower=="STR"){
+                    this.str_str=UIColor+this.str_str+UIColorEnd;
+                }else if(this.mainpower=="AGI"){
+                    this.str_agi=UIColor+this.str_agi+UIColorEnd;
+                }else{
+                    this.str_int=UIColor+this.str_int+UIColorEnd;
+                } 
+            }
 
             //获取护甲
             method Armor()->real{
@@ -251,23 +269,26 @@ library Units requires Table,Players,Events,Util{
             method SetExStr(integer s){
                 this.ex_str+=s; 
                 ModifyHeroStat( bj_HEROSTAT_STR,this.unit, bj_MODIFYMETHOD_ADD, s );
+                this.PowerStringUpdata();
             }
             //设置额外敏捷
             method SetExAgi(integer s){ 
                 this.ex_agi+=s;
                 ModifyHeroStat( bj_HEROSTAT_AGI,this.unit, bj_MODIFYMETHOD_ADD, s );
                 this.ArmorUpdata();//敏捷变化，因此获得新护甲
+                this.PowerStringUpdata();
             }            
             //设置额外智力
             method SetExInt(integer s){
                 this.ex_int+=s;
                 ModifyHeroStat( bj_HEROSTAT_INT,this.unit, bj_MODIFYMETHOD_ADD, s );
+                this.PowerStringUpdata();
             }
 
             //返回英雄力量
             //true为包含额外属性
             method Str(boolean f)->integer{
-                if(f==true){ 
+                if(f==true){  
                     return GetHeroStr(this.player.hero.unit,f);
                 }else{
                     return GetHeroStr(this.player.hero.unit,true) - this.player.hero.ExStr();
@@ -579,6 +600,9 @@ library Units requires Table,Players,Events,Util{
         //自定义事件
         public {
 
+            static constant string UIColor="|cffFF0000";
+            static constant string UIColorEnd="|r";
+
             static constant integer MJType_TSW='A02O';//马甲投射物标记
             static constant integer MJType_FZW='A02P';//马甲放置物标记
             static constant integer MJType_CDW='A02Q';//马甲场地物标记
@@ -706,7 +730,16 @@ library Units requires Table,Players,Events,Util{
             ud.ex_int=0;
             ud.mainpower=Util.GetUnitValue(ud.uid,"Primary");
             ud.def=GetUnitState(u, ConvertUnitState(0x20));
-            ud.defs=ud.ArmorAcc();
+            ud.defs=ud.ArmorAcc(); 
+            if(ud.isHero==true){ 
+                ud.PowerStringUpdata();
+                ud.str_lv=I2S(GetHeroLevel(u));
+            }else{
+                ud.str_str="0";
+                ud.str_agi="0";
+                ud.str_int="0";
+                ud.str_lv="1";
+            }
             Units.ht[u]=ud; 
             return ud;
         }
