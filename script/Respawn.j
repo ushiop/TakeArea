@@ -133,7 +133,8 @@ library Respawn requires TimerUtils,Units,Players,Util,Camera{
                     if(u.player.teamid!=m.player.teamid&&m.unit!=null){
                         m.player.lifekill=m.player.lifekill+1;
                         ForForce(Teams.GetTeamForce(m.player.player),function(){
-                            AdjustPlayerStateBJ(300, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD )  ;          
+                            Players p=Players.Get(GetEnumPlayer());
+                            p.AddMoney(300);         
                         });
                         DisplayTextToForce(Teams.GetAllPlayers(),m.player.name+"与队友 因击杀 "+u.player.name+" 而获得了|cffffcc00$300|r");
                         if(m.player.randomhero>0){

@@ -349,7 +349,7 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
         string str_s,agi_s,int_s,mps; 
         DzFrameSetText(MoneyText,"|cffFFFF00$" +I2S(GetPlayerState(Players.localplayer, PLAYER_STATE_RESOURCE_GOLD))+"|r"); 
         if(UISelectUnit!=null){ 
-            if(IsUnitAliveBJ(UISelectUnit)==true){
+            if(GetUnitState(UISelectUnit, UNIT_STATE_LIFE)>0){
                 show=1;
                 if(IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
                     if(IsUnitVisible(UISelectUnit,Players.localplayer)==false){
@@ -391,8 +391,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                             DzFrameSetText(UnitInfoName,"等级 "+I2S(GetHeroLevel(UISelectUnit))+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(defs))+"%"+"|n力量 "+str_s+"|n敏捷 "+agi_s+"|n智力 "+int_s+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                         }
                     }*/
-                    hp=GetUnitLifePercent(UISelectUnit)/100;
-                    mp=GetUnitManaPercent(UISelectUnit)/100;
+                    hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
+                    mp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_MANA, UNIT_STATE_MAX_MANA)/100;
                     if(GetUnitAbilityLevel(UISelectUnit,'A02N')==1&&IsUnitEnemy(UISelectUnit,Players.localplayer)==true){
                         hp=1;
                         mp=1;
@@ -412,8 +412,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                     DzFrameSetText(UnitInfoMPText,"|cff0000FF"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_MANA))+"|r");  
                 }else if(UIType==2){
                     //DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+"|n攻击 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+"|n防御 "+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+"|n移速 "+R2S(GetUnitMoveSpeed(UISelectUnit))+"|n攻速 "+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
-                    hp=GetUnitLifePercent(UISelectUnit)/100;
-                    mp=GetUnitManaPercent(UISelectUnit)/100;
+                    hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
+                    mp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_MANA, UNIT_STATE_MAX_MANA)/100;
                     DzFrameSetSize( UnitInfoHP,0.0001+(hp*0.2524),0.016 );
                     DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 );
                     DzFrameSetText(UnitInfoHPText,"|cffFF0000"+R2S(GetUnitState(UISelectUnit, UNIT_STATE_LIFE))+"|r"); 

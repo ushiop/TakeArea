@@ -34,9 +34,9 @@ library SpellNameText requires TimerUtils{
         if(this.now<this.max){
             this.now+=this.steep;
             SetTextTagPosUnit(this.txg,this.u,0 );
-            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font+(GetRandomReal(0,0.75)*this.font)); 
+            SetTextTagTextBJ(this.txg,SubString(this.fullmsg,0,this.now),this.font+(GetRandomReal(0,0.75)*this.font)); 
         }else{
-            SetTextTagTextBJ(this.txg,SubStringBJ(this.fullmsg,1,this.now),this.font);
+            SetTextTagTextBJ(this.txg,SubString(this.fullmsg,0,this.now),this.font);
             SetTextTagLifespan(this.txg,this.time);
             SetTextTagFadepoint(this.txg,this.time*0.1); 
             this.Destroy();

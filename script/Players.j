@@ -63,7 +63,8 @@ library Players requires TimerUtils{
 
             //增加玩家金钱
             method AddMoney(integer addm){
-                AdjustPlayerStateBJ(addm,this.player, PLAYER_STATE_RESOURCE_GOLD );
+                //AdjustPlayerStateBJ(addm,this.player, PLAYER_STATE_RESOURCE_GOLD );
+                SetPlayerState(this.player, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(whichPlayer, PLAYER_STATE_RESOURCE_GOLD) + addm);
             }
 
             //返回玩家是否处于英雄托管模式/AI托管模式
@@ -79,7 +80,7 @@ library Players requires TimerUtils{
             p.deaths=0;
             p.player=ps; 
             p.name=GetPlayerName(ps);
-            p.playerid=GetConvertedPlayerId(ps);
+            p.playerid=GetPlayerId(ps)+1;
             p.playerids=I2S(GetPlayerId(ps));
             p.teamid=GetPlayerTeam(ps);
             p.isai=GetPlayerController(ps) == MAP_CONTROL_COMPUTER;

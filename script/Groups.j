@@ -10,6 +10,7 @@ library Groups requires Units,Damage{
     group tmp_random_group=CreateGroup();//寻找随机单位用的临时租
     group tmp_cdj_group=CreateGroup();//场地技寻找周围场地技的临时租
     public group tmp_death_group=CreateGroup();//在死亡事件中使用的临时组
+    public integer tmp_group_count;//用于计算单位组中单位数量的临时变量
 
     //返回单位组内单位数量
     public function GroupNumber(group g)->integer{
@@ -30,13 +31,18 @@ library Groups requires Units,Damage{
     }
 
     //是否是建筑
-    public function GroupIsNotHouse()->boolean{
+    public function GroupIsHouse()->boolean{
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE);
+    }
+
+    //是否是英雄
+    public function GroupIsHero()->boolean{
+        return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO);
     }
 
     //是否存活
     public function GroupIsNotAlive()->boolean{ 
-        return IsUnitAliveBJ(GetFilterUnit());
+        return GetUnitState(GetFilterUnit(), UNIT_STATE_LIFE) >0;
     }
 
     //是否不是蝗虫单位
@@ -53,12 +59,17 @@ library Groups requires Units,Damage{
     public function GroupIsAliveAloc()->boolean{
         return GroupIsAloc()&&GroupIsNotAlive();
     }
+
+    //存活且不是蝗虫单位且是英雄
+    public function GroupIsHeroAliveNotAloc()->boolean{
+        return GroupIsNotAloc()&&GroupIsNotAlive()&&GroupIsHero();
+    }
     
 
 
     //存活并且不是蝗虫单位
     public function GroupIsAliveNotAloc()->boolean{
-        return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsNotHouse();
+        return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsHouse();
     }
 
     //返回指定单位组内最早出生的单位

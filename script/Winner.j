@@ -38,9 +38,9 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
 
         //设置指定阵营序号胜利
         private static method ShowWin(integer teamid){ 
-            PlaySoundBJ( gg_snd_Winner );
+            StartSound(gg_snd_Winner);
             Winner.WinTeam=teamid;
-            PauseGameOn();
+            PauseGame(true);
             Timers.Start(1,0,function(Timers t){
                 Teams.ActionsForAllPlayer(function(){ 
                     Players p=Players.Get(GetEnumPlayer());
@@ -60,9 +60,9 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             });*/
         }
 
-        private static method ShowTip(){
-            StopSoundBJ( gg_snd_ItemReceived, false );
-            PlaySoundBJ( gg_snd_ItemReceived );
+        private static method ShowTip(){ 
+            StopSound(gg_snd_ItemReceived, false, false)
+            StartSound( gg_snd_ItemReceived );
             PingMinimap(Winner.OX,Winner.OY, 3.00 );
         }
         //夺旗判定 - 范围900码
@@ -74,7 +74,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
             real rtmp;
             if(Winner.GameEnd==false){
                 g=CreateGroup();
-                GroupEnumUnitsInRange(g,Winner.OX,Winner.OY,900,function()->boolean{ return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true&&IsUnitAliveBJ(GetFilterUnit()); });
+                GroupEnumUnitsInRange(g,Winner.OX,Winner.OY,900,function GroupIsHeroAliveNotAloc);
                 numbers=CountUnitsInGroup(g);
                 while(FirstOfGroup(g)!=null){
                     tmp1=FirstOfGroup(g);
@@ -125,8 +125,8 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                             TakeUi.SetTakeBarStep(Winner.NowTime/Winner.MaxTime);
                             if(Winner.NowTime>=160){//MaxTime-20 = 160
                                 if(Winner.TimeTips<=0){
-                                    StopSoundBJ( gg_snd_TimeTips, false );
-                                    PlaySoundBJ( gg_snd_TimeTips );
+                                    StopSound( gg_snd_TimeTips, false ,false);
+                                    StartSound( gg_snd_TimeTips );
                                     Winner.TimeTips=3;
                                 }else{
                                     Winner.TimeTips-=0.01;

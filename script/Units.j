@@ -199,7 +199,7 @@ library Units requires Table,Players,Events,Util{
 
             //是否存活
             method Alive()->boolean{
-                return IsUnitAliveBJ(this.unit);
+                return GetUnitState(this.unit, UNIT_STATE_LIFE) > 0;
             }
 
             //返回额外力量

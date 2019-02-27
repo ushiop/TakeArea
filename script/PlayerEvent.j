@@ -15,8 +15,8 @@ library Disconnect requires Teams,Players{
         tmp.hero=0;
         ReviveHero(u, GetUnitX(u), GetUnitY(u), false );
         SetUnitPosition(u, GetRectCenterX(Teams.GetTeamRect(tmp.player)), GetRectCenterY(Teams.GetTeamRect(tmp.player)) );
-        for(1<=x<=6){
-            UnitRemoveItemFromSlotSwapped(x,u);
+        for(0<=x<=5){ 
+            UnitRemoveItemFromSlot(u, x)
         } 
         Units.Kill(u);
         t=NewTimer();
@@ -30,7 +30,8 @@ library Disconnect requires Teams,Players{
         x=Teams.GetTeamNumber(tmp.player)-1; 
         if(x!=0){
             ForForce(Teams.GetTeamForce(tmp.player), function(){
-                AdjustPlayerStateBJ(  GetPlayerState(tmp.player, PLAYER_STATE_RESOURCE_GOLD) / (Teams.GetTeamNumber(tmp.player)-1), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD )  ;          
+                Players p=Players.Get(GetEnumPlayer());
+                p.AddMoney(  GetPlayerState(tmp.player, PLAYER_STATE_RESOURCE_GOLD) / (Teams.GetTeamNumber(tmp.player)-1) )  ;          
             });
         } 
         Teams.PlayerRemoveForce(tmp.player);

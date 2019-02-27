@@ -74,8 +74,9 @@ library BuffUI requires BzAPI,Buff{
                 len=-1;
             }
             for(0<=i<4){
-                if(i<len){  
-                    DzFrameSetTexture(ui[i],BuffLevel[S2I(SubStringBJ(lv,s,s))], 0 );
+                if(i<len){   
+                    //SubStringBJ(lv,s,s)
+                    DzFrameSetTexture(ui[i],BuffLevel[S2I(SubString(lv, s-1,s))], 0 );
                     s-=1;
                 }else{
                     DzFrameSetTexture(ui[i], "nothing.blp", 0 );

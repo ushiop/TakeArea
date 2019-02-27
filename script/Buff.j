@@ -196,7 +196,7 @@ library Buff requires Util{
             while(tmp!=0){ 
                 tmp1=tmp.Next;
                 if(tmp!=Root){
-                    if(tmp.NowTime>0&&IsUnitAliveBJ(tmp.Unit)==true){ 
+                    if(tmp.NowTime>0&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){ 
                         tmp.NowTime=tmp.NowTime-0.01;
                         tmp.Time=tmp.Time+0.01;
                         if(tmp.onTime!=0) BuffEventInterface(tmp.onTime).evaluate(tmp); 

@@ -22,7 +22,7 @@ library Tree{
         for(0<=i<100){
             for(0<=x<3){
                 d=GetRandomLocInRect(rec[x]);
-                CreateDestructableLoc( 'B000',d, GetRandomDirectionDeg(), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4) );
+                CreateDestructableLoc( 'B000',d,GetRandomReal(0, 360), GetRandomReal(1.00, 2.00), GetRandomInt(0, 4) );
                 TriggerRegisterDeathEvent(t, GetLastCreatedDestructable());
                 RemoveLocation(d);
                 d=null;

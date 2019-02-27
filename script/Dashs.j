@@ -81,7 +81,7 @@ library Dashs requires TimerUtils{
                         walk=false;
                         speed=0;   
                         tmpMaxSpeed=tmp.MaxSpeed;
-                        if(tmp.NowDis<tmp.MaxDis&&IsUnitAliveBJ(tmp.Unit)==true){
+                        if(tmp.NowDis<tmp.MaxDis&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){
                             tmp.LastX=tmp.X;
                             tmp.LastY=tmp.Y;
                             tmpMaxSpeed=tmpMaxSpeed*Units.Get(tmp.Unit).dashspeedscale;
