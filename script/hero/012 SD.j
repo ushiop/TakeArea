@@ -1007,7 +1007,8 @@ library SD requires Groups{
                     u.AnimeSpeed(1.25);  
                     e.Destroy();
                 }else{  
-                    u.SetAbilityCD('A03K',1);
+                    u.SetAbilityCD('A03K',1); 
+                    u.SetMP(u.MP()-50);
                     SD.W(e);
                 } 
             } 
