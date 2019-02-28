@@ -663,7 +663,7 @@ library TR requires Groups{
                 t=null;
             };
         } 
-
+ 
         static method Q1(DamageArgs e){
             if(e.TriggerUnit.IsAbility('B00G')==true){
                 e.Damage-=e.Damage*0.4;
