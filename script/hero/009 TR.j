@@ -643,11 +643,12 @@ library TR requires Groups{
                 SetTimerData(t,Units.Get(b.Unit));
                 TimerStart(t,0.3,false,function(){
                     Units(GetTimerData(GetExpiredTimer())).RemoveAbility('A02H');
+                    Units(GetTimerData(GetExpiredTimer())).RemoveAbility('A04G');
                     ReleaseTimer(GetExpiredTimer());
                 });
                 t=null;
             };
-        }
+        } 
 
         static method Q1(DamageArgs e){
             if(e.TriggerUnit.IsAbility('B00G')==true){
@@ -664,12 +665,16 @@ library TR requires Groups{
                 data=Data.create('A02C'); 
                 u.Pause(true);
                 u.Pause(false);
-                mj=Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),u.F(),0.55,u.modelsize,1, "stand",u.model);
-                mj.DelayAlpha(255,0,0.5);   
-                 
+                //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
+                //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
                 u.DelayAlpha(0,255,0.5);
                 u.PositionEnabled(false);
                 u.Model("ls tong ren.mdl");
+                if(u.IsAbility('B00E')==true){
+                    u.AddAbility('A04G');
+                } 
+                Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
+                Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
                 b=Buffs.Add(u.unit,'A02I','B00G',6,false);
                 b.Obj=e;
                 b.onEnd=function(Buffs b){ 
@@ -677,10 +682,13 @@ library TR requires Groups{
                     Units u=Units.Get(b.Unit);
                     Spell(b.Obj).Destroy();
                     u.PositionEnabled(true); 
-                    mj=Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),u.F(),0.55,u.modelsize,1, "stand",u.model);
-                    mj.DelayAlpha(255,0,0.5);    
+                    //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
+                    //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
+                    
                     u.DelayAlpha(0,255,0.5);
                     u.Model("ls tong ren_white.mdl"); 
+                    Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
+                    Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
                 };
             }else{
                 e.Destroy();
