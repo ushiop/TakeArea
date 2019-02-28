@@ -513,7 +513,7 @@ library TR requires Groups{
                     }
                 }*/
                 
-                //调用原生坐标，避免‘不受位移状态’导致不能位移
+                //调用原生坐标，避免‘不受 位移状态’导致不能位移
                 SetUnitX(tr.unit,dash.X);
                 SetUnitY(tr.unit,dash.Y);
                 tr.DelayAlpha(0,255,0.5);
