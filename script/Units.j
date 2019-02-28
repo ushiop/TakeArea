@@ -32,6 +32,7 @@ library Units requires Table,Players,Events,Util{
             integer color_blue;//蓝色
             integer color_alpha;//透明度
             real modelsize;//模型缩放
+            string model;//模型路径
             real dashspeedscale;//冲锋速度系数,仅用于Dash类的速度计算,默认为1,单位是百分比
             integer ex_str;//额外力量
             integer ex_agi;//额外敏捷
@@ -370,6 +371,7 @@ library Units requires Table,Players,Events,Util{
                 if(this.isHero==true){ 
                     Units.Trigger(Units.onHeroChangeModel,this.unit,null);
                 }
+                this.model=path;
             }
 
             //延迟一定时间后替换单位模型,0秒为立即替换（不开启计时器)
@@ -720,6 +722,7 @@ library Units requires Table,Players,Events,Util{
             ud.createtime=GameTime;
             ud.animespeed=1;
             ud.modelsize=S2R(Util.GetUnitValue(ud.uid,"modelScale"));
+            ud.model=Util.GetUnitValue(ud.uid,"file");
             ud.color_red=255;
             ud.color_green=255;
             ud.color_blue=255;
@@ -790,8 +793,8 @@ library Units requires Table,Players,Events,Util{
             t.aidindex=aindex;
             t.animespeed=animspeed;
             t.modelsize=modsize;
-            Util.UnitAddRemoveAbility(u,'Amrf'); 
-            DzSetUnitModel( u, modpath);
+            Util.UnitAddRemoveAbility(u,'Amrf');  
+            t.Model(modpath);
             if(t.IsAbility('A01Z')==true){
                 //是伪蝗虫单位，需要进行隐藏/显示处理，来修复替换模型后不会播放动画的问题
                 //目前该问题只在我电脑上出现过，原因不明。
