@@ -678,7 +678,7 @@ library TR requires Groups{
             if(u.IsAbility('B00G')==false){ 
                 data=Data.create('A02C'); 
                 u.Pause(true);
-                u.Pause(false);
+                u.Pause(false); 
                 //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
                 //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
                 u.DelayAlpha(0,255,0.5);
