@@ -857,21 +857,21 @@ real s__Winner_MaxTime=240
 integer s__Winner_Team=- 1
 integer s__Winner_WinTeam=- 1
 real s__Winner_TimeTips=0
-constant integer si__ASN__ASN=36
-integer si__ASN__ASN_F=0
-integer si__ASN__ASN_I=0
-integer array si__ASN__ASN_V
-integer s__ASN__ASN_R_attack
-integer s__ASN__ASN_R_defend
-constant integer si__AW__AW=37
-integer si__AW__AW_F=0
-integer si__AW__AW_I=0
-integer array si__AW__AW_V
-constant integer si__BlackSaber___BlackSaber=38
-integer si__BlackSaber___BlackSaber_F=0
-integer si__BlackSaber___BlackSaber_I=0
-integer array si__BlackSaber___BlackSaber_V
-integer s__BlackSaber___BlackSaber_Q_HIT
+constant integer si__ASN___ASN=36
+integer si__ASN___ASN_F=0
+integer si__ASN___ASN_I=0
+integer array si__ASN___ASN_V
+integer s__ASN___ASN_R_attack
+integer s__ASN___ASN_R_defend
+constant integer si__AW___AW=37
+integer si__AW___AW_F=0
+integer si__AW___AW_I=0
+integer array si__AW___AW_V
+constant integer si__BlackSaber__BlackSaber=38
+integer si__BlackSaber__BlackSaber_F=0
+integer si__BlackSaber__BlackSaber_I=0
+integer array si__BlackSaber__BlackSaber_V
+integer s__BlackSaber__BlackSaber_Q_HIT
 constant integer si__DazzleMaster___DazzleMaster=39
 integer si__DazzleMaster___DazzleMaster_F=0
 integer si__DazzleMaster___DazzleMaster_I=0
@@ -918,11 +918,11 @@ constant integer si__OrdinaryWizard___OrdinaryWizard=48
 integer si__OrdinaryWizard___OrdinaryWizard_F=0
 integer si__OrdinaryWizard___OrdinaryWizard_I=0
 integer array si__OrdinaryWizard___OrdinaryWizard_V
-constant integer si__SD__SD=49
-integer si__SD__SD_F=0
-integer si__SD__SD_I=0
-integer array si__SD__SD_V
-integer s__SD__SD_Q_Sound
+constant integer si__SD___SD=49
+integer si__SD___SD_F=0
+integer si__SD___SD_I=0
+integer array si__SD___SD_V
+integer s__SD___SD_Q_Sound
 constant integer si__SL__SL=50
 integer si__SL__SL_F=0
 integer si__SL__SL_I=0
@@ -936,14 +936,14 @@ integer si__TR__TR_F=0
 integer si__TR__TR_I=0
 integer array si__TR__TR_V
 string array s__TR__TR_XBM
-constant integer si__WindWalk___WindWalk=53
-integer si__WindWalk___WindWalk_F=0
-integer si__WindWalk___WindWalk_I=0
-integer array si__WindWalk___WindWalk_V
-constant integer si__ZZ___ZZ=54
-integer si__ZZ___ZZ_F=0
-integer si__ZZ___ZZ_I=0
-integer array si__ZZ___ZZ_V
+constant integer si__WindWalk__WindWalk=53
+integer si__WindWalk__WindWalk_F=0
+integer si__WindWalk__WindWalk_I=0
+integer array si__WindWalk__WindWalk_V
+constant integer si__ZZ__ZZ=54
+integer si__ZZ__ZZ_F=0
+integer si__ZZ__ZZ_I=0
+integer array si__ZZ__ZZ_V
 constant integer si__Respawn___Respawn=55
 integer si__Respawn___Respawn_F=0
 integer si__Respawn___Respawn_I=0
@@ -1053,7 +1053,7 @@ trigger st__HeroRares_Repeat
 trigger st__HeroRares_AddRandomHero
 trigger st__PlayerPress_create
 trigger st__Winner_ShowWin
-trigger st__ASN__ASN_W2
+trigger st__ASN___ASN_W2
 trigger st__DazzleMaster___DazzleMaster_AddDazzle
 trigger st__DazzleMaster___DazzleMaster_Q
 trigger st__KillUi_FlushPlayerData
@@ -1312,60 +1312,60 @@ function s__Respawn___Respawn_deallocate takes integer this returns nothing
     set si__Respawn___Respawn_F=this
 endfunction
 
-//Generated allocator of ZZ___ZZ
-function s__ZZ___ZZ__allocate takes nothing returns integer
- local integer this=si__ZZ___ZZ_F
+//Generated allocator of ZZ__ZZ
+function s__ZZ__ZZ__allocate takes nothing returns integer
+ local integer this=si__ZZ__ZZ_F
     if (this!=0) then
-        set si__ZZ___ZZ_F=si__ZZ___ZZ_V[this]
+        set si__ZZ__ZZ_F=si__ZZ__ZZ_V[this]
     else
-        set si__ZZ___ZZ_I=si__ZZ___ZZ_I+1
-        set this=si__ZZ___ZZ_I
+        set si__ZZ__ZZ_I=si__ZZ__ZZ_I+1
+        set this=si__ZZ__ZZ_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__ZZ___ZZ_V[this]=-1
+    set si__ZZ__ZZ_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of ZZ___ZZ
-function s__ZZ___ZZ_deallocate takes integer this returns nothing
+//Generated destructor of ZZ__ZZ
+function s__ZZ__ZZ_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__ZZ___ZZ_V[this]!=-1) then
+    elseif (si__ZZ__ZZ_V[this]!=-1) then
         return
     endif
-    set si__ZZ___ZZ_V[this]=si__ZZ___ZZ_F
-    set si__ZZ___ZZ_F=this
+    set si__ZZ__ZZ_V[this]=si__ZZ__ZZ_F
+    set si__ZZ__ZZ_F=this
 endfunction
 
-//Generated allocator of WindWalk___WindWalk
-function s__WindWalk___WindWalk__allocate takes nothing returns integer
- local integer this=si__WindWalk___WindWalk_F
+//Generated allocator of WindWalk__WindWalk
+function s__WindWalk__WindWalk__allocate takes nothing returns integer
+ local integer this=si__WindWalk__WindWalk_F
     if (this!=0) then
-        set si__WindWalk___WindWalk_F=si__WindWalk___WindWalk_V[this]
+        set si__WindWalk__WindWalk_F=si__WindWalk__WindWalk_V[this]
     else
-        set si__WindWalk___WindWalk_I=si__WindWalk___WindWalk_I+1
-        set this=si__WindWalk___WindWalk_I
+        set si__WindWalk__WindWalk_I=si__WindWalk__WindWalk_I+1
+        set this=si__WindWalk__WindWalk_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__WindWalk___WindWalk_V[this]=-1
+    set si__WindWalk__WindWalk_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of WindWalk___WindWalk
-function s__WindWalk___WindWalk_deallocate takes integer this returns nothing
+//Generated destructor of WindWalk__WindWalk
+function s__WindWalk__WindWalk_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__WindWalk___WindWalk_V[this]!=-1) then
+    elseif (si__WindWalk__WindWalk_V[this]!=-1) then
         return
     endif
-    set si__WindWalk___WindWalk_V[this]=si__WindWalk___WindWalk_F
-    set si__WindWalk___WindWalk_F=this
+    set si__WindWalk__WindWalk_V[this]=si__WindWalk__WindWalk_F
+    set si__WindWalk__WindWalk_F=this
 endfunction
 
 //Generated allocator of TR__TR
@@ -1452,32 +1452,32 @@ function s__SL__SL_deallocate takes integer this returns nothing
     set si__SL__SL_F=this
 endfunction
 
-//Generated allocator of SD__SD
-function s__SD__SD__allocate takes nothing returns integer
- local integer this=si__SD__SD_F
+//Generated allocator of SD___SD
+function s__SD___SD__allocate takes nothing returns integer
+ local integer this=si__SD___SD_F
     if (this!=0) then
-        set si__SD__SD_F=si__SD__SD_V[this]
+        set si__SD___SD_F=si__SD___SD_V[this]
     else
-        set si__SD__SD_I=si__SD__SD_I+1
-        set this=si__SD__SD_I
+        set si__SD___SD_I=si__SD___SD_I+1
+        set this=si__SD___SD_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__SD__SD_V[this]=-1
+    set si__SD___SD_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of SD__SD
-function s__SD__SD_deallocate takes integer this returns nothing
+//Generated destructor of SD___SD
+function s__SD___SD_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__SD__SD_V[this]!=-1) then
+    elseif (si__SD___SD_V[this]!=-1) then
         return
     endif
-    set si__SD__SD_V[this]=si__SD__SD_F
-    set si__SD__SD_F=this
+    set si__SD___SD_V[this]=si__SD___SD_F
+    set si__SD___SD_F=this
 endfunction
 
 //Generated allocator of OrdinaryWizard___OrdinaryWizard
@@ -1629,97 +1629,97 @@ function s__DazzleMaster___DazzleMaster_deallocate takes integer this returns no
     set si__DazzleMaster___DazzleMaster_F=this
 endfunction
 
-//Generated allocator of BlackSaber___BlackSaber
-function s__BlackSaber___BlackSaber__allocate takes nothing returns integer
- local integer this=si__BlackSaber___BlackSaber_F
+//Generated allocator of BlackSaber__BlackSaber
+function s__BlackSaber__BlackSaber__allocate takes nothing returns integer
+ local integer this=si__BlackSaber__BlackSaber_F
     if (this!=0) then
-        set si__BlackSaber___BlackSaber_F=si__BlackSaber___BlackSaber_V[this]
+        set si__BlackSaber__BlackSaber_F=si__BlackSaber__BlackSaber_V[this]
     else
-        set si__BlackSaber___BlackSaber_I=si__BlackSaber___BlackSaber_I+1
-        set this=si__BlackSaber___BlackSaber_I
+        set si__BlackSaber__BlackSaber_I=si__BlackSaber__BlackSaber_I+1
+        set this=si__BlackSaber__BlackSaber_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__BlackSaber___BlackSaber_V[this]=-1
+    set si__BlackSaber__BlackSaber_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of BlackSaber___BlackSaber
-function s__BlackSaber___BlackSaber_deallocate takes integer this returns nothing
+//Generated destructor of BlackSaber__BlackSaber
+function s__BlackSaber__BlackSaber_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__BlackSaber___BlackSaber_V[this]!=-1) then
+    elseif (si__BlackSaber__BlackSaber_V[this]!=-1) then
         return
     endif
-    set si__BlackSaber___BlackSaber_V[this]=si__BlackSaber___BlackSaber_F
-    set si__BlackSaber___BlackSaber_F=this
+    set si__BlackSaber__BlackSaber_V[this]=si__BlackSaber__BlackSaber_F
+    set si__BlackSaber__BlackSaber_F=this
 endfunction
 
-//Generated allocator of AW__AW
-function s__AW__AW__allocate takes nothing returns integer
- local integer this=si__AW__AW_F
+//Generated allocator of AW___AW
+function s__AW___AW__allocate takes nothing returns integer
+ local integer this=si__AW___AW_F
     if (this!=0) then
-        set si__AW__AW_F=si__AW__AW_V[this]
+        set si__AW___AW_F=si__AW___AW_V[this]
     else
-        set si__AW__AW_I=si__AW__AW_I+1
-        set this=si__AW__AW_I
+        set si__AW___AW_I=si__AW___AW_I+1
+        set this=si__AW___AW_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__AW__AW_V[this]=-1
+    set si__AW___AW_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of AW__AW
-function s__AW__AW_deallocate takes integer this returns nothing
+//Generated destructor of AW___AW
+function s__AW___AW_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__AW__AW_V[this]!=-1) then
+    elseif (si__AW___AW_V[this]!=-1) then
         return
     endif
-    set si__AW__AW_V[this]=si__AW__AW_F
-    set si__AW__AW_F=this
+    set si__AW___AW_V[this]=si__AW___AW_F
+    set si__AW___AW_F=this
 endfunction
 
-//Generated method caller for ASN__ASN.W2
-function sc__ASN__ASN_W2 takes unit ua,unit target,real f,integer stype returns nothing
+//Generated method caller for ASN___ASN.W2
+function sc__ASN___ASN_W2 takes unit ua,unit target,real f,integer stype returns nothing
     set f__arg_unit1=ua
     set f__arg_unit2=target
     set f__arg_real1=f
     set f__arg_integer1=stype
-    call TriggerEvaluate(st__ASN__ASN_W2)
+    call TriggerEvaluate(st__ASN___ASN_W2)
 endfunction
 
-//Generated allocator of ASN__ASN
-function s__ASN__ASN__allocate takes nothing returns integer
- local integer this=si__ASN__ASN_F
+//Generated allocator of ASN___ASN
+function s__ASN___ASN__allocate takes nothing returns integer
+ local integer this=si__ASN___ASN_F
     if (this!=0) then
-        set si__ASN__ASN_F=si__ASN__ASN_V[this]
+        set si__ASN___ASN_F=si__ASN___ASN_V[this]
     else
-        set si__ASN__ASN_I=si__ASN__ASN_I+1
-        set this=si__ASN__ASN_I
+        set si__ASN___ASN_I=si__ASN___ASN_I+1
+        set this=si__ASN___ASN_I
     endif
     if (this>8190) then
         return 0
     endif
 
-    set si__ASN__ASN_V[this]=-1
+    set si__ASN___ASN_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of ASN__ASN
-function s__ASN__ASN_deallocate takes integer this returns nothing
+//Generated destructor of ASN___ASN
+function s__ASN___ASN_deallocate takes integer this returns nothing
     if this==null then
         return
-    elseif (si__ASN__ASN_V[this]!=-1) then
+    elseif (si__ASN___ASN_V[this]!=-1) then
         return
     endif
-    set si__ASN__ASN_V[this]=si__ASN__ASN_F
-    set si__ASN__ASN_F=this
+    set si__ASN___ASN_V[this]=si__ASN___ASN_F
+    set si__ASN___ASN_F=this
 endfunction
 
 //Generated method caller for Winner.ShowWin
@@ -6528,7 +6528,9 @@ endfunction
         endif
     endfunction
     function Test___onInit takes nothing returns nothing
-    endfunction  //Events.On(Events.onPlayerChat,Chat);
+        call s__Events_On(s__Events_onPlayerPressEsc , (8))
+        call s__Events_On(s__Events_onPlayerChat , (9))
+    endfunction
 
 //library Test ends
 //library Timers:
@@ -6799,7 +6801,7 @@ endfunction
         endif
     endfunction
     function BuyNextHero___onInit takes nothing returns nothing
-        call s__Events_On(s__Events_onUnitSellItem , (8))
+        call s__Events_On(s__Events_onUnitSellItem , (10))
     endfunction
 
 //library BuyNextHero ends
@@ -6903,8 +6905,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         endfunction
         function s__Damage_onInit takes nothing returns nothing
             set s__Damage_ht=s__HandleTable__allocate()
-            call s__Events_On(s__Events_onPlayerDisconnect , (9))
-            call s__Events_On(s__Events_onUnitDamage , (10))
+            call s__Events_On(s__Events_onPlayerDisconnect , (11))
+            call s__Events_On(s__Events_onUnitDamage , (12))
         endfunction
 
 //library Damage ends
@@ -6950,7 +6952,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         set u=null
     endfunction
     function Disconnect___onInit takes nothing returns nothing
-        call s__Events_On(s__Events_onPlayerDisconnect , (11))
+        call s__Events_On(s__Events_onPlayerDisconnect , (13))
     endfunction
 
 //library Disconnect ends
@@ -6989,7 +6991,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         endif
     endfunction
     function LevelUp___onInit takes nothing returns nothing
-        call s__Events_On(s__Events_onHeroLevelUp , (12))
+        call s__Events_On(s__Events_onHeroLevelUp , (14))
     endfunction
 
 //library LevelUp ends
@@ -7008,7 +7010,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         endif
     endfunction
     function PlayerChat___onInit takes nothing returns nothing
-        call s__Events_On(s__Events_onPlayerChat , (13))
+        call s__Events_On(s__Events_onPlayerChat , (15))
     endfunction
 
 //library PlayerChat ends
@@ -7346,10 +7348,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
         endfunction  //end of: SpellFunc("ReadySpell","Ready","1")
         function s__Spell_onInit takes nothing returns nothing
-            call s__Events_On(s__Events_onUnitSpell , (14))
-            call s__Events_On(s__Events_onUnitStartSpell , (15))
-            call s__Events_On(s__Events_onUnitStopSpell , (16))
-            call s__Events_On(s__Events_onUnitReadySpell , (17))
+            call s__Events_On(s__Events_onUnitSpell , (16))
+            call s__Events_On(s__Events_onUnitStartSpell , (17))
+            call s__Events_On(s__Events_onUnitStopSpell , (18))
+            call s__Events_On(s__Events_onUnitReadySpell , (19))
         endfunction
 
 //library Spells ends
@@ -7480,7 +7482,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_i[s__Data_i[data]+2]=maxA
                 set s___Data_r[s__Data_r[data]+3]=time
                 call sc__Units_Alpha(this,nowA)
-                call s__Timers_Start(0.01 , data , (18))
+                call s__Timers_Start(0.01 , data , (20))
             endfunction
             function s__Units_Color takes integer this,integer r,integer g,integer b returns nothing
                 set s__Units_color_red[this]=r
@@ -7590,7 +7592,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_r[s__Data_r[data]+2]=maxA
                 set s___Data_r[s__Data_r[data]+3]=time
                 call s__Units_Size(this,nowA)
-                call s__Timers_Start(0.01 , data , (19))
+                call s__Timers_Start(0.01 , data , (21))
             endfunction
             function s__Units_Life takes integer this,real time returns nothing
                 call UnitApplyTimedLife(s__Units_unit[this], 'BHwe', time)
@@ -7627,7 +7629,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_c[s__Data_c[data]]=this
                     set s___Data_s[s__Data_s[data]]=path
                     set s___Data_r[s__Data_r[data]]=delay
-                    call s__Timers_Start(0.01 , data , (20))
+                    call s__Timers_Start(0.01 , data , (22))
                 endif
             endfunction
                 function s__Units_anon__4 takes integer t returns nothing
@@ -7646,7 +7648,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_c[s__Data_c[data]]=this
                 set s___Data_i[s__Data_i[data]]=id
                 set s___Data_r[s__Data_r[data]]=delay
-                call s__Timers_Start(0.01 , data , (21))
+                call s__Timers_Start(0.01 , data , (23))
             endfunction
                 function s__Units_anon__5 takes integer t returns nothing
                     local integer d=((s__Timers_Obj[(t)])) // INLINED!!
@@ -7664,7 +7666,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_c[s__Data_c[data]]=this
                 set s___Data_r[s__Data_r[data]]=s
                 set s___Data_r[s__Data_r[data]+1]=delay
-                call s__Timers_Start(0.01 , data , (22))
+                call s__Timers_Start(0.01 , data , (24))
             endfunction
                 function s__Units_anon__6 takes integer t returns nothing
                     local integer d=((s__Timers_Obj[(t)])) // INLINED!!
@@ -7682,7 +7684,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_c[s__Data_c[data]]=this
                 set s___Data_r[s__Data_r[data]]=speed
                 set s___Data_r[s__Data_r[data]+1]=delay
-                call s__Timers_Start(0.01 , data , (23))
+                call s__Timers_Start(0.01 , data , (25))
             endfunction
                 function s__Units_anon__7 takes integer t returns nothing
                     local integer d=((s__Timers_Obj[(t)])) // INLINED!!
@@ -7700,7 +7702,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 local integer data=s__Data_create('A004')
                 set s___Data_c[s__Data_c[data]]=this
                 set s___Data_r[s__Data_r[data]]=delay
-                call s__Timers_Start(0.01 , data , (24))
+                call s__Timers_Start(0.01 , data , (26))
             endfunction
             function s__Units_Anime takes integer this,string name returns nothing
                 call SetUnitAnimation(s__Units_unit[this], name)
@@ -7841,8 +7843,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         endfunction
         function s__Units_onInit takes nothing returns nothing
             set s__Units_ht=s__HandleTable__allocate()
-            call s__Events_On(s__Events_onUnitDeath , (25))
-            call s__Events_On(s__Events_onUnitDeacy , (26))
+            call s__Events_On(s__Events_onUnitDeath , (27))
+            call s__Events_On(s__Events_onUnitDeacy , (28))
         endfunction
         function s__Units_Create takes unit u returns integer
             local integer ud=s__Units__allocate()
@@ -8360,7 +8362,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call StartSound(gg_snd_Winner)
             set s__Winner_WinTeam=teamid
             call PauseGame(true)
-            call s__Timers_Start(1 , 0 , (27))
+            call s__Timers_Start(1 , 0 , (29))
         endfunction
         function s__Winner_ShowTip takes nothing returns nothing
             call h__StopSound(gg_snd_ItemReceived, false, false)
@@ -8456,7 +8458,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
 
 //library Winner ends
 //library ASN:
-        function s__ASN__ASN_AI takes unit ua returns nothing
+        function s__ASN___ASN_AI takes unit ua returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((ua))))) // INLINED!!
             local unit target
             local unit no
@@ -8484,7 +8486,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set target=null
             set no=null
         endfunction
-            function s__ASN__ASN_anon__151 takes nothing returns nothing
+            function s__ASN___ASN_anon__151 takes nothing returns nothing
                 local integer u=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                 if ( (GetUnitState(s__Units_unit[(u)], UNIT_STATE_LIFE) > 0) == false ) then // INLINED!!
                     call ReleaseTimer(GetExpiredTimer())
@@ -8498,17 +8500,17 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call AddUnitAnimationProperties(s__Units_unit[u], "fast", false)
                 endif
             endfunction
-        function s__ASN__ASN_Spawn takes integer u,integer m returns nothing
+        function s__ASN___ASN_Spawn takes integer u,integer m returns nothing
             local timer t
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A02R')) > 0) == true ) then // INLINED!!
                 set s__Units_ai[u]=(1)
                 set t=NewTimer()
                 set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( u) // INLINED!!
-                call TimerStart(t, 0.1, true, function s__ASN__ASN_anon__151)
+                call TimerStart(t, 0.1, true, function s__ASN___ASN_anon__151)
                 set t=null
             endif
         endfunction
-        function s__ASN__ASN_Damage_Sub takes integer e returns nothing
+        function s__ASN___ASN_Damage_Sub takes integer e returns nothing
             local real f
             local real cd
             local integer mj
@@ -8518,36 +8520,36 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-        function s__ASN__ASN_Damage_Add takes integer e returns nothing
+        function s__ASN___ASN_Damage_Add takes integer e returns nothing
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('A02V')) > 0) and s__Players_lv10[s__Units_player[s__DamageArgs_DamageUnit[e]]] != null ) then //E的移速转伤害 // INLINED!!
                 if ( s__Units_movespeed[s__DamageArgs_DamageUnit[e]] > 522.0 ) then //大于522的移速转化为伤害
                     set s__DamageArgs_Damage[e]=s__DamageArgs_Damage[e] + s__DamageArgs_Damage[e] * ( ( s__Units_movespeed[s__DamageArgs_DamageUnit[e]] - 522.0 ) * 0.001 )
                 endif
             endif
         endfunction
-            function s__ASN__ASN_anon__152 takes integer b returns nothing
+            function s__ASN___ASN_anon__152 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 set s__Buffs_Level[b]=s__Buffs_Level[b] + 1
                 call s__Units_SetMoveSpeed(u,10)
             endfunction
-            function s__ASN__ASN_anon__153 takes integer b returns nothing
+            function s__ASN___ASN_anon__153 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_SetMoveSpeed(u,- ( s__Buffs_Level[b] * 10 ))
             endfunction
-            function s__ASN__ASN_anon__154 takes integer b returns nothing
+            function s__ASN___ASN_anon__154 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.4)
             endfunction
-            function s__ASN__ASN_anon__155 takes integer b returns nothing
+            function s__ASN___ASN_anon__155 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_SetMoveSpeed(u,500)
             endfunction
-            function s__ASN__ASN_anon__156 takes integer dash returns nothing
+            function s__ASN___ASN_anon__156 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,255 , 0 , 0.4)
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
             endfunction
-        function s__ASN__ASN_Damage takes integer e returns nothing
+        function s__ASN___ASN_Damage takes integer e returns nothing
             local integer b
             local real f
             local real cd
@@ -8555,7 +8557,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             if ( s__DamageArgs_DamageType[e] == s__Damage_Attack and (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('B00K')) > 0) == true and (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('B00L')) > 0) == true ) then // INLINED!!
                 set f=s__Util_XY(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]])
                 set b=s__Buffs_Find(s__Units_unit[s__DamageArgs_DamageUnit[e]] , 'B00K')
-                call sc__ASN__ASN_W2(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]] , f , 2)
+                call sc__ASN___ASN_W2(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]] , f , 2)
                 set s__Buffs_Level[b]=s__Buffs_Level[b] - 1
                 if ( s__Buffs_Level[b] <= 0 ) then
                     set s__Buffs_NowTime[(b)]=0 // INLINED!!
@@ -8571,8 +8573,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('A02V')) > 0) and s__Players_lv10[s__Units_player[s__DamageArgs_DamageUnit[e]]] != null ) then // INLINED!!
                 set b=s__Buffs_Add(s__Units_unit[s__DamageArgs_DamageUnit[e]] , 'A02W' , 'B00M' , 5 , false)
-                set s__Buffs_onFlush[b]=(29)
-                set s__Buffs_onEnd[b]=(30)
+                set s__Buffs_onFlush[b]=(31)
+                set s__Buffs_onEnd[b]=(32)
                 if ( s__Buffs_Level[b] == 1 ) then
                     call s__Units_SetMoveSpeed(s__DamageArgs_DamageUnit[e],10)
                 endif
@@ -8584,23 +8586,23 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:" + s__Units_name[s__DamageArgs_DamageUnit[e]] + "/D" + s__Units_name[s__DamageArgs_TriggerUnit[e]])
                     else
                         call s__Units_Alpha(s__DamageArgs_TriggerUnit[e],0)
-                        set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A036' , 'B00P' , 0.4 , false)]=(31)
+                        set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A036' , 'B00P' , 0.4 , false)]=(33)
                         if ( s__Units_Weapon(s__DamageArgs_DamageUnit[e]) == s__Units_WeaponFist ) then
                             call s__Damage_To(s__Units_unit[s__Players_hero[s__Units_player[(s__DamageArgs_TriggerUnit[e])]]] , (s__Units_unit[s__DamageArgs_DamageUnit[e]] ) , (( s__Damage_Physics )*1.0) , ( 'A02X' ) , (( GetUnitState(s__Units_unit[s__DamageArgs_TriggerUnit[e]], ConvertUnitState(0x15)) * 2)*1.0)) // INLINED!!
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , s__Util_XY(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , s__Units_unit[s__DamageArgs_DamageUnit[e]]) , 0.5 , s__Units_modelsize[s__DamageArgs_TriggerUnit[e]] , 3 , "attack" , "Asuna.mdl") // INLINED!!
                             call s__Effect_ToUnit("az_lxj_blue_ex.mdl" , s__Units_unit[mj] , "weapon")
                             call s__Units_DelayAlpha(mj,255 , 0 , 0.4)
-                            call RunSoundOnUnit(s__ASN__ASN_R_attack , s__Units_unit[mj])
+                            call RunSoundOnUnit(s__ASN___ASN_R_attack , s__Units_unit[mj])
                         else
                             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('B00N')) > 0) == false ) then // INLINED!!
                                 call s__Units_SetMoveSpeed(s__DamageArgs_TriggerUnit[e],- 500)
                             endif
-                            set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A034' , 'B00N' , 1 , false)]=(32)
+                            set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A034' , 'B00N' , 1 , false)]=(34)
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , s__Util_XY(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , s__Units_unit[s__DamageArgs_DamageUnit[e]]) , 10 , s__Units_modelsize[s__DamageArgs_TriggerUnit[e]] , 3 , "attack" , "Asuna.mdl") // INLINED!!
                             call s__Effect_ToUnit("az_lxj_blue_ex.mdl" , s__Units_unit[mj] , "weapon")
                             call SetUnitAnimationByIndex(s__Units_unit[(mj)], (15)) // INLINED!!
-                            call RunSoundOnUnit(s__ASN__ASN_R_defend , s__Units_unit[mj])
-                            set s__Dash_onEnd[s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) + 180 , 150 , s__Dash_SUB , 10 , true , false)]=(33) // INLINED!!
+                            call RunSoundOnUnit(s__ASN___ASN_R_defend , s__Units_unit[mj])
+                            set s__Dash_onEnd[s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) + 180 , 150 , s__Dash_SUB , 10 , true , false)]=(35) // INLINED!!
                             call s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , GetRandomReal(0, 360) , 2 , 0.6 , 1 , "stand" , "white-qiquan.mdl") //音波效果 // INLINED!!
                             call s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , 0 , 2 , 0.5 , 1 , "stand" , "kc_ex.mdl") // INLINED!!
                             call GroupEnumUnitsInRange(tmp_group, (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])), (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])), 200, Condition(function GroupIsAliveNotAloc)) // INLINED!!
@@ -8624,18 +8626,18 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-            function s__ASN__ASN_anon__157 takes integer b returns nothing
+            function s__ASN___ASN_anon__157 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.6)
             endfunction
-        function s__ASN__ASN_W3 takes integer e returns nothing
+        function s__ASN___ASN_W3 takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_AttackUnit[e]))))) // INLINED!!
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00K')) > 0) == true ) then // INLINED!!
                 call s__Units_Alpha(u,0)
-                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02T' , 'B00L' , 0.2 , false)]=(34)
+                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02T' , 'B00L' , 0.2 , false)]=(36)
             endif
         endfunction
-            function s__ASN__ASN_anon__158 takes integer dash returns nothing
+            function s__ASN___ASN_anon__158 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -8660,7 +8662,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call GroupClear(tmp_group)
                 endif
             endfunction
-            function s__ASN__ASN_anon__159 takes integer dash returns nothing
+            function s__ASN___ASN_anon__159 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer mj=(s___Data_c[s__Data_c[data]+3])
                 call s__Units_Position((s___Data_c[s__Data_c[data]]),s__Dash_X[dash] , s__Dash_Y[dash] , false)
@@ -8670,18 +8672,18 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_g[s__Data_g[data]]=null
                 call s__Data_Destroy(data)
             endfunction  //攻击触发
-            function s__ASN__ASN_anon__160 takes integer dash returns nothing
+            function s__ASN___ASN_anon__160 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 call s__Units_Position((s___Data_c[s__Data_c[data]+1]),s__Dash_X[dash] + 50 * CosBJ(s__Dash_Angle[dash]) , s__Dash_Y[dash] + 50 * SinBJ(s__Dash_Angle[dash]) , false)
             endfunction
-            function s__ASN__ASN_anon__161 takes integer dash returns nothing
+            function s__ASN___ASN_anon__161 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer mj=(s___Data_c[s__Data_c[data]+2])
                 call UnitApplyTimedLife(s__Units_unit[(mj)], 'BHwe', ((0.5)*1.0)) // INLINED!!
                 call s__Units_DelayAlpha(mj,255 , 0 , 0.4)
                 call s__Data_Destroy(data)
             endfunction  //akiha claw.mdl
-        function s__ASN__ASN_W2 takes unit ua,unit target,real f,integer stype returns nothing
+        function s__ASN___ASN_W2 takes unit ua,unit target,real f,integer stype returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((ua))))) // INLINED!!
             local integer data=s__Data_create('A02S')
             local integer mj
@@ -8707,8 +8709,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A02S' , 0 , x , y , f , 1 , 0.75 , 2 , "stand" , "dust2_white.mdl")
                 set dash=s__Dash_Start(s__Units_unit[mj] , f , 400 , s__Dash_SUB , 150 , true , false)
                 set s__Dash_Obj[dash]=data
-                set s__Dash_onMove[dash]=(35)
-                set s__Dash_onEnd[dash]=(36)
+                set s__Dash_onMove[dash]=(37)
+                set s__Dash_onEnd[dash]=(38)
             else
                 set a=GetRandomReal(- 60, 60)
                 call s__Units_Position(u,(GetUnitX(s__Units_unit[(u)])) + 100 * CosBJ(f + a) , (GetUnitY(s__Units_unit[(u)])) + 100 * SinBJ(f + a) , false) // INLINED!!
@@ -8723,13 +8725,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A02S' , 0 , x , y , f , 3 , 0.15 , 1 , "stand" , "bule-dark-salsh_red.mdl"))], ((100)*1.0), 0) // INLINED!!
                 set dash=s__Dash_Start(s__Units_unit[mj] , f , 250 , s__Dash_SUB , 50 , true , false)
                 set s__Dash_Obj[dash]=data
-                set s__Dash_onMove[dash]=(37)
-                set s__Dash_onEnd[dash]=(38)
+                set s__Dash_onMove[dash]=(39)
+                set s__Dash_onEnd[dash]=(40)
                 call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A02S' , 0 , GetUnitX(target) , GetUnitY(target) , f , 1 , 1.5 , 1.5 , "death" , "by_wood_gongchengsipai_3.mdl"))], ((100)*1.0), 0) // INLINED!!
                 call s__Effect_Destroy(s__Effect_ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl" , target , "chest"))
             endif
         endfunction
-        function s__ASN__ASN_W1 takes integer e returns nothing
+        function s__ASN___ASN_W1 takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_TriggerUnit[e]))))) // INLINED!!
             local real f
             local integer b
@@ -8742,7 +8744,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                     set b=s__Buffs_Find(s__Units_unit[u] , 'B00K')
                     if ( s__Buffs_NowTime[b] < 6.990 ) then
-                        call s__ASN__ASN_W2(s__Units_unit[u] , null , f , 1)
+                        call s__ASN___ASN_W2(s__Units_unit[u] , null , f , 1)
                         set s__Buffs_Level[b]=s__Buffs_Level[b] - 1
                         if ( s__Buffs_Level[b] <= 0 ) then
                             set s__Buffs_NowTime[(b)]=0 // INLINED!!
@@ -8751,14 +8753,14 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-            function s__ASN__ASN_anon__162 takes integer b returns nothing
+            function s__ASN___ASN_anon__162 takes integer b returns nothing
                 local integer data=(s__Buffs_Obj[b])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call SetUnitState(s__Units_unit[u], ConvertUnitState(0x25), GetUnitState(s__Units_unit[u], ConvertUnitState(0x25)) + s___Data_r[s__Data_r[data]])
                 call s__Spell_Destroy((s___Data_c[s__Data_c[data]]))
                 call s__Data_Destroy(data)
             endfunction
-        function s__ASN__ASN_W takes integer e returns nothing
+        function s__ASN___ASN_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer b
             local integer data
@@ -8775,10 +8777,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set b=s__Buffs_Add(s__Units_unit[u] , 'A02U' , 'B00K' , 7 , false)
                 set s__Buffs_Level[b]=8
                 set s__Buffs_Obj[b]=data
-                set s__Buffs_onEnd[b]=(39)
+                set s__Buffs_onEnd[b]=(41)
             endif
         endfunction
-            function s__ASN__ASN_anon__163 takes integer dash returns nothing
+            function s__ASN___ASN_anon__163 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -8835,7 +8837,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Dash_Start(s__Units_unit[u] , s__Dash_Angle[dash] , 200 , s__Dash_SUB , 20 , true , false)
                 endif
             endfunction
-            function s__ASN__ASN_anon__164 takes integer dash returns nothing
+            function s__ASN___ASN_anon__164 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(s___Data_c[s__Data_c[data]])
                 call s__Units_Pause(u,false)
@@ -8844,7 +8846,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                 call s__Data_Destroy(data)
             endfunction
-        function s__ASN__ASN_Q takes integer e returns nothing
+        function s__ASN___ASN_Q takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             local integer data=s__Data_create('A02R')
@@ -8875,42 +8877,42 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             set dash=s__Dash_Start(s__Units_unit[u] , f , 300 , s__Dash_SUB , 100 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(40)
-            set s__Dash_onEnd[dash]=(41)
+            set s__Dash_onMove[dash]=(42)
+            set s__Dash_onEnd[dash]=(43)
         endfunction
-        function s__ASN__ASN_HERO_START takes integer e returns nothing
+        function s__ASN___ASN_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( (GetUnitMoveSpeed(s__Units_unit[(u)])) >= 500 ) then // INLINED!!
                 call TextAngle((s__Units_unit[u] ) , ( "! 闪光穿刺 !" ) , (( 3 )*1.0) , (( 10)*1.0) , 90) // INLINED!!
                 call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A02R' ) , 1 , (( 5)*1.0)) // INLINED!!
                 call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 50)*1.0)) // INLINED!!
-                call s__ASN__ASN_Q(e)
+                call s__ASN___ASN_Q(e)
             else
                 call sc__Units_DelayAnime((u),(14) , 0) // INLINED!!
                 call s__Spell_Destroy(e)
             endif
         endfunction
-        function s__ASN__ASN_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02R' )), ( ( (42)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02S' )), ( ( (43)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A02R' )), ( ( (44)))) // INLINED!!
+        function s__ASN___ASN_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02R' )), ( ( (44)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02S' )), ( ( (45)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A02R' )), ( ( (46)))) // INLINED!!
             call s__Units_On(s__Units_onHeroSpawn , (4))
-            call s__Events_On(s__Events_onUnitOrderToUnit , (45))
-            call s__Events_On(s__Events_onUnitOrderToLocation , (45))
-            call s__Events_On(s__Events_onUnitAttack , (46))
-            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (28))
-            call s__Damage_On(s__Damage_onUnitDamage_AddDamage , (47))
-            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (48))
-            set s__ASN__ASN_R_attack=(s__SoundUtils___soundhelper_create((("Sound\\Units\\Combat\\MetalMediumSliceMetal3.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
-            set s__ASN__ASN_R_defend=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_asn_r.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+            call s__Events_On(s__Events_onUnitOrderToUnit , (47))
+            call s__Events_On(s__Events_onUnitOrderToLocation , (47))
+            call s__Events_On(s__Events_onUnitAttack , (48))
+            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (30))
+            call s__Damage_On(s__Damage_onUnitDamage_AddDamage , (49))
+            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (50))
+            set s__ASN___ASN_R_attack=(s__SoundUtils___soundhelper_create((("Sound\\Units\\Combat\\MetalMediumSliceMetal3.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+            set s__ASN___ASN_R_defend=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_asn_r.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
         endfunction
 
 //library ASN ends
 //library AW:
-                function s__AW__AW_anon__166 takes integer b returns nothing
+                function s__AW___AW_anon__166 takes integer b returns nothing
                     set s__Buffs_Level[b]=s__Buffs_Level[b] + 1
                 endfunction
-            function s__AW__AW_anon__165 takes integer t returns nothing
+            function s__AW___AW_anon__165 takes integer t returns nothing
                 local integer x
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
@@ -8977,7 +8979,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     if ( s__Players_isai[s__Units_player[u]] == true ) then
                         if ( s___Data_r[s__Data_r[data]+1] <= 0 ) then
                             set s___Data_r[s__Data_r[data]+1]=3
-                            set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[u] , 'A03B' , 'B00Q' , 86400 , false)]=(49)
+                            set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[u] , 'A03B' , 'B00Q' , 86400 , false)]=(51)
                         else
                             set s___Data_r[s__Data_r[data]+1]=s___Data_r[s__Data_r[data]+1] - 0.1
                         endif
@@ -8998,20 +9000,20 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03F')) // INLINED!!
                 endif
             endfunction
-        function s__AW__AW_Spawn takes integer u,integer m returns nothing
+        function s__AW___AW_Spawn takes integer u,integer m returns nothing
             local integer data
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A03A')) > 0) == true ) then // INLINED!!
                 set data=s__Data_create('A03A')
                 set s___Data_c[s__Data_c[data]]=u
                 set s___Data_r[s__Data_r[data]]=1
                 set s___Data_r[s__Data_r[data]+1]=3
-                call s__Timers_Start(0.1 , data , (50))
+                call s__Timers_Start(0.1 , data , (52))
             endif
         endfunction
-            function s__AW__AW_anon__167 takes integer b returns nothing
+            function s__AW___AW_anon__167 takes integer b returns nothing
                 set s__Buffs_Level[b]=s__Buffs_Level[b] + 1
             endfunction
-        function s__AW__AW_Death takes integer u,integer m returns nothing
+        function s__AW___AW_Death takes integer u,integer m returns nothing
             local integer mj
             local integer s=0
             call GroupEnumUnitsInRange(tmp_death_group, (GetUnitX(s__Units_unit[(u)])), (GetUnitY(s__Units_unit[(u)])), 900, Condition(function GroupIsAliveNotAloc)) // INLINED!!
@@ -9024,20 +9026,20 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s=1
                         call s__Effect_Destroy(s__Effect_To("Abilities\\Spells\\Undead\\RaiseSkeletonWarrior\\RaiseSkeleton.mdl" , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])))) // INLINED!!
                     endif
-                    set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[mj] , 'A03B' , 'B00Q' , 86400 , false)]=(51)
+                    set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[mj] , 'A03B' , 'B00Q' , 86400 , false)]=(53)
                     call s__Effect_ToUnit("Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl" , s__Units_unit[mj] , "chest")
                 endif
             endloop
             call GroupClear(tmp_death_group)
         endfunction
-        function s__AW__AW_Damage_Add takes integer e returns nothing
+        function s__AW___AW_Damage_Add takes integer e returns nothing
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('A03A')) > 0) == true ) then // INLINED!!
                 if ( s__DamageArgs_DamageType[e] == s__Damage_Attack or s__DamageArgs_DamageType[e] == s__Damage_Physics ) then //物理伤害则翻倍
                     set s__DamageArgs_Damage[e]=s__DamageArgs_Damage[e] + s__DamageArgs_Damage[e]
                 endif
             endif
         endfunction
-        function s__AW__AW_Damage_Sub takes integer e returns nothing
+        function s__AW___AW_Damage_Sub takes integer e returns nothing
             local integer b
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('B00Q')) > 0) == true ) then // INLINED!!
                 set b=s__Buffs_Find(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'B00Q')
@@ -9048,7 +9050,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-            function s__AW__AW_anon__168 takes integer dash returns nothing
+            function s__AW___AW_anon__168 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer mj=(s___Data_c[s__Data_c[data]+3])
                 local integer e
@@ -9074,7 +9076,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                 endif
             endfunction
-                function s__AW__AW_anon__170 takes integer dash returns nothing
+                function s__AW___AW_anon__170 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer tf=(s___Data_c[s__Data_c[data]+1])
                     local integer gz=(s___Data_c[s__Data_c[data]+2])
@@ -9094,7 +9096,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s__Dash_Angle[dash]=s__Util_XY(s__Units_unit[gz] , s__Units_unit[tf])
                     endif
                 endfunction
-                function s__AW__AW_anon__171 takes integer dash returns nothing
+                function s__AW___AW_anon__171 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer tf=(s___Data_c[s__Data_c[data]+1])
@@ -9115,15 +9117,15 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_u[s__Data_u[data]]=null
                     call s__Data_Destroy(data)
                 endfunction
-            function s__AW__AW_anon__169 takes integer dash returns nothing
+            function s__AW___AW_anon__169 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer dash1
                 set dash1=s__Dash_Start(s__Dash_Unit[dash] , 0 , 1000 , s__Dash_NORMAL , 70 , true , false)
                 set s__Dash_Obj[dash1]=data
-                set s__Dash_onMove[dash1]=(52)
-                set s__Dash_onEnd[dash1]=(53)
+                set s__Dash_onMove[dash1]=(54)
+                set s__Dash_onEnd[dash1]=(55)
             endfunction
-        function s__AW__AW_W takes integer e returns nothing
+        function s__AW___AW_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer b
             local integer mj
@@ -9157,11 +9159,11 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Units_Alpha(mj,0)
             set s___Data_c[s__Data_c[data]+3]=mj
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(54)
-            set s__Dash_onEnd[dash]=(55)
+            set s__Dash_onMove[dash]=(56)
+            set s__Dash_onEnd[dash]=(57)
             call s__Spell_Destroy(e)
         endfunction
-            function s__AW__AW_anon__172 takes integer t returns nothing
+            function s__AW___AW_anon__172 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer mj
                 local integer u=(s___Data_c[s__Data_c[data]])
@@ -9224,7 +9226,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call GroupClear(tmp_group)
                 endif
             endfunction
-        function s__AW__AW_E takes integer e returns nothing
+        function s__AW___AW_E takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03D')
             local integer mj
@@ -9244,10 +9246,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]+2]=2
             set s___Data_r[s__Data_r[data]]=s__Spell_X[e]
             set s___Data_r[s__Data_r[data]+1]=s__Spell_Y[e]
-            call s__Timers_Start(0.1 , data , (56))
+            call s__Timers_Start(0.1 , data , (58))
             call s__Spell_Destroy(e)
         endfunction
-            function s__AW__AW_anon__173 takes integer t returns nothing
+            function s__AW___AW_anon__173 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -9319,7 +9321,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                 endif
             endfunction
-        function s__AW__AW_D takes integer e returns nothing
+        function s__AW___AW_D takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03G')
             local integer mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03G' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0 , 5 , 1 , 3 , "stand" , "magic_ex.mdl") // INLINED!!
@@ -9338,9 +9340,9 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]]=0
             call s__Buffs_Add(s__Units_unit[u] , 'A03H' , 'B00R' , 1.5 , false)
             call sc__Units_DelayAnime((u),(5) , 0) // INLINED!!
-            call s__Timers_Start(0.01 , data , (57))
+            call s__Timers_Start(0.01 , data , (59))
         endfunction
-        function s__AW__AW_HERO_START takes integer e returns nothing
+        function s__AW___AW_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( s__Spell_Id[e] == 'A03C' or s__Spell_Id[e] == 'A03D' ) then
                 call sc__Units_DelayAnime((u),(4) , 0) // INLINED!!
@@ -9348,7 +9350,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__AW__AW_HERO_STOP takes integer e returns nothing
+        function s__AW___AW_HERO_STOP takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             call s__Units_AnimeSpeed(u,1)
             if ( s__Spell_Id[e] == 'A03G' ) then
@@ -9358,17 +9360,17 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__AW__AW_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03G' )), ( ( (58)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03D' )), ( ( (59)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03C' )), ( ( (60)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03C' )), ( ( (61)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03C' )), ( ( (62)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03D' )), ( ( (61)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03D' )), ( ( (62)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03G' )), ( ( (62)))) // INLINED!!
-            call s__Damage_On(s__Damage_onUnitDamage_AddDamage , (63))
-            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (64))
+        function s__AW___AW_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03G' )), ( ( (60)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03D' )), ( ( (61)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03C' )), ( ( (62)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03C' )), ( ( (63)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03C' )), ( ( (64)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03D' )), ( ( (63)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03D' )), ( ( (64)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03G' )), ( ( (64)))) // INLINED!!
+            call s__Damage_On(s__Damage_onUnitDamage_AddDamage , (65))
+            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (66))
             call s__Units_On(s__Units_onHeroDeath , (5))
             call s__Units_On(s__Units_onUnitDeath , (5))
             call s__Units_On(s__Units_onHeroSpawn , (6))
@@ -9476,18 +9478,18 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
     endfunction
     function Ai___onInit takes nothing returns nothing
         call s__Units_On(s__Units_onHeroSpawn , (7))
-        call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (65))
+        call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (67))
         call TimerStart(NewTimer(), 1, true, function Ai___onLoop)
     endfunction
 
 //library Ai ends
 //library BlackSaber:
-                function s__BlackSaber___BlackSaber_anon__89 takes integer h returns nothing
+                function s__BlackSaber__BlackSaber_anon__89 takes integer h returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__HitFlys_Unit[h]))))) // INLINED!!
                     call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                     call s__HitFlys_Remove(s__Units_unit[u])
                 endfunction
-            function s__BlackSaber___BlackSaber_anon__88 takes nothing returns nothing
+            function s__BlackSaber__BlackSaber_anon__88 takes nothing returns nothing
                 local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -9529,7 +9531,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             set dis=GetRandomReal(25, 225)
                             set a=GetRandomReal(0, 360)
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[(s___Data_c[s__Data_c[data]])]] , 'e00B' , 'A015' , 0 , x + dis * CosBJ(a) , y + dis * SinBJ(a) , 0 , 2.5 , 0.75 , 2 , "stand" , "BlackDragonMissile.mdl")
-                            set s__HitFlys_onDown[s__HitFlys_Add(s__Units_unit[mj] , 50)]=(66)
+                            set s__HitFlys_onDown[s__HitFlys_Add(s__Units_unit[mj] , 50)]=(68)
                         set i=i + 1
                         endloop
                     endif
@@ -9554,7 +9556,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] - 0.02
                 endif
             endfunction  //Util.Range(x,y,250); 
-        function s__BlackSaber___BlackSaber_D takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_D takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local timer t=NewTimer()
             local integer data=s__Data_create('A015')
@@ -9578,15 +9580,15 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_r[s__Data_r[data]+2]=y
             set s___Data_r[s__Data_r[data]+3]=0
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
-            call TimerStart(t, 0.02, true, function s__BlackSaber___BlackSaber_anon__88)
+            call TimerStart(t, 0.02, true, function s__BlackSaber__BlackSaber_anon__88)
         endfunction
-                    function s__BlackSaber___BlackSaber_anon__92 takes integer dash returns nothing
+                    function s__BlackSaber__BlackSaber_anon__92 takes integer dash returns nothing
                         local integer m=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                         if ( s__Dash_Speed[dash] > 20 ) then
                             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[m]] , 'e008' , 'A012' , 0 , (GetUnitX(s__Units_unit[(m)])) , (GetUnitY(s__Units_unit[(m)])) , 0 , 2 , s__Dash_Speed[dash] / 15 , 1 , "death" , "fire-boom-new-darkblue-3.mdl"))], (((GetUnitFlyHeight(s__Units_unit[(m)])))*1.0), 0) // INLINED!!
                         endif
                     endfunction
-                function s__BlackSaber___BlackSaber_anon__91 takes nothing returns nothing
+                function s__BlackSaber__BlackSaber_anon__91 takes nothing returns nothing
                     local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer m=(s___Data_c[s__Data_c[data]+2])
@@ -9667,7 +9669,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 endloop
                                 call GroupClear(tmp_group)
                                 call s__Dash_Start(s__Units_unit[u] , s__Util_XY(s__Units_unit[m] , s__Units_unit[u]) , 300 , s__Dash_SUB , 50 , true , false)
-                                set s__Dash_onMove[s__Dash_Start(s__Units_unit[m] , s__Util_XY(s__Units_unit[u] , s__Units_unit[m]) , 1000 , s__Dash_SUB , 70 , true , false)]=(67)
+                                set s__Dash_onMove[s__Dash_Start(s__Units_unit[m] , s__Util_XY(s__Units_unit[u] , s__Units_unit[m]) , 1000 , s__Dash_SUB , 70 , true , false)]=(69)
                                 call s__HitFlys_Add(s__Units_unit[m] , 25)
                                 call UnitRemoveAbility(s__Units_unit[(u)], ('A013')) // INLINED!!
                                 call UnitRemoveAbility(s__Units_unit[(u)], ('A014')) // INLINED!!
@@ -9692,7 +9694,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call ReleaseTimer(GetExpiredTimer())
                     endif
                 endfunction
-            function s__BlackSaber___BlackSaber_anon__90 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__90 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local unit k
@@ -9722,13 +9724,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s___Data_c[s__Data_c[data]+2]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((k))))) // INLINED!!
                         set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
                         call s__Dash_Start(s__Units_unit[u] , s__Dash_Angle[dash] , 300 , s__Dash_SUB , 20 , true , false)
-                        call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__91)
+                        call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__91)
                         set t=null
                         set k=null
                     endif
                 endif
             endfunction
-            function s__BlackSaber___BlackSaber_anon__93 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__93 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 if ( s___Data_i[s__Data_i[data]] == 0 ) then
@@ -9741,7 +9743,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__BlackSaber___BlackSaber_R takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_R takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             local integer data=s__Data_create('A012')
@@ -9756,10 +9758,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A012' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , s__Spell_Angle[e] , 2.5 , 0.5 , 1 , "stand" , "cf2.mdl"))], ((70)*1.0), 0) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_SUB , 80 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(68)
-            set s__Dash_onEnd[dash]=(69)
+            set s__Dash_onMove[dash]=(70)
+            set s__Dash_onEnd[dash]=(71)
         endfunction
-            function s__BlackSaber___BlackSaber_anon__94 takes nothing returns nothing
+            function s__BlackSaber__BlackSaber_anon__94 takes nothing returns nothing
                 local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local real x
@@ -9843,7 +9845,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call ReleaseTimer(GetExpiredTimer())
                 endif
             endfunction
-        function s__BlackSaber___BlackSaber_E takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_E takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A00X')
             local timer t=NewTimer()
@@ -9861,10 +9863,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
             call s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false) // INLINED!!
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00X' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0 , 2 , 0.4 , 1 , "stand" , "white-qiquan.mdl") // INLINED!!
-            call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__94)
+            call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__94)
             set t=null
         endfunction
-            function s__BlackSaber___BlackSaber_anon__95 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__95 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer mj
                 local real dis
@@ -9905,12 +9907,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call GroupClear(tmp_group)
                 endif
             endfunction
-            function s__BlackSaber___BlackSaber_anon__96 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__96 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((5)*1.0)) // INLINED!!
                 call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
             endfunction
-        function s__BlackSaber___BlackSaber_W takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer mj
             local integer dash
@@ -9921,11 +9923,11 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Units_Pause(u,false)
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00V' , 0 , x , y , s__Spell_Angle[e] , 10 , 1 , 1 , "stand" , "dark4_fast.mdl")
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 450 , s__Dash_SUB , 40 , true , false)
-            set s__Dash_onMove[dash]=(70)
-            set s__Dash_onEnd[dash]=(71)
+            set s__Dash_onMove[dash]=(72)
+            set s__Dash_onEnd[dash]=(73)
             call s__Spell_Destroy(e)
         endfunction
-            function s__BlackSaber___BlackSaber_anon__97 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__97 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local real x=(GetUnitX(s__Units_unit[(u)])) + 50 * CosBJ(s__Dash_Angle[dash]) // INLINED!!
                 local real y=(GetUnitY(s__Units_unit[(u)])) + 50 * SinBJ(s__Dash_Angle[dash]) // INLINED!!
@@ -9949,17 +9951,17 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     if ( s__Dash_NowDis[dash] > 100 ) then
                         call s__Dash_Start(s__Units_unit[u] , s__Util_XY(k , s__Units_unit[u]) , 200 * ( s__Dash_NowDis[dash] / s__Dash_MaxDis[dash] ) , s__Dash_SUB , 20 , true , false)
                     endif
-                    call RunSoundOnUnit(s__BlackSaber___BlackSaber_Q_HIT , k)
+                    call RunSoundOnUnit(s__BlackSaber__BlackSaber_Q_HIT , k)
                 endif
                 set k=null
             endfunction
-            function s__BlackSaber___BlackSaber_anon__98 takes integer dash returns nothing
+            function s__BlackSaber__BlackSaber_anon__98 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call s__Spell_Destroy((s__Dash_Obj[dash]))
                 call s__Units_AnimeSpeed(u,1)
                 call s__Units_Pause(u,false)
             endfunction
-        function s__BlackSaber___BlackSaber_Q takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_Q takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             call s__Units_Pause(u,true)
@@ -9967,10 +9969,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Units_AnimeSpeed(u,1)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(72)
-            set s__Dash_onEnd[dash]=(73)
+            set s__Dash_onMove[dash]=(74)
+            set s__Dash_onEnd[dash]=(75)
         endfunction
-        function s__BlackSaber___BlackSaber_HERO_START takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A02A')) > 0) == true ) then // INLINED!!
                 if ( s__Spell_Id[e] != 'A012' and s__Spell_Id[e] != 'A00U' ) then
@@ -9991,7 +9993,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call TextAngle((s__Units_unit[u] ) , ( "! 炎焱斩 !" ) , (( 3 )*1.0) , (( 15)*1.0) , 90) // INLINED!!
                         call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 150)*1.0)) // INLINED!!
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A00X' ) , 1 , (( 15)*1.0)) // INLINED!!
-                        call s__BlackSaber___BlackSaber_E(e)
+                        call s__BlackSaber__BlackSaber_E(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -10008,7 +10010,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call SpellText(s__Units_unit[u] , 'A015' , 3 , 15)
                         call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 250)*1.0)) // INLINED!!
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A015' ) , 1 , (( 25)*1.0)) // INLINED!!
-                        call s__BlackSaber___BlackSaber_D(e)
+                        call s__BlackSaber__BlackSaber_D(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -10017,14 +10019,14 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-        function s__BlackSaber___BlackSaber_HERO_STOP takes integer e returns nothing
+        function s__BlackSaber__BlackSaber_HERO_STOP takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( s__Spell_Id[e] == 'A00V' or s__Spell_Id[e] == 'A015' ) then
                 call s__Units_AnimeSpeed(u,1)
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__BlackSaber___BlackSaber_AI takes unit ua returns nothing
+        function s__BlackSaber__BlackSaber_AI takes unit ua returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((ua))))) // INLINED!!
             local unit target
             local unit no
@@ -10058,25 +10060,25 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set target=null
             set no=null
         endfunction
-        function s__BlackSaber___BlackSaber_Spawn takes integer u,integer m returns nothing
+        function s__BlackSaber__BlackSaber_Spawn takes integer u,integer m returns nothing
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A015')) > 0) == true ) then // INLINED!!
                 set s__Units_ai[u]=(2)
             endif
         endfunction
-        function s__BlackSaber___BlackSaber_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A015' )), ( ( (74)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A012' )), ( ( (75)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00U' )), ( ( (76)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00V' )), ( ( (77)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00X' )), ( ( (78)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00X' )), ( ( (79)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00X' )), ( ( (80)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00V' )), ( ( (79)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00V' )), ( ( (80)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A015' )), ( ( (79)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A015' )), ( ( (80)))) // INLINED!!
+        function s__BlackSaber__BlackSaber_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A015' )), ( ( (76)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A012' )), ( ( (77)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00U' )), ( ( (78)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00V' )), ( ( (79)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00X' )), ( ( (80)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00X' )), ( ( (81)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00X' )), ( ( (82)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00V' )), ( ( (81)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00V' )), ( ( (82)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A015' )), ( ( (81)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A015' )), ( ( (82)))) // INLINED!!
             call s__Units_On(s__Units_onHeroSpawn , (8))
-            set s__BlackSaber___BlackSaber_Q_HIT=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_hit_0.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+            set s__BlackSaber__BlackSaber_Q_HIT=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_hit_0.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
         endfunction
 
 //library BlackSaber ends
@@ -10406,8 +10408,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call KillUnit((s__Units_unit[first])) // INLINED!!
             call TextForPlayer(s__Players_player[s__Units_player[u]] , s__Units_unit[u] , s__s__DazzleMaster___DazzleMaster_DazzleName[s__Units_aidindex[first]] + "!" , 0.8 , 14 , 300)
             set b=s__Buffs_Add(s__Units_unit[u] , 'A00G' , 'B002' , 5 , false)
-            set s__Buffs_onEnd[b]=(81)
-            set s__Buffs_onFlush[b]=(82)
+            set s__Buffs_onEnd[b]=(83)
+            set s__Buffs_onFlush[b]=(84)
             if ( s___Data_r[s__Data_r[data]] < 80 ) then
                 set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] + 20
                 call s__Units_SetMoveSpeed(u,20)
@@ -10430,8 +10432,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set id=s__Dash_ADD
             set dash=s__Dash_Start(s__Units_unit[first] , s__Util_XYEX((GetUnitX(s__Units_unit[(first)])) , (GetUnitY(s__Units_unit[(first)])) , s__Spell_X[e] , s__Spell_Y[e]) , s__Util_XY2EX((GetUnitX(s__Units_unit[(first)])) , (GetUnitY(s__Units_unit[(first)])) , s__Spell_X[e] , s__Spell_Y[e]) , id , 50 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=R2I((GetUnitFlyHeight(s__Units_unit[(first)]))) // INLINED!!
-            set s__Dash_onMove[dash]=(83)
-            set s__Dash_onEnd[dash]=(84)
+            set s__Dash_onMove[dash]=(85)
+            set s__Dash_onEnd[dash]=(86)
             call s__Spell_Destroy(e)
         endfunction
                     function s__DazzleMaster___DazzleMaster_anon__52 takes integer dash returns nothing
@@ -10518,8 +10520,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 set s___Data_i[s__Data_i[data]+1]=s___Data_i[s__Data_i[data]+1] + 1
                                 set dash=s__Dash_Start(s__Units_unit[tmp] , s__Util_XYEX((GetUnitX(s__Units_unit[(tmp)])) , (GetUnitY(s__Units_unit[(tmp)])) , x , y) , s__Util_XY2EX((GetUnitX(s__Units_unit[(tmp)])) , (GetUnitY(s__Units_unit[(tmp)])) , x , y) , s__Dash_NORMAL , 20 , true , false) // INLINED!!
                                 set s__Dash_Obj[dash]=data
-                                set s__Dash_onMove[dash]=(85)
-                                set s__Dash_onEnd[dash]=(86)
+                                set s__Dash_onMove[dash]=(87)
+                                set s__Dash_onEnd[dash]=(88)
                             endloop
                             call GroupClear(tmp_group)
                             call DestroyGroup(s___Data_g[s__Data_g[data]])
@@ -10551,7 +10553,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 call GroupAddUnit(s___Data_g[s__Data_g[data]], s__Units_unit[tmp])
                                 call s__Buffs_Skill(s__Units_unit[tmp] , 'A00C' , 1)
                                 call s__HitFlys_Remove(s__Units_unit[tmp])
-                                set s__Dash_onMove[s__Dash_Start(s__Units_unit[tmp] , s__Util_XY(s__Units_unit[tmp] , s__Units_unit[u]) , s__Util_XY2(s__Units_unit[tmp] , s__Units_unit[u]) , s__Dash_NORMAL , s__Util_XY2(s__Units_unit[tmp] , s__Units_unit[u]) / 4 , true , false)]=(87)
+                                set s__Dash_onMove[s__Dash_Start(s__Units_unit[tmp] , s__Util_XY(s__Units_unit[tmp] , s__Units_unit[u]) , s__Util_XY2(s__Units_unit[tmp] , s__Units_unit[u]) , s__Dash_NORMAL , s__Util_XY2(s__Units_unit[tmp] , s__Units_unit[u]) / 4 , true , false)]=(89)
                                 call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", s__Units_unit[tmp], "chest"))
                             endif
                         endloop
@@ -10771,8 +10773,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Util_Duang((GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0.4 , 200 , 200 , - ( s___Data_r[s__Data_r[data]] * 51.2 ) , 0.04 , 100) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 350 + ( s___Data_r[s__Data_r[data]] * 250 ) , s__Dash_SUB , 80 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=data
-                    set s__Dash_onMove[dash]=(88)
-                    set s__Dash_onEnd[dash]=(89)
+                    set s__Dash_onMove[dash]=(90)
+                    set s__Dash_onEnd[dash]=(91)
                 endif
             endfunction
         function s__DazzleMaster___DazzleMaster_E takes integer e returns nothing
@@ -10869,8 +10871,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 250 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(90)
-            set s__Dash_onEnd[dash]=(91)
+            set s__Dash_onMove[dash]=(92)
+            set s__Dash_onEnd[dash]=(93)
         endfunction
             function s__DazzleMaster___DazzleMaster_anon__61 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
@@ -10943,18 +10945,18 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00B' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , s__Spell_Angle[e] , 4 , 1 , 2.5 , "stand" , "dust2.mdx") // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[ts] , s__Spell_Angle[e] , 600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(92)
-            set s__Dash_onEnd[dash]=(93)
+            set s__Dash_onMove[dash]=(94)
+            set s__Dash_onEnd[dash]=(95)
         endfunction
     function DazzleMaster___onInit takes nothing returns nothing
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A008' )), ( ( (94)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A009' )), ( ( (95)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00B' )), ( ( (96)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00D' )), ( ( (97)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00E' )), ( ( (98)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A009' )), ( ( (99)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A009' )), ( ( (100)))) // INLINED!!
-        call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (101))
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A008' )), ( ( (96)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A009' )), ( ( (97)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00B' )), ( ( (98)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00D' )), ( ( (99)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00E' )), ( ( (100)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A009' )), ( ( (101)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A009' )), ( ( (102)))) // INLINED!!
+        call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (103))
         call s__Units_On(s__Units_onHeroSpawn , (9))
         call s__Units_On(s__Units_onAlocDeath , (10))
         set s__s__DazzleMaster___DazzleMaster_DazzlePath[0]= "ball_nothing_ex.mdx"
@@ -10981,8 +10983,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             local unit u
             local integer p=s__Players_Set(GetEnumPlayer())
             call UnitShareVision(Origin_Ball, s__Players_player[p], true)
-            set u=s__HeroRares_GetRandomHero(s__Players_player[p] , s__Players_randomhero[p]) //测试时不随机英雄
-            set s__Players_hero[p]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((u))))) //u=Units.Spawn(p.player,'H00D',0,0,0); // INLINED!!
+            set u=s__Units_Spawn(s__Players_player[p] , 'H00E' , 0 , 0 , 0) //测试时不随机英雄 //u=HeroRares.GetRandomHero(p.player,p.randomhero);
+            set s__Players_hero[p]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((u))))) // INLINED!!
             call SetUnitPosition(u, GetRectCenterX((s__Teams___Team_Rect[GetPlayerTeam((s__Players_player[p]))])), GetRectCenterY((s__Teams___Team_Rect[GetPlayerTeam((s__Players_player[p]))]))) // INLINED!!
             set u=null
             if ( s__Players_teamid[p] == 0 ) then
@@ -11011,6 +11013,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         call s__Players_Set(Player(PLAYER_NEUTRAL_AGGRESSIVE))
         call s__Players_Set(Player(bj_PLAYER_NEUTRAL_EXTRA))
         call ForForce(Teams___AllPlayers, (function Init___anon__8)) // INLINED!!
+        set i=0
+        loop
+        exitwhen ( i > 5 )
+            call RemoveGuardPosition(s__Units_Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE) , 'h001' , - 4464 , - 3641 , 0))
+            call RemoveGuardPosition(s__Units_Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE) , 'h009' , - 4464 , - 3641 , 0))
+        set i=i + 1
+        endloop
         call SetTimeOfDay(6.0) //JAPI测试异步  //设置游戏时间为夜晚
         call Cheat("exec-lua:init")
     endfunction
@@ -11054,7 +11063,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
         endfunction
     function Item___ZiShaQiu takes integer e returns nothing
-        set s__Buffs_onEnd[s__Buffs_Add(s__Spell_Spell[e] , 'A042' , 'B00Y' , 5 , false)]=(102)
+        set s__Buffs_onEnd[s__Buffs_Add(s__Spell_Spell[e] , 'A042' , 'B00Y' , 5 , false)]=(104)
         call s__Spell_Destroy(e)
     endfunction
     function Item___TaiYangShi takes integer e returns nothing
@@ -11077,7 +11086,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         endfunction
     function Item___TuiTuiBang takes integer e returns nothing
         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
-        set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1000 , s__Dash_PWX , 30 , true , false)]=(103) // INLINED!!
+        set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1000 , s__Dash_PWX , 30 , true , false)]=(105) // INLINED!!
         call s__Spell_Destroy(e)
     endfunction
         function Item___anon__34 takes integer dash returns nothing
@@ -11124,19 +11133,19 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         call UnitAddAbility(s__Units_unit[(mj)], (s__Units_MJType_TSW)) // INLINED!!
         call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
         set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1600 , s__Dash_SUB , 30 , true , false) // INLINED!!
-        set s__Dash_onMove[dash]=(104)
-        set s__Dash_onEnd[dash]=(105)
+        set s__Dash_onMove[dash]=(106)
+        set s__Dash_onEnd[dash]=(107)
         call s__Spell_Destroy(e)
     endfunction
     function Item___onInit takes nothing returns nothing
-        call s__Damage_On(s__Damage_onItemDamage_AddDamage , (106))
-        call s__Damage_On(s__Damage_onItemDamage_SubDamage , (107))
-        call s__Damage_On(s__Damage_onItemDamage_EndDamage , (108))
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A041' )), ( ( (109)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A043' )), ( ( (110)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A044' )), ( ( (111)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A04C' )), ( ( (112)))) // INLINED!!
-        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A04D' )), ( ( (113)))) // INLINED!!
+        call s__Damage_On(s__Damage_onItemDamage_AddDamage , (108))
+        call s__Damage_On(s__Damage_onItemDamage_SubDamage , (109))
+        call s__Damage_On(s__Damage_onItemDamage_EndDamage , (110))
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A041' )), ( ( (111)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A043' )), ( ( (112)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A044' )), ( ( (113)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A04C' )), ( ( (114)))) // INLINED!!
+        call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A04D' )), ( ( (115)))) // INLINED!!
     endfunction
 
 //library Item ends
@@ -11341,7 +11350,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s___Data_r[s__Data_r[data]+2]=0
                         if ( s___Data_i[s__Data_i[data]] == 1 ) then
                             set s___Data_i[s__Data_i[data]]=0
-                            set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false)]=(114) // INLINED!!
+                            set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false)]=(116) // INLINED!!
                         endif
                     endif
                     if ( s___Data_r[s__Data_r[data]+2] >= 1.0 ) then
@@ -11465,8 +11474,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set b=s__Buffs_Add(s__Units_unit[mj] , 'A026' , 'B00D' , 5 , false)
                     set s__Buffs_Obj[b]=data
                     set s__Buffs_Type[b]=s__Buffs_TYPE_SUB + s__Buffs_TYPE_DISPEL_TRUE
-                    set s__Buffs_onTime[b]=(116)
-                    set s__Buffs_onEnd[b]=(117)
+                    set s__Buffs_onTime[b]=(118)
+                    set s__Buffs_onEnd[b]=(119)
                 endif
             endloop
             call GroupClear(tmp_group)
@@ -11501,7 +11510,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                     set s__Buffs_Type[b]=s__Buffs_TYPE_SUB + s__Buffs_TYPE_DISPEL_TRUE
                     call UnitAddAbility(s__Units_unit[(mj)], ('Abun')) // INLINED!!
-                    set s__Buffs_onEnd[b]=(118)
+                    set s__Buffs_onEnd[b]=(120)
                 endif
             endloop
             call GroupClear(tmp_group)
@@ -11617,7 +11626,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                     set dash=s__Dash_Start(s__Units_unit[mj] , s__Util_XYEX(x , y , (GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)]))) , 450 , s__Dash_PWX , 30 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=3
-                    set s__Dash_onMove[dash]=(119)
+                    set s__Dash_onMove[dash]=(121)
                 endloop
                 call GroupClear(tmp_group)
                 set s___Data_i[s__Data_i[data]]=3
@@ -11627,7 +11636,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 if ( s___Data_r[s__Data_r[data]+4] <= 0 ) then
                     set s___Data_i[s__Data_i[data]]=1
                     call s__Units_AnimeSpeed(u,1)
-                    set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , f , 200 , s__Dash_ADD , 25 , true , false)]=(120)
+                    set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , f , 200 , s__Dash_ADD , 25 , true , false)]=(122)
                     call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageDeathCaster.mdl", s__Units_unit[mj], "origin"))
                     call s__Units_DelayAlpha(mj,255 , 0 , 0.4)
                     call s__Units_AnimeSpeed(mj,1)
@@ -11704,14 +11713,14 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
         endfunction
         function s__MR__MR_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A027' )), ( ( (121)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A020' )), ( ( (122)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A025' )), ( ( (123)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A020' )), ( ( (124)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A025' )), ( ( (124)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A027' )), ( ( (124)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A027' )), ( ( (123)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A020' )), ( ( (124)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A025' )), ( ( (125)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A020' )), ( ( (126)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A025' )), ( ( (126)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A027' )), ( ( (126)))) // INLINED!!
             call s__Units_On(s__Units_onHeroDeath , (11))
-            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (115))
+            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (117))
             call s__Units_On(s__Units_onHeroSpawn , (12))
         endfunction
 
@@ -11804,8 +11813,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_r[s__Data_r[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 3500 , s__Dash_PWX , 90 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(125)
-            set s__Dash_onEnd[dash]=(126)
+            set s__Dash_onMove[dash]=(127)
+            set s__Dash_onEnd[dash]=(128)
         endfunction
         function s__OrdinaryWizard___OrdinaryWizard_E takes integer u,integer m returns nothing
             if ( s__Units_aid[u] == 'A005' and s__Units_aidindex[u] == 0 ) then
@@ -11966,8 +11975,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call SetUnitFlyHeight(s__Units_unit[(mj)], ((50)*1.0), 0) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[mj] , f , 1600 , s__Dash_SUB , 70 , true , false)
             set s__Dash_Obj[dash]=mj
-            set s__Dash_onEnd[dash]=(127)
-            set s__Dash_onMove[dash]=(128)
+            set s__Dash_onEnd[dash]=(129)
+            set s__Dash_onMove[dash]=(130)
             call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", x + 100 * CosBJ(f), y + 100 * SinBJ(f)))
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", s__Units_unit[u], "hand right"))
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A002' , 2 , x + 100 * CosBJ(f) , y + 100 * SinBJ(f) , f , 1.5 , 2 , 1 , "stand" , "Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl")
@@ -11977,8 +11986,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set dash=s__Dash_Start(s__Units_unit[mj] , f , 1300 , s__Dash_ADD , 50 , true , false)
             set s__Dash_Obj[dash]=u
             set s__Dash_NowDis[dash]=10
-            set s__Dash_onMove[dash]=(129)
-            set s__Dash_onEnd[dash]=(130)
+            set s__Dash_onMove[dash]=(131)
+            set s__Dash_onEnd[dash]=(132)
             call s__Units_AnimeSpeed(u,1)
             call s__Spell_Destroy(e)
         endfunction
@@ -11998,19 +12007,19 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Spell_Destroy(e)
         endfunction
         function s__OrdinaryWizard___OrdinaryWizard_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A002' )), ( ( (131)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A004' )), ( ( (132)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A006' )), ( ( (133)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A002' )), ( ( (134)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A002' )), ( ( (135)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A006' )), ( ( (134)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A006' )), ( ( (135)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A002' )), ( ( (133)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A004' )), ( ( (134)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A006' )), ( ( (135)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A002' )), ( ( (136)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A002' )), ( ( (137)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A006' )), ( ( (136)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A006' )), ( ( (137)))) // INLINED!!
             call s__Units_On(s__Units_onAlocDeath , (13))
         endfunction
 
 //library OrdinaryWizard ends
 //library SD:
-        function s__SD__SD_AI takes unit ua returns nothing
+        function s__SD___SD_AI takes unit ua returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((ua))))) // INLINED!!
             if ( s__Players_isai[s__Units_player[u]] == true ) then
                 call KillUnit((s__Units_unit[u])) // INLINED!!
@@ -12020,7 +12029,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_Position(u,(GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , true) // INLINED!!
             endif
         endfunction
-            function s__SD__SD_anon__174 takes integer t returns nothing
+            function s__SD___SD_anon__174 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -12071,7 +12080,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                 endif
             endfunction
-        function s__SD__SD_Spawn takes integer u,integer m returns nothing
+        function s__SD___SD_Spawn takes integer u,integer m returns nothing
             local integer data
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A03I')) > 0) == true ) then // INLINED!!
                 set s__Units_ai[u]=(4)
@@ -12080,10 +12089,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_u[s__Data_u[data]]=null
                 set s___Data_r[s__Data_r[data]]=0
                 set s__Buffs_Level[s__Buffs_Add(s__Units_unit[u] , 'A03L' , 'B00T' , 86400 , false)]=2
-                call s__Timers_Start(0.01 , data , (136))
+                call s__Timers_Start(0.01 , data , (138))
             endif
         endfunction
-            function s__SD__SD_anon__175 takes integer dash returns nothing
+            function s__SD___SD_anon__175 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer mj
@@ -12105,7 +12114,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call GroupClear(tmp_group)
                 endif
             endfunction
-            function s__SD__SD_anon__176 takes integer dash returns nothing
+            function s__SD___SD_anon__176 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call DestroyGroup(s___Data_g[s__Data_g[data]])
@@ -12122,7 +12131,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call SetUnitFlyHeight(s__Units_unit[(u)], ((0)*1.0), 0) // INLINED!!
                 endif
             endfunction
-        function s__SD__SD_W takes integer e returns nothing
+        function s__SD___SD_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer b
             local integer mj
@@ -12148,8 +12157,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_g[s__Data_g[data]]=CreateGroup()
                     set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 30 , true , false)
                     set s__Dash_Obj[dash]=data
-                    set s__Dash_onMove[dash]=(137)
-                    set s__Dash_onEnd[dash]=(138)
+                    set s__Dash_onMove[dash]=(139)
+                    set s__Dash_onEnd[dash]=(140)
                 else
                     call s__Units_Pause(u,true)
                     call s__Units_SetF(u,(GetUnitFacing(s__Units_unit[(u)])) , true) // INLINED!!
@@ -12160,7 +12169,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-                function s__SD__SD_anon__178 takes integer dash returns nothing
+                function s__SD___SD_anon__178 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local integer mj
                     if ( s__Dash_Obj[dash] <= 0 ) then
@@ -12185,7 +12194,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call GroupClear(tmp_group)
                     endif
                 endfunction
-                function s__SD__SD_anon__179 takes integer dash returns nothing
+                function s__SD___SD_anon__179 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local integer mj
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
@@ -12204,7 +12213,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endloop
                     call GroupClear(tmp_group)
                 endfunction
-            function s__SD__SD_anon__177 takes integer t returns nothing
+            function s__SD___SD_anon__177 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -12232,8 +12241,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call UnitAddAbility(s__Units_unit[(mj)], (s__Units_MJType_TSW)) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 600 , s__Dash_SUB , 25 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=6
-                    set s__Dash_onMove[dash]=(139)
-                    set s__Dash_onEnd[dash]=(140)
+                    set s__Dash_onMove[dash]=(141)
+                    set s__Dash_onEnd[dash]=(142)
                 else
                     set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] - 0.06
                     set x=(GetUnitX(s__Units_unit[((s___Data_c[s__Data_c[data]+2]))])) // INLINED!!
@@ -12275,7 +12284,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__SD__SD_E takes integer e returns nothing
+        function s__SD___SD_E takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03M')
             local integer mj
@@ -12296,14 +12305,14 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03M' , 0 , (GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , (GetUnitFacing(s__Units_unit[(mj)])) + 90 , 5 , 1 , 2 , "stand" , "az_airfloww12_ex.mdl") // INLINED!!
             call SetUnitFlyHeight(s__Units_unit[(mj)], ((150)*1.0), 0) // INLINED!!
             set s___Data_c[s__Data_c[data]+3]=mj
-            call s__Timers_Start(0.06 , data , (141))
+            call s__Timers_Start(0.06 , data , (143))
         endfunction
-                function s__SD__SD_anon__181 takes integer dash returns nothing
+                function s__SD___SD_anon__181 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03P')) // INLINED!!
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03Q')) // INLINED!!
                 endfunction
-                function s__SD__SD_anon__182 takes integer dash returns nothing
+                function s__SD___SD_anon__182 takes integer dash returns nothing
                     local integer f=(s__Dash_Obj[dash])
                     local integer tmp
                     call s__Units_Position(f,s__Dash_X[dash] , s__Dash_Y[dash] , false)
@@ -12330,7 +12339,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call s__Dash_Stop(dash)
                     endif
                 endfunction
-                function s__SD__SD_anon__183 takes integer dash returns nothing
+                function s__SD___SD_anon__183 takes integer dash returns nothing
                     local integer w=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local integer f=(s__Dash_Obj[dash])
                     local integer tmp
@@ -12353,7 +12362,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endloop
                     call GroupClear(tmp_group)
                 endfunction
-            function s__SD__SD_anon__180 takes integer t returns nothing
+            function s__SD___SD_anon__180 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer dash
@@ -12362,7 +12371,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 if ( (GetUnitState(s__Units_unit[(u)], UNIT_STATE_LIFE) > 0) == true ) then // INLINED!!
                     call SetUnitAnimationByIndex(s__Units_unit[(u)], (14)) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) + 180 , 100 , s__Dash_SUB , 7 , true , false) // INLINED!!
-                    set s__Dash_onEnd[dash]=(142)
+                    set s__Dash_onEnd[dash]=(144)
                     call s__Units_DelayReleaseAnimePause(u,0.3)
                     set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03M' , 0 , (GetUnitX(s__Units_unit[(u)])) + 75 * CosBJ((GetUnitFacing(s__Units_unit[(u)]))) , (GetUnitY(s__Units_unit[(u)])) + 75 * SinBJ((GetUnitFacing(s__Units_unit[(u)]))) , (GetUnitFacing(s__Units_unit[(u)])) , 5 , 1 , 0.5 , "stand" , "t_lxw_ex_y.mdl") // INLINED!!
                     call SetUnitFlyHeight(s__Units_unit[(mj)], ((120)*1.0), 0) // INLINED!!
@@ -12390,8 +12399,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set mj=(s___Data_c[s__Data_c[data]+2])
                     set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 600 , s__Dash_SUB , 35 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=s___Data_c[s__Data_c[data]+3]
-                    set s__Dash_onMove[dash]=(143)
-                    set s__Dash_onEnd[dash]=(144)
+                    set s__Dash_onMove[dash]=(145)
+                    set s__Dash_onEnd[dash]=(146)
                 else
                     call s__Units_Pause(u,false)
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03P')) // INLINED!!
@@ -12401,7 +12410,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Timers_Destroy(t)
                 call s__Data_Destroy(data)
             endfunction
-        function s__SD__SD_E1 takes integer e returns nothing
+        function s__SD___SD_E1 takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03M')
             call s__Units_Pause(u,true)
@@ -12416,9 +12425,9 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_c[s__Data_c[data]]=u
             set s___Data_c[s__Data_c[data]+1]=e
             set s___Data_r[s__Data_r[data]]=0.3
-            call s__Timers_Start(0.3 , data , (145))
+            call s__Timers_Start(0.3 , data , (147))
         endfunction
-                function s__SD__SD_anon__185 takes integer t returns nothing
+                function s__SD___SD_anon__185 takes integer t returns nothing
                     local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer mj=(s___Data_c[s__Data_c[data]+1])
@@ -12473,7 +12482,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call GroupClear(tmp_group)
                     endif
                 endfunction
-            function s__SD__SD_anon__184 takes integer t returns nothing
+            function s__SD___SD_anon__184 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -12493,7 +12502,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_c[s__Data_c[data1]]=u
                     set s___Data_c[s__Data_c[data1]+1]=mj
                     set s___Data_c[s__Data_c[data1]+3]=s___Data_c[s__Data_c[data]+1]
-                    call s__Timers_Start(0.02 , data1 , (146))
+                    call s__Timers_Start(0.02 , data1 , (148))
                 else
                     call s__Units_Pause(u,false)
                     call s__Units_PositionEnabled(u,true)
@@ -12505,7 +12514,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Timers_Destroy(t)
                 call s__Data_Destroy(data)
             endfunction
-        function s__SD__SD_R takes integer e returns nothing
+        function s__SD___SD_R takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03W')
             local real x=(GetUnitX(s__Units_unit[(u)])) // INLINED!!
@@ -12521,9 +12530,9 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             set s___Data_c[s__Data_c[data]]=u
             set s___Data_c[s__Data_c[data]+1]=e
-            call s__Timers_Start(0.5 , data , (147))
+            call s__Timers_Start(0.5 , data , (149))
         endfunction
-            function s__SD__SD_anon__186 takes integer dash returns nothing
+            function s__SD___SD_anon__186 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local unit tmp
@@ -12540,7 +12549,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endloop
                 call GroupClear(tmp_group)
             endfunction
-            function s__SD__SD_anon__187 takes integer dash returns nothing
+            function s__SD___SD_anon__187 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
@@ -12549,11 +12558,11 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 set s___Data_g[s__Data_g[data]]=null
                 call s__Data_Destroy(data)
             endfunction
-            function s__SD__SD_anon__188 takes integer b returns nothing
+            function s__SD___SD_anon__188 takes integer b returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.5)
             endfunction
-        function s__SD__SD_Q takes integer e returns nothing
+        function s__SD___SD_Q takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_TriggerUnit[e]))))) // INLINED!!
             local real x
             local real y
@@ -12668,7 +12677,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         endif
                     endif
                     if ( ft != - 1 ) then
-                        call RunSoundOnUnit(s__SD__SD_Q_Sound , s__Units_unit[u])
+                        call RunSoundOnUnit(s__SD___SD_Q_Sound , s__Units_unit[u])
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03R' ) , 1 , (( (YDWEGetUnitAbilityState(s__Units_unit[(u)] , ('A03R') , 1)) - 1)*1.0)) // INLINED!!
                         set x=(GetUnitX(s__Units_unit[(u)])) // INLINED!!
                         set y=(GetUnitY(s__Units_unit[(u)])) // INLINED!!
@@ -12798,8 +12807,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 set tmp1=s__Units_MJ(s__Players_player[s__Units_player[mj]] , 'e008' , 'A03I' , 0 , x1 , y1 , 0 , 4 , 1 , 1 , "stand" , "t_tai.mdl")
                                 set dash=s__Dash_Start(s__Units_unit[tmp1] , s__Util_XY(s__Units_unit[mj] , s___Data_u[s__Data_u[data]]) , s__Util_XY2(s__Units_unit[mj] , s___Data_u[s__Data_u[data]]) , s__Dash_NORMAL , 40 , true , false)
                                 set s__Dash_Obj[dash]=data1
-                                set s__Dash_onMove[dash]=(148)
-                                set s__Dash_onEnd[dash]=(149)
+                                set s__Dash_onMove[dash]=(150)
+                                set s__Dash_onEnd[dash]=(151)
                             endif
                             set s___Data_u[s__Data_u[data]]=s__Units_unit[mj]
                         endif
@@ -12842,7 +12851,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00W')) > 0) == false ) then // INLINED!!
                             call s__Units_Alpha(u,0)
                             set b=s__Buffs_Add(s__Units_unit[u] , 'A03V' , 'B00W' , 0.2 , false)
-                            set s__Buffs_onEnd[b]=(150)
+                            set s__Buffs_onEnd[b]=(152)
                         else
                             call s__Buffs_Add(s__Units_unit[u] , 'A03V' , 'B00W' , 0.2 , false)
                         endif
@@ -12850,23 +12859,23 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
             endif
         endfunction
-            function s__SD__SD_anon__189 takes nothing returns nothing
+            function s__SD___SD_anon__189 takes nothing returns nothing
                 local integer u=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                 if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('Bbsk')) > 0) == true ) then // INLINED!!
                     call UnitRemoveAbility(s__Units_unit[(u)], ('Bbsk')) // INLINED!!
                 endif
                 call ReleaseTimer(GetExpiredTimer())
             endfunction
-        function s__SD__SD_D takes integer e returns nothing
+        function s__SD___SD_D takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local timer t=NewTimer()
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( u) // INLINED!!
-            call TimerStart(t, 0, false, function s__SD__SD_anon__189)
+            call TimerStart(t, 0, false, function s__SD___SD_anon__189)
             set t=null
             set s__Buffs_Obj[s__Buffs_Add(s__Units_unit[u] , 'A03X' , 'B00X' , 10 , false)]=1
             call s__Spell_Destroy(e)
         endfunction
-                    function s__SD__SD_anon__192 takes integer t returns nothing
+                    function s__SD___SD_anon__192 takes integer t returns nothing
                         local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                         local integer cd=(s___Data_c[s__Data_c[data]+3])
                         local integer mj
@@ -12901,7 +12910,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             call SetUnitUserData(s__Units_unit[(cd)], ((GetUnitUserData(s__Units_unit[(cd)])) - 1)) // INLINED!!
                         endif
                     endfunction
-                function s__SD__SD_anon__191 takes integer t returns nothing
+                function s__SD___SD_anon__191 takes integer t returns nothing
                     local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer mj
@@ -12970,10 +12979,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         endloop
                         call DestroyGroup(g)
                         set g=null
-                        call s__Timers_Start(0.01 , data , (151))
+                        call s__Timers_Start(0.01 , data , (153))
                     endif
                 endfunction
-            function s__SD__SD_anon__190 takes integer t returns nothing
+            function s__SD___SD_anon__190 takes integer t returns nothing
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -12987,7 +12996,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_c[s__Data_c[data]+3]=mj
                     call UnitAddAbility(s__Units_unit[(u)], ('A040')) // INLINED!!
                     call s__Units_Alpha(u,0)
-                    call s__Timers_Start(0.04 , data , (152))
+                    call s__Timers_Start(0.04 , data , (154))
                     call s__Timers_Destroy(t)
                 else
                     call s__Units_Pause(u,false)
@@ -12997,7 +13006,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__SD__SD_F takes integer e returns nothing
+        function s__SD___SD_F takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A03Z')
             local real x=(GetUnitX(s__Units_unit[(u)])) // INLINED!!
@@ -13016,15 +13025,15 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_r[s__Data_r[data]+1]=y
             set s___Data_g[s__Data_g[data]]=CreateGroup()
             set s___Data_u[s__Data_u[data]]=null
-            call s__Timers_Start(0.3 , data , (153))
+            call s__Timers_Start(0.3 , data , (155))
         endfunction
-            function s__SD__SD_anon__193 takes integer dash returns nothing
+            function s__SD___SD_anon__193 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('A03N')) > 0) == false ) then // INLINED!!
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-        function s__SD__SD_HERO_START takes integer e returns nothing
+        function s__SD___SD_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             if ( s__Spell_Id[e] == 'A03K' ) then
@@ -13035,7 +13044,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 else
                     call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03K' ) , 1 , (( 1)*1.0)) // INLINED!!
                     call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 50)*1.0)) // INLINED!!
-                    call s__SD__SD_W(e)
+                    call s__SD___SD_W(e)
                 endif
             endif
             if ( s__Spell_Id[e] == 'A03M' ) then
@@ -13044,17 +13053,17 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Units_AnimeSpeed(u,1.7)
                     call UnitAddAbility(s__Units_unit[(u)], ('A03N')) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 150 , s__Dash_NORMAL , (GetUnitMoveSpeed(s__Units_unit[(u)])) / 100 , true , false) // INLINED!!
-                    set s__Dash_onMove[dash]=(154)
+                    set s__Dash_onMove[dash]=(156)
                     call s__Spell_Destroy(e) //飞雷丸
                 else
                     call TextAngle((s__Units_unit[u] ) , ( "! 螺旋丸 !" ) , (( 3 )*1.0) , (( 10)*1.0) , 90) // INLINED!!
                     call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03M' ) , 1 , (( 10)*1.0)) // INLINED!!
                     call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 150)*1.0)) // INLINED!!
-                    call s__SD__SD_E1(e)
+                    call s__SD___SD_E1(e)
                 endif
             endif
         endfunction
-        function s__SD__SD_HERO_STOP takes integer e returns nothing
+        function s__SD___SD_HERO_STOP takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             call sc__Units_DelayAnime((u),(1) , 0) // INLINED!!
             call s__Units_AnimeSpeed(u,1)
@@ -13063,20 +13072,20 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__SD__SD_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03Z' )), ( ( (155)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03R' )), ( ( (156)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03W' )), ( ( (157)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03M' )), ( ( (158)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03K' )), ( ( (159)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03K' )), ( ( (160)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03K' )), ( ( (161)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03M' )), ( ( (160)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03M' )), ( ( (161)))) // INLINED!!
+        function s__SD___SD_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03Z' )), ( ( (157)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03R' )), ( ( (158)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03W' )), ( ( (159)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03M' )), ( ( (160)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A03K' )), ( ( (161)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03K' )), ( ( (162)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03K' )), ( ( (163)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A03M' )), ( ( (162)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A03M' )), ( ( (163)))) // INLINED!!
             call s__Units_On(s__Units_onHeroSpawn , (14))
-            call s__Events_On(s__Events_onUnitOrderToUnit , (162))
-            call s__Events_On(s__Events_onUnitOrderToLocation , (162))
-            set s__SD__SD_Q_Sound=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_sd_fls.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
+            call s__Events_On(s__Events_onUnitOrderToUnit , (164))
+            call s__Events_On(s__Events_onUnitOrderToLocation , (164))
+            set s__SD___SD_Q_Sound=(s__SoundUtils___soundhelper_create((("resource\\sound_effect_sd_fls.wav" ) ) , ( ( 1000 ) ) , ( ( false ) ) , ( ( true) ) , ( true ) , ( 10 ) , ( 10 ) , ( "CombatSoundsEAX"))) // INLINED!!
         endfunction
 
 //library SD ends
@@ -13157,8 +13166,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01B' , 0 , x , y , s__Spell_Angle[e] , 10 , 0.75 , 1 , "stand" , ".mdl")
                         set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1200 , s__Dash_NORMAL , 80 , true , false)
                         set s__Dash_Obj[dash]=s__Spell_State[e]
-                        set s__Dash_onMove[dash]=(163)
-                        set s__Dash_onEnd[dash]=(164)
+                        set s__Dash_onMove[dash]=(165)
+                        set s__Dash_onEnd[dash]=(166)
                     endif
                 endif
             endfunction
@@ -13193,8 +13202,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] + 180 , 300 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(165)
-            set s__Dash_onEnd[dash]=(166)
+            set s__Dash_onMove[dash]=(167)
+            set s__Dash_onEnd[dash]=(168)
         endfunction
                 function s__SL__SL_anon__105 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -13262,8 +13271,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[mj] , f , 1600 , s__Dash_SUB , 40 , true , false)
                     set s__Dash_Obj[dash]=2
-                    set s__Dash_onMove[dash]=(167)
-                    set s__Dash_onEnd[dash]=(168)
+                    set s__Dash_onMove[dash]=(169)
+                    set s__Dash_onEnd[dash]=(170)
                 endif
                 if ( s__Players_lv15[s__Units_player[u]] == null ) then
                     call s__Units_DelayReleaseAnimePause(u,0.6)
@@ -13403,8 +13412,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                     set s___Data_r[s__Data_r[data]+4]=0
                                     set dash=s__Dash_Start(s__Units_unit[m] , s__Util_XY(s__Units_unit[m] , s___Data_u[s__Data_u[data]]) , s__Util_XY2(s__Units_unit[m] , s___Data_u[s__Data_u[data]]) + 200 , s__Dash_SUB , 125 , true , false)
                                     set s__Dash_Obj[dash]=data
-                                    set s__Dash_onMove[dash]=(169)
-                                    set s__Dash_onEnd[dash]=(170)
+                                    set s__Dash_onMove[dash]=(171)
+                                    set s__Dash_onEnd[dash]=(172)
                                 else
                                     call s__Units_Alpha(m,255)
                                     call s__Units_Pause(m,false)
@@ -13473,14 +13482,14 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s___Data_c[s__Data_c[data]+2]=mj
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , k) + 45 , s__Util_XY2(s__Units_unit[u] , k) * 4 , s__Dash_SUB , 60 , true , false)
                         set s__Dash_Obj[dash1]=data
-                        set s__Dash_onMove[dash1]=(171)
-                        set s__Dash_onEnd[dash1]=(172)
+                        set s__Dash_onMove[dash1]=(173)
+                        set s__Dash_onEnd[dash1]=(174)
                         set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A018' , 6 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0 , 5 , 0.75 , 1 , "stand" , "blink_blue.mdl") // INLINED!!
                         set s___Data_c[s__Data_c[data]+3]=mj
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , k) - 45 , s__Util_XY2(s__Units_unit[u] , k) * 4 , s__Dash_SUB , 60 , true , false)
                         set s__Dash_Obj[dash1]=data
-                        set s__Dash_onMove[dash1]=(173)
-                        set s__Dash_onEnd[dash1]=(174)
+                        set s__Dash_onMove[dash1]=(175)
+                        set s__Dash_onEnd[dash1]=(176)
                         set k=null
                     endif
                 endif
@@ -13511,8 +13520,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]+1]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1500 , s__Dash_SUB , 20 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(175)
-            set s__Dash_onEnd[dash]=(176)
+            set s__Dash_onMove[dash]=(177)
+            set s__Dash_onEnd[dash]=(178)
         endfunction
             function s__SL__SL_anon__117 takes nothing returns nothing
                 local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
@@ -13588,12 +13597,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
         endfunction
         function s__SL__SL_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01B' )), ( ( (177)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01A' )), ( ( (178)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A017' )), ( ( (179)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A018' )), ( ( (180)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A018' )), ( ( (181)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A01B' )), ( ( (181)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01B' )), ( ( (179)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01A' )), ( ( (180)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A017' )), ( ( (181)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A018' )), ( ( (182)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A018' )), ( ( (183)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A01B' )), ( ( (183)))) // INLINED!!
         endfunction
 
 //library SL ends
@@ -13619,7 +13628,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             set s___Data_r[s__Data_r[data]]=25
                             set s___Data_r[s__Data_r[data]+2]=1
                             call s__Util_Duang((GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0.3 , 150 , 150 , - 256 , 0.02 , 50) // INLINED!!
-                            set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false)]=(182) // INLINED!!
+                            set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false)]=(184) // INLINED!!
                             call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", (GetUnitX(s__Units_unit[(u)])), (GetUnitY(s__Units_unit[(u)])))) // INLINED!!
                             call GroupEnumUnitsInRange(tmp_group, (GetUnitX(s__Units_unit[(u)])), (GetUnitY(s__Units_unit[(u)])), 200, Condition(function GroupIsAliveNotAloc)) // INLINED!!
                             loop
@@ -13731,8 +13740,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__HitFlys_Add(s__Units_unit[u] , 25)
             set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1200 , s__Dash_SUB , 45 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(184)
-            set s__Dash_onEnd[dash]=(185)
+            set s__Dash_onMove[dash]=(186)
+            set s__Dash_onEnd[dash]=(187)
         endfunction
                 function s__SwordMaster__SwordMaster_anon__124 takes integer dash returns nothing
                     set s__Dash_Angle[dash]=s__Dash_Angle[dash] + 4
@@ -13787,7 +13796,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                                 endif
                                 set dash=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , s__Units_unit[mj]) - 45 , 600 , s__Dash_PWX , 25 , true , true)
                                 set s__Dash_Obj[dash]=3
-                                set s__Dash_onMove[dash]=(186)
+                                set s__Dash_onMove[dash]=(188)
                             endif
                             call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) + 10 * CosBJ(s__Util_XY(s__Units_unit[u] , s__Units_unit[mj])) , (GetUnitY(s__Units_unit[(mj)])) + 10 * SinBJ(s__Util_XY(s__Units_unit[u] , s__Units_unit[mj])) , true) // INLINED!!
                         endif
@@ -13849,11 +13858,11 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
         endfunction
         function s__SwordMaster__SwordMaster_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01E' )), ( ( (187)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01D' )), ( ( (188)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01F' )), ( ( (189)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01E' )), ( ( (189)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01D' )), ( ( (190)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A01F' )), ( ( (191)))) // INLINED!!
             call s__Units_On(s__Units_onHeroSpawn , (15))
-            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (183))
+            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (185))
         endfunction
 
 //library SwordMaster ends
@@ -13893,7 +13902,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A02J' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , GetRandomReal(0, 360) , 1 , 1 , 1 , "stand" , "dg4.mdl"))], ((75)*1.0), 0) // INLINED!!
                             set dash=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , s__Units_unit[mj]) , 200 , s__Dash_SUB , 10 , true , false)
                             set s__Dash_Obj[dash]=u
-                            set s__Dash_onMove[dash]=(190)
+                            set s__Dash_onMove[dash]=(192)
                         else
                             set s___Data_i[s__Data_i[data]]=s___Data_i[s__Data_i[data]] - 1
                         endif
@@ -13955,8 +13964,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_g[s__Data_g[data]]=CreateGroup()
                     set dash=s__Dash_Start(s__Units_unit[u] , f , 1000 , s__Dash_SUB , 60 , true , false)
                     set s__Dash_Obj[dash]=data
-                    set s__Dash_onMove[dash]=(191)
-                    set s__Dash_onEnd[dash]=(192)
+                    set s__Dash_onMove[dash]=(193)
+                    set s__Dash_onEnd[dash]=(194)
                 else
                     call s__Units_Pause(u,false)
                     call s__Units_AnimeSpeed(u,1)
@@ -13976,7 +13985,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call s__Effect_Destroy(s__Effect_ToUnit("supershinythingy.mdl" , s__Units_unit[u] , "weapon"))
             set dash=s__Dash_Start(s__Units_unit[u] , f + 180 , 250 , s__Dash_SUB , 25 , true , false)
             set s__Dash_Obj[dash]=0
-            set s__Dash_onMove[dash]=(193)
+            set s__Dash_onMove[dash]=(195)
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( u) // INLINED!!
             call TimerStart(t, 0.6, true, function s__TR__TR_anon__133)
             set t=null
@@ -14068,7 +14077,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     if ( dgs != - 1 ) then
                         set s__Dash_Obj[dash]=dgs
                     endif
-                    set s__Dash_onMove[dash]=(194)
+                    set s__Dash_onMove[dash]=(196)
                 endif
             endif
             if ( s__Buffs_Level[b] < 10 ) then //Util.Duang(m.X(),m.Y(),0.4,115,115,-160,0.02,50); 
@@ -14108,7 +14117,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_AttackUnit[e]))))) // INLINED!!
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00H')) > 0) == true ) then // INLINED!!
                 call s__Units_Alpha(u,0)
-                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02L' , 'B00I' , 0.05 , false)]=(195)
+                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02L' , 'B00I' , 0.05 , false)]=(197)
             endif
         endfunction  //开启星爆
             function s__TR__TR_anon__139 takes nothing returns nothing
@@ -14144,7 +14153,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set b=s__Buffs_Add(s__Units_unit[u] , 'A02K' , 'B00H' , 10 , false)
             set s__Buffs_Level[b]=16
             set s__Buffs_Obj[b]=data
-            set s__Buffs_onEnd[b]=(196)
+            set s__Buffs_onEnd[b]=(198)
         endfunction
                 function s__TR__TR_anon__142 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
@@ -14248,8 +14257,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s___Data_c[s__Data_c[data]+1]=mj
                         set s___Data_g[s__Data_g[data]]=CreateGroup()
                         set s__Dash_Obj[dash]=data
-                        set s__Dash_onMove[dash]=(197)
-                        set s__Dash_onEnd[dash]=(198)
+                        set s__Dash_onMove[dash]=(199)
+                        set s__Dash_onEnd[dash]=(200)
                     set i=i + 1
                     endloop
                 endif
@@ -14349,8 +14358,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_g[s__Data_g[data]]=CreateGroup()
             set dash=s__Dash_Start(s__Units_unit[ts] , f , 400 , s__Dash_SUB , 80 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(199)
-            set s__Dash_onEnd[dash]=(200)
+            set s__Dash_onMove[dash]=(201)
+            set s__Dash_onEnd[dash]=(202)
         endfunction  //伤害触发刀光冲击
         function s__TR__TR_W3 takes integer e returns nothing
             local integer b
@@ -14464,7 +14473,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set b=s__Buffs_Add(s__Units_unit[u] , 'A02E' , 'B00E' , 5 , false)
             set s__Buffs_Level[b]=4
             set s__Buffs_Obj[b]=e
-            set s__Buffs_onEnd[b]=(201)
+            set s__Buffs_onEnd[b]=(203)
         endfunction
         function s__TR__TR_Q1 takes integer e returns nothing
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('B00G')) > 0) == true ) then // INLINED!!
@@ -14500,7 +14509,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Effect_Destroy(s__Effect_ToUnit("lizi_blue1.mdl" , s__Units_unit[u] , "origin"))
                 set b=s__Buffs_Add(s__Units_unit[u] , 'A02I' , 'B00G' , 6 , false)
                 set s__Buffs_Obj[b]=e
-                set s__Buffs_onEnd[b]=(202)
+                set s__Buffs_onEnd[b]=(204)
             else
                 call s__Units_Pause(u,true)
                 call s__Units_Pause(u,false)
@@ -14595,21 +14604,21 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         function s__TR__TR_onInit takes nothing returns nothing
             set s__TR__TR_XBM[0]="tk knockin' on heaven's door by deckai_darkblue_nomore_big1.5.mdl"
             set s__TR__TR_XBM[1]="tk knockin' on heaven's door by deckai_blue_nomore_big1.5.mdl"
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02C' )), ( ( (203)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02D' )), ( ( (204)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02F' )), ( ( (205)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02J' )), ( ( (206)))) // INLINED!!
-            call s__Events_On(s__Events_onUnitOrderToUnit , (207))
-            call s__Events_On(s__Events_onUnitOrderToLocation , (207))
-            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (208))
-            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (209))
-            call s__Events_On(s__Events_onUnitAttack , (210))
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02C' )), ( ( (205)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02D' )), ( ( (206)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02F' )), ( ( (207)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A02J' )), ( ( (208)))) // INLINED!!
+            call s__Events_On(s__Events_onUnitOrderToUnit , (209))
+            call s__Events_On(s__Events_onUnitOrderToLocation , (209))
+            call s__Damage_On(s__Damage_onUnitDamage_EndDamage , (210))
+            call s__Damage_On(s__Damage_onUnitDamage_SubDamage , (211))
+            call s__Events_On(s__Events_onUnitAttack , (212))
             call s__Units_On(s__Units_onHeroSpawn , (16))
         endfunction
 
 //library TR ends
 //library WindWalk:
-                function s__WindWalk___WindWalk_anon__64 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__64 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer k=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s___Data_u[s__Data_u[data]]))))) // INLINED!!
@@ -14634,7 +14643,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s__Dash_Angle[dash]=s__Util_XY(s__Units_unit[u] , s__Units_unit[k])
                     endif
                 endfunction
-                function s__WindWalk___WindWalk_anon__65 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__65 takes integer dash returns nothing
                     local integer data=(s__Dash_Obj[dash])
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer c=(s___Data_c[s__Data_c[data]+2])
@@ -14645,7 +14654,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                     call s__Data_Destroy(data)
                 endfunction
-            function s__WindWalk___WindWalk_anon__63 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__63 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer dash1
@@ -14660,15 +14669,15 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set s___Data_c[s__Data_c[data]+2]=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00M' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , s__Dash_Angle[dash] , 3600 , 1.5 , 1 , "stand" , "wind2.mdx")
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Util_XY(s__Units_unit[u] , k) , 1600 , s__Dash_SUB , 60 , true , false)
                     set s__Dash_Obj[dash1]=data
-                    set s__Dash_onMove[dash1]=(211)
-                    set s__Dash_onEnd[dash1]=(212)
+                    set s__Dash_onMove[dash1]=(213)
+                    set s__Dash_onEnd[dash1]=(214)
                 endif
                 set k=null
                 if ( s__Dash_Speed[dash] < 4 ) then
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-            function s__WindWalk___WindWalk_anon__66 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__66 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer data=(s__Dash_Obj[dash])
                 call s__Units_AnimeSpeed(u,3)
@@ -14679,7 +14688,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__WindWalk___WindWalk_R takes integer e returns nothing
+        function s__WindWalk__WindWalk_R takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer mj
             local integer dash
@@ -14693,10 +14702,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(213)
-            set s__Dash_onEnd[dash]=(214)
+            set s__Dash_onMove[dash]=(215)
+            set s__Dash_onEnd[dash]=(216)
         endfunction
-                function s__WindWalk___WindWalk_anon__68 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__68 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local unit k
                     if ( s__Dash_Obj[dash] == 0 ) then
@@ -14713,12 +14722,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s__Dash_Obj[dash]=s__Dash_Obj[dash] - 1
                     endif
                 endfunction
-                function s__WindWalk___WindWalk_anon__69 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__69 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
                 endfunction
-            function s__WindWalk___WindWalk_anon__67 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__67 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer mj
                 local integer dash1
@@ -14730,10 +14739,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_ADD , 60 , true , false) // INLINED!!
-                set s__Dash_onMove[dash1]=(215)
-                set s__Dash_onEnd[dash1]=(216)
+                set s__Dash_onMove[dash1]=(217)
+                set s__Dash_onEnd[dash1]=(218)
             endfunction
-        function s__WindWalk___WindWalk_E1 takes nothing returns nothing
+        function s__WindWalk__WindWalk_E1 takes nothing returns nothing
             local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
             local integer u=(s___Data_c[s__Data_c[data]])
             local integer e=(s___Data_c[s__Data_c[data]+1])
@@ -14748,13 +14757,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         if ( s___Data_r[s__Data_r[data]] < 0.02 ) then
                             set s___Data_r[s__Data_r[data]]=0.02
                         endif
-                        call TimerStart(GetExpiredTimer(), s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
+                        call TimerStart(GetExpiredTimer(), s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
                     endif
                 endif
                 call s__Units_Position(u,s___Data_r[s__Data_r[data]+2] , s___Data_r[s__Data_r[data]+3] , false)
                 call s__Units_Alpha(u,0)
                 set dash=s__Dash_Start(s__Units_unit[u] , GetRandomReal(0, 360) , 200 , s__Dash_SUB , 60 , true , false)
-                set s__Dash_onEnd[dash]=(217)
+                set s__Dash_onEnd[dash]=(219)
                 set s___Data_i[s__Data_i[data]]=s___Data_i[s__Data_i[data]] - 1
             else
                 call ReleaseTimer(GetExpiredTimer())
@@ -14764,7 +14773,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Data_Destroy(data)
             endif
         endfunction
-        function s__WindWalk___WindWalk_E takes integer e returns nothing
+        function s__WindWalk__WindWalk_E takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local timer t=NewTimer()
             local integer data=s__Data_create('A00L')
@@ -14776,10 +14785,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_r[s__Data_r[data]+3]=(GetUnitY(s__Units_unit[(u)])) // INLINED!!
             set s___Data_i[s__Data_i[data]]=20
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
-            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
+            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
             set t=null
         endfunction
-            function s__WindWalk___WindWalk_anon__70 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__70 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local unit k=GroupFind(s__Units_unit[u] , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 60 , false , false) // INLINED!!
                 if ( k != null ) then
@@ -14793,12 +14802,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-            function s__WindWalk___WindWalk_anon__71 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__71 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
             endfunction
-                function s__WindWalk___WindWalk_anon__73 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__73 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local unit k=GroupFind(s__Units_unit[u] , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 60 , false , false) // INLINED!!
                     if ( k != null ) then
@@ -14809,12 +14818,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     endif
                     set k=null
                 endfunction
-                function s__WindWalk___WindWalk_anon__74 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__74 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
                 endfunction
-            function s__WindWalk___WindWalk_anon__72 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__72 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer mj
                 local integer dash1
@@ -14828,8 +14837,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                         call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                         set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_ADD , 80 , true , false) // INLINED!!
-                        set s__Dash_onMove[dash1]=(218)
-                        set s__Dash_onEnd[dash1]=(219)
+                        set s__Dash_onMove[dash1]=(220)
+                        set s__Dash_onEnd[dash1]=(221)
                     set i=i + 1
                     endloop
                 endif
@@ -14837,7 +14846,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_AnimeSpeed(u,1)
                 call s__Units_Pause(u,false)
             endfunction
-        function s__WindWalk___WindWalk_W takes integer e returns nothing
+        function s__WindWalk__WindWalk_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer i
             local integer dash
@@ -14851,8 +14860,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_SUB , 40 , true , false) // INLINED!!
-                set s__Dash_onMove[dash]=(220)
-                set s__Dash_onEnd[dash]=(221)
+                set s__Dash_onMove[dash]=(222)
+                set s__Dash_onEnd[dash]=(223)
             set i=i + 1
             endloop
             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e009' , 'A00K' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , (GetUnitFacing(s__Units_unit[(u)])) , 2 , 0.5 , 2.5 , "stand" , "tx.mdx"))], ((80)*1.0), 0) // INLINED!!
@@ -14860,13 +14869,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call SetUnitAnimationByIndex(s__Units_unit[(u)], (6)) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) + 180 , 300 , s__Dash_SUB , 50 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=e
-            set s__Dash_onEnd[dash]=(222)
+            set s__Dash_onEnd[dash]=(224)
         endfunction
-            function s__WindWalk___WindWalk_anon__75 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__75 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call s__Units_Alpha(u,0)
             endfunction
-                    function s__WindWalk___WindWalk_anon__78 takes integer dash returns nothing
+                    function s__WindWalk__WindWalk_anon__78 takes integer dash returns nothing
                         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                         local unit k=GroupFind(s__Units_unit[u] , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 60 , false , false) // INLINED!!
                         if ( k != null ) then
@@ -14877,12 +14886,12 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         endif
                         set k=null
                     endfunction
-                    function s__WindWalk___WindWalk_anon__79 takes integer dash returns nothing
+                    function s__WindWalk__WindWalk_anon__79 takes integer dash returns nothing
                         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                         call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                         call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
                     endfunction
-                function s__WindWalk___WindWalk_anon__77 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__77 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local integer mj
                     local integer dash1
@@ -14893,17 +14902,17 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                         call SetUnitFlyHeight(s__Units_unit[(mj)], ((50)*1.0), 0) // INLINED!!
                         set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(u)])) , 900 , s__Dash_ADD , 50 , true , false) // INLINED!!
-                        set s__Dash_onMove[dash1]=(223)
-                        set s__Dash_onEnd[dash1]=(224)
+                        set s__Dash_onMove[dash1]=(225)
+                        set s__Dash_onEnd[dash1]=(226)
                     endif
                 endfunction
-                function s__WindWalk___WindWalk_anon__80 takes integer dash returns nothing
+                function s__WindWalk__WindWalk_anon__80 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                     call s__Units_AnimeSpeed(u,1)
                     call s__Units_Alpha(u,255)
                 endfunction
-            function s__WindWalk___WindWalk_anon__76 takes integer dash returns nothing
+            function s__WindWalk__WindWalk_anon__76 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer dash1
                 call s__Units_Alpha(u,255)
@@ -14913,22 +14922,22 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call SetUnitAnimationByIndex(s__Units_unit[(u)], (6)) // INLINED!!
                     set dash1=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) - 90 , 400 , s__Dash_ADD , 100 , true , false) // INLINED!!
                     set s__Dash_Obj[dash1]=s__Dash_Obj[dash]
-                    set s__Dash_onMove[dash1]=(225)
-                    set s__Dash_onEnd[dash1]=(226)
+                    set s__Dash_onMove[dash1]=(227)
+                    set s__Dash_onEnd[dash1]=(228)
                 else
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                 endif
             endfunction
-        function s__WindWalk___WindWalk_Q takes integer e returns nothing
+        function s__WindWalk__WindWalk_Q takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl", s__Spell_Spell[e], "origin"))
             set dash=s__Dash_Start(s__Spell_Spell[e] , (GetUnitFacing(s__Units_unit[(u)])) + 90 , 200 , s__Dash_SUB , 40 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(227)
-            set s__Dash_onEnd[dash]=(228)
+            set s__Dash_onMove[dash]=(229)
+            set s__Dash_onEnd[dash]=(230)
         endfunction
-        function s__WindWalk___WindWalk_HERO_START takes integer e returns nothing
+        function s__WindWalk__WindWalk_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( s__Spell_Id[e] == 'A00K' ) then
                 call s__Units_AnimeSpeed(u,4)
@@ -14940,20 +14949,20 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__WindWalk___WindWalk_HERO_STOP takes integer e returns nothing
+        function s__WindWalk__WindWalk_HERO_STOP takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             call s__Units_AnimeSpeed(u,1)
             call s__Spell_Destroy(e)
         endfunction
-        function s__WindWalk___WindWalk_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00M' )), ( ( (229)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00L' )), ( ( (230)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00J' )), ( ( (231)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00K' )), ( ( (232)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00K' )), ( ( (233)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00K' )), ( ( (234)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00M' )), ( ( (233)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00M' )), ( ( (234)))) // INLINED!!
+        function s__WindWalk__WindWalk_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00M' )), ( ( (231)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00L' )), ( ( (232)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00J' )), ( ( (233)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00K' )), ( ( (234)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00K' )), ( ( (235)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00K' )), ( ( (236)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onReady )))))), (( 'A00M' )), ( ( (235)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00M' )), ( ( (236)))) // INLINED!!
         endfunction
 
 //library WindWalk ends
@@ -14987,7 +14996,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
 
 //library YeG ends
 //library ZZ:
-                function s__ZZ___ZZ_anon__82 takes integer dash returns nothing
+                function s__ZZ__ZZ_anon__82 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     local integer k=(s__Dash_Obj[dash])
                     if ( (GetUnitState(s__Units_unit[(k)], UNIT_STATE_LIFE) > 0) == false ) then // INLINED!!
@@ -15006,7 +15015,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                         set s__Dash_MaxDis[dash]=s__Dash_MaxDis[dash] + 100
                     endif
                 endfunction
-                function s__ZZ___ZZ_anon__83 takes integer dash returns nothing
+                function s__ZZ__ZZ_anon__83 takes integer dash returns nothing
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                     call s__Units_Model(u,"Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl")
                     call s__Units_AnimeSpeed(u,GetRandomReal(0.7, 1.2))
@@ -15014,7 +15023,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
                 endfunction
-            function s__ZZ___ZZ_anon__81 takes integer dash returns nothing
+            function s__ZZ__ZZ_anon__81 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer dash1
                 local integer mj
@@ -15039,8 +15048,8 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                             call s__Units_Position(mj,s__Dash_X[dash] , s__Dash_Y[dash] , true)
                             set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1800 , s__Dash_SUB , 13 , true , false) // INLINED!!
                             set s__Dash_Obj[dash1]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((k))))) // INLINED!!
-                            set s__Dash_onMove[dash1]=(235)
-                            set s__Dash_onEnd[dash1]=(236)
+                            set s__Dash_onMove[dash1]=(237)
+                            set s__Dash_onEnd[dash1]=(238)
                         endif
                     endif
                     set k=null
@@ -15049,7 +15058,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call s__Dash_Stop(dash)
                 endif
             endfunction
-            function s__ZZ___ZZ_anon__84 takes integer dash returns nothing
+            function s__ZZ__ZZ_anon__84 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 if ( s__Units_aidindex[u] == 0 ) then
                     call s__Units_Model(u,"Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl")
@@ -15059,7 +15068,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 endif
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
             endfunction
-        function s__ZZ___ZZ_R takes integer e returns nothing
+        function s__ZZ__ZZ_R takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer i
             local real x=(GetUnitX(s__Units_unit[(u)])) + 50 * CosBJ(s__Spell_Angle[e]) // INLINED!!
@@ -15074,13 +15083,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                 call s__Units_Position(mj,x , y , true)
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1800 , s__Dash_SUB , 60 , true , false) // INLINED!!
-                set s__Dash_onMove[dash]=(237)
-                set s__Dash_onEnd[dash]=(238)
+                set s__Dash_onMove[dash]=(239)
+                set s__Dash_onEnd[dash]=(240)
             set i=i + 1
             endloop
             call s__Spell_Destroy(e)
         endfunction
-            function s__ZZ___ZZ_anon__85 takes nothing returns nothing
+            function s__ZZ__ZZ_anon__85 takes nothing returns nothing
                 local integer data=((s__TimerUtils___data[GetHandleId((GetExpiredTimer())) - TimerUtils___VOFFSET])) // INLINED!!
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -15120,7 +15129,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     call GroupClear(tmp_group)
                 endif
             endfunction
-        function s__ZZ___ZZ_E takes integer e returns nothing
+        function s__ZZ__ZZ_E takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer data=s__Data_create('A00R')
             local timer t=NewTimer()
@@ -15134,10 +15143,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             set s___Data_r[s__Data_r[data]]=0.5
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
             call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", (GetUnitX(s__Units_unit[(u)])), (GetUnitY(s__Units_unit[(u)])))) // INLINED!!
-            call TimerStart(t, 0.05, true, function s__ZZ___ZZ_anon__85)
+            call TimerStart(t, 0.05, true, function s__ZZ__ZZ_anon__85)
             set t=null
         endfunction
-            function s__ZZ___ZZ_anon__86 takes integer dash returns nothing
+            function s__ZZ__ZZ_anon__86 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 local integer mj
                 local unit k
@@ -15175,13 +15184,13 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
                     set k=null
                 endif
             endfunction
-            function s__ZZ___ZZ_anon__87 takes integer dash returns nothing
+            function s__ZZ__ZZ_anon__87 takes integer dash returns nothing
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call s__Spell_Destroy((s__Dash_Obj[dash]))
                 call UnitRemoveAbility(s__Units_unit[(u)], ('A00Q')) // INLINED!!
                 call s__Units_Pause(u,false)
             endfunction
-        function s__ZZ___ZZ_W takes integer e returns nothing
+        function s__ZZ__ZZ_W takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer dash
             call s__Units_Pause(u,true)
@@ -15189,10 +15198,10 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call SetUnitAnimationByIndex(s__Units_unit[(u)], (9)) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(239)
-            set s__Dash_onEnd[dash]=(240)
+            set s__Dash_onMove[dash]=(241)
+            set s__Dash_onEnd[dash]=(242)
         endfunction
-        function s__ZZ___ZZ_Q takes integer e returns nothing
+        function s__ZZ__ZZ_Q takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local integer mj
             local real x=(GetUnitX(s__Units_unit[(u)])) + 25 * CosBJ(s__Spell_Angle[e]) // INLINED!!
@@ -15217,7 +15226,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             call GroupClear(tmp_group)
             call s__Spell_Destroy(e)
         endfunction
-        function s__ZZ___ZZ_HERO_START takes integer e returns nothing
+        function s__ZZ__ZZ_HERO_START takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( s__Spell_Id[e] == 'A00S' ) then
                 call s__Units_AnimeSpeed(u,2)
@@ -15233,24 +15242,24 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__ZZ___ZZ_HERO_STOP takes integer e returns nothing
+        function s__ZZ__ZZ_HERO_STOP takes integer e returns nothing
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             if ( s__Spell_Id[e] == 'A00O' or s__Spell_Id[e] == 'A00R' or s__Spell_Id[e] == 'A00S' ) then
                 call s__Units_AnimeSpeed(u,1)
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__ZZ___ZZ_onInit takes nothing returns nothing
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00S' )), ( ( (241)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00R' )), ( ( (242)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00P' )), ( ( (243)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00O' )), ( ( (244)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00O' )), ( ( (245)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00O' )), ( ( (246)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00R' )), ( ( (245)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00R' )), ( ( (246)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00S' )), ( ( (245)))) // INLINED!!
-            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00S' )), ( ( (246)))) // INLINED!!
+        function s__ZZ__ZZ_onInit takes nothing returns nothing
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00S' )), ( ( (243)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00R' )), ( ( (244)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00P' )), ( ( (245)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onSpell )))))), (( 'A00O' )), ( ( (246)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00O' )), ( ( (247)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00O' )), ( ( (248)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00R' )), ( ( (247)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00R' )), ( ( (248)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStart )))))), (( 'A00S' )), ( ( (247)))) // INLINED!!
+            call SaveInteger(Table___ht, (((- StringHash(((s__Spell_onStop )))))), (( 'A00S' )), ( ( (248)))) // INLINED!!
         endfunction
 
 //library ZZ ends
@@ -15632,7 +15641,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
         set UISelectUnit=null
         call NewUI___Reg()
         call TimerStart(NewTimer(), 0.01, true, function NewUI___Loop)
-        call s__Events_On(s__Events_onPlayerSelectUnit , (247))
+        call s__Events_On(s__Events_onPlayerSelectUnit , (249))
     endfunction
 
 //library NewUI ends
@@ -15930,7 +15939,7 @@ call EXSetEventDamage(((s__DamageArgs_Damage[dmg])*1.0)) //测试 BJDebugMsg("�
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Thu Feb 28 18:53:32 2019
+//   Date: Thu Feb 28 21:44:19 2019
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -16056,6 +16065,7 @@ function CreateNeutralPassive takes nothing returns nothing
     set u=CreateUnit(p, 'H00B', - 487.5, - 221.3, 212.870)
     set u=CreateUnit(p, 'H00C', 51.5, - 406.3, 160.750)
     set u=CreateUnit(p, 'H00D', - 466.2, - 525.6, 26.870)
+    set u=CreateUnit(p, 'H00E', - 591.3, - 295.9, 103.550)
 endfunction
 //===========================================================================
 function CreatePlayerBuildings takes nothing returns nothing
@@ -16333,7 +16343,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs1118675265")
+call ExecuteFunc("jasshelper__initstructs1128922546")
 call ExecuteFunc("BuyStrAgiInt___onInit")
 call ExecuteFunc("TeamTips___onInit")
 call ExecuteFunc("Teams___onInit")
@@ -16527,12 +16537,12 @@ local integer e=f__arg_integer1
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00B' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , s__Spell_Angle[e] , 4 , 1 , 2.5 , "stand" , "dust2.mdx") // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[ts] , s__Spell_Angle[e] , 600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(92)
-            set s__Dash_onEnd[dash]=(93)
+            set s__Dash_onMove[dash]=(94)
+            set s__Dash_onEnd[dash]=(95)
    return true
 endfunction
-function sa__ASN__ASN_W2 takes nothing returns boolean
-    call s__ASN__ASN_W2(f__arg_unit1,f__arg_unit2,f__arg_real1,f__arg_integer1)
+function sa__ASN___ASN_W2 takes nothing returns boolean
+    call s__ASN___ASN_W2(f__arg_unit1,f__arg_unit2,f__arg_real1,f__arg_integer1)
    return true
 endfunction
 function sa__Winner_ShowWin takes nothing returns boolean
@@ -16540,7 +16550,7 @@ local integer teamid=f__arg_integer1
             call StartSound(gg_snd_Winner)
             set s__Winner_WinTeam=teamid
             call PauseGame(true)
-            call s__Timers_Start(1 , 0 , (27))
+            call s__Timers_Start(1 , 0 , (29))
    return true
 endfunction
 function sa__PlayerPress_create takes nothing returns boolean
@@ -16732,7 +16742,7 @@ local real delay=f__arg_real1
                 set s___Data_c[s__Data_c[data]]=this
                 set s___Data_i[s__Data_i[data]]=id
                 set s___Data_r[s__Data_r[data]]=delay
-                call s__Timers_Start(0.01 , data , (21))
+                call s__Timers_Start(0.01 , data , (23))
    return true
 endfunction
 function sa__Units_AnimeSpeed takes nothing returns boolean
@@ -17298,6 +17308,68 @@ function sa___prototype33_SoundUtils___HookStopSound takes nothing returns boole
     call SoundUtils___HookStopSound(f__arg_sound1,f__arg_boolean1,f__arg_boolean2)
     return true
 endfunction
+function sa___prototype1_Test___Chat takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+        local integer p=(LoadInteger(Table___ht, ((s__Players_ht)), GetHandleId(((s__EventArgs_TriggerPlayer[e]))))) // INLINED!!
+        if ( s__EventArgs_ChatString[e] == "-reset" ) then
+            set Test___PlayerEscAnimeId[s__Players_playerid[p]]=0
+            call BJDebugMsg("动作序号已重置")
+        endif
+        if ( s__EventArgs_ChatString[e] == "1" ) then //对自己造成伤害
+            if ( s__Units_unit[s__Players_hero[p]] != null ) then
+                call sc__Units_Damage(s__Players_hero[p],s__Units_unit[s__Players_hero[p]] , s__Damage_Chaos , 'A02F' , 500)
+            endif
+        endif
+        if ( s__EventArgs_ChatString[e] == "2" ) then //对自己造成伤害
+            if ( s__Units_unit[s__Players_hero[p]] != null ) then
+                call sc__Units_Damage(s__Players_hero[p],s__Units_unit[s__Players_hero[p]] , s__Damage_Magic , 'A02A' , 500)
+            endif
+        endif
+        if ( s__EventArgs_ChatString[e] == "3" ) then //对自己造成伤害
+            if ( s__Units_unit[s__Players_hero[p]] != null ) then
+                call sc__Units_Damage(s__Players_hero[p],s__Units_unit[s__Players_hero[p]] , s__Damage_Physics , 'A02B' , 500)
+            endif
+        endif
+        if ( s__EventArgs_ChatString[e] == "4" ) then //对自己造成伤害
+            if ( s__Units_unit[s__Players_hero[p]] != null ) then
+                call s__Buffs_Skill(s__Units_unit[s__Players_hero[p]] , 'A00F' , 1)
+            endif
+        endif //特效距离
+        if ( SubString(s__EventArgs_ChatString[e], 0, 7) == "-ranged" ) then
+            set Test___RangeDis[s__Players_playerid[p]]=S2R(SubString(s__EventArgs_ChatString[e], 7, 1))
+            call BJDebugMsg("特效距离已设为:" + R2S(Test___RangeDis[s__Players_playerid[p]]))
+        endif //特效角度
+        if ( SubString(s__EventArgs_ChatString[e], 0, 7) == "-ranger" ) then
+            set Test___RangeR[s__Players_playerid[p]]=S2R(SubString(s__EventArgs_ChatString[e], 7, 1))
+            call BJDebugMsg("特效范围已设为:" + R2S(Test___RangeR[s__Players_playerid[p]]))
+        endif
+        if ( s__EventArgs_ChatString[e] == "-range" ) then //创建特效
+            if ( s__Units_unit[s__Players_hero[p]] != null ) then
+                call s__Util_Range((GetUnitX(s__Units_unit[(s__Players_hero[p])])) + Test___RangeDis[s__Players_playerid[p]] * CosBJ((GetUnitFacing(s__Units_unit[(s__Players_hero[p])]))) , (GetUnitY(s__Units_unit[(s__Players_hero[p])])) + Test___RangeDis[s__Players_playerid[p]] * SinBJ((GetUnitFacing(s__Units_unit[(s__Players_hero[p])]))) , Test___RangeR[s__Players_playerid[p]]) // INLINED!!
+            endif
+        endif
+    return true
+endfunction
+function sa___prototype1_Test___Esc takes nothing returns boolean
+ local integer e=f__arg_integer1
+
+        local integer p=(LoadInteger(Table___ht, ((s__Players_ht)), GetHandleId(((s__EventArgs_TriggerPlayer[e]))))) // INLINED!!
+        if ( s__Units_unit[s__Players_hero[p]] != null ) then
+            call SetUnitState(s__Units_unit[(s__Players_hero[p])], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(s__Players_hero[p])], UNIT_STATE_MAX_MANA)))*1.0)) // INLINED!!
+            call UnitResetCooldown(s__Units_unit[s__Players_hero[p]])
+            call SetHeroLevel(s__Units_unit[s__Players_hero[p]], 25, true)
+            call SetUnitAnimationByIndex(s__Units_unit[(s__Players_hero[p])], (Test___PlayerEscAnimeId[s__Players_playerid[p]])) // INLINED!!
+            call BJDebugMsg("动作序号:" + I2S(Test___PlayerEscAnimeId[s__Players_playerid[p]]))
+            set Test___PlayerEscAnimeId[s__Players_playerid[p]]=Test___PlayerEscAnimeId[s__Players_playerid[p]] + 1
+            call s__Players_AddMoney(p,50000)
+            call SetPlayerAlliance(Player(PLAYER_NEUTRAL_AGGRESSIVE), s__Players_player[p], ALLIANCE_SHARED_CONTROL, true)
+            call SetPlayerAlliance(Player(PLAYER_NEUTRAL_PASSIVE), s__Players_player[p], ALLIANCE_SHARED_CONTROL, true)
+            call SetPlayerAlliance(Player(4), s__Players_player[p], ALLIANCE_SHARED_CONTROL, true)
+            call SetPlayerAlliance(Player(1), s__Players_player[p], ALLIANCE_SHARED_CONTROL, true)
+        endif
+    return true
+endfunction
 function sa___prototype1_BuyNextHero___Buy takes nothing returns boolean
  local integer e=f__arg_integer1
 
@@ -17460,7 +17532,7 @@ endfunction
 function sa___prototype1_Item___ZiShaQiu takes nothing returns boolean
  local integer e=f__arg_integer1
 
-        set s__Buffs_onEnd[s__Buffs_Add(s__Spell_Spell[e] , 'A042' , 'B00Y' , 5 , false)]=(102)
+        set s__Buffs_onEnd[s__Buffs_Add(s__Spell_Spell[e] , 'A042' , 'B00Y' , 5 , false)]=(104)
         call s__Spell_Destroy(e)
     return true
 endfunction
@@ -17495,7 +17567,7 @@ function sa___prototype1_Item___TuiTuiBang takes nothing returns boolean
  local integer e=f__arg_integer1
 
         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
-        set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1000 , s__Dash_PWX , 30 , true , false)]=(103) // INLINED!!
+        set s__Dash_onMove[s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1000 , s__Dash_PWX , 30 , true , false)]=(105) // INLINED!!
         call s__Spell_Destroy(e)
     return true
 endfunction
@@ -17551,8 +17623,8 @@ function sa___prototype1_Item___ShanQiuZhiChui takes nothing returns boolean
         call UnitAddAbility(s__Units_unit[(mj)], (s__Units_MJType_TSW)) // INLINED!!
         call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
         set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1600 , s__Dash_SUB , 30 , true , false) // INLINED!!
-        set s__Dash_onMove[dash]=(104)
-        set s__Dash_onEnd[dash]=(105)
+        set s__Dash_onMove[dash]=(106)
+        set s__Dash_onEnd[dash]=(107)
         call s__Spell_Destroy(e)
     return true
 endfunction
@@ -18083,11 +18155,11 @@ function sa___prototype6_s__Winner_Death takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype29_s__ASN__ASN_AI takes nothing returns boolean
-    call s__ASN__ASN_AI(f__arg_unit1)
+function sa___prototype29_s__ASN___ASN_AI takes nothing returns boolean
+    call s__ASN___ASN_AI(f__arg_unit1)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_Damage takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_Damage takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer b
@@ -18097,7 +18169,7 @@ function sa___prototype1_s__ASN__ASN_Damage takes nothing returns boolean
             if ( s__DamageArgs_DamageType[e] == s__Damage_Attack and (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('B00K')) > 0) == true and (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('B00L')) > 0) == true ) then // INLINED!!
                 set f=s__Util_XY(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]])
                 set b=s__Buffs_Find(s__Units_unit[s__DamageArgs_DamageUnit[e]] , 'B00K')
-                call sc__ASN__ASN_W2(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]] , f , 2)
+                call sc__ASN___ASN_W2(s__Units_unit[s__DamageArgs_DamageUnit[e]] , s__Units_unit[s__DamageArgs_TriggerUnit[e]] , f , 2)
                 set s__Buffs_Level[b]=s__Buffs_Level[b] - 1
                 if ( s__Buffs_Level[b] <= 0 ) then
                     set s__Buffs_NowTime[(b)]=0 // INLINED!!
@@ -18113,8 +18185,8 @@ function sa___prototype1_s__ASN__ASN_Damage takes nothing returns boolean
             endif
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('A02V')) > 0) and s__Players_lv10[s__Units_player[s__DamageArgs_DamageUnit[e]]] != null ) then // INLINED!!
                 set b=s__Buffs_Add(s__Units_unit[s__DamageArgs_DamageUnit[e]] , 'A02W' , 'B00M' , 5 , false)
-                set s__Buffs_onFlush[b]=(29)
-                set s__Buffs_onEnd[b]=(30)
+                set s__Buffs_onFlush[b]=(31)
+                set s__Buffs_onEnd[b]=(32)
                 if ( s__Buffs_Level[b] == 1 ) then
                     call s__Units_SetMoveSpeed(s__DamageArgs_DamageUnit[e],10)
                 endif
@@ -18126,23 +18198,23 @@ function sa___prototype1_s__ASN__ASN_Damage takes nothing returns boolean
                         call BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:" + s__Units_name[s__DamageArgs_DamageUnit[e]] + "/D" + s__Units_name[s__DamageArgs_TriggerUnit[e]])
                     else
                         call s__Units_Alpha(s__DamageArgs_TriggerUnit[e],0)
-                        set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A036' , 'B00P' , 0.4 , false)]=(31)
+                        set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A036' , 'B00P' , 0.4 , false)]=(33)
                         if ( s__Units_Weapon(s__DamageArgs_DamageUnit[e]) == s__Units_WeaponFist ) then
                             call s__Damage_To(s__Units_unit[s__Players_hero[s__Units_player[(s__DamageArgs_TriggerUnit[e])]]] , (s__Units_unit[s__DamageArgs_DamageUnit[e]] ) , (( s__Damage_Physics )*1.0) , ( 'A02X' ) , (( GetUnitState(s__Units_unit[s__DamageArgs_TriggerUnit[e]], ConvertUnitState(0x15)) * 2)*1.0)) // INLINED!!
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , s__Util_XY(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , s__Units_unit[s__DamageArgs_DamageUnit[e]]) , 0.5 , s__Units_modelsize[s__DamageArgs_TriggerUnit[e]] , 3 , "attack" , "Asuna.mdl") // INLINED!!
                             call s__Effect_ToUnit("az_lxj_blue_ex.mdl" , s__Units_unit[mj] , "weapon")
                             call s__Units_DelayAlpha(mj,255 , 0 , 0.4)
-                            call RunSoundOnUnit(s__ASN__ASN_R_attack , s__Units_unit[mj])
+                            call RunSoundOnUnit(s__ASN___ASN_R_attack , s__Units_unit[mj])
                         else
                             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('B00N')) > 0) == false ) then // INLINED!!
                                 call s__Units_SetMoveSpeed(s__DamageArgs_TriggerUnit[e],- 500)
                             endif
-                            set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A034' , 'B00N' , 1 , false)]=(32)
+                            set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , 'A034' , 'B00N' , 1 , false)]=(34)
                             set mj=s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , s__Util_XY(s__Units_unit[s__DamageArgs_TriggerUnit[e]] , s__Units_unit[s__DamageArgs_DamageUnit[e]]) , 10 , s__Units_modelsize[s__DamageArgs_TriggerUnit[e]] , 3 , "attack" , "Asuna.mdl") // INLINED!!
                             call s__Effect_ToUnit("az_lxj_blue_ex.mdl" , s__Units_unit[mj] , "weapon")
                             call SetUnitAnimationByIndex(s__Units_unit[(mj)], (15)) // INLINED!!
-                            call RunSoundOnUnit(s__ASN__ASN_R_defend , s__Units_unit[mj])
-                            set s__Dash_onEnd[s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) + 180 , 150 , s__Dash_SUB , 10 , true , false)]=(33) // INLINED!!
+                            call RunSoundOnUnit(s__ASN___ASN_R_defend , s__Units_unit[mj])
+                            set s__Dash_onEnd[s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) + 180 , 150 , s__Dash_SUB , 10 , true , false)]=(35) // INLINED!!
                             call s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , GetRandomReal(0, 360) , 2 , 0.6 , 1 , "stand" , "white-qiquan.mdl") //音波效果 // INLINED!!
                             call s__Units_MJ(s__Players_player[s__Units_player[s__DamageArgs_TriggerUnit[e]]] , 'e008' , 'A02X' , 0 , (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])) , 0 , 2 , 0.5 , 1 , "stand" , "kc_ex.mdl") // INLINED!!
                             call GroupEnumUnitsInRange(tmp_group, (GetUnitX(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])), (GetUnitY(s__Units_unit[(s__DamageArgs_TriggerUnit[e])])), 200, Condition(function GroupIsAliveNotAloc)) // INLINED!!
@@ -18167,7 +18239,7 @@ function sa___prototype1_s__ASN__ASN_Damage takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__152 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__152 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
@@ -18175,28 +18247,28 @@ function sa___prototype1_s__ASN__ASN_anon__152 takes nothing returns boolean
                 call s__Units_SetMoveSpeed(u,10)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__153 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__153 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_SetMoveSpeed(u,- ( s__Buffs_Level[b] * 10 ))
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__154 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__154 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.4)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__155 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__155 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_SetMoveSpeed(u,500)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__156 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__156 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -18204,14 +18276,14 @@ function sa___prototype1_s__ASN__ASN_anon__156 takes nothing returns boolean
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__157 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__157 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.6)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__158 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__158 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18239,7 +18311,7 @@ function sa___prototype1_s__ASN__ASN_anon__158 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__159 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__159 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18252,14 +18324,14 @@ function sa___prototype1_s__ASN__ASN_anon__159 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__160 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__160 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
                 call s__Units_Position((s___Data_c[s__Data_c[data]+1]),s__Dash_X[dash] + 50 * CosBJ(s__Dash_Angle[dash]) , s__Dash_Y[dash] + 50 * SinBJ(s__Dash_Angle[dash]) , false)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__161 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__161 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18269,7 +18341,7 @@ function sa___prototype1_s__ASN__ASN_anon__161 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__162 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__162 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer data=(s__Buffs_Obj[b])
@@ -18279,7 +18351,7 @@ function sa___prototype1_s__ASN__ASN_anon__162 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__163 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__163 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18339,7 +18411,7 @@ function sa___prototype1_s__ASN__ASN_anon__163 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_anon__164 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_anon__164 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18351,7 +18423,7 @@ function sa___prototype1_s__ASN__ASN_anon__164 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_Q takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18384,11 +18456,11 @@ function sa___prototype1_s__ASN__ASN_Q takes nothing returns boolean
             endif
             set dash=s__Dash_Start(s__Units_unit[u] , f , 300 , s__Dash_SUB , 100 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(40)
-            set s__Dash_onEnd[dash]=(41)
+            set s__Dash_onMove[dash]=(42)
+            set s__Dash_onEnd[dash]=(43)
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_W takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18407,11 +18479,11 @@ function sa___prototype1_s__ASN__ASN_W takes nothing returns boolean
                 set b=s__Buffs_Add(s__Units_unit[u] , 'A02U' , 'B00K' , 7 , false)
                 set s__Buffs_Level[b]=8
                 set s__Buffs_Obj[b]=data
-                set s__Buffs_onEnd[b]=(39)
+                set s__Buffs_onEnd[b]=(41)
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_HERO_START takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18419,14 +18491,14 @@ function sa___prototype1_s__ASN__ASN_HERO_START takes nothing returns boolean
                 call TextAngle((s__Units_unit[u] ) , ( "! 闪光穿刺 !" ) , (( 3 )*1.0) , (( 10)*1.0) , 90) // INLINED!!
                 call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A02R' ) , 1 , (( 5)*1.0)) // INLINED!!
                 call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 50)*1.0)) // INLINED!!
-                call s__ASN__ASN_Q(e)
+                call s__ASN___ASN_Q(e)
             else
                 call sc__Units_DelayAnime((u),(14) , 0) // INLINED!!
                 call s__Spell_Destroy(e)
             endif
     return true
 endfunction
-function sa___prototype6_s__ASN__ASN_Spawn takes nothing returns boolean
+function sa___prototype6_s__ASN___ASN_Spawn takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -18435,12 +18507,12 @@ function sa___prototype6_s__ASN__ASN_Spawn takes nothing returns boolean
                 set s__Units_ai[u]=(1)
                 set t=NewTimer()
                 set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( u) // INLINED!!
-                call TimerStart(t, 0.1, true, function s__ASN__ASN_anon__151)
+                call TimerStart(t, 0.1, true, function s__ASN___ASN_anon__151)
                 set t=null
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_W1 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_W1 takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_TriggerUnit[e]))))) // INLINED!!
@@ -18455,7 +18527,7 @@ function sa___prototype1_s__ASN__ASN_W1 takes nothing returns boolean
                     endif
                     set b=s__Buffs_Find(s__Units_unit[u] , 'B00K')
                     if ( s__Buffs_NowTime[b] < 6.990 ) then
-                        call s__ASN__ASN_W2(s__Units_unit[u] , null , f , 1)
+                        call s__ASN___ASN_W2(s__Units_unit[u] , null , f , 1)
                         set s__Buffs_Level[b]=s__Buffs_Level[b] - 1
                         if ( s__Buffs_Level[b] <= 0 ) then
                             set s__Buffs_NowTime[(b)]=0 // INLINED!!
@@ -18465,17 +18537,17 @@ function sa___prototype1_s__ASN__ASN_W1 takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_W3 takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_W3 takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_AttackUnit[e]))))) // INLINED!!
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00K')) > 0) == true ) then // INLINED!!
                 call s__Units_Alpha(u,0)
-                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02T' , 'B00L' , 0.2 , false)]=(34)
+                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02T' , 'B00L' , 0.2 , false)]=(36)
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_Damage_Add takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_Damage_Add takes nothing returns boolean
  local integer e=f__arg_integer1
 
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_DamageUnit[e])], ('A02V')) > 0) and s__Players_lv10[s__Units_player[s__DamageArgs_DamageUnit[e]]] != null ) then //E的移速转伤害 // INLINED!!
@@ -18485,7 +18557,7 @@ function sa___prototype1_s__ASN__ASN_Damage_Add takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__ASN__ASN_Damage_Sub takes nothing returns boolean
+function sa___prototype1_s__ASN___ASN_Damage_Sub takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local real f
@@ -18498,13 +18570,13 @@ function sa___prototype1_s__ASN__ASN_Damage_Sub takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__166 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__166 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                     set s__Buffs_Level[b]=s__Buffs_Level[b] + 1
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__165 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__165 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer x
@@ -18573,7 +18645,7 @@ function sa___prototype1_s__AW__AW_anon__165 takes nothing returns boolean
                     if ( s__Players_isai[s__Units_player[u]] == true ) then
                         if ( s___Data_r[s__Data_r[data]+1] <= 0 ) then
                             set s___Data_r[s__Data_r[data]+1]=3
-                            set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[u] , 'A03B' , 'B00Q' , 86400 , false)]=(49)
+                            set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[u] , 'A03B' , 'B00Q' , 86400 , false)]=(51)
                         else
                             set s___Data_r[s__Data_r[data]+1]=s___Data_r[s__Data_r[data]+1] - 0.1
                         endif
@@ -18595,13 +18667,13 @@ function sa___prototype1_s__AW__AW_anon__165 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__167 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__167 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 set s__Buffs_Level[b]=s__Buffs_Level[b] + 1
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__170 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__170 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -18624,7 +18696,7 @@ function sa___prototype1_s__AW__AW_anon__170 takes nothing returns boolean
                     endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__171 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__171 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -18648,7 +18720,7 @@ function sa___prototype1_s__AW__AW_anon__171 takes nothing returns boolean
                     call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__168 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__168 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -18677,18 +18749,18 @@ function sa___prototype1_s__AW__AW_anon__168 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__169 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__169 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
                 local integer dash1
                 set dash1=s__Dash_Start(s__Dash_Unit[dash] , 0 , 1000 , s__Dash_NORMAL , 70 , true , false)
                 set s__Dash_Obj[dash1]=data
-                set s__Dash_onMove[dash1]=(52)
-                set s__Dash_onEnd[dash1]=(53)
+                set s__Dash_onMove[dash1]=(54)
+                set s__Dash_onEnd[dash1]=(55)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__172 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__172 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -18754,7 +18826,7 @@ function sa___prototype1_s__AW__AW_anon__172 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_anon__173 takes nothing returns boolean
+function sa___prototype1_s__AW___AW_anon__173 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -18829,7 +18901,7 @@ function sa___prototype1_s__AW__AW_anon__173 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_D takes nothing returns boolean
+function sa___prototype1_s__AW___AW_D takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18850,10 +18922,10 @@ function sa___prototype1_s__AW__AW_D takes nothing returns boolean
             set s___Data_i[s__Data_i[data]]=0
             call s__Buffs_Add(s__Units_unit[u] , 'A03H' , 'B00R' , 1.5 , false)
             call sc__Units_DelayAnime((u),(5) , 0) // INLINED!!
-            call s__Timers_Start(0.01 , data , (57))
+            call s__Timers_Start(0.01 , data , (59))
     return true
 endfunction
-function sa___prototype1_s__AW__AW_E takes nothing returns boolean
+function sa___prototype1_s__AW___AW_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18875,11 +18947,11 @@ function sa___prototype1_s__AW__AW_E takes nothing returns boolean
             set s___Data_i[s__Data_i[data]+2]=2
             set s___Data_r[s__Data_r[data]]=s__Spell_X[e]
             set s___Data_r[s__Data_r[data]+1]=s__Spell_Y[e]
-            call s__Timers_Start(0.1 , data , (56))
+            call s__Timers_Start(0.1 , data , (58))
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_W takes nothing returns boolean
+function sa___prototype1_s__AW___AW_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18915,12 +18987,12 @@ function sa___prototype1_s__AW__AW_W takes nothing returns boolean
             call s__Units_Alpha(mj,0)
             set s___Data_c[s__Data_c[data]+3]=mj
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(54)
-            set s__Dash_onEnd[dash]=(55)
+            set s__Dash_onMove[dash]=(56)
+            set s__Dash_onEnd[dash]=(57)
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_HERO_START takes nothing returns boolean
+function sa___prototype1_s__AW___AW_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18931,7 +19003,7 @@ function sa___prototype1_s__AW__AW_HERO_START takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__AW___AW_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -18944,7 +19016,7 @@ function sa___prototype1_s__AW__AW_HERO_STOP takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__AW__AW_Damage_Add takes nothing returns boolean
+function sa___prototype1_s__AW___AW_Damage_Add takes nothing returns boolean
  local integer e=f__arg_integer1
 
             if ( (GetUnitAbilityLevel(s__Units_unit[(s__DamageArgs_TriggerUnit[e])], ('A03A')) > 0) == true ) then // INLINED!!
@@ -18954,7 +19026,7 @@ function sa___prototype1_s__AW__AW_Damage_Add takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__AW__AW_Damage_Sub takes nothing returns boolean
+function sa___prototype1_s__AW___AW_Damage_Sub takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer b
@@ -18968,7 +19040,7 @@ function sa___prototype1_s__AW__AW_Damage_Sub takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype6_s__AW__AW_Death takes nothing returns boolean
+function sa___prototype6_s__AW___AW_Death takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -18984,14 +19056,14 @@ function sa___prototype6_s__AW__AW_Death takes nothing returns boolean
                         set s=1
                         call s__Effect_Destroy(s__Effect_To("Abilities\\Spells\\Undead\\RaiseSkeletonWarrior\\RaiseSkeleton.mdl" , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])))) // INLINED!!
                     endif
-                    set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[mj] , 'A03B' , 'B00Q' , 86400 , false)]=(51)
+                    set s__Buffs_onFlush[s__Buffs_Add(s__Units_unit[mj] , 'A03B' , 'B00Q' , 86400 , false)]=(53)
                     call s__Effect_ToUnit("Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl" , s__Units_unit[mj] , "chest")
                 endif
             endloop
             call GroupClear(tmp_death_group)
     return true
 endfunction
-function sa___prototype6_s__AW__AW_Spawn takes nothing returns boolean
+function sa___prototype6_s__AW___AW_Spawn takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -19001,11 +19073,11 @@ function sa___prototype6_s__AW__AW_Spawn takes nothing returns boolean
                 set s___Data_c[s__Data_c[data]]=u
                 set s___Data_r[s__Data_r[data]]=1
                 set s___Data_r[s__Data_r[data]+1]=3
-                call s__Timers_Start(0.1 , data , (50))
+                call s__Timers_Start(0.1 , data , (52))
             endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__89 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__89 takes nothing returns boolean
  local integer h=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__HitFlys_Unit[h]))))) // INLINED!!
@@ -19013,7 +19085,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__89 takes nothing retur
                     call s__HitFlys_Remove(s__Units_unit[u])
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__92 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__92 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer m=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -19022,7 +19094,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__92 takes nothing retur
                         endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__90 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__90 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -19054,14 +19126,14 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__90 takes nothing retur
                         set s___Data_c[s__Data_c[data]+2]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((k))))) // INLINED!!
                         set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
                         call s__Dash_Start(s__Units_unit[u] , s__Dash_Angle[dash] , 300 , s__Dash_SUB , 20 , true , false)
-                        call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__91)
+                        call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__91)
                         set t=null
                         set k=null
                     endif
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__93 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__93 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -19077,7 +19149,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__93 takes nothing retur
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__95 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__95 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -19121,7 +19193,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__95 takes nothing retur
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__96 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__96 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -19129,7 +19201,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__96 takes nothing retur
                 call SetUnitAnimation(s__Units_unit[(u)], ("death")) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__97 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__97 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -19155,12 +19227,12 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__97 takes nothing retur
                     if ( s__Dash_NowDis[dash] > 100 ) then
                         call s__Dash_Start(s__Units_unit[u] , s__Util_XY(k , s__Units_unit[u]) , 200 * ( s__Dash_NowDis[dash] / s__Dash_MaxDis[dash] ) , s__Dash_SUB , 20 , true , false)
                     endif
-                    call RunSoundOnUnit(s__BlackSaber___BlackSaber_Q_HIT , k)
+                    call RunSoundOnUnit(s__BlackSaber__BlackSaber_Q_HIT , k)
                 endif
                 set k=null
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_anon__98 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_anon__98 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -19169,11 +19241,11 @@ function sa___prototype1_s__BlackSaber___BlackSaber_anon__98 takes nothing retur
                 call s__Units_Pause(u,false)
     return true
 endfunction
-function sa___prototype29_s__BlackSaber___BlackSaber_AI takes nothing returns boolean
-    call s__BlackSaber___BlackSaber_AI(f__arg_unit1)
+function sa___prototype29_s__BlackSaber__BlackSaber_AI takes nothing returns boolean
+    call s__BlackSaber__BlackSaber_AI(f__arg_unit1)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_D takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_D takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19199,10 +19271,10 @@ function sa___prototype1_s__BlackSaber___BlackSaber_D takes nothing returns bool
             set s___Data_r[s__Data_r[data]+2]=y
             set s___Data_r[s__Data_r[data]+3]=0
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
-            call TimerStart(t, 0.02, true, function s__BlackSaber___BlackSaber_anon__88)
+            call TimerStart(t, 0.02, true, function s__BlackSaber__BlackSaber_anon__88)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_R takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19219,11 +19291,11 @@ function sa___prototype1_s__BlackSaber___BlackSaber_R takes nothing returns bool
             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A012' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , s__Spell_Angle[e] , 2.5 , 0.5 , 1 , "stand" , "cf2.mdl"))], ((70)*1.0), 0) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_SUB , 80 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(68)
-            set s__Dash_onEnd[dash]=(69)
+            set s__Dash_onMove[dash]=(70)
+            set s__Dash_onEnd[dash]=(71)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_Q takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19233,11 +19305,11 @@ function sa___prototype1_s__BlackSaber___BlackSaber_Q takes nothing returns bool
             call s__Units_AnimeSpeed(u,1)
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(72)
-            set s__Dash_onEnd[dash]=(73)
+            set s__Dash_onMove[dash]=(74)
+            set s__Dash_onEnd[dash]=(75)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_W takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19250,12 +19322,12 @@ function sa___prototype1_s__BlackSaber___BlackSaber_W takes nothing returns bool
             call s__Units_Pause(u,false)
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00V' , 0 , x , y , s__Spell_Angle[e] , 10 , 1 , 1 , "stand" , "dark4_fast.mdl")
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 450 , s__Dash_SUB , 40 , true , false)
-            set s__Dash_onMove[dash]=(70)
-            set s__Dash_onEnd[dash]=(71)
+            set s__Dash_onMove[dash]=(72)
+            set s__Dash_onEnd[dash]=(73)
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_E takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19275,11 +19347,11 @@ function sa___prototype1_s__BlackSaber___BlackSaber_E takes nothing returns bool
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
             call s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 300 , s__Dash_SUB , 10 , true , false) // INLINED!!
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00X' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0 , 2 , 0.4 , 1 , "stand" , "white-qiquan.mdl") // INLINED!!
-            call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__94)
+            call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__94)
             set t=null
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19302,7 +19374,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START takes nothing ret
                         call TextAngle((s__Units_unit[u] ) , ( "! 炎焱斩 !" ) , (( 3 )*1.0) , (( 15)*1.0) , 90) // INLINED!!
                         call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 150)*1.0)) // INLINED!!
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A00X' ) , 1 , (( 15)*1.0)) // INLINED!!
-                        call s__BlackSaber___BlackSaber_E(e)
+                        call s__BlackSaber__BlackSaber_E(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -19319,7 +19391,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START takes nothing ret
                         call SpellText(s__Units_unit[u] , 'A015' , 3 , 15)
                         call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 250)*1.0)) // INLINED!!
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A015' ) , 1 , (( 25)*1.0)) // INLINED!!
-                        call s__BlackSaber___BlackSaber_D(e)
+                        call s__BlackSaber__BlackSaber_D(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -19329,7 +19401,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START takes nothing ret
             endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -19339,7 +19411,7 @@ function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP takes nothing retu
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype6_s__BlackSaber___BlackSaber_Spawn takes nothing returns boolean
+function sa___prototype6_s__BlackSaber__BlackSaber_Spawn takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -19748,8 +19820,8 @@ function sa___prototype1_s__DazzleMaster___DazzleMaster_D takes nothing returns 
             call KillUnit((s__Units_unit[first])) // INLINED!!
             call TextForPlayer(s__Players_player[s__Units_player[u]] , s__Units_unit[u] , s__s__DazzleMaster___DazzleMaster_DazzleName[s__Units_aidindex[first]] + "!" , 0.8 , 14 , 300)
             set b=s__Buffs_Add(s__Units_unit[u] , 'A00G' , 'B002' , 5 , false)
-            set s__Buffs_onEnd[b]=(81)
-            set s__Buffs_onFlush[b]=(82)
+            set s__Buffs_onEnd[b]=(83)
+            set s__Buffs_onFlush[b]=(84)
             if ( s___Data_r[s__Data_r[data]] < 80 ) then
                 set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] + 20
                 call s__Units_SetMoveSpeed(u,20)
@@ -19772,8 +19844,8 @@ function sa___prototype1_s__DazzleMaster___DazzleMaster_D takes nothing returns 
             set id=s__Dash_ADD
             set dash=s__Dash_Start(s__Units_unit[first] , s__Util_XYEX((GetUnitX(s__Units_unit[(first)])) , (GetUnitY(s__Units_unit[(first)])) , s__Spell_X[e] , s__Spell_Y[e]) , s__Util_XY2EX((GetUnitX(s__Units_unit[(first)])) , (GetUnitY(s__Units_unit[(first)])) , s__Spell_X[e] , s__Spell_Y[e]) , id , 50 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=R2I((GetUnitFlyHeight(s__Units_unit[(first)]))) // INLINED!!
-            set s__Dash_onMove[dash]=(83)
-            set s__Dash_onEnd[dash]=(84)
+            set s__Dash_onMove[dash]=(85)
+            set s__Dash_onEnd[dash]=(86)
             call s__Spell_Destroy(e)
     return true
 endfunction
@@ -19799,8 +19871,8 @@ function sa___prototype1_s__DazzleMaster___DazzleMaster_Q takes nothing returns 
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00B' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , s__Spell_Angle[e] , 4 , 1 , 2.5 , "stand" , "dust2.mdx") // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[ts] , s__Spell_Angle[e] , 600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(92)
-            set s__Dash_onEnd[dash]=(93)
+            set s__Dash_onMove[dash]=(94)
+            set s__Dash_onEnd[dash]=(95)
     return true
 endfunction
 function sa___prototype1_s__DazzleMaster___DazzleMaster_W takes nothing returns boolean
@@ -19817,8 +19889,8 @@ function sa___prototype1_s__DazzleMaster___DazzleMaster_W takes nothing returns 
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 250 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(90)
-            set s__Dash_onEnd[dash]=(91)
+            set s__Dash_onMove[dash]=(92)
+            set s__Dash_onEnd[dash]=(93)
     return true
 endfunction
 function sa___prototype1_s__DazzleMaster___DazzleMaster_E takes nothing returns boolean
@@ -20069,7 +20141,7 @@ function sa___prototype1_s__MR__MR_W takes nothing returns boolean
                     endif
                     set s__Buffs_Type[b]=s__Buffs_TYPE_SUB + s__Buffs_TYPE_DISPEL_TRUE
                     call UnitAddAbility(s__Units_unit[(mj)], ('Abun')) // INLINED!!
-                    set s__Buffs_onEnd[b]=(118)
+                    set s__Buffs_onEnd[b]=(120)
                 endif
             endloop
             call GroupClear(tmp_group)
@@ -20106,8 +20178,8 @@ function sa___prototype1_s__MR__MR_E takes nothing returns boolean
                     set b=s__Buffs_Add(s__Units_unit[mj] , 'A026' , 'B00D' , 5 , false)
                     set s__Buffs_Obj[b]=data
                     set s__Buffs_Type[b]=s__Buffs_TYPE_SUB + s__Buffs_TYPE_DISPEL_TRUE
-                    set s__Buffs_onTime[b]=(116)
-                    set s__Buffs_onEnd[b]=(117)
+                    set s__Buffs_onTime[b]=(118)
+                    set s__Buffs_onEnd[b]=(119)
                 endif
             endloop
             call GroupClear(tmp_group)
@@ -20359,8 +20431,8 @@ function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q takes nothing retu
             call SetUnitFlyHeight(s__Units_unit[(mj)], ((50)*1.0), 0) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[mj] , f , 1600 , s__Dash_SUB , 70 , true , false)
             set s__Dash_Obj[dash]=mj
-            set s__Dash_onEnd[dash]=(127)
-            set s__Dash_onMove[dash]=(128)
+            set s__Dash_onEnd[dash]=(129)
+            set s__Dash_onMove[dash]=(130)
             call DestroyEffect(AddSpecialEffect("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", x + 100 * CosBJ(f), y + 100 * SinBJ(f)))
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl", s__Units_unit[u], "hand right"))
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A002' , 2 , x + 100 * CosBJ(f) , y + 100 * SinBJ(f) , f , 1.5 , 2 , 1 , "stand" , "Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl")
@@ -20370,8 +20442,8 @@ function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q takes nothing retu
             set dash=s__Dash_Start(s__Units_unit[mj] , f , 1300 , s__Dash_ADD , 50 , true , false)
             set s__Dash_Obj[dash]=u
             set s__Dash_NowDis[dash]=10
-            set s__Dash_onMove[dash]=(129)
-            set s__Dash_onEnd[dash]=(130)
+            set s__Dash_onMove[dash]=(131)
+            set s__Dash_onEnd[dash]=(132)
             call s__Units_AnimeSpeed(u,1)
             call s__Spell_Destroy(e)
     return true
@@ -20424,8 +20496,8 @@ function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_R takes nothing retu
             set s___Data_r[s__Data_r[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 3500 , s__Dash_PWX , 90 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(125)
-            set s__Dash_onEnd[dash]=(126)
+            set s__Dash_onMove[dash]=(127)
+            set s__Dash_onEnd[dash]=(128)
     return true
 endfunction
 function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_START takes nothing returns boolean
@@ -20460,11 +20532,11 @@ function sa___prototype6_s__OrdinaryWizard___OrdinaryWizard_E takes nothing retu
             endif
     return true
 endfunction
-function sa___prototype29_s__SD__SD_AI takes nothing returns boolean
-    call s__SD__SD_AI(f__arg_unit1)
+function sa___prototype29_s__SD___SD_AI takes nothing returns boolean
+    call s__SD___SD_AI(f__arg_unit1)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__174 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__174 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20518,7 +20590,7 @@ function sa___prototype1_s__SD__SD_anon__174 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__175 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__175 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -20543,7 +20615,7 @@ function sa___prototype1_s__SD__SD_anon__175 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__176 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__176 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -20563,7 +20635,7 @@ function sa___prototype1_s__SD__SD_anon__176 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__178 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__178 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -20591,7 +20663,7 @@ function sa___prototype1_s__SD__SD_anon__178 takes nothing returns boolean
                     endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__179 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__179 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -20613,7 +20685,7 @@ function sa___prototype1_s__SD__SD_anon__179 takes nothing returns boolean
                     call GroupClear(tmp_group)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__177 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__177 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20643,8 +20715,8 @@ function sa___prototype1_s__SD__SD_anon__177 takes nothing returns boolean
                     call UnitAddAbility(s__Units_unit[(mj)], (s__Units_MJType_TSW)) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 600 , s__Dash_SUB , 25 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=6
-                    set s__Dash_onMove[dash]=(139)
-                    set s__Dash_onEnd[dash]=(140)
+                    set s__Dash_onMove[dash]=(141)
+                    set s__Dash_onEnd[dash]=(142)
                 else
                     set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] - 0.06
                     set x=(GetUnitX(s__Units_unit[((s___Data_c[s__Data_c[data]+2]))])) // INLINED!!
@@ -20687,7 +20759,7 @@ function sa___prototype1_s__SD__SD_anon__177 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__181 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__181 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -20695,7 +20767,7 @@ function sa___prototype1_s__SD__SD_anon__181 takes nothing returns boolean
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03Q')) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__182 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__182 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer f=(s__Dash_Obj[dash])
@@ -20725,7 +20797,7 @@ function sa___prototype1_s__SD__SD_anon__182 takes nothing returns boolean
                     endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__183 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__183 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer w=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -20751,7 +20823,7 @@ function sa___prototype1_s__SD__SD_anon__183 takes nothing returns boolean
                     call GroupClear(tmp_group)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__180 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__180 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20762,7 +20834,7 @@ function sa___prototype1_s__SD__SD_anon__180 takes nothing returns boolean
                 if ( (GetUnitState(s__Units_unit[(u)], UNIT_STATE_LIFE) > 0) == true ) then // INLINED!!
                     call SetUnitAnimationByIndex(s__Units_unit[(u)], (14)) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) + 180 , 100 , s__Dash_SUB , 7 , true , false) // INLINED!!
-                    set s__Dash_onEnd[dash]=(142)
+                    set s__Dash_onEnd[dash]=(144)
                     call s__Units_DelayReleaseAnimePause(u,0.3)
                     set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03M' , 0 , (GetUnitX(s__Units_unit[(u)])) + 75 * CosBJ((GetUnitFacing(s__Units_unit[(u)]))) , (GetUnitY(s__Units_unit[(u)])) + 75 * SinBJ((GetUnitFacing(s__Units_unit[(u)]))) , (GetUnitFacing(s__Units_unit[(u)])) , 5 , 1 , 0.5 , "stand" , "t_lxw_ex_y.mdl") // INLINED!!
                     call SetUnitFlyHeight(s__Units_unit[(mj)], ((120)*1.0), 0) // INLINED!!
@@ -20790,8 +20862,8 @@ function sa___prototype1_s__SD__SD_anon__180 takes nothing returns boolean
                     set mj=(s___Data_c[s__Data_c[data]+2])
                     set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 600 , s__Dash_SUB , 35 , true , false) // INLINED!!
                     set s__Dash_Obj[dash]=s___Data_c[s__Data_c[data]+3]
-                    set s__Dash_onMove[dash]=(143)
-                    set s__Dash_onEnd[dash]=(144)
+                    set s__Dash_onMove[dash]=(145)
+                    set s__Dash_onEnd[dash]=(146)
                 else
                     call s__Units_Pause(u,false)
                     call UnitRemoveAbility(s__Units_unit[(u)], ('A03P')) // INLINED!!
@@ -20802,7 +20874,7 @@ function sa___prototype1_s__SD__SD_anon__180 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__185 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__185 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                     local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20860,7 +20932,7 @@ function sa___prototype1_s__SD__SD_anon__185 takes nothing returns boolean
                     endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__184 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__184 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20882,7 +20954,7 @@ function sa___prototype1_s__SD__SD_anon__184 takes nothing returns boolean
                     set s___Data_c[s__Data_c[data1]]=u
                     set s___Data_c[s__Data_c[data1]+1]=mj
                     set s___Data_c[s__Data_c[data1]+3]=s___Data_c[s__Data_c[data]+1]
-                    call s__Timers_Start(0.02 , data1 , (146))
+                    call s__Timers_Start(0.02 , data1 , (148))
                 else
                     call s__Units_Pause(u,false)
                     call s__Units_PositionEnabled(u,true)
@@ -20895,7 +20967,7 @@ function sa___prototype1_s__SD__SD_anon__184 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__186 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__186 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -20915,7 +20987,7 @@ function sa___prototype1_s__SD__SD_anon__186 takes nothing returns boolean
                 call GroupClear(tmp_group)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__187 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__187 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -20927,14 +20999,14 @@ function sa___prototype1_s__SD__SD_anon__187 takes nothing returns boolean
                 call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__188 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__188 takes nothing returns boolean
  local integer b=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Buffs_Unit[b]))))) // INLINED!!
                 call s__Units_DelayAlpha(u,0 , 255 , 0.5)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__192 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__192 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                         local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -20972,7 +21044,7 @@ function sa___prototype1_s__SD__SD_anon__192 takes nothing returns boolean
                         endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__191 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__191 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                     local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -21043,11 +21115,11 @@ function sa___prototype1_s__SD__SD_anon__191 takes nothing returns boolean
                         endloop
                         call DestroyGroup(g)
                         set g=null
-                        call s__Timers_Start(0.01 , data , (151))
+                        call s__Timers_Start(0.01 , data , (153))
                     endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__190 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__190 takes nothing returns boolean
  local integer t=f__arg_integer1
 
                 local integer data=((s__Timers_Obj[(t)])) // INLINED!!
@@ -21063,7 +21135,7 @@ function sa___prototype1_s__SD__SD_anon__190 takes nothing returns boolean
                     set s___Data_c[s__Data_c[data]+3]=mj
                     call UnitAddAbility(s__Units_unit[(u)], ('A040')) // INLINED!!
                     call s__Units_Alpha(u,0)
-                    call s__Timers_Start(0.04 , data , (152))
+                    call s__Timers_Start(0.04 , data , (154))
                     call s__Timers_Destroy(t)
                 else
                     call s__Units_Pause(u,false)
@@ -21074,7 +21146,7 @@ function sa___prototype1_s__SD__SD_anon__190 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_anon__193 takes nothing returns boolean
+function sa___prototype1_s__SD___SD_anon__193 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -21083,7 +21155,7 @@ function sa___prototype1_s__SD__SD_anon__193 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_F takes nothing returns boolean
+function sa___prototype1_s__SD___SD_F takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21104,22 +21176,22 @@ function sa___prototype1_s__SD__SD_F takes nothing returns boolean
             set s___Data_r[s__Data_r[data]+1]=y
             set s___Data_g[s__Data_g[data]]=CreateGroup()
             set s___Data_u[s__Data_u[data]]=null
-            call s__Timers_Start(0.3 , data , (153))
+            call s__Timers_Start(0.3 , data , (155))
     return true
 endfunction
-function sa___prototype1_s__SD__SD_D takes nothing returns boolean
+function sa___prototype1_s__SD___SD_D takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
             local timer t=NewTimer()
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( u) // INLINED!!
-            call TimerStart(t, 0, false, function s__SD__SD_anon__189)
+            call TimerStart(t, 0, false, function s__SD___SD_anon__189)
             set t=null
             set s__Buffs_Obj[s__Buffs_Add(s__Units_unit[u] , 'A03X' , 'B00X' , 10 , false)]=1
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_R takes nothing returns boolean
+function sa___prototype1_s__SD___SD_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21137,10 +21209,10 @@ function sa___prototype1_s__SD__SD_R takes nothing returns boolean
             endif
             set s___Data_c[s__Data_c[data]]=u
             set s___Data_c[s__Data_c[data]+1]=e
-            call s__Timers_Start(0.5 , data , (147))
+            call s__Timers_Start(0.5 , data , (149))
     return true
 endfunction
-function sa___prototype1_s__SD__SD_E takes nothing returns boolean
+function sa___prototype1_s__SD___SD_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21163,10 +21235,10 @@ function sa___prototype1_s__SD__SD_E takes nothing returns boolean
             set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A03M' , 0 , (GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , (GetUnitFacing(s__Units_unit[(mj)])) + 90 , 5 , 1 , 2 , "stand" , "az_airfloww12_ex.mdl") // INLINED!!
             call SetUnitFlyHeight(s__Units_unit[(mj)], ((150)*1.0), 0) // INLINED!!
             set s___Data_c[s__Data_c[data]+3]=mj
-            call s__Timers_Start(0.06 , data , (141))
+            call s__Timers_Start(0.06 , data , (143))
     return true
 endfunction
-function sa___prototype1_s__SD__SD_W takes nothing returns boolean
+function sa___prototype1_s__SD___SD_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21194,8 +21266,8 @@ function sa___prototype1_s__SD__SD_W takes nothing returns boolean
                     set s___Data_g[s__Data_g[data]]=CreateGroup()
                     set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 30 , true , false)
                     set s__Dash_Obj[dash]=data
-                    set s__Dash_onMove[dash]=(137)
-                    set s__Dash_onEnd[dash]=(138)
+                    set s__Dash_onMove[dash]=(139)
+                    set s__Dash_onEnd[dash]=(140)
                 else
                     call s__Units_Pause(u,true)
                     call s__Units_SetF(u,(GetUnitFacing(s__Units_unit[(u)])) , true) // INLINED!!
@@ -21207,7 +21279,7 @@ function sa___prototype1_s__SD__SD_W takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__SD__SD_HERO_START takes nothing returns boolean
+function sa___prototype1_s__SD___SD_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21220,7 +21292,7 @@ function sa___prototype1_s__SD__SD_HERO_START takes nothing returns boolean
                 else
                     call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03K' ) , 1 , (( 1)*1.0)) // INLINED!!
                     call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 50)*1.0)) // INLINED!!
-                    call s__SD__SD_W(e)
+                    call s__SD___SD_W(e)
                 endif
             endif
             if ( s__Spell_Id[e] == 'A03M' ) then
@@ -21229,18 +21301,18 @@ function sa___prototype1_s__SD__SD_HERO_START takes nothing returns boolean
                     call s__Units_AnimeSpeed(u,1.7)
                     call UnitAddAbility(s__Units_unit[(u)], ('A03N')) // INLINED!!
                     set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 150 , s__Dash_NORMAL , (GetUnitMoveSpeed(s__Units_unit[(u)])) / 100 , true , false) // INLINED!!
-                    set s__Dash_onMove[dash]=(154)
+                    set s__Dash_onMove[dash]=(156)
                     call s__Spell_Destroy(e) //飞雷丸
                 else
                     call TextAngle((s__Units_unit[u] ) , ( "! 螺旋丸 !" ) , (( 3 )*1.0) , (( 10)*1.0) , 90) // INLINED!!
                     call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03M' ) , 1 , (( 10)*1.0)) // INLINED!!
                     call SetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA, (((GetUnitState(s__Units_unit[(u)], UNIT_STATE_MANA)) - 150)*1.0)) // INLINED!!
-                    call s__SD__SD_E1(e)
+                    call s__SD___SD_E1(e)
                 endif
             endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__SD___SD_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -21252,7 +21324,7 @@ function sa___prototype1_s__SD__SD_HERO_STOP takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype6_s__SD__SD_Spawn takes nothing returns boolean
+function sa___prototype6_s__SD___SD_Spawn takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -21264,11 +21336,11 @@ function sa___prototype6_s__SD__SD_Spawn takes nothing returns boolean
                 set s___Data_u[s__Data_u[data]]=null
                 set s___Data_r[s__Data_r[data]]=0
                 set s__Buffs_Level[s__Buffs_Add(s__Units_unit[u] , 'A03L' , 'B00T' , 86400 , false)]=2
-                call s__Timers_Start(0.01 , data , (136))
+                call s__Timers_Start(0.01 , data , (138))
             endif
     return true
 endfunction
-function sa___prototype1_s__SD__SD_Q takes nothing returns boolean
+function sa___prototype1_s__SD___SD_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_TriggerUnit[e]))))) // INLINED!!
@@ -21385,7 +21457,7 @@ function sa___prototype1_s__SD__SD_Q takes nothing returns boolean
                         endif
                     endif
                     if ( ft != - 1 ) then
-                        call RunSoundOnUnit(s__SD__SD_Q_Sound , s__Units_unit[u])
+                        call RunSoundOnUnit(s__SD___SD_Q_Sound , s__Units_unit[u])
                         call YDWESetUnitAbilityState(s__Units_unit[(u)] , ('A03R' ) , 1 , (( (YDWEGetUnitAbilityState(s__Units_unit[(u)] , ('A03R') , 1)) - 1)*1.0)) // INLINED!!
                         set x=(GetUnitX(s__Units_unit[(u)])) // INLINED!!
                         set y=(GetUnitY(s__Units_unit[(u)])) // INLINED!!
@@ -21515,8 +21587,8 @@ function sa___prototype1_s__SD__SD_Q takes nothing returns boolean
                                 set tmp1=s__Units_MJ(s__Players_player[s__Units_player[mj]] , 'e008' , 'A03I' , 0 , x1 , y1 , 0 , 4 , 1 , 1 , "stand" , "t_tai.mdl")
                                 set dash=s__Dash_Start(s__Units_unit[tmp1] , s__Util_XY(s__Units_unit[mj] , s___Data_u[s__Data_u[data]]) , s__Util_XY2(s__Units_unit[mj] , s___Data_u[s__Data_u[data]]) , s__Dash_NORMAL , 40 , true , false)
                                 set s__Dash_Obj[dash]=data1
-                                set s__Dash_onMove[dash]=(148)
-                                set s__Dash_onEnd[dash]=(149)
+                                set s__Dash_onMove[dash]=(150)
+                                set s__Dash_onEnd[dash]=(151)
                             endif
                             set s___Data_u[s__Data_u[data]]=s__Units_unit[mj]
                         endif
@@ -21559,7 +21631,7 @@ function sa___prototype1_s__SD__SD_Q takes nothing returns boolean
                         if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00W')) > 0) == false ) then // INLINED!!
                             call s__Units_Alpha(u,0)
                             set b=s__Buffs_Add(s__Units_unit[u] , 'A03V' , 'B00W' , 0.2 , false)
-                            set s__Buffs_onEnd[b]=(150)
+                            set s__Buffs_onEnd[b]=(152)
                         else
                             call s__Buffs_Add(s__Units_unit[u] , 'A03V' , 'B00W' , 0.2 , false)
                         endif
@@ -21621,8 +21693,8 @@ function sa___prototype1_s__SL__SL_anon__99 takes nothing returns boolean
                         set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A01B' , 0 , x , y , s__Spell_Angle[e] , 10 , 0.75 , 1 , "stand" , ".mdl")
                         set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1200 , s__Dash_NORMAL , 80 , true , false)
                         set s__Dash_Obj[dash]=s__Spell_State[e]
-                        set s__Dash_onMove[dash]=(163)
-                        set s__Dash_onEnd[dash]=(164)
+                        set s__Dash_onMove[dash]=(165)
+                        set s__Dash_onEnd[dash]=(166)
                     endif
                 endif
     return true
@@ -21819,14 +21891,14 @@ function sa___prototype1_s__SL__SL_anon__107 takes nothing returns boolean
                         set s___Data_c[s__Data_c[data]+2]=mj
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , k) + 45 , s__Util_XY2(s__Units_unit[u] , k) * 4 , s__Dash_SUB , 60 , true , false)
                         set s__Dash_Obj[dash1]=data
-                        set s__Dash_onMove[dash1]=(171)
-                        set s__Dash_onEnd[dash1]=(172)
+                        set s__Dash_onMove[dash1]=(173)
+                        set s__Dash_onEnd[dash1]=(174)
                         set mj=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A018' , 6 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , 0 , 5 , 0.75 , 1 , "stand" , "blink_blue.mdl") // INLINED!!
                         set s___Data_c[s__Data_c[data]+3]=mj
                         set dash1=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , k) - 45 , s__Util_XY2(s__Units_unit[u] , k) * 4 , s__Dash_SUB , 60 , true , false)
                         set s__Dash_Obj[dash1]=data
-                        set s__Dash_onMove[dash1]=(173)
-                        set s__Dash_onEnd[dash1]=(174)
+                        set s__Dash_onMove[dash1]=(175)
+                        set s__Dash_onEnd[dash1]=(176)
                         set k=null
                     endif
                 endif
@@ -21867,8 +21939,8 @@ function sa___prototype1_s__SL__SL_R takes nothing returns boolean
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] + 180 , 300 , s__Dash_SUB , 40 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(165)
-            set s__Dash_onEnd[dash]=(166)
+            set s__Dash_onMove[dash]=(167)
+            set s__Dash_onEnd[dash]=(168)
     return true
 endfunction
 function sa___prototype1_s__SL__SL_E takes nothing returns boolean
@@ -21922,8 +21994,8 @@ function sa___prototype1_s__SL__SL_W takes nothing returns boolean
             set s___Data_i[s__Data_i[data]+1]=0
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1500 , s__Dash_SUB , 20 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(175)
-            set s__Dash_onEnd[dash]=(176)
+            set s__Dash_onMove[dash]=(177)
+            set s__Dash_onEnd[dash]=(178)
     return true
 endfunction
 function sa___prototype1_s__SL__SL_HERO_START takes nothing returns boolean
@@ -22071,8 +22143,8 @@ function sa___prototype1_s__SwordMaster__SwordMaster_E takes nothing returns boo
             call s__HitFlys_Add(s__Units_unit[u] , 25)
             set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) , 1200 , s__Dash_SUB , 45 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(184)
-            set s__Dash_onEnd[dash]=(185)
+            set s__Dash_onMove[dash]=(186)
+            set s__Dash_onEnd[dash]=(187)
     return true
 endfunction
 function sa___prototype1_s__SwordMaster__SwordMaster_R takes nothing returns boolean
@@ -22138,7 +22210,7 @@ function sa___prototype1_s__TR__TR_anon__134 takes nothing returns boolean
                             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A02J' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , GetRandomReal(0, 360) , 1 , 1 , 1 , "stand" , "dg4.mdl"))], ((75)*1.0), 0) // INLINED!!
                             set dash=s__Dash_Start(s__Units_unit[mj] , s__Util_XY(s__Units_unit[u] , s__Units_unit[mj]) , 200 , s__Dash_SUB , 10 , true , false)
                             set s__Dash_Obj[dash]=u
-                            set s__Dash_onMove[dash]=(190)
+                            set s__Dash_onMove[dash]=(192)
                         else
                             set s___Data_i[s__Data_i[data]]=s___Data_i[s__Data_i[data]] - 1
                         endif
@@ -22387,7 +22459,7 @@ function sa___prototype1_s__TR__TR_Q takes nothing returns boolean
                 call s__Effect_Destroy(s__Effect_ToUnit("lizi_blue1.mdl" , s__Units_unit[u] , "origin"))
                 set b=s__Buffs_Add(s__Units_unit[u] , 'A02I' , 'B00G' , 6 , false)
                 set s__Buffs_Obj[b]=e
-                set s__Buffs_onEnd[b]=(202)
+                set s__Buffs_onEnd[b]=(204)
             else
                 call s__Units_Pause(u,true)
                 call s__Units_Pause(u,false)
@@ -22410,7 +22482,7 @@ function sa___prototype1_s__TR__TR_W takes nothing returns boolean
             set b=s__Buffs_Add(s__Units_unit[u] , 'A02E' , 'B00E' , 5 , false)
             set s__Buffs_Level[b]=4
             set s__Buffs_Obj[b]=e
-            set s__Buffs_onEnd[b]=(201)
+            set s__Buffs_onEnd[b]=(203)
     return true
 endfunction
 function sa___prototype1_s__TR__TR_E takes nothing returns boolean
@@ -22447,7 +22519,7 @@ function sa___prototype1_s__TR__TR_R takes nothing returns boolean
             set b=s__Buffs_Add(s__Units_unit[u] , 'A02K' , 'B00H' , 10 , false)
             set s__Buffs_Level[b]=16
             set s__Buffs_Obj[b]=data
-            set s__Buffs_onEnd[b]=(196)
+            set s__Buffs_onEnd[b]=(198)
     return true
 endfunction
 function sa___prototype1_s__TR__TR_W1 takes nothing returns boolean
@@ -22550,7 +22622,7 @@ function sa___prototype1_s__TR__TR_R1 takes nothing returns boolean
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__EventArgs_AttackUnit[e]))))) // INLINED!!
             if ( (GetUnitAbilityLevel(s__Units_unit[(u)], ('B00H')) > 0) == true ) then // INLINED!!
                 call s__Units_Alpha(u,0)
-                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02L' , 'B00I' , 0.05 , false)]=(195)
+                set s__Buffs_onEnd[s__Buffs_Add(s__Units_unit[u] , 'A02L' , 'B00I' , 0.05 , false)]=(197)
             endif
     return true
 endfunction
@@ -22563,7 +22635,7 @@ function sa___prototype6_s__TR__TR_Spawn takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__64 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__64 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -22591,7 +22663,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__64 takes nothing returns b
                     endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__65 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__65 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer data=(s__Dash_Obj[dash])
@@ -22605,7 +22677,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__65 takes nothing returns b
                     call s__Data_Destroy(data)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__63 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__63 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -22622,8 +22694,8 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__63 takes nothing returns b
                     set s___Data_c[s__Data_c[data]+2]=s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00M' , 0 , s__Dash_X[dash] , s__Dash_Y[dash] , s__Dash_Angle[dash] , 3600 , 1.5 , 1 , "stand" , "wind2.mdx")
                     set dash1=s__Dash_Start(s__Units_unit[u] , s__Util_XY(s__Units_unit[u] , k) , 1600 , s__Dash_SUB , 60 , true , false)
                     set s__Dash_Obj[dash1]=data
-                    set s__Dash_onMove[dash1]=(211)
-                    set s__Dash_onEnd[dash1]=(212)
+                    set s__Dash_onMove[dash1]=(213)
+                    set s__Dash_onEnd[dash1]=(214)
                 endif
                 set k=null
                 if ( s__Dash_Speed[dash] < 4 ) then
@@ -22631,7 +22703,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__63 takes nothing returns b
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__66 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__66 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22645,7 +22717,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__66 takes nothing returns b
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__68 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__68 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22665,7 +22737,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__68 takes nothing returns b
                     endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__69 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__69 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22673,7 +22745,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__69 takes nothing returns b
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__67 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__67 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22687,11 +22759,11 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__67 takes nothing returns b
                 call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_ADD , 60 , true , false) // INLINED!!
-                set s__Dash_onMove[dash1]=(215)
-                set s__Dash_onEnd[dash1]=(216)
+                set s__Dash_onMove[dash1]=(217)
+                set s__Dash_onEnd[dash1]=(218)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__73 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__73 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22705,7 +22777,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__73 takes nothing returns b
                     set k=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__74 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__74 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22713,7 +22785,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__74 takes nothing returns b
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__70 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__70 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22730,7 +22802,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__70 takes nothing returns b
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__71 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__71 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22738,7 +22810,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__71 takes nothing returns b
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__72 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__72 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22754,8 +22826,8 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__72 takes nothing returns b
                         call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                         call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                         set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_ADD , 80 , true , false) // INLINED!!
-                        set s__Dash_onMove[dash1]=(218)
-                        set s__Dash_onEnd[dash1]=(219)
+                        set s__Dash_onMove[dash1]=(220)
+                        set s__Dash_onEnd[dash1]=(221)
                     set i=i + 1
                     endloop
                 endif
@@ -22764,7 +22836,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__72 takes nothing returns b
                 call s__Units_Pause(u,false)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__78 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__78 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22778,7 +22850,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__78 takes nothing returns b
                         set k=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__79 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__79 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22786,7 +22858,7 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__79 takes nothing returns b
                         call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__77 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__77 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22799,12 +22871,12 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__77 takes nothing returns b
                         call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                         call SetUnitFlyHeight(s__Units_unit[(mj)], ((50)*1.0), 0) // INLINED!!
                         set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(u)])) , 900 , s__Dash_ADD , 50 , true , false) // INLINED!!
-                        set s__Dash_onMove[dash1]=(223)
-                        set s__Dash_onEnd[dash1]=(224)
+                        set s__Dash_onMove[dash1]=(225)
+                        set s__Dash_onEnd[dash1]=(226)
                     endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__80 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__80 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22813,14 +22885,14 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__80 takes nothing returns b
                     call s__Units_Alpha(u,255)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__75 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__75 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
                 call s__Units_Alpha(u,0)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_anon__76 takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_anon__76 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22832,14 +22904,14 @@ function sa___prototype1_s__WindWalk___WindWalk_anon__76 takes nothing returns b
                     call SetUnitAnimationByIndex(s__Units_unit[(u)], (6)) // INLINED!!
                     set dash1=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) - 90 , 400 , s__Dash_ADD , 100 , true , false) // INLINED!!
                     set s__Dash_Obj[dash1]=s__Dash_Obj[dash]
-                    set s__Dash_onMove[dash1]=(225)
-                    set s__Dash_onEnd[dash1]=(226)
+                    set s__Dash_onMove[dash1]=(227)
+                    set s__Dash_onEnd[dash1]=(228)
                 else
                     call s__Spell_Destroy((s__Dash_Obj[dash]))
                 endif
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_R takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22855,11 +22927,11 @@ function sa___prototype1_s__WindWalk___WindWalk_R takes nothing returns boolean
             set s___Data_i[s__Data_i[data]]=0
             set dash=s__Dash_Start(s__Units_unit[mj] , s__Spell_Angle[e] , 1600 , s__Dash_SUB , 60 , true , false)
             set s__Dash_Obj[dash]=data
-            set s__Dash_onMove[dash]=(213)
-            set s__Dash_onEnd[dash]=(214)
+            set s__Dash_onMove[dash]=(215)
+            set s__Dash_onEnd[dash]=(216)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_E takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22873,11 +22945,11 @@ function sa___prototype1_s__WindWalk___WindWalk_E takes nothing returns boolean
             set s___Data_r[s__Data_r[data]+3]=(GetUnitY(s__Units_unit[(u)])) // INLINED!!
             set s___Data_i[s__Data_i[data]]=20
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
-            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk___WindWalk_E1)
+            call TimerStart(t, s___Data_r[s__Data_r[data]], true, function s__WindWalk__WindWalk_E1)
             set t=null
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_Q takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22885,11 +22957,11 @@ function sa___prototype1_s__WindWalk___WindWalk_Q takes nothing returns boolean
             call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl", s__Spell_Spell[e], "origin"))
             set dash=s__Dash_Start(s__Spell_Spell[e] , (GetUnitFacing(s__Units_unit[(u)])) + 90 , 200 , s__Dash_SUB , 40 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(227)
-            set s__Dash_onEnd[dash]=(228)
+            set s__Dash_onMove[dash]=(229)
+            set s__Dash_onEnd[dash]=(230)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_W takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22905,8 +22977,8 @@ function sa___prototype1_s__WindWalk___WindWalk_W takes nothing returns boolean
                 call s__Units_Position(mj,(GetUnitX(s__Units_unit[(mj)])) , (GetUnitY(s__Units_unit[(mj)])) , true) // INLINED!!
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 900 , s__Dash_SUB , 40 , true , false) // INLINED!!
-                set s__Dash_onMove[dash]=(220)
-                set s__Dash_onEnd[dash]=(221)
+                set s__Dash_onMove[dash]=(222)
+                set s__Dash_onEnd[dash]=(223)
             set i=i + 1
             endloop
             call SetUnitFlyHeight(s__Units_unit[(s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e009' , 'A00K' , 0 , (GetUnitX(s__Units_unit[(u)])) , (GetUnitY(s__Units_unit[(u)])) , (GetUnitFacing(s__Units_unit[(u)])) , 2 , 0.5 , 2.5 , "stand" , "tx.mdx"))], ((80)*1.0), 0) // INLINED!!
@@ -22914,10 +22986,10 @@ function sa___prototype1_s__WindWalk___WindWalk_W takes nothing returns boolean
             call SetUnitAnimationByIndex(s__Units_unit[(u)], (6)) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , (GetUnitFacing(s__Units_unit[(u)])) + 180 , 300 , s__Dash_SUB , 50 , true , false) // INLINED!!
             set s__Dash_Obj[dash]=e
-            set s__Dash_onEnd[dash]=(222)
+            set s__Dash_onEnd[dash]=(224)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_HERO_START takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22932,7 +23004,7 @@ function sa___prototype1_s__WindWalk___WindWalk_HERO_START takes nothing returns
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -22940,7 +23012,7 @@ function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP takes nothing returns 
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__82 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__82 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22962,7 +23034,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__82 takes nothing returns boolean
                     endif
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__83 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__83 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                     local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -22973,7 +23045,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__83 takes nothing returns boolean
                     call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__81 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__81 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -23000,8 +23072,8 @@ function sa___prototype1_s__ZZ___ZZ_anon__81 takes nothing returns boolean
                             call s__Units_Position(mj,s__Dash_X[dash] , s__Dash_Y[dash] , true)
                             set dash1=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1800 , s__Dash_SUB , 13 , true , false) // INLINED!!
                             set s__Dash_Obj[dash1]=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((k))))) // INLINED!!
-                            set s__Dash_onMove[dash1]=(235)
-                            set s__Dash_onEnd[dash1]=(236)
+                            set s__Dash_onMove[dash1]=(237)
+                            set s__Dash_onEnd[dash1]=(238)
                         endif
                     endif
                     set k=null
@@ -23011,7 +23083,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__81 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__84 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__84 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -23024,7 +23096,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__84 takes nothing returns boolean
                 call UnitApplyTimedLife(s__Units_unit[(u)], 'BHwe', ((0.5)*1.0)) // INLINED!!
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__86 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__86 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -23065,7 +23137,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__86 takes nothing returns boolean
                 endif
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_anon__87 takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_anon__87 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Dash_Unit[dash]))))) // INLINED!!
@@ -23074,7 +23146,7 @@ function sa___prototype1_s__ZZ___ZZ_anon__87 takes nothing returns boolean
                 call s__Units_Pause(u,false)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_R takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23091,14 +23163,14 @@ function sa___prototype1_s__ZZ___ZZ_R takes nothing returns boolean
                 call s__Units_Position(mj,x , y , true)
                 call UnitAddAbility(s__Units_unit[(mj)], ('A02O')) // INLINED!!
                 set dash=s__Dash_Start(s__Units_unit[mj] , (GetUnitFacing(s__Units_unit[(mj)])) , 1800 , s__Dash_SUB , 60 , true , false) // INLINED!!
-                set s__Dash_onMove[dash]=(237)
-                set s__Dash_onEnd[dash]=(238)
+                set s__Dash_onMove[dash]=(239)
+                set s__Dash_onEnd[dash]=(240)
             set i=i + 1
             endloop
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_E takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23114,11 +23186,11 @@ function sa___prototype1_s__ZZ___ZZ_E takes nothing returns boolean
             set s___Data_r[s__Data_r[data]]=0.5
             set s__TimerUtils___data[GetHandleId((t )) - TimerUtils___VOFFSET]= ( data) // INLINED!!
             call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", (GetUnitX(s__Units_unit[(u)])), (GetUnitY(s__Units_unit[(u)])))) // INLINED!!
-            call TimerStart(t, 0.05, true, function s__ZZ___ZZ_anon__85)
+            call TimerStart(t, 0.05, true, function s__ZZ__ZZ_anon__85)
             set t=null
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_W takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23128,11 +23200,11 @@ function sa___prototype1_s__ZZ___ZZ_W takes nothing returns boolean
             call SetUnitAnimationByIndex(s__Units_unit[(u)], (9)) // INLINED!!
             set dash=s__Dash_Start(s__Units_unit[u] , s__Spell_Angle[e] , 1000 , s__Dash_ADD , 70 , true , false)
             set s__Dash_Obj[dash]=e
-            set s__Dash_onMove[dash]=(239)
-            set s__Dash_onEnd[dash]=(240)
+            set s__Dash_onMove[dash]=(241)
+            set s__Dash_onEnd[dash]=(242)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_Q takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23160,7 +23232,7 @@ function sa___prototype1_s__ZZ___ZZ_Q takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_HERO_START takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23179,7 +23251,7 @@ function sa___prototype1_s__ZZ___ZZ_HERO_START takes nothing returns boolean
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__ZZ___ZZ_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__ZZ__ZZ_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=(LoadInteger(Table___ht, ((s__Units_ht)), GetHandleId(((s__Spell_Spell[e]))))) // INLINED!!
@@ -23263,7 +23335,7 @@ function sa___prototype47_s__Respawn___Respawn_PressSnyc takes nothing returns b
     return true
 endfunction
 
-function jasshelper__initstructs1118675265 takes nothing returns nothing
+function jasshelper__initstructs1128922546 takes nothing returns nothing
     set st__Respawn___Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn___Respawn_Flush,Condition( function sa__Respawn___Respawn_Flush))
     set st__Respawn___Respawn_Show=CreateTrigger()
@@ -23278,8 +23350,8 @@ function jasshelper__initstructs1118675265 takes nothing returns nothing
     call TriggerAddCondition(st__DazzleMaster___DazzleMaster_AddDazzle,Condition( function sa__DazzleMaster___DazzleMaster_AddDazzle))
     set st__DazzleMaster___DazzleMaster_Q=CreateTrigger()
     call TriggerAddCondition(st__DazzleMaster___DazzleMaster_Q,Condition( function sa__DazzleMaster___DazzleMaster_Q))
-    set st__ASN__ASN_W2=CreateTrigger()
-    call TriggerAddCondition(st__ASN__ASN_W2,Condition( function sa__ASN__ASN_W2))
+    set st__ASN___ASN_W2=CreateTrigger()
+    call TriggerAddCondition(st__ASN___ASN_W2,Condition( function sa__ASN___ASN_W2))
     set st__Winner_ShowWin=CreateTrigger()
     call TriggerAddCondition(st__Winner_ShowWin,Condition( function sa__Winner_ShowWin))
     set st__PlayerPress_create=CreateTrigger()
@@ -23453,372 +23525,378 @@ function jasshelper__initstructs1118675265 takes nothing returns nothing
     set st___prototype33[1]=CreateTrigger()
     call TriggerAddAction(st___prototype33[1],function sa___prototype33_SoundUtils___HookStopSound)
     call TriggerAddCondition(st___prototype33[1],Condition(function sa___prototype33_SoundUtils___HookStopSound))
+    set st___prototype1[9]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[9],function sa___prototype1_Test___Chat)
+    call TriggerAddCondition(st___prototype1[9],Condition(function sa___prototype1_Test___Chat))
     set st___prototype1[8]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[8],function sa___prototype1_BuyNextHero___Buy)
-    call TriggerAddCondition(st___prototype1[8],Condition(function sa___prototype1_BuyNextHero___Buy))
-    set st___prototype1[11]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[11],function sa___prototype1_Disconnect___onDisconnect)
-    call TriggerAddCondition(st___prototype1[11],Condition(function sa___prototype1_Disconnect___onDisconnect))
-    set st___prototype1[12]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[12],function sa___prototype1_LevelUp___LvUp)
-    call TriggerAddCondition(st___prototype1[12],Condition(function sa___prototype1_LevelUp___LvUp))
+    call TriggerAddAction(st___prototype1[8],function sa___prototype1_Test___Esc)
+    call TriggerAddCondition(st___prototype1[8],Condition(function sa___prototype1_Test___Esc))
+    set st___prototype1[10]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[10],function sa___prototype1_BuyNextHero___Buy)
+    call TriggerAddCondition(st___prototype1[10],Condition(function sa___prototype1_BuyNextHero___Buy))
     set st___prototype1[13]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[13],function sa___prototype1_PlayerChat___Chat)
-    call TriggerAddCondition(st___prototype1[13],Condition(function sa___prototype1_PlayerChat___Chat))
-    set st___prototype1[65]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[65],function sa___prototype1_Ai___onDmg)
-    call TriggerAddCondition(st___prototype1[65],Condition(function sa___prototype1_Ai___onDmg))
+    call TriggerAddAction(st___prototype1[13],function sa___prototype1_Disconnect___onDisconnect)
+    call TriggerAddCondition(st___prototype1[13],Condition(function sa___prototype1_Disconnect___onDisconnect))
+    set st___prototype1[14]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[14],function sa___prototype1_LevelUp___LvUp)
+    call TriggerAddCondition(st___prototype1[14],Condition(function sa___prototype1_LevelUp___LvUp))
+    set st___prototype1[15]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[15],function sa___prototype1_PlayerChat___Chat)
+    call TriggerAddCondition(st___prototype1[15],Condition(function sa___prototype1_PlayerChat___Chat))
+    set st___prototype1[67]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[67],function sa___prototype1_Ai___onDmg)
+    call TriggerAddCondition(st___prototype1[67],Condition(function sa___prototype1_Ai___onDmg))
     set st___prototype6[7]=CreateTrigger()
     call TriggerAddAction(st___prototype6[7],function sa___prototype6_Ai___AiSpawn)
     call TriggerAddCondition(st___prototype6[7],Condition(function sa___prototype6_Ai___AiSpawn))
-    set st___prototype1[106]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[106],function sa___prototype1_Item___Item_AddDamage)
-    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_Item___Item_AddDamage))
-    set st___prototype1[107]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[107],function sa___prototype1_Item___Item_SubDamage)
-    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_Item___Item_SubDamage))
     set st___prototype1[108]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[108],function sa___prototype1_Item___Item_Damage)
-    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_Item___Item_Damage))
-    set st___prototype1[102]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[102],function sa___prototype1_Item___anon__32)
-    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_Item___anon__32))
+    call TriggerAddAction(st___prototype1[108],function sa___prototype1_Item___Item_AddDamage)
+    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_Item___Item_AddDamage))
     set st___prototype1[109]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[109],function sa___prototype1_Item___ZiShaQiu)
-    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_Item___ZiShaQiu))
+    call TriggerAddAction(st___prototype1[109],function sa___prototype1_Item___Item_SubDamage)
+    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_Item___Item_SubDamage))
     set st___prototype1[110]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[110],function sa___prototype1_Item___TaiYangShi)
-    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_Item___TaiYangShi))
-    set st___prototype1[111]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[111],function sa___prototype1_Item___YueLiangShi)
-    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_Item___YueLiangShi))
-    set st___prototype1[103]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[103],function sa___prototype1_Item___anon__33)
-    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_Item___anon__33))
-    set st___prototype1[112]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[112],function sa___prototype1_Item___TuiTuiBang)
-    call TriggerAddCondition(st___prototype1[112],Condition(function sa___prototype1_Item___TuiTuiBang))
+    call TriggerAddAction(st___prototype1[110],function sa___prototype1_Item___Item_Damage)
+    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_Item___Item_Damage))
     set st___prototype1[104]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[104],function sa___prototype1_Item___anon__34)
-    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_Item___anon__34))
-    set st___prototype1[105]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[105],function sa___prototype1_Item___anon__35)
-    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_Item___anon__35))
+    call TriggerAddAction(st___prototype1[104],function sa___prototype1_Item___anon__32)
+    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_Item___anon__32))
+    set st___prototype1[111]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[111],function sa___prototype1_Item___ZiShaQiu)
+    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_Item___ZiShaQiu))
+    set st___prototype1[112]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[112],function sa___prototype1_Item___TaiYangShi)
+    call TriggerAddCondition(st___prototype1[112],Condition(function sa___prototype1_Item___TaiYangShi))
     set st___prototype1[113]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[113],function sa___prototype1_Item___ShanQiuZhiChui)
-    call TriggerAddCondition(st___prototype1[113],Condition(function sa___prototype1_Item___ShanQiuZhiChui))
-    set st___prototype1[247]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[247],function sa___prototype1_NewUI___Select)
-    call TriggerAddCondition(st___prototype1[247],Condition(function sa___prototype1_NewUI___Select))
+    call TriggerAddAction(st___prototype1[113],function sa___prototype1_Item___YueLiangShi)
+    call TriggerAddCondition(st___prototype1[113],Condition(function sa___prototype1_Item___YueLiangShi))
+    set st___prototype1[105]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[105],function sa___prototype1_Item___anon__33)
+    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_Item___anon__33))
+    set st___prototype1[114]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[114],function sa___prototype1_Item___TuiTuiBang)
+    call TriggerAddCondition(st___prototype1[114],Condition(function sa___prototype1_Item___TuiTuiBang))
+    set st___prototype1[106]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[106],function sa___prototype1_Item___anon__34)
+    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_Item___anon__34))
+    set st___prototype1[107]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[107],function sa___prototype1_Item___anon__35)
+    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_Item___anon__35))
+    set st___prototype1[115]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[115],function sa___prototype1_Item___ShanQiuZhiChui)
+    call TriggerAddCondition(st___prototype1[115],Condition(function sa___prototype1_Item___ShanQiuZhiChui))
+    set st___prototype1[249]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[249],function sa___prototype1_NewUI___Select)
+    call TriggerAddCondition(st___prototype1[249],Condition(function sa___prototype1_NewUI___Select))
     set st___prototype6[2]=CreateTrigger()
     call TriggerAddAction(st___prototype6[2],function sa___prototype6_s__Dash_Death)
     call TriggerAddCondition(st___prototype6[2],Condition(function sa___prototype6_s__Dash_Death))
     set st___prototype1[7]=CreateTrigger()
     call TriggerAddAction(st___prototype1[7],function sa___prototype1_s__Effect_anon__36)
     call TriggerAddCondition(st___prototype1[7],Condition(function sa___prototype1_s__Effect_anon__36))
-    set st___prototype1[9]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[9],function sa___prototype1_s__Damage_onDisconnect)
-    call TriggerAddCondition(st___prototype1[9],Condition(function sa___prototype1_s__Damage_onDisconnect))
-    set st___prototype1[10]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[10],function sa___prototype1_s__Damage_onDamage)
-    call TriggerAddCondition(st___prototype1[10],Condition(function sa___prototype1_s__Damage_onDamage))
-    set st___prototype1[14]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[14],function sa___prototype1_s__Spell_onUnitSpell)
-    call TriggerAddCondition(st___prototype1[14],Condition(function sa___prototype1_s__Spell_onUnitSpell))
-    set st___prototype1[15]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[15],function sa___prototype1_s__Spell_onUnitStartSpell)
-    call TriggerAddCondition(st___prototype1[15],Condition(function sa___prototype1_s__Spell_onUnitStartSpell))
+    set st___prototype1[11]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[11],function sa___prototype1_s__Damage_onDisconnect)
+    call TriggerAddCondition(st___prototype1[11],Condition(function sa___prototype1_s__Damage_onDisconnect))
+    set st___prototype1[12]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[12],function sa___prototype1_s__Damage_onDamage)
+    call TriggerAddCondition(st___prototype1[12],Condition(function sa___prototype1_s__Damage_onDamage))
     set st___prototype1[16]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[16],function sa___prototype1_s__Spell_onUnitStopSpell)
-    call TriggerAddCondition(st___prototype1[16],Condition(function sa___prototype1_s__Spell_onUnitStopSpell))
+    call TriggerAddAction(st___prototype1[16],function sa___prototype1_s__Spell_onUnitSpell)
+    call TriggerAddCondition(st___prototype1[16],Condition(function sa___prototype1_s__Spell_onUnitSpell))
     set st___prototype1[17]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[17],function sa___prototype1_s__Spell_onUnitReadySpell)
-    call TriggerAddCondition(st___prototype1[17],Condition(function sa___prototype1_s__Spell_onUnitReadySpell))
+    call TriggerAddAction(st___prototype1[17],function sa___prototype1_s__Spell_onUnitStartSpell)
+    call TriggerAddCondition(st___prototype1[17],Condition(function sa___prototype1_s__Spell_onUnitStartSpell))
+    set st___prototype1[18]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[18],function sa___prototype1_s__Spell_onUnitStopSpell)
+    call TriggerAddCondition(st___prototype1[18],Condition(function sa___prototype1_s__Spell_onUnitStopSpell))
+    set st___prototype1[19]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[19],function sa___prototype1_s__Spell_onUnitReadySpell)
+    call TriggerAddCondition(st___prototype1[19],Condition(function sa___prototype1_s__Spell_onUnitReadySpell))
     set st___prototype5[1]=CreateTrigger()
     call TriggerAddAction(st___prototype5[1],function sa___prototype5_s__Units_Data)
     call TriggerAddCondition(st___prototype5[1],Condition(function sa___prototype5_s__Units_Data))
-    set st___prototype1[18]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[18],function sa___prototype1_s__Units_anon__1)
-    call TriggerAddCondition(st___prototype1[18],Condition(function sa___prototype1_s__Units_anon__1))
-    set st___prototype1[19]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[19],function sa___prototype1_s__Units_anon__2)
-    call TriggerAddCondition(st___prototype1[19],Condition(function sa___prototype1_s__Units_anon__2))
     set st___prototype1[20]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[20],function sa___prototype1_s__Units_anon__3)
-    call TriggerAddCondition(st___prototype1[20],Condition(function sa___prototype1_s__Units_anon__3))
+    call TriggerAddAction(st___prototype1[20],function sa___prototype1_s__Units_anon__1)
+    call TriggerAddCondition(st___prototype1[20],Condition(function sa___prototype1_s__Units_anon__1))
     set st___prototype1[21]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[21],function sa___prototype1_s__Units_anon__4)
-    call TriggerAddCondition(st___prototype1[21],Condition(function sa___prototype1_s__Units_anon__4))
+    call TriggerAddAction(st___prototype1[21],function sa___prototype1_s__Units_anon__2)
+    call TriggerAddCondition(st___prototype1[21],Condition(function sa___prototype1_s__Units_anon__2))
     set st___prototype1[22]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[22],function sa___prototype1_s__Units_anon__5)
-    call TriggerAddCondition(st___prototype1[22],Condition(function sa___prototype1_s__Units_anon__5))
+    call TriggerAddAction(st___prototype1[22],function sa___prototype1_s__Units_anon__3)
+    call TriggerAddCondition(st___prototype1[22],Condition(function sa___prototype1_s__Units_anon__3))
     set st___prototype1[23]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[23],function sa___prototype1_s__Units_anon__6)
-    call TriggerAddCondition(st___prototype1[23],Condition(function sa___prototype1_s__Units_anon__6))
+    call TriggerAddAction(st___prototype1[23],function sa___prototype1_s__Units_anon__4)
+    call TriggerAddCondition(st___prototype1[23],Condition(function sa___prototype1_s__Units_anon__4))
     set st___prototype1[24]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[24],function sa___prototype1_s__Units_anon__7)
-    call TriggerAddCondition(st___prototype1[24],Condition(function sa___prototype1_s__Units_anon__7))
+    call TriggerAddAction(st___prototype1[24],function sa___prototype1_s__Units_anon__5)
+    call TriggerAddCondition(st___prototype1[24],Condition(function sa___prototype1_s__Units_anon__5))
+    set st___prototype1[25]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[25],function sa___prototype1_s__Units_anon__6)
+    call TriggerAddCondition(st___prototype1[25],Condition(function sa___prototype1_s__Units_anon__6))
+    set st___prototype1[26]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[26],function sa___prototype1_s__Units_anon__7)
+    call TriggerAddCondition(st___prototype1[26],Condition(function sa___prototype1_s__Units_anon__7))
     set st___prototype56[1]=CreateTrigger()
     call TriggerAddAction(st___prototype56[1],function sa___prototype56_s__Units_Damage)
     call TriggerAddCondition(st___prototype56[1],Condition(function sa___prototype56_s__Units_Damage))
-    set st___prototype1[25]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[25],function sa___prototype1_s__Units_onDeath)
-    call TriggerAddCondition(st___prototype1[25],Condition(function sa___prototype1_s__Units_onDeath))
-    set st___prototype1[26]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[26],function sa___prototype1_s__Units_onDeacy)
-    call TriggerAddCondition(st___prototype1[26],Condition(function sa___prototype1_s__Units_onDeacy))
+    set st___prototype1[27]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[27],function sa___prototype1_s__Units_onDeath)
+    call TriggerAddCondition(st___prototype1[27],Condition(function sa___prototype1_s__Units_onDeath))
+    set st___prototype1[28]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[28],function sa___prototype1_s__Units_onDeacy)
+    call TriggerAddCondition(st___prototype1[28],Condition(function sa___prototype1_s__Units_onDeacy))
     set st___prototype47[1]=CreateTrigger()
     call TriggerAddAction(st___prototype47[1],function sa___prototype47_s__PlayerPress_Down)
     call TriggerAddCondition(st___prototype47[1],Condition(function sa___prototype47_s__PlayerPress_Down))
     set st___prototype47[2]=CreateTrigger()
     call TriggerAddAction(st___prototype47[2],function sa___prototype47_s__PlayerPress_Up)
     call TriggerAddCondition(st___prototype47[2],Condition(function sa___prototype47_s__PlayerPress_Up))
-    set st___prototype1[27]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[27],function sa___prototype1_s__Winner_anon__18)
-    call TriggerAddCondition(st___prototype1[27],Condition(function sa___prototype1_s__Winner_anon__18))
+    set st___prototype1[29]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[29],function sa___prototype1_s__Winner_anon__18)
+    call TriggerAddCondition(st___prototype1[29],Condition(function sa___prototype1_s__Winner_anon__18))
     set st___prototype6[3]=CreateTrigger()
     call TriggerAddAction(st___prototype6[3],function sa___prototype6_s__Winner_Death)
     call TriggerAddCondition(st___prototype6[3],Condition(function sa___prototype6_s__Winner_Death))
     set st___prototype29[1]=CreateTrigger()
-    call TriggerAddAction(st___prototype29[1],function sa___prototype29_s__ASN__ASN_AI)
-    call TriggerAddCondition(st___prototype29[1],Condition(function sa___prototype29_s__ASN__ASN_AI))
-    set st___prototype1[28]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[28],function sa___prototype1_s__ASN__ASN_Damage)
-    call TriggerAddCondition(st___prototype1[28],Condition(function sa___prototype1_s__ASN__ASN_Damage))
-    set st___prototype1[29]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[29],function sa___prototype1_s__ASN__ASN_anon__152)
-    call TriggerAddCondition(st___prototype1[29],Condition(function sa___prototype1_s__ASN__ASN_anon__152))
+    call TriggerAddAction(st___prototype29[1],function sa___prototype29_s__ASN___ASN_AI)
+    call TriggerAddCondition(st___prototype29[1],Condition(function sa___prototype29_s__ASN___ASN_AI))
     set st___prototype1[30]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[30],function sa___prototype1_s__ASN__ASN_anon__153)
-    call TriggerAddCondition(st___prototype1[30],Condition(function sa___prototype1_s__ASN__ASN_anon__153))
+    call TriggerAddAction(st___prototype1[30],function sa___prototype1_s__ASN___ASN_Damage)
+    call TriggerAddCondition(st___prototype1[30],Condition(function sa___prototype1_s__ASN___ASN_Damage))
     set st___prototype1[31]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[31],function sa___prototype1_s__ASN__ASN_anon__154)
-    call TriggerAddCondition(st___prototype1[31],Condition(function sa___prototype1_s__ASN__ASN_anon__154))
+    call TriggerAddAction(st___prototype1[31],function sa___prototype1_s__ASN___ASN_anon__152)
+    call TriggerAddCondition(st___prototype1[31],Condition(function sa___prototype1_s__ASN___ASN_anon__152))
     set st___prototype1[32]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[32],function sa___prototype1_s__ASN__ASN_anon__155)
-    call TriggerAddCondition(st___prototype1[32],Condition(function sa___prototype1_s__ASN__ASN_anon__155))
+    call TriggerAddAction(st___prototype1[32],function sa___prototype1_s__ASN___ASN_anon__153)
+    call TriggerAddCondition(st___prototype1[32],Condition(function sa___prototype1_s__ASN___ASN_anon__153))
     set st___prototype1[33]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[33],function sa___prototype1_s__ASN__ASN_anon__156)
-    call TriggerAddCondition(st___prototype1[33],Condition(function sa___prototype1_s__ASN__ASN_anon__156))
+    call TriggerAddAction(st___prototype1[33],function sa___prototype1_s__ASN___ASN_anon__154)
+    call TriggerAddCondition(st___prototype1[33],Condition(function sa___prototype1_s__ASN___ASN_anon__154))
     set st___prototype1[34]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[34],function sa___prototype1_s__ASN__ASN_anon__157)
-    call TriggerAddCondition(st___prototype1[34],Condition(function sa___prototype1_s__ASN__ASN_anon__157))
+    call TriggerAddAction(st___prototype1[34],function sa___prototype1_s__ASN___ASN_anon__155)
+    call TriggerAddCondition(st___prototype1[34],Condition(function sa___prototype1_s__ASN___ASN_anon__155))
     set st___prototype1[35]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[35],function sa___prototype1_s__ASN__ASN_anon__158)
-    call TriggerAddCondition(st___prototype1[35],Condition(function sa___prototype1_s__ASN__ASN_anon__158))
+    call TriggerAddAction(st___prototype1[35],function sa___prototype1_s__ASN___ASN_anon__156)
+    call TriggerAddCondition(st___prototype1[35],Condition(function sa___prototype1_s__ASN___ASN_anon__156))
     set st___prototype1[36]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[36],function sa___prototype1_s__ASN__ASN_anon__159)
-    call TriggerAddCondition(st___prototype1[36],Condition(function sa___prototype1_s__ASN__ASN_anon__159))
+    call TriggerAddAction(st___prototype1[36],function sa___prototype1_s__ASN___ASN_anon__157)
+    call TriggerAddCondition(st___prototype1[36],Condition(function sa___prototype1_s__ASN___ASN_anon__157))
     set st___prototype1[37]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[37],function sa___prototype1_s__ASN__ASN_anon__160)
-    call TriggerAddCondition(st___prototype1[37],Condition(function sa___prototype1_s__ASN__ASN_anon__160))
+    call TriggerAddAction(st___prototype1[37],function sa___prototype1_s__ASN___ASN_anon__158)
+    call TriggerAddCondition(st___prototype1[37],Condition(function sa___prototype1_s__ASN___ASN_anon__158))
     set st___prototype1[38]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[38],function sa___prototype1_s__ASN__ASN_anon__161)
-    call TriggerAddCondition(st___prototype1[38],Condition(function sa___prototype1_s__ASN__ASN_anon__161))
+    call TriggerAddAction(st___prototype1[38],function sa___prototype1_s__ASN___ASN_anon__159)
+    call TriggerAddCondition(st___prototype1[38],Condition(function sa___prototype1_s__ASN___ASN_anon__159))
     set st___prototype1[39]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[39],function sa___prototype1_s__ASN__ASN_anon__162)
-    call TriggerAddCondition(st___prototype1[39],Condition(function sa___prototype1_s__ASN__ASN_anon__162))
+    call TriggerAddAction(st___prototype1[39],function sa___prototype1_s__ASN___ASN_anon__160)
+    call TriggerAddCondition(st___prototype1[39],Condition(function sa___prototype1_s__ASN___ASN_anon__160))
     set st___prototype1[40]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[40],function sa___prototype1_s__ASN__ASN_anon__163)
-    call TriggerAddCondition(st___prototype1[40],Condition(function sa___prototype1_s__ASN__ASN_anon__163))
+    call TriggerAddAction(st___prototype1[40],function sa___prototype1_s__ASN___ASN_anon__161)
+    call TriggerAddCondition(st___prototype1[40],Condition(function sa___prototype1_s__ASN___ASN_anon__161))
     set st___prototype1[41]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[41],function sa___prototype1_s__ASN__ASN_anon__164)
-    call TriggerAddCondition(st___prototype1[41],Condition(function sa___prototype1_s__ASN__ASN_anon__164))
+    call TriggerAddAction(st___prototype1[41],function sa___prototype1_s__ASN___ASN_anon__162)
+    call TriggerAddCondition(st___prototype1[41],Condition(function sa___prototype1_s__ASN___ASN_anon__162))
     set st___prototype1[42]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[42],function sa___prototype1_s__ASN__ASN_Q)
-    call TriggerAddCondition(st___prototype1[42],Condition(function sa___prototype1_s__ASN__ASN_Q))
+    call TriggerAddAction(st___prototype1[42],function sa___prototype1_s__ASN___ASN_anon__163)
+    call TriggerAddCondition(st___prototype1[42],Condition(function sa___prototype1_s__ASN___ASN_anon__163))
     set st___prototype1[43]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[43],function sa___prototype1_s__ASN__ASN_W)
-    call TriggerAddCondition(st___prototype1[43],Condition(function sa___prototype1_s__ASN__ASN_W))
+    call TriggerAddAction(st___prototype1[43],function sa___prototype1_s__ASN___ASN_anon__164)
+    call TriggerAddCondition(st___prototype1[43],Condition(function sa___prototype1_s__ASN___ASN_anon__164))
     set st___prototype1[44]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[44],function sa___prototype1_s__ASN__ASN_HERO_START)
-    call TriggerAddCondition(st___prototype1[44],Condition(function sa___prototype1_s__ASN__ASN_HERO_START))
-    set st___prototype6[4]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[4],function sa___prototype6_s__ASN__ASN_Spawn)
-    call TriggerAddCondition(st___prototype6[4],Condition(function sa___prototype6_s__ASN__ASN_Spawn))
+    call TriggerAddAction(st___prototype1[44],function sa___prototype1_s__ASN___ASN_Q)
+    call TriggerAddCondition(st___prototype1[44],Condition(function sa___prototype1_s__ASN___ASN_Q))
     set st___prototype1[45]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[45],function sa___prototype1_s__ASN__ASN_W1)
-    call TriggerAddCondition(st___prototype1[45],Condition(function sa___prototype1_s__ASN__ASN_W1))
+    call TriggerAddAction(st___prototype1[45],function sa___prototype1_s__ASN___ASN_W)
+    call TriggerAddCondition(st___prototype1[45],Condition(function sa___prototype1_s__ASN___ASN_W))
     set st___prototype1[46]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[46],function sa___prototype1_s__ASN__ASN_W3)
-    call TriggerAddCondition(st___prototype1[46],Condition(function sa___prototype1_s__ASN__ASN_W3))
+    call TriggerAddAction(st___prototype1[46],function sa___prototype1_s__ASN___ASN_HERO_START)
+    call TriggerAddCondition(st___prototype1[46],Condition(function sa___prototype1_s__ASN___ASN_HERO_START))
+    set st___prototype6[4]=CreateTrigger()
+    call TriggerAddAction(st___prototype6[4],function sa___prototype6_s__ASN___ASN_Spawn)
+    call TriggerAddCondition(st___prototype6[4],Condition(function sa___prototype6_s__ASN___ASN_Spawn))
     set st___prototype1[47]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[47],function sa___prototype1_s__ASN__ASN_Damage_Add)
-    call TriggerAddCondition(st___prototype1[47],Condition(function sa___prototype1_s__ASN__ASN_Damage_Add))
+    call TriggerAddAction(st___prototype1[47],function sa___prototype1_s__ASN___ASN_W1)
+    call TriggerAddCondition(st___prototype1[47],Condition(function sa___prototype1_s__ASN___ASN_W1))
     set st___prototype1[48]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[48],function sa___prototype1_s__ASN__ASN_Damage_Sub)
-    call TriggerAddCondition(st___prototype1[48],Condition(function sa___prototype1_s__ASN__ASN_Damage_Sub))
+    call TriggerAddAction(st___prototype1[48],function sa___prototype1_s__ASN___ASN_W3)
+    call TriggerAddCondition(st___prototype1[48],Condition(function sa___prototype1_s__ASN___ASN_W3))
     set st___prototype1[49]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[49],function sa___prototype1_s__AW__AW_anon__166)
-    call TriggerAddCondition(st___prototype1[49],Condition(function sa___prototype1_s__AW__AW_anon__166))
+    call TriggerAddAction(st___prototype1[49],function sa___prototype1_s__ASN___ASN_Damage_Add)
+    call TriggerAddCondition(st___prototype1[49],Condition(function sa___prototype1_s__ASN___ASN_Damage_Add))
     set st___prototype1[50]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[50],function sa___prototype1_s__AW__AW_anon__165)
-    call TriggerAddCondition(st___prototype1[50],Condition(function sa___prototype1_s__AW__AW_anon__165))
+    call TriggerAddAction(st___prototype1[50],function sa___prototype1_s__ASN___ASN_Damage_Sub)
+    call TriggerAddCondition(st___prototype1[50],Condition(function sa___prototype1_s__ASN___ASN_Damage_Sub))
     set st___prototype1[51]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[51],function sa___prototype1_s__AW__AW_anon__167)
-    call TriggerAddCondition(st___prototype1[51],Condition(function sa___prototype1_s__AW__AW_anon__167))
+    call TriggerAddAction(st___prototype1[51],function sa___prototype1_s__AW___AW_anon__166)
+    call TriggerAddCondition(st___prototype1[51],Condition(function sa___prototype1_s__AW___AW_anon__166))
     set st___prototype1[52]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[52],function sa___prototype1_s__AW__AW_anon__170)
-    call TriggerAddCondition(st___prototype1[52],Condition(function sa___prototype1_s__AW__AW_anon__170))
+    call TriggerAddAction(st___prototype1[52],function sa___prototype1_s__AW___AW_anon__165)
+    call TriggerAddCondition(st___prototype1[52],Condition(function sa___prototype1_s__AW___AW_anon__165))
     set st___prototype1[53]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[53],function sa___prototype1_s__AW__AW_anon__171)
-    call TriggerAddCondition(st___prototype1[53],Condition(function sa___prototype1_s__AW__AW_anon__171))
+    call TriggerAddAction(st___prototype1[53],function sa___prototype1_s__AW___AW_anon__167)
+    call TriggerAddCondition(st___prototype1[53],Condition(function sa___prototype1_s__AW___AW_anon__167))
     set st___prototype1[54]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[54],function sa___prototype1_s__AW__AW_anon__168)
-    call TriggerAddCondition(st___prototype1[54],Condition(function sa___prototype1_s__AW__AW_anon__168))
+    call TriggerAddAction(st___prototype1[54],function sa___prototype1_s__AW___AW_anon__170)
+    call TriggerAddCondition(st___prototype1[54],Condition(function sa___prototype1_s__AW___AW_anon__170))
     set st___prototype1[55]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[55],function sa___prototype1_s__AW__AW_anon__169)
-    call TriggerAddCondition(st___prototype1[55],Condition(function sa___prototype1_s__AW__AW_anon__169))
+    call TriggerAddAction(st___prototype1[55],function sa___prototype1_s__AW___AW_anon__171)
+    call TriggerAddCondition(st___prototype1[55],Condition(function sa___prototype1_s__AW___AW_anon__171))
     set st___prototype1[56]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[56],function sa___prototype1_s__AW__AW_anon__172)
-    call TriggerAddCondition(st___prototype1[56],Condition(function sa___prototype1_s__AW__AW_anon__172))
+    call TriggerAddAction(st___prototype1[56],function sa___prototype1_s__AW___AW_anon__168)
+    call TriggerAddCondition(st___prototype1[56],Condition(function sa___prototype1_s__AW___AW_anon__168))
     set st___prototype1[57]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[57],function sa___prototype1_s__AW__AW_anon__173)
-    call TriggerAddCondition(st___prototype1[57],Condition(function sa___prototype1_s__AW__AW_anon__173))
+    call TriggerAddAction(st___prototype1[57],function sa___prototype1_s__AW___AW_anon__169)
+    call TriggerAddCondition(st___prototype1[57],Condition(function sa___prototype1_s__AW___AW_anon__169))
     set st___prototype1[58]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[58],function sa___prototype1_s__AW__AW_D)
-    call TriggerAddCondition(st___prototype1[58],Condition(function sa___prototype1_s__AW__AW_D))
+    call TriggerAddAction(st___prototype1[58],function sa___prototype1_s__AW___AW_anon__172)
+    call TriggerAddCondition(st___prototype1[58],Condition(function sa___prototype1_s__AW___AW_anon__172))
     set st___prototype1[59]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[59],function sa___prototype1_s__AW__AW_E)
-    call TriggerAddCondition(st___prototype1[59],Condition(function sa___prototype1_s__AW__AW_E))
+    call TriggerAddAction(st___prototype1[59],function sa___prototype1_s__AW___AW_anon__173)
+    call TriggerAddCondition(st___prototype1[59],Condition(function sa___prototype1_s__AW___AW_anon__173))
     set st___prototype1[60]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[60],function sa___prototype1_s__AW__AW_W)
-    call TriggerAddCondition(st___prototype1[60],Condition(function sa___prototype1_s__AW__AW_W))
+    call TriggerAddAction(st___prototype1[60],function sa___prototype1_s__AW___AW_D)
+    call TriggerAddCondition(st___prototype1[60],Condition(function sa___prototype1_s__AW___AW_D))
     set st___prototype1[61]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[61],function sa___prototype1_s__AW__AW_HERO_START)
-    call TriggerAddCondition(st___prototype1[61],Condition(function sa___prototype1_s__AW__AW_HERO_START))
+    call TriggerAddAction(st___prototype1[61],function sa___prototype1_s__AW___AW_E)
+    call TriggerAddCondition(st___prototype1[61],Condition(function sa___prototype1_s__AW___AW_E))
     set st___prototype1[62]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[62],function sa___prototype1_s__AW__AW_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[62],Condition(function sa___prototype1_s__AW__AW_HERO_STOP))
+    call TriggerAddAction(st___prototype1[62],function sa___prototype1_s__AW___AW_W)
+    call TriggerAddCondition(st___prototype1[62],Condition(function sa___prototype1_s__AW___AW_W))
     set st___prototype1[63]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[63],function sa___prototype1_s__AW__AW_Damage_Add)
-    call TriggerAddCondition(st___prototype1[63],Condition(function sa___prototype1_s__AW__AW_Damage_Add))
+    call TriggerAddAction(st___prototype1[63],function sa___prototype1_s__AW___AW_HERO_START)
+    call TriggerAddCondition(st___prototype1[63],Condition(function sa___prototype1_s__AW___AW_HERO_START))
     set st___prototype1[64]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[64],function sa___prototype1_s__AW__AW_Damage_Sub)
-    call TriggerAddCondition(st___prototype1[64],Condition(function sa___prototype1_s__AW__AW_Damage_Sub))
-    set st___prototype6[5]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[5],function sa___prototype6_s__AW__AW_Death)
-    call TriggerAddCondition(st___prototype6[5],Condition(function sa___prototype6_s__AW__AW_Death))
-    set st___prototype6[6]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[6],function sa___prototype6_s__AW__AW_Spawn)
-    call TriggerAddCondition(st___prototype6[6],Condition(function sa___prototype6_s__AW__AW_Spawn))
+    call TriggerAddAction(st___prototype1[64],function sa___prototype1_s__AW___AW_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[64],Condition(function sa___prototype1_s__AW___AW_HERO_STOP))
+    set st___prototype1[65]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[65],function sa___prototype1_s__AW___AW_Damage_Add)
+    call TriggerAddCondition(st___prototype1[65],Condition(function sa___prototype1_s__AW___AW_Damage_Add))
     set st___prototype1[66]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[66],function sa___prototype1_s__BlackSaber___BlackSaber_anon__89)
-    call TriggerAddCondition(st___prototype1[66],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__89))
-    set st___prototype1[67]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[67],function sa___prototype1_s__BlackSaber___BlackSaber_anon__92)
-    call TriggerAddCondition(st___prototype1[67],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__92))
+    call TriggerAddAction(st___prototype1[66],function sa___prototype1_s__AW___AW_Damage_Sub)
+    call TriggerAddCondition(st___prototype1[66],Condition(function sa___prototype1_s__AW___AW_Damage_Sub))
+    set st___prototype6[5]=CreateTrigger()
+    call TriggerAddAction(st___prototype6[5],function sa___prototype6_s__AW___AW_Death)
+    call TriggerAddCondition(st___prototype6[5],Condition(function sa___prototype6_s__AW___AW_Death))
+    set st___prototype6[6]=CreateTrigger()
+    call TriggerAddAction(st___prototype6[6],function sa___prototype6_s__AW___AW_Spawn)
+    call TriggerAddCondition(st___prototype6[6],Condition(function sa___prototype6_s__AW___AW_Spawn))
     set st___prototype1[68]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[68],function sa___prototype1_s__BlackSaber___BlackSaber_anon__90)
-    call TriggerAddCondition(st___prototype1[68],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__90))
+    call TriggerAddAction(st___prototype1[68],function sa___prototype1_s__BlackSaber__BlackSaber_anon__89)
+    call TriggerAddCondition(st___prototype1[68],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__89))
     set st___prototype1[69]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[69],function sa___prototype1_s__BlackSaber___BlackSaber_anon__93)
-    call TriggerAddCondition(st___prototype1[69],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__93))
+    call TriggerAddAction(st___prototype1[69],function sa___prototype1_s__BlackSaber__BlackSaber_anon__92)
+    call TriggerAddCondition(st___prototype1[69],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__92))
     set st___prototype1[70]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[70],function sa___prototype1_s__BlackSaber___BlackSaber_anon__95)
-    call TriggerAddCondition(st___prototype1[70],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__95))
+    call TriggerAddAction(st___prototype1[70],function sa___prototype1_s__BlackSaber__BlackSaber_anon__90)
+    call TriggerAddCondition(st___prototype1[70],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__90))
     set st___prototype1[71]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[71],function sa___prototype1_s__BlackSaber___BlackSaber_anon__96)
-    call TriggerAddCondition(st___prototype1[71],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__96))
+    call TriggerAddAction(st___prototype1[71],function sa___prototype1_s__BlackSaber__BlackSaber_anon__93)
+    call TriggerAddCondition(st___prototype1[71],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__93))
     set st___prototype1[72]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[72],function sa___prototype1_s__BlackSaber___BlackSaber_anon__97)
-    call TriggerAddCondition(st___prototype1[72],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__97))
+    call TriggerAddAction(st___prototype1[72],function sa___prototype1_s__BlackSaber__BlackSaber_anon__95)
+    call TriggerAddCondition(st___prototype1[72],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__95))
     set st___prototype1[73]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[73],function sa___prototype1_s__BlackSaber___BlackSaber_anon__98)
-    call TriggerAddCondition(st___prototype1[73],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__98))
-    set st___prototype29[2]=CreateTrigger()
-    call TriggerAddAction(st___prototype29[2],function sa___prototype29_s__BlackSaber___BlackSaber_AI)
-    call TriggerAddCondition(st___prototype29[2],Condition(function sa___prototype29_s__BlackSaber___BlackSaber_AI))
+    call TriggerAddAction(st___prototype1[73],function sa___prototype1_s__BlackSaber__BlackSaber_anon__96)
+    call TriggerAddCondition(st___prototype1[73],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__96))
     set st___prototype1[74]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[74],function sa___prototype1_s__BlackSaber___BlackSaber_D)
-    call TriggerAddCondition(st___prototype1[74],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_D))
+    call TriggerAddAction(st___prototype1[74],function sa___prototype1_s__BlackSaber__BlackSaber_anon__97)
+    call TriggerAddCondition(st___prototype1[74],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__97))
     set st___prototype1[75]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[75],function sa___prototype1_s__BlackSaber___BlackSaber_R)
-    call TriggerAddCondition(st___prototype1[75],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_R))
+    call TriggerAddAction(st___prototype1[75],function sa___prototype1_s__BlackSaber__BlackSaber_anon__98)
+    call TriggerAddCondition(st___prototype1[75],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__98))
+    set st___prototype29[2]=CreateTrigger()
+    call TriggerAddAction(st___prototype29[2],function sa___prototype29_s__BlackSaber__BlackSaber_AI)
+    call TriggerAddCondition(st___prototype29[2],Condition(function sa___prototype29_s__BlackSaber__BlackSaber_AI))
     set st___prototype1[76]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[76],function sa___prototype1_s__BlackSaber___BlackSaber_Q)
-    call TriggerAddCondition(st___prototype1[76],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_Q))
+    call TriggerAddAction(st___prototype1[76],function sa___prototype1_s__BlackSaber__BlackSaber_D)
+    call TriggerAddCondition(st___prototype1[76],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_D))
     set st___prototype1[77]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[77],function sa___prototype1_s__BlackSaber___BlackSaber_W)
-    call TriggerAddCondition(st___prototype1[77],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_W))
+    call TriggerAddAction(st___prototype1[77],function sa___prototype1_s__BlackSaber__BlackSaber_R)
+    call TriggerAddCondition(st___prototype1[77],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_R))
     set st___prototype1[78]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[78],function sa___prototype1_s__BlackSaber___BlackSaber_E)
-    call TriggerAddCondition(st___prototype1[78],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_E))
+    call TriggerAddAction(st___prototype1[78],function sa___prototype1_s__BlackSaber__BlackSaber_Q)
+    call TriggerAddCondition(st___prototype1[78],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_Q))
     set st___prototype1[79]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[79],function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START)
-    call TriggerAddCondition(st___prototype1[79],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START))
+    call TriggerAddAction(st___prototype1[79],function sa___prototype1_s__BlackSaber__BlackSaber_W)
+    call TriggerAddCondition(st___prototype1[79],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_W))
     set st___prototype1[80]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[80],function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[80],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP))
+    call TriggerAddAction(st___prototype1[80],function sa___prototype1_s__BlackSaber__BlackSaber_E)
+    call TriggerAddCondition(st___prototype1[80],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_E))
+    set st___prototype1[81]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[81],function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START)
+    call TriggerAddCondition(st___prototype1[81],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START))
+    set st___prototype1[82]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[82],function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[82],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP))
     set st___prototype6[8]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[8],function sa___prototype6_s__BlackSaber___BlackSaber_Spawn)
-    call TriggerAddCondition(st___prototype6[8],Condition(function sa___prototype6_s__BlackSaber___BlackSaber_Spawn))
+    call TriggerAddAction(st___prototype6[8],function sa___prototype6_s__BlackSaber__BlackSaber_Spawn)
+    call TriggerAddCondition(st___prototype6[8],Condition(function sa___prototype6_s__BlackSaber__BlackSaber_Spawn))
     set st___prototype29[3]=CreateTrigger()
     call TriggerAddAction(st___prototype29[3],function sa___prototype29_s__DazzleMaster___DazzleMaster_AI)
     call TriggerAddCondition(st___prototype29[3],Condition(function sa___prototype29_s__DazzleMaster___DazzleMaster_AI))
-    set st___prototype1[81]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[81],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__46)
-    call TriggerAddCondition(st___prototype1[81],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__46))
-    set st___prototype1[82]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[82],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__47)
-    call TriggerAddCondition(st___prototype1[82],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__47))
     set st___prototype1[83]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[83],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__48)
-    call TriggerAddCondition(st___prototype1[83],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__48))
+    call TriggerAddAction(st___prototype1[83],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__46)
+    call TriggerAddCondition(st___prototype1[83],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__46))
     set st___prototype1[84]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[84],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__49)
-    call TriggerAddCondition(st___prototype1[84],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__49))
+    call TriggerAddAction(st___prototype1[84],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__47)
+    call TriggerAddCondition(st___prototype1[84],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__47))
     set st___prototype1[85]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[85],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__54)
-    call TriggerAddCondition(st___prototype1[85],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__54))
+    call TriggerAddAction(st___prototype1[85],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__48)
+    call TriggerAddCondition(st___prototype1[85],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__48))
     set st___prototype1[86]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[86],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__55)
-    call TriggerAddCondition(st___prototype1[86],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__55))
+    call TriggerAddAction(st___prototype1[86],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__49)
+    call TriggerAddCondition(st___prototype1[86],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__49))
     set st___prototype1[87]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[87],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__52)
-    call TriggerAddCondition(st___prototype1[87],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__52))
+    call TriggerAddAction(st___prototype1[87],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__54)
+    call TriggerAddCondition(st___prototype1[87],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__54))
     set st___prototype1[88]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[88],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__57)
-    call TriggerAddCondition(st___prototype1[88],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__57))
+    call TriggerAddAction(st___prototype1[88],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__55)
+    call TriggerAddCondition(st___prototype1[88],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__55))
     set st___prototype1[89]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[89],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__58)
-    call TriggerAddCondition(st___prototype1[89],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__58))
+    call TriggerAddAction(st___prototype1[89],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__52)
+    call TriggerAddCondition(st___prototype1[89],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__52))
     set st___prototype1[90]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[90],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__59)
-    call TriggerAddCondition(st___prototype1[90],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__59))
+    call TriggerAddAction(st___prototype1[90],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__57)
+    call TriggerAddCondition(st___prototype1[90],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__57))
     set st___prototype1[91]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[91],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__60)
-    call TriggerAddCondition(st___prototype1[91],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__60))
+    call TriggerAddAction(st___prototype1[91],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__58)
+    call TriggerAddCondition(st___prototype1[91],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__58))
     set st___prototype1[92]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[92],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__61)
-    call TriggerAddCondition(st___prototype1[92],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__61))
+    call TriggerAddAction(st___prototype1[92],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__59)
+    call TriggerAddCondition(st___prototype1[92],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__59))
     set st___prototype1[93]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[93],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__62)
-    call TriggerAddCondition(st___prototype1[93],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__62))
+    call TriggerAddAction(st___prototype1[93],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__60)
+    call TriggerAddCondition(st___prototype1[93],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__60))
     set st___prototype1[94]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[94],function sa___prototype1_s__DazzleMaster___DazzleMaster_D)
-    call TriggerAddCondition(st___prototype1[94],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_D))
+    call TriggerAddAction(st___prototype1[94],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__61)
+    call TriggerAddCondition(st___prototype1[94],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__61))
     set st___prototype1[95]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[95],function sa___prototype1_s__DazzleMaster___DazzleMaster_Q)
-    call TriggerAddCondition(st___prototype1[95],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_Q))
+    call TriggerAddAction(st___prototype1[95],function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__62)
+    call TriggerAddCondition(st___prototype1[95],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_anon__62))
     set st___prototype1[96]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[96],function sa___prototype1_s__DazzleMaster___DazzleMaster_W)
-    call TriggerAddCondition(st___prototype1[96],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_W))
+    call TriggerAddAction(st___prototype1[96],function sa___prototype1_s__DazzleMaster___DazzleMaster_D)
+    call TriggerAddCondition(st___prototype1[96],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_D))
     set st___prototype1[97]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__DazzleMaster___DazzleMaster_E)
-    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_E))
+    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__DazzleMaster___DazzleMaster_Q)
+    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_Q))
     set st___prototype1[98]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__DazzleMaster___DazzleMaster_R)
-    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_R))
+    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__DazzleMaster___DazzleMaster_W)
+    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_W))
     set st___prototype1[99]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_START)
-    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_START))
+    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__DazzleMaster___DazzleMaster_E)
+    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_E))
     set st___prototype1[100]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_STOP))
+    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__DazzleMaster___DazzleMaster_R)
+    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_R))
     set st___prototype1[101]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__DazzleMaster___DazzleMaster_Attack)
-    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_Attack))
+    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_START)
+    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_START))
+    set st___prototype1[102]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[102],function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_HERO_STOP))
+    set st___prototype1[103]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[103],function sa___prototype1_s__DazzleMaster___DazzleMaster_Attack)
+    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_s__DazzleMaster___DazzleMaster_Attack))
     set st___prototype6[9]=CreateTrigger()
     call TriggerAddAction(st___prototype6[9],function sa___prototype6_s__DazzleMaster___DazzleMaster_Spawn)
     call TriggerAddCondition(st___prototype6[9],Condition(function sa___prototype6_s__DazzleMaster___DazzleMaster_Spawn))
@@ -23831,432 +23909,432 @@ function jasshelper__initstructs1118675265 takes nothing returns nothing
     set st___prototype47[4]=CreateTrigger()
     call TriggerAddAction(st___prototype47[4],function sa___prototype47_s__KillUi_Hide)
     call TriggerAddCondition(st___prototype47[4],Condition(function sa___prototype47_s__KillUi_Hide))
-    set st___prototype1[114]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[114],function sa___prototype1_s__MR__MR_anon__126)
-    call TriggerAddCondition(st___prototype1[114],Condition(function sa___prototype1_s__MR__MR_anon__126))
-    set st___prototype1[115]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[115],function sa___prototype1_s__MR__MR_Damage)
-    call TriggerAddCondition(st___prototype1[115],Condition(function sa___prototype1_s__MR__MR_Damage))
     set st___prototype1[116]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[116],function sa___prototype1_s__MR__MR_anon__127)
-    call TriggerAddCondition(st___prototype1[116],Condition(function sa___prototype1_s__MR__MR_anon__127))
+    call TriggerAddAction(st___prototype1[116],function sa___prototype1_s__MR__MR_anon__126)
+    call TriggerAddCondition(st___prototype1[116],Condition(function sa___prototype1_s__MR__MR_anon__126))
     set st___prototype1[117]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[117],function sa___prototype1_s__MR__MR_anon__128)
-    call TriggerAddCondition(st___prototype1[117],Condition(function sa___prototype1_s__MR__MR_anon__128))
+    call TriggerAddAction(st___prototype1[117],function sa___prototype1_s__MR__MR_Damage)
+    call TriggerAddCondition(st___prototype1[117],Condition(function sa___prototype1_s__MR__MR_Damage))
     set st___prototype1[118]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[118],function sa___prototype1_s__MR__MR_anon__129)
-    call TriggerAddCondition(st___prototype1[118],Condition(function sa___prototype1_s__MR__MR_anon__129))
+    call TriggerAddAction(st___prototype1[118],function sa___prototype1_s__MR__MR_anon__127)
+    call TriggerAddCondition(st___prototype1[118],Condition(function sa___prototype1_s__MR__MR_anon__127))
     set st___prototype1[119]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[119],function sa___prototype1_s__MR__MR_anon__130)
-    call TriggerAddCondition(st___prototype1[119],Condition(function sa___prototype1_s__MR__MR_anon__130))
+    call TriggerAddAction(st___prototype1[119],function sa___prototype1_s__MR__MR_anon__128)
+    call TriggerAddCondition(st___prototype1[119],Condition(function sa___prototype1_s__MR__MR_anon__128))
     set st___prototype1[120]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[120],function sa___prototype1_s__MR__MR_anon__131)
-    call TriggerAddCondition(st___prototype1[120],Condition(function sa___prototype1_s__MR__MR_anon__131))
+    call TriggerAddAction(st___prototype1[120],function sa___prototype1_s__MR__MR_anon__129)
+    call TriggerAddCondition(st___prototype1[120],Condition(function sa___prototype1_s__MR__MR_anon__129))
     set st___prototype1[121]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[121],function sa___prototype1_s__MR__MR_R)
-    call TriggerAddCondition(st___prototype1[121],Condition(function sa___prototype1_s__MR__MR_R))
+    call TriggerAddAction(st___prototype1[121],function sa___prototype1_s__MR__MR_anon__130)
+    call TriggerAddCondition(st___prototype1[121],Condition(function sa___prototype1_s__MR__MR_anon__130))
     set st___prototype1[122]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[122],function sa___prototype1_s__MR__MR_W)
-    call TriggerAddCondition(st___prototype1[122],Condition(function sa___prototype1_s__MR__MR_W))
+    call TriggerAddAction(st___prototype1[122],function sa___prototype1_s__MR__MR_anon__131)
+    call TriggerAddCondition(st___prototype1[122],Condition(function sa___prototype1_s__MR__MR_anon__131))
     set st___prototype1[123]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[123],function sa___prototype1_s__MR__MR_E)
-    call TriggerAddCondition(st___prototype1[123],Condition(function sa___prototype1_s__MR__MR_E))
+    call TriggerAddAction(st___prototype1[123],function sa___prototype1_s__MR__MR_R)
+    call TriggerAddCondition(st___prototype1[123],Condition(function sa___prototype1_s__MR__MR_R))
     set st___prototype1[124]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[124],function sa___prototype1_s__MR__MR_HERO_START)
-    call TriggerAddCondition(st___prototype1[124],Condition(function sa___prototype1_s__MR__MR_HERO_START))
+    call TriggerAddAction(st___prototype1[124],function sa___prototype1_s__MR__MR_W)
+    call TriggerAddCondition(st___prototype1[124],Condition(function sa___prototype1_s__MR__MR_W))
+    set st___prototype1[125]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[125],function sa___prototype1_s__MR__MR_E)
+    call TriggerAddCondition(st___prototype1[125],Condition(function sa___prototype1_s__MR__MR_E))
+    set st___prototype1[126]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[126],function sa___prototype1_s__MR__MR_HERO_START)
+    call TriggerAddCondition(st___prototype1[126],Condition(function sa___prototype1_s__MR__MR_HERO_START))
     set st___prototype6[11]=CreateTrigger()
     call TriggerAddAction(st___prototype6[11],function sa___prototype6_s__MR__MR_Death)
     call TriggerAddCondition(st___prototype6[11],Condition(function sa___prototype6_s__MR__MR_Death))
     set st___prototype6[12]=CreateTrigger()
     call TriggerAddAction(st___prototype6[12],function sa___prototype6_s__MR__MR_Spawn)
     call TriggerAddCondition(st___prototype6[12],Condition(function sa___prototype6_s__MR__MR_Spawn))
-    set st___prototype1[125]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[125],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__38)
-    call TriggerAddCondition(st___prototype1[125],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__38))
-    set st___prototype1[126]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[126],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__39)
-    call TriggerAddCondition(st___prototype1[126],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__39))
     set st___prototype1[127]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[127],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__41)
-    call TriggerAddCondition(st___prototype1[127],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__41))
+    call TriggerAddAction(st___prototype1[127],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__38)
+    call TriggerAddCondition(st___prototype1[127],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__38))
     set st___prototype1[128]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[128],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__42)
-    call TriggerAddCondition(st___prototype1[128],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__42))
+    call TriggerAddAction(st___prototype1[128],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__39)
+    call TriggerAddCondition(st___prototype1[128],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__39))
     set st___prototype1[129]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[129],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__43)
-    call TriggerAddCondition(st___prototype1[129],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__43))
+    call TriggerAddAction(st___prototype1[129],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__41)
+    call TriggerAddCondition(st___prototype1[129],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__41))
     set st___prototype1[130]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[130],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__44)
-    call TriggerAddCondition(st___prototype1[130],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__44))
+    call TriggerAddAction(st___prototype1[130],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__42)
+    call TriggerAddCondition(st___prototype1[130],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__42))
     set st___prototype1[131]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[131],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q)
-    call TriggerAddCondition(st___prototype1[131],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q))
+    call TriggerAddAction(st___prototype1[131],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__43)
+    call TriggerAddCondition(st___prototype1[131],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__43))
     set st___prototype1[132]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[132],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_W)
-    call TriggerAddCondition(st___prototype1[132],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_W))
+    call TriggerAddAction(st___prototype1[132],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__44)
+    call TriggerAddCondition(st___prototype1[132],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_anon__44))
     set st___prototype1[133]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[133],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_R)
-    call TriggerAddCondition(st___prototype1[133],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_R))
+    call TriggerAddAction(st___prototype1[133],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q)
+    call TriggerAddCondition(st___prototype1[133],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_Q))
     set st___prototype1[134]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[134],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_START)
-    call TriggerAddCondition(st___prototype1[134],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_START))
+    call TriggerAddAction(st___prototype1[134],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_W)
+    call TriggerAddCondition(st___prototype1[134],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_W))
     set st___prototype1[135]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[135],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[135],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP))
+    call TriggerAddAction(st___prototype1[135],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_R)
+    call TriggerAddCondition(st___prototype1[135],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_R))
+    set st___prototype1[136]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[136],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_START)
+    call TriggerAddCondition(st___prototype1[136],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_START))
+    set st___prototype1[137]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[137],function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[137],Condition(function sa___prototype1_s__OrdinaryWizard___OrdinaryWizard_HERO_STOP))
     set st___prototype6[13]=CreateTrigger()
     call TriggerAddAction(st___prototype6[13],function sa___prototype6_s__OrdinaryWizard___OrdinaryWizard_E)
     call TriggerAddCondition(st___prototype6[13],Condition(function sa___prototype6_s__OrdinaryWizard___OrdinaryWizard_E))
     set st___prototype29[4]=CreateTrigger()
-    call TriggerAddAction(st___prototype29[4],function sa___prototype29_s__SD__SD_AI)
-    call TriggerAddCondition(st___prototype29[4],Condition(function sa___prototype29_s__SD__SD_AI))
-    set st___prototype1[136]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[136],function sa___prototype1_s__SD__SD_anon__174)
-    call TriggerAddCondition(st___prototype1[136],Condition(function sa___prototype1_s__SD__SD_anon__174))
-    set st___prototype1[137]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[137],function sa___prototype1_s__SD__SD_anon__175)
-    call TriggerAddCondition(st___prototype1[137],Condition(function sa___prototype1_s__SD__SD_anon__175))
+    call TriggerAddAction(st___prototype29[4],function sa___prototype29_s__SD___SD_AI)
+    call TriggerAddCondition(st___prototype29[4],Condition(function sa___prototype29_s__SD___SD_AI))
     set st___prototype1[138]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[138],function sa___prototype1_s__SD__SD_anon__176)
-    call TriggerAddCondition(st___prototype1[138],Condition(function sa___prototype1_s__SD__SD_anon__176))
+    call TriggerAddAction(st___prototype1[138],function sa___prototype1_s__SD___SD_anon__174)
+    call TriggerAddCondition(st___prototype1[138],Condition(function sa___prototype1_s__SD___SD_anon__174))
     set st___prototype1[139]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[139],function sa___prototype1_s__SD__SD_anon__178)
-    call TriggerAddCondition(st___prototype1[139],Condition(function sa___prototype1_s__SD__SD_anon__178))
+    call TriggerAddAction(st___prototype1[139],function sa___prototype1_s__SD___SD_anon__175)
+    call TriggerAddCondition(st___prototype1[139],Condition(function sa___prototype1_s__SD___SD_anon__175))
     set st___prototype1[140]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[140],function sa___prototype1_s__SD__SD_anon__179)
-    call TriggerAddCondition(st___prototype1[140],Condition(function sa___prototype1_s__SD__SD_anon__179))
+    call TriggerAddAction(st___prototype1[140],function sa___prototype1_s__SD___SD_anon__176)
+    call TriggerAddCondition(st___prototype1[140],Condition(function sa___prototype1_s__SD___SD_anon__176))
     set st___prototype1[141]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[141],function sa___prototype1_s__SD__SD_anon__177)
-    call TriggerAddCondition(st___prototype1[141],Condition(function sa___prototype1_s__SD__SD_anon__177))
+    call TriggerAddAction(st___prototype1[141],function sa___prototype1_s__SD___SD_anon__178)
+    call TriggerAddCondition(st___prototype1[141],Condition(function sa___prototype1_s__SD___SD_anon__178))
     set st___prototype1[142]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[142],function sa___prototype1_s__SD__SD_anon__181)
-    call TriggerAddCondition(st___prototype1[142],Condition(function sa___prototype1_s__SD__SD_anon__181))
+    call TriggerAddAction(st___prototype1[142],function sa___prototype1_s__SD___SD_anon__179)
+    call TriggerAddCondition(st___prototype1[142],Condition(function sa___prototype1_s__SD___SD_anon__179))
     set st___prototype1[143]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[143],function sa___prototype1_s__SD__SD_anon__182)
-    call TriggerAddCondition(st___prototype1[143],Condition(function sa___prototype1_s__SD__SD_anon__182))
+    call TriggerAddAction(st___prototype1[143],function sa___prototype1_s__SD___SD_anon__177)
+    call TriggerAddCondition(st___prototype1[143],Condition(function sa___prototype1_s__SD___SD_anon__177))
     set st___prototype1[144]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[144],function sa___prototype1_s__SD__SD_anon__183)
-    call TriggerAddCondition(st___prototype1[144],Condition(function sa___prototype1_s__SD__SD_anon__183))
+    call TriggerAddAction(st___prototype1[144],function sa___prototype1_s__SD___SD_anon__181)
+    call TriggerAddCondition(st___prototype1[144],Condition(function sa___prototype1_s__SD___SD_anon__181))
     set st___prototype1[145]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[145],function sa___prototype1_s__SD__SD_anon__180)
-    call TriggerAddCondition(st___prototype1[145],Condition(function sa___prototype1_s__SD__SD_anon__180))
+    call TriggerAddAction(st___prototype1[145],function sa___prototype1_s__SD___SD_anon__182)
+    call TriggerAddCondition(st___prototype1[145],Condition(function sa___prototype1_s__SD___SD_anon__182))
     set st___prototype1[146]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[146],function sa___prototype1_s__SD__SD_anon__185)
-    call TriggerAddCondition(st___prototype1[146],Condition(function sa___prototype1_s__SD__SD_anon__185))
+    call TriggerAddAction(st___prototype1[146],function sa___prototype1_s__SD___SD_anon__183)
+    call TriggerAddCondition(st___prototype1[146],Condition(function sa___prototype1_s__SD___SD_anon__183))
     set st___prototype1[147]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[147],function sa___prototype1_s__SD__SD_anon__184)
-    call TriggerAddCondition(st___prototype1[147],Condition(function sa___prototype1_s__SD__SD_anon__184))
+    call TriggerAddAction(st___prototype1[147],function sa___prototype1_s__SD___SD_anon__180)
+    call TriggerAddCondition(st___prototype1[147],Condition(function sa___prototype1_s__SD___SD_anon__180))
     set st___prototype1[148]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[148],function sa___prototype1_s__SD__SD_anon__186)
-    call TriggerAddCondition(st___prototype1[148],Condition(function sa___prototype1_s__SD__SD_anon__186))
+    call TriggerAddAction(st___prototype1[148],function sa___prototype1_s__SD___SD_anon__185)
+    call TriggerAddCondition(st___prototype1[148],Condition(function sa___prototype1_s__SD___SD_anon__185))
     set st___prototype1[149]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[149],function sa___prototype1_s__SD__SD_anon__187)
-    call TriggerAddCondition(st___prototype1[149],Condition(function sa___prototype1_s__SD__SD_anon__187))
+    call TriggerAddAction(st___prototype1[149],function sa___prototype1_s__SD___SD_anon__184)
+    call TriggerAddCondition(st___prototype1[149],Condition(function sa___prototype1_s__SD___SD_anon__184))
     set st___prototype1[150]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[150],function sa___prototype1_s__SD__SD_anon__188)
-    call TriggerAddCondition(st___prototype1[150],Condition(function sa___prototype1_s__SD__SD_anon__188))
+    call TriggerAddAction(st___prototype1[150],function sa___prototype1_s__SD___SD_anon__186)
+    call TriggerAddCondition(st___prototype1[150],Condition(function sa___prototype1_s__SD___SD_anon__186))
     set st___prototype1[151]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[151],function sa___prototype1_s__SD__SD_anon__192)
-    call TriggerAddCondition(st___prototype1[151],Condition(function sa___prototype1_s__SD__SD_anon__192))
+    call TriggerAddAction(st___prototype1[151],function sa___prototype1_s__SD___SD_anon__187)
+    call TriggerAddCondition(st___prototype1[151],Condition(function sa___prototype1_s__SD___SD_anon__187))
     set st___prototype1[152]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[152],function sa___prototype1_s__SD__SD_anon__191)
-    call TriggerAddCondition(st___prototype1[152],Condition(function sa___prototype1_s__SD__SD_anon__191))
+    call TriggerAddAction(st___prototype1[152],function sa___prototype1_s__SD___SD_anon__188)
+    call TriggerAddCondition(st___prototype1[152],Condition(function sa___prototype1_s__SD___SD_anon__188))
     set st___prototype1[153]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[153],function sa___prototype1_s__SD__SD_anon__190)
-    call TriggerAddCondition(st___prototype1[153],Condition(function sa___prototype1_s__SD__SD_anon__190))
+    call TriggerAddAction(st___prototype1[153],function sa___prototype1_s__SD___SD_anon__192)
+    call TriggerAddCondition(st___prototype1[153],Condition(function sa___prototype1_s__SD___SD_anon__192))
     set st___prototype1[154]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[154],function sa___prototype1_s__SD__SD_anon__193)
-    call TriggerAddCondition(st___prototype1[154],Condition(function sa___prototype1_s__SD__SD_anon__193))
+    call TriggerAddAction(st___prototype1[154],function sa___prototype1_s__SD___SD_anon__191)
+    call TriggerAddCondition(st___prototype1[154],Condition(function sa___prototype1_s__SD___SD_anon__191))
     set st___prototype1[155]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[155],function sa___prototype1_s__SD__SD_F)
-    call TriggerAddCondition(st___prototype1[155],Condition(function sa___prototype1_s__SD__SD_F))
+    call TriggerAddAction(st___prototype1[155],function sa___prototype1_s__SD___SD_anon__190)
+    call TriggerAddCondition(st___prototype1[155],Condition(function sa___prototype1_s__SD___SD_anon__190))
     set st___prototype1[156]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[156],function sa___prototype1_s__SD__SD_D)
-    call TriggerAddCondition(st___prototype1[156],Condition(function sa___prototype1_s__SD__SD_D))
+    call TriggerAddAction(st___prototype1[156],function sa___prototype1_s__SD___SD_anon__193)
+    call TriggerAddCondition(st___prototype1[156],Condition(function sa___prototype1_s__SD___SD_anon__193))
     set st___prototype1[157]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[157],function sa___prototype1_s__SD__SD_R)
-    call TriggerAddCondition(st___prototype1[157],Condition(function sa___prototype1_s__SD__SD_R))
+    call TriggerAddAction(st___prototype1[157],function sa___prototype1_s__SD___SD_F)
+    call TriggerAddCondition(st___prototype1[157],Condition(function sa___prototype1_s__SD___SD_F))
     set st___prototype1[158]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[158],function sa___prototype1_s__SD__SD_E)
-    call TriggerAddCondition(st___prototype1[158],Condition(function sa___prototype1_s__SD__SD_E))
+    call TriggerAddAction(st___prototype1[158],function sa___prototype1_s__SD___SD_D)
+    call TriggerAddCondition(st___prototype1[158],Condition(function sa___prototype1_s__SD___SD_D))
     set st___prototype1[159]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[159],function sa___prototype1_s__SD__SD_W)
-    call TriggerAddCondition(st___prototype1[159],Condition(function sa___prototype1_s__SD__SD_W))
+    call TriggerAddAction(st___prototype1[159],function sa___prototype1_s__SD___SD_R)
+    call TriggerAddCondition(st___prototype1[159],Condition(function sa___prototype1_s__SD___SD_R))
     set st___prototype1[160]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[160],function sa___prototype1_s__SD__SD_HERO_START)
-    call TriggerAddCondition(st___prototype1[160],Condition(function sa___prototype1_s__SD__SD_HERO_START))
+    call TriggerAddAction(st___prototype1[160],function sa___prototype1_s__SD___SD_E)
+    call TriggerAddCondition(st___prototype1[160],Condition(function sa___prototype1_s__SD___SD_E))
     set st___prototype1[161]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[161],function sa___prototype1_s__SD__SD_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[161],Condition(function sa___prototype1_s__SD__SD_HERO_STOP))
-    set st___prototype6[14]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[14],function sa___prototype6_s__SD__SD_Spawn)
-    call TriggerAddCondition(st___prototype6[14],Condition(function sa___prototype6_s__SD__SD_Spawn))
+    call TriggerAddAction(st___prototype1[161],function sa___prototype1_s__SD___SD_W)
+    call TriggerAddCondition(st___prototype1[161],Condition(function sa___prototype1_s__SD___SD_W))
     set st___prototype1[162]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[162],function sa___prototype1_s__SD__SD_Q)
-    call TriggerAddCondition(st___prototype1[162],Condition(function sa___prototype1_s__SD__SD_Q))
+    call TriggerAddAction(st___prototype1[162],function sa___prototype1_s__SD___SD_HERO_START)
+    call TriggerAddCondition(st___prototype1[162],Condition(function sa___prototype1_s__SD___SD_HERO_START))
     set st___prototype1[163]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[163],function sa___prototype1_s__SL__SL_anon__100)
-    call TriggerAddCondition(st___prototype1[163],Condition(function sa___prototype1_s__SL__SL_anon__100))
+    call TriggerAddAction(st___prototype1[163],function sa___prototype1_s__SD___SD_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[163],Condition(function sa___prototype1_s__SD___SD_HERO_STOP))
+    set st___prototype6[14]=CreateTrigger()
+    call TriggerAddAction(st___prototype6[14],function sa___prototype6_s__SD___SD_Spawn)
+    call TriggerAddCondition(st___prototype6[14],Condition(function sa___prototype6_s__SD___SD_Spawn))
     set st___prototype1[164]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[164],function sa___prototype1_s__SL__SL_anon__101)
-    call TriggerAddCondition(st___prototype1[164],Condition(function sa___prototype1_s__SL__SL_anon__101))
+    call TriggerAddAction(st___prototype1[164],function sa___prototype1_s__SD___SD_Q)
+    call TriggerAddCondition(st___prototype1[164],Condition(function sa___prototype1_s__SD___SD_Q))
     set st___prototype1[165]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[165],function sa___prototype1_s__SL__SL_anon__99)
-    call TriggerAddCondition(st___prototype1[165],Condition(function sa___prototype1_s__SL__SL_anon__99))
+    call TriggerAddAction(st___prototype1[165],function sa___prototype1_s__SL__SL_anon__100)
+    call TriggerAddCondition(st___prototype1[165],Condition(function sa___prototype1_s__SL__SL_anon__100))
     set st___prototype1[166]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[166],function sa___prototype1_s__SL__SL_anon__103)
-    call TriggerAddCondition(st___prototype1[166],Condition(function sa___prototype1_s__SL__SL_anon__103))
+    call TriggerAddAction(st___prototype1[166],function sa___prototype1_s__SL__SL_anon__101)
+    call TriggerAddCondition(st___prototype1[166],Condition(function sa___prototype1_s__SL__SL_anon__101))
     set st___prototype1[167]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[167],function sa___prototype1_s__SL__SL_anon__105)
-    call TriggerAddCondition(st___prototype1[167],Condition(function sa___prototype1_s__SL__SL_anon__105))
+    call TriggerAddAction(st___prototype1[167],function sa___prototype1_s__SL__SL_anon__99)
+    call TriggerAddCondition(st___prototype1[167],Condition(function sa___prototype1_s__SL__SL_anon__99))
     set st___prototype1[168]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[168],function sa___prototype1_s__SL__SL_anon__106)
-    call TriggerAddCondition(st___prototype1[168],Condition(function sa___prototype1_s__SL__SL_anon__106))
+    call TriggerAddAction(st___prototype1[168],function sa___prototype1_s__SL__SL_anon__103)
+    call TriggerAddCondition(st___prototype1[168],Condition(function sa___prototype1_s__SL__SL_anon__103))
     set st___prototype1[169]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[169],function sa___prototype1_s__SL__SL_anon__114)
-    call TriggerAddCondition(st___prototype1[169],Condition(function sa___prototype1_s__SL__SL_anon__114))
+    call TriggerAddAction(st___prototype1[169],function sa___prototype1_s__SL__SL_anon__105)
+    call TriggerAddCondition(st___prototype1[169],Condition(function sa___prototype1_s__SL__SL_anon__105))
     set st___prototype1[170]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[170],function sa___prototype1_s__SL__SL_anon__115)
-    call TriggerAddCondition(st___prototype1[170],Condition(function sa___prototype1_s__SL__SL_anon__115))
+    call TriggerAddAction(st___prototype1[170],function sa___prototype1_s__SL__SL_anon__106)
+    call TriggerAddCondition(st___prototype1[170],Condition(function sa___prototype1_s__SL__SL_anon__106))
     set st___prototype1[171]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[171],function sa___prototype1_s__SL__SL_anon__108)
-    call TriggerAddCondition(st___prototype1[171],Condition(function sa___prototype1_s__SL__SL_anon__108))
+    call TriggerAddAction(st___prototype1[171],function sa___prototype1_s__SL__SL_anon__114)
+    call TriggerAddCondition(st___prototype1[171],Condition(function sa___prototype1_s__SL__SL_anon__114))
     set st___prototype1[172]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[172],function sa___prototype1_s__SL__SL_anon__109)
-    call TriggerAddCondition(st___prototype1[172],Condition(function sa___prototype1_s__SL__SL_anon__109))
+    call TriggerAddAction(st___prototype1[172],function sa___prototype1_s__SL__SL_anon__115)
+    call TriggerAddCondition(st___prototype1[172],Condition(function sa___prototype1_s__SL__SL_anon__115))
     set st___prototype1[173]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[173],function sa___prototype1_s__SL__SL_anon__111)
-    call TriggerAddCondition(st___prototype1[173],Condition(function sa___prototype1_s__SL__SL_anon__111))
+    call TriggerAddAction(st___prototype1[173],function sa___prototype1_s__SL__SL_anon__108)
+    call TriggerAddCondition(st___prototype1[173],Condition(function sa___prototype1_s__SL__SL_anon__108))
     set st___prototype1[174]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[174],function sa___prototype1_s__SL__SL_anon__112)
-    call TriggerAddCondition(st___prototype1[174],Condition(function sa___prototype1_s__SL__SL_anon__112))
+    call TriggerAddAction(st___prototype1[174],function sa___prototype1_s__SL__SL_anon__109)
+    call TriggerAddCondition(st___prototype1[174],Condition(function sa___prototype1_s__SL__SL_anon__109))
     set st___prototype1[175]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[175],function sa___prototype1_s__SL__SL_anon__107)
-    call TriggerAddCondition(st___prototype1[175],Condition(function sa___prototype1_s__SL__SL_anon__107))
+    call TriggerAddAction(st___prototype1[175],function sa___prototype1_s__SL__SL_anon__111)
+    call TriggerAddCondition(st___prototype1[175],Condition(function sa___prototype1_s__SL__SL_anon__111))
     set st___prototype1[176]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[176],function sa___prototype1_s__SL__SL_anon__116)
-    call TriggerAddCondition(st___prototype1[176],Condition(function sa___prototype1_s__SL__SL_anon__116))
+    call TriggerAddAction(st___prototype1[176],function sa___prototype1_s__SL__SL_anon__112)
+    call TriggerAddCondition(st___prototype1[176],Condition(function sa___prototype1_s__SL__SL_anon__112))
     set st___prototype1[177]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[177],function sa___prototype1_s__SL__SL_R)
-    call TriggerAddCondition(st___prototype1[177],Condition(function sa___prototype1_s__SL__SL_R))
+    call TriggerAddAction(st___prototype1[177],function sa___prototype1_s__SL__SL_anon__107)
+    call TriggerAddCondition(st___prototype1[177],Condition(function sa___prototype1_s__SL__SL_anon__107))
     set st___prototype1[178]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[178],function sa___prototype1_s__SL__SL_E)
-    call TriggerAddCondition(st___prototype1[178],Condition(function sa___prototype1_s__SL__SL_E))
+    call TriggerAddAction(st___prototype1[178],function sa___prototype1_s__SL__SL_anon__116)
+    call TriggerAddCondition(st___prototype1[178],Condition(function sa___prototype1_s__SL__SL_anon__116))
     set st___prototype1[179]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[179],function sa___prototype1_s__SL__SL_Q)
-    call TriggerAddCondition(st___prototype1[179],Condition(function sa___prototype1_s__SL__SL_Q))
+    call TriggerAddAction(st___prototype1[179],function sa___prototype1_s__SL__SL_R)
+    call TriggerAddCondition(st___prototype1[179],Condition(function sa___prototype1_s__SL__SL_R))
     set st___prototype1[180]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[180],function sa___prototype1_s__SL__SL_W)
-    call TriggerAddCondition(st___prototype1[180],Condition(function sa___prototype1_s__SL__SL_W))
+    call TriggerAddAction(st___prototype1[180],function sa___prototype1_s__SL__SL_E)
+    call TriggerAddCondition(st___prototype1[180],Condition(function sa___prototype1_s__SL__SL_E))
     set st___prototype1[181]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[181],function sa___prototype1_s__SL__SL_HERO_START)
-    call TriggerAddCondition(st___prototype1[181],Condition(function sa___prototype1_s__SL__SL_HERO_START))
+    call TriggerAddAction(st___prototype1[181],function sa___prototype1_s__SL__SL_Q)
+    call TriggerAddCondition(st___prototype1[181],Condition(function sa___prototype1_s__SL__SL_Q))
     set st___prototype1[182]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[182],function sa___prototype1_s__SwordMaster__SwordMaster_anon__120)
-    call TriggerAddCondition(st___prototype1[182],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__120))
+    call TriggerAddAction(st___prototype1[182],function sa___prototype1_s__SL__SL_W)
+    call TriggerAddCondition(st___prototype1[182],Condition(function sa___prototype1_s__SL__SL_W))
     set st___prototype1[183]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[183],function sa___prototype1_s__SwordMaster__SwordMaster_Damage)
-    call TriggerAddCondition(st___prototype1[183],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_Damage))
+    call TriggerAddAction(st___prototype1[183],function sa___prototype1_s__SL__SL_HERO_START)
+    call TriggerAddCondition(st___prototype1[183],Condition(function sa___prototype1_s__SL__SL_HERO_START))
     set st___prototype1[184]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[184],function sa___prototype1_s__SwordMaster__SwordMaster_anon__121)
-    call TriggerAddCondition(st___prototype1[184],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__121))
+    call TriggerAddAction(st___prototype1[184],function sa___prototype1_s__SwordMaster__SwordMaster_anon__120)
+    call TriggerAddCondition(st___prototype1[184],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__120))
     set st___prototype1[185]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[185],function sa___prototype1_s__SwordMaster__SwordMaster_anon__122)
-    call TriggerAddCondition(st___prototype1[185],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__122))
+    call TriggerAddAction(st___prototype1[185],function sa___prototype1_s__SwordMaster__SwordMaster_Damage)
+    call TriggerAddCondition(st___prototype1[185],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_Damage))
     set st___prototype1[186]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[186],function sa___prototype1_s__SwordMaster__SwordMaster_anon__124)
-    call TriggerAddCondition(st___prototype1[186],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__124))
+    call TriggerAddAction(st___prototype1[186],function sa___prototype1_s__SwordMaster__SwordMaster_anon__121)
+    call TriggerAddCondition(st___prototype1[186],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__121))
+    set st___prototype1[187]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[187],function sa___prototype1_s__SwordMaster__SwordMaster_anon__122)
+    call TriggerAddCondition(st___prototype1[187],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__122))
+    set st___prototype1[188]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[188],function sa___prototype1_s__SwordMaster__SwordMaster_anon__124)
+    call TriggerAddCondition(st___prototype1[188],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_anon__124))
     set st___prototype29[5]=CreateTrigger()
     call TriggerAddAction(st___prototype29[5],function sa___prototype29_s__SwordMaster__SwordMaster_AI)
     call TriggerAddCondition(st___prototype29[5],Condition(function sa___prototype29_s__SwordMaster__SwordMaster_AI))
-    set st___prototype1[187]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[187],function sa___prototype1_s__SwordMaster__SwordMaster_W)
-    call TriggerAddCondition(st___prototype1[187],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_W))
-    set st___prototype1[188]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[188],function sa___prototype1_s__SwordMaster__SwordMaster_E)
-    call TriggerAddCondition(st___prototype1[188],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_E))
     set st___prototype1[189]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[189],function sa___prototype1_s__SwordMaster__SwordMaster_R)
-    call TriggerAddCondition(st___prototype1[189],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_R))
+    call TriggerAddAction(st___prototype1[189],function sa___prototype1_s__SwordMaster__SwordMaster_W)
+    call TriggerAddCondition(st___prototype1[189],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_W))
+    set st___prototype1[190]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[190],function sa___prototype1_s__SwordMaster__SwordMaster_E)
+    call TriggerAddCondition(st___prototype1[190],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_E))
+    set st___prototype1[191]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[191],function sa___prototype1_s__SwordMaster__SwordMaster_R)
+    call TriggerAddCondition(st___prototype1[191],Condition(function sa___prototype1_s__SwordMaster__SwordMaster_R))
     set st___prototype6[15]=CreateTrigger()
     call TriggerAddAction(st___prototype6[15],function sa___prototype6_s__SwordMaster__SwordMaster_Spawn)
     call TriggerAddCondition(st___prototype6[15],Condition(function sa___prototype6_s__SwordMaster__SwordMaster_Spawn))
-    set st___prototype1[190]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[190],function sa___prototype1_s__TR__TR_anon__135)
-    call TriggerAddCondition(st___prototype1[190],Condition(function sa___prototype1_s__TR__TR_anon__135))
-    set st___prototype1[191]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[191],function sa___prototype1_s__TR__TR_anon__134)
-    call TriggerAddCondition(st___prototype1[191],Condition(function sa___prototype1_s__TR__TR_anon__134))
     set st___prototype1[192]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[192],function sa___prototype1_s__TR__TR_anon__136)
-    call TriggerAddCondition(st___prototype1[192],Condition(function sa___prototype1_s__TR__TR_anon__136))
+    call TriggerAddAction(st___prototype1[192],function sa___prototype1_s__TR__TR_anon__135)
+    call TriggerAddCondition(st___prototype1[192],Condition(function sa___prototype1_s__TR__TR_anon__135))
     set st___prototype1[193]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[193],function sa___prototype1_s__TR__TR_anon__132)
-    call TriggerAddCondition(st___prototype1[193],Condition(function sa___prototype1_s__TR__TR_anon__132))
+    call TriggerAddAction(st___prototype1[193],function sa___prototype1_s__TR__TR_anon__134)
+    call TriggerAddCondition(st___prototype1[193],Condition(function sa___prototype1_s__TR__TR_anon__134))
     set st___prototype1[194]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[194],function sa___prototype1_s__TR__TR_anon__137)
-    call TriggerAddCondition(st___prototype1[194],Condition(function sa___prototype1_s__TR__TR_anon__137))
+    call TriggerAddAction(st___prototype1[194],function sa___prototype1_s__TR__TR_anon__136)
+    call TriggerAddCondition(st___prototype1[194],Condition(function sa___prototype1_s__TR__TR_anon__136))
     set st___prototype1[195]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[195],function sa___prototype1_s__TR__TR_anon__138)
-    call TriggerAddCondition(st___prototype1[195],Condition(function sa___prototype1_s__TR__TR_anon__138))
+    call TriggerAddAction(st___prototype1[195],function sa___prototype1_s__TR__TR_anon__132)
+    call TriggerAddCondition(st___prototype1[195],Condition(function sa___prototype1_s__TR__TR_anon__132))
     set st___prototype1[196]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[196],function sa___prototype1_s__TR__TR_anon__140)
-    call TriggerAddCondition(st___prototype1[196],Condition(function sa___prototype1_s__TR__TR_anon__140))
+    call TriggerAddAction(st___prototype1[196],function sa___prototype1_s__TR__TR_anon__137)
+    call TriggerAddCondition(st___prototype1[196],Condition(function sa___prototype1_s__TR__TR_anon__137))
     set st___prototype1[197]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[197],function sa___prototype1_s__TR__TR_anon__142)
-    call TriggerAddCondition(st___prototype1[197],Condition(function sa___prototype1_s__TR__TR_anon__142))
+    call TriggerAddAction(st___prototype1[197],function sa___prototype1_s__TR__TR_anon__138)
+    call TriggerAddCondition(st___prototype1[197],Condition(function sa___prototype1_s__TR__TR_anon__138))
     set st___prototype1[198]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[198],function sa___prototype1_s__TR__TR_anon__143)
-    call TriggerAddCondition(st___prototype1[198],Condition(function sa___prototype1_s__TR__TR_anon__143))
+    call TriggerAddAction(st___prototype1[198],function sa___prototype1_s__TR__TR_anon__140)
+    call TriggerAddCondition(st___prototype1[198],Condition(function sa___prototype1_s__TR__TR_anon__140))
     set st___prototype1[199]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[199],function sa___prototype1_s__TR__TR_anon__145)
-    call TriggerAddCondition(st___prototype1[199],Condition(function sa___prototype1_s__TR__TR_anon__145))
+    call TriggerAddAction(st___prototype1[199],function sa___prototype1_s__TR__TR_anon__142)
+    call TriggerAddCondition(st___prototype1[199],Condition(function sa___prototype1_s__TR__TR_anon__142))
     set st___prototype1[200]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[200],function sa___prototype1_s__TR__TR_anon__146)
-    call TriggerAddCondition(st___prototype1[200],Condition(function sa___prototype1_s__TR__TR_anon__146))
+    call TriggerAddAction(st___prototype1[200],function sa___prototype1_s__TR__TR_anon__143)
+    call TriggerAddCondition(st___prototype1[200],Condition(function sa___prototype1_s__TR__TR_anon__143))
     set st___prototype1[201]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[201],function sa___prototype1_s__TR__TR_anon__148)
-    call TriggerAddCondition(st___prototype1[201],Condition(function sa___prototype1_s__TR__TR_anon__148))
+    call TriggerAddAction(st___prototype1[201],function sa___prototype1_s__TR__TR_anon__145)
+    call TriggerAddCondition(st___prototype1[201],Condition(function sa___prototype1_s__TR__TR_anon__145))
     set st___prototype1[202]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[202],function sa___prototype1_s__TR__TR_anon__150)
-    call TriggerAddCondition(st___prototype1[202],Condition(function sa___prototype1_s__TR__TR_anon__150))
+    call TriggerAddAction(st___prototype1[202],function sa___prototype1_s__TR__TR_anon__146)
+    call TriggerAddCondition(st___prototype1[202],Condition(function sa___prototype1_s__TR__TR_anon__146))
+    set st___prototype1[203]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[203],function sa___prototype1_s__TR__TR_anon__148)
+    call TriggerAddCondition(st___prototype1[203],Condition(function sa___prototype1_s__TR__TR_anon__148))
+    set st___prototype1[204]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[204],function sa___prototype1_s__TR__TR_anon__150)
+    call TriggerAddCondition(st___prototype1[204],Condition(function sa___prototype1_s__TR__TR_anon__150))
     set st___prototype29[6]=CreateTrigger()
     call TriggerAddAction(st___prototype29[6],function sa___prototype29_s__TR__TR_AI)
     call TriggerAddCondition(st___prototype29[6],Condition(function sa___prototype29_s__TR__TR_AI))
-    set st___prototype1[203]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[203],function sa___prototype1_s__TR__TR_Q)
-    call TriggerAddCondition(st___prototype1[203],Condition(function sa___prototype1_s__TR__TR_Q))
-    set st___prototype1[204]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[204],function sa___prototype1_s__TR__TR_W)
-    call TriggerAddCondition(st___prototype1[204],Condition(function sa___prototype1_s__TR__TR_W))
     set st___prototype1[205]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[205],function sa___prototype1_s__TR__TR_E)
-    call TriggerAddCondition(st___prototype1[205],Condition(function sa___prototype1_s__TR__TR_E))
+    call TriggerAddAction(st___prototype1[205],function sa___prototype1_s__TR__TR_Q)
+    call TriggerAddCondition(st___prototype1[205],Condition(function sa___prototype1_s__TR__TR_Q))
     set st___prototype1[206]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[206],function sa___prototype1_s__TR__TR_R)
-    call TriggerAddCondition(st___prototype1[206],Condition(function sa___prototype1_s__TR__TR_R))
+    call TriggerAddAction(st___prototype1[206],function sa___prototype1_s__TR__TR_W)
+    call TriggerAddCondition(st___prototype1[206],Condition(function sa___prototype1_s__TR__TR_W))
     set st___prototype1[207]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[207],function sa___prototype1_s__TR__TR_W1)
-    call TriggerAddCondition(st___prototype1[207],Condition(function sa___prototype1_s__TR__TR_W1))
+    call TriggerAddAction(st___prototype1[207],function sa___prototype1_s__TR__TR_E)
+    call TriggerAddCondition(st___prototype1[207],Condition(function sa___prototype1_s__TR__TR_E))
     set st___prototype1[208]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[208],function sa___prototype1_s__TR__TR_W3)
-    call TriggerAddCondition(st___prototype1[208],Condition(function sa___prototype1_s__TR__TR_W3))
+    call TriggerAddAction(st___prototype1[208],function sa___prototype1_s__TR__TR_R)
+    call TriggerAddCondition(st___prototype1[208],Condition(function sa___prototype1_s__TR__TR_R))
     set st___prototype1[209]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[209],function sa___prototype1_s__TR__TR_Q1)
-    call TriggerAddCondition(st___prototype1[209],Condition(function sa___prototype1_s__TR__TR_Q1))
+    call TriggerAddAction(st___prototype1[209],function sa___prototype1_s__TR__TR_W1)
+    call TriggerAddCondition(st___prototype1[209],Condition(function sa___prototype1_s__TR__TR_W1))
     set st___prototype1[210]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[210],function sa___prototype1_s__TR__TR_R1)
-    call TriggerAddCondition(st___prototype1[210],Condition(function sa___prototype1_s__TR__TR_R1))
+    call TriggerAddAction(st___prototype1[210],function sa___prototype1_s__TR__TR_W3)
+    call TriggerAddCondition(st___prototype1[210],Condition(function sa___prototype1_s__TR__TR_W3))
+    set st___prototype1[211]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[211],function sa___prototype1_s__TR__TR_Q1)
+    call TriggerAddCondition(st___prototype1[211],Condition(function sa___prototype1_s__TR__TR_Q1))
+    set st___prototype1[212]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[212],function sa___prototype1_s__TR__TR_R1)
+    call TriggerAddCondition(st___prototype1[212],Condition(function sa___prototype1_s__TR__TR_R1))
     set st___prototype6[16]=CreateTrigger()
     call TriggerAddAction(st___prototype6[16],function sa___prototype6_s__TR__TR_Spawn)
     call TriggerAddCondition(st___prototype6[16],Condition(function sa___prototype6_s__TR__TR_Spawn))
-    set st___prototype1[211]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[211],function sa___prototype1_s__WindWalk___WindWalk_anon__64)
-    call TriggerAddCondition(st___prototype1[211],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__64))
-    set st___prototype1[212]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[212],function sa___prototype1_s__WindWalk___WindWalk_anon__65)
-    call TriggerAddCondition(st___prototype1[212],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__65))
     set st___prototype1[213]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[213],function sa___prototype1_s__WindWalk___WindWalk_anon__63)
-    call TriggerAddCondition(st___prototype1[213],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__63))
+    call TriggerAddAction(st___prototype1[213],function sa___prototype1_s__WindWalk__WindWalk_anon__64)
+    call TriggerAddCondition(st___prototype1[213],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__64))
     set st___prototype1[214]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[214],function sa___prototype1_s__WindWalk___WindWalk_anon__66)
-    call TriggerAddCondition(st___prototype1[214],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__66))
+    call TriggerAddAction(st___prototype1[214],function sa___prototype1_s__WindWalk__WindWalk_anon__65)
+    call TriggerAddCondition(st___prototype1[214],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__65))
     set st___prototype1[215]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[215],function sa___prototype1_s__WindWalk___WindWalk_anon__68)
-    call TriggerAddCondition(st___prototype1[215],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__68))
+    call TriggerAddAction(st___prototype1[215],function sa___prototype1_s__WindWalk__WindWalk_anon__63)
+    call TriggerAddCondition(st___prototype1[215],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__63))
     set st___prototype1[216]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[216],function sa___prototype1_s__WindWalk___WindWalk_anon__69)
-    call TriggerAddCondition(st___prototype1[216],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__69))
+    call TriggerAddAction(st___prototype1[216],function sa___prototype1_s__WindWalk__WindWalk_anon__66)
+    call TriggerAddCondition(st___prototype1[216],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__66))
     set st___prototype1[217]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[217],function sa___prototype1_s__WindWalk___WindWalk_anon__67)
-    call TriggerAddCondition(st___prototype1[217],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__67))
+    call TriggerAddAction(st___prototype1[217],function sa___prototype1_s__WindWalk__WindWalk_anon__68)
+    call TriggerAddCondition(st___prototype1[217],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__68))
     set st___prototype1[218]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[218],function sa___prototype1_s__WindWalk___WindWalk_anon__73)
-    call TriggerAddCondition(st___prototype1[218],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__73))
+    call TriggerAddAction(st___prototype1[218],function sa___prototype1_s__WindWalk__WindWalk_anon__69)
+    call TriggerAddCondition(st___prototype1[218],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__69))
     set st___prototype1[219]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[219],function sa___prototype1_s__WindWalk___WindWalk_anon__74)
-    call TriggerAddCondition(st___prototype1[219],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__74))
+    call TriggerAddAction(st___prototype1[219],function sa___prototype1_s__WindWalk__WindWalk_anon__67)
+    call TriggerAddCondition(st___prototype1[219],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__67))
     set st___prototype1[220]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[220],function sa___prototype1_s__WindWalk___WindWalk_anon__70)
-    call TriggerAddCondition(st___prototype1[220],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__70))
+    call TriggerAddAction(st___prototype1[220],function sa___prototype1_s__WindWalk__WindWalk_anon__73)
+    call TriggerAddCondition(st___prototype1[220],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__73))
     set st___prototype1[221]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[221],function sa___prototype1_s__WindWalk___WindWalk_anon__71)
-    call TriggerAddCondition(st___prototype1[221],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__71))
+    call TriggerAddAction(st___prototype1[221],function sa___prototype1_s__WindWalk__WindWalk_anon__74)
+    call TriggerAddCondition(st___prototype1[221],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__74))
     set st___prototype1[222]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[222],function sa___prototype1_s__WindWalk___WindWalk_anon__72)
-    call TriggerAddCondition(st___prototype1[222],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__72))
+    call TriggerAddAction(st___prototype1[222],function sa___prototype1_s__WindWalk__WindWalk_anon__70)
+    call TriggerAddCondition(st___prototype1[222],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__70))
     set st___prototype1[223]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[223],function sa___prototype1_s__WindWalk___WindWalk_anon__78)
-    call TriggerAddCondition(st___prototype1[223],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__78))
+    call TriggerAddAction(st___prototype1[223],function sa___prototype1_s__WindWalk__WindWalk_anon__71)
+    call TriggerAddCondition(st___prototype1[223],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__71))
     set st___prototype1[224]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[224],function sa___prototype1_s__WindWalk___WindWalk_anon__79)
-    call TriggerAddCondition(st___prototype1[224],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__79))
+    call TriggerAddAction(st___prototype1[224],function sa___prototype1_s__WindWalk__WindWalk_anon__72)
+    call TriggerAddCondition(st___prototype1[224],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__72))
     set st___prototype1[225]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[225],function sa___prototype1_s__WindWalk___WindWalk_anon__77)
-    call TriggerAddCondition(st___prototype1[225],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__77))
+    call TriggerAddAction(st___prototype1[225],function sa___prototype1_s__WindWalk__WindWalk_anon__78)
+    call TriggerAddCondition(st___prototype1[225],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__78))
     set st___prototype1[226]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[226],function sa___prototype1_s__WindWalk___WindWalk_anon__80)
-    call TriggerAddCondition(st___prototype1[226],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__80))
+    call TriggerAddAction(st___prototype1[226],function sa___prototype1_s__WindWalk__WindWalk_anon__79)
+    call TriggerAddCondition(st___prototype1[226],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__79))
     set st___prototype1[227]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[227],function sa___prototype1_s__WindWalk___WindWalk_anon__75)
-    call TriggerAddCondition(st___prototype1[227],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__75))
+    call TriggerAddAction(st___prototype1[227],function sa___prototype1_s__WindWalk__WindWalk_anon__77)
+    call TriggerAddCondition(st___prototype1[227],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__77))
     set st___prototype1[228]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[228],function sa___prototype1_s__WindWalk___WindWalk_anon__76)
-    call TriggerAddCondition(st___prototype1[228],Condition(function sa___prototype1_s__WindWalk___WindWalk_anon__76))
+    call TriggerAddAction(st___prototype1[228],function sa___prototype1_s__WindWalk__WindWalk_anon__80)
+    call TriggerAddCondition(st___prototype1[228],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__80))
     set st___prototype1[229]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[229],function sa___prototype1_s__WindWalk___WindWalk_R)
-    call TriggerAddCondition(st___prototype1[229],Condition(function sa___prototype1_s__WindWalk___WindWalk_R))
+    call TriggerAddAction(st___prototype1[229],function sa___prototype1_s__WindWalk__WindWalk_anon__75)
+    call TriggerAddCondition(st___prototype1[229],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__75))
     set st___prototype1[230]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[230],function sa___prototype1_s__WindWalk___WindWalk_E)
-    call TriggerAddCondition(st___prototype1[230],Condition(function sa___prototype1_s__WindWalk___WindWalk_E))
+    call TriggerAddAction(st___prototype1[230],function sa___prototype1_s__WindWalk__WindWalk_anon__76)
+    call TriggerAddCondition(st___prototype1[230],Condition(function sa___prototype1_s__WindWalk__WindWalk_anon__76))
     set st___prototype1[231]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[231],function sa___prototype1_s__WindWalk___WindWalk_Q)
-    call TriggerAddCondition(st___prototype1[231],Condition(function sa___prototype1_s__WindWalk___WindWalk_Q))
+    call TriggerAddAction(st___prototype1[231],function sa___prototype1_s__WindWalk__WindWalk_R)
+    call TriggerAddCondition(st___prototype1[231],Condition(function sa___prototype1_s__WindWalk__WindWalk_R))
     set st___prototype1[232]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[232],function sa___prototype1_s__WindWalk___WindWalk_W)
-    call TriggerAddCondition(st___prototype1[232],Condition(function sa___prototype1_s__WindWalk___WindWalk_W))
+    call TriggerAddAction(st___prototype1[232],function sa___prototype1_s__WindWalk__WindWalk_E)
+    call TriggerAddCondition(st___prototype1[232],Condition(function sa___prototype1_s__WindWalk__WindWalk_E))
     set st___prototype1[233]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[233],function sa___prototype1_s__WindWalk___WindWalk_HERO_START)
-    call TriggerAddCondition(st___prototype1[233],Condition(function sa___prototype1_s__WindWalk___WindWalk_HERO_START))
+    call TriggerAddAction(st___prototype1[233],function sa___prototype1_s__WindWalk__WindWalk_Q)
+    call TriggerAddCondition(st___prototype1[233],Condition(function sa___prototype1_s__WindWalk__WindWalk_Q))
     set st___prototype1[234]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[234],function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[234],Condition(function sa___prototype1_s__WindWalk___WindWalk_HERO_STOP))
+    call TriggerAddAction(st___prototype1[234],function sa___prototype1_s__WindWalk__WindWalk_W)
+    call TriggerAddCondition(st___prototype1[234],Condition(function sa___prototype1_s__WindWalk__WindWalk_W))
     set st___prototype1[235]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[235],function sa___prototype1_s__ZZ___ZZ_anon__82)
-    call TriggerAddCondition(st___prototype1[235],Condition(function sa___prototype1_s__ZZ___ZZ_anon__82))
+    call TriggerAddAction(st___prototype1[235],function sa___prototype1_s__WindWalk__WindWalk_HERO_START)
+    call TriggerAddCondition(st___prototype1[235],Condition(function sa___prototype1_s__WindWalk__WindWalk_HERO_START))
     set st___prototype1[236]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[236],function sa___prototype1_s__ZZ___ZZ_anon__83)
-    call TriggerAddCondition(st___prototype1[236],Condition(function sa___prototype1_s__ZZ___ZZ_anon__83))
+    call TriggerAddAction(st___prototype1[236],function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[236],Condition(function sa___prototype1_s__WindWalk__WindWalk_HERO_STOP))
     set st___prototype1[237]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[237],function sa___prototype1_s__ZZ___ZZ_anon__81)
-    call TriggerAddCondition(st___prototype1[237],Condition(function sa___prototype1_s__ZZ___ZZ_anon__81))
+    call TriggerAddAction(st___prototype1[237],function sa___prototype1_s__ZZ__ZZ_anon__82)
+    call TriggerAddCondition(st___prototype1[237],Condition(function sa___prototype1_s__ZZ__ZZ_anon__82))
     set st___prototype1[238]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[238],function sa___prototype1_s__ZZ___ZZ_anon__84)
-    call TriggerAddCondition(st___prototype1[238],Condition(function sa___prototype1_s__ZZ___ZZ_anon__84))
+    call TriggerAddAction(st___prototype1[238],function sa___prototype1_s__ZZ__ZZ_anon__83)
+    call TriggerAddCondition(st___prototype1[238],Condition(function sa___prototype1_s__ZZ__ZZ_anon__83))
     set st___prototype1[239]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[239],function sa___prototype1_s__ZZ___ZZ_anon__86)
-    call TriggerAddCondition(st___prototype1[239],Condition(function sa___prototype1_s__ZZ___ZZ_anon__86))
+    call TriggerAddAction(st___prototype1[239],function sa___prototype1_s__ZZ__ZZ_anon__81)
+    call TriggerAddCondition(st___prototype1[239],Condition(function sa___prototype1_s__ZZ__ZZ_anon__81))
     set st___prototype1[240]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[240],function sa___prototype1_s__ZZ___ZZ_anon__87)
-    call TriggerAddCondition(st___prototype1[240],Condition(function sa___prototype1_s__ZZ___ZZ_anon__87))
+    call TriggerAddAction(st___prototype1[240],function sa___prototype1_s__ZZ__ZZ_anon__84)
+    call TriggerAddCondition(st___prototype1[240],Condition(function sa___prototype1_s__ZZ__ZZ_anon__84))
     set st___prototype1[241]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[241],function sa___prototype1_s__ZZ___ZZ_R)
-    call TriggerAddCondition(st___prototype1[241],Condition(function sa___prototype1_s__ZZ___ZZ_R))
+    call TriggerAddAction(st___prototype1[241],function sa___prototype1_s__ZZ__ZZ_anon__86)
+    call TriggerAddCondition(st___prototype1[241],Condition(function sa___prototype1_s__ZZ__ZZ_anon__86))
     set st___prototype1[242]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[242],function sa___prototype1_s__ZZ___ZZ_E)
-    call TriggerAddCondition(st___prototype1[242],Condition(function sa___prototype1_s__ZZ___ZZ_E))
+    call TriggerAddAction(st___prototype1[242],function sa___prototype1_s__ZZ__ZZ_anon__87)
+    call TriggerAddCondition(st___prototype1[242],Condition(function sa___prototype1_s__ZZ__ZZ_anon__87))
     set st___prototype1[243]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[243],function sa___prototype1_s__ZZ___ZZ_W)
-    call TriggerAddCondition(st___prototype1[243],Condition(function sa___prototype1_s__ZZ___ZZ_W))
+    call TriggerAddAction(st___prototype1[243],function sa___prototype1_s__ZZ__ZZ_R)
+    call TriggerAddCondition(st___prototype1[243],Condition(function sa___prototype1_s__ZZ__ZZ_R))
     set st___prototype1[244]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[244],function sa___prototype1_s__ZZ___ZZ_Q)
-    call TriggerAddCondition(st___prototype1[244],Condition(function sa___prototype1_s__ZZ___ZZ_Q))
+    call TriggerAddAction(st___prototype1[244],function sa___prototype1_s__ZZ__ZZ_E)
+    call TriggerAddCondition(st___prototype1[244],Condition(function sa___prototype1_s__ZZ__ZZ_E))
     set st___prototype1[245]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[245],function sa___prototype1_s__ZZ___ZZ_HERO_START)
-    call TriggerAddCondition(st___prototype1[245],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_START))
+    call TriggerAddAction(st___prototype1[245],function sa___prototype1_s__ZZ__ZZ_W)
+    call TriggerAddCondition(st___prototype1[245],Condition(function sa___prototype1_s__ZZ__ZZ_W))
     set st___prototype1[246]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[246],function sa___prototype1_s__ZZ___ZZ_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[246],Condition(function sa___prototype1_s__ZZ___ZZ_HERO_STOP))
+    call TriggerAddAction(st___prototype1[246],function sa___prototype1_s__ZZ__ZZ_Q)
+    call TriggerAddCondition(st___prototype1[246],Condition(function sa___prototype1_s__ZZ__ZZ_Q))
+    set st___prototype1[247]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[247],function sa___prototype1_s__ZZ__ZZ_HERO_START)
+    call TriggerAddCondition(st___prototype1[247],Condition(function sa___prototype1_s__ZZ__ZZ_HERO_START))
+    set st___prototype1[248]=CreateTrigger()
+    call TriggerAddAction(st___prototype1[248],function sa___prototype1_s__ZZ__ZZ_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[248],Condition(function sa___prototype1_s__ZZ__ZZ_HERO_STOP))
     set st___prototype6[17]=CreateTrigger()
     call TriggerAddAction(st___prototype6[17],function sa___prototype6_s__Respawn___Respawn_Death)
     call TriggerAddCondition(st___prototype6[17],Condition(function sa___prototype6_s__Respawn___Respawn_Death))
@@ -24348,18 +24426,18 @@ function jasshelper__initstructs1118675265 takes nothing returns nothing
     call ExecuteFunc("s__Spell_onInit")
     call ExecuteFunc("s__Units_onInit")
     call ExecuteFunc("s__PlayerPress_onInit")
-    call ExecuteFunc("s__ASN__ASN_onInit")
-    call ExecuteFunc("s__AW__AW_onInit")
-    call ExecuteFunc("s__BlackSaber___BlackSaber_onInit")
+    call ExecuteFunc("s__ASN___ASN_onInit")
+    call ExecuteFunc("s__AW___AW_onInit")
+    call ExecuteFunc("s__BlackSaber__BlackSaber_onInit")
     call ExecuteFunc("s__KillUi_onInit")
     call ExecuteFunc("s__MR__MR_onInit")
     call ExecuteFunc("s__OrdinaryWizard___OrdinaryWizard_onInit")
-    call ExecuteFunc("s__SD__SD_onInit")
+    call ExecuteFunc("s__SD___SD_onInit")
     call ExecuteFunc("s__SL__SL_onInit")
     call ExecuteFunc("s__SwordMaster__SwordMaster_onInit")
     call ExecuteFunc("s__TR__TR_onInit")
-    call ExecuteFunc("s__WindWalk___WindWalk_onInit")
-    call ExecuteFunc("s__ZZ___ZZ_onInit")
+    call ExecuteFunc("s__WindWalk__WindWalk_onInit")
+    call ExecuteFunc("s__ZZ__ZZ_onInit")
     call ExecuteFunc("s__Respawn___Respawn_onInit")
 endfunction
 
