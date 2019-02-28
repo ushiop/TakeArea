@@ -26,9 +26,9 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             UnitShareVision(Origin_Ball,p.player, true );
             
             //测试时不随机英雄
-            u=HeroRares.GetRandomHero(p.player,p.randomhero);
+            //u=HeroRares.GetRandomHero(p.player,p.randomhero);
             
-            //u=Units.Spawn(p.player,'H00D',0,0,0);
+            u=Units.Spawn(p.player,'H00E',0,0,0);
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
@@ -47,12 +47,12 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
         }); 
 
  
-        /*测试
+        /*测试*/
 
         for(0<=i<=5){
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h009',-4464,-3641,0));
-        } */
+        } 
  
         //JAPI测试异步 
         /*BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
