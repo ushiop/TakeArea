@@ -422,6 +422,7 @@ library TR requires Groups{
             Data data=Data.create('A02D');
             Units mj;
             Units ts;
+            BJDebugMsg(I2S(i));
             /*if(tp>=2){ 
                 u.Pause(true);
                 if(tp!=3){ 
@@ -433,7 +434,7 @@ library TR requires Groups{
             ts.AddAbility('A02H'); 
             ts.AnimeSpeed(4);
             u.SetF(f,true);
-            u.Alpha(0);
+            //u.Alpha(0);
             Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,0.5,1.1, "stand","cf2.mdl").SetH(75);
             Units.MJ(u.player.player,'e008','A02D',0,x,y,f,1,1.25,2, "stand","dust2.mdl");
@@ -519,6 +520,7 @@ library TR requires Groups{
                 u.Life(0.7);
                 u.DelayAlpha(255,0,0.65);
                 u.AnimeSpeed(0);
+                Dash.Start(u.unit,dash.Angle,200,Dash.SUB,10,true,false);
                 mj.Life(0.5);
                 mj.Anime("death"); 
                 DestroyGroup(data.g[0]);
@@ -586,10 +588,10 @@ library TR requires Groups{
                         f=Util.XY(u.unit,e.OrderTargetUnit);
                     }
                     b=Buffs.Find(u.unit,'B00E'); 
-                    if(b.NowTime<4.990){ 
+                    if(b.NowTime<4.990&&b.Level>0){ 
                         TR.W2(u.unit,f,b.Level,2);
                         b.Level-=1;
-                        if(b.Level<=0){
+                        if(b.Level<=0){ 
                             b.Stop();
                         } 
                     }
@@ -622,7 +624,7 @@ library TR requires Groups{
                 timer t=NewTimer();
                 Spell(b.Obj).Destroy();
                 SetTimerData(t,Units.Get(b.Unit));
-                TimerStart(t,0.1,false,function(){
+                TimerStart(t,0.3,false,function(){
                     Units(GetTimerData(GetExpiredTimer())).RemoveAbility('A02H');
                     ReleaseTimer(GetExpiredTimer());
                 });
