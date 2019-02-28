@@ -435,7 +435,7 @@ library TR requires Groups{
             ts=Units.MJ(u.player.player,'e008','A02D',0,x,y,f,3,u.modelsize,1,"stand",u.model);
             ts.AnimeId(2);
             ts.AddAbility('A02H'); 
-            ts.AnimeSpeed(4);
+            ts.AnimeSpeed(3);
             u.SetF(f,true);
             //u.Alpha(0);
             Util.Duang(x,y,0.4,100,100,-320,0.02,50); 
@@ -483,7 +483,7 @@ library TR requires Groups{
                         data.i[2]-=1;
                     }
                 }
-                if(dash.Speed<4){
+                if(dash.Speed<3){
                     dash.Stop();
                 }else{
                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
@@ -572,7 +572,7 @@ library TR requires Groups{
         static method W1(EventArgs e){ 
             Units u=Units.Get(e.TriggerUnit);
             real f;
-            Buffs b; 
+            Buffs b,b1; 
             Units mj;  
             if((e.OrderId==851983||e.OrderId==851986||e.OrderId==851971)&&u.IsAbility('A02F')==true&&u.player.lv10!=null){
                 //四方斩残影
@@ -605,13 +605,27 @@ library TR requires Groups{
                         f=Util.XY(u.unit,e.OrderTargetUnit);
                     }
                     b=Buffs.Find(u.unit,'B00E'); 
-                    if(b.NowTime<4.990&&b.Level>0){ 
-                        TR.W2(u.unit,f,b.Level,2);
-                        b.Level-=1;
-                        if(b.Level<=0){ 
-                            b.Stop();
-                        } 
+                    if(u.IsAbility('B00G')==true){ 
+                        b1=Buffs.Find(u.unit,'B00G');
+                        if(b1.NowTime<5.990){
+                            if(b.NowTime<4.990&&b.Level>0){  
+                                TR.W2(u.unit,f,b.Level,2);
+                                b.Level-=1;
+                                if(b.Level<=0){ 
+                                    b.Stop();
+                                } 
+                            }   
+                        }
+                    }else{
+                        if(b.NowTime<4.990&&b.Level>0){  
+                            TR.W2(u.unit,f,b.Level,2);
+                            b.Level-=1;
+                            if(b.Level<=0){ 
+                                b.Stop();
+                            } 
+                        }
                     }
+                    
                 }  
             }
 
@@ -690,7 +704,9 @@ library TR requires Groups{
                     Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
                     Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
                 };
-            }else{
+            }else{ 
+                u.Pause(true);
+                u.Pause(false);
                 e.Destroy();
             }
         }
