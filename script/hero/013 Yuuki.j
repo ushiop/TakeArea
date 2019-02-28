@@ -16,12 +16,28 @@ library Yuuki requires Groups{
             Players p=Players.Get(ps);
             Buffs b;
             Data data;
+            Units mj;
             if(k=="Q"){ 
                 if(p.hero.IsAbility('B013')==true&&p.hero.IsAbility('A04J')==false){
                     b=Buffs.Find(p.hero.unit,'B013'); 
                     if(b.Level<=1){ 
                         data=Data(b.Obj);
+                        Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,1.5,1,"death","lizi_zi1.mdl"); 
+                        Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,2,1,"stand","hiteffect08purplea.mdl").SetH(100); 
+                        mj=Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,p.hero.modelsize,2,"attack",p.hero.model); 
+                        mj.Alpha(0);
+                        mj.SetF(Util.XY(mj.unit,p.hero.unit),true);
                         p.hero.Position(Units(data.c[2]).X(),Units(data.c[2]).Y(),false);
+                        data=Data.create('A04H');
+                        data.c[0]=mj;
+                        data.r[0]=p.hero.X();
+                        data.r[1]=p.hero.Y();
+                        Timers.Start(0.2,data,function(Timers t){
+                            Data data=Data(t.Data());
+                            Units(data.c[0]).Position(data.r[0],data.r[1],false);
+                            t.Destroy();
+                            data.Destroy();
+                        }); 
                         b.Stop();
                     }
                 }
@@ -66,24 +82,38 @@ library Yuuki requires Groups{
                     u.Position(x,y,true);
                     u.RemoveAbility('A04H');
                     u.AddAbility('A04H');
+                }else{
+                    mj=Units.MJ(u.player.player,'e009','A04H',0,x,y,f,2,1,1.5,"stand","tx_white2.mdl");
+                    mj.SetH(75);
+                    mj.DelaySizeEx(1,2,1.5);
+                    Dash.Start(mj.unit,f,600,Dash.PWX,70,true,false);
                 }
                 u.AddAbility('A04J');
-                Units.MJ(u.player.player,'e008','A04H',0,x,y,f,1,0.6,1,"stand","cf2.mdl");
-                Units.MJ(u.player.player,'e009','A04H',0,x,y,f,2,1,1.5,"stand","tx_white2.mdl").SetH(75);
+                u.DelayAlpha(0,255,0.6);
+                data=Data.create('A04H');
+                Units.MJ(u.player.player,'e008','A04H',0,x,y,f,1,0.6,1,"stand","cf2.mdl"); 
                 mj=Units.MJ(u.player.player,'e009','A04H',0,x,y,f,2,1,3,"stand","white-qiquan-new.mdl");
                 mj.SetH(75);
                 mj.DelaySizeEx(1,2,1.5);
                 Dash.Start(mj.unit,f,600,Dash.ADD,70,true,false);
+                mj=Units.MJ(u.player.player,'e008','A04H',0,x,y,f,2,0.6,1,"stand","akiha claw_zi.mdl");
+                mj.SetH(100); 
+                data.c[0]=u;
+                data.c[1]=mj;
+                data.i[0]=0;
                 dash=Dash.Start(u.unit,f,700,Dash.SUB,40,true,false);
+                dash.Obj=data;
                 dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
                     Units u=Units.Get(dash.Unit);
                     if(dash.Speed>6){
-                        if(dash.Obj==0){
-                            dash.Obj=2;
+                        if(data.i[0]==0){
+                            data.i[0]=2;
                             Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
                         }else{
-                            dash.Obj-=1;
+                            data.i[0]-=1;
                         }
+                        Units(data.c[1]).Position(dash.X+100*CosBJ(dash.Angle),dash.Y+100*SinBJ(dash.Angle),false);
                     }
                     
                     if(dash.Speed<2.3){
@@ -91,9 +121,11 @@ library Yuuki requires Groups{
                     }
                 };
                 dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
                     Units u=Units.Get(dash.Unit); 
                     u.RemoveAbility('A04J');
                     u.Pause(false);
+                    data.Destroy();
                 };
             } 
         }
