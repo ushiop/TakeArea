@@ -64,7 +64,7 @@ library TR requires Groups{
                                 data.i[0]=1;
                                 data.r[0]=GetRandomReal(0,360);
                                 
-                                mj=Units.MJ(u.player.player,'e008','A02J',0,dash.X+5*CosBJ(data.r[0]),dash.Y+5*SinBJ(data.r[0]),0,1,1,1.5, "attack","ls tong ren.mdl");   
+                                mj=Units.MJ(u.player.player,'e008','A02J',0,dash.X+5*CosBJ(data.r[0]),dash.Y+5*SinBJ(data.r[0]),0,1,1,1.5, "attack",u.model);   
                                 mj.AnimeId(5);
                                 mj.AnimeSpeed(2); 
                                 mj.Color(u.color_alpha,u.color_alpha,u.color_alpha);
@@ -156,10 +156,14 @@ library TR requires Groups{
             data.i[4]+=1;
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             if(m.IsAbility('B00H')==false){ 
-                Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
-                Dash.Start(m.unit,f,30,Dash.SUB,5,true,true); 
-            } 
-            mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack","ls tong ren.mdl");   
+                if(u.IsAbility('B00G')==true){
+                    m.Position(m.X(),m.Y(),true);
+                }else{ 
+                    Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
+                    Dash.Start(m.unit,f,30,Dash.SUB,5,true,true); 
+                }
+            }
+            mj=Units.MJ(u.player.player,'e008','A02J',0,x,y,f,1,1,1.5, "attack",u.model);   
             mj.AnimeId(anime);
             mj.AnimeSpeed(2.5);
             mj.DelayAnimeSpeed(0,0.3);  
@@ -318,7 +322,7 @@ library TR requires Groups{
                     for(0<=i<4){
                         data=Data.create('A02F');
                         f=u.F()+(i*90.0);
-                        mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand","ls tong ren.mdl");
+                        mj=Units.MJ(u.player.player,'e008','A02F',115,x,y,f,666,1,1.4, "stand",u.model);
                         //mj.DelayAlpha(255,155,0.5);
                         mj.AnimeId(5);
                         mj.AddAbility(Units.MJType_FZW);
@@ -422,14 +426,13 @@ library TR requires Groups{
             Data data=Data.create('A02D');
             Units mj;
             Units ts;
-            BJDebugMsg(I2S(i));
             /*if(tp>=2){ 
                 u.Pause(true);
                 if(tp!=3){ 
                     IssueImmediateOrder(u.unit,"stop");
                 }
             }*/
-            ts=Units.MJ(u.player.player,'e008','A02D',0,x,y,f,3,u.modelsize,1,"stand","ls tong ren.mdl");
+            ts=Units.MJ(u.player.player,'e008','A02D',0,x,y,f,3,u.modelsize,1,"stand",u.model);
             ts.AnimeId(2);
             ts.AddAbility('A02H'); 
             ts.AnimeSpeed(4);
@@ -553,6 +556,17 @@ library TR requires Groups{
                     }
                 }
             }
+            if(e.DamageUnit.IsAbility('B00G')==true&&e.DamageType==Damage.Attack){
+                if(e.DamageUnit.GetAbilityCD('A02D')>0){
+                    e.DamageUnit.SetAbilityCD('A02D',e.DamageUnit.GetAbilityCD('A02D')-1);
+                }
+                if(e.DamageUnit.GetAbilityCD('A02F')>0){
+                    e.DamageUnit.SetAbilityCD('A02F',e.DamageUnit.GetAbilityCD('A02F')-1);
+                }
+                if(e.DamageUnit.GetAbilityCD('A02J')>0){
+                    e.DamageUnit.SetAbilityCD('A02J',e.DamageUnit.GetAbilityCD('A02J')-1);
+                }
+            }
         }
         //命令触发刀光冲击
         static method W1(EventArgs e){ 
@@ -571,7 +585,10 @@ library TR requires Groups{
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
                     if(mj.aid=='A02F'&&mj.aidindex==115){ 
-                        u.Position(mj.X(),mj.Y(),false);
+                        //u.Position(mj.X(),mj.Y(),false);
+                        //调用原生坐标，避免‘不受 位移状态’导致不能位移
+                        SetUnitX(u.unit,mj.X());
+                        SetUnitY(u.unit,mj.Y());
                         mj.SetData(-1);
                         mj.aidindex=0;  
                         break;
@@ -579,7 +596,7 @@ library TR requires Groups{
                 }
                 GroupClear(tmp_group);                   
             } 
-            if(u.IsAbility('B00E')==true&&u.IsAbility('B00G')==false){//刀光冲击
+            if(u.IsAbility('B00E')==true){//刀光冲击
                 if((e.OrderId==851983&&u.player.AI()==false)||e.OrderId==851986){
                      
                     if(e.OrderTargetUnit==null){ 
@@ -632,42 +649,42 @@ library TR requires Groups{
             };
         }
 
+        static method Q1(DamageArgs e){
+            if(e.TriggerUnit.IsAbility('B00G')==true){
+                e.Damage-=e.Damage*0.4;
+            }
+        }
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
-            Data data=Data.create('A02C');
-            Dash dash;
-            Buffs.Add(u.unit,'A02I','B00G',0.03,false);
-            u.Pause(true);
-            u.Pause(false);
-            data.c[0]=u;
-            data.c[1]=e;
-            data.i[0]=0;
-            Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),u.F(),1,1,1.5, "stand","dust2.mdl"); 
-            dash=Dash.Start(u.unit,u.F(),400,Dash.SUB,30,true,false);
-            dash.Obj=data;
-            dash.onMove=function(Dash dash){ 
-                Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]);
-                unit k;
-                if(data.i[0]==0){ 
-                    k=GroupFind(u.unit,dash.X,dash.Y,110,true,false);
-                    if(k!=null){
-                        data.i[0]=1;
-                        if((dash.MaxDis-dash.NowDis)>150){
-                            dash.MaxDis-=150;
-                        }
-                        k=null;
-                    }
-                }
-                if(dash.Speed>7){
-                    Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
-                }
-            };
-            dash.onEnd=function(Dash dash){
-                Data data=Data(dash.Obj);
-                Spell(data.c[1]).Destroy();
-                data.Destroy();
-            };
+            Data data;
+            Units mj;
+            Buffs b;
+            if(u.IsAbility('B00G')==false){ 
+                data=Data.create('A02C'); 
+                u.Pause(true);
+                u.Pause(false);
+                mj=Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),u.F(),0.55,u.modelsize,1, "stand",u.model);
+                mj.DelayAlpha(255,0,0.5);   
+                 
+                u.DelayAlpha(0,255,0.5);
+                u.PositionEnabled(false);
+                u.Model("ls tong ren.mdl");
+                b=Buffs.Add(u.unit,'A02I','B00G',6,false);
+                b.Obj=e;
+                b.onEnd=function(Buffs b){ 
+                    Units mj;
+                    Units u=Units.Get(b.Unit);
+                    Spell(b.Obj).Destroy();
+                    u.PositionEnabled(true); 
+                    mj=Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),u.F(),0.55,u.modelsize,1, "stand",u.model);
+                    mj.DelayAlpha(255,0,0.5);    
+                    u.DelayAlpha(0,255,0.5);
+                    u.Model("ls tong ren_white.mdl"); 
+                };
+            }else{
+                e.Destroy();
+            }
         }
 
 
@@ -772,6 +789,7 @@ library TR requires Groups{
             Events.On(Events.onUnitOrderToUnit,TR.W1);
             Events.On(Events.onUnitOrderToLocation,TR.W1);
             Damage.On(Damage.onUnitDamage_EndDamage,TR.W3);
+            Damage.On(Damage.onUnitDamage_SubDamage,TR.Q1);
             Events.On(Events.onUnitAttack,TR.R1);
             Units.On(Units.onHeroSpawn,TR.Spawn);
         }
