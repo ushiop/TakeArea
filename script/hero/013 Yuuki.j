@@ -23,12 +23,76 @@ library Yuuki requires Groups{
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
-                unit k;
+                Units mj;
+                unit k; 
+                real f;
                 if(dash.Speed>4){
                     k=GroupFind(u.unit,dash.X+60*CosBJ(dash.Angle),dash.Y+60*SinBJ(dash.Angle),80,true,false);
                     if(k!=null){
                         data.i[0]=1;
                         dash.Stop();
+                        u.Pause(true); 
+                        data.u[0]=k; 
+                        u.DelayAlpha(255,0,0.2);
+                        f=Util.XY(u.unit,k);
+                        Units.MJ(u.player.player,'e008','A04K',0,dash.X,dash.Y,dash.Angle,1,1,1,"stand","blink_zi.mdl"); 
+                        mj=Units.MJ(u.player.player,'e008','A04K',0,dash.X,dash.Y,dash.Angle,1,u.modelsize,1.5,"attack",u.model); 
+                        mj.DelayAlpha(255,0,0.3);
+                        data.c[2]=mj;
+                        Dash.Start(mj.unit,f+90,400,Dash.SUB,20,true,false);
+                        mj=Units.MJ(u.player.player,'e008','A04K',0,dash.X,dash.Y,dash.Angle,1,u.modelsize,1.5,"attack",u.model); 
+                        mj.DelayAlpha(255,0,0.3);
+                        data.c[3]=mj; 
+                        Dash.Start(mj.unit,f-90,400,Dash.SUB,20,true,false);
+                        Dash.Start(data.u[0],f,200,Dash.SUB,15,true,true);
+                        Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
+                        Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
+                        Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
+                        Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
+                        HitFlys.Add(data.u[0],15);
+                        Timers.Start(0.3,data,function(Timers t){
+                            Data data=Data(t.Data());
+                            Units u=Units(data.c[0]);
+                            Units m=Units.Get(data.u[0]);
+                            Units mj;
+                            real x=m.X(),y=m.Y(),f=Util.XY(u.unit,m.unit);
+                            if(u.Alive()==true&&m.Alive()==true){
+                                x=x+200*CosBJ(f);
+                                y=y+200*SinBJ(f);
+                                Units.MJ(u.player.player,'e008','A04K',0,x,y,f,1,1,1,"stand","blink_zi.mdl"); 
+                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+200*CosBJ(f+90),y+200*SinBJ(f+90),f+180,0.3,u.modelsize,1,"two",u.model); 
+                                mj.DelayAlpha(0,255,0.2);
+                                Dash.Start(mj.unit,f-90,220,Dash.SUB,20,true,false);
+                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+200*CosBJ(f-90),y+200*SinBJ(f-90),f+180,0.3,u.modelsize,1,"two",u.model); 
+                                mj.DelayAlpha(0,255,0.2);
+                                Dash.Start(mj.unit,f+90,220,Dash.SUB,20,true,false);
+                                u.DelayAlpha(0,255,0.2);
+                                u.Position(x,y,false);
+                                Units(data.c[3]).Position(x,y,false);
+                                Units(data.c[3]).SetF(f+180,true);
+                                Units(data.c[2]).Position(x,y,false);
+                                Units(data.c[2]).SetF(f+180,true);
+                                u.SetF(f+180,true);
+                                Timers.Start(0.2,data,function(Timers t){
+                                    Data data=Data(t.Data());
+                                    Units u=Units(data.c[0]);
+                                    if(u.Alive()==true){
+                                        u.AnimeId(8); 
+                                    }
+                                    u.Pause(false);
+                                    Spell(data.c[1]).Destroy();
+                                    data.u[0]=null;
+                                    data.Destroy();
+                                    t.Destroy();
+                                }); 
+                            }else{
+                                u.Pause(false);
+                                Spell(data.c[1]).Destroy();
+                                data.u[0]=null;
+                                data.Destroy();
+                            }
+                            t.Destroy();
+                        });
                         k=null;
                     }
                 }else{
@@ -48,8 +112,8 @@ library Yuuki requires Groups{
                 if(data.i[0]==0){ 
                     Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
                     Spell(data.c[1]).Destroy();
+                    data.Destroy(); 
                 }
-                data.Destroy(); 
             };
         }
 
@@ -70,8 +134,8 @@ library Yuuki requires Groups{
             if(k=="Q"){ 
                 if(p.hero.IsAbility('B013')==true&&p.hero.IsPause()==false){
                     b=Buffs.Find(p.hero.unit,'B013'); 
-                    if(b.Level<=1){ 
-                        data=Data(b.Obj);
+                    if(b.Level==1){ 
+                        data=Data(b.Obj); 
                         Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,1.5,1,"death","lizi_zi1.mdl"); 
                         Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,2,1,"stand","hiteffect08purplea.mdl").SetH(100); 
                         mj=Units.MJ(p.player,'e008','A04H',0,p.hero.X(),p.hero.Y(),0,2,p.hero.modelsize,2,"attack",p.hero.model); 
@@ -88,6 +152,7 @@ library Yuuki requires Groups{
                             t.Destroy();
                             data.Destroy();
                         }); 
+                        b.Level-=1;
                         b.Stop();
                     }
                 }
