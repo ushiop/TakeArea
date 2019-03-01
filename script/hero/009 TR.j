@@ -157,7 +157,8 @@ library TR requires Groups{
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             if(m.IsAbility('B00H')==false){ 
                 if(u.IsAbility('B00G')==true){
-                    m.Position(m.X(),m.Y(),true);
+                    //m.Position(m.X(),m.Y(),true);
+                    IssueImmediateOrder( m.unit, "stop" );
                 }else{ 
                     Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
                     Dash.Start(m.unit,f,30,Dash.SUB,5,true,true); 
