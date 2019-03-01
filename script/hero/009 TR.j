@@ -54,11 +54,15 @@ library TR requires Groups{
                         Data data=Data(dash.Obj);
                         Units u=Units(data.c[0]);
                         Units mj=Units(data.c[1]); 
-                        real f;
+                        real f,minSpeed=3;
                         Effect ef;
                         mj.Position(dash.X,dash.Y,false);
                         mj.SetF(dash.Angle,true);
                         u.SetF(dash.Angle,true);
+                        if(u.IsAbility('B00G')==true){
+                            minSpeed=7;
+                            u.DelayAlpha(0,255,1);
+                        }
                         if(dash.Speed>7.5){ 
                             if(data.i[0]==0){ 
                                 data.i[0]=1;
@@ -86,7 +90,7 @@ library TR requires Groups{
                             }
                         }  
                         
-                        if(dash.Speed>3){ 
+                        if(dash.Speed>minSpeed){ 
                             GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -105,6 +109,11 @@ library TR requires Groups{
                                 }
                             }
                             GroupClear(tmp_group);  
+                        }else{
+                            if(u.IsAbility('B00G')==true){
+                                dash.Stop();
+                            }
+                            
                         }
                     };
                     dash.onEnd=function(Dash dash){
@@ -113,6 +122,7 @@ library TR requires Groups{
                         u.AnimeSpeed(1);
                         u.Alpha(255);
                         u.Pause(false);   
+                        
                         u.RemoveAbility('A02M');
                         DestroyGroup(data.g[0]);
                         data.g[0]=null;
@@ -136,7 +146,7 @@ library TR requires Groups{
             Units tmp;
             Units dgs=-1;
             Dash dash;
-            real f=Util.XY(u.unit,m.unit),x=u.X(),y=u.Y();
+            real f=Util.XY(u.unit,m.unit),x=u.X(),y=u.Y(),dis=Util.XY2(u.unit,m.unit);
             real f1=GetRandomReal(0,360);
             integer anime,i;
             if(data.i[0]==0){
@@ -157,8 +167,7 @@ library TR requires Groups{
             TextAngle(u.unit,I2S(data.i[4])+"Hits!",0.4,10,90);
             if(m.IsAbility('B00H')==false){ 
                 if(u.IsAbility('B00G')==true){
-                    //m.Position(m.X(),m.Y(),true);
-                    IssueImmediateOrder( m.unit, "stop" );
+                    m.Position(u.X()+100*CosBJ(f),u.Y()+100*SinBJ(f),true); 
                 }else{ 
                     Dash.Start(u.unit,f,30,Dash.SUB,5,true,false);
                     Dash.Start(m.unit,f,30,Dash.SUB,5,true,true); 
@@ -524,7 +533,8 @@ library TR requires Groups{
                 u.Life(0.7);
                 u.DelayAlpha(255,0,0.65);
                 u.AnimeSpeed(0);
-                Dash.Start(u.unit,dash.Angle,200,Dash.SUB,10,true,false);
+                u.RemoveAbility('A02H'); 
+                Dash.Start(u.unit,dash.Angle,150,Dash.SUB,10,true,false);
                 mj.Life(0.5);
                 mj.Anime("death"); 
                 DestroyGroup(data.g[0]);
