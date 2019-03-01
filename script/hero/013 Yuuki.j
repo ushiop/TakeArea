@@ -78,11 +78,10 @@ library Yuuki requires Groups{
                 u.AnimeId(8); 
                 x=u.X();
                 y=u.Y();
-                if(b.Level>1){ 
-                    u.Position(x,y,true);
-                    u.RemoveAbility('A04H');
-                    u.AddAbility('A04H');
-                }else{
+                u.Position(x,y,true);
+                u.RemoveAbility('A04H');
+                u.AddAbility('A04H');
+                if(b.Level==1){  
                     mj=Units.MJ(u.player.player,'e009','A04H',0,x,y,f,2,1,1.5,"stand","tx_white2.mdl");
                     mj.SetH(75);
                     mj.DelaySizeEx(1,2,1.5);
@@ -101,11 +100,13 @@ library Yuuki requires Groups{
                 data.c[0]=u;
                 data.c[1]=mj;
                 data.i[0]=0;
+                data.g[0]=CreateGroup();
                 dash=Dash.Start(u.unit,f,700,Dash.SUB,40,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
                     Units u=Units.Get(dash.Unit);
+                    Units mj;
                     if(dash.Speed>6){
                         if(data.i[0]==0){
                             data.i[0]=2;
@@ -118,6 +119,20 @@ library Yuuki requires Groups{
                     
                     if(dash.Speed<2.3){
                         dash.Stop();
+                    }else{
+                        GroupEnumUnitsInRange(tmp_group,dash.X+150*CosBJ(dash.Angle),dash.Y+150*SinBJ(dash.Angle),200,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){   
+                                GroupAddUnit(data.g[0],mj.unit);
+                                Dash.Start(mj.unit,dash.Angle,500-dash.NowDis,Dash.ADD,50,true,true);  
+                                u.Damage(mj.unit,Damage.Physics,'A04H',u.Agi(true)*5);
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                            }
+                        }
+                        GroupClear(tmp_group);
                     }
                 };
                 dash.onEnd=function(Dash dash){
@@ -125,6 +140,8 @@ library Yuuki requires Groups{
                     Units u=Units.Get(dash.Unit); 
                     u.RemoveAbility('A04J');
                     u.Pause(false);
+                    DestroyGroup(data.g[0]);
+                    data.g[0]=null;
                     data.Destroy();
                 };
             } 
