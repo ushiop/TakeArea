@@ -2,6 +2,56 @@ library Yuuki requires Groups{
     //英雄‘优纪’的技能
     //R级
     struct Yuuki{
+ 
+        //4 走路  9 飞行
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A04K');
+            Dash dash;
+            u.Pause(true);
+            u.AnimeSpeed(3);
+            u.AddAbility('A04L');
+            u.AnimeId(9);
+            u.SetF(e.Angle,true);
+            Units.MJ(u.player.player,'e008','A04K',0,u.X(),u.Y(),e.Angle,1,0.8,1,"stand","cf2.mdl"); 
+            Units.MJ(u.player.player,'e00C','A04K',0,u.X(),u.Y(),e.Angle,1,1,1,"stand","warstompcaster.mdl");
+            data.c[0]=u;
+            data.c[1]=e;
+            data.i[0]=0;
+            dash=Dash.Start(u.unit,e.Angle,1400,Dash.SUB,40,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units.Get(dash.Unit);
+                unit k;
+                if(dash.Speed>4){
+                    k=GroupFind(u.unit,dash.X+60*CosBJ(dash.Angle),dash.Y+60*SinBJ(dash.Angle),80,true,false);
+                    if(k!=null){
+                        data.i[0]=1;
+                        dash.Stop();
+                        k=null;
+                    }
+                }else{
+                   u.Anime("stand");
+                   dash.Stop();
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units.Get(dash.Unit);
+                Timers.Start(0.2,u,function(Timers t){
+                    Units(t.Data()).RemoveAbility('A04L');
+                    t.Destroy();
+                });
+                u.Pause(false);
+                u.AnimeSpeed(1);
+                if(data.i[0]==0){ 
+                    Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
+                    Spell(data.c[1]).Destroy();
+                }
+                data.Destroy(); 
+            };
+        }
 
         static method Damage(DamageArgs e){
             if(e.TriggerUnit.IsAbility('A04J')==true||e.TriggerUnit.IsAbility('A04L')==true){ 
@@ -159,6 +209,7 @@ library Yuuki requires Groups{
          
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A04K',Yuuki.W); 
             Spell.On(Spell.onSpell,'A04H',Yuuki.Q); 
             Spell.On(Spell.onReady,'A04H',Yuuki.HERO_START); 
             Damage.On(Damage.onUnitDamage_SubDamage,Yuuki.Damage);
