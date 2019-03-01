@@ -61,12 +61,12 @@ library Yuuki requires Groups{
                                 x=x+200*CosBJ(f);
                                 y=y+200*SinBJ(f);
                                 Units.MJ(u.player.player,'e008','A04K',0,x,y,f,1,1,1,"stand","blink_zi.mdl"); 
-                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+200*CosBJ(f+90),y+200*SinBJ(f+90),f+180,0.3,u.modelsize,1,"two",u.model); 
+                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+400*CosBJ(f+90),y+400*SinBJ(f+90),f+180,0.3,u.modelsize,1,"two",u.model); 
                                 mj.DelayAlpha(0,255,0.2);
-                                Dash.Start(mj.unit,f-90,220,Dash.SUB,20,true,false);
-                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+200*CosBJ(f-90),y+200*SinBJ(f-90),f+180,0.3,u.modelsize,1,"two",u.model); 
+                                Dash.Start(mj.unit,f-90,460,Dash.SUB,50,true,false);
+                                mj=Units.MJ(u.player.player,'e008','A04K',0,x+400*CosBJ(f-90),y+400*SinBJ(f-90),f+180,0.3,u.modelsize,1,"two",u.model); 
                                 mj.DelayAlpha(0,255,0.2);
-                                Dash.Start(mj.unit,f+90,220,Dash.SUB,20,true,false);
+                                Dash.Start(mj.unit,f+90,460,Dash.SUB,50,true,false);
                                 u.DelayAlpha(0,255,0.2);
                                 u.Position(x,y,false);
                                 Units(data.c[3]).Position(x,y,false);
@@ -83,7 +83,9 @@ library Yuuki requires Groups{
                                         mj=Units.MJ(u.player.player,'e008','A04K',0,x,y,f,2,2,2,"stand","zzmxcl_tuci_zise.mdl");
                                         mj.SetH(150); 
                                         Dash.Start(mj.unit,f,400,Dash.SUB,30,true,false);
-                                        Units.MJ(u.player.player,'e008','A04K',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.25,1,"stand","zise-shoot_ex.mdl").SetH(100);  
+                                        mj=Units.MJ(u.player.player,'e008','A04K',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.25,1,"stand","zise-shoot_ex.mdl");
+                                        mj.SetH(100);  
+                                        Dash.Start(mj.unit,f,180,Dash.NORMAL,30,true,false);
                                         //Util.Range(x+150*CosBJ(f),y+150*SinBJ(f),150);
                                         GroupEnumUnitsInRange(tmp_group,x+150*CosBJ(f),y+150*SinBJ(f),150,function GroupIsAliveNotAloc);     
                                         while(FirstOfGroup(tmp_group)!=null){
