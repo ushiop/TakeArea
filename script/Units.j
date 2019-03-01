@@ -218,6 +218,11 @@ library Units requires Table,Players,Events,Util{
                 SetUnitVertexColor(this.unit, this.color_red,this.color_green,this.color_blue,a );
             }
 
+            //单位是否不处于暂停状态
+            method IsPause()->boolean{
+                return !(this.pauses==0);
+            }
+
             //暂停单位
             method Pause(boolean p){
                 if(p==true){
