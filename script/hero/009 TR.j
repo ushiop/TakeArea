@@ -273,7 +273,7 @@ library TR requires Groups{
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
             Buffs b;
-            Data data=Data.create('A02J');
+            Data data;
             timer t=NewTimer();
             SetTimerData(t,u);
             TimerStart(t,0,false,function(){
@@ -287,22 +287,28 @@ library TR requires Groups{
             Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,3,1,1, "stand","boom.mdl").SetH(100); 
             Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,1,1.15,1.25, "stand","white-qiquan.mdl"); 
             Units.MJ(u.player.player,'e008','A02J',0,u.X(),u.Y(),0,1,2.5,1, "stand","by_wood_gongchengsipai_2.mdl");
-            
-            data.c[0]=u;
-            data.c[1]=e;
-            data.i[0]=0;
-            data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1; //0.1 
-            SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) - data.r[0] );
-            b=Buffs.Add(u.unit,'A02K','B00H',10,false);
-            b.Level=16;
-            b.Obj=data;
-            b.onEnd=function(Buffs b){ 
-                Data data=Data(b.Obj);
-                Units u=Units(data.c[0]); 
-                SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) + data.r[0] );
-                Spell(data.c[1]).Destroy(); 
-                data.Destroy();
-            };
+            if(u.IsAbility('B00H')==false){//第一次用 
+                data=Data.create('A02J');
+                data.c[0]=u;
+                data.c[1]=e;
+                data.i[0]=0;
+                data.r[0]=GetUnitState(u.unit, ConvertUnitState(0x25))-0.1; //0.1 
+                SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) - data.r[0] );
+                b=Buffs.Add(u.unit,'A02K','B00H',10,false);
+                b.Level=16;
+                b.Obj=data; 
+                b.onEnd=function(Buffs b){ 
+                    Data data=Data(b.Obj);
+                    Units u=Units(data.c[0]); 
+                    SetUnitState(u.unit, ConvertUnitState(0x25),GetUnitState(u.unit, ConvertUnitState(0x25)) + data.r[0] );
+                    Spell(data.c[1]).Destroy(); 
+                    data.Destroy();
+                };
+            }else{//刷CD导致的多次使用
+                b=Buffs.Add(u.unit,'A02K','B00H',10,false);
+                b.Level=16;
+                e.Destroy();
+            }
         }
 
 
