@@ -83,9 +83,9 @@ library AW requires Groups{
                                     data.r[0]-=0.1;
                                 }
                             } 
-                            if(u.player.isai==true){//AI作弊，每3秒增加1层尸体
+                            if(u.player.isai==true){//AI作弊，每1秒增加1层尸体
                                 if(data.r[1]<=0){
-                                    data.r[1]=3;
+                                    data.r[1]=1;
                                     Buffs.Add(u.unit,'A03B','B00Q',86400,false).onFlush=function(Buffs b){
                                         b.Level+=1;
                                     }; 
