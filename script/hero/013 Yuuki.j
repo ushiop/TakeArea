@@ -76,10 +76,17 @@ library Yuuki requires Groups{
                                 Timers.Start(0.2,data,function(Timers t){
                                     Data data=Data(t.Data());
                                     Units u=Units(data.c[0]);
+                                    Units mj; 
+                                    real x=u.X(),y=u.Y(),f=u.F();
                                     if(u.Alive()==true){
+                                        mj=Units.MJ(u.player.player,'e008','A04K',0,x,y,f,2,2,2,"stand","zzmxcl_tuci_zise.mdl");
+                                        mj.SetH(150); 
+                                        Dash.Start(mj.unit,f,400,Dash.SUB,30,true,false);
+                                        Units.MJ(u.player.player,'e008','A04K',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.25,1,"stand","zise-shoot.mdl");  
                                         u.AnimeId(8); 
+                                        
                                     }
-                                    u.Pause(false);
+                                    u.DelayReleaseAnimePause(0.2);
                                     Spell(data.c[1]).Destroy();
                                     data.u[0]=null;
                                     data.Destroy();
