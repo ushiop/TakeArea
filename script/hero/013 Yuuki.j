@@ -50,6 +50,7 @@ library Yuuki requires Groups{
                         Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
                         Effect.ToUnit("hiteffect08purplea.mdl",k,"chest").Destroy(); 
                         HitFlys.Add(data.u[0],15);
+                        u.Damage(k,Damage.Physics,'A04K',u.Agi(true)*5);
                         Timers.Start(0.3,data,function(Timers t){
                             Data data=Data(t.Data());
                             Units u=Units(data.c[0]);
@@ -82,9 +83,23 @@ library Yuuki requires Groups{
                                         mj=Units.MJ(u.player.player,'e008','A04K',0,x,y,f,2,2,2,"stand","zzmxcl_tuci_zise.mdl");
                                         mj.SetH(150); 
                                         Dash.Start(mj.unit,f,400,Dash.SUB,30,true,false);
-                                        Units.MJ(u.player.player,'e008','A04K',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.25,1,"stand","zise-shoot.mdl");  
+                                        Units.MJ(u.player.player,'e008','A04K',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,1.25,1,"stand","zise-shoot_ex.mdl").SetH(100);  
+                                        //Util.Range(x+150*CosBJ(f),y+150*SinBJ(f),150);
+                                        GroupEnumUnitsInRange(tmp_group,x+150*CosBJ(f),y+150*SinBJ(f),150,function GroupIsAliveNotAloc);     
+                                        while(FirstOfGroup(tmp_group)!=null){
+                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                                Dash.Start(mj.unit,f,300,Dash.SUB,60,true,true);  
+                                                u.Damage(mj.unit,Damage.Physics,'A04K',u.Agi(true)*5);
+                                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                                Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                                                Buffs.Add(mj.unit,'A04M','B014',4,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                            }
+                                        }
+                                        GroupClear(tmp_group);
                                         u.AnimeId(8); 
-                                        
+                                        Dash.Start(u.unit,f,200,Dash.NORMAL,20,true,false);
                                     }
                                     u.DelayReleaseAnimePause(0.2);
                                     Spell(data.c[1]).Destroy();
