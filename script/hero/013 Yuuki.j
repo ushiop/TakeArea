@@ -217,14 +217,15 @@ library Yuuki requires Groups{
                 u.AnimeId(8); 
                 x=u.X();
                 y=u.Y();
-                u.Position(x,y,true);
-                u.RemoveAbility('A04H');
-                u.AddAbility('A04H');
                 if(b.Level==1){  
                     mj=Units.MJ(u.player.player,'e009','A04H',0,x,y,f,2,1,1.5,"stand","tx_white2.mdl");
                     mj.SetH(75);
                     mj.DelaySizeEx(1,2,1.5);
                     Dash.Start(mj.unit,f,600,Dash.PWX,70,true,false);
+                }else{ 
+                    u.Position(x,y,true);
+                    u.RemoveAbility('A04H');
+                    u.AddAbility('A04H');
                 }
                 u.AddAbility('A04J');
                 u.DelayAlpha(0,255,0.6);
