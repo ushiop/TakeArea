@@ -4,13 +4,13 @@ library Yuuki requires Groups{
     struct Yuuki{
 
         static method Damage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('A04J')==true){ 
+            if(e.TriggerUnit.IsAbility('A04J')==true||e.TriggerUnit.IsAbility('A04L')==true){ 
                 if(e.DamageType==Damage.Attack||e.DamageType==Damage.Physics){
                     e.Damage-=e.Damage*0.85;
                 }
             }
 
-        }
+        } 
 
         static method Q1(player ps,string k){
             Players p=Players.Get(ps);
@@ -18,7 +18,7 @@ library Yuuki requires Groups{
             Data data;
             Units mj;
             if(k=="Q"){ 
-                if(p.hero.IsAbility('B013')==true&&p.hero.IsAbility('A04J')==false){
+                if(p.hero.IsAbility('B013')==true&&p.hero.IsPause()==false){
                     b=Buffs.Find(p.hero.unit,'B013'); 
                     if(b.Level<=1){ 
                         data=Data(b.Obj);
