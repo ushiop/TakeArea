@@ -20,10 +20,10 @@ library Yuuki requires Groups{
             data.i[1]=0;
             mj=Units.MJ(u.player.player,'e008','A04N',0,data.r[0]+150*CosBJ(data.r[2]),data.r[1]+150*SinBJ(data.r[2]),data.r[2],10,1,1,"stand","slash_flareadditive195_2.mdl");
             mj.SetH(75);   
-            mj.DelayAnimeSpeed(0,0.3);
+            mj.DelayAnimeSpeed(0,0.25);
             data.c[0]=mj;
-            dash=Dash.Start(u.unit,data.r[2],300,Dash.NORMAL,40,true,false);
-            dash.Obj=data;
+            dash=Dash.Start(u.unit,data.r[2],200,Dash.NORMAL,40,true,false);
+            dash.Obj=data; 
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Dash dash1;
@@ -33,7 +33,7 @@ library Yuuki requires Groups{
                 data.i[0]+=1; 
                 if(data.i[0]<4){
                     if(data.i[0]==3){ 
-                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],350,Dash.SUB,40,true,false);
+                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],250,Dash.SUB,40,true,false);
                         dash1.onMove=function(Dash dash){
                             Units mj;
                             integer i;
@@ -41,17 +41,16 @@ library Yuuki requires Groups{
                             Data data=Data(dash.Obj);
                             Dash dash1;
                             if(data.i[1]==0){
-                                if(dash.Speed<6){
+                                if(dash.Speed<4){
                                     data.i[1]=1;
-                                    x=data.r[0]+150*CosBJ(data.r[2]);
-                                    y=data.r[1]+150*SinBJ(data.r[2]);
-                                    x=x+150*CosBJ(data.r[2]+90);
-                                    y=y+150*SinBJ(data.r[2]+90);
-                                     
+                                    x=data.r[0]+125*CosBJ(data.r[2]);
+                                    y=data.r[1]+125*SinBJ(data.r[2]);
+                                    x=x+125*CosBJ(data.r[2]+90);
+                                    y=y+125*SinBJ(data.r[2]+90); 
                                     for(0<=i<4){
                                         mj=Units(data.c[i]);
                                         mj.Life(0.4);
-                                        mj.DelayAlpha(255,0,0.38);
+                                        mj.DelayAlpha(255,0,0.2);
                                         mj.DelaySizeEx(1,3,0.38);
                                         dash1=Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.ADD,50,true,false);
                                     }
@@ -59,13 +58,13 @@ library Yuuki requires Groups{
                             }
                         };
                     }else{ 
-                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],300,Dash.NORMAL,40,true,false);
+                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],200,Dash.NORMAL,40,true,false);
                     }
-                    dash1.Obj=data;
+                    dash1.Obj=data; 
                     dash1.onEnd=dash.onEnd;
-                    mj=Units.MJ(u.player.player,'e008','A04N',0,dash.X+150*CosBJ(dash.Angle+90),dash.Y+150*SinBJ(dash.Angle+90),dash.Angle+90,10,1,1,"stand","slash_flareadditive195_2.mdl");
+                    mj=Units.MJ(u.player.player,'e008','A04N',0,dash.X+125*CosBJ(dash.Angle+90),dash.Y+125*SinBJ(dash.Angle+90),dash.Angle+90,10,1,1,"stand","slash_flareadditive195_2.mdl");
                     mj.SetH(75);
-                    mj.DelayAnimeSpeed(0,0.3);
+                    mj.DelayAnimeSpeed(0,0.25);
                     data.c[data.i[0]]=mj; 
                 }else{ 
                     u.Pause(false); 
