@@ -127,8 +127,54 @@ library Yuuki requires Groups{
                     } 
                     
                 });
-            }else{//四方斩或意外释放
+            }else{//四方斩或意外释放 
+                Units.MJ(u.player.player,'e008','A04Q',0,u.X(),u.Y(),0,2,1,1,"stand","white-qiquan.mdl"); 
+                Effect.ToUnit("blink_zi.mdl",u.unit,"chest").Destroy();
+                data=Data.create('A04Q');
+                data.c[0]=u;
+                data.c[1]=e;
+                data.r[0]=u.X();
+                data.r[1]=u.Y();
+                data.i[0]=10;
+                data.r[2]=0;
+                u.Alpha(0); 
+                Timers.Start(0.1,data,function(Timers t){
+                    Data data=Data(t.Data());
+                    Units u=Units(data.c[0]); 
+                    Units mj;
+                    Dash dash; 
+                    if(u.Alive()==false||data.i[0]<=0){ 
+                        u.DelayAlpha(0,255,0.5);
+                        u.RemoveAbility('A04S');
+                        u.Position(data.r[0],data.r[1],false); 
+                        u.Pause(false);
+                        Spell(data.c[1]).Destroy();
+                        t.Destroy();
+                        data.Destroy();
+                    }else{ 
+                        u.Alpha(0); 
+                        u.Position(data.r[0],data.r[1],false);
+                        mj=Units.MJ(u.player.player,'e008','A04Q',0,data.r[0],data.r[1],data.r[2]+GetRandomReal(60,-60),1,u.modelsize,1,"stand",u.model);
+                        mj.Alpha(150);
+                        mj.AnimeId(15);
+                        mj.AddAbility('A04S');
+                        Effect.ToUnit("az_dg01.mdl",mj.unit,"chest").Destroy(); 
+                        dash=Dash.Start(mj.unit,mj.F(),300,Dash.NORMAL,15,true,false);
+                        dash.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            if(u.player.hero.IsAbility('A04S')==true){ 
+                                u.player.hero.Position(dash.X,dash.Y,false);
+                            }
+                            u.DelayAlpha(150,0,0.7);
+                        };
 
+                        data.i[0]-=1;
+                        data.r[2]+=90;
+                        if(data.r[2]>360){
+                            data.r[2]-=360;
+                        }
+                    }
+                });
             }
         }
 
