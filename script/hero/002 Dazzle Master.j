@@ -579,7 +579,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             u.AnimeId(10);
             data.c[0]=u;
             data.c[2]=e;
-            data.r[0]=0;//蓄力时间
+            data.r[0]=0;//蓄力时间 
+            data.r[1]=e.Angle;//角度
             data.i[3]=2; 
             /*if(u.player.isai==true){
                 data.r[0]=1;
@@ -621,9 +622,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }else{
                         data.i[3]-=1;
                     }
-                    if(data.r[0]>=0.5){
+                    /*if(data.r[0]>=0.5){
                         u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
-                    }
+                    }*/
                 }else{ 
                     ReleaseTimer(GetExpiredTimer()); 
                     if(data.r[0]>2){
@@ -631,7 +632,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                     if(u.Alive()==false){
                         data.r[0]=0;
-                    }else{
+                    }else{ 
+                        u.SetF(data.r[1],true);
                         mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),0.6,0.8,1.5, "birth","dg.mdx");
                         mj.SetH(100);
                         Dash.Start(mj.unit,u.F(),350+(data.r[0]*250),Dash.ADD,80,true,false);
