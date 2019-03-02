@@ -654,7 +654,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     data.i[0]=0;
                     data.g[0]=CreateGroup();
                     
-                    Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster_fire.mdx");
+                    Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster_fire.mdx").Alpha(200);
                     Util.Duang(u.X(),u.Y(),0.4,200,200,-(data.r[0]*51.2),0.04,100);
                     dash=Dash.Start(u.unit,u.F(),350+(data.r[0]*250),Dash.SUB,80,true,false);
                     dash.Obj=data; 
