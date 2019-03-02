@@ -2,7 +2,126 @@ library Yuuki requires Groups{
     //英雄‘优纪’的技能
     //R级
     struct Yuuki{
+        
+        //B017 日向衔接  B015 四方斩一段衔接
+        //10
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Buffs b;
+            Units m;
+            Data data;
+            real x,y;
+            u.Pause(true); 
+            u.AddAbility('A04S');
+            if(u.IsAbility('B017')==true){//日向
+                b=Buffs.Find(u.unit,'B017');
+                data=Data(b.Obj);
+                m=Units.Get(data.u[0]);
+                b.Stop();
+                Units.MJ(u.player.player,'e008','A04Q',0,u.X(),u.Y(),0,2,1.5,1,"death","lizi_zi1.mdl"); 
+                data=Data.create('A04Q');
+                data.c[0]=u;
+                data.c[1]=e;
+                data.c[2]=m;
+                data.i[0]=5;
+                Timers.Start(0.1,data,function(Timers t){
+                    Data data=Data(t.Data());
+                    Units u=Units(data.c[0]);
+                    Units m=Units(data.c[2]);
+                    Units mj;
+                    real x,y,f;
+                    if(m.Alive()==true){
+                        f=m.F()+180;
+                        x=m.X()+100*CosBJ(f);
+                        y=m.Y()+100*SinBJ(f);
+                        f=m.F();
+                    }else{
+                        f=u.F();
+                        x=u.X();
+                        y=u.Y();
+                    }
+                    if(u.Alive()==true){
+                        if(data.i[0]>0){ 
+                            if(data.i[0]==5){//第一下突击
+                                u.Position(x,y,false);
+                                u.SetF(f,true);
+                                u.AnimeId(8);
+                                u.AnimeSpeed(2);
+                                t.SetTime(0.2);
+                                data.i[0]-=1;
+                            }else{
+                                if(data.i[0]==4){//突击打到 
+                                    u.Position(x,y,false); 
+                                    u.SetF(f,true);
+                                    u.AnimeId(10);
+                                    u.AnimeSpeed(1.4);
+                                    t.SetTime(0.3);
+                                    GroupEnumUnitsInRange(tmp_group,x+150*CosBJ(f),y+150*SinBJ(f),175,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                            Dash.Start(mj.unit,f,300,Dash.SUB,15,true,true);
+                                            //u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*10);
+                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                            Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                                        }
+                                    }
+                                    GroupClear(tmp_group);
+                                    BJDebugMsg("伤害");
+                                    mj=Units.MJ(u.player.player,'e008','A04Q',0,x,y,f,2,1.5,1,"stand","zzmxcl_tuci_zise.mdl");
+                                    mj.SetH(150); 
+                                    Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
+                                    data.i[0]-=1;
+                                }else{
+                                    u.Position(x,y,false); 
+                                    u.SetF(f,true);
+                                    f=u.F();
+                                    
+                                    BJDebugMsg("伤害");
+                                    if(data.i[0]==3){
+                                        Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f+90,2,2,1,"stand","daoguang_ex_y90.mdl").SetH(100);
+                                    }
+                                    if(data.i[0]==1){ 
+                                        Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,3,1,"stand","boom4.mdl");
+                                    }
+                                    Units.MJ(u.player.player,'e009','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1,"stand","az-ziwu-yumao.mdl");
+                                    Dash.Start(u.unit,f,30,Dash.NORMAL,5,true,false);
+                                    GroupEnumUnitsInRange(tmp_group,x+150*CosBJ(f),y+150*SinBJ(f),175,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                            Dash.Start(mj.unit,f,100,Dash.SUB,9,true,true);
+                                            //u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*10);
+                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                            Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                                        }
+                                    }
+                                    GroupClear(tmp_group);
+                                    data.i[0]-=1;
+                                }
+                            }
+                        }else{
+                            u.RemoveAbility('A04S');
+                            u.DelayReleaseAnimePause(0.3);
+                            Spell(data.c[1]).Destroy();
+                            t.Destroy();
+                            data.Destroy();  
+                        }
+                    }else{
+                        u.RemoveAbility('A04S');
+                        u.Pause(false);
+                        Spell(data.c[1]).Destroy();
+                        t.Destroy();
+                        data.Destroy();
+                    } 
+                    
+                });
+            }else{//四方斩或意外释放
 
+            }
+        }
 
         static method E1(unit ua){
             Units u=Units.Get(ua);
@@ -64,7 +183,7 @@ library Yuuki requires Groups{
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){   
                                             if(Util.XY2EX(data.r[0],data.r[1],mj.X(),mj.Y())>100){ 
-                                                Dash.Start(mj.unit,Util.XYEX(data.r[0],data.r[1],mj.X(),mj.Y()),200,Dash.SUB,40,true,false);
+                                                Dash.Start(mj.unit,Util.XYEX(data.r[0],data.r[1],mj.X(),mj.Y()),200,Dash.SUB,40,true,true);
                                                 u.Damage(mj.unit,Damage.Physics,'A04N',u.Agi(true)*10);
                                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                                 Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
@@ -100,10 +219,10 @@ library Yuuki requires Groups{
             integer i;
             real x=u.X(),y=u.Y(),f=u.F();
             Units mj;
+            Buffs b;
             u.Pause(true);
             u.DelayAlpha(0,255,1.5); 
-            u.DelayReleaseAnimePause(0.25);
-            Buffs.Add(u.unit,'A04O','B015',0.75,false);//衔接R
+            u.DelayReleaseAnimePause(0.25); 
             Buffs.Add(u.unit,'A04P','B016',5.25,false);//二段
             Units.MJ(u.player.player,'e008','A04N',0,x,y,f,1,1,1,"stand","blink_zi.mdl");   
             f=e.Angle;
@@ -170,6 +289,17 @@ library Yuuki requires Groups{
                     };
                 };
             }
+             //--橙风需求 
+            b=Buffs.Add(u.unit,'A04O','B015',0.75,false);//衔接R 
+            data=Data.create('A04Q'); 
+            data.u[1]=Units.MJ(u.player.player,'e00K','A04Q',0,0,0,0,86400,1,1,"two",".mdl").unit;
+            b.Obj=data; 
+            b.onEnd=function(Buffs b){
+                Data data=Data(b.Obj);
+                Units.Kill(data.u[1]); 
+                data.u[1]=null;
+                data.Destroy();
+            };
             e.Destroy();
         }
  
@@ -226,6 +356,7 @@ library Yuuki requires Groups{
                             Units u=Units(data.c[0]);
                             Units m=Units.Get(data.u[0]);
                             Units mj;
+                            Buffs b;
                             real x=m.X(),y=m.Y(),f=Util.XY(u.unit,m.unit);
                             if(u.Alive()==true&&m.Alive()==true){
                                 x=x+200*CosBJ(f);
@@ -243,7 +374,7 @@ library Yuuki requires Groups{
                                 Units(data.c[3]).SetF(f+180,true);
                                 Units(data.c[2]).Position(x,y,false);
                                 Units(data.c[2]).SetF(f+180,true);
-                                u.SetF(f+180,true);
+                                u.SetF(f+180,true); 
                                 Timers.Start(0.2,data,function(Timers t){
                                     Data data=Data(t.Data());
                                     Units u=Units(data.c[0]);
@@ -279,7 +410,28 @@ library Yuuki requires Groups{
                                     data.Destroy();
                                     t.Destroy();
                                 }); 
+                                //--橙风需求
+                                b=Buffs.Add(u.unit,'A04R','B017',0.9,false);
+                                data=Data.create('A04Q');
+                                data.u[0]=m.unit;
+                                data.u[1]=Units.MJ(u.player.player,'e00K','A04Q',0,0,0,0,86400,1,1,"two",".mdl").unit;
+                                b.Obj=data;
+                                b.onTime=function(Buffs b){
+                                    Data data=Data(b.Obj);
+                                    Units m=Units.Get(data.u[0]);
+                                    if(m.Alive()==false){
+                                        b.Stop();
+                                    }
+                                };
+                                b.onEnd=function(Buffs b){
+                                    Data data=Data(b.Obj);
+                                    Units.Kill(data.u[1]);
+                                    data.u[0]=null;
+                                    data.u[1]=null;
+                                    data.Destroy();
+                                };
                             }else{
+                                u.DelayAlpha(0,255,0.2);
                                 u.Pause(false);
                                 Spell(data.c[1]).Destroy();
                                 data.u[0]=null;
@@ -476,6 +628,7 @@ library Yuuki requires Groups{
          
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A04Q',Yuuki.R); 
             Spell.On(Spell.onSpell,'A04N',Yuuki.E); 
             Spell.On(Spell.onSpell,'A04K',Yuuki.W); 
             Spell.On(Spell.onSpell,'A04H',Yuuki.Q); 
