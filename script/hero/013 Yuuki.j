@@ -29,7 +29,7 @@ library Yuuki requires Groups{
                     Units u=Units(data.c[0]);
                     Units m=Units(data.c[2]);
                     Units mj;
-                    real x,y,f;
+                    real x,y,f,max,speed;
                     if(m.Alive()==true){
                         f=m.F()+180;
                         x=m.X()+100*CosBJ(f);
@@ -62,7 +62,8 @@ library Yuuki requires Groups{
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){   
                                             Dash.Start(mj.unit,f,300,Dash.SUB,15,true,true);
-                                            //u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*10);
+                                            u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*2.5);
+                                            u.Damage(mj.unit,Damage.Chaos,'A04Q',u.Agi(true)*2.5);
                                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                             Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
                                         }
@@ -80,10 +81,17 @@ library Yuuki requires Groups{
                                     
                                     BJDebugMsg("伤害");
                                     if(data.i[0]==3){
-                                        Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f+90,2,2,1,"stand","daoguang_ex_y90.mdl").SetH(100);
+                                        Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f+90,2,2,1,"stand","daoguang_ex_y90_zise.mdl").SetH(100);
                                     }
+                                    if(data.i[0]==2){
+                                        Units.MJ(u.player.player,'e00D','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f+45,2,2,1,"stand","daoguang_ex_y90_zise.mdl").SetH(100);
+                                    }
+                                    max=100;
+                                    speed=9;
                                     if(data.i[0]==1){ 
-                                        Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,3,1,"stand","boom4.mdl");
+                                        Units.MJ(u.player.player,'e008','A04Q',0,x,y,f,2,1.5,0.7,"stand","az-xiapi_zise.mdl");
+                                        max=350;
+                                        speed=30;
                                     }
                                     Units.MJ(u.player.player,'e009','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1,"stand","az-ziwu-yumao.mdl");
                                     Dash.Start(u.unit,f,30,Dash.NORMAL,5,true,false);
@@ -92,8 +100,9 @@ library Yuuki requires Groups{
                                         mj=Units.Get(FirstOfGroup(tmp_group));
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                            Dash.Start(mj.unit,f,100,Dash.SUB,9,true,true);
-                                            //u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*10);
+                                            Dash.Start(mj.unit,f,max,Dash.SUB,speed,true,true);
+                                            u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*2.5);
+                                            u.Damage(mj.unit,Damage.Chaos,'A04Q',u.Agi(true)*2.5);
                                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                             Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
                                         }
