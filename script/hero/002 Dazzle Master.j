@@ -634,7 +634,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         data.r[0]=0;
                     }else{ 
                         u.SetF(data.r[1],true);
-                        mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),0.6,0.8,1.5, "birth","dg.mdx");
+                        mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),0.6,0.8,1.5, "birth","dg_fire.mdx");
                         mj.SetH(100);
                         Dash.Start(mj.unit,u.F(),350+(data.r[0]*250),Dash.ADD,80,true,false);
                     }
@@ -648,13 +648,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     }
                     u.AnimeSpeed(2);
                     u.AnimeId(11);
-                    mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_blue.mdx");
+                    mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_fire.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
                     data.i[0]=0;
                     data.g[0]=CreateGroup();
                     
-                    Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster.mdx");
+                    Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster_fire.mdx");
                     Util.Duang(u.X(),u.Y(),0.4,200,200,-(data.r[0]*51.2),0.04,100);
                     dash=Dash.Start(u.unit,u.F(),350+(data.r[0]*250),Dash.SUB,80,true,false);
                     dash.Obj=data; 
