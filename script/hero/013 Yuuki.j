@@ -55,9 +55,9 @@ library Yuuki requires Groups{
                                         dash1=Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.ADD,50,true,false);
                                     }
                                 }
-                            }
+                            } 
                         };
-                    }else{ 
+                    }else{  
                         dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],200,Dash.NORMAL,40,true,false);
                     }
                     dash1.Obj=data; 
