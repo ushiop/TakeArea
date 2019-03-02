@@ -2,6 +2,158 @@ library Yuuki requires Groups{
     //英雄‘优纪’的技能
     //R级
     struct Yuuki{
+
+
+        static method E1(unit ua){
+            Units u=Units.Get(ua);
+            Dash dash;
+            Data data=Data.create('A04N');
+            Units mj;
+            u.Pause(true);
+            u.AnimeId(6); 
+            u.DelayAlpha(0,255,1.2); 
+            data.c[4]=u;
+            data.r[0]=u.X();
+            data.r[1]=u.Y();
+            data.r[2]=u.F();
+            data.i[0]=0;
+            data.i[1]=0;
+            mj=Units.MJ(u.player.player,'e008','A04N',0,data.r[0]+150*CosBJ(data.r[2]),data.r[1]+150*SinBJ(data.r[2]),data.r[2],10,1,1,"stand","slash_flareadditive195_2.mdl");
+            mj.SetH(75);   
+            mj.DelayAnimeSpeed(0,0.3);
+            data.c[0]=mj;
+            dash=Dash.Start(u.unit,data.r[2],300,Dash.NORMAL,40,true,false);
+            dash.Obj=data;
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Dash dash1;
+                Units u=Units.Get(dash.Unit);
+                Units mj;
+                integer i;
+                data.i[0]+=1; 
+                if(data.i[0]<4){
+                    if(data.i[0]==3){ 
+                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],350,Dash.SUB,40,true,false);
+                        dash1.onMove=function(Dash dash){
+                            Units mj;
+                            integer i;
+                            real x,y;
+                            Data data=Data(dash.Obj);
+                            Dash dash1;
+                            if(data.i[1]==0){
+                                if(dash.Speed<6){
+                                    data.i[1]=1;
+                                    x=data.r[0]+150*CosBJ(data.r[2]);
+                                    y=data.r[1]+150*SinBJ(data.r[2]);
+                                    x=x+150*CosBJ(data.r[2]+90);
+                                    y=y+150*SinBJ(data.r[2]+90);
+                                     
+                                    for(0<=i<4){
+                                        mj=Units(data.c[i]);
+                                        mj.Life(0.4);
+                                        mj.DelayAlpha(255,0,0.38);
+                                        mj.DelaySizeEx(1,3,0.38);
+                                        dash1=Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.ADD,50,true,false);
+                                    }
+                                }
+                            }
+                        };
+                    }else{ 
+                        dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],300,Dash.NORMAL,40,true,false);
+                    }
+                    dash1.Obj=data;
+                    dash1.onEnd=dash.onEnd;
+                    mj=Units.MJ(u.player.player,'e008','A04N',0,dash.X+150*CosBJ(dash.Angle+90),dash.Y+150*SinBJ(dash.Angle+90),dash.Angle+90,10,1,1,"stand","slash_flareadditive195_2.mdl");
+                    mj.SetH(75);
+                    mj.DelayAnimeSpeed(0,0.3);
+                    data.c[data.i[0]]=mj; 
+                }else{ 
+                    u.Pause(false); 
+                    Dash.Start(u.unit,dash.Angle,100,Dash.SUB,2,true,false); 
+                    data.Destroy();
+                }
+            };
+        }
+
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data;
+            Dash dash;
+            integer i;
+            real x=u.X(),y=u.Y(),f=u.F();
+            Units mj;
+            u.Pause(true);
+            u.DelayAlpha(0,255,1.5); 
+            u.DelayReleaseAnimePause(0.25);
+            Buffs.Add(u.unit,'A04O','B015',0.75,false);//衔接R
+            Buffs.Add(u.unit,'A04P','B016',5.25,false);//二段
+            Units.MJ(u.player.player,'e008','A04N',0,x,y,f,1,1,1,"stand","blink_zi.mdl");   
+            f=e.Angle;
+            for(0<=i<4){ 
+                data=Data.create('A04N');
+                Units.MJ(u.player.player,'e009','A04N',0,x+115*CosBJ(f+90*i),y+115*SinBJ(f+90*i),f+90*i,2,1,1.5,"stand","wind.mdl");
+                Units.MJ(u.player.player,'e008','A04N',0,x,y,f+90*i,2,1,1.25,"stand","dust2.mdl");
+                mj=Units.MJ(u.player.player,'e008','A04N',0,x,y,f+90*i,1,u.modelsize,0.7,"stand",u.model);
+                mj.AnimeId(8);
+                mj.Alpha(200);
+                data.c[0]=mj; 
+                data.r[0]=x;
+                data.r[1]=y;
+                data.g[0]=CreateGroup();
+                dash=Dash.Start(mj.unit,mj.F(),500,Dash.SUB,25,true,false);
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units.Get(dash.Unit);
+                    Units mj;
+                    if(dash.Speed<2.5){
+                        dash.Stop();
+                    }else{
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,100,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){   
+                                GroupAddUnit(data.g[0],mj.unit);
+                                u.Damage(mj.unit,Damage.Physics,'A04N',u.Agi(true)*2.5);
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                            }
+                        }
+                        GroupClear(tmp_group);
+                    }
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units.Get(dash.Unit);
+                    Units mj;
+                    real f=Util.XYEX(dash.X,dash.Y,data.r[0],data.r[1]),dis=Util.XY2EX(dash.X,dash.Y,data.r[0],data.r[1]);
+ 
+                    u.Alpha(0);     
+                    Units.MJ(u.player.player,'e008','A04N',0,dash.X,dash.Y,0,2,1.5,1,"stand","az-ziwu-yumao.mdl");
+                    Units.MJ(u.player.player,'e008','A04N',0,dash.X+250*CosBJ(f),dash.Y+250*SinBJ(f),f,2,2,1,"stand","slash_flareadditive195_2.mdl").SetH(75);      
+                    DestroyGroup(data.g[0]);
+                    data.g[0]=null;
+                    data.Destroy(); 
+                    mj=Units.MJ(u.player.player,'e008','A04N',0,dash.X,dash.Y,0,2,1.5,1,"stand",".mdl");
+                    dash=Dash.Start(mj.unit,f,dis,Dash.NORMAL,20,true,false);
+                    dash.onMove=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        Units mj;
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                mj.Position(dash.X,dash.Y,true);
+                            }
+                        }
+                        GroupClear(tmp_group);
+                    };
+                };
+            }
+            e.Destroy();
+        }
  
         //4 走路  9 飞行
         static method W(Spell e){
@@ -181,6 +333,13 @@ library Yuuki requires Groups{
                     }
                 }
             }
+            if(k=="E"){
+                if(p.hero.IsAbility('B016')==true&&p.hero.IsPause()==false){
+                    b=Buffs.Find(p.hero.unit,'B016');
+                    Yuuki.E1(p.hero.unit);
+                    b.Stop();
+                }
+            }
         }
 
         static method Q(Spell e){
@@ -299,6 +458,7 @@ library Yuuki requires Groups{
          
 
         static method onInit(){
+            Spell.On(Spell.onSpell,'A04N',Yuuki.E); 
             Spell.On(Spell.onSpell,'A04K',Yuuki.W); 
             Spell.On(Spell.onSpell,'A04H',Yuuki.Q); 
             Spell.On(Spell.onReady,'A04H',Yuuki.HERO_START); 
