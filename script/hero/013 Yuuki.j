@@ -9,6 +9,7 @@ library Yuuki requires Groups{
             Dash dash;
             Data data=Data.create('A04N');
             Units mj;
+            SpellText(u.unit,'A04N',3,10);
             u.Pause(true);
             u.AnimeId(6); 
             u.DelayAlpha(0,255,1.2); 
@@ -18,10 +19,10 @@ library Yuuki requires Groups{
             data.r[2]=u.F();
             data.i[0]=0;
             data.i[1]=0;
-            mj=Units.MJ(u.player.player,'e008','A04N',0,data.r[0]+150*CosBJ(data.r[2]),data.r[1]+150*SinBJ(data.r[2]),data.r[2],10,1,1,"stand","slash_flareadditive195_2.mdl");
-            mj.SetH(75);   
-            mj.DelayAnimeSpeed(0,0.25);
-            data.c[0]=mj;
+            mj=Units.MJ(u.player.player,'e008','A04N',0,data.r[0]+125*CosBJ(data.r[2]),data.r[1]+125*SinBJ(data.r[2]),data.r[2],10,1,1,"stand","slash_flareadditive195_2.mdl");
+            mj.SetH(75);  
+            mj.DelayAnimeSpeed(0,0.2);
+            data.c[0]=mj;    
             dash=Dash.Start(u.unit,data.r[2],200,Dash.NORMAL,40,true,false);
             dash.Obj=data; 
             dash.onEnd=function(Dash dash){
@@ -35,6 +36,7 @@ library Yuuki requires Groups{
                     if(data.i[0]==3){ 
                         dash1=Dash.Start(u.unit,data.r[2]+90*data.i[0],250,Dash.SUB,40,true,false);
                         dash1.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
                             Units mj;
                             integer i;
                             real x,y;
@@ -47,6 +49,8 @@ library Yuuki requires Groups{
                                     y=data.r[1]+125*SinBJ(data.r[2]);
                                     x=x+125*CosBJ(data.r[2]+90);
                                     y=y+125*SinBJ(data.r[2]+90); 
+                                    data.r[0]=x;
+                                    data.r[1]=y;
                                     for(0<=i<4){
                                         mj=Units(data.c[i]);
                                         mj.Life(0.4);
@@ -54,6 +58,20 @@ library Yuuki requires Groups{
                                         mj.DelaySizeEx(1,3,0.38);
                                         dash1=Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.ADD,50,true,false);
                                     }
+                                    GroupEnumUnitsInRange(tmp_group,data.r[0],data.r[1],300,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){   
+                                            if(Util.XY2EX(data.r[0],data.r[1],mj.X(),mj.Y())>100){ 
+                                                Dash.Start(mj.unit,Util.XYEX(data.r[0],data.r[1],mj.X(),mj.Y()),200,Dash.SUB,40,true,false);
+                                                u.Damage(mj.unit,Damage.Physics,'A04N',u.Agi(true)*10);
+                                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                                Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
+                                            }
+                                        }
+                                    }
+                                    GroupClear(tmp_group);
                                 }
                             } 
                         };
@@ -63,10 +81,11 @@ library Yuuki requires Groups{
                     dash1.Obj=data; 
                     dash1.onEnd=dash.onEnd;
                     mj=Units.MJ(u.player.player,'e008','A04N',0,dash.X+125*CosBJ(dash.Angle+90),dash.Y+125*SinBJ(dash.Angle+90),dash.Angle+90,10,1,1,"stand","slash_flareadditive195_2.mdl");
-                    mj.SetH(75);
-                    mj.DelayAnimeSpeed(0,0.25);
-                    data.c[data.i[0]]=mj; 
-                }else{ 
+                    mj.SetH(75); 
+                    mj.DelayAnimeSpeed(0,0.2);
+                    data.c[data.i[0]]=mj;  
+                }else{  
+                    
                     u.Pause(false); 
                     Dash.Start(u.unit,dash.Angle,100,Dash.SUB,2,true,false); 
                     data.Destroy();
@@ -139,7 +158,7 @@ library Yuuki requires Groups{
                     dash.onMove=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
                         Units mj;
-                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
