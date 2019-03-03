@@ -194,7 +194,7 @@ library Yuuki requires Groups{
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){
-                                Buffs.Add(mj.unit,'A04T','B018').Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;;    
+                                Buffs.Add(mj.unit,'A04T','B018',5,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;    
                                 u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*2);
                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                 Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy(); 
@@ -608,7 +608,7 @@ library Yuuki requires Groups{
                 data.c[1]=e;
                 mj=Units.MJ(u.player.player,'e008','A04H',0,u.X(),u.Y(),0,6,1,1,"stand","bowen_zi.mdl");
                 data.c[2]=mj;
-                b=Buffs.Add(u.unit,'A04I','B013',5,false);
+                b=Buffs.Add(u.unit,'A04I','B013',7,false);
                 b.Level=2;
                 b.Obj=data;
                 b.onEnd=function(Buffs b){
