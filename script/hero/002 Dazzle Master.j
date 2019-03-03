@@ -582,9 +582,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             data.r[0]=0;//蓄力时间 
             data.r[1]=e.Angle;//角度
             data.i[3]=2; 
-            /*if(u.player.isai==true){
+            if(u.IsAbility('B006')==true){ 
+                SpellNameText(u.unit,"! 龙落击 !",3,15);
                 data.r[0]=1;
-            } */
+            } 
             SetTimerData(t,data);  
             TimerStart(t,0.1,true,function(){
                 Data data=Data(GetTimerData(GetExpiredTimer()));
