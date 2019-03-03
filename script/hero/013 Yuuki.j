@@ -189,7 +189,7 @@ library Yuuki requires Groups{
                 });
             }
         }
-
+ 
         static method E1(unit ua){
             Units u=Units.Get(ua);
             Dash dash;
