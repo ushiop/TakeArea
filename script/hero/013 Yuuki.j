@@ -29,20 +29,22 @@ library Yuuki requires Groups{
                     Units u=Units(data.c[0]);
                     Units m=Units(data.c[2]);
                     Units mj;
-                    real x,y,f,max,speed;
+                    real x,y,f,max,speed,pt;
                     if(m.Alive()==true){
                         f=m.F()+180;
                         x=m.X()+100*CosBJ(f);
                         y=m.Y()+100*SinBJ(f);
                         f=m.F();
+                        pt=1;
                     }else{
                         f=u.F();
                         x=u.X();
                         y=u.Y();
+                        pt=0;
                     }
                     if(u.Alive()==true){
                         if(data.i[0]>0){ 
-                            if(data.i[0]==5){//第一下突击
+                            if(data.i[0]==5){//第一下突击 
                                 u.Position(x,y,false);
                                 u.SetF(f,true);
                                 u.AnimeId(8);
@@ -50,7 +52,7 @@ library Yuuki requires Groups{
                                 t.SetTime(0.2);
                                 data.i[0]-=1;
                             }else{
-                                if(data.i[0]==4){//突击打到 
+                                if(data.i[0]==4){//突击打到  
                                     u.Position(x,y,false); 
                                     u.SetF(f,true);
                                     u.AnimeId(10);
@@ -75,7 +77,9 @@ library Yuuki requires Groups{
                                     Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
                                     data.i[0]-=1;
                                 }else{
-                                    u.Position(x,y,false); 
+                                    if(pt==1){ 
+                                        u.Position(x,y,false); 
+                                    }
                                     u.SetF(f,true);
                                     f=u.F();
                                     
@@ -94,7 +98,7 @@ library Yuuki requires Groups{
                                         speed=30;
                                     }
                                     Units.MJ(u.player.player,'e009','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,2,1,"stand","az-ziwu-yumao.mdl");
-                                    Dash.Start(u.unit,f,30,Dash.NORMAL,5,true,false);
+                                    Dash.Start(u.unit,f,50,Dash.NORMAL,5,true,false);
                                     GroupEnumUnitsInRange(tmp_group,x+150*CosBJ(f),y+150*SinBJ(f),175,function GroupIsAliveNotAloc);     
                                     while(FirstOfGroup(tmp_group)!=null){
                                         mj=Units.Get(FirstOfGroup(tmp_group));
@@ -163,7 +167,7 @@ library Yuuki requires Groups{
                         Spell(data.c[1]).Destroy();
                         t.Destroy();
                         data.Destroy();
-                    }else{ 
+                    }else{  
                         u.Alpha(0); 
                         u.Position(data.r[0],data.r[1],false);
                         mj=Units.MJ(u.player.player,'e008','A04Q',0,data.r[0],data.r[1],data.r[2]+GetRandomReal(60,-60),1,u.modelsize,1,"stand",u.model);
@@ -185,6 +189,18 @@ library Yuuki requires Groups{
                         if(data.r[2]>360){
                             data.r[2]-=360;
                         }
+                        GroupEnumUnitsInRange(tmp_group,data.r[0],data.r[1],300,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                Buffs.Add(mj.unit,'A04T','B018').Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;;    
+                                u.Damage(mj.unit,Damage.Physics,'A04Q',u.Agi(true)*2);
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                                Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy(); 
+                            }
+                        }
+                        GroupClear(tmp_group);
                     }
                 });
             }
