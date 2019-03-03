@@ -646,8 +646,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         mj.SetH(200); 
                         Dash.Start(mj.unit,u.F(),200,Dash.ADD,60,true,false);
                     }
-                    u.AnimeSpeed(2);
-                    u.AnimeId(11);
+                    u.AnimeSpeed(3);
+                    u.AnimeId(16);//突刺换为转转,突刺：11，转转：16
                     mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_fire.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
