@@ -143,7 +143,19 @@ library Yuuki requires Groups{
                     Units u=Units(data.c[0]); 
                     Units mj;
                     Dash dash; 
+                    integer x;
                     if(u.Alive()==false||data.i[0]<=0){ 
+                        if(u.Alive()==true){//如果活着，追加最后的四下
+                            for(0<=x<4){
+                                mj=Units.MJ(u.player.player,'e008','A04Q',0,data.r[0],data.r[1],90*x+90,2,2,1,"stand","daoguang_ex_y90_zise.mdl");
+                                mj.SetH(100);
+                                dash=Dash.Start(mj.unit,mj.F()-90,400,Dash.SUB,10,true,false);  
+                                dash.onMove=function(Dash dash){
+                                    Units dg=Units.Get(dash.Unit);  
+                                    dg.SetF(dg.F()-8,true);
+                                };
+                            }
+                        }
                         u.DelayAlpha(0,255,0.5);
                         u.RemoveAbility('A04S');
                         u.Position(data.r[0],data.r[1],false); 
