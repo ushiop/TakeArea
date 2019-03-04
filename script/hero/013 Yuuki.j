@@ -374,6 +374,10 @@ library Yuuki requires Groups{
                 };
             }
              //--橙风需求 
+            
+            if(u.IsAbility('B017')==true){//如果有W的乘风，则取消
+                Buffs.Find(u.unit,'B017').Stop();
+            }
             b=Buffs.Add(u.unit,'A04O','B015',0.75,false);//衔接R 
             data=Data.create('A04Q'); 
             data.u[1]=Units.MJ(u.player.player,'e00K','A04Q',0,0,0,0,86400,1,1,"two",".mdl").unit;
@@ -495,6 +499,9 @@ library Yuuki requires Groups{
                                     t.Destroy();
                                 }); 
                                 //--橙风需求
+                                if(u.IsAbility('B015')==true){//如果有E的乘风，则取消
+                                    Buffs.Find(u.unit,'B015').Stop();
+                                }
                                 b=Buffs.Add(u.unit,'A04R','B017',0.9,false);
                                 data=Data.create('A04Q');
                                 data.u[0]=m.unit;
@@ -732,11 +739,9 @@ library Yuuki requires Groups{
                 }  
 
                 no=GroupFind(u.unit,x,y,400,true,false);
-                if(no!=null){  
-                    x1=GetUnitX(target);
-                    y1=GetUnitY(target);
+                if(no!=null){   
                     u.SetF(Util.XY(u.unit,no),true);  
-                    IssuePointOrder(u.unit, "dispel",x1,y1);//四方斩 
+                    IssueImmediateOrder( u.unit, "impale" );//呈风
                 }  
 
                 if(u.IsAbility('B016')==true){ //四方站2段
