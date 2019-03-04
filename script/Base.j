@@ -57,3 +57,4 @@
 //! import zinc "map/script/hero/011 AW.j"
 //! import zinc "map/script/hero/012 SD.j"
 //! import zinc "map/script/hero/013 Yuuki.j"
+//! import zinc "map/script/hero/014 BigZZ.j"
