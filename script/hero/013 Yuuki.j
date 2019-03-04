@@ -580,7 +580,7 @@ library Yuuki requires Groups{
                             Units(data.c[0]).Position(data.r[0],data.r[1],false);
                             t.Destroy();
                             data.Destroy();
-                        }); 
+                        });  
                         b.Level-=1;
                         b.Stop();
                     }
@@ -606,7 +606,7 @@ library Yuuki requires Groups{
                 data=Data.create('A04H');
                 data.c[0]=u;
                 data.c[1]=e;
-                mj=Units.MJ(u.player.player,'e008','A04H',0,u.X(),u.Y(),0,6,1,1,"stand","bowen_zi.mdl");
+                mj=Units.MJ(u.player.player,'e008','A04H',0,u.X(),u.Y(),0,10,1,1,"stand","bowen_zi.mdl");
                 data.c[2]=mj;
                 b=Buffs.Add(u.unit,'A04I','B013',7,false);
                 b.Level=2;
@@ -615,7 +615,7 @@ library Yuuki requires Groups{
                     Data data=Data(b.Obj);
                     Units(data.c[0]).SetAbilityCD('A04H',10-b.Time);
                     Spell(data.c[1]).Destroy();
-                    Units(data.c[2]).Anime("death");
+                    Units(data.c[2]).Anime("death");  
                     data.Destroy();
                 };
             }else{//后续使用
