@@ -92,7 +92,8 @@ library Yuuki requires Groups{
                                     }
                                     max=100;
                                     speed=9;
-                                    if(data.i[0]==1){ 
+                                    if(data.i[0]==1){  
+                                        //Util.Duang(x+100*CosBJ(f),y+100*SinBJ(f),0.2,175,175,-125,0.02,50);
                                         Units.MJ(u.player.player,'e008','A04Q',0,x,y,f,2,1.5,0.7,"stand","az-xiapi_zise.mdl");
                                         max=350;
                                         speed=30;
@@ -708,6 +709,52 @@ library Yuuki requires Groups{
             e.Destroy();
         }
 
+
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);  
+ 
+                IssuePointOrder(u.unit, "curse",x1,y1);//日向
+ 
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "charm",x1,y1);//残影斩 
+                }  
+
+                no=GroupFind(u.unit,x,y,400,true,false);
+                if(no!=null){  
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);  
+                    IssuePointOrder(u.unit, "dispel",x1,y1);//四方斩 
+                }  
+
+                if(u.IsAbility('B016')==true){ //四方站2段
+                    Yuuki.Q1(u.player.player,"E");
+                }
+
+                IssueImmediateOrder( u.unit, "inferno" );//呈风
+                  
+            } 
+            target=null;
+            no=null;
+        }
+
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A04H')==true){
+                u.ai=Yuuki.AI;
+            }
+        }
          
 
         static method onInit(){
@@ -718,6 +765,7 @@ library Yuuki requires Groups{
             Spell.On(Spell.onReady,'A04H',Yuuki.HERO_START); 
             Damage.On(Damage.onUnitDamage_SubDamage,Yuuki.Damage);
             Press.OnSnyc(Press.onSnycPressKeyDown,Yuuki.Q1);
+            Units.On(Units.onHeroSpawn,Yuuki.Spawn);
             //Spell.On(Spell.onStop,'A04H',Yuuki.HERO_STOP);   
         }
     }
