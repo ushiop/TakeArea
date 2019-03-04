@@ -28,7 +28,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             //测试时不随机英雄
             //u=HeroRares.GetRandomHero(p.player,p.randomhero);
             
-            u=Units.Spawn(p.player,'H00E',0,0,0);
+            u=Units.Spawn(p.player,'H00F',0,0,0);
             p.hero=Units.Get(u);
             SetUnitPosition(u,GetRectCenterX(Teams.GetTeamRect(p.player)),GetRectCenterY(Teams.GetTeamRect(p.player)));
             u=null;
