@@ -309,7 +309,7 @@ library Yuuki requires Groups{
             u.DelayReleaseAnimePause(0.25); 
             Buffs.Add(u.unit,'A04P','B016',5.25,false);//二段
             Units.MJ(u.player.player,'e008','A04N',0,x,y,f,1,1,1,"stand","blink_zi.mdl");   
-            f=e.Angle;
+            //f=e.Angle;
             for(0<=i<4){ 
                 data=Data.create('A04N');
                 Units.MJ(u.player.player,'e009','A04N',0,x+115*CosBJ(f+90*i),y+115*SinBJ(f+90*i),f+90*i,2,1,1.5,"stand","wind.mdl");
