@@ -406,7 +406,7 @@ library Yuuki requires Groups{
             data.c[0]=u;
             data.c[1]=e;
             data.i[0]=0;
-            dash=Dash.Start(u.unit,e.Angle,1400,Dash.SUB,40,true,false);
+            dash=Dash.Start(u.unit,e.Angle,1200,Dash.NORMAL,20,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -547,7 +547,7 @@ library Yuuki requires Groups{
                 u.Pause(false);
                 u.AnimeSpeed(1);
                 if(data.i[0]==0){ 
-                    Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
+                    //Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
                     Spell(data.c[1]).Destroy();
                     data.Destroy(); 
                 }
@@ -661,7 +661,7 @@ library Yuuki requires Groups{
                 data.c[1]=mj;
                 data.i[0]=0;
                 data.g[0]=CreateGroup();
-                dash=Dash.Start(u.unit,f,700,Dash.SUB,40,true,false);
+                dash=Dash.Start(u.unit,f,700,Dash.NORMAL,20,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
