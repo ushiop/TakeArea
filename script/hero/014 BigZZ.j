@@ -3,6 +3,22 @@ library BigZZ requires Groups{
     //SR
     struct BigZZ{
 
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Units mj;
+            Dash dash;
+            real x=u.X()+50*CosBJ(e.Angle),y=u.Y()+50*SinBJ(e.Angle),f=e.Angle;
+            u.Pause(true); 
+            u.DelayReleaseAnimePause(0.2);
+            u.AnimeSpeed(2.5);
+            u.AnimeId(4);
+            mj=Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di_.mdl");
+            mj.SetH(100); 
+            //Units.MJ(u.player.player,'e008','A050',0,x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
+            dash=Dash.Start(mj.unit,e.Angle,700,Dash.SUB,50,true,false); 
+            e.Destroy();
+        }
+
         static method Death(Units u,Units m){
             if(u.IsAbility('A04U')==true){
                 Units.Kill(Units(u.Data()).unit);
@@ -31,13 +47,14 @@ library BigZZ requires Groups{
 
         static method Q(Spell e){
             Units u=Units.Get(e.Spell); 
-            Data data=Data.create('A04U');
+            Data data=Data.create('A04U'); 
             Units.Kill(Units(u.Data()).unit);
-            u.Pause(true);
-            u.AnimeId(7);
+            u.Pause(true); 
+            u.AnimeSpeed(1);
+            u.AnimeId(8);
             data.c[0]=u;
             data.c[1]=e;
-            Timers.Start(0.2,data,function(Timers t){
+            Timers.Start(0.4,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units mj;
@@ -50,7 +67,7 @@ library BigZZ requires Groups{
                     u.Alpha(0);
                     u.AddAbility('A04V');
                     u.AddAbility('A04Z');
-                    mj.AnimeId(5);
+                    mj.AnimeId(6);
                     mj.AnimeSpeed(2);
                     dash=Dash.Start(u.unit,u.F(),1000,Dash.NORMAL,10,true,false);
                     dash.Obj=data;
@@ -70,7 +87,7 @@ library BigZZ requires Groups{
                                 data.r[0]=0;
                                 data.g[0]=CreateGroup();
                                 u.Pause(true);
-                                u.AnimeId(6);
+                                u.AnimeId(7);
                                 u.AddAbility('A04X');
                                 u.SetF(Util.XY(u.unit,k),true);
                                 dash1=Dash.Start(u.unit,u.F(),450,Dash.SUB,30,true,false);
@@ -152,18 +169,26 @@ library BigZZ requires Groups{
         }
 
 
-        //4 挥手雷电 5 雷电奔跑 6 雷电穿刺 7 搓雷电
+        //5 挥手雷电 6 雷电奔跑 7 雷电穿刺 8 搓雷电
+        //3 喷火 4 喷火中
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(u.IsAbility('A04U')==true){
-                u.FlushAnimeId(4);
+                u.FlushAnimeId(5); 
+                e.Destroy();
+            }
+            if(u.IsAbility('A050')==true){
+                u.FlushAnimeId(3);
                 e.Destroy();
             }
         }
+ 
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A050',BigZZ.W); 
             Spell.On(Spell.onSpell,'A04U',BigZZ.Q); 
-            Spell.On(Spell.onReady,'A04U',BigZZ.HERO_START); 
+            Spell.On(Spell.onReady,'A04U',BigZZ.HERO_START);  
+            Spell.On(Spell.onReady,'A050',BigZZ.HERO_START);  
             Units.On(Units.onHeroSpawn,BigZZ.Spawn);
             Units.On(Units.onHeroDeath,BigZZ.Death); 
             Events.On(Events.onUnitOrderToUnit,BigZZ.Q_Order);
