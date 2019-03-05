@@ -13,7 +13,7 @@ library BigZZ requires Groups{
             u.DelayReleaseAnimePause(0.2);
             u.AnimeSpeed(2.5);
             u.AnimeId(4);
-            mj=Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di_.mdl");
+            mj=Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di__ex.mdl");
             mj.SetH(100); 
             Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,4,1,"death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);
             mj=Units.MJ(u.player.player,'e008','A050',0,x+200*CosBJ(f),y+200*SinBJ(f),f,1.5,1,1,"stand",".mdl");
