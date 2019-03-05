@@ -7,6 +7,7 @@ library BigZZ requires Groups{
             Units u=Units.Get(e.Spell);
             Units mj;
             Dash dash;
+            Data data;
             real x=u.X()+50*CosBJ(e.Angle),y=u.Y()+50*SinBJ(e.Angle),f=e.Angle;
             u.Pause(true); 
             u.DelayReleaseAnimePause(0.2);
@@ -14,8 +15,46 @@ library BigZZ requires Groups{
             u.AnimeId(4);
             mj=Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di_.mdl");
             mj.SetH(100); 
-            //Units.MJ(u.player.player,'e008','A050',0,x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,1.5,1,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
-            dash=Dash.Start(mj.unit,e.Angle,700,Dash.SUB,50,true,false); 
+            Units.MJ(u.player.player,'e009','A050',0,x,y,f,1.5,4,1,"death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);
+            mj=Units.MJ(u.player.player,'e008','A050',0,x+200*CosBJ(f),y+200*SinBJ(f),f,1.5,1,1,"stand",".mdl");
+            data=Data.create('A050');
+            data.c[0]=u; 
+            data.g[0]=CreateGroup();
+            data.r[0]=0;
+            dash=Dash.Start(mj.unit,e.Angle,450,Dash.NORMAL,30,true,false); 
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){ 
+                Data data=Data(dash.Obj);
+                Units mj;
+                Units u=Units(data.c[0]);
+                if(data.r[0]==0){
+                    data.r[0]=0.04;
+                    //Util.Range(dash.X,dash.Y,250);
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
+                            GroupAddUnit(data.g[0],mj.unit);
+                            u.Damage(mj.unit,Damage.Magic,'A050',u.Agi(true)*10); 
+                            Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
+                            Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
+                            Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                             
+                            //Units.MJ(u.player.player,'e008','A050',0,mj.X(),mj.Y(),GetRandomReal(0,360),1.5,1.5,2,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
+                        }
+                    }
+                    GroupClear(tmp_group);
+                }else{
+                    data.r[0]-=0.01;
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                data.g[0]=null;
+                DestroyGroup(data.g[0]);
+                data.Destroy();
+            };
             e.Destroy();
         }
 
