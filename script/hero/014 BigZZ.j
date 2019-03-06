@@ -31,10 +31,14 @@ library BigZZ requires Groups{
                 Units h=u.player.hero;
                 Units mj;
                 integer fire=0;
-                if(Util.XY2(u.unit,h.unit)>3000){ 
-                    dash.MaxSpeed=(Util.XY2(u.unit,h.unit)/100)+70;
-                }else{
-                    dash.MaxSpeed=70;
+                if(h.Alive()==true){
+                    dash.MaxSpeed=45;
+                }else{ 
+                    if(Util.XY2(u.unit,h.unit)>3000){ 
+                        dash.MaxSpeed=(Util.XY2(u.unit,h.unit)/100)+70;
+                    }else{
+                        dash.MaxSpeed=70;
+                    }
                 }
                 dash.Angle=Util.XY(u.unit,h.unit);
                 dash.MaxDis+=100;
@@ -114,7 +118,7 @@ library BigZZ requires Groups{
                 data.c[1]=mj;
                 data.g[0]=CreateGroup(); 
                 data.r[0]=0;
-                dash=Dash.Start(mj.unit,f,1500,Dash.ADD,70,true,false);
+                dash=Dash.Start(mj.unit,f,1800,Dash.ADD,70,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
@@ -122,8 +126,8 @@ library BigZZ requires Groups{
                     Units mj;
                     integer fire=0;
                     dash.Angle=u.F();
-                    if(dash.DashType==Dash.ADD&&dash.Speed>10){
-                        dash.MaxSpeed=10;
+                    if(dash.DashType==Dash.ADD&&dash.Speed>8){
+                        dash.MaxSpeed=8;
                         dash.DashType=Dash.NORMAL;
                         
                     }
