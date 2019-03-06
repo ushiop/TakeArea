@@ -85,7 +85,7 @@ library BigZZ requires Groups{
         }
 
         static method Damage(DamageArgs e){
-            if(u.TriggerUnit.IsAbility('A04V')==true){
+            if(e.TriggerUnit.IsAbility('A04V')==true){
                 if(e.DamageType==Damage.Magic){
                     e.Damage-=0.5*e.Damage;
                 }
