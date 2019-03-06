@@ -570,7 +570,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             t=null; 
         }
 
-        // 14 转圈(蓄力)    15 收尾  16前摇 17前冲
+        //  9 后摇 11戳 10前摇 8蓄力
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A00D');
@@ -648,11 +648,12 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         Dash.Start(mj.unit,u.F(),200,Dash.ADD,60,true,false);
                     }
                     u.AnimeSpeed(3);
-                    u.AnimeId(16);//突刺换为转转,突刺：11，转转：16
+                    u.AnimeId(11);//突刺换为转转,突刺：11，转转：16
                     mj=Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),u.F(),3600,0.9,1, "birth","bimuyu_fire.mdx");
                     mj.SetH(100);
                     data.c[1]=mj;
                     data.i[0]=0;
+                    data.i[1]=0;//是否播放过后摇
                     data.g[0]=CreateGroup();
                     
                     Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),0,2,1,1, "stand","ThunderClapCaster_fire.mdx").Alpha(200);
@@ -667,6 +668,13 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                         u.SetF(dash.Angle,true);
                         mj.Position(dash.X+150*CosBJ(dash.Angle+180),dash.LastY+150*SinBJ(dash.Angle+180),false);
                         mj.SetF(dash.Angle,true);
+                        if(data.i[1]==0){
+                            if(dash.Speed<3){
+                                data.i[1]=1;
+                                u.AnimeSpeed(1);
+                                u.AnimeId(9);
+                            }
+                        } 
                         //枪头判定
                         GroupEnumUnitsInRange(tmp_group,dash.X+160*CosBJ(dash.Angle),dash.Y+160*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);
                         while(FirstOfGroup(tmp_group)!=null){
