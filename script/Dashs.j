@@ -80,7 +80,8 @@ library Dashs requires TimerUtils{
                     if(tmp!=Root){
                         walk=false;
                         speed=0;   
-                        tmpMaxSpeed=tmp.MaxSpeed;
+                        tmpMaxSpeed=tmp.MaxSpeed; 
+                        //测试 BJDebugMsg("类型:"+I2S(tmp.DashType)+"/ID:"+I2S(tmp)+"/MAX:"+R2S(tmp.MaxDis)+"/NOW:"+R2S(tmp.NowDis)+"/LIFE:"+Util.B2S(GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0));
                         if(tmp.NowDis<tmp.MaxDis&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){
                             tmp.LastX=tmp.X;
                             tmp.LastY=tmp.Y;
@@ -109,8 +110,7 @@ library Dashs requires TimerUtils{
                             if(walk==true){
                                 walk=RectContainsCoords(gg_rct_main,tmp.X,tmp.Y);
                             }
-                            if(walk==false||(tmp.DashType==Dash.SUB&&speed<1.0)){
-                                
+                            if(walk==false||(tmp.DashType==Dash.SUB&&speed<1.0)){ 
                                 tmp.NowDis=tmp.MaxDis;
                             }else{
                                 tmp.Speed=speed;
