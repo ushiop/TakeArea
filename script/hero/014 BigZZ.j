@@ -84,6 +84,12 @@ library BigZZ requires Groups{
             }
         }
 
+        static method Damage(DamageArgs e){
+            if(u.TriggerUnit.IsAbility('A04V')==true&&e.DamageType==Damage.Magic){
+                e.Damage-=0.5*e.Damage;
+            }
+        }
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell); 
             Data data=Data.create('A04U'); 
@@ -232,6 +238,7 @@ library BigZZ requires Groups{
             Units.On(Units.onHeroDeath,BigZZ.Death); 
             Events.On(Events.onUnitOrderToUnit,BigZZ.Q_Order);
             Events.On(Events.onUnitOrderToLocation,BigZZ.Q_Order); 
+            Damage.On(Damage.onUnitDamage_SubDamage,BigZZ.Damage);
         }
     }
 }
