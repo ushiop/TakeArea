@@ -45,6 +45,15 @@ library Units requires Table,Players,Events,Util{
             string str_int;//智力值的文本形态
             string str_lv;//英雄等级的文本形态
 
+            //0秒发布停止命令
+            method Stop(){
+                Timers.Start(0,this,function(Timers t){
+                    Units u=Units(t.Data());
+                    IssueImmediateOrder(u.unit,"stop");
+                    t.Destroy();
+                });
+            }
+
             //更新该单位的文本形态的三围值
             method PowerStringUpdata(){ 
                 this.str_str=I2S(GetHeroStr(this.unit,true));
