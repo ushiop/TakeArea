@@ -15,6 +15,7 @@ library BigZZ requires Groups{
 
         static method E1(unit slj){
             Units u=Units.Get(slj);
+            Units h=u.player.hero;
             Data data=Data.create('A051');
             Dash dash;
             BJDebugMsg("手里剑-回收中");
@@ -22,7 +23,7 @@ library BigZZ requires Groups{
             data.g[0]=CreateGroup();
             u.RemoveAbility(Units.MJType_FZW);
             u.AddAbility(Units.MJType_TSW);
-            dash=Dash.Start(u.unit,u.F(),1000,Dash.NORMAL,70,true,false);
+            dash=Dash.Start(u.unit,Util.XY(u.unit,h.unit),1000,Dash.NORMAL,70,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -36,10 +37,22 @@ library BigZZ requires Groups{
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]);
-                BJDebugMsg("手里剑-回收完毕");
-                u.Anime("death");
-                u.Life(0.5);
+                Units u=Units(data.c[0]); 
+                Data data1;
+                BJDebugMsg("手里剑-回收完毕");  
+                if(u.IsAbility('A053')==true){
+                    BJDebugMsg("删除抚摸");
+                    data1=Effect(u.Obj);
+                    Effect(data1.c[0]).Destroy();
+                    Effect(data1.c[1]).Destroy();
+                    Effect(data1.c[2]).Destroy();
+                    Effect(data1.c[3]).Destroy();
+                    data1.Destroy();
+                } 
+                u.Anime("death"); 
+                u.Size(0);
+                u.RemoveAbility('A053'); 
+                u.Life(1);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
                 data.Destroy();
@@ -58,8 +71,9 @@ library BigZZ requires Groups{
                 x=u.X()+50*CosBJ(e.Angle);
                 y=u.Y()+50*SinBJ(e.Angle);
                 f=e.Angle-30+(30*i);
-                mj=Units.MJ(u.player.player,'e008','A051',0,x,y,f,15,1,1,"stand","ShadowHunterMissile_ex.mdl");
+                mj=Units.MJ(u.player.player,'e008','A051',0,x,y,f,15,1.5,1,"stand","ShadowHunterMissile_ex.mdl");
                 mj.SetH(100); 
+                mj.Obj=0;
                 mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
                 mj.AddAbility(Units.MJType_TSW);
                 mj.Position(x,y,true);
@@ -167,7 +181,9 @@ library BigZZ requires Groups{
             dash.onMove=function(Dash dash){ 
                 Data data=Data(dash.Obj);
                 Units mj;
+                Units tmp;
                 Units u=Units(data.c[0]);
+                Data data1;
                 if(data.r[0]==0){
                     data.r[0]=0.04;
                     //Util.Range(dash.X,dash.Y,250);
@@ -186,6 +202,45 @@ library BigZZ requires Groups{
                         }
                     }
                     GroupClear(tmp_group);
+
+                    //喷手里剑
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsFZW); 
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));  
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(tmp.aid=='A051'){  
+                            if(tmp.Obj==0){
+                                BJDebugMsg("附魔");
+                                tmp.AddAbility('A053'); 
+                                data1=Data.create('A051');
+                                data1.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
+                                data1.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
+                                data1.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
+                                data1.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
+                                tmp.Obj=data1;
+                            } 
+                        }  
+                    }  
+                    GroupClear(tmp_group);      
+
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsTSW); 
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));  
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(tmp.aid=='A051'){  
+                            if(tmp.Obj==0){
+                                BJDebugMsg("附魔2");
+                                tmp.AddAbility('A053'); 
+                                data1=Data.create('A051');
+                                data1.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
+                                data1.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
+                                data1.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
+                                data1.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
+                                tmp.Obj=data1;
+                            } 
+                        }  
+                    }  
+                    GroupClear(tmp_group); 
                 }else{
                     data.r[0]-=0.01;
                 }
@@ -362,15 +417,15 @@ library BigZZ requires Groups{
         //11 扔手里剑
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            if(u.IsAbility('A04U')==true){
+            if(e.Id=='A04U'){ 
                 u.FlushAnimeId(5); 
                 e.Destroy();
             }
-            if(u.IsAbility('A050')==true){
+            if(e.Id=='A050'){
                 u.FlushAnimeId(3);
                 e.Destroy();
             }
-            if(u.IsAbility('A051')==true){
+            if(e.Id=='A051'){
                 u.FlushAnimeId(11);
                 e.Destroy();
             }
