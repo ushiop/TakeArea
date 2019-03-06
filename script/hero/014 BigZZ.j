@@ -3,6 +3,147 @@ library BigZZ requires Groups{
     //SR
     struct BigZZ{
 
+        static method E2(player ps,string k){
+            Players p;
+            if(k=="E"){
+                p=Players.Get(ps);
+                if(p.hero.IsAbility('B01A')==true){
+                    Buffs.Find(p.hero.unit,'B01A').Stop();
+                }
+            }
+        }
+
+        static method E1(unit slj){
+            Units u=Units.Get(slj);
+            Data data=Data.create('A051');
+            Dash dash;
+            BJDebugMsg("手里剑-回收中");
+            data.c[0]=u;
+            data.g[0]=CreateGroup();
+            u.RemoveAbility(Units.MJType_FZW);
+            u.AddAbility(Units.MJType_TSW);
+            dash=Dash.Start(u.unit,u.F(),1000,Dash.NORMAL,70,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                Units h=u.player.hero;
+                dash.Angle=Util.XY(u.unit,h.unit);
+                dash.MaxDis+=100;
+                if(Util.XY2(u.unit,h.unit)<140){
+                    dash.Stop();
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                BJDebugMsg("手里剑-回收完毕");
+                u.Anime("death");
+                u.Life(0.5);
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
+                data.Destroy();
+            };
+        }
+
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data;
+            Dash dash;
+            real x,y,f;
+            Units mj;
+            integer i;
+            Buffs b;
+            for(0<=i<3){
+                x=u.X()+50*CosBJ(e.Angle);
+                y=u.Y()+50*SinBJ(e.Angle);
+                f=e.Angle-30+(30*i);
+                mj=Units.MJ(u.player.player,'e008','A051',0,x,y,f,15,1,1,"stand","ShadowHunterMissile_ex.mdl");
+                mj.SetH(100); 
+                mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
+                mj.AddAbility(Units.MJType_TSW);
+                mj.Position(x,y,true);
+                Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
+                data=Data.create('A051');
+                data.c[0]=u;
+                data.c[1]=mj;
+                data.g[0]=CreateGroup(); 
+                dash=Dash.Start(mj.unit,f,1200,Dash.ADD,70,true,false);
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    if(u.Data()==2){
+                        dash.Stop();
+                    }
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units.Get(dash.Unit);
+                    Data data1;
+                    if(u.Data()==2){//扔出过程就回收了
+                        //回收处理 
+                        BJDebugMsg("手里剑-飞行回收");
+                        BigZZ.E1(u.unit);
+                    }else{
+                        //盘旋处理
+                        BJDebugMsg("手里剑-转为盘旋");
+                        u.SetData(1);
+                        u.RemoveAbility(Units.MJType_TSW);
+                        u.AddAbility(Units.MJType_FZW);
+                        data1=Data.create('A051');
+                        data1.c[0]=u;
+                        data1.r[0]=0;
+                        Timers.Start(0.01,data1,function(Timers t){
+                            Data data=Data(t.Data());
+                            Units u=Units(data.c[0]);
+                            if(u.Data()==2){
+                                BJDebugMsg("手里剑-盘旋回收");
+                                //回收了 
+                                BigZZ.E1(u.unit);
+                                t.Destroy();
+                                data.Destroy();
+                            }else{
+                                if(data.r[0]==0){
+                                    data.r[0]=1;
+                                }else{
+                                    data.r[0]-=0.01;
+                                }
+                            }
+                        });
+                    }
+                    
+                    BJDebugMsg("手里剑-扔出完毕");
+                    DestroyGroup(data.g[0]);
+                    data.g[0]=null;
+                    data.Destroy();
+                };
+            }
+            b=Buffs.Add(u.unit,'A052','B01A',10,false);
+            b.onEnd=function(Buffs b){
+                Units tmp;
+                GroupEnumUnitsInRange(tmp_group,0,0,999999999,function GroupIsFZW); 
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));  
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(tmp.aid=='A051'){  
+                        tmp.SetData(2);
+                    }  
+                }  
+                GroupClear(tmp_group);      
+
+                GroupEnumUnitsInRange(tmp_group,0,0,999999999,function GroupIsTSW); 
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));  
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(tmp.aid=='A051'){  
+                        tmp.SetData(2);
+                    }  
+                }  
+                GroupClear(tmp_group); 
+            };
+            e.Destroy();
+        }
+
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Units mj;
@@ -218,6 +359,7 @@ library BigZZ requires Groups{
 
         //5 挥手雷电 6 雷电奔跑 7 雷电穿刺 8 搓雷电
         //3 喷火 4 喷火中
+        //11 扔手里剑
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(u.IsAbility('A04U')==true){
@@ -228,19 +370,26 @@ library BigZZ requires Groups{
                 u.FlushAnimeId(3);
                 e.Destroy();
             }
+            if(u.IsAbility('A051')==true){
+                u.FlushAnimeId(11);
+                e.Destroy();
+            }
         }
  
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A051',BigZZ.E); 
             Spell.On(Spell.onSpell,'A050',BigZZ.W); 
             Spell.On(Spell.onSpell,'A04U',BigZZ.Q); 
             Spell.On(Spell.onReady,'A04U',BigZZ.HERO_START);  
             Spell.On(Spell.onReady,'A050',BigZZ.HERO_START);  
+            Spell.On(Spell.onReady,'A051',BigZZ.HERO_START); 
             Units.On(Units.onHeroSpawn,BigZZ.Spawn);
             Units.On(Units.onHeroDeath,BigZZ.Death); 
             Events.On(Events.onUnitOrderToUnit,BigZZ.Q_Order);
             Events.On(Events.onUnitOrderToLocation,BigZZ.Q_Order); 
-            Damage.On(Damage.onUnitDamage_SubDamage,BigZZ.Damage);
+            Damage.On(Damage.onUnitDamage_SubDamage,BigZZ.Damage); 
+            Press.OnSnyc(Press.onSnycPressKeyDown,BigZZ.E2);
         }
     }
 }
