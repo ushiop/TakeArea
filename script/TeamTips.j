@@ -4,8 +4,10 @@ library TeamTips {
     public integer TeamTips_Ability_Id[];//技能标志的ID
 
     function Spawn(Units u,Units m){
-        u.RemoveAbility(TeamTips_Ability_Id[u.player.teamid]);
-        u.AddAbility(TeamTips_Ability_Id[u.player.teamid]); 
+        if(u.IsAbility('A02N')==false){ 
+            u.RemoveAbility(TeamTips_Ability_Id[u.player.teamid]);
+            u.AddAbility(TeamTips_Ability_Id[u.player.teamid]); 
+        }
     }
 
     function onInit(){
