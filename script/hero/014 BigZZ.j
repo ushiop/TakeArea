@@ -72,17 +72,31 @@ library BigZZ requires Groups{
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
-                Data data1;
+                Data data1,data2;
                 BJDebugMsg("手里剑-回收完毕");  
+                
+                //-----------------附魔删除处理
+                data1=Data(u.Obj);
                 if(u.IsAbility('A053')==true){
-                    BJDebugMsg("删除抚摸");
-                    data1=Effect(u.Obj);
-                    Effect(data1.c[0]).Destroy();
-                    Effect(data1.c[1]).Destroy();
-                    Effect(data1.c[2]).Destroy();
-                    Effect(data1.c[3]).Destroy();
-                    data1.Destroy();
+                    BJDebugMsg("删除附魔-火焰");
+                    data2=Data(data1.c[0]);
+                    Effect(data2.c[0]).Destroy();
+                    Effect(data2.c[1]).Destroy();
+                    Effect(data2.c[2]).Destroy();
+                    Effect(data2.c[3]).Destroy();
+                    data2.Destroy();
                 } 
+                if(u.IsAbility('A054')==true){
+                    BJDebugMsg("删除附魔-闪电"); 
+                    data2=Data(data1.c[1]);
+                    Effect(data2.c[0]).Destroy();
+                    Effect(data2.c[1]).Destroy();
+                    Effect(data2.c[2]).Destroy();
+                    Effect(data2.c[3]).Destroy();
+                    data2.Destroy();
+                } 
+                data1.Destroy();
+                //----------------------------------
                 u.Anime("death"); 
                 u.Size(0);
                 u.RemoveAbility('A053'); 
@@ -92,10 +106,11 @@ library BigZZ requires Groups{
                 data.Destroy();
             };
         }
-
+ 
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data;
+            Data data2,data3;
             Dash dash;
             real x,y,f;
             Units mj;
@@ -106,8 +121,13 @@ library BigZZ requires Groups{
                 y=u.Y()+50*SinBJ(e.Angle);
                 f=e.Angle-30+(30*i);
                 mj=Units.MJ(u.player.player,'e008','A051',0,x,y,f,15,1.5,1,"stand","ShadowHunterMissile_ex.mdl");
+                data2=Data.create('A051');//存储附魔状态的数据
+                data3=Data.create('A051');//存储附魔状态-火焰的数据
+                data2.c[0]=data3;
+                data3=Data.create('A051');//存储附魔状态-闪电的数据
+                data2.c[1]=data3;
                 mj.SetH(100); 
-                mj.Obj=0;
+                mj.Obj=data2;
                 mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
                 mj.AddAbility(Units.MJType_TSW);
                 mj.Position(x,y,true);
@@ -276,7 +296,7 @@ library BigZZ requires Groups{
                 Units mj;
                 Units tmp;
                 Units u=Units(data.c[0]);
-                Data data1;
+                Data data1,data2;
                 if(data.r[0]==0){
                     data.r[0]=0.04;
                     //Util.Range(dash.X,dash.Y,250);
@@ -297,20 +317,21 @@ library BigZZ requires Groups{
                     GroupClear(tmp_group);
 
                     //喷手里剑
+                    //---手里剑附魔
                     GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsTSW); 
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));  
                         GroupRemoveUnit(tmp_group,tmp.unit);
                         if(tmp.aid=='A051'){  
-                            if(tmp.Obj==0){
+                            if(tmp.IsAbility('A053')==false){
                                 BJDebugMsg("附魔2");
                                 tmp.AddAbility('A053'); 
-                                data1=Data.create('A051');
-                                data1.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
-                                data1.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
-                                data1.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
-                                data1.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
-                                tmp.Obj=data1;
+                                data1=Data(tmp.Obj);
+                                data2=Data(data1.c[0]);
+                                data2.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
+                                data2.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
+                                data2.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
+                                data2.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
                             } 
                         }  
                     }  
@@ -422,11 +443,33 @@ library BigZZ requires Groups{
                         Data data=Data(dash.Obj);
                         Units u=Units.Get(dash.Unit);
                         Units ts=Units(data.c[2]);
+                        Units tmp;
                         unit k; 
                         Dash dash1;
+                        Data data1,data2;
                         if(u.IsAbility('B019')==true){
                             dash.Angle=u.F();
                             dash.MaxDis+=100;
+                            //-------------手里剑附魔
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));  
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(tmp.aid=='A051'){  
+                                    if(tmp.IsAbility('A054')==false){ 
+                                        BJDebugMsg("闪电附魔");
+                                        tmp.AddAbility('A054');  
+                                        data1=Data(tmp.Obj);
+                                        data2=Data(data1.c[1]);
+                                        data2.c[0]=Effect.ToUnit("lei9.mdl",tmp.unit,"weapon");
+                                        data2.c[1]=Effect.ToUnit("lei9.mdl",tmp.unit,"origin");
+                                        data2.c[2]=Effect.ToUnit("lei9.mdl",tmp.unit,"head");
+                                        data2.c[3]=Effect.ToUnit("lei9.mdl",tmp.unit,"overhead");
+                                    }
+                                }  
+                            }  
+                            GroupClear(tmp_group); 
+                            //----------------------
                             k=GroupFind(u.unit,dash.X+100*CosBJ(dash.Angle),dash.Y+100*SinBJ(dash.Angle),100,true,false);
                             if(k!=null){
                                 data.i[0]=1;
@@ -443,6 +486,8 @@ library BigZZ requires Groups{
                                     Data data=Data(dash.Obj);
                                     Units u=Units(data.c[0]);
                                     Units mj;
+                                    Data data1,data2;
+                                    Units tmp;
                                     if(dash.Speed<4){
                                         dash.Stop();
                                     }else{ 
@@ -463,6 +508,25 @@ library BigZZ requires Groups{
                                                 }
                                             }
                                             GroupClear(tmp_group);
+                                            //-------------手里剑附魔
+                                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
+                                            while(FirstOfGroup(tmp_group)!=null){
+                                                tmp=Units.Get(FirstOfGroup(tmp_group));  
+                                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                                if(tmp.aid=='A051'){  
+                                                    if(tmp.IsAbility('A054')==false){ 
+                                                        tmp.AddAbility('A054');  
+                                                        data1=Data(tmp.Obj);
+                                                        data2=Data(data1.c[1]);
+                                                        data2.c[0]=Effect.ToUnit("lei9.mdl",tmp.unit,"weapon");
+                                                        data2.c[1]=Effect.ToUnit("lei9.mdl",tmp.unit,"origin");
+                                                        data2.c[2]=Effect.ToUnit("lei9.mdl",tmp.unit,"head");
+                                                        data2.c[3]=Effect.ToUnit("lei9.mdl",tmp.unit,"overhead");
+                                                    }
+                                                }  
+                                            }  
+                                            GroupClear(tmp_group); 
+                                            //----------------------
                                         }else{
                                             data.r[0]-=0.01;
                                         }
