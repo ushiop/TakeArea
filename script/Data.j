@@ -39,7 +39,7 @@ library Data{
         static method  create(integer id)->Data{
             Data t=Data.allocate();
             t.id=id; 
-             
+            BJDebugMsg("DATA被创建,ID："+I2S(t)+"/AID:"+GetAbilityName(t.id));
             return t;
         }
     }
