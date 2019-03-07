@@ -3,6 +3,34 @@ library BigZZ requires Groups{
     //SR
     struct BigZZ{
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell); 
+            u.Pause(true);
+            u.AnimeSpeed(0); 
+            Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,0.6,1,3,"stand","zztz.mdl");
+            Timers.Start(0.3,e,function(Timers t){
+                Spell e=Spell(t.Data());
+                Units u=Units.Get(e.Spell);
+                Data data=Data.create('A055');
+                Buffs b;
+                Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,3,2,1,"stand","bymutou_huozhu_siwang.mdl");
+                Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,2,1.75,1,"stand","AZ_TZFire.mdl").DelayAnime(1,0.6);
+                u.DelayReleaseAnimePause(0.5);
+                t.Destroy();
+                data.c[0]=u;
+                data.c[1]=e;
+                data.r[0]=0;//伤害间隔
+                data.r[1]=0;//手里剑附魔间隔
+                b=Buffs.Add(u.unit,'A056','B01B',86400,false);
+                b.Obj=data;
+                b.onEnd=function(Buffs b){
+                    Data data=Data(b.Obj);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                };
+            });
+        }
+
         static method E2(player ps,string k){
             Players p;
             if(k=="E"){
@@ -619,15 +647,20 @@ library BigZZ requires Groups{
                 u.FlushAnimeId(11);
                 e.Destroy();
             }
-        }
- 
+            if(e.Id=='A055'){
+                u.FlushAnimeId(10); 
+                e.Destroy();
+            }
+        }  
 
         static method onInit(){ 
+            Spell.On(Spell.onSpell,'A055',BigZZ.R); 
             Spell.On(Spell.onSpell,'A051',BigZZ.E); 
             Spell.On(Spell.onSpell,'A050',BigZZ.W); 
             Spell.On(Spell.onSpell,'A04U',BigZZ.Q); 
             Spell.On(Spell.onReady,'A04U',BigZZ.HERO_START);  
             Spell.On(Spell.onReady,'A050',BigZZ.HERO_START);  
+            Spell.On(Spell.onReady,'A055',BigZZ.HERO_START);  
             Spell.On(Spell.onReady,'A051',BigZZ.HERO_START); 
             Units.On(Units.onHeroSpawn,BigZZ.Spawn);
             Units.On(Units.onHeroDeath,BigZZ.Death); 
