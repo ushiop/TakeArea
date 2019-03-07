@@ -1,30 +1,108 @@
 library BigZZ requires Groups{
     //英雄‘大佐助’的技能
-    //SR
+    //R
     struct BigZZ{
+
+        static method R1(unit u,unit m){
+
+        }
  
         static method R(Spell e){
             Units u=Units.Get(e.Spell); 
             u.Pause(true);
+            u.SetAbilityCD('A055',86400);
             u.AnimeSpeed(0); 
             Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,0.6,1,3,"stand","zztz.mdl");
             Timers.Start(0.3,e,function(Timers t){
                 Spell e=Spell(t.Data());
                 Units u=Units.Get(e.Spell);
                 Data data=Data.create('A055');
+                Data data1,data2;
+                real x=u.X(),y=u.Y();
+                Units mj;
+                Units tmp;
                 Buffs b;
-                Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,3,2,1,"stand","bymutou_huozhu_siwang.mdl");
-                Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,2,1.75,1,"stand","AZ_TZFire.mdl").DelayAnime(1,0.6);
+                Units.MJ(u.player.player,'e008','A055',0,x,y,GetRandomReal(0,360),3,2,1,"stand","bymutou_huozhu_siwang.mdl");
+                Units.MJ(u.player.player,'e008','A055',0,x,y,0,2,1.75,1,"stand","AZ_TZFire.mdl").DelayAnime(1,0.6);
                 u.DelayReleaseAnimePause(0.5);
                 t.Destroy();
+                //Util.Range(x,y,350);
+                GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                        u.Damage(mj.unit,Damage.Chaos,'A055',(u.Agi(true)+u.Int(true))*5); 
+                        //Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
+                        //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
+                        //Buffs.Skill(mj.unit,'A04Y',1);
+                        BigZZ.R1(u.unit,mj.unit);
+                    }
+                }
+                GroupClear(tmp_group);
+
+                //---------------手里剑附魔
+                GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsTSW); 
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));  
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(tmp.aid=='A051'){  
+                        if(tmp.IsAbility('A057')==false){
+                            BJDebugMsg("天照附魔");
+                            tmp.AddAbility('A057'); 
+                            data1=Data(tmp.Obj);
+                            data2=Data(data1.c[2]);
+                            data2.c[0]=Effect.ToUnit("AZ_TZFire_ex.mdl",tmp.unit,"chest"); 
+                        } 
+                    }   
+                }  
+                GroupClear(tmp_group); 
+                //--------------------------
                 data.c[0]=u;
                 data.c[1]=e;
                 data.r[0]=0;//伤害间隔
                 data.r[1]=0;//手里剑附魔间隔
                 b=Buffs.Add(u.unit,'A056','B01B',86400,false);
                 b.Obj=data;
+                b.onTime=function(Buffs b){
+                    //225
+                    Data data=Data(b.Obj);
+                    Units u=Units(data.c[0]);
+                    Units tmp;
+                    Data data1,data2;
+                    real x=u.X(),y=u.Y();
+                    if(data.r[0]==0){
+                        data.r[0]=1;
+                    }else{
+                        data.r[0]-=0.01;
+                    }
+                    //---------------手里剑附魔
+                    if(data.r[1]==0){
+                        data.r[1]=0.1;
+                        GroupEnumUnitsInRange(tmp_group,x,y,225,function GroupIsTSW); 
+                        while(FirstOfGroup(tmp_group)!=null){
+                            tmp=Units.Get(FirstOfGroup(tmp_group));  
+                            GroupRemoveUnit(tmp_group,tmp.unit);
+                            if(tmp.aid=='A051'){  
+                                if(tmp.IsAbility('A057')==false){
+                                    BJDebugMsg("天照附魔");
+                                    tmp.AddAbility('A057'); 
+                                    data1=Data(tmp.Obj);
+                                    data2=Data(data1.c[2]);
+                                    data2.c[0]=Effect.ToUnit("AZ_TZFire_ex.mdl",tmp.unit,"chest"); 
+                                } 
+                            }   
+                        }  
+                        GroupClear(tmp_group); 
+                    }else{
+                        data.r[1]-=0.01;
+                    }
+                    //---------------手里剑附魔
+                }; 
                 b.onEnd=function(Buffs b){
                     Data data=Data(b.Obj);
+                    Units u=Units(data.c[0]);
+                    u.SetAbilityCD('A055',5);
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
                 };
@@ -130,6 +208,12 @@ library BigZZ requires Groups{
                     Effect(data2.c[3]).Destroy();
                     data2.Destroy();
                 } 
+                if(u.IsAbility('A057')==true){
+                    BJDebugMsg("删除附魔-天照"); 
+                    data2=Data(data1.c[2]);
+                    Effect(data2.c[0]).Destroy(); 
+                    data2.Destroy();
+                } 
                 data1.Destroy();
                 //----------------------------------
                 u.Anime("death"); 
@@ -161,6 +245,8 @@ library BigZZ requires Groups{
                 data2.c[0]=data3;
                 data3=Data.create('A051');//存储附魔状态-闪电的数据
                 data2.c[1]=data3;
+                data3=Data.create('A051');//存储附魔状态-天照的数据
+                data2.c[2]=data3;
                 mj.SetH(100); 
                 mj.Obj=data2;
                 mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
