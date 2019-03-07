@@ -22,7 +22,6 @@ library BigZZ requires Groups{
             data.c[0]=u;
             data.g[0]=CreateGroup();
             u.RemoveAbility(Units.MJType_FZW);
-            u.AddAbility(Units.MJType_TSW);
             dash=Dash.Start(u.unit,Util.XY(u.unit,h.unit),1000,Dash.NORMAL,70,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
@@ -177,7 +176,6 @@ library BigZZ requires Groups{
                         //盘旋处理
                         BJDebugMsg("手里剑-转为盘旋");
                         u.SetData(1);
-                        u.RemoveAbility(Units.MJType_TSW);
                         u.AddAbility(Units.MJType_FZW);
                         Dash.Start(u.unit,dash.Angle,300,Dash.SUB,15,true,false);
                         data1=Data.create('A051');
@@ -236,24 +234,17 @@ library BigZZ requires Groups{
             }
             b=Buffs.Add(u.unit,'A052','B01A',10,false);
             b.onEnd=function(Buffs b){
+                Units u=Units.Get(b.Unit);
                 Units tmp;
-                GroupEnumUnitsInRange(tmp_group,0,0,999999999,function GroupIsFZW); 
-                while(FirstOfGroup(tmp_group)!=null){
-                    tmp=Units.Get(FirstOfGroup(tmp_group));  
-                    GroupRemoveUnit(tmp_group,tmp.unit);
-                    if(tmp.aid=='A051'){  
-                        tmp.SetData(2);
-                    }  
-                }  
-                GroupClear(tmp_group);      
-
                 GroupEnumUnitsInRange(tmp_group,0,0,999999999,function GroupIsTSW); 
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));  
                     GroupRemoveUnit(tmp_group,tmp.unit);
-                    if(tmp.aid=='A051'){  
-                        tmp.SetData(2);
-                    }  
+                    if(tmp.player.player==u.player.player){ 
+                        if(tmp.aid=='A051'){  
+                            tmp.SetData(2);
+                        }  
+                    }
                 }  
                 GroupClear(tmp_group); 
             };
@@ -306,25 +297,6 @@ library BigZZ requires Groups{
                     GroupClear(tmp_group);
 
                     //喷手里剑
-                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsFZW); 
-                    while(FirstOfGroup(tmp_group)!=null){
-                        tmp=Units.Get(FirstOfGroup(tmp_group));  
-                        GroupRemoveUnit(tmp_group,tmp.unit);
-                        if(tmp.aid=='A051'){  
-                            if(tmp.Obj==0){
-                                BJDebugMsg("附魔");
-                                tmp.AddAbility('A053'); 
-                                data1=Data.create('A051');
-                                data1.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
-                                data1.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
-                                data1.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
-                                data1.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
-                                tmp.Obj=data1;
-                            } 
-                        }  
-                    }  
-                    GroupClear(tmp_group);      
-
                     GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,250,function GroupIsTSW); 
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));  
@@ -396,12 +368,14 @@ library BigZZ requires Groups{
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));  
                     GroupRemoveUnit(tmp_group,tmp.unit);
-                    if(tmp.aid=='A051'){  
-                        if(tmp.Data()==0){
-                            tips=1;
-                            tmp.SetF(Util.XYEX(tmp.X(),tmp.Y(),x,y),false); 
-                        }
-                    }  
+                    if(tmp.player.player==u.player.player){ 
+                        if(tmp.aid=='A051'){  
+                            if(tmp.Data()==0){
+                                tips=1;
+                                tmp.SetF(Util.XYEX(tmp.X(),tmp.Y(),x,y),false); 
+                            }
+                        }  
+                    }
                 }  
                 GroupClear(tmp_group); 
                 if(tips==1){
