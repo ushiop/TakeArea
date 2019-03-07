@@ -29,7 +29,7 @@ library BigZZ requires Groups{
                 Units u=Units(data.c[0]);
                 Units h=u.player.hero;
                 Units mj;
-                integer fire=0;
+                integer fire=0,light=0;
                 if(h.Alive()==true){
                     dash.MaxSpeed=45;
                 }else{ 
@@ -47,6 +47,9 @@ library BigZZ requires Groups{
                 if(u.IsAbility('A053')==true){
                     fire=1;
                 }
+                if(u.IsAbility('A054')==true){
+                    light=1;
+                }
                 GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
@@ -59,6 +62,10 @@ library BigZZ requires Groups{
                             u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
                             Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                             Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                        }
+                        if(light==1){
+                            u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                            Buffs.Skill(mj.unit,'A00H',1);
                         }
                         //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                         //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
@@ -143,7 +150,7 @@ library BigZZ requires Groups{
                     Units u=Units.Get(dash.Unit);
                     Data data=Data(dash.Obj);
                     Units mj;
-                    integer fire=0;
+                    integer fire=0,light=0;
                     dash.Angle=u.F();
                     if(dash.DashType==Dash.ADD&&dash.Speed>8){
                         dash.MaxSpeed=8;
@@ -158,6 +165,9 @@ library BigZZ requires Groups{
                             if(u.IsAbility('A053')==true){
                                 fire=1;
                             }
+                            if(u.IsAbility('A054')==true){
+                                light=1;
+                            }
                             GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -170,6 +180,10 @@ library BigZZ requires Groups{
                                         u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
                                         Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                         Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                    }
+                                    if(light==1){
+                                        u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                        Buffs.Skill(mj.unit,'A00H',1);
                                     }
                                     //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                     //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
@@ -205,7 +219,7 @@ library BigZZ requires Groups{
                             Data data=Data(t.Data());
                             Units u=Units(data.c[0]);
                             Units mj;
-                            integer fire=0;
+                            integer fire=0,light=0;
                             if(u.Data()==2){
                                 BJDebugMsg("手里剑-盘旋回收");
                                 //回收了 
@@ -217,6 +231,9 @@ library BigZZ requires Groups{
                                     data.r[0]=1;
                                     if(u.IsAbility('A053')==true){
                                         fire=1;
+                                    }
+                                    if(u.IsAbility('A054')==true){
+                                        light=1;
                                     }
                                     //Util.Range(u.X(),u.Y(),125);
                                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
@@ -230,6 +247,10 @@ library BigZZ requires Groups{
                                                 u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1); 
                                                 Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                            }
+                                            if(light==1){
+                                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1); 
+                                                Buffs.Skill(mj.unit,'A00H',1);
                                             }
                                             //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                             //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
@@ -460,7 +481,7 @@ library BigZZ requires Groups{
                                         BJDebugMsg("闪电附魔");
                                         tmp.AddAbility('A054');  
                                         data1=Data(tmp.Obj);
-                                        data2=Data(data1.c[1]);
+                                        data2=Data(data1.c[1]);//lei9.mdl
                                         data2.c[0]=Effect.ToUnit("lei9.mdl",tmp.unit,"weapon");
                                         data2.c[1]=Effect.ToUnit("lei9.mdl",tmp.unit,"origin");
                                         data2.c[2]=Effect.ToUnit("lei9.mdl",tmp.unit,"head");
