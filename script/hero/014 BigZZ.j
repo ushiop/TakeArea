@@ -2,15 +2,39 @@ library BigZZ requires Groups{
     //英雄‘大佐助’的技能
     //R
     struct BigZZ{
-
-        static method R1(unit u,unit m){
-
+        //A058,B01C
+        static method R1(unit ua,unit ma){
+            Units u=Units.Get(ua);
+            Units m=Units.Get(ma);
+            Buffs b;
+            Data data;
+            if(m.IsAbility('B01C')==false){
+                b=Buffs.Add(m.unit,'A058','B01C',86400,false);
+                data=Data.create('A055');
+                data.c[0]=u.player;
+                data.r[0]=0;
+                b.Obj=data;
+                b.onTime=function(Buffs b){
+                    //BJDebugMsg(R2S(ModuloReal(b.Time,1))+"/时间:"+R2S(b.Time));
+                    Data data=Data(b.Obj);
+                    Units u=Units.Get(b.Unit);
+                    if(data.r[0]==0){
+                        data.r[0]=1;
+                        Players(data.c[0]).hero.Damage(b.Unit,Damage.Physics,'A055',u.MaxHP()*0.01); 
+                    }else{
+                        data.r[0]-=0.01;
+                    }
+                };
+                b.onEnd=function(Buffs b){
+                    Data data=Data(b.Obj);
+                    data.Destroy();
+                };
+            }
         }
  
         static method R(Spell e){
             Units u=Units.Get(e.Spell); 
             u.Pause(true);
-            u.SetAbilityCD('A055',86400);
             u.AnimeSpeed(0); 
             Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,0.6,1,3,"stand","zztz.mdl");
             Timers.Start(0.3,e,function(Timers t){
@@ -24,7 +48,8 @@ library BigZZ requires Groups{
                 Buffs b;
                 Units.MJ(u.player.player,'e008','A055',0,x,y,GetRandomReal(0,360),3,2,1,"stand","bymutou_huozhu_siwang.mdl");
                 Units.MJ(u.player.player,'e008','A055',0,x,y,0,2,1.75,1,"stand","AZ_TZFire.mdl").DelayAnime(1,0.6);
-                u.DelayReleaseAnimePause(0.5);
+                u.DelayReleaseAnimePause(0.5); 
+                u.SetAbilityCD('A055',86400);
                 t.Destroy();
                 //Util.Range(x,y,350);
                 GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
@@ -52,7 +77,7 @@ library BigZZ requires Groups{
                             tmp.AddAbility('A057'); 
                             data1=Data(tmp.Obj);
                             data2=Data(data1.c[2]);
-                            data2.c[0]=Effect.ToUnit("AZ_TZFire_ex.mdl",tmp.unit,"chest"); 
+                            data2.c[0]=Effect.ToUnit("buff_hei.mdl",tmp.unit,"chest"); 
                         } 
                     }   
                 }  
@@ -70,16 +95,36 @@ library BigZZ requires Groups{
                     Units u=Units(data.c[0]);
                     Units tmp;
                     Data data1,data2;
+                    Units mj;
                     real x=u.X(),y=u.Y();
                     if(data.r[0]==0){
-                        data.r[0]=1;
+                        if(u.MP()>40){  
+                            u.SetMP(u.MP()-40);
+                            data.r[0]=1;
+                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                    u.Damage(mj.unit,Damage.Chaos,'A055',u.Int(true)*2); 
+                                    //Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
+                                    //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
+                                    //Buffs.Skill(mj.unit,'A04Y',1);
+                                    BigZZ.R1(u.unit,mj.unit);
+                                }
+                            }
+                            GroupClear(tmp_group);
+                        }
+                        else{
+                            b.Stop();
+                        }
                     }else{
                         data.r[0]-=0.01;
                     }
                     //---------------手里剑附魔
                     if(data.r[1]==0){
                         data.r[1]=0.1;
-                        GroupEnumUnitsInRange(tmp_group,x,y,225,function GroupIsTSW); 
+                        GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsTSW); 
                         while(FirstOfGroup(tmp_group)!=null){
                             tmp=Units.Get(FirstOfGroup(tmp_group));  
                             GroupRemoveUnit(tmp_group,tmp.unit);
@@ -89,7 +134,7 @@ library BigZZ requires Groups{
                                     tmp.AddAbility('A057'); 
                                     data1=Data(tmp.Obj);
                                     data2=Data(data1.c[2]);
-                                    data2.c[0]=Effect.ToUnit("AZ_TZFire_ex.mdl",tmp.unit,"chest"); 
+                                    data2.c[0]=Effect.ToUnit("buff_hei.mdl",tmp.unit,"chest"); 
                                 } 
                             }   
                         }  
@@ -110,11 +155,15 @@ library BigZZ requires Groups{
         }
 
         static method E2(player ps,string k){
-            Players p;
-            if(k=="E"){
-                p=Players.Get(ps);
+            Players p=Players.Get(ps);
+            if(k=="E"){ 
                 if(p.hero.IsAbility('B01A')==true){
                     Buffs.Find(p.hero.unit,'B01A').Stop();
+                }
+            }
+            if(k=="R"){
+                if(p.hero.IsAbility('B01B')==true){
+                    Buffs.Find(p.hero.unit,'B01B').Stop();
                 }
             }
         }
@@ -123,19 +172,21 @@ library BigZZ requires Groups{
             Units u=Units.Get(slj);
             Units h=u.player.hero;
             Data data=Data.create('A051');
-            Dash dash;
-            BJDebugMsg("手里剑-回收中");
+            Dash dash; 
             data.c[0]=u;
             data.g[0]=CreateGroup();
+            data.i[0]=GetRandomInt(0,1000);
             u.RemoveAbility(Units.MJType_FZW);
             dash=Dash.Start(u.unit,Util.XY(u.unit,h.unit),1000,Dash.NORMAL,70,true,false);
+            
+            BJDebugMsg("手里剑-回收中/"+u.name+"/DASH："+I2S(dash)+"/RANDOM:"+I2S(data.i[0])+"/DATA:"+I2S(data)+"/U:"+I2S(u)+"/U2:"+I2S(data.c[0]));
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]);
+                Units u=Units.Get(dash.Unit);
                 Units h=u.player.hero;
                 Units mj;
-                integer fire=0,light=0;
+                integer fire=0,light=0,dark=0;
                 if(h.Alive()==true){
                     dash.MaxSpeed=45;
                 }else{ 
@@ -149,45 +200,55 @@ library BigZZ requires Groups{
                 dash.MaxDis+=100;
                 if(Util.XY2(u.unit,h.unit)<140){
                     dash.Stop();
-                }
-                if(u.IsAbility('A053')==true){
-                    fire=1;
-                }
-                if(u.IsAbility('A054')==true){
-                    light=1;
-                }
-                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
-                while(FirstOfGroup(tmp_group)!=null){
-                    mj=Units.Get(FirstOfGroup(tmp_group));
-                    GroupRemoveUnit(tmp_group,mj.unit);
-                    if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
-                        GroupAddUnit(data.g[0],mj.unit);
-                        u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*2.5); 
-                        Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
-                        if(fire==1){
-                            u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
-                            Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
-                            Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
-                        }
-                        if(light==1){
-                            u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
-                            Buffs.Skill(mj.unit,'A00H',1);
-                        }
-                        //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
-                        //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
-                        //Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
-                        
-                        //Units.MJ(u.player.player,'e008','A050',0,mj.X(),mj.Y(),GetRandomReal(0,360),1.5,1.5,2,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
+                }else{ 
+                    if(u.IsAbility('A053')==true){
+                        fire=1;
                     }
+                    if(u.IsAbility('A054')==true){
+                        light=1;
+                    }
+                    if(u.IsAbility('A057')==true){
+                        dark=1;
+                    }
+                    /*GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
+                            GroupAddUnit(data.g[0],mj.unit);
+                            u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*2.5); 
+                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
+                            if(fire==1){
+                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
+                                Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                            }
+                            if(light==1){
+                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                Buffs.Skill(mj.unit,'A00H',1);
+                            }
+                            if(dark==1){
+                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*2.5); 
+                                BigZZ.R1(u.unit,mj.unit);
+                            }
+                            //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
+                            //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
+                            //Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                            
+                            //Units.MJ(u.player.player,'e008','A050',0,mj.X(),mj.Y(),GetRandomReal(0,360),1.5,1.5,2,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
+                        }
+                    }
+                    GroupClear(tmp_group);*/
                 }
-                GroupClear(tmp_group);
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]); 
+                Units u=Units.Get(dash.Unit);
                 Data data1,data2;
-                BJDebugMsg("手里剑-回收完毕");  
-                
+                if(u!=data.c[0]){
+                    BJDebugMsg("手里剑-回收完毕/"+u.name+"/DASH:"+I2S(dash)+"/DASHUNIT:"+Units.Get(dash.Unit).name+"/RANDOM:"+I2S(data.i[0])+"/DATA:"+I2S(data)+"/U:"+I2S(u)+"/U2:"+I2S(data.c[0]));  
+  
+                }
                 //-----------------附魔删除处理
                 data1=Data(u.Obj);
                 if(u.IsAbility('A053')==true){
@@ -216,6 +277,7 @@ library BigZZ requires Groups{
                 } 
                 data1.Destroy();
                 //----------------------------------
+                BJDebugMsg(u.name);
                 u.Anime("death"); 
                 u.Size(0);
                 u.RemoveAbility('A053'); 
@@ -247,6 +309,7 @@ library BigZZ requires Groups{
                 data2.c[1]=data3;
                 data3=Data.create('A051');//存储附魔状态-天照的数据
                 data2.c[2]=data3;
+                data2.i[4]=i+6;
                 mj.SetH(100); 
                 mj.Obj=data2;
                 mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
@@ -257,14 +320,14 @@ library BigZZ requires Groups{
                 data.c[0]=u;
                 data.c[1]=mj;
                 data.g[0]=CreateGroup(); 
-                data.r[0]=0;
+                data.r[0]=0; 
                 dash=Dash.Start(mj.unit,f,1800,Dash.ADD,70,true,false);
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
                     Data data=Data(dash.Obj);
                     Units mj;
-                    integer fire=0,light=0;
+                    integer fire=0,light=0,dark=0;
                     dash.Angle=u.F();
                     if(dash.DashType==Dash.ADD&&dash.Speed>8){
                         dash.MaxSpeed=8;
@@ -282,6 +345,9 @@ library BigZZ requires Groups{
                             if(u.IsAbility('A054')==true){
                                 light=1;
                             }
+                            if(u.IsAbility('A057')==true){
+                                dark=1;
+                            }
                             GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -298,6 +364,10 @@ library BigZZ requires Groups{
                                     if(light==1){
                                         u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
                                         Buffs.Skill(mj.unit,'A00H',1);
+                                    }
+                                    if(dark==1){
+                                        u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*2.5); 
+                                        BigZZ.R1(u.unit,mj.unit);
                                     }
                                     //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                     //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
@@ -333,7 +403,7 @@ library BigZZ requires Groups{
                             Data data=Data(t.Data());
                             Units u=Units(data.c[0]);
                             Units mj;
-                            integer fire=0,light=0;
+                            integer fire=0,light=0,dark=0;
                             if(u.Data()==2){
                                 BJDebugMsg("手里剑-盘旋回收");
                                 //回收了 
@@ -348,6 +418,9 @@ library BigZZ requires Groups{
                                     }
                                     if(u.IsAbility('A054')==true){
                                         light=1;
+                                    }
+                                    if(u.IsAbility('A057')==true){
+                                        dark=1;
                                     }
                                     //Util.Range(u.X(),u.Y(),125);
                                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
@@ -365,6 +438,10 @@ library BigZZ requires Groups{
                                             if(light==1){
                                                 u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1); 
                                                 Buffs.Skill(mj.unit,'A00H',1);
+                                            }
+                                            if(dark==1){
+                                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*1); 
+                                                BigZZ.R1(u.unit,mj.unit);
                                             }
                                             //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                             //Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
@@ -547,6 +624,11 @@ library BigZZ requires Groups{
                     e.Damage-=0.5*e.Damage;
                 }
             }
+            if(e.TriggerUnit.IsAbility('B01B')==true){
+                if(e.DamageType==Damage.Chaos){
+                    e.Damage-=0.5*e.Damage;
+                }
+            }
         }
 
         static method Q(Spell e){
@@ -671,6 +753,7 @@ library BigZZ requires Groups{
                                 dash1.onEnd=function(Dash dash){
                                     Data data=Data(dash.Obj);
                                     Units u=Units(data.c[0]);
+                                    BJDebugMsg("千鸟尾巴结束");
                                     u.RemoveAbility('A04X');
                                     u.DelayReleaseAnimePause(0.2); 
                                     Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
@@ -694,6 +777,7 @@ library BigZZ requires Groups{
                         if(u.IsAbility('B019')==true){
                             Buffs.Find(u.unit,'B019').Stop();
                         }
+                        BJDebugMsg("千鸟奔跑结束");
                         u.RemoveAbility('A04V'); 
                         u.RemoveAbility('A04Z');
                         u.Alpha(255);
