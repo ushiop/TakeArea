@@ -540,10 +540,10 @@ library BigZZ requires Groups{
                                                         tmp.AddAbility('A054');  
                                                         data1=Data(tmp.Obj);
                                                         data2=Data(data1.c[1]);
-                                                        data2.c[0]=Effect.ToUnit("lei9.mdl",tmp.unit,"weapon");
-                                                        data2.c[1]=Effect.ToUnit("lei9.mdl",tmp.unit,"origin");
-                                                        data2.c[2]=Effect.ToUnit("lei9.mdl",tmp.unit,"head");
-                                                        data2.c[3]=Effect.ToUnit("lei9.mdl",tmp.unit,"overhead");
+                                                        data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
+                                                        data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
+                                                        data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
+                                                        data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
                                                     }
                                                 }  
                                             }  
