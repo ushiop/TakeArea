@@ -354,7 +354,7 @@ library BigZZ requires Groups{
                                 data2.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
                                 data2.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
                             } 
-                        }  
+                        }   
                     }  
                     GroupClear(tmp_group); 
                 }else{
@@ -422,6 +422,7 @@ library BigZZ requires Groups{
                 GroupClear(tmp_group); 
                 if(tips==1){
                     u.Stop();
+                    u.FlushAnimeId(11);
                 }
             }
         }
