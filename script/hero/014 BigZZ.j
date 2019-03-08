@@ -276,7 +276,7 @@ library BigZZ requires Groups{
                     Effect(data2.c[2]).Destroy();
                     Effect(data2.c[3]).Destroy();
                     data2.Destroy();
-                } 
+                }  
                 if(u.IsAbility('A054')==true){
                     //BJDebugMsg("删除附魔-闪电"); 
                     data2=Data(data1.c[1]);
