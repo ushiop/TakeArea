@@ -12,15 +12,27 @@ library BigZZ requires Groups{
                 b=Buffs.Add(m.unit,'A058','B01C',86400,false);
                 data=Data.create('A055');
                 data.c[0]=u.player;
+                //BJDebugMsg("A----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
                 data.r[0]=0;
                 b.Obj=data;
                 b.onTime=function(Buffs b){
                     //BJDebugMsg(R2S(ModuloReal(b.Time,1))+"/时间:"+R2S(b.Time));
                     Data data=Data(b.Obj);
+                    Players h=Players(data.c[0]);
                     Units u=Units.Get(b.Unit);
+                    Units mj;
                     if(data.r[0]==0){
                         data.r[0]=1;
-                        Players(data.c[0]).hero.Damage(b.Unit,Damage.Physics,'A055',u.MaxHP()*0.01); 
+                        h.hero.Damage(b.Unit,Damage.Physics,'A055',u.MaxHP()*0.01); 
+                        GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),125,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,h.player)==true&&mj.unit!=u.unit){  
+                                BigZZ.R1(h.hero.unit,mj.unit);
+                            }
+                        }
+                        GroupClear(tmp_group);
                     }else{
                         data.r[0]-=0.01;
                     }
@@ -73,17 +85,19 @@ library BigZZ requires Groups{
                     GroupRemoveUnit(tmp_group,tmp.unit);
                     if(tmp.aid=='A051'){  
                         if(tmp.IsAbility('A057')==false){
-                            BJDebugMsg("天照附魔");
+                            //BJDebugMsg("天照附魔");
                             tmp.AddAbility('A057'); 
                             data1=Data(tmp.Obj);
                             data2=Data(data1.c[2]);
                             data2.c[0]=Effect.ToUnit("buff_hei.mdl",tmp.unit,"chest"); 
+                            //BJDebugMsg("B----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                         } 
                     }   
                 }  
                 GroupClear(tmp_group); 
                 //--------------------------
                 data.c[0]=u;
+                //BJDebugMsg("C----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
                 data.c[1]=e;
                 data.r[0]=0;//伤害间隔
                 data.r[1]=0;//手里剑附魔间隔
@@ -130,11 +144,12 @@ library BigZZ requires Groups{
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(tmp.aid=='A051'){  
                                 if(tmp.IsAbility('A057')==false){
-                                    BJDebugMsg("天照附魔");
+                                    //BJDebugMsg("天照附魔");
                                     tmp.AddAbility('A057'); 
                                     data1=Data(tmp.Obj);
                                     data2=Data(data1.c[2]);
                                     data2.c[0]=Effect.ToUnit("buff_hei.mdl",tmp.unit,"chest"); 
+                                    //BJDebugMsg("D----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                                 } 
                             }   
                         }  
@@ -174,12 +189,13 @@ library BigZZ requires Groups{
             Data data=Data.create('A051');
             Dash dash; 
             data.c[0]=u;
+            //BJDebugMsg("E----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
             data.g[0]=CreateGroup();
             data.i[0]=GetRandomInt(0,1000);
             u.RemoveAbility(Units.MJType_FZW);
             dash=Dash.Start(u.unit,Util.XY(u.unit,h.unit),1000,Dash.NORMAL,70,true,false);
             
-            BJDebugMsg("手里剑-回收中/"+u.name+"/DASH："+I2S(dash)+"/RANDOM:"+I2S(data.i[0])+"/DATA:"+I2S(data)+"/U:"+I2S(u)+"/U2:"+I2S(data.c[0]));
+            //BJDebugMsg("手里剑-回收中/"+u.name+"/DASH："+I2S(dash)+"/RANDOM:"+I2S(data.i[0])+"/DATA:"+I2S(data)+"/U:"+I2S(u)+"/U2:"+I2S(data.c[0]));
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -210,7 +226,7 @@ library BigZZ requires Groups{
                     if(u.IsAbility('A057')==true){
                         dark=1;
                     }
-                    /*GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
                         mj=Units.Get(FirstOfGroup(tmp_group));
                         GroupRemoveUnit(tmp_group,mj.unit);
@@ -238,21 +254,22 @@ library BigZZ requires Groups{
                             //Units.MJ(u.player.player,'e008','A050',0,mj.X(),mj.Y(),GetRandomReal(0,360),1.5,1.5,2,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl").SetH(100);
                         }
                     }
-                    GroupClear(tmp_group);*/
+                    GroupClear(tmp_group);
                 }
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
-                Data data1,data2;
+                Data data1,data2; 
+                u.RemoveAbility(Units.MJType_TSW);
                 if(u!=data.c[0]){
                     BJDebugMsg("手里剑-回收完毕/"+u.name+"/DASH:"+I2S(dash)+"/DASHUNIT:"+Units.Get(dash.Unit).name+"/RANDOM:"+I2S(data.i[0])+"/DATA:"+I2S(data)+"/U:"+I2S(u)+"/U2:"+I2S(data.c[0]));  
-  
+                    BJDebugMsg("这是一条错误提示，如果你愿意请截图并联系作者，同时保存录像发给作者，谢谢~！");
                 }
                 //-----------------附魔删除处理
                 data1=Data(u.Obj);
                 if(u.IsAbility('A053')==true){
-                    BJDebugMsg("删除附魔-火焰");
+                    //BJDebugMsg("删除附魔-火焰");
                     data2=Data(data1.c[0]);
                     Effect(data2.c[0]).Destroy();
                     Effect(data2.c[1]).Destroy();
@@ -261,7 +278,7 @@ library BigZZ requires Groups{
                     data2.Destroy();
                 } 
                 if(u.IsAbility('A054')==true){
-                    BJDebugMsg("删除附魔-闪电"); 
+                    //BJDebugMsg("删除附魔-闪电"); 
                     data2=Data(data1.c[1]);
                     Effect(data2.c[0]).Destroy();
                     Effect(data2.c[1]).Destroy();
@@ -270,17 +287,16 @@ library BigZZ requires Groups{
                     data2.Destroy();
                 } 
                 if(u.IsAbility('A057')==true){
-                    BJDebugMsg("删除附魔-天照"); 
+                    //BJDebugMsg("删除附魔-天照"); 
                     data2=Data(data1.c[2]);
                     Effect(data2.c[0]).Destroy(); 
                     data2.Destroy();
                 } 
                 data1.Destroy();
                 //----------------------------------
-                BJDebugMsg(u.name);
+                //BJDebugMsg(u.name);
                 u.Anime("death"); 
-                u.Size(0);
-                u.RemoveAbility('A053'); 
+                u.Size(0); 
                 u.Life(1);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
@@ -305,8 +321,10 @@ library BigZZ requires Groups{
                 data2=Data.create('A051');//存储附魔状态的数据
                 data3=Data.create('A051');//存储附魔状态-火焰的数据
                 data2.c[0]=data3;
+                //BJDebugMsg("F----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                 data3=Data.create('A051');//存储附魔状态-闪电的数据
-                data2.c[1]=data3;
+                data2.c[1]=data3; 
+                //BJDebugMsg("P----ID:"+I2S(data2)+"/U:"+I2S(data2.c[1])+"/ID2:"+I2S(data3));
                 data3=Data.create('A051');//存储附魔状态-天照的数据
                 data2.c[2]=data3;
                 data2.i[4]=i+6;
@@ -318,6 +336,7 @@ library BigZZ requires Groups{
                 Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
                 data=Data.create('A051');
                 data.c[0]=u;
+                //BJDebugMsg("G----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
                 data.c[1]=mj;
                 data.g[0]=CreateGroup(); 
                 data.r[0]=0; 
@@ -388,16 +407,17 @@ library BigZZ requires Groups{
                     Data data1;
                     if(u.Data()==2){//扔出过程就回收了
                         //回收处理 
-                        BJDebugMsg("手里剑-飞行回收");
+                        //BJDebugMsg("手里剑-飞行回收");
                         BigZZ.E1(u.unit);
                     }else{
                         //盘旋处理
-                        BJDebugMsg("手里剑-转为盘旋");
+                        //BJDebugMsg("手里剑-转为盘旋");
                         u.SetData(1);
                         u.AddAbility(Units.MJType_FZW);
                         Dash.Start(u.unit,dash.Angle,300,Dash.SUB,15,true,false);
                         data1=Data.create('A051');
                         data1.c[0]=u;
+                        //BJDebugMsg("H----ID:"+I2S(data1)+"/U:"+I2S(data1.c[0]));
                         data1.r[0]=0;
                         Timers.Start(0.01,data1,function(Timers t){
                             Data data=Data(t.Data());
@@ -405,7 +425,7 @@ library BigZZ requires Groups{
                             Units mj;
                             integer fire=0,light=0,dark=0;
                             if(u.Data()==2){
-                                BJDebugMsg("手里剑-盘旋回收");
+                                //BJDebugMsg("手里剑-盘旋回收");
                                 //回收了 
                                 BigZZ.E1(u.unit);
                                 t.Destroy();
@@ -458,7 +478,7 @@ library BigZZ requires Groups{
                         });
                     }
                     
-                    BJDebugMsg("手里剑-扔出完毕");
+                    //BJDebugMsg("手里剑-扔出完毕");
                     DestroyGroup(data.g[0]);
                     data.g[0]=null;
                     data.Destroy();
@@ -499,6 +519,7 @@ library BigZZ requires Groups{
             mj=Units.MJ(u.player.player,'e008','A050',0,x+200*CosBJ(f),y+200*SinBJ(f),f,1.5,1,1,"stand",".mdl");
             data=Data.create('A050');
             data.c[0]=u; 
+            //BJDebugMsg("I----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
             data.g[0]=CreateGroup();
             data.r[0]=0;
             dash=Dash.Start(mj.unit,e.Angle,450,Dash.NORMAL,30,true,false); 
@@ -536,11 +557,12 @@ library BigZZ requires Groups{
                         GroupRemoveUnit(tmp_group,tmp.unit);
                         if(tmp.aid=='A051'){  
                             if(tmp.IsAbility('A053')==false){
-                                BJDebugMsg("附魔2");
+                                //BJDebugMsg("附魔2");
                                 tmp.AddAbility('A053'); 
                                 data1=Data(tmp.Obj);
                                 data2=Data(data1.c[0]);
                                 data2.c[0]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"weapon");
+                                //BJDebugMsg("J----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                                 data2.c[1]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"origin");
                                 data2.c[2]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"head");
                                 data2.c[3]=Effect.ToUnit("Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireDamage.mdl",tmp.unit,"overhead");
@@ -639,6 +661,7 @@ library BigZZ requires Groups{
             u.AnimeSpeed(1);
             u.AnimeId(8);
             data.c[0]=u;
+            //BJDebugMsg("K----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
             data.c[1]=e;
             Timers.Start(0.4,data,function(Timers t){
                 Data data=Data(t.Data());
@@ -675,11 +698,12 @@ library BigZZ requires Groups{
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(tmp.aid=='A051'){  
                                     if(tmp.IsAbility('A054')==false){ 
-                                        BJDebugMsg("闪电附魔");
+                                        //BJDebugMsg("闪电附魔");
                                         tmp.AddAbility('A054');  
                                         data1=Data(tmp.Obj);
                                         data2=Data(data1.c[1]);//lei9.mdl
                                         data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
+                                        //BJDebugMsg("L----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                                         data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
                                         data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
                                         data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
@@ -734,9 +758,11 @@ library BigZZ requires Groups{
                                                 if(tmp.aid=='A051'){  
                                                     if(tmp.IsAbility('A054')==false){ 
                                                         tmp.AddAbility('A054');  
-                                                        data1=Data(tmp.Obj);
+                                                        data1=Data(tmp.Obj); 
                                                         data2=Data(data1.c[1]);
+                                                        //BJDebugMsg("Q----ID:"+I2S(data1)+"/U:"+I2S(data1.c[1])+"/ID2:"+I2S(data2));
                                                         data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
+                                                        //BJDebugMsg("O----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
                                                         data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
                                                         data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
                                                         data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
@@ -753,7 +779,7 @@ library BigZZ requires Groups{
                                 dash1.onEnd=function(Dash dash){
                                     Data data=Data(dash.Obj);
                                     Units u=Units(data.c[0]);
-                                    BJDebugMsg("千鸟尾巴结束");
+                                    //BJDebugMsg("千鸟尾巴结束");
                                     u.RemoveAbility('A04X');
                                     u.DelayReleaseAnimePause(0.2); 
                                     Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
@@ -777,7 +803,7 @@ library BigZZ requires Groups{
                         if(u.IsAbility('B019')==true){
                             Buffs.Find(u.unit,'B019').Stop();
                         }
-                        BJDebugMsg("千鸟奔跑结束");
+                        //BJDebugMsg("千鸟奔跑结束");
                         u.RemoveAbility('A04V'); 
                         u.RemoveAbility('A04Z');
                         u.Alpha(255);
