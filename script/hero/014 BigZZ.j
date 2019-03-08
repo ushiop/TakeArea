@@ -2,6 +2,52 @@ library BigZZ requires Groups{
     //英雄‘大佐助’的技能
     //R
     struct BigZZ{
+
+
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);  
+
+                no=GroupFind(u.unit,x,y,500,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "channel",x1,y1);//喷火
+                }  
+  
+                no=GroupFind(u.unit,x,y,500,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "dispel",x1,y1);//手里剑 
+                }  
+ 
+
+                if(u.IsAbility('B01A')==true){ //如果手里剑已经扔出
+                    no=GroupFind(u.unit,x,y,200,true,false);
+                    if(no!=null&&Buffs.Find(u.unit,'B01A').Time>4){ 
+                        BigZZ.E2(u.player.player,"E");//周围有人时回收
+                    }  
+                }
+
+                IssueImmediateOrder( u.unit, "heal" );//千鸟
+
+                IssueImmediateOrder( u.unit, "instant" );//天照
+                  
+            } 
+            target=null;
+            no=null;
+        }
+
         //A058,B01C
         static method R1(unit ua,unit ma){
             Units u=Units.Get(ua);
@@ -113,7 +159,9 @@ library BigZZ requires Groups{
                     real x=u.X(),y=u.Y();
                     if(data.r[0]==0){
                         if(u.MP()>40){  
-                            u.SetMP(u.MP()-40);
+                            if(u.player.isai==false){//AI不扣蓝
+                                u.SetMP(u.MP()-40);
+                            }
                             data.r[0]=1;
                             GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
@@ -333,6 +381,9 @@ library BigZZ requires Groups{
                 mj.SetData(0);//状态， 0 - 扔出 ， 1 - 盘旋 ， 2 -回收中
                 mj.AddAbility(Units.MJType_TSW);
                 mj.Position(x,y,true);
+                if(u.player.isai==true){//AI则补正角度为前方
+                    mj.SetF(e.Angle,false);
+                }
                 Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
                 data=Data.create('A051');
                 data.c[0]=u;
@@ -483,7 +534,7 @@ library BigZZ requires Groups{
                     data.g[0]=null;
                     data.Destroy();
                 };
-            }
+            } 
             b=Buffs.Add(u.unit,'A052','B01A',10,false);
             b.onEnd=function(Buffs b){
                 Units u=Units.Get(b.Unit);
@@ -591,7 +642,8 @@ library BigZZ requires Groups{
 
         static method Spawn(Units u,Units m){
             if(u.IsAbility('A04U')==true){
-                u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl"));    
+                u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl"));
+                u.ai=BigZZ.AI;    
             }
         }
 
@@ -689,7 +741,18 @@ library BigZZ requires Groups{
                         Dash dash1;
                         Data data1,data2;
                         if(u.IsAbility('B019')==true){
-                            dash.Angle=u.F();
+                            if(u.player.isai==true){//如果是AI
+                                dash.MaxSpeed=20;
+                                k=GroupFind(u.unit,dash.X,dash.Y,1200,true,false);
+                                if(k==null){//没人时朝前方冲
+                                    dash.Angle=u.F();
+                                }else{//1200码内有人时自动追踪
+                                    dash.Angle=Util.XY(u.unit,k);
+                                    k=null;
+                                }
+                            }else{ 
+                                dash.Angle=u.F();
+                            }
                             dash.MaxDis+=100;
                             //-------------手里剑附魔
                             GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
