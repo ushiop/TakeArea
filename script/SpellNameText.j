@@ -86,7 +86,7 @@ library SpellNameText requires TimerUtils{
         Units u=Units.Get(ua);
         Units mj;
  
-        if(aid=='A04Q'||aid=='A03Z'||aid=='A03G'||aid=='A02J'||aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'||aid=='A027'){
+        if(aid=='A055'||aid=='A04Q'||aid=='A03Z'||aid=='A03G'||aid=='A02J'||aid=='A006'||aid=='A00M'||aid=='A00E'||aid=='A00S'||aid=='A015'||aid=='A01B'||aid=='A01F'||aid=='A027'){
             if(aid=='A006'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_huangyanluo.mdx");
             }
@@ -116,12 +116,15 @@ library SpellNameText requires TimerUtils{
             }
             if(aid=='A03G'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_aw_wanglingzhiguodu.mdx");            
-            }
+            } 
             if(aid=='A03Z'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_sd_feileishenzhen.mdx");            
             }
             if(aid=='A04Q'){
                 mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_yuuki_chengfeng.mdx");            
+            }
+            if(aid=='A055'){
+                mj=Units.MJ(u.player.player,'e008',aid,999,u.X(),u.Y(),0,1,0.75,1, "birth","skill_name_bigzz_tianzhao.mdx");            
             }
             mj.SetH(75);
             mj.DelayAnime(2,0.7);  
