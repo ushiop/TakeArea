@@ -210,6 +210,8 @@ library BigZZ requires Groups{
                 b.onEnd=function(Buffs b){
                     Data data=Data(b.Obj);
                     Units u=Units(data.c[0]);
+                    Units.MJ(u.player.player,'e008','A055',0,u.X(),u.Y(),0,2,1,1,"stand","AZ_TZFire.mdl").DelayAnime(1,0.6);
+                
                     u.SetAbilityCD('A055',5);
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
