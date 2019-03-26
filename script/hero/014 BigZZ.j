@@ -634,18 +634,39 @@ library BigZZ requires Groups{
                 data.Destroy();
             };
             e.Destroy();
-        }
-
-        static method Death(Units u,Units m){
-            if(u.IsAbility('A04U')==true){
-                Units.Kill(Units(u.Data()).unit);
-            }
-        }
+        } 
 
         static method Spawn(Units u,Units m){
-            if(u.IsAbility('A04U')==true){
-                u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl"));
+            Data data;
+            if(u.IsAbility('A04U')==true){ 
                 u.ai=BigZZ.AI;    
+                data=Data.create('A04U');
+                data.c[0]=u;
+                data.u[0]=Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl").unit;
+                Timers.Start(0.05,data,function(Timers t){
+                    Data data=Data(t.Data());
+                    Units u=Units(data.c[0]);
+                    if(u.Alive()==false){
+                        BJDebugMsg("死亡");
+                        if(data.u[0]!=null){
+                            Units.Kill(data.u[0]);
+                            data.u[0]=null;
+                        }
+                        data.Destroy();
+                        t.Destroy();
+                    }else{
+                        if(u.IsAbility('B019')==true){
+                            if(data.u[0]!=null){ 
+                                Units.Kill(data.u[0]); 
+                                data.u[0]=null; 
+                            }
+                        }else{
+                            if(data.u[0]==null){
+                                data.u[0]=Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl").unit;
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -710,7 +731,7 @@ library BigZZ requires Groups{
         static method Q(Spell e){
             Units u=Units.Get(e.Spell); 
             Data data=Data.create('A04U'); 
-            Units.Kill(Units(u.Data()).unit);
+            //Units.Kill(Units(u.Data()).unit);
             u.Pause(true); 
             u.AnimeSpeed(1);
             u.AnimeId(8);
@@ -872,7 +893,7 @@ library BigZZ requires Groups{
                         u.RemoveAbility('A04V'); 
                         u.RemoveAbility('A04Z');
                         u.Alpha(255);
-                        u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl")); 
+                        //u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl")); 
                         Dash.Start(u.unit,u.F(),200,Dash.SUB,dash.Speed,true,false);
                         mj.Life(0.3);
                         mj.Alpha(0);
@@ -923,8 +944,7 @@ library BigZZ requires Groups{
             Spell.On(Spell.onReady,'A050',BigZZ.HERO_START);  
             Spell.On(Spell.onReady,'A055',BigZZ.HERO_START);  
             Spell.On(Spell.onReady,'A051',BigZZ.HERO_START); 
-            Units.On(Units.onHeroSpawn,BigZZ.Spawn);
-            Units.On(Units.onHeroDeath,BigZZ.Death); 
+            Units.On(Units.onHeroSpawn,BigZZ.Spawn); 
             Events.On(Events.onUnitOrderToUnit,BigZZ.Q_Order);
             Events.On(Events.onUnitOrderToLocation,BigZZ.Q_Order); 
             Damage.On(Damage.onUnitDamage_SubDamage,BigZZ.Damage); 
