@@ -107,7 +107,7 @@ library Ai requires Teams,Groups{
     function onDmg(DamageArgs dmg){
         Units u=dmg.TriggerUnit; 
         if(u.IsAbility('B012')==false){
-            Buffs.Add(u.unit,'A048','B012',0.2,false);
+            Buffs.Add(u.unit,'A048','B012',0.1,false);
             if(u.player.AI()==true){ 
                 AISpell(u.unit);
             }
