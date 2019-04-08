@@ -132,6 +132,8 @@ library Units requires Table,Players,Events,Util{
                     return Units.WeaponPike;//长枪
                 }else if(this.IsAbility('A039')==true){
                     return Units.WeaponWand;//法杖
+                }else if(this.IsAbility('A059')==true){
+                    return Units.WeaponDirk;//匕首
                 }else{
                     return Units.WeaponUnknow;//未知武器
                 }
@@ -631,6 +633,7 @@ library Units requires Table,Players,Events,Util{
             static constant integer WeaponFist=5;//拳(空手)
             static constant integer WeaponPike=6;//长枪
             static constant integer WeaponWand=7;//法杖
+            static constant integer WeaponDirk=8;//匕首
 
 
             static constant integer SexUnknow=0;//未知性别..
