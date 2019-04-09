@@ -1,8 +1,15 @@
 library Shiki requires Groups{
     //英雄‘极死·七夜’的技能
     //SR
-    struct Shiki{
+    /*  35 屈腿
+        16 踢腿
+        17 上翻
+        19 踢腿
+        20 空踢
+        36 空踢（无前摇）*/
+    struct Shiki{ 
 
+ 
         static method Order(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             real f; 
