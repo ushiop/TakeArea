@@ -6,14 +6,13 @@ library Shiki requires Groups{
         static method Order(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             real f; 
-            if(是七夜)
+            if(u.IsAbility('A05A')==true){
                 if(e.OrderTargetUnit==null){ 
                     f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
                 }else{
                     f=Util.XY(u.unit,e.OrderTargetUnit);
-                }
-                u.Position(u.X(),u.Y(),true);
-                u.SetF(f,false);
+                } 
+                u.SetF(f,true);
             } 
                   
         }
@@ -26,4 +25,4 @@ library Shiki requires Groups{
     }
 }
 
-        
+         
