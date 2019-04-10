@@ -61,6 +61,7 @@ library BigZZ requires Groups{
                 //BJDebugMsg("A----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
                 data.r[0]=0;
                 b.Obj=data;
+                b.Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;
                 b.onTime=function(Buffs b){
                     //BJDebugMsg(R2S(ModuloReal(b.Time,1))+"/时间:"+R2S(b.Time));
                     Data data=Data(b.Obj);
