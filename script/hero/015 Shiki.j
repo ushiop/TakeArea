@@ -5,7 +5,9 @@ library Shiki requires Groups{
         16 踢腿
         17 上翻 0.433秒 
         20 空踢 
-        36 空踢（无前摇）*/
+        36 空踢（无前摇-无高度）
+        38 上翻 0.433秒 无高度
+        39 空踢 无高度*/
     struct Shiki{ 
 
         static method Q(Spell e){
@@ -34,9 +36,9 @@ library Shiki requires Groups{
                         dash.Stop(); 
                         m=Units.MJ(u.player.player,'e008','A05A',0,x,y,dash.Angle+180,2,1.5,1,"stand","chongfeng2.mdl");
                         Dash.Start(m.unit,dash.Angle,400,Dash.SUB,50,true,false);
-                        m=Units.MJ(u.player.player,'e008','A05A',0,dash.X,dash.Y,dash.Angle,1,u.modelsize,1.5,"stand",u.model);
+                        /*m=Units.MJ(u.player.player,'e008','A05A',0,dash.X,dash.Y,dash.Angle,1,u.modelsize,1.5,"stand",u.model);
                         m.AnimeId(16);
-                        m.DelayAlpha(255,0,0.5); 
+                        m.DelayAlpha(255,0,0.2); */
                         m=Units.Get(k);
                         k=null;
                         Units.MJ(u.player.player,'e008','A05A',0,dash.X,dash.Y,dash.Angle,1,0.5,0.6,"stand","white-qiquan.mdl");
@@ -47,16 +49,19 @@ library Shiki requires Groups{
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.unit!=m.unit){    
                                 Dash.Start(mj.unit,dash.Angle,450,Dash.SUB,40,true,false); 
-                                HitFlys.Add(mj.unit,15);
-                            }
-                        }
+                                HitFlys.Add(mj.unit,20);
+                                Buffs.Add(mj.unit,'A05D','B01E',6,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                            } 
+                        } 
                         GroupClear(tmp_group);
                         u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
                         Buffs.Skill(m.unit,'A00F',1);
                         u.Pause(true);
-                        u.AnimeId(17);
-                        u.AnimeSpeed(0.75);
-                        HitFlys.Add(m.unit,12);
+                        u.AnimeId(38);
+                        u.AnimeSpeed(0.75); 
+                        u.AddAbility('A05B');
+                        HitFlys.Add(u.unit,12);
+                        HitFlys.Add(m.unit,16);
                         Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
                         Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
                         data=Data.create('A05A');
@@ -66,14 +71,42 @@ library Shiki requires Groups{
                             Data data=Data(t.Data());
                             Units u=Units(data.c[0]);
                             Units m=Units(data.c[1]);  
-                            u.DelayReleaseAnimePause(0.3);
-                            Buffs.Skill(m.unit,'A00F',1);
-                            Dash.Start(m.unit,u.F(),100,Dash.SUB,10,true,false);
-                            Dash.Start(u.unit,u.F()+180,100,Dash.SUB,10,true,false);
-                        
-                            HitFlys.Add(m.unit,25);
-                            Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
-                            Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
+                            Data data1;
+                            Buffs b;
+                            if(u.Alive()==true){ 
+                                u.DelayReleaseAnimePause(0.32);
+                                Buffs.Skill(m.unit,'A00F',1);
+                                //Units.MJ(u.player.player,'e00C','A05A',0,m.X(),m.Y(),u.F()+180,2,2,1.5,"stand","by_wood_gongchengsipai_2.mdl").SetH(m.H()+100);
+                                Units.MJ(u.player.player,'e00E','A05A',0,u.X(),u.Y(),Util.XY(u.unit,m.unit),2,0.8,1.5,"stand","cf2.mdl").SetH(m.H());
+                                
+                                Dash.Start(m.unit,u.F(),150,Dash.SUB,10,true,false);
+                                Dash.Start(u.unit,u.F()+180,100,Dash.SUB,10,true,false);
+                                
+                                HitFlys.Add(u.unit,20);
+                                HitFlys.Add(m.unit,25);
+                                Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
+                                Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
+                                if(m.Alive()==true){
+                                    //标记
+                                    data1=Data.create('A05A');
+                                    data1.c[0]=u;
+                                    data1.c[1]=m;
+                                    b=Buffs.Add(u.unit,'A05C','B01D',10,false);
+                                    b.Obj=data1;
+                                    b.onTime=function(Buffs b){ 
+                                        Data data=Data(b.Obj);
+                                        Units m=Units(data.c[1]);
+                                        if(m.Alive()==false){
+                                            b.Stop();
+                                        }
+                                    };
+                                    b.onEnd=function(Buffs b){
+                                        Data data=Data(b.Obj);
+                                        data.Destroy();
+                                    };
+                                } 
+                            }
+                            u.RemoveAbility('A05B');
                             t.Destroy();
                             data.Destroy();
                         });
@@ -110,6 +143,7 @@ library Shiki requires Groups{
                 u.FlushAnimeId(35);
                 Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
             }
+            e.Destroy();
         }
 
 
