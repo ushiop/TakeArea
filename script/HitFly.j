@@ -54,6 +54,14 @@ library HitFly requires Util{
                 return tmp;
             }
 
+            //重置一个单位的上升力为0
+            static method Reset(unit u){
+                HitFlys tmp=HitFlys.Find(u);
+                if(tmp!=0){
+                    tmp.UpPower=0;
+                }
+            }
+
             //添加一个击飞给目标单位,上升力度为up
             //重复添加则会叠加上升力
             static method Add(unit u,real up)->HitFlys{ 
