@@ -645,7 +645,8 @@ library Units requires Table,Players,Events,Util{
             static constant string onHeroDeath="Units.HeroDeath";//英雄单位死亡
             static constant string onUnitSpawn="Units.UnitSpawn";//非英雄单位被创建
             static constant string onHeroSpawn="Units.HeroSpawn";//英雄单位被创建
-            static constant string onAlocDeath="Units.AlocDeath";//蝗虫单位死亡
+            static constant string onAlocDeath="Units.AlocDeath";//蝗虫单位死亡 
+            static constant string onHeroAlocDeath="Units.HeroAlocDeath";//蝗虫单位死亡
             static constant string onAlocSpawn="Units.AlocSpawn";//蝗虫单位出生
             static constant string onHeroChangeModel="Units.HeroChangeModel";//英雄单位改变模型
 
@@ -685,7 +686,13 @@ library Units requires Table,Players,Events,Util{
                     Units.Trigger(Units.onHeroDeath,e.TriggerUnit,e.KillUnit);
                 }else{
                     //英雄蝗虫单位死亡
-                    Units.Trigger(Units.onAlocDeath,e.TriggerUnit,e.KillUnit); 
+                    SetUnitState( e.TriggerUnit, UNIT_STATE_LIFE, -0.001 ); 
+                    Units.Trigger(Units.onHeroAlocDeath,e.TriggerUnit,e.KillUnit); 
+                    //英雄蝗虫死了后过5秒删除单位
+                    Timers.Start(5,Units.Get(e.TriggerUnit),function(Timers t){
+                        Units.Remove(Units(t.Data()).unit);
+                        t.Destroy();
+                    });
                 }
             }else{
                 if(GetUnitAbilityLevel(e.TriggerUnit,'Aloc')==0){ 
