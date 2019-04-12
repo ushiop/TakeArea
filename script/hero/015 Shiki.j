@@ -7,8 +7,100 @@ library Shiki requires Groups{
         20 空踢 
         36 空踢（无前摇-无高度）
         38 上翻 0.433秒 无高度
-        39 空踢 无高度*/
+        39 空踢 无高度
+        6 划小刀
+        13 划小刀后撤
+        19 划小刀前踢*/
     struct Shiki{ 
+
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A05G');
+            Units ts;
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0;//已持续时间
+            data.r[1]=0;//伤害间隔(0.1s)
+            data.r[2]=0;//增伤间隔(0.5s)
+            data.r[3]=0;//增伤系数(+0.25)
+            //用于Q2的替身残影
+            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(6);
+            ts.Alpha(0);
+            data.c[2]=ts;
+            //
+            Buffs.Add(u.unit,'A05H','B01G',10,false); 
+            u.Pause(true);  
+            u.AnimeId(6);
+            Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4,1.25,"stand","white-qiquan.mdl");
+            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),5,0.8,1,"stand","shiki-bahuajing.mdl");
+            data.c[3]=ts; 
+            Dash.Start(u.unit,u.F(),50,Dash.SUB,6,true,false);  
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Units ts;
+                boolean press=false;
+                if(data.r[0]<0.3){
+                    press=true;
+                }else{
+                    press=u.player.press.W;
+                }
+                if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false){
+                    ts=Units(data.c[2]);
+                    if(u.Alive()==true){
+                        u.Pause(false);
+                        if(u.IsAbility('B01G')==false){
+                            BJDebugMsg("砍人：因Q2中断结束");  
+                            ts.AnimeSpeed(0);
+                            ts.DelayAlpha(255,0,0.5);
+                        }else{
+                            Buffs.Find(u.unit,'B01G').Stop();
+                            BJDebugMsg("砍人：因松开W或到达上限时间结束");
+                            if(data.r[0]>1){
+                                //前踢
+                            }else{
+                                //后撤
+                            }
+                        }
+                    }else{
+                        BJDebugMsg("砍人：因死亡结束");
+                    }
+                    ts.Life(1);
+                    Units(data.c[3]).Life(0.3);
+                    Units(data.c[3]).DelayAlpha(255,0,0.2);
+                    Spell(data.c[1]).Destroy();
+                    t.Destroy();
+                    data.Destroy();
+                }else{
+                    ts=Units(data.c[3]);
+                    data.r[0]+=0.01;
+                    data.r[1]+=0.01;
+                    data.r[2]+=0.01;
+                    ts.Position(u.X(),u.Y(),false);
+                    ts.SetF(u.F(),true);
+                    if(data.r[1]>=0.1){
+                        //伤害
+                        data.r[1]=0;
+                    } 
+                    if(data.r[2]>=0.5){
+                        //增伤
+                        data.r[2]=0;
+                        data.r[3]+=0.25;
+                        ts.Size(0.8+(data.r[3]/1.5)); 
+                        Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
+                        ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
+                        ts.DelayAlpha(255,0,0.5);
+                        Dash.Start(ts.unit,ts.F(),100,Dash.SUB,10,true,false);
+                        ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),0.5,u.modelsize,1,"stand",u.model);
+                        ts.AnimeId(6);
+                        ts.DelayAlpha(255,0,0.25);
+                        ts.DelaySizeEx(0.5,u.modelsize+0.25,0.25); 
+                        Dash.Start(u.unit,u.F(),75,Dash.SUB,6,true,false);
+                    }
+                }
+            });
+        }
 
         static method Q3(Units u,Units m,real f){
             f=f+180;
@@ -60,9 +152,13 @@ library Shiki requires Groups{
             /*
                 中断技能，通过结束BUFF来结束技能硬直，每个技能单独判断
                 B01F - 踢人(Q)的后半段硬直，可取消
+                B01G - 砍人(W)的过程硬直，可取消
             */
             if(u.IsAbility('B01F')==true){
                 Buffs.Find(u.unit,'B01F').Stop();
+            }
+            if(u.IsAbility('B01G')==true){
+                Buffs.Find(u.unit,'B01G').Stop();
             }
             u.AddAbility('A05F'); 
             //Units.MJ(u.player.player,'e008','A05A',0,x,y,f,1,1,1,"stand","blink_darkblue.mdl").SetH(u.H());
@@ -273,7 +369,8 @@ library Shiki requires Groups{
         static method Order(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
             real f; 
-            if(u.IsAbility('A05A')==true){
+            if(u.IsAbility('A05A')==true&&e.OrderId!=851973){
+                
                 if(e.OrderTargetUnit==null){ 
                     f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
                 }else{
@@ -298,6 +395,7 @@ library Shiki requires Groups{
             Press.OnSnyc(Press.onSnycPressKeyDown,Shiki.Press);
             Spell.On(Spell.onReady,'A05A',Shiki.HERO_START); 
             Spell.On(Spell.onSpell,'A05A',Shiki.Q);
+            Spell.On(Spell.onSpell,'A05G',Shiki.W);
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
             Events.On(Events.onUnitOrderToLocation,Shiki.Order); 
         }
