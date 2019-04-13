@@ -21,7 +21,7 @@ library HitFly requires Util{
             HitFlyEventInterface onRemove;//被移除时触发
             上述事件为避免相同实例重复注册导致的覆盖BUG，已改为由HitFlys.Lister实现
             
-                HitFlys.Lister(HitFlys.Add(),HitFlys.onDown,function(HitFlys h){
+                HitFlys.Lister(HitFlys.Add(),HitFlys.onDown|onEnd|onRemove,function(HitFlys h){
                     //.....
                 };)
             */
