@@ -15,9 +15,16 @@ library HitFly requires Util{
             boolean Down=false;//是否触发了ondown
             integer Obj;//这个击飞实例携带的实例化对象ID，由对应类自己转化为实例  
             unit Unit;//被击飞的单位  
-            /*HitFlyEventInterface onDown;//从上升转为下降的那一刻触发
+            /*
+            HitFlyEventInterface onDown;//从上升转为下降的那一刻触发
             HitFlyEventInterface onEnd;//落地后触发
-            HitFlyEventInterface onRemove;//被移除时触发*/
+            HitFlyEventInterface onRemove;//被移除时触发
+            上述事件为避免相同实例重复注册导致的覆盖BUG，已改为由HitFlys.Lister实现
+            
+                HitFlys.Lister(HitFlys.Add(),HitFlys.onDown,function(HitFlys h){
+                    //.....
+                };)
+            */
             HitFlys Prev;//上一个BUFF节点，为0则无
             HitFlys Next;//下一个BUFF节点，为0则无;
 
