@@ -103,6 +103,7 @@ library Shiki requires Groups{
         }
 
         static method Q3(Units u,Units m,real f){
+            HitFlys ad;
             f=f+180;
             u.Pause(true);
             BJDebugMsg("暂停3");
@@ -110,28 +111,32 @@ library Shiki requires Groups{
             u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
             u.AnimeId(36);
             HitFlys.Reset(m.unit);
-            HitFlys.Add(m.unit,-30).onEnd=function(HitFlys h){
+            HitFlys.Lister(HitFlys.Add(m.unit,-30),HitFlys.onEnd,function(HitFlys h){
                 Units u=Units.Get(h.Unit);
                 Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",u.X(),u.Y()).Destroy();
                 Util.Duang(u.X(),u.Y(),0.7,175,175,-220,0.02,50);  
                 Timers.Start(0.01,u,function(Timers t){
                     Units u=Units(t.Data());
-                    HitFlys.Add(u.unit,15).onEnd=function(HitFlys h){
+                    HitFlys.Lister(HitFlys.Add(u.unit,15),HitFlys.onEnd,function(HitFlys h){
                         Units u=Units.Get(h.Unit);
                         Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",u.X(),u.Y()).Destroy();
                         Util.Duang(u.X(),u.Y(),0.4,175,175,-64,0.02,50);   
-                    };
+                    });
                     t.Destroy();
                 });
                               
-            };
+            });
             HitFlys.Reset(u.unit);
-            HitFlys.Add(u.unit,15).onEnd=function(HitFlys h){
+            ad=HitFlys.Add(u.unit,15);
+            HitFlys.Lister(ad,HitFlys.onEnd,function(HitFlys h){
                 Units u=Units.Get(h.Unit); 
                 u.RemoveAbility('A05F'); 
                 u.Pause(false);
                 BJDebugMsg("暂停3-解除");
-            }; 
+            });
+            HitFlys.Lister(ad,HitFlys.onEnd,function(HitFlys h){
+                BJDebugMsg("测试-123123123213");
+            });
             Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
             Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
             Dash.Start(m.unit,f,500,Dash.SUB,40,true,false);
