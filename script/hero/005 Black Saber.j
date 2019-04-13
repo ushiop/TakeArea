@@ -70,11 +70,11 @@ library BlackSaber requires Groups{
                                 dis=GetRandomReal(25,225);
                                 a=GetRandomReal(0,360);
                                 mj=Units.MJ(Units(data.c[0]).player.player,'e00B','A015',0,x+dis*CosBJ(a),y+dis*SinBJ(a),0,2.5,0.75,2, "stand","BlackDragonMissile.mdl");
-                                HitFlys.Add(mj.unit,50).onDown=function(HitFlys h){
+                                HitFlys.Lister(HitFlys.Add(mj.unit,50),HitFlys.onDown,function(HitFlys h){
                                     Units u=Units.Get(h.Unit);
                                     u.Anime("death");
                                     HitFlys.Remove(u.unit);
-                                };
+                                });
                             }
                         }
                         if(data.r[3]==0){
