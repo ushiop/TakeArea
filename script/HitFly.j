@@ -6,11 +6,12 @@ library HitFly requires Util{
         private static HitFlys Root;//根节点
         private static HitFlys Last;//最后一个节点
         private static real Power=0.98;//下落重力 
-        private static string onDown="HitFlys.onDown";
-        private static string onEnd="HitFlys.onEnd";
-        private static string onRemove="HitFlys.onRemove";
   
-        public{
+        public{ 
+            static string onDown="HitFlys.onDown";
+            static string onEnd="HitFlys.onEnd";
+            static string onRemove="HitFlys.onRemove";
+
             real UpPower;//上升力  
             boolean Down=false;//是否触发了ondown
             integer Obj;//这个击飞实例携带的实例化对象ID，由对应类自己转化为实例  
@@ -25,6 +26,7 @@ library HitFly requires Util{
                     //.....
                 };)
             */
+            integer Listers;//拥有的监听者数量，为0则不触发事件
             HitFlys Prev;//上一个BUFF节点，为0则无
             HitFlys Next;//下一个BUFF节点，为0则无;
 
@@ -49,7 +51,7 @@ library HitFly requires Util{
                 HitFlys tmp=HitFlys.Find(u);
                 if(tmp!=0){ 
                     //if(tmp.onRemove!=0) HitFlyEventInterface(tmp.onRemove).evaluate(tmp); 
-                    HitFlys.ListerTrigger(HitFlys.onRemove,tmp);
+                    if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onRemove,tmp);
                     tmp.Destroy();
                 }
             }
@@ -85,9 +87,7 @@ library HitFly requires Util{
                     tmp.UpPower=up;
                     tmp.Down=false;
                     tmp.Obj=0;
-                    tmp.onEnd=0;
-                    tmp.onRemove=0;
-                    tmp.onDown=0;
+                    tmp.Listers=0;
                     tmp.Prev=HitFlys.Last;
                     tmp.Next=0; 
                     HitFlys.Last.Next=tmp; 
@@ -104,6 +104,7 @@ library HitFly requires Util{
             //注册不同击飞实例的单独事件
             static method Lister(HitFlys HitFlysId,string eventname,HitFlyEventInterface callback){ 
                 string eName="HitFlys_"+I2S(HitFlysId)+"_Event_"+eventname; 
+                HitFlysId.Listers+=1;
                 if(Table[eName][0]==0){ 
                     Table[eName][0]=1;
                 }
@@ -130,15 +131,13 @@ library HitFly requires Util{
                     Table[eName][i]=0;
                 }  
                 Table[eName][0]=0;
-                eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onEnd;
-                for(1<=i<Table[eName][0]){   
-                    BJDebugMsg("end:"+I2S(i));
+                eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onEnd; 
+                for(1<=i<Table[eName][0]){    
                     Table[eName][i]=0;
                 }  
                 Table[eName][0]=0; 
                 eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onDown;
-                for(1<=i<Table[eName][0]){  
-                    BJDebugMsg("down:"+I2S(i));
+                for(1<=i<Table[eName][0]){   
                     Table[eName][i]=0;
                 }  
                 Table[eName][0]=0; 
@@ -179,13 +178,13 @@ library HitFly requires Util{
                             if(tmp.UpPower<0){
                                 tmp.Down=true;
                                 //if(tmp.onDown!=0) HitFlyEventInterface(tmp.onDown).evaluate(tmp);
-                                HitFlys.ListerTrigger(HitFlys.onDown,tmp);
+                                if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onDown,tmp);
                             }
                         }
                     }else{
                         SetUnitFlyHeight(tmp.Unit,0,0);
                         //if(tmp.onEnd!=0) HitFlyEventInterface(tmp.onEnd).evaluate(tmp); 
-                        HitFlys.ListerTrigger(HitFlys.onEnd,tmp);
+                        if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onEnd,tmp);
                         tmp.Destroy();
                     }
                 } 
