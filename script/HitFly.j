@@ -5,21 +5,25 @@ library HitFly requires Util{
     public struct HitFlys{
         private static HitFlys Root;//根节点
         private static HitFlys Last;//最后一个节点
-        private static real Power=0.98;//下落重力
+        private static real Power=0.98;//下落重力 
+        private static string onDown="HitFlys.onDown";
+        private static string onEnd="HitFlys.onEnd";
+        private static string onRemove="HitFlys.onRemove";
   
         public{
             real UpPower;//上升力  
             boolean Down=false;//是否触发了ondown
             integer Obj;//这个击飞实例携带的实例化对象ID，由对应类自己转化为实例  
             unit Unit;//被击飞的单位  
-            HitFlyEventInterface onDown;//从上升转为下降的那一刻触发
+            /*HitFlyEventInterface onDown;//从上升转为下降的那一刻触发
             HitFlyEventInterface onEnd;//落地后触发
-            HitFlyEventInterface onRemove;//被移除时触发
+            HitFlyEventInterface onRemove;//被移除时触发*/
             HitFlys Prev;//上一个BUFF节点，为0则无
             HitFlys Next;//下一个BUFF节点，为0则无;
 
             //删除一个击飞实例
             method Destroy(){
+                HitFlys.DeleteLister(this);
                 this.Unit=null;
                 if(HitFlys.Last==this){ 
                     this.Prev.Next=0;       
@@ -28,6 +32,7 @@ library HitFly requires Util{
                     this.Prev.Next=this.Next;
                     this.Next.Prev=this.Prev;
                 }
+
                 this.deallocate();         
             }
 
@@ -36,7 +41,8 @@ library HitFly requires Util{
             static method Remove(unit u){ 
                 HitFlys tmp=HitFlys.Find(u);
                 if(tmp!=0){ 
-                    if(tmp.onRemove!=0) HitFlyEventInterface(tmp.onRemove).evaluate(tmp); 
+                    //if(tmp.onRemove!=0) HitFlyEventInterface(tmp.onRemove).evaluate(tmp); 
+                    HitFlys.ListerTrigger(HitFlys.onRemove,tmp);
                     tmp.Destroy();
                 }
             }
@@ -86,7 +92,50 @@ library HitFly requires Util{
                 return tmp;
             }
  
-            static constant string onUnitHitFly="HitFlys.UnitHitFly";//任意单位被击飞 
+            static constant string onUnitHitFly="HitFlys.UnitHitFly";//任意单位被击飞
+
+            //注册不同击飞实例的单独事件
+            static method Lister(HitFlys HitFlysId,string eventname,HitFlyEventInterface callback){ 
+                string eName="HitFlys_"+I2S(HitFlysId)+"_Event_"+eventname; 
+                if(Table[eName][0]==0){ 
+                    Table[eName][0]=1;
+                }
+                Table[eName][Table[eName][0]]=callback;
+                Table[eName][0]=Table[eName][0]+1;
+            } 
+
+            //触发不同击飞实例的单独事件
+            static method ListerTrigger(string eventname,HitFlys m){
+                integer i;
+                string eName="HitFlys_"+I2S(m)+"_Event_"+eventname; 
+                HitFlyEventInterface callback;
+                for(1<=i<Table[eName][0]){  
+                    callback=HitFlyEventInterface(Table[eName][i]);
+                    callback.evaluate(m);
+                }        
+            }
+
+            //删除一个击飞实例的监听器
+            static method DeleteLister(HitFlys m){
+                integer i;
+                string eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onRemove; 
+                for(1<=i<Table[eName][0]){  
+                    Table[eName][i]=0;
+                }  
+                Table[eName][0]=0;
+                eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onEnd;
+                for(1<=i<Table[eName][0]){   
+                    BJDebugMsg("end:"+I2S(i));
+                    Table[eName][i]=0;
+                }  
+                Table[eName][0]=0; 
+                eName="HitFlys_"+I2S(m)+"_Event_"+HitFlys.onDown;
+                for(1<=i<Table[eName][0]){  
+                    BJDebugMsg("down:"+I2S(i));
+                    Table[eName][i]=0;
+                }  
+                Table[eName][0]=0; 
+            }
 
             //触发指定事件名
             static method Trigger(string eName,HitFlys m){
@@ -122,12 +171,14 @@ library HitFly requires Util{
                         if(tmp.Down==false){
                             if(tmp.UpPower<0){
                                 tmp.Down=true;
-                                if(tmp.onDown!=0) HitFlyEventInterface(tmp.onDown).evaluate(tmp);
+                                //if(tmp.onDown!=0) HitFlyEventInterface(tmp.onDown).evaluate(tmp);
+                                HitFlys.ListerTrigger(HitFlys.onDown,tmp);
                             }
                         }
                     }else{
                         SetUnitFlyHeight(tmp.Unit,0,0);
-                        if(tmp.onEnd!=0) HitFlyEventInterface(tmp.onEnd).evaluate(tmp); 
+                        //if(tmp.onEnd!=0) HitFlyEventInterface(tmp.onEnd).evaluate(tmp); 
+                        HitFlys.ListerTrigger(HitFlys.onEnd,tmp);
                         tmp.Destroy();
                     }
                 } 
