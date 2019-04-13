@@ -23,6 +23,7 @@ library Shiki requires Groups{
             data.r[1]=0;//伤害间隔(0.1s)
             data.r[2]=0;//增伤间隔(0.5s)
             data.r[3]=0;//增伤系数(+0.25)
+            data.r[4]=75;//伤害距离和范围(+35)
             //用于Q2的替身残影
             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
             ts.AnimeId(6);
@@ -40,13 +41,19 @@ library Shiki requires Groups{
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units ts;
+                Units ts1;
+                Data data1;
+                Buffs b;
                 boolean press=false;
+                real f1;
+                integer ani;
+                Units mj;
                 if(data.r[0]<0.3){
                     press=true;
                 }else{
                     press=u.player.press.W;
                 }
-                if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false){
+                if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false||u.IsAbility('BPSE')==true){
                     ts=Units(data.c[2]);
                     if(u.Alive()==true){
                         u.Pause(false);
@@ -56,12 +63,50 @@ library Shiki requires Groups{
                             ts.DelayAlpha(255,0,0.5);
                         }else{
                             Buffs.Find(u.unit,'B01G').Stop();
-                            BJDebugMsg("砍人：因松开W或到达上限时间结束");
+                            BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束");
                             if(data.r[0]>1){
                                 //前踢
+                                f1=0;
+                                ani=19;
+                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F()+180,2,1.25,1,"stand","chongfeng2.mdl");
+                                Dash.Start(mj.unit,u.F(),400,Dash.SUB,50,true,false);
                             }else{
-                                //后撤
+                                f1=180;
+                                ani=13;
+                                Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7.mdl").AnimeId(0);
+        
                             }
+                            //后撤 A05I,B01H
+                            //用于Q2的替身残影
+                            ts1=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+                            ts1.AnimeId(ani);
+                            ts1.Alpha(0);
+                            //
+                            u.Pause(true);
+                            u.AnimeId(ani); 
+                            
+                            data1=Data.create('A05G');
+                            data1.c[0]=u;
+                            data1.c[1]=ts1;
+                            b=Buffs.Add(u.unit,'A05I','B01H',data.r[0]/2,false);
+                            b.Obj=data1;
+                            b.onEnd=function(Buffs b){
+                                Data data=Data(b.Obj);
+                                Units u=Units(data.c[0]);
+                                Units ts=Units(data.c[1]);
+                                u.Pause(false);
+                                if(b.Level==0){  
+                                    Dash.AllStop(ts.unit);
+                                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                    ts.AnimeSpeed(0);
+                                    ts.DelayAlpha(255,0,0.5);
+                                }
+                                ts.Life(1);
+                                data.Destroy();
+                            };
+                            Dash.Start(ts1.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
+                            Dash.Start(u.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
+                           
                         }
                     }else{
                         BJDebugMsg("砍人：因死亡结束");
@@ -87,6 +132,7 @@ library Shiki requires Groups{
                         //增伤
                         data.r[2]=0;
                         data.r[3]+=0.25;
+                        data.r[4]+=35;
                         ts.Size(0.8+(data.r[3]/1.5)); 
                         Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
                         ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
@@ -133,10 +179,7 @@ library Shiki requires Groups{
                 u.RemoveAbility('A05F'); 
                 u.Pause(false);
                 BJDebugMsg("暂停3-解除");
-            });
-            HitFlys.Lister(ad,HitFlys.onEnd,function(HitFlys h){
-                BJDebugMsg("测试-123123123213");
-            });
+            }); 
             Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
             Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
             Dash.Start(m.unit,f,500,Dash.SUB,40,true,false);
@@ -158,16 +201,26 @@ library Shiki requires Groups{
                 中断技能，通过结束BUFF来结束技能硬直，每个技能单独判断
                 B01F - 踢人(Q)的后半段硬直，可取消
                 B01G - 砍人(W)的过程硬直，可取消
+                B01H - 砍人(W)后撤/前踢的过程硬直，可取消
             */
             if(u.IsAbility('B01F')==true){
-                Buffs.Find(u.unit,'B01F').Stop();
+                b=Buffs.Find(u.unit,'B01F');
+                b.Level=0;
+                b.Stop();
             }
             if(u.IsAbility('B01G')==true){
-                Buffs.Find(u.unit,'B01G').Stop();
+                b=Buffs.Find(u.unit,'B01G');
+                b.Level=0;
+                b.Stop();
+            }
+            if(u.IsAbility('B01H')==true){
+                b=Buffs.Find(u.unit,'B01H');
+                b.Level=0;
+                b.Stop();
             }
             u.AddAbility('A05F'); 
             //Units.MJ(u.player.player,'e008','A05A',0,x,y,f,1,1,1,"stand","blink_darkblue.mdl").SetH(u.H());
-            Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
+            //Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
             if(m.H()<200){//高度过低时会踢起来
                 u.Pause(true);
                 BJDebugMsg("暂停2");
@@ -297,9 +350,8 @@ library Shiki requires Groups{
                                     Units u=Units.Get(b.Unit);
                                     Units ts=Units(b.Obj);
                                     //如果是提前结束的BUFF，则是Q2打断，显示残影
-                                    if(b.Time<0.31){
-                                        ts.SetH(u.H());
-                                        ts.Alpha(255);
+                                    if(b.Level==0){
+                                        ts.SetH(u.H()); 
                                         ts.AnimeSpeed(0);
                                         ts.DelayAlpha(255,0,0.5);
                                     } 
