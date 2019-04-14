@@ -26,7 +26,7 @@ library Shiki requires Groups{
                 m=e.TriggerUnit.Copy(false);
                 m.Position(e.TriggerUnit.X(),e.TriggerUnit.Y(),false); 
             }
-        }
+        } 
 
         static method E(Spell e){
             //A05L B01J
