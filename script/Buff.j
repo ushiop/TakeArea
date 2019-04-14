@@ -53,6 +53,19 @@ library Buff requires Util{
                 this.NowTime=time;
             }
 
+            //将该BUFF实例从U移到M身上
+            //已有BUFF的单位不能被转移
+            method Move(unit u,unit m)->boolean{
+                if(m.IsAbility(this.Buff)==true){
+                    return false;
+                }else{ 
+                    UnitAddAbility(m.unit,this.Ability); 
+                    this.Unit=m.unit;
+                    UnitRemoveAbility(u.unit,this.Ability);
+                    UnitRemoveAbility(u.unit,this.Buff);  
+                }
+            }
+
             //移除一个单位身上的所有满足条件的BUFF
             //btype指示BUFF类型,由Buffs类定义
             //指示为-1则表示清除所有BUFF
