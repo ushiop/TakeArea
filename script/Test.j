@@ -35,6 +35,11 @@ library Test requires Util{
                 Buffs.Skill(p.hero.unit,'A00F',1);
             }
         } 
+        if(e.ChatString=="p"){
+            if(p.hero.unit!=null){
+                BJDebugMsg("暂停计数："+I2S(p.hero.pauses));
+            }
+        }
         if(SubString(e.ChatString,0,7)=="-ranged"){//特效距离
             RangeDis[p.playerid]=S2R(SubString(e.ChatString,7,1));
             BJDebugMsg("特效距离已设为:"+R2S(RangeDis[p.playerid]));
