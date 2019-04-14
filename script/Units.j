@@ -45,6 +45,44 @@ library Units requires Table,Players,Events,Util{
             string str_int;//智力值的文本形态
             string str_lv;//英雄等级的文本形态
 
+            //复制一个英雄，继承属性值并返回，用于替身类效果
+            //itemcopy为TRUE时，复制物品与物品CD
+            //itemcopy为FALSE时，移动本体身上的物品到复制的英雄上
+            //非英雄调用无反应
+            method Copy(boolean itemcopy)->Units{
+                Units m;
+                integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int;
+                if(this.isHero==true){
+                    m=Units.Get(Units.Spawn(this.player.player,this.uid,0,0,0));
+                    r_lv=GetUnitLevel(this.unit);
+                    r_str=this.Str(false);
+                    r_agi=this.Agi(false);
+                    r_int=this.Int(false);
+                    ex_str=this.ExStr();
+                    ex_agi=this.ExAgi();
+                    ex_int=this.ExInt();
+                    /*for(0<=r_i<6){
+                        r_it[r_i]=GetItemTypeId(UnitItemInSlot(this.unit,r_i));
+                    } */
+                    if(r_lv!=1){  
+                        SetHeroLevel(m.unit,r_lv,false);
+                    }
+                    SetHeroAgi(m.unit,r_agi,true);
+                    SetHeroStr(m.unit,r_str,true);
+                    SetHeroInt(m.unit,r_int,true);
+                    m.SetExStr(ex_str);
+                    m.SetExAgi(ex_agi);
+                    m.SetExInt(ex_int);
+                    /*for(0<=r_i<6){
+                        UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
+                    }*/
+                    return m;
+                }else{
+                    return 0;
+                }
+            }
+
+
             //0秒发布停止命令
             method Stop(){
                 Timers.Start(0,this,function(Timers t){
@@ -795,6 +833,7 @@ library Units requires Table,Players,Events,Util{
                 Units.onSpawn(u);
             }
         }
+
 
         //创建单位并绑定UNITS实例
         public static method Spawn(player p,integer unitid,real x,real y,real f)->unit{
