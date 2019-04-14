@@ -10,8 +10,51 @@ library Shiki requires Groups{
         39 空踢 无高度
         6 划小刀
         13 划小刀后撤
-        12 划小刀突刺*/
+        12 划小刀突刺
+        21 后跳 1.567秒*/
     struct Shiki{ 
+
+        static method SubDamage(DamageArgs e){
+            if(e.TriggerUnit.IsAbility('A05K')==true){
+                e.Damage=0;
+            }
+        }
+
+        static method Damage(DamageArgs e){
+            Units m;
+            if(e.TriggerUnit.IsAbility('A05K')==true){ 
+                m=e.TriggerUnit.Copy(false);
+                m.Position(e.TriggerUnit.X(),e.TriggerUnit.Y(),false); 
+            }
+        }
+
+        static method E(Spell e){
+            //A05L B01J
+            Units u=Units.Get(e.Spell);
+            Buffs b;
+            Data data=Data.create('A05K');
+            u.Pause(true);
+            u.AnimeId(21);
+            u.AnimeSpeed(1.1);
+            data.c[0]=u;
+            data.c[1]=e;
+            Dash.Start(u.unit,u.F()+180,600,Dash.SUB,20,true,false).onMove=function(Dash dash){
+                Units u=Units.Get(dash.Unit);
+                if(u.IsAbility('B01J')==false){
+                    dash.Stop();
+                }
+            };
+            b=Buffs.Add(u.unit,'A05L','B01J',1.567,false);
+            b.Obj=data;
+            b.onEnd=function(Buffs b){
+                Data data=Data(b.Obj);
+                Units u=Units(data.c[0]);
+                u.AnimeSpeed(1);
+                u.Pause(false);
+                Spell(data.c[1]).Destroy();
+                data.Destroy();
+            };
+        }
 
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
@@ -80,7 +123,7 @@ library Shiki requires Groups{
                                     GroupRemoveUnit(tmp_group,mj.unit);
                                     if(IsUnitEnemy(mj.unit,u.player.player)==true){    
                                         Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,8,true,false);
-                                        HitFlys.Add(mj.unit,25);
+                                        HitFlys.Add(mj.unit,15);
                                         u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*2);  
                                         Buffs.Skill(mj.unit,'A00W',1);  
                                     } 
@@ -505,6 +548,10 @@ library Shiki requires Groups{
             Spell.On(Spell.onReady,'A05A',Shiki.HERO_START); 
             Spell.On(Spell.onSpell,'A05A',Shiki.Q);
             Spell.On(Spell.onSpell,'A05G',Shiki.W);
+            Spell.On(Spell.onSpell,'A05K',Shiki.E); 
+            
+            Damage.On(Damage.onUnitDamage_SubDamage,Shiki.SubDamage); 
+            Damage.On(Damage.onUnitDamage_EndDamage,Shiki.Damage); 
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
             Events.On(Events.onUnitOrderToLocation,Shiki.Order); 
         }
