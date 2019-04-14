@@ -23,7 +23,7 @@ library Shiki requires Groups{
             data.r[1]=0;//伤害间隔(0.1s)
             data.r[2]=0;//增伤间隔(0.5s)
             data.r[3]=0;//增伤系数(+0.25)
-            data.r[4]=75;//伤害距离和范围(+20)
+            data.r[4]=75;//伤害距离和范围(+25)
             //用于Q2的替身残影
             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
             ts.AnimeId(6);
@@ -63,22 +63,46 @@ library Shiki requires Groups{
                             ts.DelayAlpha(255,0,0.5);
                         }else{
                             Buffs.Find(u.unit,'B01G').Stop();
-                            BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束");
+                            BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束"); 
+                            x=u.X()+data.r[4]*CosBJ(u.F());
+                            y=u.Y()+data.r[4]*SinBJ(u.F());
                             if(data.r[0]>1){
                                 //前踢
                                 f1=0; 
                                 ani=12;
                                 asp=2;
-                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.5,"stand","zzmxcl_tuci_zise.mdl");
+                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.15,"stand","zzmxcl_tuci_zise.mdl");
                                 mj.SetH(100);
-                                Dash.Start(mj.unit,u.F(),100,Dash.SUB,30,true,false); 
+                                Dash.Start(mj.unit,u.F(),200,Dash.SUB,30,true,false); 
+                                GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                        Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,8,true,false);
+                                        HitFlys.Add(mj.unit,25);
+                                        u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*2);  
+                                        Buffs.Skill(mj.unit,'A00W',1);  
+                                    } 
+                                } 
+                                GroupClear(tmp_group);  
                             }else{
                                 f1=180;
                                 asp=1;
                                 ani=13;
-                                Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7.mdl").AnimeId(0);
-        
+                                Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7_zise.mdl").AnimeId(0);
+                                GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                        Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,15,true,true);
+                                        u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*6);  
+                                    } 
+                                } 
+                                GroupClear(tmp_group); 
                             }
+                            
                             //后撤 A05I,B01H
                             //用于Q2的替身残影
                             ts1=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
@@ -157,7 +181,7 @@ library Shiki requires Groups{
                         //增伤
                         data.r[2]=0;
                         data.r[3]+=0.25;
-                        data.r[4]+=20;
+                        data.r[4]+=25;
                         if(data.r[3]==0.5){
                             Effect.ToUnit("yooobug_hit_blue.mdl",u.unit,"weapon").Destroy();
                         }
