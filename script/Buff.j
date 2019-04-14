@@ -55,7 +55,7 @@ library Buff requires Util{
 
             //将该BUFF实例从U移到M身上
             //已有BUFF的单位不能被转移
-            method Move(unit u,unit m)->boolean{
+            method Move(Units u,Units m)->boolean{
                 if(m.IsAbility(this.Buff)==true){
                     return false;
                 }else{ 
