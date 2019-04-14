@@ -10,7 +10,7 @@ library Shiki requires Groups{
         39 空踢 无高度
         6 划小刀
         13 划小刀后撤
-        19 划小刀前踢*/
+        12 划小刀突刺*/
     struct Shiki{ 
 
         static method W(Spell e){
@@ -23,7 +23,7 @@ library Shiki requires Groups{
             data.r[1]=0;//伤害间隔(0.1s)
             data.r[2]=0;//增伤间隔(0.5s)
             data.r[3]=0;//增伤系数(+0.25)
-            data.r[4]=75;//伤害距离和范围(+35)
+            data.r[4]=75;//伤害距离和范围(+20)
             //用于Q2的替身残影
             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
             ts.AnimeId(6);
@@ -36,7 +36,7 @@ library Shiki requires Groups{
             Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4,1.25,"stand","white-qiquan.mdl");
             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),5,0.8,1,"stand","shiki-bahuajing.mdl");
             data.c[3]=ts; 
-            Dash.Start(u.unit,u.F(),50,Dash.SUB,6,true,false);  
+            Dash.Start(u.unit,u.F(),150,Dash.SUB,10,true,false);  
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
@@ -45,8 +45,8 @@ library Shiki requires Groups{
                 Data data1;
                 Buffs b;
                 boolean press=false;
-                real f1;
-                integer ani;
+                real f1,x,y;
+                integer ani,asp;
                 Units mj;
                 if(data.r[0]<0.3){
                     press=true;
@@ -66,12 +66,15 @@ library Shiki requires Groups{
                             BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束");
                             if(data.r[0]>1){
                                 //前踢
-                                f1=0;
-                                ani=19;
-                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F()+180,2,1.25,1,"stand","chongfeng2.mdl");
-                                Dash.Start(mj.unit,u.F(),400,Dash.SUB,50,true,false);
+                                f1=0; 
+                                ani=12;
+                                asp=2;
+                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.5,"stand","zzmxcl_tuci_zise.mdl");
+                                mj.SetH(100);
+                                Dash.Start(mj.unit,u.F(),100,Dash.SUB,30,true,false); 
                             }else{
                                 f1=180;
+                                asp=1;
                                 ani=13;
                                 Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7.mdl").AnimeId(0);
         
@@ -81,10 +84,11 @@ library Shiki requires Groups{
                             ts1=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
                             ts1.AnimeId(ani);
                             ts1.Alpha(0);
+                            ts1.AnimeSpeed(asp);
                             //
                             u.Pause(true);
                             u.AnimeId(ani); 
-                            
+                            u.AnimeSpeed(asp);
                             data1=Data.create('A05G');
                             data1.c[0]=u;
                             data1.c[1]=ts1;
@@ -94,6 +98,7 @@ library Shiki requires Groups{
                                 Data data=Data(b.Obj);
                                 Units u=Units(data.c[0]);
                                 Units ts=Units(data.c[1]);
+                                u.AnimeSpeed(1);
                                 u.Pause(false);
                                 if(b.Level==0){  
                                     Dash.AllStop(ts.unit);
@@ -127,12 +132,35 @@ library Shiki requires Groups{
                     if(data.r[1]>=0.1){
                         //伤害
                         data.r[1]=0;
+                        x=u.X()+data.r[4]*CosBJ(u.F());
+                        y=u.Y()+data.r[4]*SinBJ(u.F());
+                        //Util.Range(x,y,data.r[4]);
+                        GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),50,Dash.SUB,10,true,false);
+                                Buffs.Add(mj.unit,'A05J','B01I',1,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*(1+data.r[3])); 
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                if(data.r[0]>=1){ 
+                                    Buffs.Skill(mj.unit,'A00W',1); 
+                                    ts1=Units.MJ(u.player.player,'e008','A02G',0,mj.X(),mj.Y(),Util.XY(u.unit,mj.unit),2,1,1,"stand", "blood-2.mdl");
+                                    ts1.DelayAlpha(255,0,1.99);
+                                }
+                            } 
+                        } 
+                        GroupClear(tmp_group);
                     } 
                     if(data.r[2]>=0.5){
                         //增伤
                         data.r[2]=0;
                         data.r[3]+=0.25;
-                        data.r[4]+=35;
+                        data.r[4]+=20;
+                        if(data.r[3]==0.5){
+                            Effect.ToUnit("yooobug_hit_blue.mdl",u.unit,"weapon").Destroy();
+                        }
                         ts.Size(0.8+(data.r[3]/1.5)); 
                         Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
                         ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
