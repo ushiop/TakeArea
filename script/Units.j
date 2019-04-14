@@ -73,6 +73,8 @@ library Units requires Table,Players,Events,Util{
                     m.SetExStr(ex_str);
                     m.SetExAgi(ex_agi);
                     m.SetExInt(ex_int);
+                    m.SetHP(this.HP());
+                    m.SetMP(this.MP());
                     /*for(0<=r_i<6){
                         UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
                     }*/
