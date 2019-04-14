@@ -19,7 +19,7 @@ library HitFly requires Util{
             /*
             HitFlyEventInterface onDown;//从上升转为下降的那一刻触发
             HitFlyEventInterface onEnd;//落地后触发
-            HitFlyEventInterface onRemove;//被移除时触发
+            HitFlyEventInterface onRemove;//被移除时触发，然后触发onEnd
             上述事件为避免相同实例重复注册导致的覆盖BUG，已改为由HitFlys.Lister实现
             
                 HitFlys.Lister(HitFlys.Add(),HitFlys.onDown|onEnd|onRemove,function(HitFlys h){
@@ -46,12 +46,15 @@ library HitFly requires Util{
             }
 
  
-            //移除某个单位的击飞效果,不会触发onEnd
+            //移除某个单位的击飞效果,会触发onEnd
             static method Remove(unit u){ 
                 HitFlys tmp=HitFlys.Find(u);
                 if(tmp!=0){ 
                     //if(tmp.onRemove!=0) HitFlyEventInterface(tmp.onRemove).evaluate(tmp); 
-                    if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onRemove,tmp);
+                    if(tmp.Listers!=0){
+                        HitFlys.ListerTrigger(HitFlys.onRemove,tmp);
+                        HitFlys.ListerTrigger(HitFlys.onEnd,tmp);
+                    }
                     tmp.Destroy();
                 }
             }
