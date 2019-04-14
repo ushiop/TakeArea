@@ -63,6 +63,7 @@ library Buff requires Util{
                     this.Unit=m.unit;
                     UnitRemoveAbility(u.unit,this.Ability);
                     UnitRemoveAbility(u.unit,this.Buff);  
+                    return true;
                 }
             }
 
