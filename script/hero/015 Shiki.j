@@ -62,6 +62,9 @@ library Shiki requires Groups{
                 Data data=Data(b.Obj);
                 Units u=Units(data.c[0]);
                 Units ts=Units(data.c[2]);
+                Units new;
+                Units m;
+                Data data1;
                 u.AnimeSpeed(1);
                 u.Pause(false);
                 if(b.Level==0){//等于0表示是被打断的
@@ -71,7 +74,22 @@ library Shiki requires Groups{
                     ts.AnimeSpeed(0);
                     ts.DelayAlpha(255,0,0.5);
                 }else if(b.Level==2){//等于2表示是触发了
-
+                    m=Units(data.c[3]);//伤害来源
+                    new=u.Copy();
+                    u.CopyItem(new.unit,true);
+                    u.player.hero=new;
+                    u.Pause(true); 
+                    u.AnimeSpeed(0);
+                    u.DelayAlpha(255,0,0.5);
+                    u.AddAbility('Aloc');
+                    new.Position(u.X(),u.Y(),false);
+                    new.SetF(u.F(),true);
+                    if(u.IsAbility('B01D')==true){
+                        Buffs.Find(u.unit,'B01D').Move(u,new);
+                    }
+                    Units.Kill(u.unit);
+                    Effect.ToUnit("blackblink.mdl",u.unit,"origin").Destroy();
+                    new.Select(new.player.player);
                 }//等于1是啥也没发生
                 ts.Life(1);
                 Spell(data.c[1]).Destroy();
@@ -353,8 +371,8 @@ library Shiki requires Groups{
             Timers.Start(0.01,data,function(Timers t){
                 Data data1=Data(t.Data());
                 Data data;
-                Units u=Units(data.c[0]);
-                Units m=Units(data.c[1]); 
+                Units u=Units(data1.c[0]);
+                Units m=Units(data1.c[1]); 
                 real x=u.X(),y=u.Y(),f=Util.XY(u.unit,m.unit),x1=m.X(),y1=m.Y(),f1; 
                 //Units.MJ(u.player.player,'e008','A05A',0,x,y,f,1,1,1,"stand","blink_darkblue.mdl").SetH(u.H());
                 //Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
