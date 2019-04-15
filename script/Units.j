@@ -746,7 +746,6 @@ library Units requires Table,Players,Events,Util{
                     Units.Trigger(Units.onHeroAlocDeath,e.TriggerUnit,e.KillUnit); 
                     //英雄蝗虫死了后过5秒删除单位
                     Timers.Start(5,Units.Get(e.TriggerUnit),function(Timers t){
-                        BJDebugMsg("删除了");
                         Units.Remove(Units(t.Data()).unit);
                         t.Destroy();
                     });
