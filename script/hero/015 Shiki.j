@@ -15,16 +15,22 @@ library Shiki requires Groups{
     struct Shiki{ 
 
         static method SubDamage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('A05K')==true){
+            if(e.TriggerUnit.IsAbility('B01J')==true){
                 e.Damage=0;
             }
         }
 
         static method Damage(DamageArgs e){
             Units m;
-            if(e.TriggerUnit.IsAbility('A05K')==true){ 
-                m=e.TriggerUnit.Copy(false);
-                m.Position(e.TriggerUnit.X(),e.TriggerUnit.Y(),false); 
+            Buffs b;
+            if(e.TriggerUnit.IsAbility('B01J')==true){ 
+                b=Buffs.Find(e.TriggerUnit.unit,'B01J');
+                if(b.Level==1){//未打断时可触发
+                    b.Level=2;
+                    Data(b.Obj).c[3]=e.DamageUnit;
+                    b.Stop(); 
+                }
+               
             }
         } 
 
@@ -33,11 +39,17 @@ library Shiki requires Groups{
             Units u=Units.Get(e.Spell);
             Buffs b;
             Data data=Data.create('A05K');
+            Units ts;
             u.Pause(true);
             u.AnimeId(21);
             u.AnimeSpeed(1.1);
             data.c[0]=u;
             data.c[1]=e;
+            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(21);
+            ts.Alpha(0);
+            ts.AnimeSpeed(1.1);
+            data.c[2]=ts;
             Dash.Start(u.unit,u.F()+180,600,Dash.SUB,20,true,false).onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
                 if(u.IsAbility('B01J')==false){
@@ -49,8 +61,19 @@ library Shiki requires Groups{
             b.onEnd=function(Buffs b){
                 Data data=Data(b.Obj);
                 Units u=Units(data.c[0]);
+                Units ts=Units(data.c[2]);
                 u.AnimeSpeed(1);
                 u.Pause(false);
+                if(b.Level==0){//等于0表示是被打断的
+                    ts.Position(u.X(),u.Y(),false);
+                    ts.SetF(u.F(),true); 
+                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                    ts.AnimeSpeed(0);
+                    ts.DelayAlpha(255,0,0.5);
+                }else if(b.Level==2){//等于2表示是触发了
+
+                }//等于1是啥也没发生
+                ts.Life(1);
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };
@@ -179,7 +202,7 @@ library Shiki requires Groups{
                                 ts.Life(1);
                                 data.Destroy();
                             };
-                            Dash.Start(ts1.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
+                            //Dash.Start(ts1.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
                             Dash.Start(u.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
                            
                         }
@@ -299,6 +322,7 @@ library Shiki requires Groups{
                 B01F - 踢人(Q)的后半段硬直，可取消
                 B01G - 砍人(W)的过程硬直，可取消
                 B01H - 砍人(W)后撤/前踢的过程硬直，可取消
+                B01J - 后跳(E)的过程硬直，可取消
             */
             if(u.IsAbility('B01F')==true){
                 b=Buffs.Find(u.unit,'B01F');
@@ -314,6 +338,13 @@ library Shiki requires Groups{
                 b=Buffs.Find(u.unit,'B01H');
                 b.Level=0;
                 b.Stop();
+            }
+            if(u.IsAbility('B01J')==true){
+                b=Buffs.Find(u.unit,'B01J');
+                if(b.Level==1){//未触发时可取消，触发后不可
+                    b.Level=0;
+                    b.Stop();
+                }
             }
             u.AddAbility('A05F'); 
             data=Data.create('A05A');
