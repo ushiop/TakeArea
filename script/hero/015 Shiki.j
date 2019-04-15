@@ -102,6 +102,7 @@ library Shiki requires Groups{
                         u.Pause(false);
                         if(u.IsAbility('B01G')==false){
                             BJDebugMsg("砍人：因Q2中断结束");  
+                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
                             ts.AnimeSpeed(0);
                             ts.DelayAlpha(255,0,0.5);
                         }else{
@@ -168,6 +169,8 @@ library Shiki requires Groups{
                                 u.AnimeSpeed(1);
                                 u.Pause(false);
                                 if(b.Level==0){  
+                                    ts.Position(u.X(),u.Y(),false);
+                                    ts.SetF(u.F(),true);
                                     Dash.AllStop(ts.unit);
                                     Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
                                     ts.AnimeSpeed(0);
@@ -288,7 +291,6 @@ library Shiki requires Groups{
             Buffs b=Buffs.Find(u.unit,'B01D');
             Data data=Data(b.Obj);
             Units m=Units(data.c[1]);
-            real x=u.X(),y=u.Y(),f=Util.XY(u.unit,m.unit),x1=m.X(),y1=m.Y(),f1;
             b.Level=0;
             b.Stop(); 
             BJDebugMsg("触发Q2");
@@ -314,53 +316,65 @@ library Shiki requires Groups{
                 b.Stop();
             }
             u.AddAbility('A05F'); 
-            //Units.MJ(u.player.player,'e008','A05A',0,x,y,f,1,1,1,"stand","blink_darkblue.mdl").SetH(u.H());
-            //Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
-            if(m.H()<200){//高度过低时会踢起来
-                u.Pause(true);
-                BJDebugMsg("暂停2");
-                u.Position(x1+120*CosBJ(f),y1+120*SinBJ(f),false);
-                u.SetF(f+180,true);
-                u.AnimeId(39);
-                f1=f;
-                f=u.F();
-                Dash.Start(m.unit,f,150,Dash.SUB,10,true,false);
-                Dash.Start(u.unit,f,150,Dash.SUB,10,true,false);
-                HitFlys.Add(u.unit,20);
-                HitFlys.Add(m.unit,25);
-                Buffs.Skill(m.unit,'A00F',1);
-                data=Data.create('A05A');
-                data.c[0]=u;
-                data.c[1]=m;
-                data.i[0]=0;
-                data.r[0]=f1;
-                Timers.Start(0.15,data,function(Timers t){
-                    Data data=Data(t.Data());
-                    Units u=Units(data.c[0]);
-                    Units m=Units(data.c[1]);
-                    if(data.i[0]==0){
-                        if(u.Alive()==true&&m.Alive()==true){ 
-                            //HitFlys.Reset(u.unit);
-                            //HitFlys.Reset(m.unit);
-                            HitFlys.Add(m.unit,15);
-                            HitFlys.Add(u.unit,25); 
+            data=Data.create('A05A');
+            data.c[0]=u;
+            data.c[1]=m;
+            Timers.Start(0.01,data,function(Timers t){
+                Data data1=Data(t.Data());
+                Data data;
+                Units u=Units(data.c[0]);
+                Units m=Units(data.c[1]); 
+                real x=u.X(),y=u.Y(),f=Util.XY(u.unit,m.unit),x1=m.X(),y1=m.Y(),f1; 
+                //Units.MJ(u.player.player,'e008','A05A',0,x,y,f,1,1,1,"stand","blink_darkblue.mdl").SetH(u.H());
+                //Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
+                if(m.H()<200){//高度过低时会踢起来
+                    u.Pause(true);
+                    BJDebugMsg("暂停2");
+                    u.Position(x1+120*CosBJ(f),y1+120*SinBJ(f),false);
+                    u.SetF(f+180,true);
+                    u.AnimeId(39);
+                    f1=f;
+                    f=u.F();
+                    Dash.Start(m.unit,f,150,Dash.SUB,10,true,false);
+                    Dash.Start(u.unit,f,150,Dash.SUB,10,true,false);
+                    HitFlys.Add(u.unit,20);
+                    HitFlys.Add(m.unit,25);
+                    Buffs.Skill(m.unit,'A00F',1);
+                    data=Data.create('A05A');
+                    data.c[0]=u;
+                    data.c[1]=m;
+                    data.i[0]=0;
+                    data.r[0]=f1;
+                    Timers.Start(0.15,data,function(Timers t){
+                        Data data=Data(t.Data());
+                        Units u=Units(data.c[0]);
+                        Units m=Units(data.c[1]);
+                        if(data.i[0]==0){
+                            if(u.Alive()==true&&m.Alive()==true){ 
+                                //HitFlys.Reset(u.unit);
+                                //HitFlys.Reset(m.unit);
+                                HitFlys.Add(m.unit,15);
+                                HitFlys.Add(u.unit,25); 
+                            }
+                            data.i[0]+=1;
+                        }else{ 
+                            u.Pause(false);
+                            BJDebugMsg("暂停2-解除");
+                            if(u.Alive()==true&&m.Alive()==true){  
+                                Shiki.Q3(u,m,data.r[0]);
+                            }
+                            t.Destroy();
+                            data.Destroy();
                         }
-                        data.i[0]+=1;
-                    }else{ 
-                        u.Pause(false);
-                        BJDebugMsg("暂停2-解除");
-                        if(u.Alive()==true&&m.Alive()==true){  
-                            Shiki.Q3(u,m,data.r[0]);
-                        }
-                        t.Destroy();
-                        data.Destroy();
-                    }
-                });
-            }else{//在天上则直接踹
-                u.Position(x1+120*CosBJ(f),y1+120*SinBJ(f),false);
-                u.SetF(f+180,true);
-                Shiki.Q3(u,m,f);
-            }
+                    });
+                }else{//在天上则直接踹
+                    u.Position(x1+120*CosBJ(f),y1+120*SinBJ(f),false);
+                    u.SetF(f+180,true);
+                    Shiki.Q3(u,m,f);
+                }
+                t.Destroy();
+                data1.Destroy();
+            });
         }
 
         static method Q(Spell e){
@@ -446,6 +460,9 @@ library Shiki requires Groups{
                                     Units ts=Units(b.Obj);
                                     //如果是提前结束的BUFF，则是Q2打断，显示残影
                                     if(b.Level==0){
+                                        Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                        ts.Position(u.X(),u.Y(),false);
+                                        ts.SetF(u.F(),true);
                                         ts.SetH(u.H()); 
                                         ts.AnimeSpeed(0);
                                         ts.DelayAlpha(255,0,0.5);
