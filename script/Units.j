@@ -45,6 +45,27 @@ library Units requires Table,Players,Events,Util{
             string str_int;//智力值的文本形态
             string str_lv;//英雄等级的文本形态
 
+            //复制物品到目标单位身上
+            //move为true时是移动物品
+            //move为false时为复制物品
+            //非英雄无反应
+            method CopyItem(unit m,boolean move){
+                Units target=Units.Get(m);
+                integer r_i;
+                if(m.isHero==true){
+                    if(move==true){ 
+                        for(0<=r_i<6){ 
+                            UnitAddItem(target.unit, UnitItemInSlot(this.unit,r_i) );
+                        } 
+                    }else{
+
+                        /*for(0<=r_i<6){
+                            UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
+                        }*/
+                    }
+                }
+            }
+
             //复制一个英雄，继承属性值并返回，用于替身类效果
             //itemcopy为TRUE时，复制物品与物品CD
             //itemcopy为FALSE时，移动本体身上的物品到复制的英雄上
@@ -61,9 +82,6 @@ library Units requires Table,Players,Events,Util{
                     ex_str=this.ExStr();
                     ex_agi=this.ExAgi();
                     ex_int=this.ExInt();
-                    /*for(0<=r_i<6){
-                        r_it[r_i]=GetItemTypeId(UnitItemInSlot(this.unit,r_i));
-                    } */
                     if(r_lv!=1){  
                         SetHeroLevel(m.unit,r_lv,false);
                     }
@@ -75,9 +93,6 @@ library Units requires Table,Players,Events,Util{
                     m.SetExInt(ex_int);
                     m.SetHP(this.HP());
                     m.SetMP(this.MP());
-                    /*for(0<=r_i<6){
-                        UnitAddItemToSlotById(ps.hero.unit, r_it[r_i],r_i);
-                    }*/
                     return m;
                 }else{
                     return 0;
