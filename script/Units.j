@@ -70,7 +70,7 @@ library Units requires Table,Players,Events,Util{
             //itemcopy为TRUE时，复制物品与物品CD
             //itemcopy为FALSE时，移动本体身上的物品到复制的英雄上
             //非英雄调用无反应
-            method Copy(boolean itemcopy)->Units{
+            method Copy()->Units{
                 Units m;
                 integer r_i,r_lv,r_str,r_agi,r_int,ex_str,ex_agi,ex_int;
                 if(this.isHero==true){
