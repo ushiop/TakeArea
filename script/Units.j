@@ -84,7 +84,7 @@ library Units requires Table,Players,Events,Util{
                     ex_int=this.ExInt();
                     if(r_lv!=1){  
                         SetHeroLevel(m.unit,r_lv,false);
-                        m.str_lv=r_lv;
+                        m.str_lv=I2S(r_lv);
                     }
                     SetHeroAgi(m.unit,r_agi,true);
                     SetHeroStr(m.unit,r_str,true);
