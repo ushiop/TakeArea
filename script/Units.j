@@ -52,7 +52,7 @@ library Units requires Table,Players,Events,Util{
             method CopyItem(unit m,boolean move){
                 Units target=Units.Get(m);
                 integer r_i;
-                if(m.isHero==true){
+                if(target.isHero==true){
                     if(move==true){ 
                         for(0<=r_i<6){ 
                             UnitAddItem(target.unit, UnitItemInSlot(this.unit,r_i) );
@@ -84,6 +84,7 @@ library Units requires Table,Players,Events,Util{
                     ex_int=this.ExInt();
                     if(r_lv!=1){  
                         SetHeroLevel(m.unit,r_lv,false);
+                        m.str_lv=r_lv;
                     }
                     SetHeroAgi(m.unit,r_agi,true);
                     SetHeroStr(m.unit,r_str,true);
@@ -745,6 +746,7 @@ library Units requires Table,Players,Events,Util{
                     Units.Trigger(Units.onHeroAlocDeath,e.TriggerUnit,e.KillUnit); 
                     //英雄蝗虫死了后过5秒删除单位
                     Timers.Start(5,Units.Get(e.TriggerUnit),function(Timers t){
+                        BJDebugMsg("删除了");
                         Units.Remove(Units(t.Data()).unit);
                         t.Destroy();
                     });
