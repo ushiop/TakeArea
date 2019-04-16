@@ -46,7 +46,7 @@ library Shiki requires Groups{
             u.Pause(true);
             u.AnimeId(2);
             u.AnimeSpeed(2);
-            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05K',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
             ts.AnimeId(2);
             ts.Alpha(0);
             ts.AnimeSpeed(2);
@@ -71,9 +71,19 @@ library Shiki requires Groups{
             };
             u.Position(x+50*CosBJ(f+180),y+50*SinBJ(f+180),false);
             u.SetF(f,true);
-            Buffs.Skill(m.unit,'A00F',1);
+            Buffs.Skill(m.unit,'A00F',1); 
+            u.Damage(m.unit,Damage.Physics,'A05K',u.Agi(true)*10); 
             Buffs.Add(u.unit,'A05N','B01L',2,false);
-            Dash.Start(u.unit,f+180,250,Dash.SUB,15,true,false);
+            Dash.Start(m.unit,f,100,Dash.SUB,30,true,false);  
+            ts=Units.MJ(u.player.player,'e008','A05K',0,m.X(),m.Y(),f,2,1.5,1,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
+            ts.SetH(115);
+            Dash.Start(ts.unit,f,100,Dash.SUB,30,true,false);
+            Effect.ToUnit("az_hit-red-blade.mdl",m.unit,"chest").Destroy();
+            Effect.ToUnit("az-blood-hit.mdl",m.unit,"chest").Destroy();
+            ts=Units.MJ(u.player.player,'e008','A05K',0,x+300*CosBJ(f+180),y+300*SinBJ(f+180),f,1,1,1,"birth","az_lxj_blue_ex.mdl");
+            ts.SetH(115);
+            Dash.Start(ts.unit,f,350,Dash.NORMAL,30,true,false);
+            
         }
 
         static method E(Spell e){
@@ -98,7 +108,7 @@ library Shiki requires Groups{
                     dash.Stop();
                 }
             };
-            b=Buffs.Add(u.unit,'A05L','B01J',1.567,false);
+            b=Buffs.Add(u.unit,'A05L','B01J',1.3,false);
             b.Obj=data;
             b.onEnd=function(Buffs b){
                 Data data=Data(b.Obj);
@@ -109,28 +119,28 @@ library Shiki requires Groups{
                 Data data1;
                 u.AnimeSpeed(1);
                 u.Pause(false);
-                if(b.Level==0){//等于0表示是被打断的
+                if(b.Level==0||b.Level==2){//等于0或2表示是被打断/触发的，都会出残影
                     ts.Position(u.X(),u.Y(),false);
                     ts.SetF(u.F(),true); 
                     Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
                     ts.AnimeSpeed(0);
                     ts.DelayAlpha(255,0,0.5);
-                }else if(b.Level==2){//等于2表示是触发了
+                }
+                if(b.Level==2){//等于2表示是触发了
                     m=Units(data.c[3]);//伤害来源
                     new=u.Copy();
                     u.CopyItem(new.unit,true);
                     u.player.hero=new;
                     u.Pause(true); 
-                    u.AnimeSpeed(0);
-                    u.DelayAlpha(255,0,0.5);
-                    u.AddAbility('Aloc');
+                    u.AnimeSpeed(0); 
+                    u.AddAbility('Aloc'); 
                     new.Position(u.X(),u.Y(),false);
                     new.SetF(u.F(),true);
                     if(u.IsAbility('B01D')==true){
                         Buffs.Find(u.unit,'B01D').Move(u,new);
                     }
-                    Units.Kill(u.unit);
-                    Effect.ToUnit("blackblink.mdl",u.unit,"origin").Destroy();
+                    Units.Kill(u.unit); 
+                    ShowUnit(u.unit,false); 
                     new.Select(new.player.player);
                     Shiki.E1(new,m);
                 }//等于1是啥也没发生
@@ -384,11 +394,12 @@ library Shiki requires Groups{
                 B01G - 砍人(W)的过程硬直，可取消
                 B01H - 砍人(W)后撤/前踢的过程硬直，可取消
                 B01J - 后跳(E)的过程硬直，可取消
+                B01K - 后跳(E)的反击硬直，可取消
             */
             if(u.IsAbility('B01F')==true){
                 b=Buffs.Find(u.unit,'B01F');
                 b.Level=0;
-                b.Stop();
+                b.Stop(); 
             }
             if(u.IsAbility('B01G')==true){
                 b=Buffs.Find(u.unit,'B01G');
@@ -397,6 +408,11 @@ library Shiki requires Groups{
             }
             if(u.IsAbility('B01H')==true){
                 b=Buffs.Find(u.unit,'B01H');
+                b.Level=0;
+                b.Stop();
+            }
+            if(u.IsAbility('B01K')==true){
+                b=Buffs.Find(u.unit,'B01K');
                 b.Level=0;
                 b.Stop();
             }
