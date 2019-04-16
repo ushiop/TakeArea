@@ -11,11 +11,12 @@ library Shiki requires Groups{
         6 划小刀
         13 划小刀后撤
         12 划小刀突刺
-        21 后跳 1.567秒*/
+        21 后跳 1.567秒
+        2 后跳反击*/
     struct Shiki{ 
 
         static method SubDamage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('B01J')==true){
+            if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true){
                 e.Damage=0;
             }
         }
@@ -33,6 +34,47 @@ library Shiki requires Groups{
                
             }
         } 
+
+        //A05M B01K
+        static method E1(Units u,Units m){
+            Data data=Data.create('A05K');
+            Buffs b; 
+            Units ts;
+            real x=m.X(),y=m.Y(),f=m.F();
+            data.c[0]=u;
+            data.c[1]=m;
+            u.Pause(true);
+            u.AnimeId(2);
+            u.AnimeSpeed(2);
+            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(2);
+            ts.Alpha(0);
+            ts.AnimeSpeed(2);
+            data.c[2]=ts;
+            b=Buffs.Add(u.unit,'A05M','B01K',0.5,false);
+            b.Obj=data;
+            b.onEnd=function(Buffs b){
+                Data data=Data(b.Obj);
+                Units u=Units(data.c[0]);
+                Units ts=Units(data.c[2]);
+                u.Pause(false);
+                u.AnimeSpeed(1);
+                if(b.Level==0){
+                    ts.Position(u.X(),u.Y(),false);
+                    ts.SetF(u.F(),true); 
+                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                    ts.AnimeSpeed(0);
+                    ts.DelayAlpha(255,0,0.5);
+                }
+                ts.Life(1);
+                data.Destroy();
+            };
+            u.Position(x+50*CosBJ(f+180),y+50*SinBJ(f+180),false);
+            u.SetF(f,true);
+            Buffs.Skill(m.unit,'A00F',1);
+            Buffs.Add(u.unit,'A05N','B01L',2,false);
+            Dash.Start(u.unit,f+180,250,Dash.SUB,15,true,false);
+        }
 
         static method E(Spell e){
             //A05L B01J
@@ -90,6 +132,7 @@ library Shiki requires Groups{
                     Units.Kill(u.unit);
                     Effect.ToUnit("blackblink.mdl",u.unit,"origin").Destroy();
                     new.Select(new.player.player);
+                    Shiki.E1(new,m);
                 }//等于1是啥也没发生
                 ts.Life(1);
                 Spell(data.c[1]).Destroy();
