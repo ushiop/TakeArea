@@ -661,8 +661,14 @@ library Shiki requires Groups{
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A05A'){
-                u.FlushAnimeId(35);
-                Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
+                if(u.IsAbility('B01D')==false){ 
+                    u.FlushAnimeId(35);
+                    Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
+                }else{
+                    if(Buffs.Find(u.unit,'B01D').Level==1){ 
+                        Shiki.Q2(u);
+                    }
+                }
             }
             e.Destroy();
         }
