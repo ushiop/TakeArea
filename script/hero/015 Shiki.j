@@ -665,7 +665,8 @@ library Shiki requires Groups{
                     u.FlushAnimeId(35);
                     Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
                 }else{
-                    if(Buffs.Find(u.unit,'B01D').Level==1){ 
+                    if(Buffs.Find(u.unit,'B01D').Level==1){  
+                        IssueImmediateOrder(u.unit,"stop"); 
                         Shiki.Q2(u);
                     }
                 }
