@@ -14,7 +14,8 @@ library Shiki requires Groups{
         21 后跳 1.567秒
         2 后跳反击
         22 关灯杀跳跃 1.4秒
-        23 关灯杀跳跃收尾*/
+        23 关灯杀跳跃收尾 
+        10 关灯杀前摇*/
     struct Shiki{ 
 
         static method R(Spell e){
@@ -27,6 +28,7 @@ library Shiki requires Groups{
             u.Pause(true);
             u.AnimeId(22); 
             IssueImmediateOrder(u.unit,"stop"); 
+            CinematicFadeBJ( bj_CINEFADETYPE_FADEOUTIN, 1.6, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 25 );
             //Q2残影 A05P B01M
             b=Buffs.Add(u.unit,'A05P','B01M',1.4,false);
             ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
@@ -38,10 +40,12 @@ library Shiki requires Groups{
             b.onEnd=function(Buffs b){
                 Data data=Data(b.Obj);
                 Units u=Units(data.c[0]);
-                Units ts=Units(data.c[1]); 
-                if(b.Level==0){
+                Units ts=Units(data.c[1]);  
+                HitFlys.Remove(ts.unit);
+                if(b.Level==0){ 
                     ts.Position(u.X(),u.Y(),false);
                     ts.SetF(u.F(),true); 
+                    ts.SetH(u.H());
                     Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
                     ts.AnimeSpeed(0);
                     ts.DelayAlpha(255,0,0.5);
@@ -56,13 +60,14 @@ library Shiki requires Groups{
             data.r[0]=1.4;//无效属性
             data.r[1]=0;//(0.02s)残影帧  
             data.u[0]=null;//目标
+            data.u[1]=ts.unit;//高度辅助
             //第一个残影
             ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
             ts.AnimeId(22);
             ts.Alpha(0); 
             //
             data.c[2]=ts;//技能残影
-            for(1<=i<70){
+            for(1<=i<28){
                 ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
                 ts1.AnimeId(22);
                 ts1.Alpha(0);
@@ -74,25 +79,46 @@ library Shiki requires Groups{
             ts.AnimeId(22);
             ts.Alpha(0); 
             //
-            HitFlys.Add(u.unit,15).LocalPower=0.21;
+            data.c[3]=ts;//技能残影-地面
+            for(1<=i<28){
+                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts1.AnimeId(22);
+                ts1.Alpha(0);
+                ts.Obj=ts1;  
+                ts=ts1;
+            }
+            HitFlys.Add(data.u[1],15).LocalPower=0.21; 
+            Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),0,1,0.8,1.25,"stand","white-qiquan.mdl");
+            
             dash=Dash.Start(u.unit,e.Angle,600,Dash.NORMAL,4.28,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){ 
                 Data data=Data(dash.Obj); 
                 Units u=Units(data.c[0]);
+                Units ts=Units.Get(data.u[1]);
                 Units cy=Units(data.c[2]);
+                Units cys=Units(data.c[3]);
                 if(u.IsAbility('B01M')==false){
                     dash.Stop();
                 }else{ 
                     if(data.r[1]==0){
-                        data.r[1]=0.01; 
+                        data.r[1]=0.04; 
                         if(cy.Obj!=0){
-                            cy.DelayAlpha(255,0,0.1);
+                            cy.Alpha(191);
                             cy.Position(u.X(),u.Y(),false);
                             cy.SetF(u.F(),true);
-                            cy.SetH(u.H());
+                            cy.SetH(ts.H());
                             cy.AnimeSpeed(0);
+                            cy.Life(0.1);
                             data.c[2]=cy.Obj;
+                        }
+                        if(cys.Obj!=0){
+                            cys.Alpha(127);
+                            cys.Position(u.X(),u.Y(),false);
+                            cys.SetF(u.F(),true); 
+                            cys.AnimeSpeed(0);
+                            cys.Life(0.1);
+                            data.c[3]=cys.Obj;
                         }
                     }else{
                         data.r[1]-=0.01;
@@ -106,48 +132,52 @@ library Shiki requires Groups{
                 Buffs b; 
                 Units ts;
                 u.Pause(false); 
-                if(u.H()>0){
+                /*if(u.H()>0){
                     HitFlys.ResetPower(u.unit);
-                }
-                if(data.u[0]==null){//没抓到人,结束技能 
+                }*/
+                if(data.u[0]==null){//没抓到人,结束技能  
                     e.Destroy();
+                    data.u[1]=null;
                     data.Destroy();
                     //------------------
-                    u.Pause(true);
-                    u.AnimeId(23);
-                    ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
-                    ts.AnimeId(23);
-                    ts.Alpha(0);
-                    data=Data.create('A05O');
-                    data.c[0]=u;
-                    data.c[1]=ts;
-                    b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
-                    b.Obj=data;
-                    b.onEnd=function(Buffs b){
-                        Data data=Data(b.Obj);
-                        Units u=Units(data.c[0]);
-                        Units ts=Units(data.c[1]); 
-                        if(b.Level==0){
-                            ts.Position(u.X(),u.Y(),false);
-                            ts.SetF(u.F(),true); 
-                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
-                            ts.AnimeSpeed(0);
-                            ts.DelayAlpha(255,0,0.5);
-                        }
-                        ts.Life(1);
-                        data.Destroy();                        
-                    };
-                    dash=Dash.Start(u.unit,u.F(),300,Dash.SUB,15,true,false);
-                    dash.onMove=function(Dash dash){
-                        Units u=Units.Get(dash.Unit);
-                        if(u.IsAbility('B01N')==false){
-                            dash.Stop();
-                        }
-                    };
-                    dash.onEnd=function(Dash dash){
-                        Units u=Units.Get(dash.Unit);
-                        u.Pause(false); 
-                    };
+                    if(u.IsAbility('A05F')==false){//如果不是被Q2打断的,则有硬直
+                        BJDebugMsg("关灯后摇");
+                        u.Pause(true);
+                        u.AnimeId(23);
+                        ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                        ts.AnimeId(23);
+                        ts.Alpha(0);
+                        data=Data.create('A05O');
+                        data.c[0]=u;
+                        data.c[1]=ts;
+                        b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
+                        b.Obj=data;
+                        b.onEnd=function(Buffs b){
+                            Data data=Data(b.Obj);
+                            Units u=Units(data.c[0]);
+                            Units ts=Units(data.c[1]); 
+                            if(b.Level==0){
+                                ts.Position(u.X(),u.Y(),false);
+                                ts.SetF(u.F(),true); 
+                                Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                ts.AnimeSpeed(0);
+                                ts.DelayAlpha(255,0,0.5);
+                            }
+                            ts.Life(1);
+                            data.Destroy();                        
+                        };
+                        dash=Dash.Start(u.unit,u.F(),300,Dash.SUB,15,true,false);
+                        dash.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            if(u.IsAbility('B01N')==false){
+                                dash.Stop();
+                            }
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            u.Pause(false); 
+                        };
+                    }
                 } 
             };
 
@@ -810,6 +840,7 @@ library Shiki requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            Buffs b;
             if(e.Id=='A05A'){
                 if(u.IsAbility('B01D')==false){ 
                     u.FlushAnimeId(35);
@@ -821,6 +852,33 @@ library Shiki requires Groups{
                     }
                 }
             }
+            if(e.Id=='A05O'){
+                u.FlushAnimeId(10); 
+                Dash.Start(u.unit,e.Angle+180,100,Dash.SUB,7,true,false);
+                b=Buffs.Add(u.unit,'A05R','B01O',0.4,false);
+                b.Obj=0;
+                b.onTime=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    Units ts;
+                    b.Obj+=1;
+                    if(b.Obj==30){
+                        ts=Units.MJ(u.player.player,'e008','A05O',0,u.X()+100*CosBJ(u.F()+180),u.Y()+100*SinBJ(u.F()+180),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
+                        ts.SetH(115);
+                        Dash.Start(ts.unit,u.F(),150,Dash.NORMAL,30,true,false);
+                        //Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),0,1.5,1.25,2,"stand","kc_ex.mdl");
+                    }
+                };
+            }
+            e.Destroy();
+        }
+
+        static method HERO_STOP(Spell e){ 
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A05O'){
+                if(u.IsAbility('B01O')==true){
+                    Buffs.Find(u.unit,'B01O').Stop();
+                }
+            }
             e.Destroy();
         }
 
@@ -828,6 +886,8 @@ library Shiki requires Groups{
         static method onInit(){   
             Press.OnSnyc(Press.onSnycPressKeyDown,Shiki.Press);
             Spell.On(Spell.onReady,'A05A',Shiki.HERO_START); 
+            Spell.On(Spell.onReady,'A05O',Shiki.HERO_START); 
+            Spell.On(Spell.onStop,'A05O',Shiki.HERO_STOP); 
             Spell.On(Spell.onSpell,'A05A',Shiki.Q);
             Spell.On(Spell.onSpell,'A05G',Shiki.W);
             Spell.On(Spell.onSpell,'A05K',Shiki.E);  
