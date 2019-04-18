@@ -75,8 +75,16 @@ library HitFly requires Util{
             //重置一个单位的上升力为0
             static method Reset(unit u){
                 HitFlys tmp=HitFlys.Find(u);
-                if(tmp!=0){
+                if(tmp!=0){ 
                     tmp.UpPower=0;
+                }
+            }
+
+            //重置一个单位的击飞重力
+            static method ResetPower(unit u){
+                HitFlys tmp=HitFlys.Find(u);        
+                if(tmp!=0){
+                    tmp.LocalPower=HitFlys.Power; 
                 }
             }
 
@@ -177,7 +185,7 @@ library HitFly requires Util{
                 if(tmp!=Root){
                     if(GetUnitFlyHeight(tmp.Unit)>10||tmp.UpPower>0){ 
                         SetUnitFlyHeight(tmp.Unit,GetUnitFlyHeight(tmp.Unit)+tmp.UpPower,0);
-                        tmp.UpPower=tmp.UpPower-HitFlys.Power;
+                        tmp.UpPower=tmp.UpPower-tmp.LocalPower;
                         if(tmp.Down==false){
                             if(tmp.UpPower<0){
                                 tmp.Down=true;
