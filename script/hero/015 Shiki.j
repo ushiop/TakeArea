@@ -12,11 +12,149 @@ library Shiki requires Groups{
         13 划小刀后撤
         12 划小刀突刺
         21 后跳 1.567秒
-        2 后跳反击*/
+        2 后跳反击
+        22 关灯杀跳跃 1.4秒
+        23 关灯杀跳跃收尾*/
     struct Shiki{ 
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A05O');
+            Units ts,ts1;
+            Dash dash;
+            Buffs b;
+            integer i;
+            u.Pause(true);
+            u.AnimeId(22); 
+            IssueImmediateOrder(u.unit,"stop"); 
+            //Q2残影 A05P B01M
+            b=Buffs.Add(u.unit,'A05P','B01M',1.4,false);
+            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(22);
+            ts.Alpha(0);
+            data.c[0]=u;
+            data.c[1]=ts;
+            b.Obj=data;
+            b.onEnd=function(Buffs b){
+                Data data=Data(b.Obj);
+                Units u=Units(data.c[0]);
+                Units ts=Units(data.c[1]); 
+                if(b.Level==0){
+                    ts.Position(u.X(),u.Y(),false);
+                    ts.SetF(u.F(),true); 
+                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                    ts.AnimeSpeed(0);
+                    ts.DelayAlpha(255,0,0.5);
+                }
+                ts.Life(1);
+                data.Destroy();
+            };
+            // 
+            data=Data.create('A05O');
+            data.c[0]=u;
+            data.c[1]=e; 
+            data.r[0]=1.4;//无效属性
+            data.r[1]=0;//(0.02s)残影帧  
+            data.u[0]=null;//目标
+            //第一个残影
+            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(22);
+            ts.Alpha(0); 
+            //
+            data.c[2]=ts;//技能残影
+            for(1<=i<70){
+                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts1.AnimeId(22);
+                ts1.Alpha(0);
+                ts.Obj=ts1;  
+                ts=ts1;
+            }
+            //第二个残影
+            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(22);
+            ts.Alpha(0); 
+            //
+            HitFlys.Add(u.unit,15).LocalPower=0.21;
+            dash=Dash.Start(u.unit,e.Angle,600,Dash.NORMAL,4.28,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){ 
+                Data data=Data(dash.Obj); 
+                Units u=Units(data.c[0]);
+                Units cy=Units(data.c[2]);
+                if(u.IsAbility('B01M')==false){
+                    dash.Stop();
+                }else{ 
+                    if(data.r[1]==0){
+                        data.r[1]=0.01; 
+                        if(cy.Obj!=0){
+                            cy.DelayAlpha(255,0,0.1);
+                            cy.Position(u.X(),u.Y(),false);
+                            cy.SetF(u.F(),true);
+                            cy.SetH(u.H());
+                            cy.AnimeSpeed(0);
+                            data.c[2]=cy.Obj;
+                        }
+                    }else{
+                        data.r[1]-=0.01;
+                    }
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                Spell e=Spell(data.c[1]);  
+                Buffs b; 
+                Units ts;
+                u.Pause(false); 
+                if(u.H()>0){
+                    HitFlys.ResetPower(u.unit);
+                }
+                if(data.u[0]==null){//没抓到人,结束技能 
+                    e.Destroy();
+                    data.Destroy();
+                    //------------------
+                    u.Pause(true);
+                    u.AnimeId(23);
+                    ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                    ts.AnimeId(23);
+                    ts.Alpha(0);
+                    data=Data.create('A05O');
+                    data.c[0]=u;
+                    data.c[1]=ts;
+                    b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
+                    b.Obj=data;
+                    b.onEnd=function(Buffs b){
+                        Data data=Data(b.Obj);
+                        Units u=Units(data.c[0]);
+                        Units ts=Units(data.c[1]); 
+                        if(b.Level==0){
+                            ts.Position(u.X(),u.Y(),false);
+                            ts.SetF(u.F(),true); 
+                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                            ts.AnimeSpeed(0);
+                            ts.DelayAlpha(255,0,0.5);
+                        }
+                        ts.Life(1);
+                        data.Destroy();                        
+                    };
+                    dash=Dash.Start(u.unit,u.F(),300,Dash.SUB,15,true,false);
+                    dash.onMove=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        if(u.IsAbility('B01N')==false){
+                            dash.Stop();
+                        }
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Units u=Units.Get(dash.Unit);
+                        u.Pause(false); 
+                    };
+                } 
+            };
+
+        }
+
         static method SubDamage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true){
+            if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true||e.TriggerUnit.IsAbility('B01M')==true){
                 e.Damage=0;
             }
         }
@@ -395,6 +533,8 @@ library Shiki requires Groups{
                 B01H - 砍人(W)后撤/前踢的过程硬直，可取消
                 B01J - 后跳(E)的过程硬直，可取消
                 B01K - 后跳(E)的反击硬直，可取消
+                B01M - 关灯杀(R)的过程硬直,可取消(同时取消技能)
+                B01N - 关灯杀(R)的后摇硬直,可取消
             */
             if(u.IsAbility('B01F')==true){
                 b=Buffs.Find(u.unit,'B01F');
@@ -413,6 +553,16 @@ library Shiki requires Groups{
             }
             if(u.IsAbility('B01K')==true){
                 b=Buffs.Find(u.unit,'B01K');
+                b.Level=0;
+                b.Stop();
+            }
+            if(u.IsAbility('B01M')==true){
+                b=Buffs.Find(u.unit,'B01M');
+                b.Level=0;
+                b.Stop();
+            }
+            if(u.IsAbility('B01N')==true){
+                b=Buffs.Find(u.unit,'B01N');
                 b.Level=0;
                 b.Stop();
             }
@@ -680,8 +830,8 @@ library Shiki requires Groups{
             Spell.On(Spell.onReady,'A05A',Shiki.HERO_START); 
             Spell.On(Spell.onSpell,'A05A',Shiki.Q);
             Spell.On(Spell.onSpell,'A05G',Shiki.W);
-            Spell.On(Spell.onSpell,'A05K',Shiki.E); 
-            
+            Spell.On(Spell.onSpell,'A05K',Shiki.E);  
+            Spell.On(Spell.onSpell,'A05O',Shiki.R); 
             Damage.On(Damage.onUnitDamage_SubDamage,Shiki.SubDamage); 
             Damage.On(Damage.onUnitDamage_EndDamage,Shiki.Damage); 
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
