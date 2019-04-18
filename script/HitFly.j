@@ -11,7 +11,7 @@ library HitFly requires Util{
             static string onDown="HitFlys.onDown";
             static string onEnd="HitFlys.onEnd";
             static string onRemove="HitFlys.onRemove";
-
+            real LocalPower;//私有重力,默认为全局重力
             real UpPower;//上升力  
             boolean Down=false;//是否触发了ondown
             integer Obj;//这个击飞实例携带的实例化对象ID，由对应类自己转化为实例  
@@ -91,6 +91,7 @@ library HitFly requires Util{
                     tmp.Down=false;
                     tmp.Obj=0;
                     tmp.Listers=0;
+                    tmp.LocalPower=HitFlys.Power;
                     tmp.Prev=HitFlys.Last;
                     tmp.Next=0; 
                     HitFlys.Last.Next=tmp; 
