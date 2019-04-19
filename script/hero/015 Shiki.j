@@ -61,6 +61,7 @@ library Shiki requires Groups{
             data.r[1]=0;//(0.02s)残影帧  
             data.u[0]=null;//目标
             data.u[1]=ts.unit;//高度辅助
+            data.i[0]=0;//起跳判定
             //第一个残影
             ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
             ts.AnimeId(22);
@@ -86,10 +87,9 @@ library Shiki requires Groups{
                 ts1.Alpha(0);
                 ts.Obj=ts1;  
                 ts=ts1;
-            }
-            HitFlys.Add(data.u[1],15).LocalPower=0.21; 
+            } 
             Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),0,1,0.8,1.25,"stand","white-qiquan.mdl");
-            
+            //Dash.Start(u.unit,e.Angle+180,200,Dash.SUB,4.28,true,false);
             dash=Dash.Start(u.unit,e.Angle,600,Dash.NORMAL,4.28,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){ 
@@ -98,28 +98,51 @@ library Shiki requires Groups{
                 Units ts=Units.Get(data.u[1]);
                 Units cy=Units(data.c[2]);
                 Units cys=Units(data.c[3]);
+                unit k;
+                real x=u.X(),y=u.Y();
                 if(u.IsAbility('B01M')==false){
                     dash.Stop();
                 }else{ 
                     if(data.r[1]==0){
-                        data.r[1]=0.04; 
-                        if(cy.Obj!=0){
-                            cy.Alpha(191);
-                            cy.Position(u.X(),u.Y(),false);
-                            cy.SetF(u.F(),true);
-                            cy.SetH(ts.H());
-                            cy.AnimeSpeed(0);
-                            cy.Life(0.1);
-                            data.c[2]=cy.Obj;
+                        data.r[1]=0.04;
+                        if(dash.NowDis>200){ 
+                            if(data.i[0]==0){
+                                data.i[0]=1; 
+                                HitFlys.Add(data.u[1],15).LocalPower=0.35;
+                            }
+                            if(cy.Obj!=0){
+                                cy.Alpha(191);
+                                cy.Position(x,y,false);
+                                cy.SetF(u.F(),true);
+                                cy.SetH(ts.H());
+                                cy.AnimeSpeed(0);
+                                cy.Life(0.1);
+                                data.c[2]=cy.Obj;
+                            }
                         }
-                        if(cys.Obj!=0){
-                            cys.Alpha(127);
-                            cys.Position(u.X(),u.Y(),false);
-                            cys.SetF(u.F(),true); 
-                            cys.AnimeSpeed(0);
-                            cys.Life(0.1);
-                            data.c[3]=cys.Obj;
+                        if(dash.NowDis>200){ 
+                            if(cys.Obj!=0){
+                                cys.DelayAlpha(0,127,0.1);
+                                cys.Position(x,y,false);
+                                cys.SetF(u.F(),true); 
+                                cys.AnimeSpeed(0);
+                                cys.Life(0.11);
+                                data.c[3]=cys.Obj;
+                            }
                         }
+                        k=GroupFind(u.unit,x+150*CosBJ(dash.Angle),y+150*SinBJ(dash.Angle),150,true,false);
+                        if(k!=null){
+                            data.u[0]=k;
+                            dash.Stop();
+                            Buffs.Add(u.unit,'A05S','B01P',0.52,false);
+                            u.Pause(true);
+                            u.Alpha(0);
+                            Timers.Start(0.5,data,function(Timers t){
+                                Data data=Data(t.Data());
+                                Units u=Units(data.c[0]);
+
+                            });
+                        } 
                     }else{
                         data.r[1]-=0.01;
                     }
@@ -135,6 +158,9 @@ library Shiki requires Groups{
                 /*if(u.H()>0){
                     HitFlys.ResetPower(u.unit);
                 }*/
+                if(u.IsAbility('B01M')==true){
+                    Buffs.Find(u.unit,'B01M').Stop();
+                }
                 if(data.u[0]==null){//没抓到人,结束技能  
                     e.Destroy();
                     data.u[1]=null;
@@ -184,7 +210,7 @@ library Shiki requires Groups{
         }
 
         static method SubDamage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true||e.TriggerUnit.IsAbility('B01M')==true){
+            if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true||e.TriggerUnit.IsAbility('B01M')==true||e.TriggerUnit.IsAbility('B01P')==true){
                 e.Damage=0;
             }
         }
@@ -565,6 +591,7 @@ library Shiki requires Groups{
                 B01K - 后跳(E)的反击硬直，可取消
                 B01M - 关灯杀(R)的过程硬直,可取消(同时取消技能)
                 B01N - 关灯杀(R)的后摇硬直,可取消
+                B01P - 关灯杀(R)的关灯硬直，可取消（同时取消伤害)
             */
             if(u.IsAbility('B01F')==true){
                 b=Buffs.Find(u.unit,'B01F');
@@ -588,6 +615,11 @@ library Shiki requires Groups{
             }
             if(u.IsAbility('B01M')==true){
                 b=Buffs.Find(u.unit,'B01M');
+                b.Level=0;
+                b.Stop();
+            }
+            if(u.IsAbility('B01P')==true){
+                b=Buffs.Find(u.unit,'B01P');
                 b.Level=0;
                 b.Stop();
             }
