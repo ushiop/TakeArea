@@ -130,17 +130,93 @@ library Shiki requires Groups{
                                 data.c[3]=cys.Obj;
                             }
                         }
-                        k=GroupFind(u.unit,x+150*CosBJ(dash.Angle),y+150*SinBJ(dash.Angle),150,true,false);
+                        k=GroupFind(u.unit,x+125*CosBJ(dash.Angle),y+125*SinBJ(dash.Angle),70,true,false);
                         if(k!=null){
                             data.u[0]=k;
                             dash.Stop();
                             Buffs.Add(u.unit,'A05S','B01P',0.52,false);
                             u.Pause(true);
-                            u.Alpha(0);
+                            u.Alpha(0); 
+                            Effect.ToUnit("blackblink.mdl",u.unit,"origin").Destroy();  
+                            Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,1,1,"stand","blackblink.mdl").SetH(ts.H());        
                             Timers.Start(0.5,data,function(Timers t){
                                 Data data=Data(t.Data());
                                 Units u=Units(data.c[0]);
-
+                                Units m=Units.Get(data.u[0]);
+                                Units ts;
+                                Data data1;
+                                Dash dash;
+                                Buffs b;
+                                Units mj;
+                                real x,y,f=GetRandomReal(0,360); 
+                                u.Pause(false);
+                                u.Alpha(255);
+                                if(u.IsAbility('B01P')==true&&m.Alive()==true){ 
+                                    x=m.X();
+                                    y=m.Y();
+                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,0.5,2,"stand","dark3.mdl"); 
+                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,1.2,1.5,"stand","by_wood_effect_yuanbanlin_sand2.mdl");
+                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
+                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom.mdl");  
+                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom2.mdl"); 
+                                    Util.Duang(x,y,1,350,350,-36,0.02,50);
+                                    //Util.Range(x,y,350); 
+                                    GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                            Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.SUB,10,true,false);
+                                            HitFlys.Add(mj.unit,25);
+                                            Buffs.Skill(mj.unit,'A00F',1);
+                                            u.Damage(mj.unit,Damage.Physics,'A05O',u.Agi(true)*17); 
+                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                        } 
+                                    } 
+                                    GroupClear(tmp_group);
+                                } 
+                                data.u[0]=null;
+                                data.u[1]=null;
+                                Spell(data.c[1]).Destroy();
+                                t.Destroy();
+                                data.Destroy();
+                                if(u.IsAbility('A05F')==false){
+                                    u.Pause(true);
+                                    u.AnimeId(23);
+                                    ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                                    ts.AnimeId(23);
+                                    ts.Alpha(0);
+                                    data1=Data.create('A05O');
+                                    data1.c[0]=u;
+                                    data1.c[1]=ts;
+                                    b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
+                                    b.Obj=data1;
+                                    b.onEnd=function(Buffs b){
+                                        Data data=Data(b.Obj);
+                                        Units u=Units(data.c[0]);
+                                        Units ts=Units(data.c[1]); 
+                                        if(b.Level==0){
+                                            ts.Position(u.X(),u.Y(),false);
+                                            ts.SetF(u.F(),true); 
+                                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                            ts.AnimeSpeed(0);
+                                            ts.DelayAlpha(255,0,0.5);
+                                        }
+                                        ts.Life(1);
+                                        data.Destroy();                        
+                                    };
+                                    dash=Dash.Start(u.unit,u.F(),600,Dash.SUB,40,true,false);
+                                    dash.onMove=function(Dash dash){
+                                        Units u=Units.Get(dash.Unit);
+                                        if(u.IsAbility('B01N')==false){
+                                            dash.Stop();
+                                        }
+                                    };
+                                    dash.onEnd=function(Dash dash){
+                                        Units u=Units.Get(dash.Unit);
+                                        u.Pause(false); 
+                                    };
+                                }
                             });
                         } 
                     }else{
