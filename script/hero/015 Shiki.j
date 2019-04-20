@@ -374,8 +374,18 @@ library Shiki requires Groups{
             data.c[2]=ts;
             Dash.Start(u.unit,u.F()+180,600,Dash.SUB,20,true,false).onMove=function(Dash dash){
                 Units u=Units.Get(dash.Unit);
+                Spell e;
                 if(u.IsAbility('B01J')==false){
                     dash.Stop();
+                }else{
+                    if(dash.Speed<2.8){
+                        if(u.player.press.R==true&&u.GetAbilityCD('A05O')==0){
+                            Buffs.Find(u.unit,'B01J').Stop();
+                            e=Spell.UseSpell(u.unit,'A05O',Spell.SpellState);
+                            e.Angle=u.F();
+                            Shiki.R(e);
+                        }
+                    }
                 }
             };
             b=Buffs.Add(u.unit,'A05L','B01J',1.3,false);
