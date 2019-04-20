@@ -15,8 +15,23 @@ library Shiki requires Groups{
         2 后跳反击
         22 关灯杀跳跃 1.4秒
         23 关灯杀跳跃收尾 
-        10 关灯杀前摇*/
+        10 关灯杀前摇
+        37 扭脖子前摇
+        41 扭脖子前摇残影
+        42 扭脖子扔刀残影
+        43 扭脖子冲刺残影
+        34 扭脖子处决
+        33 扭脖子冲刺*/
     struct Shiki{ 
+        
+        static method D(Spell e){
+            Units u=Units.Get(e.Spell);
+            Dash dash;
+            Buffs b;
+            Units ts;
+            
+            dash.mdl
+        }
 
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
@@ -381,9 +396,11 @@ library Shiki requires Groups{
                     if(dash.Speed<2.8){
                         if(u.player.press.R==true&&u.GetAbilityCD('A05O')==0){
                             Buffs.Find(u.unit,'B01J').Stop();
+                            u.SetAbilityCD('A05O',20);
                             e=Spell.UseSpell(u.unit,'A05O',Spell.SpellState);
                             e.Angle=u.F();
                             Shiki.R(e);
+
                         }
                     }
                 }
@@ -422,6 +439,12 @@ library Shiki requires Groups{
                     Units.Kill(u.unit); 
                     ShowUnit(u.unit,false); 
                     new.Select(new.player.player);
+                    if(u.GetAbilityCD('A05O')!=0){
+                        new.SetAbilityCD('A05O',u.GetAbilityCD('A05O')*0.5);
+                    }
+                    if(u.GetAbilityCD('A05T')!=0){
+                        new.SetAbilityCD('A05T',u.GetAbilityCD('A05T')*0.5);
+                    }
                     Shiki.E1(new,m);
                 }//等于1是啥也没发生
                 ts.Life(1);
@@ -987,6 +1010,9 @@ library Shiki requires Groups{
                     }
                 };
             }
+            if(e.Id=='A05T'){ 
+                u.FlushAnimeId(37); 
+            }
             e.Destroy();
         }
 
@@ -1005,11 +1031,13 @@ library Shiki requires Groups{
             Press.OnSnyc(Press.onSnycPressKeyDown,Shiki.Press);
             Spell.On(Spell.onReady,'A05A',Shiki.HERO_START); 
             Spell.On(Spell.onReady,'A05O',Shiki.HERO_START); 
+            Spell.On(Spell.onReady,'A05T',Shiki.HERO_START); 
             Spell.On(Spell.onStop,'A05O',Shiki.HERO_STOP); 
             Spell.On(Spell.onSpell,'A05A',Shiki.Q);
             Spell.On(Spell.onSpell,'A05G',Shiki.W);
             Spell.On(Spell.onSpell,'A05K',Shiki.E);  
             Spell.On(Spell.onSpell,'A05O',Shiki.R); 
+            Spell.On(Spell.onSpell,'A05T',Shiki.D); 
             Damage.On(Damage.onUnitDamage_SubDamage,Shiki.SubDamage); 
             Damage.On(Damage.onUnitDamage_EndDamage,Shiki.Damage); 
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
