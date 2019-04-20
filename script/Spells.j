@@ -62,44 +62,27 @@ library Spells requires SpellNameText{
         }
 
         //让一个单位模拟使用一个技能并返回Spells，用于技能衔接,可设置技能阶段
-        static method UseSpell(unit ua,integer spell,integer state){
-            Units u=Units.Get(u);
-            Spell tmp;
-            if(GetUnitAbilityLevel(u.unit,'Aloc')==0){
-                tmp=Spell.allocate();
-                if(state==Spell.SpellState){//如果模拟的是发动技能效果则显示技能名
-                    SpellText(u.unit,e.SpellId,3,10);
-                }
-                tmp.Spell=u.unit;
-                tmp.Target=null;//调用方自己添加
-                tmp.X=0;//调用方自己添加
-                tmp.Y=0;//调用方自己添加
-                tmp.Id=spell; 
-                tmp.Angle=0;//调用方自己添加
-                tmp.Dis=0;//调用方自己添加 
-                tmp.Obj=0;
-                tmp.Kill=false;
-                tmp.Use=1;
-                tmp.State=state;
-                //测试 
-                BJDebugMsg(GetAbilityName(tmp.Id)+"模拟生成-阶段:"+I2S(tmp.State));
-                if(u.spell!=0){
-                    tmp.Use=2;
-                    SpellEventInterface(u.spell).evaluate(tmp);
-                } 
-                if(state==Spell.SpellState){ 
-                    Spell.Trigger(Spell.onSpell,tmp.Id,tmp);
-                }
-                if(state==Spell.StartState){ 
-                    Spell.Trigger(Spell.onStart,tmp.Id,tmp);
-                }
-                if(state==Spell.StopState){ 
-                    Spell.Trigger(Spell.onStop,tmp.Id,tmp);
-                }
-                if(state==Spell.ReadyState){ 
-                    Spell.Trigger(Spell.onReady,tmp.Id,tmp);
-                }
+        static method UseSpell(unit ua,integer spell,integer state)->Spell{
+            Units u=Units.Get(ua);
+            Spell tmp; 
+            tmp=Spell.allocate();
+            if(state==Spell.SpellState){//如果模拟的是发动技能效果则显示技能名
+                SpellText(u.unit,spell,3,10);
             }
+            tmp.Spell=u.unit;
+            tmp.Target=null;//调用方自己添加
+            tmp.X=0;//调用方自己添加
+            tmp.Y=0;//调用方自己添加
+            tmp.Id=spell; 
+            tmp.Angle=0;//调用方自己添加
+            tmp.Dis=0;//调用方自己添加 
+            tmp.Obj=0;
+            tmp.Kill=false;
+            tmp.Use=1;
+            tmp.State=state;
+            //测试 
+            BJDebugMsg(GetAbilityName(tmp.Id)+"模拟生成-阶段:"+I2S(tmp.State)); 
+            return tmp; 
         }
  
 
