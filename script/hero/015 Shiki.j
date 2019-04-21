@@ -23,14 +23,27 @@ library Shiki requires Groups{
         34 扭脖子处决
         33 扭脖子冲刺*/
     struct Shiki{ 
-        
+         
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
             Buffs b;
             Units ts;
+            real x=u.X(),y=u.Y(),f=e.Angle;
+            Units.MJ(u.player.player,'e008','A05T',0,x+300*CosBJ(f),y+300*SinBJ(f),f,0.27,1.25,1,"birth","dash.mdl");
+            Units.MJ(u.player.player,'e008','A05T',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,0.8,1,"stand","cf2.mdl").SetH(100);
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,4,1,1,"stand","chongfeng2.mdl");
+            Dash.Start(ts.unit,f+180,200,Dash.SUB,20,true,false);
+            Units.MJ(u.player.player,'e008','A05T',0,x+200*CosBJ(f),y+200*SinBJ(f),f,2,1,1,"stand","k1.mdl").SetH(100);
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,0.5,2,1,"birth","az_lxj_blue_ex.mdl");
+            ts.SetH(115);
+            Dash.Start(ts.unit,f,400,Dash.NORMAL,60,true,false);
+            ts=Units.MJ(u.player.player,'e009','A05T',0,x+200*CosBJ(f),y+200*SinBJ(f),f,5,1.5,1.5,"stand","white-qiquan-new.mdl");
+            ts.SetH(100); 
+            Dash.Start(ts.unit,f+180,600,Dash.ADD,40,true,false);
             
-            dash.mdl
+            
+            //sfeidaor_y.mdl 
         }
 
         static method R(Spell e){
