@@ -30,20 +30,112 @@ library Shiki requires Groups{
             Buffs b;
             Units ts;
             real x=u.X(),y=u.Y(),f=e.Angle;
+            Data data=Data.create('A05T');
             Units.MJ(u.player.player,'e008','A05T',0,x+300*CosBJ(f),y+300*SinBJ(f),f,0.27,1.25,1,"birth","dash.mdl");
             Units.MJ(u.player.player,'e008','A05T',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2,0.8,1,"stand","cf2.mdl").SetH(100);
             ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,4,1,1,"stand","chongfeng2.mdl");
             Dash.Start(ts.unit,f+180,200,Dash.SUB,20,true,false);
-            Units.MJ(u.player.player,'e008','A05T',0,x+200*CosBJ(f),y+200*SinBJ(f),f,2,1,1,"stand","k1.mdl").SetH(100);
+            Units.MJ(u.player.player,'e008','A05T',0,x+200*CosBJ(f),y+200*SinBJ(f),f,2,1,2,"stand","k1.mdl").SetH(100);
             ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,0.5,2,1,"birth","az_lxj_blue_ex.mdl");
             ts.SetH(115);
             Dash.Start(ts.unit,f,400,Dash.NORMAL,60,true,false);
             ts=Units.MJ(u.player.player,'e009','A05T',0,x+200*CosBJ(f),y+200*SinBJ(f),f,5,1.5,1.5,"stand","white-qiquan-new.mdl");
             ts.SetH(100); 
             Dash.Start(ts.unit,f+180,600,Dash.ADD,40,true,false);
+            Util.Duang(x,y,0.5,150,150,-22,0.02,50);
+            Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,1.5,1,"stand","warstompcaster.mdl").SetH(50);
+            //前摇残影
+            ts=Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(41);
+            ts.DelayAlpha(255,0,1.9);
+            //扔刀残影
+            ts=Units.MJ(u.player.player,'e008','A05O',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2.5,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(42);
+            ts.DelayAlpha(255,0,2.4);
+            //本体
+            u.Pause(true); 
+            IssueImmediateOrder(u.unit,"stop"); 
+            u.Alpha(0);
+            u.AnimeId(33);
+            //Q2残影
+            ts=Units.MJ(u.player.player,'e008','A05O',0,x,y,f,5,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(33);
+            ts.Alpha(0);
+            //硬直BUFF
+            b=Buffs.Add(u.unit,'A05U','B01Q',1,false);
+            b.Obj=ts;
+            b.onEnd=function(Buffs b){ 
+                Units u=Units.Get(b.Unit);
+                Units ts=Units(b.Obj);   
+                if(b.Level==0){ 
+                    ts.Position(u.X(),u.Y(),false);
+                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy(); 
+                    if(u.color_alpha!=0){  
+                        ts.SetF(u.F(),true);  
+                        ts.AnimeSpeed(0);
+                        ts.DelayAlpha(u.color_alpha,0,0.5);
+                    }
+                }
+                ts.Life(1); 
+            };
+            data.c[0]=u;
+            data.c[1]=e; 
+            data.r[0]=0;
+            data.i[0]=0;//是否被打断标记
+            data.u[0]=null;
+            ts=Units.MJ(u.player.player,'e008','A05O',0,x+100*CosBJ(f),y+100*SinBJ(f),f,5,1,1,"stand","sfeidaor_y.mdl");
+            ts.SetH(100);
+            dash=Dash.Start(ts.unit,f,1200,Dash.NORMAL,60,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]);
+                Units fd=Units.Get(dash.Unit);
+                Units ts;
+                if(u.IsAbility('B01Q')==true){ 
+                    u.Position(dash.X,dash.Y,false);
+                }else{
+                    data.i[0]=1;
+                }
+                if(dash.NowDis==180){
+                    ts=Units.MJ(u.player.player,'e008','A05O',0,dash.X,dash.Y,dash.Angle,2.5,u.modelsize,1,"stand",u.model);
+                    ts.AnimeId(43);
+                    ts.DelayAlpha(255,0,2.4);
+                }
+                if(data.r[0]==0){
+                    data.r[0]=0.02;
+                    Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
+                }else{
+                    data.r[0]-=0.01;
+                }
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]); 
+                if(data.i[0]==1){ 
+                    u.Pause(false);
+                    u.Alpha(255);
+                }else{
+                    if(data.u[0]==null){
+                        u.DelayAlpha(0,255,Buffs.Find(u.unit,'B01Q').NowTime);
+                        Timers.Start(0.01,u,function(Timers t){
+                            Units u=Units(t.Data());
+                            if(u.IsAbility('B01Q')==false){
+                                u.Pause(false);
+                                t.Destroy();
+                            }
+                        });
+                    }else{ 
+                        u.Pause(false);
+                        u.Alpha(255);
+                    }
+                } 
+                Units.Get(dash.Unit).Anime("death");
+                Units.Get(dash.Unit).Life(1);
+                Spell(data.c[1]).Destroy();
+                data.Destroy();
+            };
             
-            
-            //sfeidaor_y.mdl 
         }
 
         static method R(Spell e){
@@ -714,7 +806,13 @@ library Shiki requires Groups{
                 B01M - 关灯杀(R)的过程硬直,可取消(同时取消技能)
                 B01N - 关灯杀(R)的后摇硬直,可取消
                 B01P - 关灯杀(R)的关灯硬直，可取消（同时取消伤害)
-            */
+                B01Q - 扭脖子(D)的投掷硬直，可取消（不影响小刀判定触发扭脖子)
+            */ 
+            if(u.IsAbility('B01Q')==true){
+                b=Buffs.Find(u.unit,'B01Q');
+                b.Level=0;
+                b.Stop(); 
+            }
             if(u.IsAbility('B01F')==true){
                 b=Buffs.Find(u.unit,'B01F');
                 b.Level=0;
