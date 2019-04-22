@@ -20,9 +20,114 @@ library Shiki requires Groups{
         41 扭脖子前摇残影
         42 扭脖子扔刀残影
         43 扭脖子冲刺残影
-        34 扭脖子处决
+        34 扭脖子处决 1.167秒（完整动作） 0.634(起跳到扭脖子) 0.523(扭脖子到后摇硬直)
         33 扭脖子冲刺*/
     struct Shiki{ 
+
+        static method D1(unit ua,unit ma){
+            Units u=Units.Get(ua);
+            Units m=Units.Get(ma);
+            Data data=Data.create('A05T');
+            Units ts,ts1;
+            Buffs b; 
+            real x=u.X(),y=u.Y(),f=Util.XY(u.unit,m.unit);
+            integer i;
+            BJDebugMsg("扭脖子处决-1");
+            //Q2残影
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,5,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(34);
+            ts.Alpha(0);
+            //
+            b=Buffs.Add(u.unit,'A05V','B01R',1.17,false);
+            b.Obj=ts;
+            b.onEnd=function(Buffs b){ 
+                Units u=Units.Get(b.Unit);
+                Units ts=Units(b.Obj);   
+                if(b.Level==0){ 
+                    ts.Position(u.X(),u.Y(),false);
+                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();  
+                    ts.SetF(u.F(),true);  
+                    ts.AnimeSpeed(0);
+                    ts.DelayAlpha(u.color_alpha,0,0.5); 
+                }
+                ts.Life(1); 
+            };
+            u.Pause(true);
+            u.AnimeId(34);
+            //起跳残影
+            BJDebugMsg("扭脖子处决-2");
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,u.modelsize,1,"stand",u.model);
+            ts.AnimeId(34);
+            ts.Alpha(0);
+            data.c[3]=ts;
+            for(0<=i<29){
+                ts1=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,u.modelsize,1,"stand",u.model);
+                ts1.AnimeId(34);
+                ts1.Alpha(0);
+                ts.Obj=ts1;
+                ts=ts1;
+            }
+            //
+            data.c[0]=u;
+            data.c[1]=ts;
+            data.c[2]=m;
+            data.r[0]=0;
+            data.r[1]=0;
+            BJDebugMsg("扭脖子处决-3");
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]); 
+                Units m=Units(data.c[2]);
+                Units cy=Units(data.c[3]);
+                Units ts;
+                Dash dash; 
+                if(u.Alive()==false||m.Alive()==false||data.r[0]>=0.7||u.IsAbility('B01R')==false){ 
+                    BJDebugMsg("扭脖子处决-4");
+                    u.Pause(false);
+                    u.AnimeSpeed(1);
+                    t.Destroy();
+                    data.Destroy();
+                    if(u.IsAbility('B01R')==true){ 
+                        u.Pause(true);
+                        dash=Dash.Start(u.unit,u.F()+180,850,Dash.SUB,50,true,false);
+                        dash.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            if(u.IsAbility('B01R')==false){
+                                dash.Stop();
+                            }
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            u.Pause(false);
+                        };
+                    }
+                }else{
+                    data.r[0]+=0.01;
+                    data.r[1]+=0.01; 
+                    if(data.r[1]==0.04){
+                        data.r[1]=0;
+                        if(cy.Obj!=0){
+                            cy.Position(u.X(),u.Y(),false);
+                            cy.SetF(u.F(),true);
+                            cy.AnimeSpeed(0);
+                            cy.DelayAlpha(255,0,0.3);
+                            cy.Life(1);
+                            data.c[3]=cy.Obj;
+                        }
+                    } 
+                    if(data.r[0]==0.66){//处决
+                        if(Util.XY2(u.unit,m.unit)<50){//太远了就不处决
+                            Units.MJ(u.player.player,'e008','A05T',0,m.X(),m.Y(),0,0.55,7,2,"stand", "blood-qiye.mdl").SetH(125);
+                            ts=Units.MJ(u.player.player,'e008','A05T',0,m.X(),m.Y(),u.F()+180,2,1.5,1,"stand", "blood-2.mdl");
+                            ts.DelayAlpha(255,0,1.99);
+                            u.Damage(m.unit,Damage.Physics,'A05T',m.MaxHP()*0.3); 
+                            Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
+                        }
+                        data.r[0]=0.7;
+                    }
+                }
+            });
+        }
          
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
@@ -45,11 +150,11 @@ library Shiki requires Groups{
             Util.Duang(x,y,0.5,150,150,-22,0.02,50);
             Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,1.5,1,"stand","warstompcaster.mdl").SetH(50);
             //前摇残影
-            ts=Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,u.modelsize,1,"stand",u.model);
             ts.AnimeId(41);
             ts.DelayAlpha(255,0,1.9);
             //扔刀残影
-            ts=Units.MJ(u.player.player,'e008','A05O',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2.5,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x+100*CosBJ(f),y+100*SinBJ(f),f,2.5,u.modelsize,1,"stand",u.model);
             ts.AnimeId(42);
             ts.DelayAlpha(255,0,2.4);
             //本体
@@ -58,7 +163,7 @@ library Shiki requires Groups{
             u.Alpha(0);
             u.AnimeId(33);
             //Q2残影
-            ts=Units.MJ(u.player.player,'e008','A05O',0,x,y,f,5,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,5,u.modelsize,1,"stand",u.model);
             ts.AnimeId(33);
             ts.Alpha(0);
             //硬直BUFF
@@ -83,7 +188,7 @@ library Shiki requires Groups{
             data.r[0]=0;
             data.i[0]=0;//是否被打断标记
             data.u[0]=null;
-            ts=Units.MJ(u.player.player,'e008','A05O',0,x+100*CosBJ(f),y+100*SinBJ(f),f,5,1,1,"stand","sfeidaor_y.mdl");
+            ts=Units.MJ(u.player.player,'e008','A05T',0,x+100*CosBJ(f),y+100*SinBJ(f),f,5,1,1,"stand","sfeidaor_y.mdl");
             ts.SetH(100);
             dash=Dash.Start(ts.unit,f,1200,Dash.NORMAL,60,true,false);
             dash.Obj=data;
@@ -92,13 +197,14 @@ library Shiki requires Groups{
                 Units u=Units(data.c[0]);
                 Units fd=Units.Get(dash.Unit);
                 Units ts;
+                unit k;
                 if(u.IsAbility('B01Q')==true){ 
                     u.Position(dash.X,dash.Y,false);
                 }else{
                     data.i[0]=1;
                 }
                 if(dash.NowDis==180){
-                    ts=Units.MJ(u.player.player,'e008','A05O',0,dash.X,dash.Y,dash.Angle,2.5,u.modelsize,1,"stand",u.model);
+                    ts=Units.MJ(u.player.player,'e008','A05T',0,dash.X,dash.Y,dash.Angle,2.5,u.modelsize,1,"stand",u.model);
                     ts.AnimeId(43);
                     ts.DelayAlpha(255,0,2.4);
                 }
@@ -108,31 +214,59 @@ library Shiki requires Groups{
                 }else{
                     data.r[0]-=0.01;
                 }
+                k=GroupFind(u.unit,dash.X,dash.Y,60,true,false);
+                if(k!=null){
+                    data.u[0]=k;
+                    k=null;
+                    dash.Stop();
+                }   
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
+                Dash dash1;
                 if(data.i[0]==1){ 
+                    BJDebugMsg("扭脖子结束1");
                     u.Pause(false);
                     u.Alpha(255);
                 }else{
-                    if(data.u[0]==null){
-                        u.DelayAlpha(0,255,Buffs.Find(u.unit,'B01Q').NowTime);
+                    if(data.u[0]==null){ 
+                        BJDebugMsg("扭脖子结束2");
+                        if(u.IsAbility('B01Q')==true){ 
+                            u.DelayAlpha(0,255,Buffs.Find(u.unit,'B01Q').NowTime);
+                        }else{
+                            u.Alpha(255);
+                        }
                         Timers.Start(0.01,u,function(Timers t){
                             Units u=Units(t.Data());
-                            if(u.IsAbility('B01Q')==false){
+                            if(u.IsAbility('B01Q')==false){ 
+                                BJDebugMsg("扭脖子结束2-1");
                                 u.Pause(false);
                                 t.Destroy();
                             }
                         });
-                    }else{ 
+                    }else{  
+                        BJDebugMsg("扭脖子结束3");
+                        Buffs.Find(u.unit,'B01Q').Stop();
                         u.Pause(false);
                         u.Alpha(255);
+                        Buffs.Skill(data.u[0],'A00F',1);
+                        u.Damage(data.u[0],Damage.Physics,'A05T',u.Agi(true)*10); 
+                        dash1=Dash.Start(data.u[0],dash.Angle,200,Dash.SUB,30,true,false);
+                        dash1.Obj=u;
+                        dash1.onMove=function(Dash dash){
+                            Units u=Units(dash.Obj);
+                            if(u.IsAbility('A05F')!=true){
+                                u.Position(dash.X,dash.Y,false);
+                            }
+                        };
+                        Shiki.D1(u.unit,data.u[0]);
                     }
                 } 
                 Units.Get(dash.Unit).Anime("death");
                 Units.Get(dash.Unit).Life(1);
                 Spell(data.c[1]).Destroy();
+                data.u[0]=null;
                 data.Destroy();
             };
             
@@ -549,10 +683,10 @@ library Shiki requires Groups{
                     }
                     if(u.GetAbilityCD('A05T')!=0){
                         new.SetAbilityCD('A05T',u.GetAbilityCD('A05T')*0.5);
-                    }
-                    Shiki.E1(new,m);
+                    } 
+                    Shiki.E1(new,m); 
                 }//等于1是啥也没发生
-                ts.Life(1);
+                ts.Life(1); 
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };
@@ -806,8 +940,15 @@ library Shiki requires Groups{
                 B01M - 关灯杀(R)的过程硬直,可取消(同时取消技能)
                 B01N - 关灯杀(R)的后摇硬直,可取消
                 B01P - 关灯杀(R)的关灯硬直，可取消（同时取消伤害)
-                B01Q - 扭脖子(D)的投掷硬直，可取消（不影响小刀判定触发扭脖子)
+                B01Q - 扭脖子(D)的投掷硬直，可取消（不影响小刀伤害，但会打断触发扭脖子)
+                B01R - 扭脖子(D)的处决硬直,可取消
+
             */ 
+            if(u.IsAbility('B01R')==true){
+                b=Buffs.Find(u.unit,'B01R');
+                b.Level=0;
+                b.Stop(); 
+            }
             if(u.IsAbility('B01Q')==true){
                 b=Buffs.Find(u.unit,'B01Q');
                 b.Level=0;
