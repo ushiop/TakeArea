@@ -25,7 +25,7 @@ library Shiki requires Groups{
     struct Shiki{ 
 
         
-        static integer Sound[10];
+        static integer Sound[8];
 
         static method D1(unit ua,unit ma){
             Units u=Units.Get(ua);
@@ -847,7 +847,8 @@ library Shiki requires Groups{
                         //伤害
                         data.r[1]=0;
                         x=u.X()+data.r[4]*CosBJ(u.F());
-                        y=u.Y()+data.r[4]*SinBJ(u.F());
+                        y=u.Y()+data.r[4]*SinBJ(u.F()); 
+                        RunSoundOnUnit(Shiki.Sound[7],u.unit);
                         //Util.Range(x,y,data.r[4]);
                         GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
@@ -1312,6 +1313,7 @@ library Shiki requires Groups{
             Shiki.Sound[4] = DefineSound("resource\\sound_effect_shiki_13.wav",1000, false, true);//W的前斩攻击音效
             Shiki.Sound[5] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//R的关灯音效
             Shiki.Sound[6] = DefineSound("resource\\sound_effect_shiki_9.wav",1000, false, true);//D的处决音效
+            Shiki.Sound[7] = DefineSound("resource\\sound_effect_shiki_20.wav",1000, false, true);//W的攻击音效
            
          
         }
