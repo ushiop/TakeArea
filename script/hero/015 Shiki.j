@@ -24,6 +24,9 @@ library Shiki requires Groups{
         33 扭脖子冲刺*/
     struct Shiki{ 
 
+        
+        static integer Sound[10];
+
         static method D1(unit ua,unit ma){
             Units u=Units.Get(ua);
             Units m=Units.Get(ma);
@@ -113,7 +116,7 @@ library Shiki requires Groups{
                             cy.DelayAlpha(255,0,0.3);
                             cy.Life(1);
                             data.c[3]=cy.Obj;
-                        }
+                        } 
                     } 
                     if(data.r[0]==0.66){//处决
                         if(Util.XY2(u.unit,m.unit)<50){//太远了就不处决
@@ -122,6 +125,7 @@ library Shiki requires Groups{
                             ts.DelayAlpha(255,0,1.99);
                             u.Damage(m.unit,Damage.Physics,'A05T',m.MaxHP()*0.3); 
                             Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
+                            RunSoundOnUnit(Shiki.Sound[6],m.unit);
                         }
                         data.r[0]=0.7;
                     }
@@ -280,7 +284,8 @@ library Shiki requires Groups{
             Buffs b;
             integer i;
             u.Pause(true);
-            u.AnimeId(22); 
+            u.AnimeId(22);  
+            RunSoundOnUnit(Shiki.Sound[5],u.unit);
             IssueImmediateOrder(u.unit,"stop"); 
             CinematicFadeBJ( bj_CINEFADETYPE_FADEOUTIN, 1.6, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 25 );
             //Q2残影 A05P B01M
@@ -425,6 +430,7 @@ library Shiki requires Groups{
                                             Buffs.Skill(mj.unit,'A00F',1);
                                             u.Damage(mj.unit,Damage.Physics,'A05O',u.Agi(true)*17); 
                                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                            RunSoundOnUnit(Shiki.Sound[0],mj.unit);
                                         } 
                                     } 
                                     GroupClear(tmp_group);
@@ -597,6 +603,7 @@ library Shiki requires Groups{
             u.SetF(f,true);
             Buffs.Skill(m.unit,'A00F',1); 
             u.Damage(m.unit,Damage.Physics,'A05K',u.Agi(true)*10); 
+            RunSoundOnUnit(Shiki.Sound[3],u.unit);
             Buffs.Add(u.unit,'A05N','B01L',2,false);
             Dash.Start(m.unit,f,100,Dash.SUB,30,true,false);  
             ts=Units.MJ(u.player.player,'e008','A05K',0,m.X(),m.Y(),f,2,1.5,1,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
@@ -753,7 +760,8 @@ library Shiki requires Groups{
                                 asp=2;
                                 mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.15,"stand","zzmxcl_tuci_zise.mdl");
                                 mj.SetH(100);
-                                Dash.Start(mj.unit,u.F(),200,Dash.SUB,30,true,false); 
+                                Dash.Start(mj.unit,u.F(),200,Dash.SUB,30,true,false);  
+                                RunSoundOnUnit(Shiki.Sound[4],u.unit);
                                 GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
                                 while(FirstOfGroup(tmp_group)!=null){
                                     mj=Units.Get(FirstOfGroup(tmp_group));
@@ -887,7 +895,8 @@ library Shiki requires Groups{
             f=f+180;
             u.Pause(true);
             BJDebugMsg("暂停3");
-            Buffs.Skill(m.unit,'A00F',1);
+            Buffs.Skill(m.unit,'A00F',1); 
+            RunSoundOnUnit(Shiki.Sound[2], m.unit);
             u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
             u.AnimeId(36);
             HitFlys.Reset(m.unit);
@@ -1104,6 +1113,7 @@ library Shiki requires Groups{
                             } 
                         } 
                         GroupClear(tmp_group);
+                        RunSoundOnUnit(Shiki.Sound[1], m.unit); 
                         u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
                         Buffs.Skill(m.unit,'A00F',1);
                         u.Pause(true);
@@ -1278,6 +1288,7 @@ library Shiki requires Groups{
             e.Destroy();
         }
 
+                        
 
         static method onInit(){   
             Press.OnSnyc(Press.onSnycPressKeyDown,Shiki.Press);
@@ -1294,6 +1305,15 @@ library Shiki requires Groups{
             Damage.On(Damage.onUnitDamage_EndDamage,Shiki.Damage); 
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
             Events.On(Events.onUnitOrderToLocation,Shiki.Order); 
+            Shiki.Sound[0] = DefineSound("resource\\sound_effect_shiki_1.wav",1000, false, true);//R的攻击音效
+            Shiki.Sound[1] = DefineSound("resource\\sound_effect_shiki_2.wav",1000, false, true);//Q1的攻击音效
+            Shiki.Sound[2] = DefineSound("resource\\sound_effect_shiki_3.wav",1000, false, true);//Q2的攻击音效
+            Shiki.Sound[3] = DefineSound("resource\\sound_effect_shiki_6.wav",1000, false, true);//E的攻击音效
+            Shiki.Sound[4] = DefineSound("resource\\sound_effect_shiki_13.wav",1000, false, true);//W的前斩攻击音效
+            Shiki.Sound[5] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//R的关灯音效
+            Shiki.Sound[6] = DefineSound("resource\\sound_effect_shiki_9.wav",1000, false, true);//D的处决音效
+           
+         
         }
     }
 }
