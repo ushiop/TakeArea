@@ -27,6 +27,54 @@ library Shiki requires Groups{
         
         static integer Sound[8];
 
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);  
+
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "doom",x1,y1);//扭脖子
+                }  
+  
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "channel",x1,y1);//关灯杀 
+                }  
+ 
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "curse",x1,y1);//踢人 
+                }  
+                 
+                no=GroupFind(u.unit,x,y,250,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssueImmediateOrder( u.unit, "hex" );//砍人
+                }
+                   
+            } 
+            target=null;
+            no=null;
+        }
+
         static method D1(unit ua,unit ma){
             Units u=Units.Get(ua);
             Units m=Units.Get(ma);
@@ -103,6 +151,11 @@ library Shiki requires Groups{
                             Units u=Units.Get(dash.Unit);
                             u.Pause(false);
                         };
+                        if(u.player.isai==true){
+                            if(u.IsAbility('B01D')==true){
+                                Shiki.Press(u.player.player,"Q");  
+                            }
+                        } 
                     }
                 }else{
                     data.r[0]+=0.01;
@@ -236,6 +289,12 @@ library Shiki requires Groups{
                 }else{
                     if(data.u[0]==null){ 
                         BJDebugMsg("扭脖子结束2");
+                        Dash.Start(u.unit,dash.Angle,300,Dash.SUB,25,true,false).onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            if(u.IsAbility('B01Q')==false){
+                                dash.Stop();
+                            }
+                        };
                         if(u.IsAbility('B01Q')==true){ 
                             u.DelayAlpha(0,255,Buffs.Find(u.unit,'B01Q').NowTime);
                         }else{
@@ -250,21 +309,46 @@ library Shiki requires Groups{
                             }
                         });
                     }else{  
-                        BJDebugMsg("扭脖子结束3");
-                        Buffs.Find(u.unit,'B01Q').Stop();
-                        u.Pause(false);
-                        u.Alpha(255);
+                        BJDebugMsg("扭脖子结束3"); 
                         Buffs.Skill(data.u[0],'A00F',1);
                         u.Damage(data.u[0],Damage.Physics,'A05T',u.Agi(true)*10); 
-                        dash1=Dash.Start(data.u[0],dash.Angle,200,Dash.SUB,30,true,false);
-                        dash1.Obj=u;
-                        dash1.onMove=function(Dash dash){
-                            Units u=Units(dash.Obj);
-                            if(u.IsAbility('A05F')!=true){
-                                u.Position(dash.X,dash.Y,false);
+                        if(Units.Get(data.u[0]).Alive()==true){
+                            BJDebugMsg("扭脖子结束3-1"); 
+                            Buffs.Find(u.unit,'B01Q').Stop();
+                            u.Pause(false);
+                            u.Alpha(255);
+                            dash1=Dash.Start(data.u[0],dash.Angle,200,Dash.SUB,30,true,false);
+                            dash1.Obj=u;
+                            dash1.onMove=function(Dash dash){
+                                Units u=Units(dash.Obj);
+                                if(u.IsAbility('A05F')!=true){
+                                    u.Position(dash.X,dash.Y,false);
+                                }
+                            }; 
+                            RunSoundOnUnit(Shiki.Sound[8],u.unit);
+                            Shiki.D1(u.unit,data.u[0]);
+                        }else{
+                            BJDebugMsg("扭脖子结束3-2");
+                            Dash.Start(u.unit,dash.Angle,300,Dash.SUB,25,true,false).onMove=function(Dash dash){
+                                Units u=Units.Get(dash.Unit);
+                                if(u.IsAbility('B01Q')==false){
+                                    dash.Stop();
+                                }
+                            };
+                            if(u.IsAbility('B01Q')==true){ 
+                                u.DelayAlpha(0,255,Buffs.Find(u.unit,'B01Q').NowTime);
+                            }else{
+                                u.Alpha(255);
                             }
-                        };
-                        Shiki.D1(u.unit,data.u[0]);
+                            Timers.Start(0.01,u,function(Timers t){
+                                Units u=Units(t.Data());
+                                if(u.IsAbility('B01Q')==false){ 
+                                    BJDebugMsg("扭脖子结束3-2-1");
+                                    u.Pause(false);
+                                    t.Destroy();
+                                }
+                            });
+                        }
                     }
                 } 
                 Units.Get(dash.Unit).Anime("death");
@@ -476,6 +560,11 @@ library Shiki requires Groups{
                                         Units u=Units.Get(dash.Unit);
                                         u.Pause(false); 
                                     };
+                                    if(u.player.isai==true){
+                                        if(u.IsAbility('B01D')==true){
+                                            Shiki.Press(u.player.player,"Q");  
+                                        }
+                                    } 
                                 }
                             });
                         } 
@@ -548,6 +637,9 @@ library Shiki requires Groups{
         static method SubDamage(DamageArgs e){
             if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true||e.TriggerUnit.IsAbility('B01M')==true||e.TriggerUnit.IsAbility('B01P')==true){
                 e.Damage=0;
+                if(e.TriggerUnit.player.isai==true){//如果是AI就放后跳
+                    IssueImmediateOrder( e.TriggerUnit.unit, "impale" );//后跳
+                }
             }
         }
 
@@ -614,7 +706,11 @@ library Shiki requires Groups{
             ts=Units.MJ(u.player.player,'e008','A05K',0,x+300*CosBJ(f+180),y+300*SinBJ(f+180),f,1,1,1,"birth","az_lxj_blue_ex.mdl");
             ts.SetH(115);
             Dash.Start(ts.unit,f,350,Dash.NORMAL,30,true,false);
-            
+            if(u.player.isai==true){
+                if(u.IsAbility('B01D')==true){
+                    Shiki.Press(u.player.player,"Q");  
+                }
+            } 
         }
 
         static method E(Spell e){
@@ -739,6 +835,9 @@ library Shiki requires Groups{
                 }else{
                     press=u.player.press.W;
                 }
+                if(u.player.isai==true){//如果是AI就按住
+                    press=true;
+                }
                 if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false||u.IsAbility('BPSE')==true){
                     ts=Units(data.c[2]);
                     if(u.Alive()==true){
@@ -774,7 +873,12 @@ library Shiki requires Groups{
                                     } 
                                 } 
                                 GroupClear(tmp_group);  
-                            }else{
+                                /*if(u.player.isai==true){
+                                    if(u.IsAbility('B01D')==true){
+                                        Shiki.Press(u.player.player,"Q");  
+                                    }
+                                } */
+                            }else{ 
                                 f1=180;
                                 asp=1;
                                 ani=13;
@@ -1246,15 +1350,23 @@ library Shiki requires Groups{
             Units u=Units.Get(e.Spell);
             Buffs b;
             if(e.Id=='A05A'){
-                if(u.IsAbility('B01D')==false){ 
-                    u.FlushAnimeId(35);
-                    Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
+                if(u.player.isai==true){
+                    u.SetMP(u.MP()-50);
+                    u.SetAbilityCD('A05A',5);
+                    Shiki.Q(e);
                 }else{
-                    if(Buffs.Find(u.unit,'B01D').Level==1){  
-                        IssueImmediateOrder(u.unit,"stop"); 
-                        Shiki.Q2(u);
-                    }
+                    if(u.IsAbility('B01D')==false){ 
+                        u.FlushAnimeId(35);
+                        Dash.Start(u.unit,e.Angle+180,80,Dash.SUB,10,true,false);
+                    }else{
+                        if(Buffs.Find(u.unit,'B01D').Level==1){  
+                            IssueImmediateOrder(u.unit,"stop"); 
+                            Shiki.Q2(u);
+                        }
+                    } 
+                    e.Destroy();
                 }
+                
             }
             if(e.Id=='A05O'){
                 u.FlushAnimeId(10); 
@@ -1265,18 +1377,20 @@ library Shiki requires Groups{
                     Units u=Units.Get(b.Unit);
                     Units ts;
                     b.Obj+=1;
-                    if(b.Obj==30){
+                    if(b.Obj==30){ 
+                        RunSoundOnUnit(Shiki.Sound[9],u.unit);
                         ts=Units.MJ(u.player.player,'e008','A05O',0,u.X()+100*CosBJ(u.F()+180),u.Y()+100*SinBJ(u.F()+180),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
                         ts.SetH(115);
                         Dash.Start(ts.unit,u.F(),150,Dash.NORMAL,30,true,false);
                         //Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),0,1.5,1.25,2,"stand","kc_ex.mdl");
                     }
-                };
+                }; 
+                e.Destroy();
             }
             if(e.Id=='A05T'){ 
-                u.FlushAnimeId(37); 
+                u.FlushAnimeId(37);  
+                e.Destroy();
             }
-            e.Destroy();
         }
 
         static method HERO_STOP(Spell e){ 
@@ -1287,6 +1401,10 @@ library Shiki requires Groups{
                 }
             }
             e.Destroy();
+        }
+
+        static method Spawn(Units u,Units m){
+            u.ai=Shiki.AI;
         }
 
                         
@@ -1301,7 +1419,8 @@ library Shiki requires Groups{
             Spell.On(Spell.onSpell,'A05G',Shiki.W);
             Spell.On(Spell.onSpell,'A05K',Shiki.E);  
             Spell.On(Spell.onSpell,'A05O',Shiki.R); 
-            Spell.On(Spell.onSpell,'A05T',Shiki.D); 
+            Spell.On(Spell.onSpell,'A05T',Shiki.D);  
+            Units.On(Units.onHeroSpawn,Shiki.Spawn); 
             Damage.On(Damage.onUnitDamage_SubDamage,Shiki.SubDamage); 
             Damage.On(Damage.onUnitDamage_EndDamage,Shiki.Damage); 
             Events.On(Events.onUnitOrderToUnit,Shiki.Order);
@@ -1311,10 +1430,12 @@ library Shiki requires Groups{
             Shiki.Sound[2] = DefineSound("resource\\sound_effect_shiki_3.wav",1000, false, true);//Q2的攻击音效
             Shiki.Sound[3] = DefineSound("resource\\sound_effect_shiki_6.wav",1000, false, true);//E的攻击音效
             Shiki.Sound[4] = DefineSound("resource\\sound_effect_shiki_13.wav",1000, false, true);//W的前斩攻击音效
-            Shiki.Sound[5] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//R的关灯音效
+            Shiki.Sound[5] = DefineSound("resource\\sound_effect_shiki_17.wav",1000, false, true);//R的关灯音效
             Shiki.Sound[6] = DefineSound("resource\\sound_effect_shiki_9.wav",1000, false, true);//D的处决音效
-            Shiki.Sound[7] = DefineSound("resource\\sound_effect_shiki_20.wav",1000, false, true);//W的攻击音效
-           
+            Shiki.Sound[7] = DefineSound("resource\\sound_effect_shiki_20.wav",1000, false, true);//W的攻击音效 
+            Shiki.Sound[8] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//D的抓取音效 
+            Shiki.Sound[9] = DefineSound("resource\\sound_effect_shiki_21.wav",1000, false, true);//R的出招音效 
+            
          
         }
     }
