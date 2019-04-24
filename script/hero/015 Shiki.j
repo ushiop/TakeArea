@@ -247,6 +247,7 @@ library Shiki requires Groups{
             data.u[0]=null;
             ts=Units.MJ(u.player.player,'e008','A05T',0,x+100*CosBJ(f),y+100*SinBJ(f),f,5,1,1,"stand","sfeidaor_y.mdl");
             ts.SetH(100);
+            ts.Position(ts.X(),ts.Y(),true);
             dash=Dash.Start(ts.unit,f,1200,Dash.NORMAL,60,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
