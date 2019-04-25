@@ -184,13 +184,15 @@ library HitFly requires Util{
                 tmp1=tmp.Next;
                 if(tmp!=Root){
                     if(GetUnitFlyHeight(tmp.Unit)>10||tmp.UpPower>0){ 
-                        SetUnitFlyHeight(tmp.Unit,GetUnitFlyHeight(tmp.Unit)+tmp.UpPower,0);
-                        tmp.UpPower=tmp.UpPower-tmp.LocalPower;
-                        if(tmp.Down==false){
-                            if(tmp.UpPower<0){
-                                tmp.Down=true;
-                                //if(tmp.onDown!=0) HitFlyEventInterface(tmp.onDown).evaluate(tmp);
-                                if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onDown,tmp);
+                        if(Units.Get(tmp.Unit).IsTimeStop()==false){ 
+                            SetUnitFlyHeight(tmp.Unit,GetUnitFlyHeight(tmp.Unit)+tmp.UpPower,0);
+                            tmp.UpPower=tmp.UpPower-tmp.LocalPower;
+                            if(tmp.Down==false){
+                                if(tmp.UpPower<0){
+                                    tmp.Down=true;
+                                    //if(tmp.onDown!=0) HitFlyEventInterface(tmp.onDown).evaluate(tmp);
+                                    if(tmp.Listers!=0) HitFlys.ListerTrigger(HitFlys.onDown,tmp);
+                                }
                             }
                         }
                     }else{

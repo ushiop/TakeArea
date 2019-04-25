@@ -300,6 +300,11 @@ library Units requires Table,Players,Events,Util{
                         Timers.Start(0.01,this,function(Timers t){
                             Units u=Units(t.Data());
                             if(u.Alive()==false||u.timestops==0){ 
+                                if(u.Alive()==false){
+                                    if(u.timestops!=0){
+                                        u.timestops=0;
+                                    }
+                                }
                                 SetUnitTimeScale(u.unit,u.animespeed);
                                 PauseUnit(u.unit,false);
                                 t.Destroy();
