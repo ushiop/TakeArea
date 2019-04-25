@@ -22,6 +22,7 @@ library Buff requires Util{
             integer Type;//可否被驱散(默认为增益,不可驱散)
             integer Level;//BUFF层数，添加BUFF时手动设置，所有BUFF默认为1
             unit Unit;//BUFF的携带者  
+            boolean TimeStop;//该BUFF是否受时停影响,true为受影响,false为不受影响，默认为true
             BuffEventInterface onTime;//BUFF计时时触发的事件
             BuffEventInterface onEnd;//BUFF到期时触发的事件
             BuffEventInterface onRemove;//BUFF被驱散/移除时触发的事件,然后再触发onEnd
@@ -133,6 +134,7 @@ library Buff requires Util{
                         tmp.Ability=aid;
                         tmp.Buff=bid;
                         tmp.Unit=u; 
+                        tmp.TimeStop=true;
                         tmp.Obj=0;  
                         tmp.onTime=0;
                         tmp.onEnd=0;
@@ -207,13 +209,22 @@ library Buff requires Util{
         //计时循环
         public static method onLoop(){
             Buffs tmp=Root,tmp1;
+            boolean go;
             while(tmp!=0){ 
                 tmp1=tmp.Next;
+                go=false;
                 if(tmp!=Root){
                     if(tmp.NowTime>0&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){ 
-                        tmp.NowTime=tmp.NowTime-0.01;
-                        tmp.Time=tmp.Time+0.01;
-                        if(tmp.onTime!=0) BuffEventInterface(tmp.onTime).evaluate(tmp); 
+                        if(tmp.TimeStop==true){ 
+                            go=!Units.Get(tmp.Unit).IsTimeStop(); 
+                        }else{
+                            go=true;
+                        }
+                        if(go==true){ 
+                            tmp.NowTime=tmp.NowTime-0.01;
+                            tmp.Time=tmp.Time+0.01;
+                            if(tmp.onTime!=0) BuffEventInterface(tmp.onTime).evaluate(tmp); 
+                        }
                     }else{
                         UnitRemoveAbility(tmp.Unit,tmp.Ability);
                         UnitRemoveAbility(tmp.Unit,tmp.Buff);
