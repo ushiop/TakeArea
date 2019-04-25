@@ -264,7 +264,7 @@ library Units requires Table,Players,Events,Util{
                         u.Alpha(data.i[2]);  
                         data.Destroy();
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         data.r[3]-=0.01;
                         data.i[1]+=data.i[0];
                         u.Alpha(data.i[1]);
@@ -441,7 +441,7 @@ library Units requires Table,Players,Events,Util{
                         u.Size(data.r[2]);  
                         data.Destroy();
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         data.r[3]-=0.01;
                         data.r[1]+=data.r[0];
                         u.Size(data.r[1]);
@@ -485,11 +485,12 @@ library Units requires Table,Players,Events,Util{
                     data.r[0]=delay; 
                     Timers.Start(0.01,data,function(Timers t){
                         Data d=Data(t.Data());
-                        if(d.r[0]<=0||Units(d.c[0]).Alive()==false){ 
-                            Units(d.c[0]).Model(d.s[0]); 
+                        Units u=Units(d.c[0]);
+                        if(d.r[0]<=0||u.Alive()==false){ 
+                            u.Model(d.s[0]); 
                             t.Destroy();
                             d.Destroy();
-                        }else{
+                        }elseif(u.IsTimeStop()==false){
                             d.r[0]-=0.01;
                         }
                     }); 
@@ -509,7 +510,7 @@ library Units requires Table,Players,Events,Util{
                         u.AnimeId(d.i[0]);
                         d.Destroy(); 
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         d.r[0]-=0.01;
                     }
                 });       
@@ -529,7 +530,7 @@ library Units requires Table,Players,Events,Util{
                         u.Size(d.r[0]);
                         d.Destroy(); 
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         d.r[1]-=0.01;
                     }
                 });                    
@@ -548,7 +549,7 @@ library Units requires Table,Players,Events,Util{
                         u.AnimeSpeed(d.r[0]);
                         d.Destroy(); 
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         d.r[1]-=0.01;
                     }
                 });               
@@ -568,7 +569,7 @@ library Units requires Table,Players,Events,Util{
                         u.Pause(false);
                         d.Destroy(); 
                         t.Destroy();
-                    }else{
+                    }elseif(u.IsTimeStop()==false){
                         d.r[0]-=0.01;
                     }
                 });       
