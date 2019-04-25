@@ -83,41 +83,43 @@ library Dashs requires TimerUtils{
                         tmpMaxSpeed=tmp.MaxSpeed; 
                         //测试 BJDebugMsg("类型:"+I2S(tmp.DashType)+"/ID:"+I2S(tmp)+"/MAX:"+R2S(tmp.MaxDis)+"/NOW:"+R2S(tmp.NowDis)+"/LIFE:"+Util.B2S(GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0));
                         if(tmp.NowDis<tmp.MaxDis&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){
-                            tmp.LastX=tmp.X;
-                            tmp.LastY=tmp.Y;
-                            tmpMaxSpeed=tmpMaxSpeed*Units.Get(tmp.Unit).dashspeedscale;
-                            if(tmp.DashType==Dash.NORMAL){
-                                speed=tmpMaxSpeed;
-                            }else if(tmp.DashType==Dash.PWX){
-                                speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
-                            }else if(tmp.DashType==Dash.ADD){
-                                speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
-                            }else if(tmp.DashType==Dash.SUB){
-                                speed=tmpMaxSpeed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis));  
-                            }
-                            tmp.X=GetUnitX(tmp.Unit)+speed*CosBJ(tmp.Angle);
-                            tmp.Y=GetUnitY(tmp.Unit)+speed*SinBJ(tmp.Angle); 
-                            if(tmp.Fly==true){
-                                walk=true;
-                            }else{
-                                if(speed>=64) 
-                                { 
-                                    walk=IsTerrainWalkable(tmp.X,tmp.Y);
-                                }else{ 
-                                    walk=IsTerrainWalkable(GetUnitX(tmp.Unit)+64*CosBJ(tmp.Angle),GetUnitY(tmp.Unit)+64*SinBJ(tmp.Angle));
+                            if(Units.Get(tmp.Unit).IsTimeStop()==false){
+                                tmp.LastX=tmp.X;
+                                tmp.LastY=tmp.Y;
+                                tmpMaxSpeed=tmpMaxSpeed*Units.Get(tmp.Unit).dashspeedscale;
+                                if(tmp.DashType==Dash.NORMAL){
+                                    speed=tmpMaxSpeed;
+                                }else if(tmp.DashType==Dash.PWX){
+                                    speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis,tmp.MaxDis)); 
+                                }else if(tmp.DashType==Dash.ADD){
+                                    speed=tmpMaxSpeed*(Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis)); 
+                                }else if(tmp.DashType==Dash.SUB){
+                                    speed=tmpMaxSpeed*(1-Util.GetPwx(3.99,tmp.NowDis/2,tmp.MaxDis));  
+                                }
+                                tmp.X=GetUnitX(tmp.Unit)+speed*CosBJ(tmp.Angle);
+                                tmp.Y=GetUnitY(tmp.Unit)+speed*SinBJ(tmp.Angle); 
+                                if(tmp.Fly==true){
+                                    walk=true;
+                                }else{
+                                    if(speed>=64) 
+                                    { 
+                                        walk=IsTerrainWalkable(tmp.X,tmp.Y);
+                                    }else{ 
+                                        walk=IsTerrainWalkable(GetUnitX(tmp.Unit)+64*CosBJ(tmp.Angle),GetUnitY(tmp.Unit)+64*SinBJ(tmp.Angle));
+                                    } 
                                 } 
-                            } 
-                            if(walk==true){
-                                walk=RectContainsCoords(gg_rct_main,tmp.X,tmp.Y);
+                                if(walk==true){
+                                    walk=RectContainsCoords(gg_rct_main,tmp.X,tmp.Y);
+                                }
+                                if(walk==false||(tmp.DashType==Dash.SUB&&speed<1.0)){ 
+                                    tmp.NowDis=tmp.MaxDis;
+                                }else{
+                                    tmp.Speed=speed;
+                                    tmp.NowDis=tmp.NowDis+speed;
+                                    Units.Get(tmp.Unit).Position(tmp.X,tmp.Y,tmp.Order);
+                                    if(tmp.onMove!=0) DashEventInterface(tmp.onMove).evaluate(tmp);
+                                } 
                             }
-                            if(walk==false||(tmp.DashType==Dash.SUB&&speed<1.0)){ 
-                                tmp.NowDis=tmp.MaxDis;
-                            }else{
-                                tmp.Speed=speed;
-                                tmp.NowDis=tmp.NowDis+speed;
-                                Units.Get(tmp.Unit).Position(tmp.X,tmp.Y,tmp.Order);
-                                if(tmp.onMove!=0) DashEventInterface(tmp.onMove).evaluate(tmp);
-                            } 
                         }else{  
                             if(tmp.onEnd!=0) DashEventInterface(tmp.onEnd).evaluate(tmp);
                             tmp.Destroy();
