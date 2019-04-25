@@ -23,6 +23,7 @@ library Units requires Table,Players,Events,Util{
             Data Obj;//自定义数据
             integer pauses;//暂停计数
             integer moves;//位移计数
+            integer timestops;//时停计数
             integer ai;//AI施法的接口
             real createtime;//被创建时间
             real movespeed;//理论移动速度（只是用于计算，并没有突破522的实际移动速度)
@@ -285,7 +286,33 @@ library Units requires Table,Players,Events,Util{
                 SetUnitVertexColor(this.unit, this.color_red,this.color_green,this.color_blue,a );
             }
 
-            //单位是否不处于暂停状态
+            //单位是否处于时停状态
+            method IsTimeStop()->boolean{
+                return !(this.timestops==0);
+            }
+
+            //时停单位
+            method TimeStop(boolean b){
+                if(b==true){
+                    if(this.timestops==0){
+                        PauseUnit(this.unit,true);
+                        SetUnitTimeScale(this.unit,0);
+                        Timers.Start(0.01,this,function(Timers t){
+                            Units u=Units(t.Data());
+                            if(u.Alive()==false||u.timestops==0){ 
+                                SetUnitTimeScale(u.unit,u.animespeed);
+                                PauseUnit(u.unit,false);
+                                t.Destroy();
+                            }
+                        });
+                    }
+                    this.timestops+=1;
+                }else{
+                    this.timestops-=1;
+                }
+            }
+
+            //单位是否处于暂停状态
             method IsPause()->boolean{
                 return !(this.pauses==0);
             }
