@@ -66,6 +66,7 @@ library Effect requires TimerUtils{
             EXSetEffectSize( this.e,this.size);
         }
 
+        //设置特效速度
         method AnimeSpeed(real s){
             this.animespeed=s;
             EXSetEffectSpeed(this.e, this.animespeed );
