@@ -25,7 +25,7 @@ library Shiki requires Groups{
     struct Shiki{ 
 
         
-        static integer Sound[8];
+        static integer Sound[11];
 
         static method AI(unit ua){
             Units u=Units.Get(ua);
@@ -1184,7 +1184,8 @@ library Shiki requires Groups{
             BJDebugMsg("暂停");
             IssueImmediateOrder(u.unit,"stop"); 
             u.SetF(e.Angle,true);
-            u.AnimeId(16);
+            u.AnimeId(16); 
+            RunSoundOnUnit(Shiki.Sound[10],u.unit);
             Units.MJ(u.player.player,'e008','A05A',0,u.X(),u.Y(),e.Angle,1,1.15,1.25,"stand","dust2_white.mdl");
             dash=Dash.Start(u.unit,e.Angle,600,Dash.SUB,75,true,false);
             dash.Obj=data;
@@ -1350,7 +1351,7 @@ library Shiki requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            Buffs b;
+            Buffs b; 
             if(e.Id=='A05A'){
                 if(u.player.isai==true){
                     u.SetMP(u.MP()-50);
@@ -1390,7 +1391,22 @@ library Shiki requires Groups{
                 e.Destroy();
             }
             if(e.Id=='A05T'){ 
-                u.FlushAnimeId(37);  
+                u.FlushAnimeId(37); 
+                b=Buffs.Add(u.unit,'A05W','B01S',0.4,false);
+                b.Obj=0;
+                b.onTime=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    Units ts; 
+                    b.Obj+=1;
+                    if(b.Obj==30){ 
+                        RunSoundOnUnit(Shiki.Sound[9],u.unit);  
+                        ts=Units.MJ(u.player.player,'e008','A05O',0,u.X()+60*CosBJ(u.F()+180),u.Y()+60*SinBJ(u.F()+180),0,0.5,1,1.5,"birth","az_lxj_blue_ex.mdl");
+                        ts.SetH(200);
+                        ts.DelaySizeEx(1,2.5,0.4);
+                        //Dash.Start(ts.unit,u.F(),150,Dash.NORMAL,30,true,false);
+                        //Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),0,1.5,1.25,2,"stand","kc_ex.mdl");
+                    }
+                };  
                 e.Destroy();
             }
         }
@@ -1400,6 +1416,11 @@ library Shiki requires Groups{
             if(e.Id=='A05O'){
                 if(u.IsAbility('B01O')==true){
                     Buffs.Find(u.unit,'B01O').Stop();
+                }
+            }
+            if(e.Id=='A05T'){
+                if(u.IsAbility('B01S')==true){
+                    Buffs.Find(u.unit,'B01S').Stop();
                 }
             }
             e.Destroy();
@@ -1436,7 +1457,8 @@ library Shiki requires Groups{
             Shiki.Sound[6] = DefineSound("resource\\sound_effect_shiki_9.wav",1000, false, true);//D的处决音效
             Shiki.Sound[7] = DefineSound("resource\\sound_effect_shiki_20.wav",1000, false, true);//W的攻击音效 
             Shiki.Sound[8] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//D的抓取音效 
-            Shiki.Sound[9] = DefineSound("resource\\sound_effect_shiki_21.wav",1000, false, true);//R的出招音效 
+            Shiki.Sound[9] = DefineSound("resource\\sound_effect_shiki_23_bing.wav",1000, false, true);//R的出招音效 
+            Shiki.Sound[10]= DefineSound("resource\\sound_effect_shiki_22_Q1.wav",1000, false, true);//Q的出招音效    
             
          
         }
