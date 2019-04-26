@@ -308,6 +308,9 @@ library Units requires Table,Players,Events,Util{
                                 SetUnitTimeScale(u.unit,u.animespeed);
                                 PauseUnit(u.unit,false);
                                 t.Destroy();
+                            }else{ 
+                                PauseUnit(this.unit,true);
+                                SetUnitTimeScale(this.unit,0);
                             }
                         });
                     }
