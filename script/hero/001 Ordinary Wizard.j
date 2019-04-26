@@ -101,15 +101,14 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
         //炎空爆
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
-            Units mj;
-            timer t=NewTimer(); 
+            Units mj; 
+            Data data=Data.create('A004');
             u.Pause(true);
             u.AnimeId(6);
             u.AnimeSpeed(2);
             mj=Units.MJ(u.player.player,'e008','A004',0,u.X(),u.Y(),0,2,1.5,1.5,"birth","fire2.mdx");
             mj.DelayAnime(2,0.4);
-            u.PositionEnabled(false);
-            SetTimerData(t,e);
+            u.PositionEnabled(false); 
             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);
             while(FirstOfGroup(tmp_group)!=null){
                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -118,43 +117,52 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 }
                 GroupRemoveUnit(tmp_group,mj.unit);
             }
-            GroupClear(tmp_group); 
-            TimerStart(t,0.4,false,function(){
-                integer i;
-                Spell e=Spell(GetTimerData(GetExpiredTimer()));
-                Units u=Units.Get(e.Spell);
+            GroupClear(tmp_group);  
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0;
+            Timer.Start(0.01,t,function(Timers t){
+                Data data=Data(t.Data());
+                Spell e=Spell(data.c[1]);
+                Units u=Units(data.c[0]);
                 Units mj;
-                if(u.Alive()==true){ 
-                    Util.Duang(u.X(),u.Y(),0.8,300,300,-140,0.05,75);
-                    mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
-                    mj.SetH(50); 
-                    DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
-                    DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);
-                    while(FirstOfGroup(tmp_group)!=null){
-                        mj=Units.Get(FirstOfGroup(tmp_group));
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
-                            Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),400,Dash.SUB,70,true,true);    
-                            u.Damage(mj.unit,Damage.Magic,'A004',u.Int(true)*10);
-                        }
-                        GroupRemoveUnit(tmp_group,mj.unit);
-                    }
-                    GroupClear(tmp_group); 
-                    if(u.player.lv10!=null){
-                        //是否触发E
-                            for(0<=i<6){
-                                mj=Units.MJ(u.player.player,'e008','A005',0,u.X(),u.Y(),I2R(i)*60,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
-                                Dash.Start(mj.unit,mj.F(),300,Dash.PWX,20,true,false);
+                if(data.r[0]>=0.4){ 
+                    if(u.Alive()==true){ 
+                        Util.Duang(u.X(),u.Y(),0.8,300,300,-140,0.05,75);
+                        mj=Units.MJ(u.player.player,'e008','A004',1,u.X(),u.Y(),0,2,1,1.5,"birth","fire1.mdx");
+                        mj.SetH(50); 
+                        DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl", u.X(),u.Y()) );
+                        DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",u.X(),u.Y()) );
+                        GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),400,Dash.SUB,70,true,true);    
+                                u.Damage(mj.unit,Damage.Magic,'A004',u.Int(true)*10);
                             }
-                        } 
-                } 
-                u.AnimeSpeed(1);
-                u.PositionEnabled(true);
-                u.Pause(false);
-                e.Destroy();
-                ReleaseTimer(GetExpiredTimer());
-            });
-            t=null;
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                        }
+                        GroupClear(tmp_group); 
+                        if(u.player.lv10!=null){
+                            //是否触发E
+                                for(0<=i<6){
+                                    mj=Units.MJ(u.player.player,'e008','A005',0,u.X(),u.Y(),I2R(i)*60,1.5,2.5,1, "stand","Environment\\UndeadBuildingFire\\UndeadLargeBuildingFire1.mdl");
+                                    Dash.Start(mj.unit,mj.F(),300,Dash.PWX,20,true,false);
+                                }
+                            } 
+                    } 
+                    u.AnimeSpeed(1);
+                    u.PositionEnabled(true);
+                    u.Pause(false);
+                    e.Destroy();
+                    data.Destroy();
+                    t.Destroy();
+                }else{
+                    if(u.IsTimeStop()==false){ 
+                        data.r[0]+=0.01;
+                    }
+                }
+            }); 
         }
 
         //火球术
@@ -197,7 +205,7 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             mj=Units.MJ(u.player.player,'e008','A002',2,x+100*CosBJ(f),y+100*SinBJ(f),f,1.5,2,1, "stand","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
             mj.SetH(120);      
             SetUnitPosition(mj.unit,mj.X(),mj.Y());
-            mj.AddAbility('A02O');
+            mj.AddAbility(Units.MJType_TSW);
             dash=Dash.Start(mj.unit,f,1300,Dash.ADD,50,true,false);
             dash.Obj=u;             
             dash.NowDis=10;
