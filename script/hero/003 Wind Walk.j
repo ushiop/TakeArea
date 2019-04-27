@@ -93,57 +93,59 @@ library WindWalk requires Groups{
             Spell e=Spell(data.c[1]);
             Dash dash;  
             if(u.Alive()==true&&data.i[0]>0){
-                if(u.player.press.E==true||u.player.isai==true){
-                    if(data.r[1]!=0){
-                        data.r[1]-=1;
-                    }else{
-                        data.r[1]=2;
-                        data.r[0]=data.r[0]-0.01;
-                        if(data.r[0]<0.02){
-                            data.r[0]=0.02;
-                        }
-                        TimerStart(GetExpiredTimer(),data.r[0],true,function WindWalk.E1);
-                    }
-                } 
-                u.Position(data.r[2],data.r[3],false); 
-                u.Alpha(0);
-                dash=Dash.Start(u.unit,GetRandomReal(0,360),200,Dash.SUB,60,true,false);
-                dash.onEnd=function(Dash dash){
-                    Units u=Units.Get(dash.Unit);
-                    Units mj;
-                    Dash dash1;
-                    mj=Units.MJ(u.player.player,'e008','A00L',0,dash.X,dash.Y,dash.Angle,0.7,1.3,1.5, "attack","units\\creeps\\SylvanusWindrunner\\SylvanusWindrunner.mdl"); 
-                    mj.Alpha(50); 
-                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",mj.unit, "origin") );
-                    mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,6,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
-                    mj.SetH(70);
-                    mj.Position(mj.X(),mj.Y(),true);
-                    mj.AddAbility('A02O');
-                    dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false); 
-                    dash1.onMove=function(Dash dash){
-                        Units u=Units.Get(dash.Unit);
-                        unit k;
-                        if(dash.Obj==0){ 
-                            dash.Obj=2;
-                            k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
-                            if(k!=null){
-                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
-                                Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
-                                dash.Stop(); 
-                                u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
-                            }     
-                            k=null; 
+                if(u.IsTimeStop()==false){ 
+                    if(u.player.press.E==true||u.player.isai==true){
+                        if(data.r[1]!=0){
+                            data.r[1]-=1;
                         }else{
-                            dash.Obj-=1;
+                            data.r[1]=2;
+                            data.r[0]=data.r[0]-0.01;
+                            if(data.r[0]<0.02){
+                                data.r[0]=0.02;
+                            }
+                            TimerStart(GetExpiredTimer(),data.r[0],true,function WindWalk.E1);
                         }
-                    }; 
-                    dash1.onEnd=function(Dash dash){
+                    } 
+                    u.Position(data.r[2],data.r[3],false); 
+                    u.Alpha(0);
+                    dash=Dash.Start(u.unit,GetRandomReal(0,360),200,Dash.SUB,60,true,false);
+                    dash.onEnd=function(Dash dash){
                         Units u=Units.Get(dash.Unit);
-                        u.Anime("death");
-                        u.Life(0.5);                       
+                        Units mj;
+                        Dash dash1;
+                        mj=Units.MJ(u.player.player,'e008','A00L',0,dash.X,dash.Y,dash.Angle,0.7,1.3,1.5, "attack","units\\creeps\\SylvanusWindrunner\\SylvanusWindrunner.mdl"); 
+                        mj.Alpha(50); 
+                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Orc\\MirrorImage\\MirrorImageCaster.mdl",mj.unit, "origin") );
+                        mj=Units.MJ(u.player.player,'e008','A00L',0,u.X()+50*CosBJ(dash.Angle),u.Y()+50*SinBJ(dash.Angle),dash.Angle,6,1.5,1, "stand","Abilities\\Weapons\\MoonPriestessMissile\\MoonPriestessMissile.mdl"); 
+                        mj.SetH(70);
+                        mj.Position(mj.X(),mj.Y(),true);
+                        mj.AddAbility('A02O');
+                        dash1=Dash.Start(mj.unit,mj.F(),900,Dash.ADD,60,true,false); 
+                        dash1.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            unit k;
+                            if(dash.Obj==0){ 
+                                dash.Obj=2;
+                                k=GroupFind(u.unit,u.X(),u.Y(),60,false,false);
+                                if(k!=null){
+                                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
+                                    Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
+                                    dash.Stop(); 
+                                    u.Damage(k,Damage.Physics,'A00L',u.player.hero.Agi(true)*7.0);
+                                }     
+                                k=null; 
+                            }else{
+                                dash.Obj-=1;
+                            }
+                        }; 
+                        dash1.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            u.Anime("death");
+                            u.Life(0.5);                       
+                        }; 
                     }; 
-                }; 
-                data.i[0]-=1;
+                    data.i[0]-=1;
+                }
             }else{
                 ReleaseTimer(GetExpiredTimer());
                 u.AnimeId(5);
