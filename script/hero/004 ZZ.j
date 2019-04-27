@@ -122,37 +122,39 @@ library ZZ requires Groups{
                     u.PositionEnabled(true);
                     u.Pause(false);
                 }else{ 
-                    if(u.Alive()==false){
-                        data.r[0]=0.05;
-                    }
-                    data.r[0]-=0.05;
-                    /*if(data.r[0]==0.05){  
-                        //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
-                    }else if(data.r[0]>0.4){ 
-                        //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
-                    }*/ 
-                    if(data.r[0]>0.3){
-                        DestroyEffect( AddSpecialEffectTarget("lei2.mdx",u.unit, "weapon") );
-                    }
-                    if(data.r[0]>0.1&&data.r[0]<0.35){
-                        mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
-                        mj.SetH(100);  
-                        dis=GetRandomReal(0,100);
-                        a=GetRandomReal(0,360);                       
-                        mj=Units.MJ(u.player.player,'e008','A00R',0,u.X()+dis*CosBJ(a),u.Y()+dis*SinBJ(a),GetRandomReal(0,360),2,1,1, "stand","az_storm_v2_z_5.mdl");
-                         
-                    }
-                    
-                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);                   
-                    while(FirstOfGroup(tmp_group)!=null){
-                        mj=Units.Get(FirstOfGroup(tmp_group));
-                        GroupRemoveUnit(tmp_group,mj.unit);
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                            u.Damage(mj.unit,Damage.Magic,'A00R',u.Agi(true)*1.5);   
-                            Buffs.Skill(mj.unit,'A00T',1);
+                    if(u.IsTimeStop()==false){ 
+                        if(u.Alive()==false){
+                            data.r[0]=0.05;
                         }
-                    }
-                    GroupClear(tmp_group);  
+                        data.r[0]-=0.05;
+                        /*if(data.r[0]==0.05){  
+                            //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,1.2,1,2.5, "death","lei4.mdx");
+                        }else if(data.r[0]>0.4){ 
+                            //Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),0,0.7,1,2.5, "stand","lei4.mdx");
+                        }*/ 
+                        if(data.r[0]>0.3){
+                            DestroyEffect( AddSpecialEffectTarget("lei2.mdx",u.unit, "weapon") );
+                        }
+                        if(data.r[0]>0.1&&data.r[0]<0.35){
+                            mj=Units.MJ(u.player.player,'e008','A00R',0,u.X(),u.Y(),GetRandomReal(0,360),2,2.5,2, "death","lei2.mdx");
+                            mj.SetH(100);  
+                            dis=GetRandomReal(0,100);
+                            a=GetRandomReal(0,360);                       
+                            mj=Units.MJ(u.player.player,'e008','A00R',0,u.X()+dis*CosBJ(a),u.Y()+dis*SinBJ(a),GetRandomReal(0,360),2,1,1, "stand","az_storm_v2_z_5.mdl");
+                            
+                        }
+                        
+                        GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                u.Damage(mj.unit,Damage.Magic,'A00R',u.Agi(true)*1.5);   
+                                Buffs.Skill(mj.unit,'A00T',1);
+                            }
+                        }
+                        GroupClear(tmp_group); 
+                    } 
                 }
             });
             t=null;
