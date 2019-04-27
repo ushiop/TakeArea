@@ -246,7 +246,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             first=Units.MJ(u.player.player,'e008','A008',id+10,x,y,0,15,1.5,1, "stand",DazzlePath[id]);
             first.SetH(h);
             first.Position(x,y,true); 
-            first.AddAbility('A02O');
+            first.AddAbility(Units.MJType_TSW);
             id=Dash.ADD;
             dash=Dash.Start(first.unit,Util.XYEX(first.X(),first.Y(),e.X,e.Y),Util.XY2EX(first.X(),first.Y(),e.X,e.Y),id,50,true,false);
             dash.Obj=R2I(first.H());
@@ -371,8 +371,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
 
         //18 刺 19 砸
         static method R(Spell e){
-            Units u=Units.Get(e.Spell); 
-            timer t=NewTimer();
+            Units u=Units.Get(e.Spell);  
             Data data=Data.create('A00E');
             //Util.Range(x,y,150);
             u.Pause(true);
@@ -380,194 +379,203 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             u.AnimeId(12);
             data.c[0]=u;
             data.c[1]=e;
-            SetTimerData(t,data); 
+            data.r[0]=0.25;
+            data.r[1]=0.15;
             Units.MJ(u.player.player,'e008','A00E',0,u.X(),u.Y(),0,2,0.5,0.75, "stand","white-qiquan.mdl"); 
-            TimerStart(t,0.25,false,function(){
-                Data data=Data(GetTimerData(GetExpiredTimer()));
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());            
                 Units tmp;
                 Dash dash; 
                 integer s=0; 
                 timer t;
-                if(u.Alive()==true){
-                    tmp=Units.MJ(u.player.player,'e009','A00E',0,x,y,u.F(),2,1.1,1.5, "stand","by_wood_gongchengsipai_2.mdl");
-                    tmp.SetH(110);
-                    Dash.Start(tmp.unit,u.F()+180,50,Dash.SUB,10,true,false);
-                    tmp=Units.MJ(u.player.player,'e009','A00E',0,x,y,u.F(),2,0.5,1.5, "stand","white-qiquan.mdl");
-                    tmp.SetH(100);
-                    Dash.Start(tmp.unit,u.F()+180,100,Dash.SUB,20,true,false);
-                        
-                    if(GroupFind(u.unit,x,y,150,false,false)!=null){
-                        Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
-                        AddDazzle(u.unit,4);
-                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
-                        while(FirstOfGroup(tmp_group)!=null){
-                            tmp=Units.Get(FirstOfGroup(tmp_group));
-                            GroupRemoveUnit(tmp_group,tmp.unit);
-                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
-                                HitFlys.Add(tmp.unit,10);
-                                Dash.Start(tmp.unit,u.F(),50,Dash.SUB,10,true,true);    
-                                u.Damage(tmp.unit,Damage.Physics,'A00E',u.Agi(true)*4.0);
-                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
-                                Buffs.Skill(tmp.unit,'A00C',1); 
+                if(data.r[0]==0){   
+                    if(u.Alive()==true){
+                        tmp=Units.MJ(u.player.player,'e009','A00E',0,x,y,u.F(),2,1.1,1.5, "stand","by_wood_gongchengsipai_2.mdl");
+                        tmp.SetH(110);
+                        Dash.Start(tmp.unit,u.F()+180,50,Dash.SUB,10,true,false);
+                        tmp=Units.MJ(u.player.player,'e009','A00E',0,x,y,u.F(),2,0.5,1.5, "stand","white-qiquan.mdl");
+                        tmp.SetH(100);
+                        Dash.Start(tmp.unit,u.F()+180,100,Dash.SUB,20,true,false);
+                            
+                        if(GroupFind(u.unit,x,y,150,false,false)!=null){
+                            Units.MJ(u.player.player,'e008','A00E',0,x,y,0,2,1.25,1, "stand","ThunderClapCaster.mdx");
+                            AddDazzle(u.unit,4);
+                            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                            while(FirstOfGroup(tmp_group)!=null){
+                                tmp=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,tmp.unit);
+                                if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                    HitFlys.Add(tmp.unit,10);
+                                    Dash.Start(tmp.unit,u.F(),50,Dash.SUB,10,true,true);    
+                                    u.Damage(tmp.unit,Damage.Physics,'A00E',u.Agi(true)*4.0);
+                                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
+                                    Buffs.Skill(tmp.unit,'A00C',1); 
+                                }
                             }
-                        }
-                        GroupClear(tmp_group);
-                        t=NewTimer(); 
-                        SetTimerData(t,data);
-                        TimerStart(t,0.15,false,function(){
-                            Data data=Data(GetTimerData(GetExpiredTimer()));
-                            Units u=Units(data.c[0]); 
-                            Units tmp; 
-                            real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F()); 
-                            if(u.Alive()==true){
-                                Units.MJ(u.player.player,'e00B','A00E',0,u.X(),u.Y(),u.F()-90,2,0.5,2, "stand","daoguang-blue-hengsao.mdl").SetH(100);
-                                data.g[0]=CreateGroup();     
-                                GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
-                                while(FirstOfGroup(tmp_group)!=null){
-                                    tmp=Units.Get(FirstOfGroup(tmp_group));
-                                    GroupRemoveUnit(tmp_group,tmp.unit);
-                                    if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
-                                        GroupAddUnit(data.g[0],tmp.unit);
-                                        Buffs.Skill(tmp.unit,'A00C',1);   
-                                        HitFlys.Remove(tmp.unit);
-                                        Dash.Start(tmp.unit,Util.XY(tmp.unit,u.unit),Util.XY2(tmp.unit,u.unit),Dash.NORMAL,Util.XY2(tmp.unit,u.unit)/4,true,false).onMove=function(Dash dash){
-                                            Units u=Units.Get(dash.Unit);
-                                            u.SetH(200*(dash.NowDis/dash.MaxDis));
-                                        };   
-                                        DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") ); 
+                            GroupClear(tmp_group); 
+                            Timers.Start(0.01,data,function(Timers t){
+                                Data data=Data(t.Data());
+                                Units u=Units(data.c[0]); 
+                                Units tmp; 
+                                real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());  
+                                if(data.r[1]==0){ 
+                                    if(u.Alive()==true){
+                                        Units.MJ(u.player.player,'e00B','A00E',0,u.X(),u.Y(),u.F()-90,2,0.5,2, "stand","daoguang-blue-hengsao.mdl").SetH(100);
+                                        data.g[0]=CreateGroup();     
+                                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                                        while(FirstOfGroup(tmp_group)!=null){
+                                            tmp=Units.Get(FirstOfGroup(tmp_group));
+                                            GroupRemoveUnit(tmp_group,tmp.unit);
+                                            if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                                GroupAddUnit(data.g[0],tmp.unit);
+                                                Buffs.Skill(tmp.unit,'A00C',1);   
+                                                HitFlys.Remove(tmp.unit);
+                                                Dash.Start(tmp.unit,Util.XY(tmp.unit,u.unit),Util.XY2(tmp.unit,u.unit),Dash.NORMAL,Util.XY2(tmp.unit,u.unit)/4,true,false).onMove=function(Dash dash){
+                                                    Units u=Units.Get(dash.Unit);
+                                                    u.SetH(200*(dash.NowDis/dash.MaxDis));
+                                                };   
+                                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") ); 
+                                            }
+                                        }
+                                        GroupClear(tmp_group);  
+                                        if(GroupNumber(data.g[0])!=0){ 
+                                            data.r[0]=0.1;         
+                                            TimerStart(GetExpiredTimer(),0.02,true,function(){
+                                                Data data=Data(GetTimerData(GetExpiredTimer()));
+                                                Units u=Units(data.c[0]);
+                                                Units tmp;
+                                                Dash dash;
+                                                real x,y;
+                                                if(data.r[0]>0){
+                                                    if(u.IsTimeStop()==false){
+                                                        data.r[0]-=0.02;
+                                                    } 
+                                                    GroupAddGroup(data.g[0],tmp_group);  
+                                                    while(FirstOfGroup(tmp_group)!=null){
+                                                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                                                        GroupRemoveUnit(tmp_group,tmp.unit);
+                                                        tmp.Position(u.X(),u.Y(),false);
+                                                        if(u.Alive()==false){
+                                                            HitFlys.Add(tmp.unit,0.1);
+                                                        }
+                                                    }
+                                                    GroupClear(tmp_group);         
+                                                    if(u.Alive()==false){
+                                                        DestroyGroup(data.g[0]);
+                                                        Spell(data.c[1]).Destroy();
+                                                        data.g[0]=null; 
+                                                        data.Destroy();
+                                                        u.PositionEnabled(true); 
+                                                        u.Pause(false);     
+                                                        t.Destroy();                               
+                                                    }                      
+                                                }else{
+                                                    u.AnimeId(13); 
+                                                    data.i[0]=0;
+                                                    if(u.player.press.R==true){ 
+                                                        x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
+                                                        Units.MJ(u.player.player,'e009','A00E',0,u.X(),u.Y(),u.F()-90,2,0.75,1, "stand","daoguang-blue-hengsao.mdl").SetH(100);
+                                            
+                                                    }else{ 
+                                                        x=u.X()+200*CosBJ(u.F()+180),y=u.Y()+200*SinBJ(u.F()+180);
+                                                        Units.MJ(u.player.player,'e009','A00E',0,u.X(),u.Y(),u.F()-270,2,0.75,1, "stand","daoguang-blue-hengsao.mdl").SetH(100);
+                                                    }
+                                                    data.r[1]=x;
+                                                    data.r[2]=y;
+                                                    data.r[3]=u.X();
+                                                    data.r[4]=u.Y();
+                                                    u.SetF(Util.XYEX(u.X(),u.Y(),x,y),true);
+                                                    GroupAddGroup(data.g[0],tmp_group);  
+                                                    while(FirstOfGroup(tmp_group)!=null){
+                                                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                                                        GroupRemoveUnit(tmp_group,tmp.unit);
+                                                        data.i[1]+=1; 
+                                                        dash=Dash.Start(tmp.unit,Util.XYEX(tmp.X(),tmp.Y(),x,y),Util.XY2EX(tmp.X(),tmp.Y(),x,y),Dash.NORMAL,20,true,false);
+                                                        dash.Obj=data;
+                                                        dash.onMove=function(Dash dash){
+                                                            Data data=Data(dash.Obj);
+                                                            Units u=Units.Get(dash.Unit);
+                                                            Units(data.c[0]).Position(data.r[3],data.r[4],false);
+                                                            u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
+                                                        };         
+                                                        dash.onEnd=function(Dash dash){
+                                                            Data data=Data(dash.Obj);
+                                                            Units u=Units(data.c[0]); 
+                                                            Units tmp=Units.Get(dash.Unit);
+                                                            tmp.SetH(0);
+                                                            data.i[1]-=1;  
+                                                            Buffs.Skill(tmp.unit,'A00F',1);  
+                                                            u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str(true)*18.0);  
+                                                            if(data.i[0]==0){
+                                                                data.i[0]=1;
+                                                                Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
+                                                                Util.Duang(data.r[1],data.r[2],0.5,200,200,-75,0.02,50);
+                                                            }
+                                                            if(data.i[1]==0){ 
+                                                                Spell(data.c[1]).Destroy();
+                                                                data.Destroy(); 
+                                                                u.PositionEnabled(true); 
+                                                                u.DelayReleaseAnimePause(0.2);
+                                                            }
+                                                        };
+                                                    }   
+                                                    GroupClear(tmp_group);
+                                                    DestroyGroup(data.g[0]);
+                                                    data.g[0]=null;  
+                                                    if(data.i[1]==0){
+                                                        Spell(data.c[1]).Destroy();
+                                                        data.Destroy();   
+                                                        u.PositionEnabled(true); 
+                                                        u.Pause(false);  
+                                                    } 
+                                                    t.Destroy();
+                                                }  
+                                            });
+                                        }else{ 
+                                            DestroyGroup(data.g[0]);
+                                            Spell(data.c[1]).Destroy();
+                                            data.g[0]=null; 
+                                            data.Destroy();
+                                            u.PositionEnabled(true); 
+                                            u.Pause(false);     
+                                            t.Destroy();     
+                                        }
+                                    }else{
+                                        Spell(data.c[1]).Destroy();
+                                        data.Destroy();
+                                        u.PositionEnabled(true); 
+                                        u.Pause(false);   
+                                        t.Destroy();             
+                                    }
+                                else{
+                                    if(u.IsTimeStop()==false){
+                                        data.r[1]-=0.01;
                                     }
                                 }
-                                GroupClear(tmp_group);  
-                                if(GroupNumber(data.g[0])!=0){ 
-                                    data.r[0]=0.1;         
-                                    TimerStart(GetExpiredTimer(),0.02,true,function(){
-                                        Data data=Data(GetTimerData(GetExpiredTimer()));
-                                        Units u=Units(data.c[0]);
-                                        Units tmp;
-                                        Dash dash;
-                                        real x,y;
-                                        if(data.r[0]>0){
-                                            data.r[0]-=0.02;
-                                            GroupAddGroup(data.g[0],tmp_group);  
-                                            while(FirstOfGroup(tmp_group)!=null){
-                                                tmp=Units.Get(FirstOfGroup(tmp_group));
-                                                GroupRemoveUnit(tmp_group,tmp.unit);
-                                                tmp.Position(u.X(),u.Y(),false);
-                                                if(u.Alive()==false){
-                                                    HitFlys.Add(tmp.unit,0.1);
-                                                }
-                                            }
-                                            GroupClear(tmp_group);         
-                                            if(u.Alive()==false){
-                                                DestroyGroup(data.g[0]);
-                                                Spell(data.c[1]).Destroy();
-                                                data.g[0]=null; 
-                                                data.Destroy();
-                                                u.PositionEnabled(true); 
-                                                u.Pause(false);     
-                                                ReleaseTimer(GetExpiredTimer());                                
-                                            }                      
-                                        }else{
-                                            u.AnimeId(13); 
-                                            data.i[0]=0;
-                                            if(u.player.press.R==true){ 
-                                                x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());
-                                                Units.MJ(u.player.player,'e009','A00E',0,u.X(),u.Y(),u.F()-90,2,0.75,1, "stand","daoguang-blue-hengsao.mdl").SetH(100);
-                                    
-                                            }else{ 
-                                                x=u.X()+200*CosBJ(u.F()+180),y=u.Y()+200*SinBJ(u.F()+180);
-                                                Units.MJ(u.player.player,'e009','A00E',0,u.X(),u.Y(),u.F()-270,2,0.75,1, "stand","daoguang-blue-hengsao.mdl").SetH(100);
-                                            }
-                                            data.r[1]=x;
-                                            data.r[2]=y;
-                                            data.r[3]=u.X();
-                                            data.r[4]=u.Y();
-                                            u.SetF(Util.XYEX(u.X(),u.Y(),x,y),true);
-                                            GroupAddGroup(data.g[0],tmp_group);  
-                                            while(FirstOfGroup(tmp_group)!=null){
-                                                tmp=Units.Get(FirstOfGroup(tmp_group));
-                                                GroupRemoveUnit(tmp_group,tmp.unit);
-                                                data.i[1]+=1; 
-                                                dash=Dash.Start(tmp.unit,Util.XYEX(tmp.X(),tmp.Y(),x,y),Util.XY2EX(tmp.X(),tmp.Y(),x,y),Dash.NORMAL,20,true,false);
-                                                dash.Obj=data;
-                                                dash.onMove=function(Dash dash){
-                                                    Data data=Data(dash.Obj);
-                                                    Units u=Units.Get(dash.Unit);
-                                                    Units(data.c[0]).Position(data.r[3],data.r[4],false);
-                                                    u.SetH(200*(1-(dash.NowDis/dash.MaxDis)));
-                                                };         
-                                                dash.onEnd=function(Dash dash){
-                                                    Data data=Data(dash.Obj);
-                                                    Units u=Units(data.c[0]); 
-                                                    Units tmp=Units.Get(dash.Unit);
-                                                    tmp.SetH(0);
-                                                    data.i[1]-=1;  
-                                                    Buffs.Skill(tmp.unit,'A00F',1);  
-                                                    u.Damage(tmp.unit,Damage.Physics,'A00E',u.Str(true)*18.0);  
-                                                    if(data.i[0]==0){
-                                                        data.i[0]=1;
-                                                        Units.MJ(u.player.player,'e008','A00E',0,data.r[1],data.r[2],0,2,1,1, "stand","tx.mdx");
-                                                        Util.Duang(data.r[1],data.r[2],0.5,200,200,-75,0.02,50);
-                                                    }
-                                                    if(data.i[1]==0){ 
-                                                        Spell(data.c[1]).Destroy();
-                                                        data.Destroy(); 
-                                                        u.PositionEnabled(true); 
-                                                        u.DelayReleaseAnimePause(0.2);
-                                                    }
-                                                };
-                                            }   
-                                            GroupClear(tmp_group);
-                                            DestroyGroup(data.g[0]);
-                                            data.g[0]=null;  
-                                            if(data.i[1]==0){
-                                                Spell(data.c[1]).Destroy();
-                                                data.Destroy();   
-                                                u.PositionEnabled(true); 
-                                                u.Pause(false);  
-                                            } 
-                                            ReleaseTimer(GetExpiredTimer()); 
-                                        }  
-                                    });
-                                }else{ 
-                                    DestroyGroup(data.g[0]);
-                                    Spell(data.c[1]).Destroy();
-                                    data.g[0]=null; 
-                                    data.Destroy();
-                                    u.PositionEnabled(true); 
-                                    u.Pause(false);     
-                                    ReleaseTimer(GetExpiredTimer());      
-                                }
-                            }else{
-                                Spell(data.c[1]).Destroy();
-                                data.Destroy();
-                                u.PositionEnabled(true); 
-                                u.Pause(false);   
-                                ReleaseTimer(GetExpiredTimer());               
-                            }
-                             
-                        });
-                        t=null; 
-                        ReleaseTimer(GetExpiredTimer());  
-                    }else{    
+                            }); 
+                        }else{    
+                            u.PositionEnabled(true); 
+                            u.Pause(false);  
+                            Spell(data.c[1]).Destroy();   
+                            data.Destroy();
+                            t.Destroy(); 
+                        }
+                    }else{ 
                         u.PositionEnabled(true); 
                         u.Pause(false);  
                         Spell(data.c[1]).Destroy();   
                         data.Destroy();
-                        ReleaseTimer(GetExpiredTimer());  
+                        t.Destroy();           
                     }
-                }else{ 
-                    u.PositionEnabled(true); 
-                    u.Pause(false);  
-                    Spell(data.c[1]).Destroy();   
-                    data.Destroy();
-                    ReleaseTimer(GetExpiredTimer());                 
+                }else{
+                    if(u.IsTimeStop()==false){ 
+                        data.r[0]-=0.01;
+                    }
                 }
                 
-            });
-            t=null; 
+            }); 
         }
 
         //  9 后摇 11戳 10前摇 8蓄力
@@ -597,31 +605,33 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                     pr=u.player.press.E;
                 }
                 if(pr==true&&data.r[0]<=2&&u.IsAbility('BPSE')==false&&u.Alive()==true){ 
-                    data.r[0]+=0.1;
-                    if(data.r[0]==0.2){
-                        u.AnimeId(8);
-                        u.AnimeSpeed(2); 
-                        RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
-                    } 
-                    
-                    if(data.r[0]==0.8){
-                        RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
-                    }
-                    if(data.r[0]==1.3){
+                    if(u.IsTimeStop()==false){ 
+                        data.r[0]+=0.1;
+                        if(data.r[0]==0.2){
+                            u.AnimeId(8);
+                            u.AnimeSpeed(2); 
+                            RunSoundOnUnit(DazzleMaster.E_sound[0], u.unit); 
+                        } 
                         
-                        RunSoundOnUnit(DazzleMaster.E_sound[2], u.unit); 
-                    }
-                    if(data.r[0]==1.8){ 
-                        RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
-                    }
-                    if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2){
-                        TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2)*100.0)+"%",0.4,12,45);     
-                    } 
-                    if(data.i[3]==0){
-                        data.i[3]=2;
-                        Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx"); 
-                    }else{
-                        data.i[3]-=1;
+                        if(data.r[0]==0.8){
+                            RunSoundOnUnit(DazzleMaster.E_sound[1], u.unit); 
+                        }
+                        if(data.r[0]==1.3){
+                            
+                            RunSoundOnUnit(DazzleMaster.E_sound[2], u.unit); 
+                        }
+                        if(data.r[0]==1.8){ 
+                            RunSoundOnUnit(DazzleMaster.E_sound[3], u.unit); 
+                        }
+                        if(data.r[0]==0.5||data.r[0]==1||data.r[0]==1.5||data.r[0]==2){
+                            TextForPlayer(u.player.player,u.unit,R2S((data.r[0]/2)*100.0)+"%",0.4,12,45);     
+                        } 
+                        if(data.i[3]==0){
+                            data.i[3]=2;
+                            Units.MJ(u.player.player,'e008','A00D',0,u.X(),u.Y(),GetRandomReal(0,360),2,0.2,1.5, "stand","kc12.mdx"); 
+                        }else{
+                            data.i[3]-=1;
+                        }
                     }
                     /*if(data.r[0]>=0.5){
                         u.SetF(Util.XYEX(u.X(),u.Y(),u.player.press.MouseX,u.player.press.MouseY),false);
