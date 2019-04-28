@@ -37,66 +37,68 @@ library BlackSaber requires Groups{
                 Units mj; 
                 real x=data.r[1],y=data.r[2],dis,a;
                 integer i;
-                if(data.i[0]>0){
-                    data.i[0]-=1;
-                    if(data.i[0]==0){
-                        Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,1,1, "stand","black_thunderclapcaster.mdl");
-                        Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,1.5,1, "stand","by_wood_effect_d2_shadowfiend_shadowraze_1_darkblue.mdl");
-                        Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,1, "stand","fire-boom-new-darkblue.mdl");
-                        Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,1.5, "stand","dead spirit by deckai3.mdl").SetH(100);
-                        Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,2.5, "stand","dtbluenoringblend.mdl").SetH(100);
-            
-                        Util.Duang(x,y,2,250,250,-256,0.02,50);
-                    }
-                }else{
-                    if(data.r[0]<=0||u.Alive()==false){
-                        if(data.i[1]==0){
-                            Units(data.c[1]).Anime("death");
-                            Units(data.c[1]).Life(5);                            
+                if(u.IsTimeStop()==false){
+                    if(data.i[0]>0){
+                        data.i[0]-=1;
+                        if(data.i[0]==0){
+                            Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,1,1, "stand","black_thunderclapcaster.mdl");
+                            Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,1.5,1, "stand","by_wood_effect_d2_shadowfiend_shadowraze_1_darkblue.mdl");
+                            Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,1, "stand","fire-boom-new-darkblue.mdl");
+                            Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,1.5, "stand","dead spirit by deckai3.mdl").SetH(100);
+                            Units.MJ(u.player.player,'e008','A015',0,x,y,0,2.5,2,2.5, "stand","dtbluenoringblend.mdl").SetH(100);
+                
+                            Util.Duang(x,y,2,250,250,-256,0.02,50);
                         }
-                        Spell(data.c[2]).Destroy();
-                        u.PositionEnabled(true);
-                        u.Pause(false); 
-                        data.Destroy();
-                        ReleaseTimer(GetExpiredTimer());
                     }else{
-                        if(data.r[0]==0.4){
-                            Units(data.c[1]).Anime("death");
-                            Units(data.c[1]).Life(5);
-                            data.i[1]=1;
-                        }
-                        if(data.r[0]>0.02){ 
-                            for(0<=i<2){
-                                dis=GetRandomReal(25,225);
-                                a=GetRandomReal(0,360);
-                                mj=Units.MJ(Units(data.c[0]).player.player,'e00B','A015',0,x+dis*CosBJ(a),y+dis*SinBJ(a),0,2.5,0.75,2, "stand","BlackDragonMissile.mdl");
-                                HitFlys.Lister(HitFlys.Add(mj.unit,50),HitFlys.onDown,function(HitFlys h){
-                                    Units u=Units.Get(h.Unit);
-                                    u.Anime("death");
-                                    HitFlys.Remove(u.unit);
-                                });
+                        if(data.r[0]<=0||u.Alive()==false){
+                            if(data.i[1]==0){
+                                Units(data.c[1]).Anime("death");
+                                Units(data.c[1]).Life(5);                            
                             }
-                        }
-                        if(data.r[3]==0){
-                            data.r[3]=0.2; 
-                            //Util.Range(x,y,250);
-                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);                   
-                            while(FirstOfGroup(tmp_group)!=null){
-                                mj=Units.Get(FirstOfGroup(tmp_group));
-                                GroupRemoveUnit(tmp_group,mj.unit);
-                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                    u.Damage(mj.unit,Damage.Magic,'A015',u.Int(true)*2.2);
-                                    HitFlys.Add(mj.unit,20);
-                                    Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(u.unit,mj.unit),Dash.SUB,10,true,true);
-                                    Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(mj.H());
-                                        
+                            Spell(data.c[2]).Destroy();
+                            u.PositionEnabled(true);
+                            u.Pause(false); 
+                            data.Destroy();
+                            ReleaseTimer(GetExpiredTimer());
+                        }else{
+                            if(data.r[0]==0.4){
+                                Units(data.c[1]).Anime("death");
+                                Units(data.c[1]).Life(5);
+                                data.i[1]=1;
+                            }
+                            if(data.r[0]>0.02){ 
+                                for(0<=i<2){
+                                    dis=GetRandomReal(25,225);
+                                    a=GetRandomReal(0,360);
+                                    mj=Units.MJ(Units(data.c[0]).player.player,'e00B','A015',0,x+dis*CosBJ(a),y+dis*SinBJ(a),0,2.5,0.75,2, "stand","BlackDragonMissile.mdl");
+                                    HitFlys.Lister(HitFlys.Add(mj.unit,50),HitFlys.onDown,function(HitFlys h){
+                                        Units u=Units.Get(h.Unit);
+                                        u.Anime("death");
+                                        HitFlys.Remove(u.unit);
+                                    });
                                 }
                             }
-                            GroupClear(tmp_group);   
-                        }else{
-                            data.r[3]-=0.02;
+                            if(data.r[3]==0){
+                                data.r[3]=0.2; 
+                                //Util.Range(x,y,250);
+                                GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);                   
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                        u.Damage(mj.unit,Damage.Magic,'A015',u.Int(true)*2.2);
+                                        HitFlys.Add(mj.unit,20);
+                                        Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(u.unit,mj.unit),Dash.SUB,10,true,true);
+                                        Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(mj.H());
+                                            
+                                    }
+                                }
+                                GroupClear(tmp_group);   
+                            }else{
+                                data.r[3]-=0.02;
+                            }
+                            data.r[0]-=0.02;
                         }
-                        data.r[0]-=0.02;
                     }
                 }
             });
@@ -156,113 +158,115 @@ library BlackSaber requires Groups{
                             Units m=Units(data.c[2]);
                             Units mj;
                             real x,y;
-                            if(u.Alive()==true&&m.Alive()){
-                                HitFlys.Remove(m.unit);
-                                if(data.r[1]==0){ 
-                                    if(data.r[0]<540){
-                                        data.r[0]+=15;
-                                        m.Position(u.X()+80*CosBJ(u.F()),u.Y()+80*SinBJ(u.F()),false);
-                                        m.SetH(125*Util.GetPwx(3.99,data.r[0],720));
-                                        //DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",m.X(),m.Y()) );
-                                        Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,0.6,2, "death","BlackDragonMissile.mdl").SetH(m.H());               
-                                        u.SetF(u.F()+15,true);
-                                        Buffs.Skill(m.unit,'A00F',1);
-                                    }else{     
-                                        data.r[1]=1;
-                                        data.r[0]=0;
-                                        u.AddAbility('A014');
-                                        u.SetF(Util.XY(u.unit,m.unit),true);
-                                    }
-                                }else if(data.r[1]<2){
-                                    m.Position(u.X()+80*CosBJ(u.F()),u.Y()+80*SinBJ(u.F()),false);
-                                }
-                                if(data.r[1]==1){
-                                    if(data.r[0]<80){
-                                        data.r[0]+=1;
-                                        //Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1.5*(data.r[0]/50),2.5, "death","BlackDragonMissile.mdl").SetH(m.H());                            
-                                        //Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1,2, "death","BlackDragonMissile.mdl").SetH(m.H());               
-                                        
-                                    }else{
-                                        data.r[1]=2; 
-                                        data.r[0]=0;
-                                        u.RemoveAbility('A014');
-                                        mj=Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,2,1, "birth","blue-fire.mdl");
-                                        mj.SetH(m.H());                            
-                                        mj.DelayAnime(2,0.2);
-                                        Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
-                                        u.Damage(m.unit,Damage.Magic,'A012',u.Str(true)*5.0);
-                                        u.AnimeId(20);
-                                        u.AnimeSpeed(1);
-                                    }
-                                }
-                                if(data.r[1]==2){
-                                    if(data.r[0]<15){
-                                        data.r[0]+=1;
-                                    }else{
-                                        Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,2,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
-                                        u.player.Duang(20,0.2);
-                                        Dash.Start(u.unit,Util.XY(m.unit,u.unit),150,Dash.SUB,30,true,false);
-                                        Dash.Start(m.unit,Util.XY(u.unit,m.unit),100,Dash.SUB,20,true,false);
-                                        HitFlys.Add(m.unit,15);
-                                        u.AnimeSpeed(0.5);
-                                        data.r[1]=3; 
-                                        data.r[0]=0;
-                                    }
-                                }
-                                if(data.r[1]==3){
-                                    if(data.r[0]<20){
-                                        data.r[0]+=1;
-                                    }else{
-                                        data.r[1]=4;
-                                        u.AnimeSpeed(1);
-                                        u.player.Duang(80,0.2);
-                                        x=u.X()+50*CosBJ(u.F());
-                                        y=u.Y()+50*SinBJ(u.F()); 
-                                        Units.MJ(u.player.player,'e00C','A012',0,x,y,Util.XY(u.unit,m.unit),5,2,2.5, "stand","devilslam.mdl").SetH(150);
-                                        x=x+200*CosBJ(u.F());
-                                        y=y+200*SinBJ(u.F());
-                                        u.Damage(m.unit,Damage.Chaos,'A012',u.Str(true)*12.0);
-                                        GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
-                                        while(FirstOfGroup(tmp_group)!=null){
-                                            mj=Units.Get(FirstOfGroup(tmp_group));
-                                            GroupRemoveUnit(tmp_group,mj.unit);
-                                            if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.unit!=m.unit){ 
-                                                u.Damage(mj.unit,Damage.Chaos,'A012',u.Str(true)*12);
-                                                Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1.5,1, "death","fire-boom-new-darkblue-3.mdl").SetH(70);
-                                        
-                                            }
+                            if(u.IsTimeStop()==false){ 
+                                if(u.Alive()==true&&m.Alive()){
+                                    HitFlys.Remove(m.unit);
+                                    if(data.r[1]==0){ 
+                                        if(data.r[0]<540){
+                                            data.r[0]+=15;
+                                            m.Position(u.X()+80*CosBJ(u.F()),u.Y()+80*SinBJ(u.F()),false);
+                                            m.SetH(125*Util.GetPwx(3.99,data.r[0],720));
+                                            //DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",m.X(),m.Y()) );
+                                            Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,0.6,2, "death","BlackDragonMissile.mdl").SetH(m.H());               
+                                            u.SetF(u.F()+15,true);
+                                            Buffs.Skill(m.unit,'A00F',1);
+                                        }else{     
+                                            data.r[1]=1;
+                                            data.r[0]=0;
+                                            u.AddAbility('A014');
+                                            u.SetF(Util.XY(u.unit,m.unit),true);
                                         }
-                                        GroupClear(tmp_group);    
-                                        Dash.Start(u.unit,Util.XY(m.unit,u.unit),300,Dash.SUB,50,true,false);
-                                        Dash.Start(m.unit,Util.XY(u.unit,m.unit),1000,Dash.SUB,70,true,false).onMove=function(Dash dash){
-                                            Units m=Units.Get(dash.Unit);
-                                            if(dash.Speed>20){
-                                                Units.MJ(m.player.player,'e008','A012',0,m.X(),m.Y(),0,2,dash.Speed/15,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
-                                        
-                                            }
-                                        };
-                                        HitFlys.Add(m.unit,25);
-                                        u.RemoveAbility('A013');
-                                        u.RemoveAbility('A014');
-                                        u.Position(u.X(),u.Y(),true);
-                                        u.Pause(false); 
-                                        Spell(data.c[1]).Destroy();
-                                        data.Destroy();
-                                        ReleaseTimer(GetExpiredTimer());
+                                    }else if(data.r[1]<2){
+                                        m.Position(u.X()+80*CosBJ(u.F()),u.Y()+80*SinBJ(u.F()),false);
                                     }
+                                    if(data.r[1]==1){
+                                        if(data.r[0]<80){
+                                            data.r[0]+=1;
+                                            //Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1.5*(data.r[0]/50),2.5, "death","BlackDragonMissile.mdl").SetH(m.H());                            
+                                            //Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1,2, "death","BlackDragonMissile.mdl").SetH(m.H());               
+                                            
+                                        }else{
+                                            data.r[1]=2; 
+                                            data.r[0]=0;
+                                            u.RemoveAbility('A014');
+                                            mj=Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,2,1, "birth","blue-fire.mdl");
+                                            mj.SetH(m.H());                            
+                                            mj.DelayAnime(2,0.2);
+                                            Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,1,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
+                                            u.Damage(m.unit,Damage.Magic,'A012',u.Str(true)*5.0);
+                                            u.AnimeId(20);
+                                            u.AnimeSpeed(1);
+                                        }
+                                    }
+                                    if(data.r[1]==2){
+                                        if(data.r[0]<15){
+                                            data.r[0]+=1;
+                                        }else{
+                                            Units.MJ(u.player.player,'e008','A012',0,m.X(),m.Y(),0,2,2,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
+                                            u.player.Duang(20,0.2);
+                                            Dash.Start(u.unit,Util.XY(m.unit,u.unit),150,Dash.SUB,30,true,false);
+                                            Dash.Start(m.unit,Util.XY(u.unit,m.unit),100,Dash.SUB,20,true,false);
+                                            HitFlys.Add(m.unit,15);
+                                            u.AnimeSpeed(0.5);
+                                            data.r[1]=3; 
+                                            data.r[0]=0;
+                                        }
+                                    }
+                                    if(data.r[1]==3){
+                                        if(data.r[0]<20){
+                                            data.r[0]+=1;
+                                        }else{
+                                            data.r[1]=4;
+                                            u.AnimeSpeed(1);
+                                            u.player.Duang(80,0.2);
+                                            x=u.X()+50*CosBJ(u.F());
+                                            y=u.Y()+50*SinBJ(u.F()); 
+                                            Units.MJ(u.player.player,'e00C','A012',0,x,y,Util.XY(u.unit,m.unit),5,2,2.5, "stand","devilslam.mdl").SetH(150);
+                                            x=x+200*CosBJ(u.F());
+                                            y=y+200*SinBJ(u.F());
+                                            u.Damage(m.unit,Damage.Chaos,'A012',u.Str(true)*12.0);
+                                            GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);                   
+                                            while(FirstOfGroup(tmp_group)!=null){
+                                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                                GroupRemoveUnit(tmp_group,mj.unit);
+                                                if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.unit!=m.unit){ 
+                                                    u.Damage(mj.unit,Damage.Chaos,'A012',u.Str(true)*12);
+                                                    Units.MJ(u.player.player,'e008','A012',0,mj.X(),mj.Y(),0,2,1.5,1, "death","fire-boom-new-darkblue-3.mdl").SetH(70);
+                                            
+                                                }
+                                            }
+                                            GroupClear(tmp_group);    
+                                            Dash.Start(u.unit,Util.XY(m.unit,u.unit),300,Dash.SUB,50,true,false);
+                                            Dash.Start(m.unit,Util.XY(u.unit,m.unit),1000,Dash.SUB,70,true,false).onMove=function(Dash dash){
+                                                Units m=Units.Get(dash.Unit);
+                                                if(dash.Speed>20){
+                                                    Units.MJ(m.player.player,'e008','A012',0,m.X(),m.Y(),0,2,dash.Speed/15,1, "death","fire-boom-new-darkblue-3.mdl").SetH(m.H());
+                                            
+                                                }
+                                            };
+                                            HitFlys.Add(m.unit,25);
+                                            u.RemoveAbility('A013');
+                                            u.RemoveAbility('A014');
+                                            u.Position(u.X(),u.Y(),true);
+                                            u.Pause(false); 
+                                            Spell(data.c[1]).Destroy();
+                                            data.Destroy();
+                                            ReleaseTimer(GetExpiredTimer());
+                                        }
+                                    }
+                                }else{ 
+                                    if(m.H()>10){
+                                        HitFlys.Add(m.unit,0.1);
+                                    }
+                                    u.Anime("stand");
+                                    u.RemoveAbility('A013');
+                                    u.RemoveAbility('A014');
+                                    u.Pause(false);
+                                    u.AnimeSpeed(1);
+                                    Spell(data.c[1]).Destroy();
+                                    data.Destroy();
+                                    ReleaseTimer(GetExpiredTimer());
                                 }
-                            }else{ 
-                                if(m.H()>10){
-                                    HitFlys.Add(m.unit,0.1);
-                                }
-                                u.Anime("stand");
-                                u.RemoveAbility('A013');
-                                u.RemoveAbility('A014');
-                                u.Pause(false);
-                                u.AnimeSpeed(1);
-                                Spell(data.c[1]).Destroy();
-                                data.Destroy();
-                                ReleaseTimer(GetExpiredTimer());
                             }
                         });
                         t=null;
@@ -310,66 +314,68 @@ library BlackSaber requires Groups{
                 real x,y;
                 Units mj;
                 if(u.Alive()==true){
-                    data.r[0]+=0.01;
-                    if(data.r[0]<0.2){ 
-                        u.SetH(u.H()+20);
-                    }else{ 
-                        u.SetH(u.H()-20);
-                    }
-                    if(data.r[0]>0.5){ 
-                        Buffs.Add(u.unit,'A016','B007',0.2,false);
-                        u.RemoveAbility('A02A');
-                        u.RemoveAbility('A00Z');
-                        u.AnimeSpeed(1);
-                        if(data.i[4]==0){ 
-                            u.Pause(false); 
+                    if(u.IsTimeStop()==false){ 
+                        data.r[0]+=0.01;
+                        if(data.r[0]<0.2){ 
+                            u.SetH(u.H()+20);
+                        }else{ 
+                            u.SetH(u.H()-20);
                         }
-                        Spell(data.c[1]).Destroy();
-                        data.Destroy();
-                        ReleaseTimer(GetExpiredTimer());
-                    }else{ 
-                        if(data.r[0]<0.3){
-                            DestroyEffect( AddSpecialEffectTarget("dark5.mdx", u.unit, "weapon") );   
-                            if(data.r[0]<0.2){
-                                DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-2.mdl", u.unit, "weapon") );   
-                            } 
-                        }
-                        if(data.r[1]==0){
-                            data.r[1]=0.1; 
-                            data.r[2]+=1;
-                            x=u.X()+125*CosBJ(u.F());
-                            y=u.Y()+125*SinBJ(u.F());
-                            GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
-                            while(FirstOfGroup(tmp_group)!=null){
-                                mj=Units.Get(FirstOfGroup(tmp_group));
-                                GroupRemoveUnit(tmp_group,mj.unit);
-                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                    if(data.r[2]==1||data.r[2]==5){ 
-                                        if(data.r[2]==1){
-                                            HitFlys.Add(mj.unit,20);
-                                        }
-                                        u.Damage(mj.unit,Damage.Magic,'A00X',u.Int(true)*2.4);
-                                        DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
-                                        mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
-                                    }
-                                    if(data.r[2]>=2&&data.r[2]<=4){
-                                        if(mj.H()>10){ 
-                                            HitFlys.Add(mj.unit,7);
-                                            u.Damage(mj.unit,Damage.Chaos,'A00X',u.Int(true)*2.4);
+                        if(data.r[0]>0.5){ 
+                            Buffs.Add(u.unit,'A016','B007',0.2,false);
+                            u.RemoveAbility('A02A');
+                            u.RemoveAbility('A00Z');
+                            u.AnimeSpeed(1);
+                            if(data.i[4]==0){ 
+                                u.Pause(false); 
+                            }
+                            Spell(data.c[1]).Destroy();
+                            data.Destroy();
+                            ReleaseTimer(GetExpiredTimer());
+                        }else{ 
+                            if(data.r[0]<0.3){
+                                DestroyEffect( AddSpecialEffectTarget("dark5.mdx", u.unit, "weapon") );   
+                                if(data.r[0]<0.2){
+                                    DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-2.mdl", u.unit, "weapon") );   
+                                } 
+                            }
+                            if(data.r[1]==0){
+                                data.r[1]=0.1; 
+                                data.r[2]+=1;
+                                x=u.X()+125*CosBJ(u.F());
+                                y=u.Y()+125*SinBJ(u.F());
+                                GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);                   
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                        if(data.r[2]==1||data.r[2]==5){ 
+                                            if(data.r[2]==1){
+                                                HitFlys.Add(mj.unit,20);
+                                            }
+                                            u.Damage(mj.unit,Damage.Magic,'A00X',u.Int(true)*2.4);
                                             DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
                                             mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
                                         }
-                                    } 
+                                        if(data.r[2]>=2&&data.r[2]<=4){
+                                            if(mj.H()>10){ 
+                                                HitFlys.Add(mj.unit,7);
+                                                u.Damage(mj.unit,Damage.Chaos,'A00X',u.Int(true)*2.4);
+                                                DestroyEffect( AddSpecialEffectTarget("fire-boom-new-darkblue-3.mdl", mj.unit, "chest") );
+                                                mj.Position(mj.X()+25*CosBJ(u.F()),mj.Y()+25*SinBJ(u.F()),true);
+                                            }
+                                        } 
+                                    }
                                 }
-                            }
-                            GroupClear(tmp_group);   
-                            if(data.r[2]>=2){
-                                if(data.i[4]==0){
-                                    data.i[4]=1;
-                                    u.Pause(false);
-                                    u.AddAbility('A02A'); 
-                                }
-                            }                            
+                                GroupClear(tmp_group);   
+                                if(data.r[2]>=2){
+                                    if(data.i[4]==0){
+                                        data.i[4]=1;
+                                        u.Pause(false);
+                                        u.AddAbility('A02A'); 
+                                    }
+                                }                   
+                            }         
                         }else{
                             data.r[1]-=0.01;
                         }

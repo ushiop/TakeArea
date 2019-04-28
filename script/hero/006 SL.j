@@ -115,8 +115,7 @@ library SL requires Groups{
         //6
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
-            Data data=Data.create('A01A');
-            timer t=NewTimer();
+            Data data=Data.create('A01A'); 
             real s=0.4;
             u.Pause(true);
             if(u.player.lv15!=null){
@@ -125,86 +124,91 @@ library SL requires Groups{
             }
             u.AnimeId(6);
             data.c[0]=u;
-            data.c[1]=e;
-            SetTimerData(t,data);
-            TimerStart(t,s,false,function(){
-                Data data=Data(GetTimerData(GetExpiredTimer()));
+            data.c[1]=e; 
+            data.r[0]=s;
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
                 Units u=Units(data.c[0]),mj;
                 real x=u.X(),y=u.Y(),f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
                 Dash dash;
-                u.SetF(u.F(),true);
-                u.AnimeSpeed(1);
-                u.AnimeId(10);
-                if(u.Alive()==true){
-                    Units.MJ(u.player.player,'e00B','A01A',0,x,y,f+90,2,0.5,2.5, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
-                    mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f+180,2,1.5,1, "stand","dust2.mdl"); 
-                    Dash.Start(mj.unit,f,250,Dash.SUB,20,true,false); 
-                    GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
-                    while(FirstOfGroup(tmp_group)!=null){
-                        mj=Units.Get(FirstOfGroup(tmp_group));
-                        GroupRemoveUnit(tmp_group,mj.unit);
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){  
-                            if(Util.FAN(u.unit,mj.unit,f,80)==true){  
-                                DestroyEffect( AddSpecialEffectTarget("hiteffect10white.mdl", mj.unit, "chest") );
-                                Dash.Start(mj.unit,f,400.0,Dash.SUB,40,true,true);
+                if(data.r[0]==0){ 
+                    u.SetF(u.F(),true);
+                    u.AnimeSpeed(1);
+                    u.AnimeId(10);
+                    if(u.Alive()==true){
+                        Units.MJ(u.player.player,'e00B','A01A',0,x,y,f+90,2,0.5,2.5, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
+                        mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f+180,2,1.5,1, "stand","dust2.mdl"); 
+                        Dash.Start(mj.unit,f,250,Dash.SUB,20,true,false); 
+                        GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                if(Util.FAN(u.unit,mj.unit,f,80)==true){  
+                                    DestroyEffect( AddSpecialEffectTarget("hiteffect10white.mdl", mj.unit, "chest") );
+                                    Dash.Start(mj.unit,f,400.0,Dash.SUB,40,true,true);
+                                }
                             }
                         }
-                    }
-                    GroupClear(tmp_group);      
-                    mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f,5,0.75,1, "stand","bladewave_yellow.mdl"); 
-                    mj.Position(mj.X(),mj.Y(),true);
-                    mj.AddAbility('A02O');
-                    dash=Dash.Start(mj.unit,f,1600,Dash.SUB,40,true,false);
-                    dash.Obj=2;
-                    dash.onMove=function(Dash dash){
-                        Units u=Units.Get(dash.Unit);
-                        Units mj;
-                        if(dash.Speed<4){
+                        GroupClear(tmp_group);      
+                        mj=Units.MJ(u.player.player,'e008','A01A',0,x+75*CosBJ(f),y+75*SinBJ(f),f,5,0.75,1, "stand","bladewave_yellow.mdl"); 
+                        mj.Position(mj.X(),mj.Y(),true);
+                        mj.AddAbility('A02O');
+                        dash=Dash.Start(mj.unit,f,1600,Dash.SUB,40,true,false);
+                        dash.Obj=2;
+                        dash.onMove=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
+                            Units mj;
+                            if(dash.Speed<4){
+                                if(u.aidindex==0){
+                                    u.aidindex=1;
+                                    u.Life(0.5);
+                                    u.Anime("death");
+                                }
+                            }else{
+                                if(dash.Obj==0){
+                                    //12 
+                                    dash.Obj=2; 
+                                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);                   
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                            DestroyEffect( AddSpecialEffectTarget("hiteffect10white.mdl", mj.unit, "chest") );
+                                            u.Damage(mj.unit,Damage.Magic,'A01A',u.Agi(true)*2);  
+                                        }
+                                    }
+                                    GroupClear(tmp_group);    
+                                }else{
+                                    dash.Obj-=1;
+                                }
+                            }
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Units u=Units.Get(dash.Unit);
                             if(u.aidindex==0){
-                                u.aidindex=1;
                                 u.Life(0.5);
                                 u.Anime("death");
                             }
-                        }else{
-                            if(dash.Obj==0){
-                                //12 
-                                dash.Obj=2; 
-                                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);                   
-                                while(FirstOfGroup(tmp_group)!=null){
-                                    mj=Units.Get(FirstOfGroup(tmp_group));
-                                    GroupRemoveUnit(tmp_group,mj.unit);
-                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){  
-                                        DestroyEffect( AddSpecialEffectTarget("hiteffect10white.mdl", mj.unit, "chest") );
-                                        u.Damage(mj.unit,Damage.Magic,'A01A',u.Agi(true)*2);  
-                                    }
-                                }
-                                GroupClear(tmp_group);    
-                            }else{
-                                dash.Obj-=1;
-                            }
-                        }
-                    };
-                    dash.onEnd=function(Dash dash){
-                        Units u=Units.Get(dash.Unit);
-                        if(u.aidindex==0){
-                            u.Life(0.5);
-                            u.Anime("death");
-                        }
-                    };
-                } 
-                if(u.player.lv15==null){ 
-                    u.DelayReleaseAnimePause(0.6);
-                }else{ 
-                    
-                    Buffs.Add(u.unit,'A01C','B008',0.25,false);
-                    u.AnimeSpeed(3);
-                    u.DelayReleaseAnimePause(0.2);
+                        };
+                    } 
+                    if(u.player.lv15==null){ 
+                        u.DelayReleaseAnimePause(0.6);
+                    }else{ 
+                        
+                        Buffs.Add(u.unit,'A01C','B008',0.25,false);
+                        u.AnimeSpeed(3);
+                        u.DelayReleaseAnimePause(0.2);
+                    }
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                    t.Destroy();
+                }else{
+                    if(u.IsTimeStop()==false){
+                        data.r[0]-=0.01;
+                    }
                 }
-                Spell(data.c[1]).Destroy();
-                data.Destroy();
-                ReleaseTimer(GetExpiredTimer());
-            });
-            t=null;
+            }); 
         }
 
         //9
@@ -279,7 +283,7 @@ library SL requires Groups{
                                 Data data=Data(GetTimerData(GetExpiredTimer()));
                                 Units u=Units(data.c[2]);
                                 Units m=Units(data.c[0]);
-                                Dash dash; 
+                                Dash dash;  
                                 if(data.i[2]==0){                  
                                     //u.RemoveAbility('A019');
                                     u.AnimeSpeed(1);
@@ -295,7 +299,7 @@ library SL requires Groups{
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",data.u[0], "chest") );
                                     data.i[2]-=1;  
                                     u.Damage(data.u[0],Damage.Physics,'A018',u.Agi(true)*0.5); 
-                                }
+                                } 
                             }); 
                             t=null;
                         };
@@ -328,6 +332,7 @@ library SL requires Groups{
                                 Units u=Units(data.c[3]);
                                 Units m=Units(data.c[0]);
                                 Dash dash; 
+                                
                                 if(data.i[3]==0){
                                     if(data.i[4]==0){
                                         data.i[4]=1;
@@ -429,47 +434,52 @@ library SL requires Groups{
         //3
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
-            Data data=Data.create('A017');
-            timer t=NewTimer();
+            Data data=Data.create('A017'); 
             u.Pause(true);
             u.AnimeSpeed(4);
             u.AnimeId(3);
             data.c[0]=u;
-            data.c[1]=e;
-            SetTimerData(t,data);
-            TimerStart(t,0.1,false,function(){
-                Data data=Data(GetTimerData(GetExpiredTimer()));
+            data.c[1]=e; 
+            data.r[0]=0.1;
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units mj;
                 real x=u.X(),y=u.Y(); 
                 real f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F())); 
-                if(u.Alive()==true){
-                    Units.MJ(u.player.player,'e008','A017',0,x,y,u.F(),2,0.5,2.2, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
-                    GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
-                    while(FirstOfGroup(tmp_group)!=null){
-                        mj=Units.Get(FirstOfGroup(tmp_group));
-                        GroupRemoveUnit(tmp_group,mj.unit);
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){  
-                            if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
-                                u.Damage(mj.unit,Damage.Physics,'A017',u.Str(true)*5.0);  
-                                DestroyEffect( AddSpecialEffectTarget("az-blood-hit.mdl", mj.unit, "chest") );
-                                Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200.0,Dash.SUB,20,true,true);
+                if(data.r[0]==0){ 
+                    if(u.Alive()==true){
+                        Units.MJ(u.player.player,'e008','A017',0,x,y,u.F(),2,0.5,2.2, "stand","[spell]xinzhao_r2_3.mdl").SetH(100); 
+                        GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
+                                    u.Damage(mj.unit,Damage.Physics,'A017',u.Str(true)*5.0);  
+                                    DestroyEffect( AddSpecialEffectTarget("az-blood-hit.mdl", mj.unit, "chest") );
+                                    Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200.0,Dash.SUB,20,true,true);
+                                }
                             }
                         }
+                        GroupClear(tmp_group);    
                     }
-                    GroupClear(tmp_group);    
+                    u.AnimeSpeed(2);
+                    if(u.player.lv15==null){ 
+                        u.DelayReleaseAnimePause(0.4);
+                    }else{ 
+                        Buffs.Add(u.unit,'A01C','B008',0.25,false);
+                        u.AnimeSpeed(4);
+                        u.DelayReleaseAnimePause(0.2);
+                    }
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                    t.Destroy();
+                }else{
+                    if(u.IsTimeStop()==false){
+                        data.r[0]-=0.01;
+                    }
                 }
-                u.AnimeSpeed(2);
-                if(u.player.lv15==null){ 
-                    u.DelayReleaseAnimePause(0.4);
-                }else{ 
-                    Buffs.Add(u.unit,'A01C','B008',0.25,false);
-                    u.AnimeSpeed(4);
-                    u.DelayReleaseAnimePause(0.2);
-                }
-                Spell(data.c[1]).Destroy();
-                data.Destroy();
-                ReleaseTimer(GetExpiredTimer());
             });
             t=null; 
         }

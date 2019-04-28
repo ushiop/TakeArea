@@ -189,7 +189,7 @@ library ASN requires Groups{
                 }
             }
             if(e.DamageType==Damage.Attack&&e.TriggerUnit.IsAbility('A02X')==true&&e.TriggerUnit.player.lv15!=null&&e.TriggerUnit.IsAbility('B00O')==false){
-                if(e.isRange==false){//仅抵挡近战攻击
+                if(e.isRange==false&&e.TriggerUnit.IsTimeStop()==false){//仅抵挡近战攻击,被时停时不触发
                     f=e.OriginDamage+GetUnitState(e.TriggerUnit.unit, ConvertUnitState(0x15));
                     if(e.DamageUnit.Weapon()==Units.WeaponUnknow){
                         BJDebugMsg("----------这是一条BUG信息，如果你愿意，请截图给作者，谢谢！A:"+e.DamageUnit.name+"/D"+e.TriggerUnit.name);

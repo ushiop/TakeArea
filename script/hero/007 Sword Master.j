@@ -28,44 +28,46 @@ library SwordMaster requires Groups{
                         Data data=Data(GetTimerData(GetExpiredTimer()));
                         Units u=Units(data.c[0]);
                         Units mj;
-                        if(data.r[1]==1){
-                            u.RemoveAbility('A01J');
-                            u.RemoveAbility('A01H');
-                            u.SetH(0);
-                            Spell(data.c[1]).Destroy();
-                            data.Destroy();
-                            ReleaseTimer(GetExpiredTimer());
-                        }else{
-                            if(data.r[2]==0){
-                                if(u.Alive()==false||u.IsAbility('B009')==false){
-                                    data.r[1]=1;
-                                }else{ 
-                                    data.r[0]=25; 
-                                    data.r[2]=1;  
-                                    Util.Duang(u.X(),u.Y(),0.3,150,150,-256,0.02,50);
-                                    Dash.Start(u.unit,u.F(),300,Dash.SUB,10,true,false).onMove=function(Dash dash){
-                                        dash.Angle=Units.Get(dash.Unit).F();
-                                    };
-                                    DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",u.X(),u.Y()) );
-                                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),200,function GroupIsAliveNotAloc);                   
-                                    while(FirstOfGroup(tmp_group)!=null){
-                                        mj=Units.Get(FirstOfGroup(tmp_group));
-                                        GroupRemoveUnit(tmp_group,mj.unit);
-                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
-                                            //DestroyEffect( AddSpecialEffectTarget("qqqqq.mdl", mj.unit, "chest") );
-                                            u.Damage(mj.unit,Damage.Physics,'A01F',u.Agi(true)*5.0);  
-                                            HitFlys.Add(mj.unit,25);
-                                            Buffs.Add(mj.unit,'A01I','B00A',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
-                                        }
-                                    }
-                                    GroupClear(tmp_group);   
-                                }
+                        if(u.IsTimeStop()==false){     
+                            if(data.r[1]==1){
+                                u.RemoveAbility('A01J');
+                                u.RemoveAbility('A01H');
+                                u.SetH(0);
+                                Spell(data.c[1]).Destroy();
+                                data.Destroy();
+                                ReleaseTimer(GetExpiredTimer());
                             }else{
-                                u.SetH(u.H()+data.r[0]);
-                                if(u.H()<=20){
-                                    data.r[2]=0;
+                                if(data.r[2]==0){
+                                    if(u.Alive()==false||u.IsAbility('B009')==false){
+                                        data.r[1]=1;
+                                    }else{ 
+                                        data.r[0]=25; 
+                                        data.r[2]=1;  
+                                        Util.Duang(u.X(),u.Y(),0.3,150,150,-256,0.02,50);
+                                        Dash.Start(u.unit,u.F(),300,Dash.SUB,10,true,false).onMove=function(Dash dash){
+                                            dash.Angle=Units.Get(dash.Unit).F();
+                                        };
+                                        DestroyEffect( AddSpecialEffect("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl",u.X(),u.Y()) );
+                                        GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),200,function GroupIsAliveNotAloc);                   
+                                        while(FirstOfGroup(tmp_group)!=null){
+                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                                //DestroyEffect( AddSpecialEffectTarget("qqqqq.mdl", mj.unit, "chest") );
+                                                u.Damage(mj.unit,Damage.Physics,'A01F',u.Agi(true)*5.0);  
+                                                HitFlys.Add(mj.unit,25);
+                                                Buffs.Add(mj.unit,'A01I','B00A',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                            }
+                                        }
+                                        GroupClear(tmp_group);   
+                                    }
+                                }else{
+                                    u.SetH(u.H()+data.r[0]);
+                                    if(u.H()<=20){
+                                        data.r[2]=0;
+                                    }
+                                    data.r[0]-=0.98;
                                 }
-                                data.r[0]-=0.98;
                             }
                         }
                     });
@@ -163,57 +165,59 @@ library SwordMaster requires Groups{
                 Units mj=Units(data.c[2]);
                 Dash dash;
                 real x=u.X(),y=u.Y();
-                if(u.IsAbility('B009')==true){
-                    if(u.GetAbilityCD('A01E')>1){ 
-                        u.SetAbilityCD('A01E',1);
-                        u.SetMP(u.MP()+75); 
-                    }
-                }
-                if(u.Alive()==false||data.r[0]<=0){
-                    DestroyGroup(data.g[0]);
-                    data.g[0]=null;
-                    mj.Alpha(0);
-                    mj.Anime("stand");
-                    mj.Life(2);
-                    u.SetMoveSpeed(-100);
-                    u.Alpha(255);
-                    Spell(data.c[1]).Destroy();
-                    data.Destroy();
-                    ReleaseTimer(GetExpiredTimer());
-                }else{
-                    mj.SetH(u.H());
-                    mj.Position(x,y,false); 
-                    GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
-                    while(FirstOfGroup(tmp_group)!=null){
-                        mj=Units.Get(FirstOfGroup(tmp_group));
-                        GroupRemoveUnit(tmp_group,mj.unit);
-                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
-                            if(IsUnitInGroup(mj.unit,data.g[0])!=true){ 
-                                GroupAddUnit(data.g[0],mj.unit);  
-                                DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", mj.unit, "origin") );
-                                if(u.IsAbility('B009')==true){
-                                    HitFlys.Add(mj.unit,20);
-                                    u.Damage(mj.unit,Damage.Physics,'A01E',u.Agi(true)*2.0);  
-                                }else{ 
-                                    u.Damage(mj.unit,Damage.Physics,'A01E',u.Agi(true)*10.0);  
-                                }
-                                dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit)-45,600,Dash.PWX,25,true,true);
-                                dash.Obj=3;
-                                dash.onMove=function(Dash dash){ 
-                                    dash.Angle+=4;
-                                    if(dash.Obj==0){
-                                        dash.Obj=3;
-                                        DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", dash.X,dash.Y) );
-                                    }else{
-                                        dash.Obj-=1;
-                                    }
-                                }; 
-                            }
-                            mj.Position(mj.X()+10*CosBJ(Util.XY(u.unit,mj.unit)),mj.Y()+10*SinBJ(Util.XY(u.unit,mj.unit)),true);
+                if(u.IsTimeStop()==false){ 
+                    if(u.IsAbility('B009')==true){
+                        if(u.GetAbilityCD('A01E')>1){ 
+                            u.SetAbilityCD('A01E',1);
+                            u.SetMP(u.MP()+75); 
                         }
                     }
-                    GroupClear(tmp_group);    
-                    data.r[0]-=0.02;
+                    if(u.Alive()==false||data.r[0]<=0){
+                        DestroyGroup(data.g[0]);
+                        data.g[0]=null;
+                        mj.Alpha(0);
+                        mj.Anime("stand");
+                        mj.Life(2);
+                        u.SetMoveSpeed(-100);
+                        u.Alpha(255);
+                        Spell(data.c[1]).Destroy();
+                        data.Destroy();
+                        ReleaseTimer(GetExpiredTimer());
+                    }else{
+                        mj.SetH(u.H());
+                        mj.Position(x,y,false); 
+                        GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);                   
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                if(IsUnitInGroup(mj.unit,data.g[0])!=true){ 
+                                    GroupAddUnit(data.g[0],mj.unit);  
+                                    DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Human\\Thunderclap\\ThunderClapCaster.mdl", mj.unit, "origin") );
+                                    if(u.IsAbility('B009')==true){
+                                        HitFlys.Add(mj.unit,20);
+                                        u.Damage(mj.unit,Damage.Physics,'A01E',u.Agi(true)*2.0);  
+                                    }else{ 
+                                        u.Damage(mj.unit,Damage.Physics,'A01E',u.Agi(true)*10.0);  
+                                    }
+                                    dash=Dash.Start(mj.unit,Util.XY(u.unit,mj.unit)-45,600,Dash.PWX,25,true,true);
+                                    dash.Obj=3;
+                                    dash.onMove=function(Dash dash){ 
+                                        dash.Angle+=4;
+                                        if(dash.Obj==0){
+                                            dash.Obj=3;
+                                            DestroyEffect( AddSpecialEffect("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl", dash.X,dash.Y) );
+                                        }else{
+                                            dash.Obj-=1;
+                                        }
+                                    }; 
+                                }
+                                mj.Position(mj.X()+10*CosBJ(Util.XY(u.unit,mj.unit)),mj.Y()+10*SinBJ(Util.XY(u.unit,mj.unit)),true);
+                            }
+                        }
+                        GroupClear(tmp_group);    
+                        data.r[0]-=0.02;
+                    }
                 }
             });
             t=null;
