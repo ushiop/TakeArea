@@ -309,8 +309,8 @@ library Units requires Table,Players,Events,Util{
                                 PauseUnit(u.unit,false);
                                 t.Destroy();
                             }else{ 
-                                PauseUnit(this.unit,true);
-                                SetUnitTimeScale(this.unit,0);
+                                PauseUnit(u.unit,true);
+                                SetUnitTimeScale(u.unit,0);
                             }
                         });
                     }

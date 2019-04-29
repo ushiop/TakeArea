@@ -375,10 +375,10 @@ library BlackSaber requires Groups{
                                         u.AddAbility('A02A'); 
                                     }
                                 }                   
-                            }         
-                        }else{
-                            data.r[1]-=0.01;
-                        }
+                            }else{
+                                data.r[1]-=0.01;
+                            }
+                        } 
                     }
                 }else{ 
                     u.RemoveAbility('A02A');

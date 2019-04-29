@@ -481,7 +481,6 @@ library SL requires Groups{
                     }
                 }
             });
-            t=null; 
         }
 
 

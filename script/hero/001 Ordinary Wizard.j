@@ -121,11 +121,12 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=0;
-            Timer.Start(0.01,t,function(Timers t){
+            Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Spell e=Spell(data.c[1]);
                 Units u=Units(data.c[0]);
                 Units mj;
+                integer i;
                 if(data.r[0]>=0.4){ 
                     if(u.Alive()==true){ 
                         Util.Duang(u.X(),u.Y(),0.8,300,300,-140,0.05,75);

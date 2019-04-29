@@ -329,7 +329,7 @@ library SD requires Groups{
                 Units u=Units(data.c[0]);
                 Dash dash;
                 Units mj,tmp;
-                if(data.r[0]==false){
+                if(data.r[0]==0){
                     if(u.Alive()==true){
                         u.AnimeId(14);  
                         dash=Dash.Start(u.unit,u.F()+180,100,Dash.SUB,7,true,false); 
@@ -539,7 +539,7 @@ library SD requires Groups{
                     u.RemoveAbility('A03T');  
                     t.Destroy();
                     data.Destroy(); 
-                else{
+                }else{
                     if(u.IsTimeStop()==false){
                         data.r[0]-=0.01;
                     }

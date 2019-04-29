@@ -388,8 +388,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                 real x=u.X()+200*CosBJ(u.F()),y=u.Y()+200*SinBJ(u.F());            
                 Units tmp;
                 Dash dash; 
-                integer s=0; 
-                timer t;
+                integer s=0;  
                 if(data.r[0]==0){   
                     if(u.Alive()==true){
                         tmp=Units.MJ(u.player.player,'e009','A00E',0,x,y,u.F(),2,1.1,1.5, "stand","by_wood_gongchengsipai_2.mdl");
@@ -442,8 +441,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                         GroupClear(tmp_group);  
                                         if(GroupNumber(data.g[0])!=0){ 
                                             data.r[0]=0.1;         
-                                            TimerStart(GetExpiredTimer(),0.02,true,function(){
-                                                Data data=Data(GetTimerData(GetExpiredTimer()));
+                                            Timers.Start(0.02,data,function(Timers t){
+                                                Data data=Data(t.Data());
                                                 Units u=Units(data.c[0]);
                                                 Units tmp;
                                                 Dash dash;
@@ -547,9 +546,9 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                         data.Destroy();
                                         u.PositionEnabled(true); 
                                         u.Pause(false);   
-                                        t.Destroy();             
                                     }
-                                else{
+                                    t.Destroy();   
+                                }else{
                                     if(u.IsTimeStop()==false){
                                         data.r[1]-=0.01;
                                     }
@@ -560,8 +559,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             u.Pause(false);  
                             Spell(data.c[1]).Destroy();   
                             data.Destroy();
-                            t.Destroy(); 
                         }
+                        t.Destroy(); 
                     }else{ 
                         u.PositionEnabled(true); 
                         u.Pause(false);  
