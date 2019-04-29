@@ -158,8 +158,10 @@ library Shiki requires Groups{
                         } 
                     }
                 }else{
-                    data.r[0]+=0.01;
-                    data.r[1]+=0.01; 
+                    if(u.IsTimeStop()==false){ 
+                        data.r[0]+=0.01;
+                        data.r[1]+=0.01; 
+                    }
                     if(data.r[1]==0.04){
                         data.r[1]=0;
                         if(cy.Obj!=0){
@@ -403,7 +405,8 @@ library Shiki requires Groups{
             data.c[0]=u;
             data.c[1]=e; 
             data.r[0]=1.4;//无效属性
-            data.r[1]=0;//(0.02s)残影帧  
+            data.r[1]=0;//(0.02s)残影帧 
+            data.r[2]=0.5; 
             data.u[0]=null;//目标
             data.u[1]=ts.unit;//高度辅助
             data.i[0]=0;//起跳判定
@@ -484,7 +487,7 @@ library Shiki requires Groups{
                             u.Alpha(0); 
                             Effect.ToUnit("blackblink.mdl",u.unit,"origin").Destroy();  
                             Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,1,1,"stand","blackblink.mdl").SetH(ts.H());        
-                            Timers.Start(0.5,data,function(Timers t){
+                            Timers.Start(0.01,data,function(Timers t){
                                 Data data=Data(t.Data());
                                 Units u=Units(data.c[0]);
                                 Units m=Units.Get(data.u[0]);
@@ -494,79 +497,85 @@ library Shiki requires Groups{
                                 Buffs b;
                                 Units mj;
                                 real x,y,f=GetRandomReal(0,360); 
-                                u.Pause(false);
-                                u.Alpha(255);
-                                if(u.IsAbility('B01P')==true&&m.Alive()==true){ 
-                                    x=m.X();
-                                    y=m.Y();
-                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,0.5,2,"stand","dark3.mdl"); 
-                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,1.2,1.5,"stand","by_wood_effect_yuanbanlin_sand2.mdl");
-                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
-                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom.mdl");  
-                                    Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom2.mdl"); 
-                                    Util.Duang(x,y,1,350,350,-36,0.02,50);
-                                    //Util.Range(x,y,350); 
-                                    GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
-                                    while(FirstOfGroup(tmp_group)!=null){
-                                        mj=Units.Get(FirstOfGroup(tmp_group));
-                                        GroupRemoveUnit(tmp_group,mj.unit);
-                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                            Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.SUB,10,true,false);
-                                            HitFlys.Add(mj.unit,25);
-                                            Buffs.Skill(mj.unit,'A00F',1);
-                                            u.Damage(mj.unit,Damage.Physics,'A05O',u.Agi(true)*17); 
-                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
-                                            RunSoundOnUnit(Shiki.Sound[0],mj.unit);
+                                if(data.r[2]==0){
+                                    u.Pause(false);
+                                    u.Alpha(255);
+                                    if(u.IsAbility('B01P')==true&&m.Alive()==true){ 
+                                        x=m.X();
+                                        y=m.Y();
+                                        Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,0.5,2,"stand","dark3.mdl"); 
+                                        Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,1.2,1.5,"stand","by_wood_effect_yuanbanlin_sand2.mdl");
+                                        Units.MJ(u.player.player,'e008','A05O',0,x,y,f,2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
+                                        Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom.mdl");  
+                                        Units.MJ(u.player.player,'e008','A05O',0,x,y,f,4,3,1,"stand","blood-boom2.mdl"); 
+                                        Util.Duang(x,y,1,350,350,-36,0.02,50);
+                                        //Util.Range(x,y,350); 
+                                        GroupEnumUnitsInRange(tmp_group,x,y,350,function GroupIsAliveNotAloc);     
+                                        while(FirstOfGroup(tmp_group)!=null){
+                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                                Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),200,Dash.SUB,10,true,false);
+                                                HitFlys.Add(mj.unit,25);
+                                                Buffs.Skill(mj.unit,'A00F',1);
+                                                u.Damage(mj.unit,Damage.Physics,'A05O',u.Agi(true)*17); 
+                                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                                RunSoundOnUnit(Shiki.Sound[0],mj.unit);
+                                            } 
                                         } 
+                                        GroupClear(tmp_group);
                                     } 
-                                    GroupClear(tmp_group);
-                                } 
-                                data.u[0]=null;
-                                data.u[1]=null;
-                                Spell(data.c[1]).Destroy();
-                                t.Destroy();
-                                data.Destroy();
-                                if(u.IsAbility('A05F')==false){
-                                    u.Pause(true);
-                                    u.AnimeId(23);
-                                    ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
-                                    ts.AnimeId(23);
-                                    ts.Alpha(0);
-                                    data1=Data.create('A05O');
-                                    data1.c[0]=u;
-                                    data1.c[1]=ts;
-                                    b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
-                                    b.Obj=data1;
-                                    b.onEnd=function(Buffs b){
-                                        Data data=Data(b.Obj);
-                                        Units u=Units(data.c[0]);
-                                        Units ts=Units(data.c[1]); 
-                                        if(b.Level==0){
-                                            ts.Position(u.X(),u.Y(),false);
-                                            ts.SetF(u.F(),true); 
-                                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
-                                            ts.AnimeSpeed(0);
-                                            ts.DelayAlpha(255,0,0.5);
-                                        }
-                                        ts.Life(1);
-                                        data.Destroy();                        
-                                    };
-                                    dash=Dash.Start(u.unit,u.F(),600,Dash.SUB,40,true,false);
-                                    dash.onMove=function(Dash dash){
-                                        Units u=Units.Get(dash.Unit);
-                                        if(u.IsAbility('B01N')==false){
-                                            dash.Stop();
-                                        }
-                                    };
-                                    dash.onEnd=function(Dash dash){
-                                        Units u=Units.Get(dash.Unit);
-                                        u.Pause(false); 
-                                    };
-                                    if(u.player.isai==true){
-                                        if(u.IsAbility('B01D')==true){
-                                            Shiki.Press(u.player.player,"Q");  
-                                        }
-                                    } 
+                                    data.u[0]=null;
+                                    data.u[1]=null;
+                                    Spell(data.c[1]).Destroy();
+                                    t.Destroy();
+                                    data.Destroy();
+                                    if(u.IsAbility('A05F')==false){
+                                        u.Pause(true);
+                                        u.AnimeId(23);
+                                        ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                                        ts.AnimeId(23);
+                                        ts.Alpha(0);
+                                        data1=Data.create('A05O');
+                                        data1.c[0]=u;
+                                        data1.c[1]=ts;
+                                        b=Buffs.Add(u.unit,'A05Q','B01N',0.6,false);
+                                        b.Obj=data1;
+                                        b.onEnd=function(Buffs b){
+                                            Data data=Data(b.Obj);
+                                            Units u=Units(data.c[0]);
+                                            Units ts=Units(data.c[1]); 
+                                            if(b.Level==0){
+                                                ts.Position(u.X(),u.Y(),false);
+                                                ts.SetF(u.F(),true); 
+                                                Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                                ts.AnimeSpeed(0);
+                                                ts.DelayAlpha(255,0,0.5);
+                                            }
+                                            ts.Life(1);
+                                            data.Destroy();                        
+                                        };
+                                        dash=Dash.Start(u.unit,u.F(),600,Dash.SUB,40,true,false);
+                                        dash.onMove=function(Dash dash){
+                                            Units u=Units.Get(dash.Unit);
+                                            if(u.IsAbility('B01N')==false){
+                                                dash.Stop();
+                                            }
+                                        };
+                                        dash.onEnd=function(Dash dash){
+                                            Units u=Units.Get(dash.Unit);
+                                            u.Pause(false); 
+                                        };
+                                        if(u.player.isai==true){
+                                            if(u.IsAbility('B01D')==true){
+                                                Shiki.Press(u.player.player,"Q");  
+                                            }
+                                        } 
+                                    }
+                                }else{
+                                    if(u.IsTimeStop()==false){
+                                        data.r[2]-=0.01;
+                                    }
                                 }
                             });
                         } 
@@ -840,158 +849,160 @@ library Shiki requires Groups{
                 if(u.player.isai==true){//如果是AI就按住
                     press=true;
                 }
-                if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false||u.IsAbility('BPSE')==true){
-                    ts=Units(data.c[2]);
-                    if(u.Alive()==true){
-                        u.Pause(false);
-                        if(u.IsAbility('B01G')==false){
-                            BJDebugMsg("砍人：因Q2中断结束");  
-                            Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
-                            ts.AnimeSpeed(0);
-                            ts.DelayAlpha(255,0,0.5);
-                        }else{
-                            Buffs.Find(u.unit,'B01G').Stop();
-                            BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束"); 
-                            x=u.X()+data.r[4]*CosBJ(u.F());
-                            y=u.Y()+data.r[4]*SinBJ(u.F());
-                            if(data.r[0]>1){
-                                //前踢
-                                f1=0; 
-                                ani=12;
-                                asp=2;
-                                mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.15,"stand","zzmxcl_tuci_zise.mdl");
-                                mj.SetH(100);
-                                Dash.Start(mj.unit,u.F(),200,Dash.SUB,30,true,false);  
-                                RunSoundOnUnit(Shiki.Sound[4],u.unit);
-                                GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
-                                while(FirstOfGroup(tmp_group)!=null){
-                                    mj=Units.Get(FirstOfGroup(tmp_group));
-                                    GroupRemoveUnit(tmp_group,mj.unit);
-                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                        Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,8,true,false);
-                                        HitFlys.Add(mj.unit,15);
-                                        u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*2);  
-                                        Buffs.Skill(mj.unit,'A00W',1);  
+                if(u.IsTimeStop()==false){
+                    if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false||u.IsAbility('BPSE')==true){
+                        ts=Units(data.c[2]);
+                        if(u.Alive()==true){
+                            u.Pause(false);
+                            if(u.IsAbility('B01G')==false){
+                                BJDebugMsg("砍人：因Q2中断结束");  
+                                Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                ts.AnimeSpeed(0);
+                                ts.DelayAlpha(255,0,0.5);
+                            }else{
+                                Buffs.Find(u.unit,'B01G').Stop();
+                                BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束"); 
+                                x=u.X()+data.r[4]*CosBJ(u.F());
+                                y=u.Y()+data.r[4]*SinBJ(u.F());
+                                if(data.r[0]>1){
+                                    //前踢
+                                    f1=0; 
+                                    ani=12;
+                                    asp=2;
+                                    mj=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),2,1.25,1.15,"stand","zzmxcl_tuci_zise.mdl");
+                                    mj.SetH(100);
+                                    Dash.Start(mj.unit,u.F(),200,Dash.SUB,30,true,false);  
+                                    RunSoundOnUnit(Shiki.Sound[4],u.unit);
+                                    GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                            Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,8,true,false);
+                                            HitFlys.Add(mj.unit,15);
+                                            u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*2);  
+                                            Buffs.Skill(mj.unit,'A00W',1);  
+                                        } 
                                     } 
-                                } 
-                                GroupClear(tmp_group);  
-                                /*if(u.player.isai==true){
-                                    if(u.IsAbility('B01D')==true){
-                                        Shiki.Press(u.player.player,"Q");  
+                                    GroupClear(tmp_group);  
+                                    /*if(u.player.isai==true){
+                                        if(u.IsAbility('B01D')==true){
+                                            Shiki.Press(u.player.player,"Q");  
+                                        }
+                                    } */
+                                }else{ 
+                                    f1=180;
+                                    asp=1;
+                                    ani=13;
+                                    Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7_zise.mdl").AnimeId(0);
+                                    GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                            Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,15,true,true);
+                                            u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*6);  
+                                        } 
+                                    } 
+                                    GroupClear(tmp_group); 
+                                }
+                                
+                                //后撤 A05I,B01H
+                                //用于Q2的替身残影
+                                ts1=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
+                                ts1.AnimeId(ani);
+                                ts1.Alpha(0);
+                                ts1.AnimeSpeed(asp);
+                                //
+                                u.Pause(true);
+                                u.AnimeId(ani); 
+                                u.AnimeSpeed(asp);
+                                data1=Data.create('A05G');
+                                data1.c[0]=u;
+                                data1.c[1]=ts1;
+                                b=Buffs.Add(u.unit,'A05I','B01H',data.r[0]/2,false);
+                                b.Obj=data1;
+                                b.onEnd=function(Buffs b){
+                                    Data data=Data(b.Obj);
+                                    Units u=Units(data.c[0]);
+                                    Units ts=Units(data.c[1]);
+                                    u.AnimeSpeed(1);
+                                    u.Pause(false);
+                                    if(b.Level==0){  
+                                        ts.Position(u.X(),u.Y(),false);
+                                        ts.SetF(u.F(),true);
+                                        Dash.AllStop(ts.unit);
+                                        Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
+                                        ts.AnimeSpeed(0);
+                                        ts.DelayAlpha(255,0,0.5);
                                     }
-                                } */
-                            }else{ 
-                                f1=180;
-                                asp=1;
-                                ani=13;
-                                Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),1,1,1.25,"stand","dg7_zise.mdl").AnimeId(0);
-                                GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
-                                while(FirstOfGroup(tmp_group)!=null){
-                                    mj=Units.Get(FirstOfGroup(tmp_group));
-                                    GroupRemoveUnit(tmp_group,mj.unit);
-                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                        Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,15,true,true);
-                                        u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*6);  
-                                    } 
-                                } 
-                                GroupClear(tmp_group); 
-                            }
+                                    ts.Life(1);
+                                    data.Destroy();
+                                };
+                                //Dash.Start(ts1.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
+                                Dash.Start(u.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
                             
-                            //后撤 A05I,B01H
-                            //用于Q2的替身残影
-                            ts1=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),10,u.modelsize,1,"stand",u.model);
-                            ts1.AnimeId(ani);
-                            ts1.Alpha(0);
-                            ts1.AnimeSpeed(asp);
-                            //
-                            u.Pause(true);
-                            u.AnimeId(ani); 
-                            u.AnimeSpeed(asp);
-                            data1=Data.create('A05G');
-                            data1.c[0]=u;
-                            data1.c[1]=ts1;
-                            b=Buffs.Add(u.unit,'A05I','B01H',data.r[0]/2,false);
-                            b.Obj=data1;
-                            b.onEnd=function(Buffs b){
-                                Data data=Data(b.Obj);
-                                Units u=Units(data.c[0]);
-                                Units ts=Units(data.c[1]);
-                                u.AnimeSpeed(1);
-                                u.Pause(false);
-                                if(b.Level==0){  
-                                    ts.Position(u.X(),u.Y(),false);
-                                    ts.SetF(u.F(),true);
-                                    Dash.AllStop(ts.unit);
-                                    Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
-                                    ts.AnimeSpeed(0);
-                                    ts.DelayAlpha(255,0,0.5);
-                                }
-                                ts.Life(1);
-                                data.Destroy();
-                            };
-                            //Dash.Start(ts1.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
-                            Dash.Start(u.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
-                           
+                            }
+                        }else{
+                            BJDebugMsg("砍人：因死亡结束");
                         }
+                        ts.Life(1);
+                        Units(data.c[3]).Life(0.3);
+                        Units(data.c[3]).DelayAlpha(255,0,0.2);
+                        Spell(data.c[1]).Destroy();
+                        t.Destroy();
+                        data.Destroy();
                     }else{
-                        BJDebugMsg("砍人：因死亡结束");
-                    }
-                    ts.Life(1);
-                    Units(data.c[3]).Life(0.3);
-                    Units(data.c[3]).DelayAlpha(255,0,0.2);
-                    Spell(data.c[1]).Destroy();
-                    t.Destroy();
-                    data.Destroy();
-                }else{
-                    ts=Units(data.c[3]);
-                    data.r[0]+=0.01;
-                    data.r[1]+=0.01;
-                    data.r[2]+=0.01;
-                    ts.Position(u.X(),u.Y(),false);
-                    ts.SetF(u.F(),true);
-                    if(data.r[1]>=0.1){
-                        //伤害
-                        data.r[1]=0;
-                        x=u.X()+data.r[4]*CosBJ(u.F());
-                        y=u.Y()+data.r[4]*SinBJ(u.F()); 
-                        RunSoundOnUnit(Shiki.Sound[7],u.unit);
-                        //Util.Range(x,y,data.r[4]);
-                        GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
-                        while(FirstOfGroup(tmp_group)!=null){
-                            mj=Units.Get(FirstOfGroup(tmp_group));
-                            GroupRemoveUnit(tmp_group,mj.unit);
-                            if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),50,Dash.SUB,10,true,false);
-                                Buffs.Add(mj.unit,'A05J','B01I',1,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
-                                u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*(1+data.r[3])); 
-                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
-                                if(data.r[0]>=1){ 
-                                    Buffs.Skill(mj.unit,'A00W',1); 
-                                    ts1=Units.MJ(u.player.player,'e008','A02G',0,mj.X(),mj.Y(),Util.XY(u.unit,mj.unit),2,1,1,"stand", "blood-2.mdl");
-                                    ts1.DelayAlpha(255,0,1.99);
-                                }
+                        ts=Units(data.c[3]);
+                        data.r[0]+=0.01;
+                        data.r[1]+=0.01;
+                        data.r[2]+=0.01;
+                        ts.Position(u.X(),u.Y(),false);
+                        ts.SetF(u.F(),true);
+                        if(data.r[1]>=0.1){
+                            //伤害
+                            data.r[1]=0;
+                            x=u.X()+data.r[4]*CosBJ(u.F());
+                            y=u.Y()+data.r[4]*SinBJ(u.F()); 
+                            RunSoundOnUnit(Shiki.Sound[7],u.unit);
+                            //Util.Range(x,y,data.r[4]);
+                            GroupEnumUnitsInRange(tmp_group,x,y,data.r[4],function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){    
+                                    Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),50,Dash.SUB,10,true,false);
+                                    Buffs.Add(mj.unit,'A05J','B01I',1,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                    u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*(1+data.r[3])); 
+                                    Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                    if(data.r[0]>=1){ 
+                                        Buffs.Skill(mj.unit,'A00W',1); 
+                                        ts1=Units.MJ(u.player.player,'e008','A02G',0,mj.X(),mj.Y(),Util.XY(u.unit,mj.unit),2,1,1,"stand", "blood-2.mdl");
+                                        ts1.DelayAlpha(255,0,1.99);
+                                    }
+                                } 
                             } 
+                            GroupClear(tmp_group);
                         } 
-                        GroupClear(tmp_group);
-                    } 
-                    if(data.r[2]>=0.5){
-                        //增伤
-                        data.r[2]=0;
-                        data.r[3]+=0.25;
-                        data.r[4]+=25;
-                        if(data.r[3]==0.5){
-                            Effect.ToUnit("yooobug_hit_blue.mdl",u.unit,"weapon").Destroy();
+                        if(data.r[2]>=0.5){
+                            //增伤
+                            data.r[2]=0;
+                            data.r[3]+=0.25;
+                            data.r[4]+=25;
+                            if(data.r[3]==0.5){
+                                Effect.ToUnit("yooobug_hit_blue.mdl",u.unit,"weapon").Destroy();
+                            }
+                            ts.Size(0.8+(data.r[3]/1.5)); 
+                            Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
+                            ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
+                            ts.DelayAlpha(255,0,0.5);
+                            Dash.Start(ts.unit,ts.F(),100,Dash.SUB,10,true,false);
+                            ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),0.5,u.modelsize,1,"stand",u.model);
+                            ts.AnimeId(6);
+                            ts.DelayAlpha(255,0,0.25);
+                            ts.DelaySizeEx(0.5,u.modelsize+0.25,0.25); 
+                            Dash.Start(u.unit,u.F(),75,Dash.SUB,6,true,false);
                         }
-                        ts.Size(0.8+(data.r[3]/1.5)); 
-                        Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
-                        ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
-                        ts.DelayAlpha(255,0,0.5);
-                        Dash.Start(ts.unit,ts.F(),100,Dash.SUB,10,true,false);
-                        ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),0.5,u.modelsize,1,"stand",u.model);
-                        ts.AnimeId(6);
-                        ts.DelayAlpha(255,0,0.25);
-                        ts.DelaySizeEx(0.5,u.modelsize+0.25,0.25); 
-                        Dash.Start(u.unit,u.F(),75,Dash.SUB,6,true,false);
                     }
                 }
             });
@@ -1142,26 +1153,34 @@ library Shiki requires Groups{
                     data.c[1]=m;
                     data.i[0]=0;
                     data.r[0]=f1;
-                    Timers.Start(0.15,data,function(Timers t){
+                    data.r[1]=0.15;
+                    Timers.Start(0.01,data,function(Timers t){
                         Data data=Data(t.Data());
                         Units u=Units(data.c[0]);
                         Units m=Units(data.c[1]);
-                        if(data.i[0]==0){
-                            if(u.Alive()==true&&m.Alive()==true){ 
-                                //HitFlys.Reset(u.unit);
-                                //HitFlys.Reset(m.unit);
-                                HitFlys.Add(m.unit,15);
-                                HitFlys.Add(u.unit,25); 
+                        if(data.r[1]==0){
+                            data.r[1]=0.15; 
+                            if(data.i[0]==0){
+                                if(u.Alive()==true&&m.Alive()==true){ 
+                                    //HitFlys.Reset(u.unit);
+                                    //HitFlys.Reset(m.unit);
+                                    HitFlys.Add(m.unit,15);
+                                    HitFlys.Add(u.unit,25); 
+                                }
+                                data.i[0]+=1;
+                            }else{ 
+                                u.Pause(false);
+                                BJDebugMsg("暂停2-解除");
+                                if(u.Alive()==true&&m.Alive()==true){  
+                                    Shiki.Q3(u,m,data.r[0]);
+                                }
+                                t.Destroy();
+                                data.Destroy();
                             }
-                            data.i[0]+=1;
-                        }else{ 
-                            u.Pause(false);
-                            BJDebugMsg("暂停2-解除");
-                            if(u.Alive()==true&&m.Alive()==true){  
-                                Shiki.Q3(u,m,data.r[0]);
+                        }else{
+                            if(u.IsTimeStop()==false){
+                                data.r[1]-=0.01;
                             }
-                            t.Destroy();
-                            data.Destroy();
                         }
                     });
                 }else{//在天上则直接踹

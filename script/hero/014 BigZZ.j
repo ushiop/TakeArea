@@ -739,176 +739,184 @@ library BigZZ requires Groups{
             data.c[0]=u;
             //BJDebugMsg("K----ID:"+I2S(data)+"/U:"+I2S(data.c[0]));
             data.c[1]=e;
-            Timers.Start(0.4,data,function(Timers t){
+            data.r[0]=0.4;
+            Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units mj;
                 Dash dash;
-                if(u.Alive()==true){ 
-                    Buffs.Add(u.unit,'A04W','B019',10,false);
-                    mj=Units.MJ(u.player.player,'e008','A04U',0,u.X(),u.Y(),u.F(),11,u.modelsize,1,"stand",u.model);
-                    mj.AddAbility(TeamTips_Ability_Id[u.player.teamid]); 
-                    data.c[2]=mj; 
-                    u.Alpha(0);
-                    u.AddAbility('A04V');
-                    u.AddAbility('A04Z');
-                    mj.AnimeId(6);
-                    mj.AnimeSpeed(2);
-                    dash=Dash.Start(u.unit,u.F(),1000,Dash.NORMAL,10,true,false);
-                    dash.Obj=data;
-                    dash.onMove=function(Dash dash){ 
-                        Data data=Data(dash.Obj);
-                        Units u=Units.Get(dash.Unit);
-                        Units ts=Units(data.c[2]);
-                        Units tmp;
-                        unit k; 
-                        Dash dash1;
-                        Data data1,data2;
-                        if(u.IsAbility('B019')==true){
-                            if(u.player.isai==true){//如果是AI
-                                dash.MaxSpeed=20;
-                                k=GroupFind(u.unit,dash.X,dash.Y,1200,true,false);
-                                if(k==null){//没人时朝前方冲
+                if(data.r[0]==0){
+                     
+                    if(u.Alive()==true){ 
+                        Buffs.Add(u.unit,'A04W','B019',10,false);
+                        mj=Units.MJ(u.player.player,'e008','A04U',0,u.X(),u.Y(),u.F(),11,u.modelsize,1,"stand",u.model);
+                        mj.AddAbility(TeamTips_Ability_Id[u.player.teamid]); 
+                        data.c[2]=mj; 
+                        u.Alpha(0);
+                        u.AddAbility('A04V');
+                        u.AddAbility('A04Z');
+                        mj.AnimeId(6);
+                        mj.AnimeSpeed(2);
+                        dash=Dash.Start(u.unit,u.F(),1000,Dash.NORMAL,10,true,false);
+                        dash.Obj=data;
+                        dash.onMove=function(Dash dash){ 
+                            Data data=Data(dash.Obj);
+                            Units u=Units.Get(dash.Unit);
+                            Units ts=Units(data.c[2]);
+                            Units tmp;
+                            unit k; 
+                            Dash dash1;
+                            Data data1,data2;
+                            if(u.IsAbility('B019')==true){
+                                if(u.player.isai==true){//如果是AI
+                                    dash.MaxSpeed=20;
+                                    k=GroupFind(u.unit,dash.X,dash.Y,1200,true,false);
+                                    if(k==null){//没人时朝前方冲
+                                        dash.Angle=u.F();
+                                    }else{//1200码内有人时自动追踪
+                                        dash.Angle=Util.XY(u.unit,k);
+                                        k=null;
+                                    }
+                                }else{ 
                                     dash.Angle=u.F();
-                                }else{//1200码内有人时自动追踪
-                                    dash.Angle=Util.XY(u.unit,k);
+                                }
+                                dash.MaxDis+=100;
+                                //-------------手里剑附魔
+                                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    tmp=Units.Get(FirstOfGroup(tmp_group));  
+                                    GroupRemoveUnit(tmp_group,tmp.unit);
+                                    if(tmp.aid=='A051'){  
+                                        if(tmp.IsAbility('A054')==false){ 
+                                            //BJDebugMsg("闪电附魔");
+                                            tmp.AddAbility('A054');  
+                                            data1=Data(tmp.Obj);
+                                            data2=Data(data1.c[1]);//lei9.mdl
+                                            data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
+                                            //BJDebugMsg("L----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
+                                            data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
+                                            data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
+                                            data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
+                                        }
+                                    }  
+                                }   
+                                GroupClear(tmp_group); 
+                                //----------------------
+                                k=GroupFind(u.unit,dash.X+100*CosBJ(dash.Angle),dash.Y+100*SinBJ(dash.Angle),100,true,false);
+                                if(k!=null){
+                                    data.i[0]=1;
+                                    dash.Stop(); 
+                                    data.r[0]=0;
+                                    data.g[0]=CreateGroup();
+                                    u.Pause(true);
+                                    u.AnimeId(7);
+                                    u.AddAbility('A04X');
+                                    u.SetF(Util.XY(u.unit,k),true);
+                                    dash1=Dash.Start(u.unit,u.F(),450,Dash.SUB,30,true,false);
+                                    dash1.Obj=data;
+                                    dash1.onMove=function(Dash dash){
+                                        Data data=Data(dash.Obj);
+                                        Units u=Units(data.c[0]);
+                                        Units mj;
+                                        Data data1,data2;
+                                        Units tmp;
+                                        if(dash.Speed<4){
+                                            dash.Stop();
+                                        }else{ 
+                                            if(data.r[0]<=0){
+                                                data.r[0]=0.04;
+                                                Units.MJ(u.player.player,'e008','A04U',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1,"stand","az_storm_v2_z_5.mdl");
+                                                //Units.MJ(u.player.player,'e008','A04U',0,dash.X,dash.Y,GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
+                                                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);     
+                                                while(FirstOfGroup(tmp_group)!=null){
+                                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                                    if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
+                                                        GroupAddUnit(data.g[0],mj.unit);
+                                                        u.Damage(mj.unit,Damage.Magic,'A04U',u.Agi(true)*5); 
+                                                        Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
+                                                        //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
+                                                        Buffs.Skill(mj.unit,'A04Y',1);
+                                                    }
+                                                }
+                                                GroupClear(tmp_group);
+                                                //-------------手里剑附魔
+                                                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
+                                                while(FirstOfGroup(tmp_group)!=null){
+                                                    tmp=Units.Get(FirstOfGroup(tmp_group));  
+                                                    GroupRemoveUnit(tmp_group,tmp.unit);
+                                                    if(tmp.aid=='A051'){  
+                                                        if(tmp.IsAbility('A054')==false){ 
+                                                            tmp.AddAbility('A054');  
+                                                            data1=Data(tmp.Obj); 
+                                                            data2=Data(data1.c[1]);
+                                                            //BJDebugMsg("Q----ID:"+I2S(data1)+"/U:"+I2S(data1.c[1])+"/ID2:"+I2S(data2));
+                                                            data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
+                                                            //BJDebugMsg("O----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
+                                                            data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
+                                                            data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
+                                                            data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
+                                                        }
+                                                    }  
+                                                }  
+                                                GroupClear(tmp_group); 
+                                                //----------------------
+                                            }else{
+                                                data.r[0]-=0.01;
+                                            }
+                                        }
+                                    };
+                                    dash1.onEnd=function(Dash dash){
+                                        Data data=Data(dash.Obj);
+                                        Units u=Units(data.c[0]);
+                                        //BJDebugMsg("千鸟尾巴结束");
+                                        u.RemoveAbility('A04X');
+                                        u.DelayReleaseAnimePause(0.2); 
+                                        Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
+                                        DestroyGroup(data.g[0]);
+                                        data.g[0]=null;
+                                        Spell(data.c[1]).Destroy();
+                                        data.Destroy();
+                                    };
                                     k=null;
                                 }
-                            }else{ 
-                                dash.Angle=u.F();
+                            }else{
+                                dash.Stop();
                             }
-                            dash.MaxDis+=100;
-                            //-------------手里剑附魔
-                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
-                            while(FirstOfGroup(tmp_group)!=null){
-                                tmp=Units.Get(FirstOfGroup(tmp_group));  
-                                GroupRemoveUnit(tmp_group,tmp.unit);
-                                if(tmp.aid=='A051'){  
-                                    if(tmp.IsAbility('A054')==false){ 
-                                        //BJDebugMsg("闪电附魔");
-                                        tmp.AddAbility('A054');  
-                                        data1=Data(tmp.Obj);
-                                        data2=Data(data1.c[1]);//lei9.mdl
-                                        data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
-                                        //BJDebugMsg("L----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
-                                        data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
-                                        data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
-                                        data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
-                                    }
-                                }  
-                            }   
-                            GroupClear(tmp_group); 
-                            //----------------------
-                            k=GroupFind(u.unit,dash.X+100*CosBJ(dash.Angle),dash.Y+100*SinBJ(dash.Angle),100,true,false);
-                            if(k!=null){
-                                data.i[0]=1;
-                                dash.Stop(); 
-                                data.r[0]=0;
-                                data.g[0]=CreateGroup();
-                                u.Pause(true);
-                                u.AnimeId(7);
-                                u.AddAbility('A04X');
-                                u.SetF(Util.XY(u.unit,k),true);
-                                dash1=Dash.Start(u.unit,u.F(),450,Dash.SUB,30,true,false);
-                                dash1.Obj=data;
-                                dash1.onMove=function(Dash dash){
-                                    Data data=Data(dash.Obj);
-                                    Units u=Units(data.c[0]);
-                                    Units mj;
-                                    Data data1,data2;
-                                    Units tmp;
-                                    if(dash.Speed<4){
-                                        dash.Stop();
-                                    }else{ 
-                                        if(data.r[0]<=0){
-                                            data.r[0]=0.04;
-                                            Units.MJ(u.player.player,'e008','A04U',0,dash.X,dash.Y,GetRandomReal(0,360),1,1,1,"stand","az_storm_v2_z_5.mdl");
-                                            //Units.MJ(u.player.player,'e008','A04U',0,dash.X,dash.Y,GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
-                                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsAliveNotAloc);     
-                                            while(FirstOfGroup(tmp_group)!=null){
-                                                mj=Units.Get(FirstOfGroup(tmp_group));
-                                                GroupRemoveUnit(tmp_group,mj.unit);
-                                                if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
-                                                    GroupAddUnit(data.g[0],mj.unit);
-                                                    u.Damage(mj.unit,Damage.Magic,'A04U',u.Agi(true)*5); 
-                                                    Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
-                                                    //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
-                                                    Buffs.Skill(mj.unit,'A04Y',1);
-                                                }
-                                            }
-                                            GroupClear(tmp_group);
-                                            //-------------手里剑附魔
-                                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,125,function GroupIsTSW); 
-                                            while(FirstOfGroup(tmp_group)!=null){
-                                                tmp=Units.Get(FirstOfGroup(tmp_group));  
-                                                GroupRemoveUnit(tmp_group,tmp.unit);
-                                                if(tmp.aid=='A051'){  
-                                                    if(tmp.IsAbility('A054')==false){ 
-                                                        tmp.AddAbility('A054');  
-                                                        data1=Data(tmp.Obj); 
-                                                        data2=Data(data1.c[1]);
-                                                        //BJDebugMsg("Q----ID:"+I2S(data1)+"/U:"+I2S(data1.c[1])+"/ID2:"+I2S(data2));
-                                                        data2.c[0]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"weapon");
-                                                        //BJDebugMsg("O----ID:"+I2S(data2)+"/U:"+I2S(data2.c[0]));
-                                                        data2.c[1]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"origin");
-                                                        data2.c[2]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"head");
-                                                        data2.c[3]=Effect.ToUnit("[effect]31_ex.mdl",tmp.unit,"overhead");
-                                                    }
-                                                }  
-                                            }  
-                                            GroupClear(tmp_group); 
-                                            //----------------------
-                                        }else{
-                                            data.r[0]-=0.01;
-                                        }
-                                    }
-                                };
-                                dash1.onEnd=function(Dash dash){
-                                    Data data=Data(dash.Obj);
-                                    Units u=Units(data.c[0]);
-                                    //BJDebugMsg("千鸟尾巴结束");
-                                    u.RemoveAbility('A04X');
-                                    u.DelayReleaseAnimePause(0.2); 
-                                    Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
-                                    DestroyGroup(data.g[0]);
-                                    data.g[0]=null;
-                                    Spell(data.c[1]).Destroy();
-                                    data.Destroy();
-                                };
-                                k=null;
+                            ts.Position(dash.X,dash.Y,false);
+                            ts.SetF(dash.Angle,true);
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units u=Units(data.c[0]);
+                            Units mj=Units(data.c[2]); 
+                            if(u.IsAbility('B019')==true){
+                                Buffs.Find(u.unit,'B019').Stop();
                             }
-                        }else{
-                            dash.Stop();
-                        }
-                        ts.Position(dash.X,dash.Y,false);
-                        ts.SetF(dash.Angle,true);
-                    };
-                    dash.onEnd=function(Dash dash){
-                        Data data=Data(dash.Obj);
-                        Units u=Units(data.c[0]);
-                        Units mj=Units(data.c[2]); 
-                        if(u.IsAbility('B019')==true){
-                            Buffs.Find(u.unit,'B019').Stop();
-                        }
-                        //BJDebugMsg("千鸟奔跑结束");
-                        u.RemoveAbility('A04V'); 
-                        u.RemoveAbility('A04Z');
-                        u.Alpha(255);
-                        //u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl")); 
-                        Dash.Start(u.unit,u.F(),200,Dash.SUB,dash.Speed,true,false);
-                        mj.Life(0.3);
-                        mj.Alpha(0);
-                        if(data.i[0]==0){ 
-                            Spell(data.c[1]).Destroy();
-                            data.Destroy();
-                        }
-                    };
+                            //BJDebugMsg("千鸟奔跑结束");
+                            u.RemoveAbility('A04V'); 
+                            u.RemoveAbility('A04Z');
+                            u.Alpha(255);
+                            //u.SetData(Units.MJ(u.player.player,'e00L','A04U',0,0,0,0,86400,1,1,"two",".mdl")); 
+                            Dash.Start(u.unit,u.F(),200,Dash.SUB,dash.Speed,true,false);
+                            mj.Life(0.3);
+                            mj.Alpha(0);
+                            if(data.i[0]==0){ 
+                                Spell(data.c[1]).Destroy();
+                                data.Destroy();
+                            }
+                        };
+                    }else{
+                        Spell(data.c[1]).Destroy();
+                        data.Destroy();
+                    }  
+                    u.Pause(false);
+                    t.Destroy();
                 }else{
-                    Spell(data.c[1]).Destroy();
-                    data.Destroy();
-                }  
-                u.Pause(false);
-                t.Destroy();
+                    if(u.IsTimeStop()==false){
+                        data.r[0]-=0.01;
+                    }
+                }
             });
         }
 
