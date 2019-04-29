@@ -412,7 +412,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", tmp.unit, "chest") );
                                     Buffs.Skill(tmp.unit,'A00C',1); 
                                 }
-                            }
+                            } 
                             GroupClear(tmp_group); 
                             Timers.Start(0.01,data,function(Timers t){
                                 Data data=Data(t.Data());
