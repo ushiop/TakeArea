@@ -442,6 +442,7 @@ library SD requires Groups{
             //u.AnimeSpeed(0.5);
             u.AddAbility('A03S');
             u.AddAbility('A03T'); 
+            u.RemoveAbility(TeamTips_Ability_Id[u.player.teamid]);
             u.PositionEnabled(false); 
             if(u.IsAbility('B00V')==true){
                 Buffs.Find(u.unit,'B00V').Stop();
@@ -496,6 +497,11 @@ library SD requires Groups{
                                     Units.MJ(u.player.player,'e008','A03W',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
                                     u.PositionEnabled(true); 
                                     u.Position(u.X(),u.Y(),true);
+                                    Timers.Start(0.5,u,function(Timers t){
+                                        Units u=Units(t.Data());
+                                        u.AddAbility(TeamTips_Ability_Id[u.player.teamid]);
+                                        t.Destroy();
+                                    });
                                     u.Pause(false); 
                                     Spell(data.c[3]).Destroy();
                                     Units.MJ(u.player.player,'e008','A03W',0,x,y,0,2,2,1, "stand","boom1.mdl").SetH(50);
@@ -529,7 +535,8 @@ library SD requires Groups{
                                 }
                             }
                         });
-                    }else{ 
+                    }else{  
+                        u.AddAbility(TeamTips_Ability_Id[u.player.teamid]);
                         u.Pause(false); 
                         u.PositionEnabled(true); 
                         Spell(data.c[1]).Destroy();
