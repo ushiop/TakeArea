@@ -4,8 +4,19 @@ library Zg requires Groups{
     /*
         27 - Q前摇
         24 - Q动作
-    */
-   
-    struct Zg{ 
+    */ 
+    struct Zg{  
+        static method HERO_START(Spell e){
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A05X'){
+                u.FlushAnimeId(27);
+            }
+            e.Destroy();
+        }
+
+        static method onInit(){
+
+            Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
+        }
     }
-}
+} 
