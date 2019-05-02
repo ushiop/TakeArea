@@ -82,7 +82,7 @@ library Dashs requires TimerUtils{
                         speed=0;   
                         tmpMaxSpeed=tmp.MaxSpeed; 
                         //测试 BJDebugMsg("类型:"+I2S(tmp.DashType)+"/ID:"+I2S(tmp)+"/MAX:"+R2S(tmp.MaxDis)+"/NOW:"+R2S(tmp.NowDis)+"/LIFE:"+Util.B2S(GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0));
-                        if(tmp.NowDis<tmp.MaxDis&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){
+                        if(tmp.NowDis<(tmp.MaxDis*Units.Get(tmp.Unit).dashspeedscale)&&GetUnitState(tmp.Unit, UNIT_STATE_LIFE)>0){
                             if(Units.Get(tmp.Unit).IsTimeStop()==false){
                                 tmp.LastX=tmp.X;
                                 tmp.LastY=tmp.Y;
