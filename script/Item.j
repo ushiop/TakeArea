@@ -106,14 +106,17 @@ library Item requires Groups{
             u.Life(0.75);
             u.Anime("death");
             if(u.Data()==0){
+                BJDebugMsg("锤子没打到人");
                 Dash.Start(u.unit,u.F(),200,Dash.SUB,10,true,false);
             }else{
+                BJDebugMsg("锤子打到人了");
                 GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
                     if(IsUnitEnemy(mj.unit,u.player.player)==true){    
                         Buffs.Skill(mj.unit,'A00F',1);   
+                        BJDebugMsg("锤子打到人了-眩晕:"+mj.name);
                     }
                 }  
                 GroupClear(tmp_group);
