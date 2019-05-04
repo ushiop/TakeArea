@@ -657,7 +657,7 @@ library Shiki requires Groups{
         static method Damage(DamageArgs e){
             Units m;
             Buffs b;
-            if(e.TriggerUnit.IsAbility('B01J')==true){ 
+            if(e.TriggerUnit.IsAbility('B01J')==true&&e.TriggerUnit.IsTimeStop()==false){ 
                 b=Buffs.Find(e.TriggerUnit.unit,'B01J');
                 if(b.Level==1){//未打断时可触发
                     b.Level=2;
