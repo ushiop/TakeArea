@@ -1242,7 +1242,7 @@ library Shiki requires Groups{
                         GroupClear(tmp_group);
                         RunSoundOnUnit(Shiki.Sound[1], m.unit); 
                         u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
-                        Buffs.Skill(m.unit,'A00F',1);
+                        Buffs.Skill(m.unit,'A00W',1);
                         u.Pause(true);
                         BJDebugMsg("暂停1");
                         u.AnimeId(38);
