@@ -28,15 +28,35 @@ library Zg requires Groups{
             mj=Units.MJ(u.player.player,'e008','A05X',0,x,y,e.Angle,0.6,1,1.25,"stand","dg7.mdl"); 
             mj.AnimeId(4);
             data.c[3]=mj; 
+            data.g[0]=CreateGroup();
             dash=Dash.Start(u.unit,e.Angle,400,Dash.SUB,50,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 Units mj=Units(data.c[2]);
-                mj.Position(dash.X,dash.Y,false);
-                mj=Units(data.c[3]); 
-                mj.Position(dash.X,dash.Y,false);
+                Units ts;
+                if(dash.Speed>3.25){  
+                    mj.Position(dash.X,dash.Y,false);
+                    mj=Units(data.c[3]); 
+                    mj.Position(dash.X,dash.Y,false);
+                    GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
+                            GroupAddUnit(data.g[0],mj.unit);
+                            u.Damage(mj.unit,Damage.Magic,'A05X',u.Agi(true)*2); 
+                            Buffs.Skill(mj.unit,'A00W',1);
+                            Dash.Start(mj.unit,dash.Angle,50+(dash.MaxDis-dash.NowDis),Dash.SUB,25,true,false); 
+                            ts=Units.MJ(u.player.player,'e008','A05X',0,mj.X(),mj.Y(),dash.Angle,2,1,1,"stand", "blood-2.mdl");
+                            ts.DelayAlpha(255,0,1.99);
+                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                        
+                        }
+                    }
+                    GroupClear(tmp_group); 
+                }
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -47,6 +67,8 @@ library Zg requires Groups{
                     t.Destroy();
                 });
                 u.Pause(false);
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
                 Spell(data.c[1]).Destroy(); 
                 data.Destroy();
             };
