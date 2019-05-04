@@ -1446,7 +1446,9 @@ library Shiki requires Groups{
         }
 
         static method Spawn(Units u,Units m){
-            u.ai=Shiki.AI;
+            if(u.IsAbility('A05A')==true){ 
+                u.ai=Shiki.AI;
+            }
         }
 
                         
