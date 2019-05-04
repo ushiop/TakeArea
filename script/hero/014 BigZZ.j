@@ -116,7 +116,7 @@ library BigZZ requires Groups{
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
                     if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                        u.Damage(mj.unit,Damage.Chaos,'A055',(u.Agi(true)+u.Int(true))*5); 
+                        u.Damage(mj.unit,Damage.Chaos,'A055',(u.Agi(true)*2)+(u.Int(true)*3)); 
                         //Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
                         //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
                         //Buffs.Skill(mj.unit,'A04Y',1);
@@ -169,7 +169,7 @@ library BigZZ requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                                    u.Damage(mj.unit,Damage.Chaos,'A055',u.Int(true)*2); 
+                                    u.Damage(mj.unit,Damage.Chaos,'A055',u.Int(true)); 
                                     //Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
                                     //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
                                     //Buffs.Skill(mj.unit,'A04Y',1);
@@ -283,19 +283,19 @@ library BigZZ requires Groups{
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
                             GroupAddUnit(data.g[0],mj.unit);
-                            u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*2.5); 
+                            u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*1.5); 
                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                             if(fire==1){
-                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1.5); 
                                 Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                             }
                             if(light==1){
-                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1.5); 
                                 Buffs.Skill(mj.unit,'A00H',1);
                             }
                             if(dark==1){
-                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*2.5); 
+                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*1.5); 
                                 BigZZ.R1(u.unit,mj.unit);
                             }
                             //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
@@ -427,19 +427,19 @@ library BigZZ requires Groups{
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
                                     GroupAddUnit(data.g[0],mj.unit);
-                                    u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*2.5); 
+                                    u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*1.5); 
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                     if(fire==1){
-                                        u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                        u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1.5); 
                                         Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                         Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                     }
                                     if(light==1){
-                                        u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*2.5); 
+                                        u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1.5); 
                                         Buffs.Skill(mj.unit,'A00H',1);
                                     }
                                     if(dark==1){
-                                        u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*2.5); 
+                                        u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*1.5); 
                                         BigZZ.R1(u.unit,mj.unit);
                                     }
                                     //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
@@ -502,19 +502,19 @@ library BigZZ requires Groups{
                                         mj=Units.Get(FirstOfGroup(tmp_group));
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                            u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*1); 
+                                            u.Damage(mj.unit,Damage.Physics,'A051',u.Agi(true)*0.5); 
                                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                             if(fire==1){
-                                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1); 
+                                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*0.5); 
                                                 Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                             }
                                             if(light==1){
-                                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*1); 
+                                                u.Damage(mj.unit,Damage.Magic,'A051',u.Agi(true)*0.5); 
                                                 Buffs.Skill(mj.unit,'A00H',1);
                                             }
                                             if(dark==1){
-                                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*1); 
+                                                u.Damage(mj.unit,Damage.Chaos,'A051',u.Agi(true)*0.5); 
                                                 BigZZ.R1(u.unit,mj.unit);
                                             }
                                             //Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
@@ -593,7 +593,7 @@ library BigZZ requires Groups{
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
                             GroupAddUnit(data.g[0],mj.unit);
-                            u.Damage(mj.unit,Damage.Magic,'A050',u.Agi(true)*10); 
+                            u.Damage(mj.unit,Damage.Magic,'A050',u.Agi(true)*5); 
                             Effect.ToUnit("Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl", mj.unit, "chest").Destroy();
                             Dash.Start(mj.unit,dash.Angle,100+(dash.MaxDis-dash.NowDis),Dash.SUB,40,true,true);
                             Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
@@ -833,7 +833,7 @@ library BigZZ requires Groups{
                                                     GroupRemoveUnit(tmp_group,mj.unit);
                                                     if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
                                                         GroupAddUnit(data.g[0],mj.unit);
-                                                        u.Damage(mj.unit,Damage.Magic,'A04U',u.Agi(true)*5); 
+                                                        u.Damage(mj.unit,Damage.Magic,'A04U',u.Agi(true)*2); 
                                                         Units.MJ(u.player.player,'e008','A04U',0,mj.X(),mj.Y(),GetRandomReal(0,360),0.5,2,1,"death","by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl").SetH(75);
                                                         //Effect.ToUnit("by_wood_effect_yubanmeiqin_lightning_dianjishanghai.mdl",mj.unit,"chest").Destroy();
                                                         Buffs.Skill(mj.unit,'A04Y',1);
