@@ -89,7 +89,7 @@ library Item requires Groups{
             }else{ 
                 if(dash.Obj==0){
                     dash.Obj=1;
-                    k=GroupFind(dash.Unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),125,true,false);
+                    k=GroupFind(dash.Unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),80,true,false);
                     if(k!=null){ 
                         Units.Get(dash.Unit).SetData(1);
                         k=null;
@@ -105,18 +105,15 @@ library Item requires Groups{
             Units mj;
             u.Life(0.75);
             u.Anime("death");
-            if(u.Data()==0){
-                BJDebugMsg("锤子没打到人");
+            if(u.Data()==0){ 
                 Dash.Start(u.unit,u.F(),200,Dash.SUB,10,true,false);
-            }else{
-                BJDebugMsg("锤子打到人了");
-                GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,150,function GroupIsAliveNotAloc);     
+            }else{ 
+                GroupEnumUnitsInRange(tmp_group,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),80,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     mj=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,mj.unit);
                     if(IsUnitEnemy(mj.unit,u.player.player)==true){    
-                        Buffs.Skill(mj.unit,'A00F',1);   
-                        BJDebugMsg("锤子打到人了-眩晕:"+mj.name);
+                        Buffs.Skill(mj.unit,'A00F',1);    
                     }
                 }  
                 GroupClear(tmp_group);
