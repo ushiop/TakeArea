@@ -7,6 +7,13 @@ library Zg requires Groups{
     */ 
     struct Zg{  
 
+        static method Q2(Units u){
+            Buffs b=Buffs.Find(u.unit,'B01T');  
+            b.Level=0;
+            b.Stop(); 
+            BJDebugMsg("触发Q2");
+        }
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A05X');
@@ -61,6 +68,7 @@ library Zg requires Groups{
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
+                Buffs.Add(u.unit,'A05Z','B01T',5,false);
                 Timers.Start(0.2,u,function(Timers t){
                     Units u=Units(t.Data());
                     u.RemoveAbility('A05Y');
@@ -74,6 +82,17 @@ library Zg requires Groups{
             };
         }
 
+        static method Press(player ps,string k){
+            Players p=Players.Get(ps);
+            if(k=="Q"){ 
+                if(p.hero.IsAbility('B01T')==true&&p.hero.IsAbility('BPSE')==false&&p.hero.IsPause()==false){
+                    if(Buffs.Find(p.hero.unit,'B01T').Level==1){ 
+                        Zg.Q2(p.hero);
+                    }
+                }
+            } 
+        }
+
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A05X'){
@@ -84,6 +103,7 @@ library Zg requires Groups{
 
         static method onInit(){
 
+            Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
         }
