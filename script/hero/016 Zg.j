@@ -4,14 +4,87 @@ library Zg requires Groups{
     /*
         27 - Q前摇
         24 - Q动作
+        28 - Q2 第一阶段(0.768s蓄力)(0.464s蓄力完毕小踹)(0.421s大踹)
+        29 - Q2 空中下踹
     */ 
     struct Zg{  
 
         static method Q2(Units u){
             Buffs b=Buffs.Find(u.unit,'B01T');  
+            Data data=Data.create('A05X');
             b.Level=0;
             b.Stop(); 
             BJDebugMsg("触发Q2");
+            u.Pause(true);
+            u.AnimeId(28);
+            u.AddAbility('A060');
+            data.c[0]=u;
+            data.r[0]=0.77;//一段蓄力
+            data.r[1]=0.23;//小踹动作0.46
+            data.r[2]=0.21;//大踹动作0.42
+            Dash.Start(u.unit,u.F()+180,50,Dash.SUB,7,true,false);
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Units mj;
+                real x=u.X(),y=u.Y(),f=u.F();
+                Dash dash;
+                Data data1;
+                if(u.Alive()==false){
+                    u.RemoveAbility('A060'); 
+                    u.AnimeSpeed(1);
+                    u.Pause(false);
+                    t.Destroy();
+                    data.Destroy();
+                }else{
+                    if(data.r[0]<=0){//小踹
+                        if(data.r[1]==0.23){
+                            u.AnimeSpeed(2);
+                            data.r[1]-=0.01;
+                            Dash.Start(u.unit,f,50,Dash.SUB,7,true,false);
+                            mj=Units.MJ(u.player.player,'e009','A05X',0,x+100*CosBJ(f),y+100*SinBJ(f),f+180,1,0.7,2,"stand","white-qiquan-juhuang.mdl");
+                            mj.SetH(105);  
+                            mj.DelaySizeEx(0.7,1.5,0.9);
+                            Dash.Start(mj.unit,f+180,150,Dash.SUB,10,true,false);
+                        }else{ 
+                            if(data.r[1]<=0){//大踹
+                                if(data.r[2]==0.21){
+                                    data.r[2]-=0.01;
+                                    dash=Dash.Start(u.unit,f,350,Dash.SUB,15,true,false);
+                                    mj=Units.MJ(u.player.player,'e00N','A05X',0,x+55*CosBJ(f),y+55*SinBJ(f),f,1,0.75,1,"stand","cf2.mdl");  
+                                    dash.Obj=mj;
+                                    dash.onMove=function(Dash dash){
+                                        Units u=Units.Get(dash.Unit);
+                                        Units mj=Units(dash.Obj);
+                                        mj.Position(dash.X+55*CosBJ(dash.Angle),dash.Y+55*SinBJ(dash.Angle),false);
+                                        mj.SetF(dash.Angle,true);
+                                        mj.SetH(u.H());
+                                    };
+                                    HitFlys.Lister(HitFlys.Add(u.unit,30),HitFlys.onEnd,function(HitFlys h){
+                                        Units u=Units.Get(h.Unit);
+                                        u.AnimeSpeed(1);
+                                        u.RemoveAbility('A060'); 
+                                        u.Pause(false);
+                                    }); 
+                                    t.Destroy();
+                                    data.Destroy();
+                                }  
+                            }else{
+                                if(u.IsTimeStop()==false){
+                                    data.r[1]-=0.01;
+                                }
+                            }
+                        }
+                    }else{
+                        if(u.IsTimeStop()==false){//蓄力中
+                            data.r[0]-=0.01; 
+                            if(ModuloReal(data.r[0],0.1)==0.1){
+                                mj=Units.MJ(u.player.player,'e008','A05X',0,x,y,f,0.6,0.3,1,"stand","white-qiquan.mdl");  
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         static method Q(Spell e){
