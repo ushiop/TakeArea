@@ -1345,7 +1345,7 @@ library Shiki requires Groups{
         static method Press(player ps,string k){
             Players p=Players.Get(ps);
             if(k=="Q"){ 
-                if(p.hero.IsAbility('B01D')==true&&p.hero.IsAbility('BPSE')==false){
+                if(p.hero.IsAbility('B01D')==true&&p.hero.IsAbility('BPSE')==false&&p.hero.IsTimeStop()==false){
                     if(Buffs.Find(p.hero.unit,'B01D').Level==1){ 
                         Shiki.Q2(p.hero);
                     }
