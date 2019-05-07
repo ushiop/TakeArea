@@ -8,8 +8,90 @@ library Zg requires Groups{
         29 - Q2 第二阶段大踹0.421
         30 - Q2 空中下踹
         13 - W 真正的走位
+        25 - E 前摇
+        26 - E 抛投(0.7s抛出)(0.5s硬直)
     */ 
     struct Zg{  
+
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data;
+            real x=u.X(),y=u.Y(),f=u.F(),f1;
+            unit k;
+            HitFlys h;
+            Units mj;
+            Dash dash;
+            k=GroupFind(u.unit,x+70*CosBJ(f+180),y+70*SinBJ(f+180),85,true,false);
+            if(k!=null){
+                data=Data.create('A062');
+                u.Pause(true);
+                u.AnimeId(26);
+                u.AnimeSpeed(2.3);
+                data.c[0]=u;
+                data.c[1]=e; 
+                Buffs.Skill(k,'A00F',1);
+                f1=Util.XYEX(GetUnitX(k),GetUnitY(k),x+250*CosBJ(f),y+250*SinBJ(f));
+                mj=Units.MJ(u.player.player,'e008','A062',0,x,y,f+180,2,1.5,1.25,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
+                dash=Dash.Start(k,f1,300,Dash.ADD,40,true,false);
+                dash.Obj=mj;
+                dash.onMove=function(Dash dash){
+                    Units mj=Units(dash.Obj);
+                    Units u=Units.Get(dash.Unit);
+                    mj.Position(dash.X,dash.Y,false);
+                    mj.SetH(u.H());
+                };
+                h=HitFlys.Add(k,20);
+                h.Obj=u;
+                HitFlys.Lister(h,HitFlys.onEnd,function(HitFlys h){
+                    Units u=Units(h.Obj);
+                    Units m=Units.Get(h.Unit);
+                    real x=m.X(),y=m.Y();
+                    HitFlys hh;
+                    Units mj;
+                    Buffs.Skill(m.unit,'A00F',1); 
+                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.unit!=m.unit){  
+                            u.Damage(mj.unit,Damage.Physics,'A062',u.Agi(true)*6);  
+                            Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,15,true,false);
+                            Effect.ToUnit("qqqqq.mdl",mj.unit,"chest").Destroy();
+                        }
+                    } 
+                    GroupClear(tmp_group); 
+                    u.Damage(m.unit,Damage.Physics,'A062',u.Agi(true)*12);  
+                    Util.Duang(x,y,0.5,150,150,-96,0.02,50);
+                    Units.MJ(u.player.player,'e008','A062',0,x,y,0,2,1.3,1,"stand","warstompcaster.mdl").SetH(150);
+                    Units.MJ(u.player.player,'e008','A062',0,x,y,0,2,1.3,1,"stand","white-qiquan-new.mdl").SetH(150);
+                    Dash.Start(m.unit,Util.XY(u.unit,m.unit),400,Dash.SUB,25,true,false); 
+                    Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
+                    hh=HitFlys.Add(m.unit,45);
+                    hh.Obj=u;
+                    HitFlys.Lister(hh,HitFlys.onEnd,function(HitFlys h){
+                        Timers.Start(0.01,Units.Get(h.Unit),function(Timers t){
+                            Units u=Units(t.Data());
+                            HitFlys.Add(u.unit,30);
+                            t.Destroy();
+                        });
+                    });
+                });
+                h=HitFlys.Add(u.unit,15);
+                Dash.Start(u.unit,f1,75,Dash.SUB,10,true,false);
+                h.Obj=data;
+                HitFlys.Lister(h,HitFlys.onEnd,function(HitFlys h){
+                    Data data=Data(h.Obj);
+                    Units u=Units(data.c[0]);
+                    u.DelayReleaseAnimePause(0.23);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                });
+                k=null;
+            }else{
+                u.SetAbilityCD('A061',0);
+                e.Destroy();
+            } 
+        }
 
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
@@ -371,18 +453,22 @@ library Zg requires Groups{
             if(e.Id=='A061'){
                 u.SetF(e.Angle,true);
             }
+            if(e.Id=='A062'){
+                u.FlushAnimeId(25);
+            }
             e.Destroy();
         }
 
         
 
-        static method onInit(){
-
+        static method onInit(){ 
             Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A061',Zg.HERO_START); 
+            Spell.On(Spell.onReady,'A062',Zg.HERO_START); 
             Spell.On(Spell.onSpell,'A061',Zg.W);
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
+            Spell.On(Spell.onSpell,'A062',Zg.E);
         }
     }
 } 
