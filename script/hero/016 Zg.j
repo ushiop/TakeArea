@@ -19,14 +19,22 @@ library Zg requires Groups{
             u.AnimeSpeed(2);
             data.c[0]=u;
             data.c[1]=e;
-            data.r[0]=0.24;
+            data.r[0]=0.26;
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Dash dash;
+                real x,y,f;
                 if(data.r[0]<=0){
                     if(u.Alive()==true){
-                        u.AnimeSpeed(0);
+                        u.AnimeSpeed(0); 
+                        u.Alpha(255);
+                        x=u.X();
+                        y=u.Y();
+                        f=Spell(data.c[1]).Angle;
+                        Util.Duang(x,y,0.5,100,100,-36,0.02,50);
+                        Units.MJ(u.player.player,'e008','A061',0,x,y,f,1,1.1,2,"stand","chongfeng2.mdl").SetH(50);
+                        Units.MJ(u.player.player,'e008','A061',0,x,y,Spell(data.c[1]).Angle,2,0.5,1.25,"stand","white-qiquan.mdl").SetH(50);
                         dash=Dash.Start(u.unit,Spell(data.c[1]).Angle,600,Dash.SUB,45,true,false);
                         dash.Obj=data;
                         dash.onMove=function(Dash dash){
@@ -67,6 +75,7 @@ library Zg requires Groups{
                             data.Destroy();
                         };
                     }else{
+                        u.Alpha(255);
                         u.AnimeSpeed(1);
                         u.Pause(false);
                         Spell(data.c[1]).Destroy();
@@ -76,6 +85,12 @@ library Zg requires Groups{
                 }else{
                     if(u.IsTimeStop()==false){
                         data.r[0]-=0.01;
+                        if(data.r[0]==0.25||data.r[0]==0.15||data.r[0]==0.05){
+                            u.Alpha(0);
+                        }
+                        if(data.r[0]==0.2||data.r[0]==0.1){
+                            u.Alpha(255);
+                        }
                     }
                 }
             });
@@ -353,13 +368,19 @@ library Zg requires Groups{
             if(e.Id=='A05X'){
                 u.FlushAnimeId(27);
             }
+            if(e.Id=='A061'){
+                u.SetF(e.Angle,true);
+            }
             e.Destroy();
         }
+
+        
 
         static method onInit(){
 
             Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
+            Spell.On(Spell.onReady,'A061',Zg.HERO_START); 
             Spell.On(Spell.onSpell,'A061',Zg.W);
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
         }
