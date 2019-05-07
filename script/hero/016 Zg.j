@@ -7,8 +7,79 @@ library Zg requires Groups{
         28 - Q2 第一阶段(0.768s蓄力)(0.464s蓄力完毕小踹)
         29 - Q2 第二阶段大踹0.421
         30 - Q2 空中下踹
+        13 - W 真正的走位
     */ 
     struct Zg{  
+
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A061'); 
+            u.Pause(true);
+            u.AnimeId(13);
+            u.AnimeSpeed(2);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0.24;
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Dash dash;
+                if(data.r[0]<=0){
+                    if(u.Alive()==true){
+                        u.AnimeSpeed(0);
+                        dash=Dash.Start(u.unit,Spell(data.c[1]).Angle,600,Dash.SUB,45,true,false);
+                        dash.Obj=data;
+                        dash.onMove=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units u=Units(data.c[0]);
+                            unit k=null;
+                            Dash dash1;
+                            if(dash.Speed>5){
+                                k=GroupFind(u.unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),70,true,false);
+                                if(k!=null){
+                                    data.u[0]=k;
+                                    k=null;
+                                    dash.Stop();
+                                    u.Pause(true);
+                                    u.AnimeSpeed(1.5);
+                                    dash1=Dash.Start(u.unit,dash.Angle,200,Dash.NORMAL,20,true,false);
+                                    dash1.onEnd=function(Dash dash){
+                                        Units u=Units.Get(dash.Unit);  
+                                        u.DelayReleaseAnimePause(0.2);
+                                    };
+                                }
+                            }else{
+                                dash.Stop();
+                            }
+                        };
+                        dash.onEnd=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units u=Units(data.c[0]); 
+                            if(data.u[0]==null){
+                                Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
+                                u.AnimeSpeed(1);
+                                u.DelayReleaseAnimePause(0.6);
+                            }else{
+                                u.Pause(false);
+                                data.u[0]=null;
+                            }
+                            Spell(data.c[1]).Destroy();
+                            data.Destroy();
+                        };
+                    }else{
+                        u.AnimeSpeed(1);
+                        u.Pause(false);
+                        Spell(data.c[1]).Destroy();
+                        data.Destroy();
+                    }
+                    t.Destroy();
+                }else{
+                    if(u.IsTimeStop()==false){
+                        data.r[0]-=0.01;
+                    }
+                }
+            });
+        }
 
         static method Q2(Units u){
             Buffs b=Buffs.Find(u.unit,'B01T');  
@@ -289,6 +360,7 @@ library Zg requires Groups{
 
             Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
+            Spell.On(Spell.onSpell,'A061',Zg.W);
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
         }
     }
