@@ -13,6 +13,33 @@ library Zg requires Groups{
     */ 
     struct Zg{  
 
+        //突然贫血
+        static method R1(Units u){
+            real r; 
+            if(u.player.lv15!=null){
+                r=GetRandomReal(0,1); 
+                if(r<=0.05){
+                    RuaText(u.unit,"？？？",10,2,1,45,0,0.02);
+                    Buffs.Skill(u.unit,'A00W',1);         
+                }
+            } 
+        }
+
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell); 
+            Buffs b;
+            u.Pause(true);
+            u.Pause(false);
+            b=Buffs.Add(u.unit,'A065','B01V',10,false);
+            b.Obj=e;
+            b.onEnd=function(Buffs b){
+                Spell(b.Obj).Destroy();
+                Zg.R1(Units.Get(b.Unit));
+            };
+            Units.MJ(u.player.player,'e008','A065',0,u.X(),u.Y(),0,2,1,1,"stand","az-blue-lizi-shangsheng.mdl");
+        
+        }
+
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Data data;
@@ -91,11 +118,13 @@ library Zg requires Groups{
                     Data data=Data(h.Obj);
                     Units u=Units(data.c[0]);
                     u.DelayReleaseAnimePause(0.23);
+                    Zg.R1(u);
                     Spell(data.c[1]).Destroy();
                     data.Destroy();
                 });
                 k=null;
             }else{
+                Zg.R1(u);
                 e.Destroy();
             } 
         }
@@ -164,6 +193,7 @@ library Zg requires Groups{
                                 u.Pause(false);
                                 data.u[0]=null;
                             }
+                            Zg.R1(u);
                             Spell(data.c[1]).Destroy();
                             data.Destroy();
                         };
@@ -171,6 +201,7 @@ library Zg requires Groups{
                         u.Alpha(255);
                         u.AnimeSpeed(1);
                         u.Pause(false);
+                        Zg.R1(u);
                         Spell(data.c[1]).Destroy();
                         data.Destroy();
                     }
@@ -336,6 +367,7 @@ library Zg requires Groups{
                                                 });
                                                 HitFlys.Lister(h,HitFlys.onEnd,function(HitFlys h){
                                                     Units u=Units.Get(h.Unit);
+                                                    Zg.R1(u);
                                                     u.RemoveAbility('A060'); 
                                                     u.AnimeSpeed(1);
                                                     u.Pause(false);
@@ -356,6 +388,7 @@ library Zg requires Groups{
                                 Data data=Data(dash.Obj);
                                 Units u=Units(data.c[0]);
                                 if(data.u[0]==null){
+                                    Zg.R1(u);
                                     u.RemoveAbility('A060');
                                     u.AnimeSpeed(1);
                                 }else{
@@ -441,6 +474,7 @@ library Zg requires Groups{
                 u.Pause(false);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
+                Zg.R1(u);
                 Spell(data.c[1]).Destroy(); 
                 data.Destroy();
             };
@@ -492,6 +526,7 @@ library Zg requires Groups{
             Spell.On(Spell.onSpell,'A061',Zg.W);
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
             Spell.On(Spell.onSpell,'A062',Zg.E);
+            Spell.On(Spell.onSpell,'A064',Zg.R);
         }
     }
 } 
