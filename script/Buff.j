@@ -1,7 +1,7 @@
 library Buff requires Util{
 
     type BuffEventInterface extends function(Buffs);
-    type AddBuffEventInterface extends function(unit,Buffs);
+    type AddBuffEventInterface extends function(unit,integer);
 
     public struct Buffs{
         private static Buffs Root;//根节点
