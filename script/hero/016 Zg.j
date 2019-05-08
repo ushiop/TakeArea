@@ -136,8 +136,7 @@ library Zg requires Groups{
                                 if(k!=null){
                                     data.u[0]=k;
                                     k=null;
-                                    dash.Stop();
-                                    
+                                    dash.Stop(); 
                                     u.Pause(true);
                                     u.AnimeSpeed(1.5);
                                     dash1=Dash.Start(u.unit,dash.Angle,200,Dash.NORMAL,20,true,false);
@@ -145,6 +144,9 @@ library Zg requires Groups{
                                         Units u=Units.Get(dash.Unit);  
                                         u.DelayReleaseAnimePause(0.2);
                                         Buffs.Add(u.unit,'A063','B01U',0.3,false);
+                                        if(u.player.press.W==true){
+                                            u.SetF(dash.Angle+180,true);
+                                        }
                                     };
                                 }
                             }else{
@@ -453,7 +455,7 @@ library Zg requires Groups{
                     }
                 }
             } 
-        }
+        } 
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
@@ -467,7 +469,7 @@ library Zg requires Groups{
             }
             if(e.Id=='A062'){
                 if(u.IsAbility('B01U')==true){ 
-                    SpellText(u.unit,e.SpellId,3,10);
+                    SpellText(u.unit,e.Id,3,10);
                     u.SetAbilityCD('A062',15);
                     u.SetMP(u.MP()-150);
                     Zg.E(e);
