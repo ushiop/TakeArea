@@ -20,7 +20,8 @@ library Zg requires Groups{
             unit k;
             HitFlys h;
             Units mj;
-            Dash dash;
+            Dash dash; 
+            u.SetAbilityCD('A061',0);
             k=GroupFind(u.unit,x+70*CosBJ(f+180),y+70*SinBJ(f+180),85,true,false);
             if(k!=null){
                 data=Data.create('A062');
@@ -30,8 +31,15 @@ library Zg requires Groups{
                 data.c[0]=u;
                 data.c[1]=e; 
                 Buffs.Skill(k,'A00F',1);
+                if(u.GetAbilityCD('A05X')!=0){ 
+                    u.SetAbilityCD('A05X',u.GetAbilityCD('A05X')*0.6);
+                }
                 f1=Util.XYEX(GetUnitX(k),GetUnitY(k),x+250*CosBJ(f),y+250*SinBJ(f));
                 mj=Units.MJ(u.player.player,'e008','A062',0,x,y,f+180,2,1.5,1.25,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
+                if(e.State!=Spell.SpellState){
+                    Effect.ToUnit("qqqqq.mdl",k,"chest").Destroy();
+                    mj.Model(".mdl");
+                }
                 dash=Dash.Start(k,f1,300,Dash.ADD,40,true,false);
                 dash.Obj=mj;
                 dash.onMove=function(Dash dash){
@@ -88,7 +96,6 @@ library Zg requires Groups{
                 });
                 k=null;
             }else{
-                u.SetAbilityCD('A061',0);
                 e.Destroy();
             } 
         }
@@ -130,12 +137,14 @@ library Zg requires Groups{
                                     data.u[0]=k;
                                     k=null;
                                     dash.Stop();
+                                    
                                     u.Pause(true);
                                     u.AnimeSpeed(1.5);
                                     dash1=Dash.Start(u.unit,dash.Angle,200,Dash.NORMAL,20,true,false);
                                     dash1.onEnd=function(Dash dash){
                                         Units u=Units.Get(dash.Unit);  
                                         u.DelayReleaseAnimePause(0.2);
+                                        Buffs.Add(u.unit,'A063','B01U',0.3,false);
                                     };
                                 }
                             }else{
@@ -192,6 +201,7 @@ library Zg requires Groups{
             data.r[0]=0.77;//一段蓄力
             data.r[1]=0.23;//小踹动作0.46
             Dash.Start(u.unit,u.F()+180,50,Dash.SUB,7,true,false);
+            SpellNameText(u.unit,"自己也不清楚怎么使出的踢击",3,10);
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
@@ -449,14 +459,25 @@ library Zg requires Groups{
             Units u=Units.Get(e.Spell);
             if(e.Id=='A05X'){
                 u.FlushAnimeId(27);
+                e.Destroy();
             }
             if(e.Id=='A061'){
                 u.SetF(e.Angle,true);
+                e.Destroy();
             }
             if(e.Id=='A062'){
-                u.FlushAnimeId(25);
+                if(u.IsAbility('B01U')==true){ 
+                    SpellText(u.unit,e.SpellId,3,10);
+                    u.SetAbilityCD('A062',15);
+                    u.SetMP(u.MP()-150);
+                    Zg.E(e);
+                }else{ 
+                    u.FlushAnimeId(25);
+                    Dash.Start(u.unit,u.F()+180,50,Dash.SUB,6,true,false);
+                    e.Destroy();
+                }
             }
-            e.Destroy();
+            
         }
 
         
