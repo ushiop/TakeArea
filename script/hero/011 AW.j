@@ -146,12 +146,15 @@ library AW requires Groups{
         static method Damage_Sub(DamageArgs e){
             Buffs b;
             if(e.TriggerUnit.IsAbility('B00Q')==true){
-                b=Buffs.Find(e.TriggerUnit.unit,'B00Q');
-                if(b.Level>=100){
-                    e.Damage=0;
-                }else{ 
-                    e.Damage-=e.Damage*(b.Level*0.01);
+                if(e.DamageType==Damage.Attack||e.DamageType==Damage.Physics){
+                    b=Buffs.Find(e.TriggerUnit.unit,'B00Q');
+                    if(b.Level>=100){
+                        e.Damage=0;
+                    }else{ 
+                        e.Damage-=e.Damage*(b.Level*0.01);
+                    }
                 }
+                
             }
         }
 
