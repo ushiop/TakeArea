@@ -13,6 +13,50 @@ library Zg requires Groups{
     */ 
     struct Zg{  
 
+        //突然反转-受到伤害后判断累计伤害是否超过60%
+        static method Damage(DamageArgs e){
+            Data data;
+            Buffs b;
+            if(e.TriggerUnit.IsAbility('B01W')==true){
+                b=Buffs.Find(e.TriggerUnit.unit,'B01W');
+                data=Data(b.Obj);
+                data.r[0]+=e.Damage;
+                if(data.r[0]>=e.TriggerUnit.MaxHP()*0.6){
+                    if(data.i[0]==0){
+                        data.i[0]=1;
+                        UnitRemoveAbility(e.TriggerUnit.unit, 'BPSE' );  
+                        RuaText(e.TriggerUnit.unit,"？ ？？ ？？？",10,2,1,45,0,0.02);
+                        RuaText(e.DamageUnit.unit,"！！！！！",10,2,1,45,0,0.02);
+                        Units.MJ(e.TriggerUnit.player.player,'e008','A065',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),0,2,1,1,"stand","az-blue-lizi-shangsheng_ex.mdl");
+                        Buffs.Add(e.TriggerUnit.unit,'A067','B01X',4,false);
+                    }
+                }
+            }
+        }
+
+        //突然反转-受到眩晕后开始计算2秒内累计伤害，重复被眩晕不会重新计算
+        static method R2(unit ua,integer aid){
+            Data data;
+            Units u=Units.Get(ua);
+            Buffs b;
+            if(u.IsAbility('A064')==true){
+                if(u.player.lv15!=null){
+                    if(aid=='A00C'||aid=='A00A'||aid=='A00W'||aid=='A00F'){
+                        if(u.IsAbility('B01W')==false){
+                            data=Data.create('A064');
+                            data.r[0]=0;
+                            b=Buffs.Add(u.unit,'A066','B01W',2,false);
+                            b.Obj=data;
+                            b.onEnd=function(Buffs b){
+                                Data data=Data(b.Obj);
+                                data.Destroy();
+                            };
+                        } 
+                    }
+                }
+            }
+        }
+
         //突然贫血
         static method R1(Units u){
             real r; 
@@ -440,7 +484,7 @@ library Zg requires Groups{
                 Units u=Units(data.c[0]);
                 Units mj=Units(data.c[2]);
                 Units ts;
-                if(dash.Speed>3.25){  
+                if(dash.Speed>4){  
                     mj.Position(dash.X,dash.Y,false);
                     mj=Units(data.c[3]); 
                     mj.Position(dash.X,dash.Y,false);
@@ -471,6 +515,7 @@ library Zg requires Groups{
                     u.RemoveAbility('A05Y');
                     t.Destroy();
                 });
+                Dash.Start(u.unit,dash.Angle,150,Dash.SUB,dash.Speed,true,false);
                 u.Pause(false);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
@@ -515,11 +560,27 @@ library Zg requires Groups{
             }
             
         }
+ 
+        static method Order(EventArgs e){
+            Units u=Units.Get(e.TriggerUnit);
+            real f; 
+            if(u.IsAbility('B01X')==true&&e.OrderId!=851973){ 
+                if(e.OrderTargetUnit==null){ 
+                    f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
+                }else{
+                    f=Util.XY(u.unit,e.OrderTargetUnit);
+                } 
+                u.SetF(f,true);
+            } 
+                  
+        }
 
-        
-
-        static method onInit(){ 
+        static method onInit(){  
+            Damage.On(Damage.onUnitDamage_EndDamage,Zg.Damage); 
             Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
+            Buffs.On(Buffs.onUnitSkill,Zg.R2); 
+            Events.On(Events.onUnitOrderToUnit,Zg.Order);
+            Events.On(Events.onUnitOrderToLocation,Zg.Order); 
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A061',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A062',Zg.HERO_START); 
