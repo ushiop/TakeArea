@@ -1126,7 +1126,8 @@ library Shiki requires Groups{
             u.AddAbility('A05F'); 
             data=Data.create('A05A');
             data.c[0]=u;
-            data.c[1]=m;
+            data.c[1]=m; 
+            SpellNameText(u.unit,"再踹一脚",3,10);
             Timers.Start(0.01,data,function(Timers t){
                 Data data1=Data(t.Data());
                 Data data;
