@@ -825,7 +825,7 @@ library Shiki requires Groups{
             //
             Buffs.Add(u.unit,'A05H','B01G',10,false); 
             u.Pause(true);  
-            u.AnimeId(6);
+            u.AnimeId(6); 
             Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4,1.25,"stand","white-qiquan.mdl");
             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),5,0.8,1,"stand","shiki-bahuajing.mdl");
             data.c[3]=ts; 
@@ -851,7 +851,7 @@ library Shiki requires Groups{
                 }
                 if(u.IsTimeStop()==false){
                     if(u.Alive()==false||data.r[0]>=2.0||u.IsAbility('B01G')==false||press==false||u.IsAbility('BPSE')==true){
-                        ts=Units(data.c[2]);
+                        ts=Units(data.c[2]); 
                         if(u.Alive()==true){
                             u.Pause(false);
                             if(u.IsAbility('B01G')==false){
@@ -957,7 +957,11 @@ library Shiki requires Groups{
                         data.r[0]+=0.01;
                         data.r[1]+=0.01;
                         data.r[2]+=0.01;
-                        ts.Position(u.X(),u.Y(),false);
+                        if(data.r[3]>=0.5){ 
+                            ts.Position(u.X()+40*CosBJ(u.F()+180),u.Y()+40*SinBJ(u.F()+180),false);
+                        }else{ 
+                            ts.Position(u.X(),u.Y(),false);
+                        }
                         ts.SetF(u.F(),true);
                         if(data.r[1]>=0.1){
                             //伤害
@@ -988,13 +992,10 @@ library Shiki requires Groups{
                             //增伤
                             data.r[2]=0;
                             data.r[3]+=0.25;
-                            data.r[4]+=25;
-                            if(data.r[3]==0.5){
-                                Effect.ToUnit("yooobug_hit_blue.mdl",u.unit,"weapon").Destroy();
-                            }
-                            ts.Size(0.8+(data.r[3]/1.5)); 
+                            data.r[4]+=25; 
+                            ts.DelaySizeEx(ts.modelsize,0.8+(data.r[3]/1.5),0.3); 
                             Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),0,1,0.4+(data.r[3]/2),1.25+data.r[3],"stand","white-qiquan.mdl");
-                            ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+data.r[3],1,"stand","shiki-bahuajing.mdl");
+                            ts=Units.MJ(u.player.player,'e008','A05G',0,ts.X(),ts.Y(),ts.F(),1,0.8+(data.r[3]/1.5),1,"stand","shiki-bahuajing.mdl");
                             ts.DelayAlpha(255,0,0.5);
                             Dash.Start(ts.unit,ts.F(),100,Dash.SUB,10,true,false);
                             ts=Units.MJ(u.player.player,'e008','A05G',0,u.X(),u.Y(),u.F(),0.5,u.modelsize,1,"stand",u.model);
