@@ -601,6 +601,9 @@ library Units requires Table,Players,Events,Util{
 
             //返回X坐标
             method X()->real{
+                if(GetUnitX(this.unit)==0.00){
+                    BJDebugMsg("【----坐标错误-----】单位："+this.name+"/存活:"+Util.B2S(this.Alive()));
+                }
                 return GetUnitX(this.unit);
             }
  
