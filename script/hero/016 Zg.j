@@ -28,10 +28,11 @@ library Zg requires Groups{
                 data=Data.create('A064');
                 u.Pause(true);
                 u.AnimeId(14);
-                u.AnimeSpeed(2); 
-                RuaText(u.unit,"？",10,2,1,45,0,0.02);
+                u.AnimeSpeed(2);  
+                SpellNameText(u.unit,"？",3,10);
                 data.c[0]=u;
                 data.u[0]=k; 
+                data.i[0]=3;
                 Units.MJ(u.player.player,'e008','A065',0,u.X(),u.Y(),0,2,1,1,"stand","blink_blue.mdl");
                 dash=Dash.Start(u.unit,GetRandomReal(0,360),450,Dash.NORMAL,22.5,true,false);
                 dash.Obj=data;
@@ -40,6 +41,12 @@ library Zg requires Groups{
                     Units u=Units.Get(dash.Unit);
                     Units m=Units.Get(data.u[0]);
                     u.SetF(Util.XY(u.unit,m.unit),true);
+                    if(data.i[0]==0){
+                        data.i[0]=3; 
+                        SpellNameText(u.unit,"？",3,10);
+                    }else{
+                        data.i[0]-=1;
+                    }
                 };
                 dash.onEnd=function(Dash dash){
                     Data data=Data(dash.Obj);
@@ -60,16 +67,16 @@ library Zg requires Groups{
                         Units u=Units(data.c[0]);
                         Data data1;
                         Dash dash1;
-                        Dash.Start(u.unit,dash.Angle,250,Dash.SUB,10,true,false);
+                        Dash.Start(u.unit,dash.Angle,350,Dash.SUB,12,true,false);
                         Effect.ToUnit("qqqqq.mdl",data.u[0],"chest").Destroy();
-                        u.AnimeSpeed(1);
-                        u.DelayReleaseAnimePause(0.5);
+                        u.AnimeSpeed(1.25);
+                        u.DelayReleaseAnimePause(0.7);
                         Buffs.Add(data.u[0],'A068','B01Y',4,false); 
                         u.Damage(data.u[0],Damage.Physics,'A064',u.Agi(true)*5); 
                         data1=Data.create('A064');
                         data1.g[0]=CreateGroup();
                         data1.c[0]=u;
-                        HitFlys.Add(data.u[0],25);
+                        HitFlys.Add(data.u[0],17);
                         dash1=Dash.Start(data.u[0],dash.Angle,800,Dash.SUB,40,true,true);
                         dash1.Obj=data1;
                         dash1.onMove=function(Dash dash){
@@ -315,7 +322,7 @@ library Zg requires Groups{
                                         }
                                         if(u.player.lv15!=null){
                                             if(u.player.press.R==false){
-                                                if(GetRandomReal(0,1)<=1){ 
+                                                if(GetRandomReal(0,1)<=0.5){ 
                                                     Zg.R3(u.unit);
                                                 }
                                             } 
