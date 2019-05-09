@@ -10,8 +10,98 @@ library Zg requires Groups{
         13 - W 真正的走位
         25 - E 前摇
         26 - E 抛投(0.7s抛出)(0.5s硬直)
+        14 - 突然踢人(1.225s整体)(0.541s蓄力)(0.379s踢人)
     */ 
     struct Zg{  
+
+        //突然踢人
+        static method R3(unit ua){
+            Units u=Units.Get(ua);
+            unit k;
+            Data data;
+            Dash dash;
+            k=GroupRandomFilter(u.unit,u.X(),u.Y(),150,true,u.unit);//随机选取一个友军
+            if(k==null){//没有友军
+                k=GroupRandomFilter(u.unit,u.X(),u.Y(),150,false,u.unit);//随机选取一个敌军
+            }
+            if(k!=null){
+                data=Data.create('A064');
+                u.Pause(true);
+                u.AnimeId(14);
+                u.AnimeSpeed(2); 
+                RuaText(u.unit,"？",10,2,1,45,0,0.02);
+                data.c[0]=u;
+                data.u[0]=k; 
+                Units.MJ(u.player.player,'e008','A065',0,u.X(),u.Y(),0,2,1,1,"stand","blink_blue.mdl");
+                dash=Dash.Start(u.unit,GetRandomReal(0,360),450,Dash.NORMAL,22.5,true,false);
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units.Get(dash.Unit);
+                    Units m=Units.Get(data.u[0]);
+                    u.SetF(Util.XY(u.unit,m.unit),true);
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    Units m=Units.Get(data.u[0]);
+                    Dash dash1;
+                    Units.MJ(u.player.player,'e008','A064',0,dash.X,dash.Y,Util.XY(u.unit,m.unit),1,1.1,2,"stand","chongfeng2.mdl");
+                        
+                    dash1=Dash.Start(u.unit,Util.XY(u.unit,m.unit),Util.XY2(u.unit,m.unit),Dash.SUB,45,true,false);
+                    dash1.Obj=data;
+                    dash1.onMove=function(Dash dash){
+                        if(dash.Speed<12){
+                            dash.Stop();
+                        }
+                    }; 
+                    dash1.onEnd=function(Dash dash){
+                        Data data=Data(dash.Obj); 
+                        Units u=Units(data.c[0]);
+                        Data data1;
+                        Dash dash1;
+                        Dash.Start(u.unit,dash.Angle,250,Dash.SUB,10,true,false);
+                        Effect.ToUnit("qqqqq.mdl",data.u[0],"chest").Destroy();
+                        u.AnimeSpeed(1);
+                        u.DelayReleaseAnimePause(0.5);
+                        Buffs.Add(data.u[0],'A068','B01Y',4,false); 
+                        u.Damage(data.u[0],Damage.Physics,'A064',u.Agi(true)*5); 
+                        data1=Data.create('A064');
+                        data1.g[0]=CreateGroup();
+                        data1.c[0]=u;
+                        HitFlys.Add(data.u[0],25);
+                        dash1=Dash.Start(data.u[0],dash.Angle,800,Dash.SUB,40,true,true);
+                        dash1.Obj=data1;
+                        dash1.onMove=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            Units u=Units(data.c[0]);
+                            Units mj;
+                            GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,110,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
+                                    GroupAddUnit(data.g[0],mj.unit);
+                                    u.Damage(mj.unit,Damage.Physics,'A064',u.Agi(true)*3);  
+                                    Dash.Start(mj.unit,Util.XY(dash.Unit,mj.unit),150,Dash.SUB,25,true,false);  
+                                    Effect.ToUnit("qqqqq.mdl",mj.unit,"chest").Destroy(); 
+                                }
+                            }
+                            GroupClear(tmp_group); 
+                        };
+                        dash1.onEnd=function(Dash dash){
+                            Data data=Data(dash.Obj);
+                            DestroyGroup(data.g[0]);
+                            data.g[0]=null;
+                            data.Destroy();
+                        };
+                        data.u[0]=null;
+                        data.Destroy();
+                    };
+                };
+                k=null;
+            }
+        }
 
         //突然反转-受到伤害后判断累计伤害是否超过60%
         static method Damage(DamageArgs e){
@@ -223,6 +313,13 @@ library Zg requires Groups{
                                         if(u.player.press.W==true){
                                             u.SetF(dash.Angle+180,true);
                                         }
+                                        if(u.player.lv15!=null){
+                                            if(u.player.press.R==false){
+                                                if(GetRandomReal(0,1)<=1){ 
+                                                    Zg.R3(u.unit);
+                                                }
+                                            } 
+                                        }
                                     };
                                 }
                             }else{
@@ -236,19 +333,25 @@ library Zg requires Groups{
                                 Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
                                 u.AnimeSpeed(1);
                                 u.DelayReleaseAnimePause(0.6);
+                                if(u.player.lv15!=null){
+                                    if(u.player.press.R==false){
+                                        if(GetRandomReal(0,1)<=0.5){ 
+                                            Zg.R3(u.unit);
+                                        }
+                                    } 
+                                }
                             }else{
                                 u.Pause(false);
                                 data.u[0]=null;
                             }
-                            Zg.R1(u);
+                            Zg.R1(u); 
                             Spell(data.c[1]).Destroy();
                             data.Destroy();
                         };
                     }else{
                         u.Alpha(255);
                         u.AnimeSpeed(1);
-                        u.Pause(false);
-                        Zg.R1(u);
+                        u.Pause(false); 
                         Spell(data.c[1]).Destroy();
                         data.Destroy();
                     }
