@@ -73,6 +73,7 @@ library Zg requires Groups{
                         u.DelayReleaseAnimePause(0.7);
                         Buffs.Add(data.u[0],'A068','B01Y',4,false); 
                         u.Damage(data.u[0],Damage.Physics,'A064',u.Agi(true)*5); 
+                        Buffs.Skill(data.u[0],'A00W',1);
                         data1=Data.create('A064');
                         data1.g[0]=CreateGroup();
                         data1.c[0]=u;
@@ -202,7 +203,7 @@ library Zg requires Groups{
                 if(u.GetAbilityCD('A05X')!=0){ 
                     u.SetAbilityCD('A05X',u.GetAbilityCD('A05X')*0.6);
                 }
-                f1=Util.XYEX(GetUnitX(k),GetUnitY(k),x+250*CosBJ(f),y+250*SinBJ(f));
+                f1=e.Angle;
                 mj=Units.MJ(u.player.player,'e008','A062',0,x,y,f+180,2,1.5,1.25,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
                 if(e.State!=Spell.SpellState){
                     Effect.ToUnit("qqqqq.mdl",k,"chest").Destroy();
@@ -652,8 +653,20 @@ library Zg requires Groups{
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A05X'){
-                u.FlushAnimeId(27);
-                e.Destroy();
+                if(u.IsAbility('B01T')==false){
+                    if(u.IsAbility('B01U')==true){
+                        SpellText(u.unit,e.Id,3,10);
+                        u.SetAbilityCD('A05X',10);
+                        u.SetMP(u.MP()-50);
+                        Zg.Q(e);
+                    }else{
+                        u.FlushAnimeId(27);
+                        e.Destroy();
+                    }
+                }else{ 
+                    IssueImmediateOrder(u.unit,"stop"); 
+                    Zg.Press(u.player.player,"Q");
+                } 
             }
             if(e.Id=='A061'){
                 u.SetF(e.Angle,true);
