@@ -90,7 +90,7 @@ library Zg requires Groups{
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){    
                                     GroupAddUnit(data.g[0],mj.unit);
                                     u.Damage(mj.unit,Damage.Physics,'A064',u.Agi(true)*3);  
-                                    Dash.Start(mj.unit,Util.XY(dash.Unit,mj.unit),150,Dash.SUB,25,true,false);  
+                                    Dash.Start(mj.unit,Util.XY(dash.Unit,mj.unit),350,Dash.SUB,25,true,false);  
                                     Effect.ToUnit("qqqqq.mdl",mj.unit,"chest").Destroy(); 
                                 }
                             }
