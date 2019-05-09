@@ -204,18 +204,21 @@ library Zg requires Groups{
                             Units u=Units(data.c[0]);
                             unit k=null;
                             Dash dash1;
+                            real dis;
                             if(dash.Speed>5){
                                 k=GroupFind(u.unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),70,true,false);
                                 if(k!=null){
+                                    dis=Util.XY2(u.unit,k)+75;
                                     data.u[0]=k;
                                     k=null;
                                     dash.Stop(); 
                                     u.Pause(true);
-                                    u.AnimeSpeed(1.5);
-                                    dash1=Dash.Start(u.unit,dash.Angle,200,Dash.NORMAL,20,true,false);
+                                    u.AnimeSpeed(1.5);  
+                                    dash1=Dash.Start(u.unit,dash.Angle,dis,Dash.NORMAL,dis/10,true,false);
                                     dash1.onEnd=function(Dash dash){
                                         Units u=Units.Get(dash.Unit);  
-                                        u.DelayReleaseAnimePause(0.2);
+                                        u.AnimeSpeed(1);
+                                        u.Pause(false);
                                         Buffs.Add(u.unit,'A063','B01U',0.3,false);
                                         if(u.player.press.W==true){
                                             u.SetF(dash.Angle+180,true);
@@ -478,13 +481,13 @@ library Zg requires Groups{
             data.c[3]=mj; 
             data.g[0]=CreateGroup();
             dash=Dash.Start(u.unit,e.Angle,400,Dash.SUB,50,true,false);
-            dash.Obj=data;
+            dash.Obj=data; 
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 Units mj=Units(data.c[2]);
                 Units ts;
-                if(dash.Speed>4){  
+                if(dash.Speed>15){  
                     mj.Position(dash.X,dash.Y,false);
                     mj=Units(data.c[3]); 
                     mj.Position(dash.X,dash.Y,false);
@@ -554,7 +557,7 @@ library Zg requires Groups{
                     Zg.E(e);
                 }else{ 
                     u.FlushAnimeId(25);
-                    Dash.Start(u.unit,u.F()+180,50,Dash.SUB,6,true,false);
+                    Dash.Start(u.unit,e.Angle+180,70,Dash.SUB,6,true,false);
                     e.Destroy();
                 }
             }
