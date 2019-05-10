@@ -225,7 +225,12 @@ library Zg requires Groups{
                 Zg.R1(Units.Get(b.Unit));
             };
             Units.MJ(u.player.player,'e008','A065',0,u.X(),u.Y(),0,2,1,1,"stand","az-blue-lizi-shangsheng.mdl");
-        
+            if(u.GetAbilityCD('A062')!=0){
+                u.SetAbilityCD('A062',0);
+            }
+            if(u.GetAbilityCD('A061')!=0){
+                u.SetAbilityCD('A061',0);
+            }
         }
 
         static method E(Spell e){
