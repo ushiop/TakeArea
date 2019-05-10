@@ -254,7 +254,7 @@ library Zg requires Groups{
                 if(u.GetAbilityCD('A05X')!=0){ 
                     u.SetAbilityCD('A05X',u.GetAbilityCD('A05X')*0.6);
                 }
-                f1=e.Angle;
+                f1=Util.XYEX(GetUnitX(k),GetUnitY(k),x+250*CosBJ(f),y+250*SinBJ(f));
                 mj=Units.MJ(u.player.player,'e008','A062',0,x,y,f+180,2,1.5,1.25,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
                 if(e.State!=Spell.SpellState){
                     Effect.ToUnit("qqqqq.mdl",k,"chest").Destroy();
