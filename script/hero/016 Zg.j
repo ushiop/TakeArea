@@ -11,8 +11,47 @@ library Zg requires Groups{
         25 - E 前摇
         26 - E 抛投(0.7s抛出)(0.5s硬直)
         14 - 突然踢人(1.225s整体)(0.541s蓄力)(0.379s踢人)
+        8 - 突然决死
     */ 
     struct Zg{  
+
+        //突然决死
+        static method R4(Units u,Units m){ 
+            real r=GetRandomReal(0,1);
+            Dash dash;
+            Units mj;
+            if(r<=0.01){
+                u.Pause(true);
+                u.AnimeSpeed(3);
+                u.AnimeId(8);  
+                Buffs.Skill(m.unit,'A00A',1);
+                RuaText(u.unit,"？？ ？ ？？",10,2,1,45,0,0.02);
+                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",m.unit,"chest").Destroy();
+                Effect.ToUnit("blink_blue.mdl",u.unit,"origin").Destroy();
+                Effect.ToUnit("az-blood-hit.mdl",m.unit,"chest").Destroy();
+                mj=Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),Util.XY(u.unit,m.unit),2.5,1,1,"stand", "blood-2.mdl");
+                mj.DelayAlpha(255,0,1.99);
+                mj=Units.MJ(u.player.player,'e008','A064',0,u.X(),u.Y(),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
+                mj.SetH(100); 
+                dash=Dash.Start(u.unit,Util.XY(u.unit,m.unit),350,Dash.SUB,60,true,false);
+                dash.Obj=mj;
+                dash.onMove=function(Dash dash){
+                    Units mj=Units(dash.Obj);
+                    mj.Position(dash.X,dash.Y,false);
+                };
+                dash.onEnd=function(Dash dash){ 
+                    Units u=Units.Get(dash.Unit);
+                    u.DelayReleaseAnimePause(0.3);
+                };
+                if(u.IsAbility('B01V')==false){ 
+                    u.Damage(m.unit,Damage.Physics,'A064',u.Agi(true)*20);
+                }else{   
+                    Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,1,1,1,"stand", "az_hit-red-blade.mdl");
+                    Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,3,1.5,1,"stand", "blood-boom.mdl");
+                    u.Damage(m.unit,Damage.Chaos,'A064',99999);
+                }
+            }
+        }
 
         //突然踢人
         static method R3(unit ua){
@@ -127,6 +166,13 @@ library Zg requires Groups{
                         RuaText(e.DamageUnit.unit,"！！！！！",10,2,1,45,0,0.02);
                         Units.MJ(e.TriggerUnit.player.player,'e008','A065',0,e.TriggerUnit.X(),e.TriggerUnit.Y(),0,2,1,1,"stand","az-blue-lizi-shangsheng_ex.mdl");
                         Buffs.Add(e.TriggerUnit.unit,'A067','B01X',4,false);
+                    }
+                }
+            }
+            if(e.DamageType==Damage.Attack){ 
+                if(e.DamageUnit.IsAbility('A064')==true){
+                    if(e.DamageUnit.player.lv15!=null){
+                        Zg.R4(e.DamageUnit,e.TriggerUnit);
                     }
                 }
             }
@@ -611,7 +657,7 @@ library Zg requires Groups{
                             u.Damage(mj.unit,Damage.Physics,'A05X',u.Agi(true)*2); 
                             Buffs.Skill(mj.unit,'A00W',1);
                             Dash.Start(mj.unit,dash.Angle,50+(dash.MaxDis-dash.NowDis),Dash.SUB,25,true,false); 
-                            ts=Units.MJ(u.player.player,'e008','A05X',0,mj.X(),mj.Y(),dash.Angle,2,1,1,"stand", "blood-2.mdl");
+                            ts=Units.MJ(u.player.player,'e008','A05X',0,mj.X(),mj.Y(),dash.Angle,2.5,1,1,"stand", "blood-2.mdl");
                             ts.DelayAlpha(255,0,1.99);
                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
                                         
