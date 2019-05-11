@@ -60,6 +60,11 @@ library Timers requires TimerUtils{
                 return this.Obj;
             }
 
+            //设置该计时器携带的数据类
+            method SetData(integer obj){
+                this.Obj=obj;
+            }
+
             //创建一个计时器返回，该方法创建的计时器处于暂停状态，所有参数为默认值
             static method New()->Timers{ 
                 Timers tmp=Timers.allocate();
