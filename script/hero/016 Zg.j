@@ -12,8 +12,14 @@ library Zg requires Groups{
         26 - E 抛投(0.7s抛出)(0.5s硬直)
         14 - 突然踢人(1.225s整体)(0.541s蓄力)(0.379s踢人)
         8 - 突然决死
+        18 - 十七分割 前摇
+        19 - 十七分割 过程
     */ 
     struct Zg{  
+
+        static method D(Spell e){
+            
+        }
 
         //突然决死
         static method R4(Units u,Units m){ 
@@ -703,6 +709,9 @@ library Zg requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            Dash dash;  
+            Units ts,ts1;
+            integer i;
             if(e.Id=='A05X'){
                 if(u.IsAbility('B01T')==false){
                     if(u.IsAbility('B01U')==true){
@@ -734,8 +743,65 @@ library Zg requires Groups{
                     Dash.Start(u.unit,e.Angle+180,70,Dash.SUB,6,true,false);
                     e.Destroy();
                 }
+            } 
+            if(e.Id=='A069'){
+                u.AddAbility('A06A');
+                u.FlushAnimeId(18); 
+                dash=Dash.Start(u.unit,e.Angle+180,250,Dash.SUB,4,true,false);
+                dash.onMove=function(Dash dash){
+                    Units ts;
+                    Units u=Units.Get(dash.Unit);
+                    if(u.IsAbility('A06A')==true){
+                        if(dash.NowDis>70){
+                            if(dash.Obj==0){
+                                dash.Obj=1;
+                                ts=Units.MJ(u.player.player,'e008','A069',0,dash.X+100*CosBJ(dash.Angle+180),dash.Y+100*SinBJ(dash.Angle+180),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
+                                ts.SetH(115);
+                                Dash.Start(ts.unit,dash.Angle,150,Dash.NORMAL,30,true,false);
+                            }
+                        }
+                    }else{
+                        dash.Stop();
+                    }                    
+                };
+                //第一个残影
+                ts=Units.MJ(u.player.player,'e008','A069',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts.AnimeId(18);
+                ts.Alpha(0); 
+                Timers.Start(0.08,ts,function(Timers t){
+                    Units ts=Units(t.Data());
+                    Units u=ts.player.hero;
+                    if(u.Alive()==true&&u.IsAbility('A06A')==true){
+                        if(ts.Obj!=0){
+                            ts.Position(u.X(),u.Y(),false);
+                            ts.SetF(u.F(),true);
+                            ts.DelayAlpha(255,0,0.4);
+                            ts.Life(0.4);
+                            ts.SetH(u.H());
+                            t.SetData(ts.Obj);
+                        } 
+                    }else{
+                        t.Destroy();
+                    }
+                });
+                // 
+                for(1<=i<5){
+                    ts1=Units.MJ(u.player.player,'e008','A069',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                    ts1.AnimeId(18);
+                    ts1.Alpha(0);
+                    ts.Obj=ts1;  
+                    ts=ts1;
+                }
+                e.Destroy();
             }
             
+        }
+
+        static method HERO_STOP(Spell e){
+            if(e.Id=='A069'){
+                Units.Get(e.Spell).RemoveAbility('A06A');
+            }
+            e.Destroy();
         }
  
         static method Order(EventArgs e){
@@ -761,10 +827,13 @@ library Zg requires Groups{
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A061',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A062',Zg.HERO_START); 
+            Spell.On(Spell.onReady,'A069',Zg.HERO_START); 
+            Spell.On(Spell.onStop,'A069',Zg.HERO_STOP); 
             Spell.On(Spell.onSpell,'A061',Zg.W);
             Spell.On(Spell.onSpell,'A05X',Zg.Q);
             Spell.On(Spell.onSpell,'A062',Zg.E);
             Spell.On(Spell.onSpell,'A064',Zg.R);
+            Spell.On(Spell.onSpell,'A069',Zg.D);
         }
     }
 } 
