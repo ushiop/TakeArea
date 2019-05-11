@@ -29,13 +29,13 @@ library Zg requires Groups{
             u.AnimeId(19);
             data.c[0]=u;
             data.c[1]=e; 
-            ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
             ts.AnimeId(19);
             ts.Alpha(0); 
             data.c[2]=ts; 
-            data.r[0]=0.02;
+            data.r[0]=0.12; 
             for(1<=i<70){
-                ts1=Units.MJ(u.player.player,'e008','A069',i,x,y,0,6,u.modelsize,1,"stand",u.model);
+                ts1=Units.MJ(u.player.player,'e008','A069',i,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
                 ts1.AnimeId(19);
                 ts1.Alpha(0);
                 ts.Obj=ts1;  
@@ -69,41 +69,12 @@ library Zg requires Groups{
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
-                Units u=Units(data.c[0]); 
-                Units ts,ts1,ts2;
-                Dash dash1;
+                Units u=Units(data.c[0]);  
                 integer i;
                 if(data.u[0]==null){ 
                     u.AnimeId(20);
-                    u.DelayReleaseAnimePause(0.5); 
-                    ts=Units.MJ(u.player.player,'e008','A069',0,dash.X,dash.Y,0,6,u.modelsize,1,"stand",u.model);
-                    ts.AnimeId(20);
-                    ts.Alpha(0); 
-                    ts2=ts;
-                    for(1<=i<10){
-                        ts1=Units.MJ(u.player.player,'e008','A069',i,dash.X,dash.Y,0,6,u.modelsize,1,"stand",u.model);
-                        ts1.AnimeId(20);
-                        ts1.Alpha(0);
-                        ts.Obj=ts1;  
-                        ts=ts1;
-                    } 
-                        BJDebugMsg(I2S(ts.Obj));
-                    dash1=Dash.Start(u.unit,dash.Angle,450,Dash.SUB,dash.Speed,true,false);
-                    dash1.Obj=ts2;
-                    dash1.onMove=function(Dash dash){
-                        Units ts=Units(dash.Obj);
-                        Units u=ts.player.hero;
-                        BJDebugMsg(I2S(ts.Obj));
-                        if(ts.Obj!=0){
-                            ts.Position(dash.X,dash.Y,false);
-                            ts.SetF(dash.Angle,true);
-                            ts.SetH(u.H());
-                            ts.DelayAlpha(255,0,0.8);
-                            ts.Life(0.8);
-                            dash.Obj=ts.Obj;
-                        }
-                    };
-                    
+                    u.DelayReleaseAnimePause(0.5);  
+                    Dash.Start(u.unit,dash.Angle,250,Dash.SUB,dash.Speed,true,false); 
                 }else{
                     u.Pause(false);
                 }
@@ -866,7 +837,7 @@ library Zg requires Groups{
                         if(ts.Obj!=0){
                             ts.Position(u.X(),u.Y(),false);
                             ts.SetF(u.F(),true);
-                            ts.DelayAlpha(255,0,0.4);
+                            //ts.DelayAlpha(255,0,0.4);
                             ts.Life(0.4);
                             ts.SetH(u.H());
                             t.SetData(ts.Obj);
