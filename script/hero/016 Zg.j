@@ -15,10 +15,10 @@ library Zg requires Groups{
         18 - 十七分割 前摇
         19 - 十七分割 过程
     */ 
-    struct Zg{  
+    struct Zg{   
 
         static method D(Spell e){
-            
+
         }
 
         //突然决死
