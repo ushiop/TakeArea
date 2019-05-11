@@ -23,8 +23,8 @@ library Zg requires Groups{
             Data data=Data.create('A069');
             Dash dash;
             real x=u.X(),y=u.Y();
-            Units ts,ts1;
-            integer i;
+            Units ts,ts1,mj;
+            integer i,js,jsb;
             u.Pause(true);
             u.AnimeId(19);
             data.c[0]=u;
@@ -41,11 +41,27 @@ library Zg requires Groups{
                 ts.Obj=ts1;  
                 ts=ts1;
             } 
-            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,1,1,"stand", "white-qiquan.mdl");
-            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,1,0.8,"stand", "white-qiquan.mdl");
-            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,1,0.6,"stand", "white-qiquan.mdl");
-            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,1,0.4,"stand", "white-qiquan.mdl");
+            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,2.5,1,"stand", "white-qiquan.mdl");
+            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,2.5,0.8,"stand", "white-qiquan.mdl");
+            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,2.5,0.6,"stand", "white-qiquan.mdl");
+            Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,2.5,0.4,"stand", "white-qiquan.mdl");
             //减速
+            if(u.IsAbility('B01V')==true){
+                js='A06C';
+                jsb='B020';
+            }else{
+                js='A06B';
+                jsb='B01Z';
+            }
+            GroupEnumUnitsInRange(tmp_group,x,y,1300,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,mj.unit);
+                if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                    Buffs.Add(mj.unit,js,jsb,5,false);
+                }
+            } 
+            GroupClear(tmp_group); 
             //
             dash=Dash.Start(u.unit,e.Angle,1000,Dash.ADD,25,true,false);
             dash.Obj=data;
@@ -53,6 +69,8 @@ library Zg requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units.Get(dash.Unit);
                 Units ts=Units(data.c[2]);
+                unit k=null;
+                Data data1;
                 if(data.r[0]==0){
                     data.r[0]=0.02;
                     if(ts.Obj!=0){
@@ -66,6 +84,92 @@ library Zg requires Groups{
                 }else{
                     data.r[0]-=0.01;
                 }
+                k=GroupFind(u.unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),60,true,false);
+                if(k!=null){
+                    data.u[0]=k;
+                    dash.Stop(); 
+                    Units.MJ(u.player.player,'e008','A065',0,dash.X,dash.Y,0,2,1,1,"stand","blink_blue.mdl");
+                    data1=Data.create('A069');
+                    data1.c[0]=u;
+                    data1.c[1]=Units.Get(k);
+                    data1.i[0]=17;
+                    data1.r[0]=0;//角度
+                    data1.r[1]=0.25;//延迟0.5秒后开始演出
+                    u.Pause(true);
+                    u.Alpha(0);
+                    Units.Get(k).TimeStop(true);
+                    Timers.Start(0.01,data1,function(Timers t){
+                        Data data=Data(t.Data());
+                        Units u=Units(data.c[0]);
+                        Units m=Units(data.c[1]);
+                        Units mj;
+                        integer c;
+                        real x,y,f=0,dis;
+                        if(u.Alive()==true){
+                            if(data.r[1]<=0){
+                                t.SetTime(0.01);
+                                if(data.i[0]==0){
+                                    if(m.Alive()==true){
+                                        m.Color(255,255,255);
+                                    }
+                                    m.TimeStop(false);
+                                    u.DelayAlpha(0,255,0.5);
+                                    u.AnimeId(20);
+                                    u.DelayReleaseAnimePause(0.5);  
+                                    u.Position(m.X(),m.Y(),false);
+                                    Dash.Start(u.unit,u.F(),750,Dash.SUB,50,true,false); 
+                                    t.Destroy();
+                                    data.Destroy(); 
+                                }else{ 
+                                    if(u.IsTimeStop()==false){
+                                        data.i[0]-=1;
+                                        x=m.X();
+                                        y=m.Y();
+                                        if(data.i[0]==0){ 
+                                            Units.MJ(u.player.player,'e008','A069',0,x,y,0,5,3,1,"stand","blood-boom.mdl");  
+                                            mj=Units.MJ(u.player.player,'e008','A069',0,x,y,0,2,0.3,1.5,"stand","boli_black.mdl"); 
+                                            Timers.Start(0.6,mj,function(Timers t){
+                                                Units mj=Units(t.Data());
+                                                mj.DelayAlpha(255,0,0.5);
+                                                t.Destroy();
+                                            });  
+                                            Units.MJ(u.player.player,'e008','A069',0,x,y,GetRandomReal(0,360),2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
+                                            //u.Damage(m.unit,Damage.Chaos,'A069',999999999);
+                                        }else{  
+                                            data.r[0]+=60;
+                                            
+                                            f=data.r[0];
+                                            c=R2I((data.i[0]/17.0)*255.0);
+                                            dis=GetRandomReal(180,314);
+                                            m.Color(c,c,c);
+                                            if(u.IsAbility('B01V')==true){
+                                                mj=Units.MJ(u.player.player,'e00O','A069',0,x+dis*CosBJ(f),y+dis*SinBJ(f),f,2,0.2,1,"stand","bule-dark-salsh_red.mdl");  
+                                            }else{
+                                                mj=Units.MJ(u.player.player,'e00O','A069',0,x+dis*CosBJ(f),y+dis*SinBJ(f),f,2,0.2,1,"stand","bule-dark-salsh.mdl");  
+                                            } 
+                                            mj.SetF(Util.XY(mj.unit,m.unit)+GetRandomReal(-30,30),true);
+                                            Dash.Start(u.unit,mj.F()+180,350,Dash.SUB,25,true,false);
+                                            u.Position(mj.X(),mj.Y(),false); 
+                                            Effect.ToUnit("az-blood-hit.mdl",m.unit,"chest").Destroy();
+                                            Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",m.unit,"chest").Destroy();
+                
+                                        }
+                                    }
+                                }
+                            }else{
+                                if(u.IsTimeStop()==false){ 
+                                    data.r[1]-=0.01;
+                                }
+                            }
+                            
+                        }else{
+                            m.TimeStop(false);
+                            t.Destroy();
+                            data.Destroy();
+                        }
+                    });
+                    k=null;
+                }
             };
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -76,6 +180,7 @@ library Zg requires Groups{
                     u.DelayReleaseAnimePause(0.5);  
                     Dash.Start(u.unit,dash.Angle,250,Dash.SUB,dash.Speed,true,false); 
                 }else{
+                    data.u[0]=null;
                     u.Pause(false);
                 }
                 Spell(data.c[1]).Destroy();
@@ -115,7 +220,7 @@ library Zg requires Groups{
                     u.Damage(m.unit,Damage.Physics,'A064',u.Agi(true)*20);
                 }else{   
                     Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,1,1,1,"stand", "az_hit-red-blade.mdl");
-                    Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,3,1.5,1,"stand", "blood-boom.mdl");
+                    Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,5,1.5,1,"stand", "blood-boom.mdl");
                     u.Damage(m.unit,Damage.Chaos,'A064',99999);
                 }
             }
@@ -837,7 +942,7 @@ library Zg requires Groups{
                         if(ts.Obj!=0){
                             ts.Position(u.X(),u.Y(),false);
                             ts.SetF(u.F(),true);
-                            //ts.DelayAlpha(255,0,0.4);
+                            ts.DelayAlpha(255,0,0.4);
                             ts.Life(0.4);
                             ts.SetH(u.H());
                             t.SetData(ts.Obj);
