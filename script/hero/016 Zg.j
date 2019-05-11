@@ -34,6 +34,7 @@ library Zg requires Groups{
             ts.Alpha(0); 
             data.c[2]=ts; 
             data.r[0]=0.12; 
+            data.r[2]=0.74;
             for(1<=i<70){
                 ts1=Units.MJ(u.player.player,'e008','A069',i,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
                 ts1.AnimeId(19);
@@ -62,8 +63,8 @@ library Zg requires Groups{
                 }
             } 
             GroupClear(tmp_group); 
-            //
-            dash=Dash.Start(u.unit,e.Angle,1000,Dash.ADD,25,true,false);
+            //  
+            dash=Dash.Start(u.unit,e.Angle,500,Dash.NORMAL,2,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
@@ -77,12 +78,19 @@ library Zg requires Groups{
                         ts.Position(dash.X,dash.Y,false);
                         ts.SetF(dash.Angle,true);
                         ts.SetH(u.H());
-                        ts.DelayAlpha(255,0,0.8);
-                        ts.Life(0.8);
+                        ts.DelayAlpha(255,0,0.6);
+                        ts.Life(0.6);
                         data.c[2]=ts.Obj;
                     }
-                }else{
+                }else{ 
                     data.r[0]-=0.01;
+                }
+                if(data.r[2]==0){ 
+                    HitFlys.Add(u.unit,2.5).LocalPower=0.05;
+                    dash.MaxSpeed=4;
+                    data.r[2]=-0.01;
+                }else{
+                    data.r[2]-=0.01;
                 }
                 k=GroupFind(u.unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),60,true,false);
                 if(k!=null){
@@ -94,7 +102,7 @@ library Zg requires Groups{
                     data1.c[1]=Units.Get(k);
                     data1.i[0]=17;
                     data1.r[0]=0;//角度
-                    data1.r[1]=0.25;//延迟0.5秒后开始演出
+                    data1.r[1]=0.25;//延迟0.25秒后开始演出
                     u.Pause(true);
                     u.Alpha(0);
                     Units.Get(k).TimeStop(true);
@@ -175,10 +183,41 @@ library Zg requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);  
                 integer i;
+                Units ts,ts1,ts2;
+                real x=u.X(),y=u.Y();
+                Dash dash1;
                 if(data.u[0]==null){ 
                     u.AnimeId(20);
-                    u.DelayReleaseAnimePause(0.5);  
-                    Dash.Start(u.unit,dash.Angle,250,Dash.SUB,dash.Speed,true,false); 
+                    u.DelayReleaseAnimePause(0.5); 
+                    ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
+                    ts.AnimeId(19);
+                    ts.AnimeSpeed(5);
+                    ts.Alpha(0); 
+                    ts2=ts;
+                    for(1<=i<15){
+                        ts1=Units.MJ(u.player.player,'e008','A069',i,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
+                        ts1.AnimeId(19); 
+                        ts1.AnimeSpeed(5);
+                        ts1.Alpha(0);
+                        ts.Obj=ts1;  
+                        ts=ts1;
+                    } 
+                    dash1=Dash.Start(u.unit,dash.Angle,250,Dash.SUB,dash.Speed,true,false); 
+                    dash1.Obj=ts2;
+                    dash1.onMove=function(Dash dash){
+                        Units ts=Units(dash.Obj);
+                        Units u=Units.Get(dash.Unit);
+                        if(ts.Obj!=0){
+                            ts.AnimeSpeed(1);
+                            ts.AnimeId(20);
+                            ts.Position(dash.X,dash.Y,false);
+                            ts.SetF(u.F(),true);
+                            ts.SetH(u.H()); 
+                            ts.DelayAlpha(255,0,0.6);
+                            ts.Life(0.6);
+                            dash.Obj=ts.Obj;
+                        }
+                    };
                 }else{
                     data.u[0]=null;
                     u.Pause(false);
@@ -932,7 +971,7 @@ library Zg requires Groups{
                     }                    
                 };
                 //第一个残影
-                ts=Units.MJ(u.player.player,'e008','A069',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts=Units.MJ(u.player.player,'e008','A069',0,u.X(),u.Y(),u.F(),5,u.modelsize,1,"stand",u.model);
                 ts.AnimeId(18);
                 ts.Alpha(0); 
                 Timers.Start(0.08,ts,function(Timers t){
@@ -942,8 +981,8 @@ library Zg requires Groups{
                         if(ts.Obj!=0){
                             ts.Position(u.X(),u.Y(),false);
                             ts.SetF(u.F(),true);
-                            ts.DelayAlpha(255,0,0.4);
-                            ts.Life(0.4);
+                            ts.DelayAlpha(255,0,1);
+                            ts.Life(1);
                             ts.SetH(u.H());
                             t.SetData(ts.Obj);
                         } 
@@ -953,7 +992,7 @@ library Zg requires Groups{
                 });
                 // 
                 for(1<=i<5){
-                    ts1=Units.MJ(u.player.player,'e008','A069',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                    ts1=Units.MJ(u.player.player,'e008','A069',i,u.X(),u.Y(),u.F(),5,u.modelsize,1,"stand",u.model);
                     ts1.AnimeId(18);
                     ts1.Alpha(0);
                     ts.Obj=ts1;  
