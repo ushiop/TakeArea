@@ -17,6 +17,7 @@ library Zg requires Groups{
         20 - 十七分割 后摇
     */ 
     struct Zg{   
+        static integer Sound[11];
 
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
@@ -27,6 +28,7 @@ library Zg requires Groups{
             integer i,js,jsb;
             u.Pause(true);
             u.AnimeId(19);
+            u.AddAbility('A06D');//不可选取标记
             data.c[0]=u;
             data.c[1]=e; 
             ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
@@ -121,6 +123,7 @@ library Zg requires Groups{
                                         m.Color(255,255,255);
                                     }
                                     m.TimeStop(false);
+                                    u.RemoveAbility('A06D');
                                     u.DelayAlpha(0,255,0.5);
                                     u.AnimeId(20);
                                     u.DelayReleaseAnimePause(0.5);  
@@ -142,6 +145,7 @@ library Zg requires Groups{
                                                 t.Destroy();
                                             });  
                                             Units.MJ(u.player.player,'e008','A069',0,x,y,GetRandomReal(0,360),2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
+                                            RunSoundOnUnit(Zg.Sound[2],u.unit);
                                             //u.Damage(m.unit,Damage.Chaos,'A069',999999999);
                                         }else{  
                                             data.r[0]+=60;
@@ -187,6 +191,7 @@ library Zg requires Groups{
                 real x=u.X(),y=u.Y();
                 Dash dash1;
                 if(data.u[0]==null){ 
+                    u.RemoveAbility('A06D');
                     u.AnimeId(20);
                     u.DelayReleaseAnimePause(0.5); 
                     ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
@@ -262,6 +267,7 @@ library Zg requires Groups{
                     Units.MJ(u.player.player,'e008','A064',0,m.X(),m.Y(),0,5,1.5,1,"stand", "blood-boom.mdl");
                     u.Damage(m.unit,Damage.Chaos,'A064',99999);
                 }
+                RunSoundOnUnit(Zg.Sound[4],u.unit);
             }
         }
 
@@ -305,7 +311,7 @@ library Zg requires Groups{
                     Units m=Units.Get(data.u[0]);
                     Dash dash1;
                     Units.MJ(u.player.player,'e008','A064',0,dash.X,dash.Y,Util.XY(u.unit,m.unit),1,1.1,2,"stand","chongfeng2.mdl");
-                        
+                    
                     dash1=Dash.Start(u.unit,Util.XY(u.unit,m.unit),Util.XY2(u.unit,m.unit),Dash.SUB,45,true,false);
                     dash1.Obj=data;
                     dash1.onMove=function(Dash dash){
@@ -324,6 +330,7 @@ library Zg requires Groups{
                         u.DelayReleaseAnimePause(0.7);
                         Buffs.Add(data.u[0],'A068','B01Y',4,false); 
                         u.Damage(data.u[0],Damage.Physics,'A064',u.Agi(true)*5); 
+                        RunSoundOnUnit(Zg.Sound[5],u.unit);    
                         Buffs.Skill(data.u[0],'A00W',1);
                         data1=Data.create('A064');
                         data1.g[0]=CreateGroup();
@@ -554,7 +561,8 @@ library Zg requires Groups{
                         u.Alpha(255);
                         x=u.X();
                         y=u.Y();
-                        f=Spell(data.c[1]).Angle;
+                        f=Spell(data.c[1]).Angle; 
+                        RunSoundOnUnit(Zg.Sound[0],u.unit);
                         Util.Duang(x,y,0.5,100,100,-36,0.02,50);
                         Units.MJ(u.player.player,'e008','A061',0,x,y,f,1,1.1,2,"stand","chongfeng2.mdl").SetH(50);
                         Units.MJ(u.player.player,'e008','A061',0,x,y,Spell(data.c[1]).Angle,2,0.5,1.25,"stand","white-qiquan.mdl").SetH(50);
@@ -670,7 +678,7 @@ library Zg requires Groups{
                     data.Destroy();
                 }else{
                     if(data.r[0]<=0){//小踹
-                        if(data.r[1]==0.23){
+                        if(data.r[1]==0.23){ 
                             u.AnimeSpeed(2);
                             data.r[1]-=0.01;
                             dash=Dash.Start(u.unit,f,150,Dash.SUB,10,true,false); 
@@ -685,7 +693,8 @@ library Zg requires Groups{
                                 unit k=null;
                                 Units mj;
                                 k=GroupFind(u.unit,dash.X+50*CosBJ(dash.Angle),dash.Y+50*SinBJ(dash.Angle),50,true,false);
-                                if(k!=null){
+                                if(k!=null){ 
+                                    RunSoundOnUnit(Zg.Sound[6],u.unit);
                                     data.u[0]=k;
                                     dash.Stop();
                                     GroupEnumUnitsInRange(tmp_group,GetUnitX(k),GetUnitY(k),100,function GroupIsAliveNotAloc);     
@@ -756,6 +765,7 @@ library Zg requires Groups{
                                                     u.Alpha(255);
                                                     if(u.Alive()==true){ 
                                                         u.AnimeId(30);
+                                                        RunSoundOnUnit(Zg.Sound[7],u.unit);
                                                         u.AnimeSpeed(1.75);
                                                         u.DelayAnimeSpeed(0.5,0.3);
                                                         GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
@@ -951,6 +961,7 @@ library Zg requires Groups{
                 }
             } 
             if(e.Id=='A069'){
+                u.SetF(e.Angle,true);
                 u.AddAbility('A06A');
                 u.FlushAnimeId(18); 
                 dash=Dash.Start(u.unit,e.Angle+180,250,Dash.SUB,4,true,false);
@@ -960,6 +971,7 @@ library Zg requires Groups{
                     if(u.IsAbility('A06A')==true){
                         if(dash.NowDis>70){
                             if(dash.Obj==0){
+                                RunSoundOnUnit(Zg.Sound[1],u.unit);
                                 dash.Obj=1;
                                 ts=Units.MJ(u.player.player,'e008','A069',0,dash.X+100*CosBJ(dash.Angle+180),dash.Y+100*SinBJ(dash.Angle+180),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
                                 ts.SetH(115);
@@ -1040,6 +1052,15 @@ library Zg requires Groups{
             Spell.On(Spell.onSpell,'A062',Zg.E);
             Spell.On(Spell.onSpell,'A064',Zg.R);
             Spell.On(Spell.onSpell,'A069',Zg.D);
+            Zg.Sound[0] = DefineSound("resource\\sound_effect_shiki_13.wav",1000, false, true);//W的音效
+            Zg.Sound[1] = DefineSound("resource\\sound_effect_shiki_17.wav",1000, false, true);//R的发动音效
+            Zg.Sound[2] = DefineSound("resource\\sound_effect_shiki_18.wav",1000, false, true);//R的碎裂音效 
+            Zg.Sound[3] = DefineSound("resource\\sound_effect_shiki_16.wav",1000, false, true);//触发突然决死的音效
+            Zg.Sound[4] = DefineSound("resource\\sound_effect_shiki_19.wav",1000, false, true);//突然决死处决音效
+            Zg.Sound[5] = DefineSound("resource\\sound_effect_shiki_2.wav",1000, false, true);//突然踢人
+            Zg.Sound[6] = DefineSound("resource\\sound_effect_shiki_5.wav",1000, false, true);//蜜汁踢人小踢
+            Zg.Sound[7] = DefineSound("resource\\sound_effect_shiki_3.wav",1000, false, true);//蜜汁踢人大踢
+            
         }
     }
 } 
