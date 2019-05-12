@@ -50,7 +50,7 @@ library Zg requires Groups{
             Units.MJ(u.player.player,'e008','A069',0,x,y,0,2.5,2.5,0.4,"stand", "white-qiquan.mdl");
             //减速
             if(u.IsAbility('B01V')==true){
-                js='A06C';
+                js='A06C'; 
                 jsb='B020';
             }else{
                 js='A06B';
@@ -66,6 +66,8 @@ library Zg requires Groups{
             } 
             GroupClear(tmp_group); 
             //  
+            CinematicFadeBJ( bj_CINEFADETYPE_FADEOUTIN, 1.6, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 25 );
+            
             dash=Dash.Start(u.unit,e.Angle,500,Dash.NORMAL,2,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
