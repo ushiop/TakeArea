@@ -373,6 +373,7 @@ library Shiki requires Groups{
             integer i;
             u.Pause(true);
             u.AnimeId(22);  
+            u.AddAbility('A06D');//不可选取标记
             RunSoundOnUnit(Shiki.Sound[5],u.unit);
             IssueImmediateOrder(u.unit,"stop"); 
             CinematicFadeBJ( bj_CINEFADETYPE_FADEOUTIN, 1.6, "ReplaceableTextures\\CameraMasks\\Black_mask.blp", 0, 0, 0, 25 );
@@ -499,6 +500,7 @@ library Shiki requires Groups{
                                 real x,y,f=GetRandomReal(0,360); 
                                 if(data.r[2]==0){
                                     u.Pause(false);
+                                    u.RemoveAbility('A06D');
                                     u.Alpha(255);
                                     if(u.IsAbility('B01P')==true&&m.Alive()==true){ 
                                         x=m.X();
@@ -599,6 +601,7 @@ library Shiki requires Groups{
                 }
                 if(data.u[0]==null){//没抓到人,结束技能  
                     e.Destroy();
+                    u.RemoveAbility('A06D');
                     data.u[1]=null;
                     data.Destroy();
                     //------------------
