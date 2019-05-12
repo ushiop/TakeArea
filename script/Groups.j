@@ -29,6 +29,11 @@ library Groups requires Units,Damage{
     public function GroupIsCDW()->boolean{
         return GetUnitAbilityLevel(GetFilterUnit(),Units.MJType_CDW)==1;
     }
+    
+    //是否可以被选取
+    public function GroupIsNotSelect()->boolean{
+        return GetUnitAbilityLevel(GetFilterUnit(),'A06D')==0;
+    }
 
     //是否是建筑
     public function GroupIsHouse()->boolean{
@@ -57,12 +62,12 @@ library Groups requires Units,Damage{
 
     //存活且是蝗虫单位
     public function GroupIsAliveAloc()->boolean{
-        return GroupIsAloc()&&GroupIsNotAlive();
+        return GroupIsAloc()&&GroupIsNotAlive()&&GroupIsNotSelect();
     }
 
     //存活且不是蝗虫单位且是英雄
     public function GroupIsHeroAliveNotAloc()->boolean{
-        return GroupIsNotAloc()&&GroupIsNotAlive()&&GroupIsHero();
+        return GroupIsNotAloc()&&GroupIsNotAlive()&&GroupIsHero()&&GroupIsNotSelect();
     }
     
 
