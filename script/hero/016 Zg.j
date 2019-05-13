@@ -19,6 +19,59 @@ library Zg requires Groups{
     struct Zg{   
         static integer Sound[11];
 
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);  
+ 
+  
+                no=GroupFind(u.unit,x,y,200,true,false);
+                if(no!=null){ 
+                    u.SetF(Util.XY(u.unit,no)+180,true);   
+                    x1=u.X()+50*CosBJ(u.F());
+                    y1=u.Y()+50*SinBJ(u.F());
+                    IssuePointOrder(u.unit, "channel",x1,y1);//投技 
+                }  
+ 
+                no=GroupFind(u.unit,x,y,350,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "curse",x1,y1);//王牌
+                }  
+
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "channel",x1,y1);//真正的走位
+                }  
+                 
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssueImmediateOrder( u.unit, "doom" );//十七分割
+                }
+
+                if(u.GetAbilityCD('A062')!=0&&u.GetAbilityCD('A061')!=0){ 
+                    IssueImmediateOrder( u.unit, "fanofknives" );//R
+                }
+                   
+            } 
+            target=null;
+            no=null;
+        }
+
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A069');
@@ -593,9 +646,6 @@ library Zg requires Groups{
                                         u.AnimeSpeed(1);
                                         u.Pause(false);
                                         Buffs.Add(u.unit,'A063','B01U',0.3,false);
-                                        if(u.player.press.W==true){
-                                            u.SetF(dash.Angle+180,true);
-                                        }
                                         if(u.player.lv15!=null){
                                             if(u.player.press.R==false){
                                                 if(GetRandomReal(0,1)<=0.5){ 
@@ -603,6 +653,15 @@ library Zg requires Groups{
                                                 }
                                             } 
                                         }
+                                        if(u.player.press.W==true||u.player.isai==true){
+                                            u.SetF(dash.Angle+180,true);
+                                            if(u.player.isai==true){
+                                                if(u.IsAbility('B01T')==true){
+                                                    Zg.Press(u.player.player,"Q");
+                                                }
+                                            }
+                                        }
+                                        
                                     };
                                 }
                             }else{
@@ -1041,12 +1100,19 @@ library Zg requires Groups{
                   
         }
 
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A05X')==true){
+                u.ai=Zg.AI;
+            }
+        }
+
         static method onInit(){  
             Damage.On(Damage.onUnitDamage_EndDamage,Zg.Damage); 
             Press.OnSnyc(Press.onSnycPressKeyDown,Zg.Press);
             Buffs.On(Buffs.onUnitSkill,Zg.R2); 
             Events.On(Events.onUnitOrderToUnit,Zg.Order);
             Events.On(Events.onUnitOrderToLocation,Zg.Order); 
+            Units.On(Units.onHeroSpawn,Zg.Spawn);
             Spell.On(Spell.onReady,'A05X',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A061',Zg.HERO_START); 
             Spell.On(Spell.onReady,'A062',Zg.HERO_START); 
