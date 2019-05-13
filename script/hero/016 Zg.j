@@ -56,6 +56,8 @@ library Zg requires Groups{
                 js='A06B';
                 jsb='B01Z';
             }
+            
+            RunSoundOnUnit(Zg.Sound[1],u.unit);
             GroupEnumUnitsInRange(tmp_group,x,y,1300,function GroupIsAliveNotAloc);     
             while(FirstOfGroup(tmp_group)!=null){
                 mj=Units.Get(FirstOfGroup(tmp_group));
@@ -473,7 +475,7 @@ library Zg requires Groups{
                 data.c[1]=e; 
                 Buffs.Skill(k,'A00F',1);
                 if(u.GetAbilityCD('A05X')!=0){ 
-                    u.SetAbilityCD('A05X',u.GetAbilityCD('A05X')*0.6);
+                    u.SetAbilityCD('A05X',u.GetAbilityCD('A05X')*0.4);
                 }
                 f1=Util.XYEX(GetUnitX(k),GetUnitY(k),x+250*CosBJ(f),y+250*SinBJ(f));
                 mj=Units.MJ(u.player.player,'e008','A062',0,x,y,f+180,2,1.5,1.25,"stand","dingzhi_by_wood_effect_blood_biaoxue_2.mdl");
@@ -836,6 +838,7 @@ library Zg requires Groups{
                         if(u.IsTimeStop()==false){//蓄力中
                             data.r[0]-=0.01; 
                             if(ModuloReal(data.r[0],0.1)==0.1){
+                                RunSoundOnUnit(Zg.Sound[9],u.unit);
                                 mj=Units.MJ(u.player.player,'e008','A05X',0,x,y,f,0.6,0.3,1,"stand","white-qiquan.mdl");  
                             }
                         }
@@ -973,11 +976,11 @@ library Zg requires Groups{
                     if(u.IsAbility('A06A')==true){
                         if(dash.NowDis>70){
                             if(dash.Obj==0){
-                                RunSoundOnUnit(Zg.Sound[1],u.unit);
                                 dash.Obj=1;
                                 ts=Units.MJ(u.player.player,'e008','A069',0,dash.X+100*CosBJ(dash.Angle+180),dash.Y+100*SinBJ(dash.Angle+180),0,0.5,1.5,1.5,"birth","az_lxj_blue_ex.mdl");
                                 ts.SetH(115);
                                 Dash.Start(ts.unit,dash.Angle,150,Dash.NORMAL,30,true,false);
+                                RunSoundOnUnit(Zg.Sound[8],u.unit);
                             }
                         }
                     }else{
@@ -1062,7 +1065,8 @@ library Zg requires Groups{
             Zg.Sound[5] = DefineSound("resource\\sound_effect_shiki_2.wav",1000, false, true);//突然踢人
             Zg.Sound[6] = DefineSound("resource\\sound_effect_shiki_5.wav",1000, false, true);//蜜汁踢人小踢
             Zg.Sound[7] = DefineSound("resource\\sound_effect_shiki_3.wav",1000, false, true);//蜜汁踢人大踢
-            
+            Zg.Sound[8] = DefineSound("resource\\sound_effect_shiki_23_bing.wav",1000, false, true);//R的出招音效 
+            Zg.Sound[9]=DefineSound("resource\\sound_effect_xuanwendashi_e_3.wav",1000, false, true);//Q2的蓄力音效
         }
     }
 } 
