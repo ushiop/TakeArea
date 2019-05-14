@@ -407,20 +407,20 @@ library Shiki requires Groups{
             ts.Alpha(0); 
             // 
             data.c[2]=ts;//技能残影
-            for(1<=i<28){ 
+            for(1<=i<44){ //28
                 ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,2,"stand",u.model);
                 ts1.AnimeId(22);
                 ts1.Alpha(0);
                 ts.Obj=ts1;  
                 ts=ts1;
             }
-            //第二个残影
+            //第二个残影 
             ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,2,"stand",u.model);
             ts.AnimeId(22);
             ts.Alpha(0); 
             //
             data.c[3]=ts;//技能残影-地面
-            for(1<=i<28){
+            for(1<=i<44){//28
                 ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,2,"stand",u.model);
                 ts1.AnimeId(22);
                 ts1.Alpha(0);
@@ -444,10 +444,10 @@ library Shiki requires Groups{
                 }else{ 
                     if(data.r[1]==0){
                         data.r[1]=0.04;
-                        if(dash.NowDis>200){ 
+                        if(dash.NowDis>100){ //200
                             if(data.i[0]==0){
                                 data.i[0]=1; 
-                                HitFlys.Add(data.u[1],15).LocalPower=0.35;
+                                HitFlys.Add(data.u[1],10).LocalPower=0.16;//15，0.35
                             }
                             if(cy.Obj!=0){
                                 cy.Alpha(191);
@@ -459,7 +459,7 @@ library Shiki requires Groups{
                                 data.c[2]=cy.Obj;
                             }
                         }
-                        if(dash.NowDis>200){ 
+                        if(dash.NowDis>100){//200 
                             if(cys.Obj!=0){
                                 cys.DelayAlpha(0,127,0.1);
                                 cys.Position(x,y,false);
