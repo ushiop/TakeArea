@@ -21,8 +21,7 @@ library Spells requires SpellNameText{
         method Destroy(){
             this.Use=this.Use-1;
             if(this.Use==0){ 
-                //测试 
-                BJDebugMsg(GetAbilityName(this.Id)+"结束-阶段:"+I2S(this.State));
+                //测试 BJDebugMsg(GetAbilityName(this.Id)+"结束-阶段:"+I2S(this.State));
                 if(this.Kill==true){
                     Units.Kill(this.Spell);
                 }
@@ -80,8 +79,7 @@ library Spells requires SpellNameText{
             tmp.Kill=false;
             tmp.Use=1;
             tmp.State=state;
-            //测试 
-            BJDebugMsg(GetAbilityName(tmp.Id)+"模拟生成-阶段:"+I2S(tmp.State)); 
+            //测试 BJDebugMsg(GetAbilityName(tmp.Id)+"模拟生成-阶段:"+I2S(tmp.State)); 
             return tmp; 
         }
  
@@ -108,8 +106,7 @@ library Spells requires SpellNameText{
                 tmp.Kill=false;
                 tmp.Use=1;
                 tmp.State=Spell.SpellState;
-                //测试 
-                BJDebugMsg(GetAbilityName(tmp.Id)+"生成-阶段:"+I2S(tmp.State));
+                //测试 BJDebugMsg(GetAbilityName(tmp.Id)+"生成-阶段:"+I2S(tmp.State));
                 if(u.spell!=0){
                     tmp.Use=2;
                     SpellEventInterface(u.spell).evaluate(tmp);
@@ -140,8 +137,7 @@ library Spells requires SpellNameText{
                 tmp.Kill=false;
                 tmp.Use=1; 
                 tmp.State=$type$;
-                //测试 
-                BJDebugMsg(GetAbilityName(tmp.Id)+"生成-阶段:"+I2S(tmp.State));
+                //测试 BJDebugMsg(GetAbilityName(tmp.Id)+"生成-阶段:"+I2S(tmp.State));
                 if(u.spell!=0){
                     tmp.Use=2;
                     SpellEventInterface(u.spell).evaluate(tmp);

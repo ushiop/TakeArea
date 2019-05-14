@@ -716,8 +716,7 @@ library Zg requires Groups{
             Buffs b=Buffs.Find(u.unit,'B01T');  
             Data data=Data.create('A05X');
             b.Level=0;
-            b.Stop(); 
-            BJDebugMsg("触发Q2");
+            b.Stop();  
             u.Pause(true);
             u.AnimeId(28);
             u.AddAbility('A060'); 

@@ -71,8 +71,7 @@ library Yuuki requires Groups{
                                                 Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
                                             }
                                         }
-                                        GroupClear(tmp_group);
-                                        BJDebugMsg("伤害");
+                                        GroupClear(tmp_group); 
                                         mj=Units.MJ(u.player.player,'e008','A04Q',0,x,y,f,2,1.5,1,"stand","zzmxcl_tuci_zise.mdl");
                                         mj.SetH(150); 
                                         Dash.Start(mj.unit,f,300,Dash.SUB,30,true,false);
@@ -82,9 +81,7 @@ library Yuuki requires Groups{
                                             u.Position(x,y,false); 
                                         }
                                         u.SetF(f,true);
-                                        f=u.F();
-                                        
-                                        BJDebugMsg("伤害");
+                                        f=u.F(); 
                                         if(data.i[0]==3){
                                             Units.MJ(u.player.player,'e008','A04Q',0,x+100*CosBJ(f),y+100*SinBJ(f),f+90,2,2,1,"stand","daoguang_ex_y90_zise.mdl").SetH(100);
                                         }

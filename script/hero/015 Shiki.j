@@ -83,7 +83,6 @@ library Shiki requires Groups{
             Buffs b; 
             real x=u.X(),y=u.Y(),f=Util.XY(u.unit,m.unit);
             integer i;
-            BJDebugMsg("扭脖子处决-1");
             //Q2残影
             ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,5,u.modelsize,1,"stand",u.model);
             ts.AnimeId(34);
@@ -106,7 +105,6 @@ library Shiki requires Groups{
             u.Pause(true);
             u.AnimeId(34);
             //起跳残影
-            BJDebugMsg("扭脖子处决-2");
             ts=Units.MJ(u.player.player,'e008','A05T',0,x,y,f,2,u.modelsize,1,"stand",u.model);
             ts.AnimeId(34);
             ts.Alpha(0);
@@ -124,7 +122,6 @@ library Shiki requires Groups{
             data.c[2]=m;
             data.r[0]=0;
             data.r[1]=0;
-            BJDebugMsg("扭脖子处决-3");
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]); 
@@ -133,7 +130,6 @@ library Shiki requires Groups{
                 Units ts;
                 Dash dash; 
                 if(u.Alive()==false||m.Alive()==false||data.r[0]>=0.7||u.IsAbility('B01R')==false){ 
-                    BJDebugMsg("扭脖子处决-4");
                     u.Pause(false);
                     u.AnimeSpeed(1);
                     t.Destroy();
@@ -287,12 +283,10 @@ library Shiki requires Groups{
                 Units u=Units(data.c[0]); 
                 Dash dash1;
                 if(data.i[0]==1){ 
-                    BJDebugMsg("扭脖子结束1");
                     u.Pause(false);
                     u.Alpha(255);
                 }else{
                     if(data.u[0]==null){ 
-                        BJDebugMsg("扭脖子结束2");
                         Dash.Start(u.unit,dash.Angle,300,Dash.SUB,25,true,false).onMove=function(Dash dash){
                             Units u=Units.Get(dash.Unit);
                             if(u.IsAbility('B01Q')==false){
@@ -307,17 +301,14 @@ library Shiki requires Groups{
                         Timers.Start(0.01,u,function(Timers t){
                             Units u=Units(t.Data());
                             if(u.IsAbility('B01Q')==false){ 
-                                BJDebugMsg("扭脖子结束2-1");
                                 u.Pause(false);
                                 t.Destroy();
                             }
                         });
                     }else{  
-                        BJDebugMsg("扭脖子结束3"); 
                         Buffs.Skill(data.u[0],'A00F',1);
                         u.Damage(data.u[0],Damage.Physics,'A05T',u.Agi(true)*10); 
                         if(Units.Get(data.u[0]).Alive()==true){
-                            BJDebugMsg("扭脖子结束3-1"); 
                             Buffs.Find(u.unit,'B01Q').Stop();
                             u.Pause(false);
                             u.Alpha(255);
@@ -332,7 +323,6 @@ library Shiki requires Groups{
                             RunSoundOnUnit(Shiki.Sound[8],u.unit);
                             Shiki.D1(u.unit,data.u[0]);
                         }else{
-                            BJDebugMsg("扭脖子结束3-2");
                             Dash.Start(u.unit,dash.Angle,300,Dash.SUB,25,true,false).onMove=function(Dash dash){
                                 Units u=Units.Get(dash.Unit);
                                 if(u.IsAbility('B01Q')==false){
@@ -347,7 +337,6 @@ library Shiki requires Groups{
                             Timers.Start(0.01,u,function(Timers t){
                                 Units u=Units(t.Data());
                                 if(u.IsAbility('B01Q')==false){ 
-                                    BJDebugMsg("扭脖子结束3-2-1");
                                     u.Pause(false);
                                     t.Destroy();
                                 }
@@ -608,7 +597,6 @@ library Shiki requires Groups{
                     data.Destroy();
                     //------------------
                     if(u.IsAbility('A05F')==false){//如果不是被Q2打断的,则有硬直
-                        BJDebugMsg("关灯后摇");
                         u.Pause(true);
                         u.AnimeId(23);
                         ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
@@ -860,13 +848,11 @@ library Shiki requires Groups{
                         if(u.Alive()==true){
                             u.Pause(false);
                             if(u.IsAbility('B01G')==false){
-                                BJDebugMsg("砍人：因Q2中断结束");  
                                 Effect.ToUnit("blackblink.mdl",ts.unit,"origin").Destroy();
                                 ts.AnimeSpeed(0);
                                 ts.DelayAlpha(255,0,0.5);
                             }else{
                                 Buffs.Find(u.unit,'B01G').Stop();
-                                BJDebugMsg("砍人：因松开W或到达上限时间或眩晕结束"); 
                                 x=u.X()+data.r[4]*CosBJ(u.F());
                                 y=u.Y()+data.r[4]*SinBJ(u.F());
                                 if(data.r[0]>1){
@@ -948,8 +934,6 @@ library Shiki requires Groups{
                                 Dash.Start(u.unit,u.F()+f1,500*(data.r[0]/2),Dash.SUB,20,true,false);
                             
                             }
-                        }else{
-                            BJDebugMsg("砍人：因死亡结束");
                         }
                         ts.Life(1);
                         Units(data.c[3]).Life(0.3);
@@ -1018,7 +1002,6 @@ library Shiki requires Groups{
             HitFlys ad;
             f=f+180;
             u.Pause(true);
-            BJDebugMsg("暂停3");
             Buffs.Skill(m.unit,'A00F',1); 
             RunSoundOnUnit(Shiki.Sound[2], m.unit);
             u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
@@ -1045,7 +1028,6 @@ library Shiki requires Groups{
                 Units u=Units.Get(h.Unit); 
                 u.RemoveAbility('A05F'); 
                 u.Pause(false);
-                BJDebugMsg("暂停3-解除");
             }); 
             Effect.ToUnit("hiteffect08purplea.mdl",m.unit,"chest").Destroy();
             Effect.ToUnit("hit-juhuang-lizi.mdl",m.unit,"chest").Destroy();
@@ -1062,7 +1044,6 @@ library Shiki requires Groups{
             Units m=Units(data.c[1]);
             b.Level=0;
             b.Stop(); 
-            BJDebugMsg("触发Q2");
             /*
                 中断技能，通过结束BUFF来结束技能硬直，每个技能单独判断
                 B01F - 踢人(Q)的后半段硬直，可取消
@@ -1144,7 +1125,6 @@ library Shiki requires Groups{
                 //Effect.ToUnit("blink_darkblue.mdl",u.unit,"chest").Destroy();
                 if(m.H()<200){//高度过低时会踢起来
                     u.Pause(true);
-                    BJDebugMsg("暂停2");
                     u.Position(x1+120*CosBJ(f),y1+120*SinBJ(f),false);
                     u.SetF(f+180,true);
                     u.AnimeId(39);
@@ -1177,7 +1157,6 @@ library Shiki requires Groups{
                                 data.i[0]+=1;
                             }else{ 
                                 u.Pause(false);
-                                BJDebugMsg("暂停2-解除");
                                 if(u.Alive()==true&&m.Alive()==true){  
                                     Shiki.Q3(u,m,data.r[0]);
                                 }
@@ -1207,7 +1186,6 @@ library Shiki requires Groups{
             data.c[0]=u;
             data.c[1]=e;
             u.Pause(true);
-            BJDebugMsg("暂停");
             IssueImmediateOrder(u.unit,"stop"); 
             u.SetF(e.Angle,true);
             u.AnimeId(16); 
@@ -1251,7 +1229,6 @@ library Shiki requires Groups{
                         u.Damage(m.unit,Damage.Physics,'A05A',u.Agi(true)*5); 
                         Buffs.Skill(m.unit,'A00W',1);
                         u.Pause(true);
-                        BJDebugMsg("暂停1");
                         u.AnimeId(38);
                         u.AnimeSpeed(0.75); 
                         u.AddAbility('A05B');
@@ -1296,7 +1273,6 @@ library Shiki requires Groups{
                                     //
                                     u.AnimeSpeed(1);
                                     u.Pause(false);
-                                    BJDebugMsg("暂停1-解除");
                                 };
                                 Buffs.Skill(m.unit,'A00F',1);
                                 //Units.MJ(u.player.player,'e00C','A05A',0,m.X(),m.Y(),u.F()+180,2,2,1.5,"stand","by_wood_gongchengsipai_2.mdl").SetH(m.H()+100);
@@ -1342,7 +1318,6 @@ library Shiki requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 u.Pause(false);
-                BJDebugMsg("暂停-解除");
                 Spell(data.c[1]).Destroy();
                 data.Destroy();
             };

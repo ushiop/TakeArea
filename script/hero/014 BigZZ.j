@@ -648,7 +648,6 @@ library BigZZ requires Groups{
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
                     if(u.Alive()==false){
-                        BJDebugMsg("死亡");
                         if(data.u[0]!=null){
                             Units.Kill(data.u[0]);
                             data.u[0]=null;
