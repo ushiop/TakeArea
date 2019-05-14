@@ -373,6 +373,7 @@ library Shiki requires Groups{
             integer i;
             u.Pause(true);
             u.AnimeId(22);  
+            u.AnimeSpeed(1.5);
             u.AddAbility('A06D');//不可选取标记
             RunSoundOnUnit(Shiki.Sound[5],u.unit);
             IssueImmediateOrder(u.unit,"stop"); 
@@ -412,26 +413,26 @@ library Shiki requires Groups{
             data.u[1]=ts.unit;//高度辅助
             data.i[0]=0;//起跳判定
             //第一个残影
-            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1.5,"stand",u.model);
             ts.AnimeId(22);
             ts.Alpha(0); 
-            //
+            // 
             data.c[2]=ts;//技能残影
             for(1<=i<28){
-                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1.5,"stand",u.model);
                 ts1.AnimeId(22);
                 ts1.Alpha(0);
                 ts.Obj=ts1;  
                 ts=ts1;
             }
             //第二个残影
-            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+            ts=Units.MJ(u.player.player,'e008','A05O',0,u.X(),u.Y(),u.F(),2,u.modelsize,1.5,"stand",u.model);
             ts.AnimeId(22);
             ts.Alpha(0); 
             //
             data.c[3]=ts;//技能残影-地面
             for(1<=i<28){
-                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1,"stand",u.model);
+                ts1=Units.MJ(u.player.player,'e008','A05O',i,u.X(),u.Y(),u.F(),2,u.modelsize,1.5,"stand",u.model);
                 ts1.AnimeId(22);
                 ts1.Alpha(0);
                 ts.Obj=ts1;  
@@ -592,6 +593,7 @@ library Shiki requires Groups{
                 Spell e=Spell(data.c[1]);  
                 Buffs b; 
                 Units ts;
+                u.AnimeSpeed(1);
                 u.Pause(false); 
                 /*if(u.H()>0){
                     HitFlys.ResetPower(u.unit);
