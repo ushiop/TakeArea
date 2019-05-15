@@ -185,10 +185,11 @@ library Zg requires Groups{
                                     u.AnimeId(20);
                                     u.DelayReleaseAnimePause(0.5);  
                                     u.Position(m.X(),m.Y(),false);
-                                    Dash.Start(u.unit,u.F(),750,Dash.SUB,50,true,false); 
+                                    u.SetF(GetRandomReal(0,360),true);
+                                    Dash.Start(u.unit,u.F(),550,Dash.SUB,50,true,false); 
                                     t.Destroy();
                                     data.Destroy(); 
-                                }else{ 
+                                }else{  
                                     if(u.IsTimeStop()==false){
                                         data.i[0]-=1;
                                         x=m.X();
@@ -203,7 +204,7 @@ library Zg requires Groups{
                                             });  
                                             Units.MJ(u.player.player,'e008','A069',0,x,y,GetRandomReal(0,360),2,5,2.5,"stand","arcdirve02b1.mdl").SetH(150); 
                                             RunSoundOnUnit(Zg.Sound[2],u.unit);
-                                            //u.Damage(m.unit,Damage.Chaos,'A069',999999999);
+                                            u.Damage(m.unit,Damage.Chaos,'A069',999999999);
                                         }else{  
                                             data.r[0]+=60;
                                             
@@ -217,7 +218,7 @@ library Zg requires Groups{
                                                 mj=Units.MJ(u.player.player,'e00O','A069',0,x+dis*CosBJ(f),y+dis*SinBJ(f),f,2,0.2,1,"stand","bule-dark-salsh.mdl");  
                                             } 
                                             mj.SetF(Util.XY(mj.unit,m.unit)+GetRandomReal(-30,30),true);
-                                            Dash.Start(u.unit,mj.F()+180,350,Dash.SUB,25,true,false);
+                                            //Dash.Start(u.unit,mj.F()+180,350,Dash.SUB,25,true,false);
                                             u.Position(mj.X(),mj.Y(),false); 
                                             Effect.ToUnit("az-blood-hit.mdl",m.unit,"chest").Destroy();
                                             Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",m.unit,"chest").Destroy();
@@ -725,7 +726,7 @@ library Zg requires Groups{
             data.r[0]=0.77;//一段蓄力
             data.r[1]=0.23;//小踹动作0.46
             Dash.Start(u.unit,u.F()+180,50,Dash.SUB,7,true,false);
-            SpellNameText(u.unit,"自己也不清楚怎么使出的踢击",3,10);
+            SpellNameText(u.unit,"自己也不清楚怎么使出的踢击",3,10); 
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
@@ -740,7 +741,7 @@ library Zg requires Groups{
                     data.Destroy();
                 }else{
                     if(data.r[0]<=0){//小踹
-                        if(data.r[1]==0.23){ 
+                        if(data.r[1]==0.23){  
                             u.AnimeSpeed(2);
                             data.r[1]-=0.01;
                             dash=Dash.Start(u.unit,f,150,Dash.SUB,10,true,false); 
@@ -895,7 +896,7 @@ library Zg requires Groups{
                     }else{
                         if(u.IsTimeStop()==false){//蓄力中
                             data.r[0]-=0.01; 
-                            if(ModuloReal(data.r[0],0.1)==0.1){
+                            if(ModuloReal(data.r[0],0.1)==0.1){ 
                                 RunSoundOnUnit(Zg.Sound[9],u.unit);
                                 mj=Units.MJ(u.player.player,'e008','A05X',0,x,y,f,0.6,0.3,1,"stand","white-qiquan.mdl");  
                             }
@@ -1131,7 +1132,7 @@ library Zg requires Groups{
             Zg.Sound[6] = DefineSound("resource\\sound_effect_shiki_5.wav",1000, false, true);//蜜汁踢人小踢
             Zg.Sound[7] = DefineSound("resource\\sound_effect_shiki_3.wav",1000, false, true);//蜜汁踢人大踢
             Zg.Sound[8] = DefineSound("resource\\sound_effect_shiki_23_bing.wav",1000, false, true);//R的出招音效 
-            Zg.Sound[9]=DefineSound("resource\\sound_effect_xuanwendashi_e_3.wav",1000, false, true);//Q2的蓄力音效
+            Zg.Sound[9]=DefineSound("resource\\sound_effect_misc_28.wav",1000, false, true);//Q2的蓄力音效
         }
     }
 } 
