@@ -1035,6 +1035,7 @@ library SD requires Groups{
                     u.AnimeSpeed(1.25);  
                     e.Destroy();
                 }else{  
+                    SpellNameText(u.unit,"放置苦无",3,10);
                     u.SetAbilityCD('A03K',1); 
                     u.SetMP(u.MP()-50);
                     SD.W(e);

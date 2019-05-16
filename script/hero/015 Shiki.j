@@ -1355,6 +1355,7 @@ library Shiki requires Groups{
             Buffs b; 
             if(e.Id=='A05A'){
                 if(u.player.isai==true){
+                    SpellText(u.unit,'A05A',3,10);
                     u.SetMP(u.MP()-50);
                     u.SetAbilityCD('A05A',5);
                     Shiki.Q(e);
