@@ -60,3 +60,4 @@
 //! import zinc "map/script/hero/014 BigZZ.j"
 //! import zinc "map/script/hero/015 Shiki.j"
 //! import zinc "map/script/hero/016 Zg.j"
+//! import zinc "map/script/hero/017 Mogu.j"
