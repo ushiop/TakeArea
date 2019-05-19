@@ -81,7 +81,7 @@ library Zg requires Groups{
             integer i,js,jsb;
             u.Pause(true);
             u.AnimeId(19);
-            u.AddAbility('A06D');//不可选取标记
+            u.AddAbility(Units.Group_NotSelect);//不可选取标记
             data.c[0]=u;
             data.c[1]=e; 
             ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
@@ -180,7 +180,7 @@ library Zg requires Groups{
                                         m.Color(255,255,255);
                                     }
                                     m.TimeStop(false);
-                                    u.RemoveAbility('A06D');
+                                    u.RemoveAbility(Units.Group_NotSelect);
                                     u.DelayAlpha(0,255,0.5);
                                     u.AnimeId(20);
                                     u.DelayReleaseAnimePause(0.5);  
@@ -249,7 +249,7 @@ library Zg requires Groups{
                 real x=u.X(),y=u.Y();
                 Dash dash1;
                 if(data.u[0]==null){ 
-                    u.RemoveAbility('A06D');
+                    u.RemoveAbility(Units.Group_NotSelect);
                     u.AnimeId(20);
                     u.DelayReleaseAnimePause(0.5); 
                     ts=Units.MJ(u.player.player,'e008','A069',0,x,y,0,6,u.modelsize,1,"spell slam one",u.model);
