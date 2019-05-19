@@ -716,6 +716,8 @@ library Units requires Table,Players,Events,Util{
             static constant string UIColor="|cffFF0000";
             static constant string UIColorEnd="|r";
 
+            static constant integer Group_NotSelect='A06D';//不可被选取标记
+
             static constant integer MJType_TSW='A02O';//马甲投射物标记
             static constant integer MJType_FZW='A02P';//马甲放置物标记
             static constant integer MJType_CDW='A02Q';//马甲场地物标记
