@@ -32,7 +32,7 @@ library Groups requires Units,Damage{
     
     //是否可以被选取
     public function GroupIsNotSelect()->boolean{
-        return GetUnitAbilityLevel(GetFilterUnit(),'A06D')==0;
+        return GetUnitAbilityLevel(GetFilterUnit(),Units.Group_NotSelect)==0;
     }
 
     //是否是建筑
@@ -74,7 +74,7 @@ library Groups requires Units,Damage{
 
     //存活并且不是蝗虫单位
     public function GroupIsAliveNotAloc()->boolean{
-        return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsHouse();
+        return GroupIsNotAloc()&&GroupIsNotAlive()&&!GroupIsHouse()&&GroupIsNotSelect();
     }
 
     //返回指定单位组内最早出生的单位
