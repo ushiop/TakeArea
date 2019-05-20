@@ -7,7 +7,7 @@ library Mogu requires Groups{
             if(u.aid=='A06E'&&u.aidindex==0){ 
                 Units.MJ(u.player.player,'e008','A06E',1,u.X(),u.Y(),GetRandomReal(0,360),2.5,0.8,2, "stand","chushou_by_wood_effect_flame_explosion_2.mdl");
                 Util.Range(u.X(),u.Y(),150);
-                GroupDamage(u, u.X(),u.Y(),250,u.player.hero.Str(true)*1.5,Damage.Magic,'A06E',false); 
+                GroupDamage(u, u.X(),u.Y(),150,u.player.hero.Str(true)*1.5,Damage.Magic,'A06E',false); 
             }
         }
 
@@ -34,6 +34,16 @@ library Mogu requires Groups{
                                 mj=Units.MJ(u.player.player,'e008','A06E',0,u.X(),u.Y(),0,GetRandomReal(0.5,1.5),1.5,1, "stand","Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl");
                                 mj.Position(mj.X(),mj.Y(),true);
                                 mj.AddAbility(Units.MJType_FZW);
+                                GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),125,function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                        u.Damage(mj.unit,Damage.Magic,'A06E',u.Str(true));  
+                                        Buffs.Add(mj.unit,'A06F','B021',2,false);
+                                    }
+                                }
+                                GroupClear(tmp_group); 
                             }else{
                                 BJDebugMsg("没了");
                                 Effect(data.c[1]).Destroy();
