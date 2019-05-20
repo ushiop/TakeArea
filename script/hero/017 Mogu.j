@@ -22,7 +22,7 @@ library Mogu requires Groups{
                 Timers.Start(0.05,data,function(Timers t){
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
-                    Units mj;
+                    Units mj; 
                     if(u.IsTimeStop()==false){
                         if(data.r[0]==0){
                             data.r[0]=1;
