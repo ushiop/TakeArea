@@ -25,14 +25,14 @@ library Mogu requires Groups{
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units mj;
-                real f;
+                real x,y,f;
                 if(u.Alive()==true){
                     if(u.IsTimeStop()==false){
                         if(data.i[1]==0){
                             if(data.r[1]<=0){
                                 //后回旋结束，进入前回旋
                                 u.AnimeSpeed(0.4*data.r[0]);
-                                Dash.Start(u.unit,u.F(),30,Dash.NORMAL,u.MoveSpeed()/100,true,false);
+                                Dash.Start(u.unit,u.F(),50,Dash.NORMAL,u.MoveSpeed()/100,true,false);
                                 data.i[1]=1;
                             }else{
                                 data.r[1]-=0.01; 
@@ -40,6 +40,22 @@ library Mogu requires Groups{
                                     mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),1,1,1,"stand","white-qiquan.mdl");
                                     mj.Color(255,0,0);
                                     mj.DelaySizeEx(0.6,0.1,0.8);
+                                    f=u.F();
+                                    x=u.X()+150*CosBJ(f);
+                                    y=u.Y()+150*SinBJ(f);
+                                    f=Util.XYEX(x,y,x+100*CosBJ(f),y+100*SinBJ(f));
+                                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),400,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                            if((Util.XY2(mj.unit,u.unit)>200&&Util.FAN(u.unit,mj.unit,f,80)==true)||(Util.FAN(u.unit,mj.unit,f,80)==false)){ 
+                                                Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),Util.XY2EX(mj.X(),mj.Y(),x,y),Dash.NORMAL,15,true,true);
+                                                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                                            }  
+                                        }
+                                    }
+                                    GroupClear(tmp_group); 
                                 }
                             }
                         }else{
@@ -68,6 +84,25 @@ library Mogu requires Groups{
                                 mj=Units.MJ(u.player.player,'e008','A06G',0,u.X()+60*CosBJ(f),u.Y()+60*SinBJ(f),GetRandomReal(0,360),2,0.5,0.7,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl");
                                 mj.SetH(30+(data.r[3]/2)); 
                                 Dash.Start(mj.unit,f,70,Dash.SUB,15,true,false);
+                                 
+                                if(data.r[2]>=0.12&&data.r[2]<=0.13){
+                                    x=u.X();
+                                    y=u.Y();
+                                    f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
+                                    GroupEnumUnitsInRange(tmp_group,x,y,200,function GroupIsAliveNotAloc);     
+                                    while(FirstOfGroup(tmp_group)!=null){
+                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                            if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
+                                                Dash.Start(mj.unit,f,75,Dash.NORMAL,6,true,true);
+                                                HitFlys.Add(mj.unit,13);
+                                                Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                            } 
+                                        }
+                                    }
+                                    GroupClear(tmp_group); 
+                                }
                             }   
                         }        
                     }
