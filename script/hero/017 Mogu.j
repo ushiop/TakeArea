@@ -15,7 +15,7 @@ library Mogu requires Groups{
             data.i[0]+=1;
             data.i[1]=0;//当前阶段，0为后回旋，1为输出回旋
             data.r[1]=0.329/data.r[0];//后回旋，结束时牵引判定
-            data.r[2]=(0.123/0.4)/data.r[0];//前回旋，伤害判定
+            data.r[2]=0.123/data.r[0];//前回旋，伤害判定
             data.r[3]=0;//前回旋火焰角度
             data.r[4]=180/(data.r[2]/0.01);//前回旋火焰角度幅度
             u.Pause(true);
@@ -26,25 +26,26 @@ library Mogu requires Groups{
                 Units u=Units(data.c[0]);
                 Units mj;
                 real x,y,f;
+                Data data1;
                 if(u.Alive()==true){
                     if(u.IsTimeStop()==false){
                         if(data.i[1]==0){
                             if(data.r[1]<=0){
                                 //后回旋结束，进入前回旋
-                                u.AnimeSpeed(0.4*data.r[0]);
+                                //u.AnimeSpeed(0.4*data.r[0]);
                                 Dash.Start(u.unit,u.F(),50,Dash.NORMAL,u.MoveSpeed()/100,true,false);
                                 data.i[1]=1;
                             }else{
                                 data.r[1]-=0.01; 
                                 if(data.r[1]>=0.13&&data.r[1]<=0.14){//牵引周围敌人 
-                                    mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),1,1,1,"stand","white-qiquan.mdl");
-                                    mj.Color(255,0,0);
-                                    mj.DelaySizeEx(0.6,0.1,0.8);
+
+                                    mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),2,1,2,"stand","dark1_ex.mdl");
+                                    mj.DelaySizeEx(1,0.5,0.5);
                                     f=u.F();
                                     x=u.X()+150*CosBJ(f);
                                     y=u.Y()+150*SinBJ(f);
                                     f=Util.XYEX(x,y,x+100*CosBJ(f),y+100*SinBJ(f));
-                                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),400,function GroupIsAliveNotAloc);     
+                                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);     
                                     while(FirstOfGroup(tmp_group)!=null){
                                         mj=Units.Get(FirstOfGroup(tmp_group));
                                         GroupRemoveUnit(tmp_group,mj.unit);
@@ -73,8 +74,101 @@ library Mogu requires Groups{
                                         //踢远并减速
                                     }else{
                                         //踢高并眩晕
+                                        data1=Data.create('A06G');
+                                        data1.c[0]=u;
+                                        data1.c[1]=data.c[1];
+                                        data1.r[0]=0.2;
+                                        u.Pause(true);
+                                        u.AnimeId(23);
+                                        u.AnimeSpeed(0.7);
+                                        Timers.Start(0.01,data1,function(Timers t){ 
+                                            Data data=Data(t.Data());
+                                            Units u=Units(data.c[0]);
+                                            Units mj;
+                                            real x,y,f;
+                                            if(u.Alive()==true){
+                                                if(data.r[0]<=0){
+                                                    x=u.X();
+                                                    y=u.Y();
+                                                    f=u.F();
+                                                    x=x+100*CosBJ(f);
+                                                    y=y+100*SinBJ(f);
+                                                    Dash.Start(u.unit,f,125,Dash.SUB,10,true,false);
+                                                    HitFlys.Add(u.unit,20);
+                                                    mj=Units.MJ(u.player.player,'e008','A06G',0,x,y,0,2,0.5,0.7,"stand",".mdl");
+                                                    Dash.Start(mj.unit,f,140,Dash.NORMAL,5,true,false); 
+                                                    Timers.Start(0.01,mj,function(Timers t){
+                                                        Units u=Units(t.Data());
+                                                        Units mj;
+                                                        if(u.aidindex==1){
+                                                            t.Destroy();
+                                                        }else{
+                                                            if(u.Obj==0){
+                                                                u.Obj=2;
+                                                                mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),2,GetRandomReal(1,2),1,"death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
+                                                                mj.SetH(u.H());
+                                                                if(GetRandomInt(1,4)==1){
+                                                                    mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),3,1,1.4,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl");
+                                                                    mj.SetH(u.H());  
+                                                                }
+                                                            }else{
+                                                                u.Obj-=1;
+                                                            }
+                                                        }
+                                                    });
+                                                    HitFlys.Lister(HitFlys.Add(mj.unit,35),HitFlys.onDown,function(HitFlys h){
+                                                        Units u=Units.Get(h.Unit);
+                                                        Units mj;
+                                                        u.aidindex=1;
+                                                        mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),3,3,0.6,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl");
+                                                        mj.SetH(u.H()); 
+                                                        GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),150,function GroupIsAliveNotAloc);     
+                                                        while(FirstOfGroup(tmp_group)!=null){
+                                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                                                if(mj.H()>=u.H()-50){ 
+                                                                    Dash.Start(mj.unit,GetRandomReal(0,360),400,Dash.SUB,13,true,false);
+                                                                    HitFlys.Reset(mj.unit);
+                                                                    HitFlys.Add(mj.unit,20);
+                                                                    //Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                                                    Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                                                                }
+                                                            }
+                                                        }
+                                                        GroupClear(tmp_group);  
+                                                    }); 
+                                                    GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
+                                                    while(FirstOfGroup(tmp_group)!=null){
+                                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                                        GroupRemoveUnit(tmp_group,mj.unit);
+                                                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                                            //伤害和眩晕
+                                                            Dash.Start(mj.unit,f,140,Dash.NORMAL,5,true,false);
+                                                            HitFlys.Reset(mj.unit);
+                                                            HitFlys.Add(mj.unit,35);
+                                                            Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                                            Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                                                        }
+                                                    }
+                                                    GroupClear(tmp_group);  
+                                                    u.DelayReleaseAnimePause(0.35);
+                                                    t.Destroy();
+                                                    Spell(data.c[1]).Destroy();
+                                                    data.Destroy();
+                                                }else{
+                                                    if(u.IsTimeStop()==false){
+                                                        data.r[0]-=0.01;
+                                                    }
+                                                }
+                                            }else{
+                                                u.Pause(false);
+                                                t.Destroy();
+                                                Spell(data.c[1]).Destroy();
+                                                data.Destroy();
+                                            } 
+                                        });
                                     }
-                                    Spell(data.c[1]).Destroy();
                                     data.Destroy();
                                 }
                             }else{
@@ -83,9 +177,8 @@ library Mogu requires Groups{
                                 data.r[3]+=data.r[4];
                                 mj=Units.MJ(u.player.player,'e008','A06G',0,u.X()+60*CosBJ(f),u.Y()+60*SinBJ(f),GetRandomReal(0,360),2,0.5,0.7,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl");
                                 mj.SetH(30+(data.r[3]/2)); 
-                                Dash.Start(mj.unit,f,70,Dash.SUB,15,true,false);
-                                 
-                                if(data.r[2]>=0.11&&data.r[2]<=0.12){
+                                Dash.Start(mj.unit,f,70,Dash.SUB,15,true,false); 
+                                if(data.r[2]>=0.04&&data.r[2]<=0.05){
                                     x=u.X();
                                     y=u.Y();
                                     f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
@@ -95,7 +188,8 @@ library Mogu requires Groups{
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                             if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
-                                                Dash.Start(mj.unit,f,75,Dash.NORMAL,6,true,true);
+                                                //伤害
+                                                Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,true);
                                                 HitFlys.Add(mj.unit,13);
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
