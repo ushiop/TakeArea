@@ -85,7 +85,7 @@ library Mogu requires Groups{
                                 mj.SetH(30+(data.r[3]/2)); 
                                 Dash.Start(mj.unit,f,70,Dash.SUB,15,true,false);
                                  
-                                if(data.r[2]>=0.12&&data.r[2]<=0.13){
+                                if(data.r[2]>=0.11&&data.r[2]<=0.12){
                                     x=u.X();
                                     y=u.Y();
                                     f=Util.XYEX(x,y,x+100*CosBJ(u.F()),y+100*SinBJ(u.F()));
@@ -98,10 +98,11 @@ library Mogu requires Groups{
                                                 Dash.Start(mj.unit,f,75,Dash.NORMAL,6,true,true);
                                                 HitFlys.Add(mj.unit,13);
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
                                             } 
                                         }
                                     }
-                                    GroupClear(tmp_group); 
+                                    GroupClear(tmp_group);  
                                 }
                             }   
                         }        
