@@ -893,11 +893,11 @@ constant integer si__BigZZ__BigZZ=38
 integer si__BigZZ__BigZZ_F=0
 integer si__BigZZ__BigZZ_I=0
 integer array si__BigZZ__BigZZ_V
-constant integer si__BlackSaber__BlackSaber=39
-integer si__BlackSaber__BlackSaber_F=0
-integer si__BlackSaber__BlackSaber_I=0
-integer array si__BlackSaber__BlackSaber_V
-integer s__BlackSaber__BlackSaber_Q_HIT
+constant integer si__BlackSaber___BlackSaber=39
+integer si__BlackSaber___BlackSaber_F=0
+integer si__BlackSaber___BlackSaber_I=0
+integer array si__BlackSaber___BlackSaber_V
+integer s__BlackSaber___BlackSaber_Q_HIT
 constant integer si__DazzleMaster___DazzleMaster=40
 integer si__DazzleMaster___DazzleMaster_F=0
 integer si__DazzleMaster___DazzleMaster_I=0
@@ -1863,35 +1863,35 @@ function s__DazzleMaster___DazzleMaster_deallocate takes integer this returns no
     set si__DazzleMaster___DazzleMaster_F=this
 endfunction
 
-//Generated allocator of BlackSaber__BlackSaber
-function s__BlackSaber__BlackSaber__allocate takes nothing returns integer
- local integer this=si__BlackSaber__BlackSaber_F
+//Generated allocator of BlackSaber___BlackSaber
+function s__BlackSaber___BlackSaber__allocate takes nothing returns integer
+ local integer this=si__BlackSaber___BlackSaber_F
     if (this!=0) then
-        set si__BlackSaber__BlackSaber_F=si__BlackSaber__BlackSaber_V[this]
+        set si__BlackSaber___BlackSaber_F=si__BlackSaber___BlackSaber_V[this]
     else
-        set si__BlackSaber__BlackSaber_I=si__BlackSaber__BlackSaber_I+1
-        set this=si__BlackSaber__BlackSaber_I
+        set si__BlackSaber___BlackSaber_I=si__BlackSaber___BlackSaber_I+1
+        set this=si__BlackSaber___BlackSaber_I
     endif
     if (this>8190) then
-        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: BlackSaber__BlackSaber")
+        call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Unable to allocate id for an object of type: BlackSaber___BlackSaber")
         return 0
     endif
 
-    set si__BlackSaber__BlackSaber_V[this]=-1
+    set si__BlackSaber___BlackSaber_V[this]=-1
  return this
 endfunction
 
-//Generated destructor of BlackSaber__BlackSaber
-function s__BlackSaber__BlackSaber_deallocate takes integer this returns nothing
+//Generated destructor of BlackSaber___BlackSaber
+function s__BlackSaber___BlackSaber_deallocate takes integer this returns nothing
     if this==null then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: BlackSaber__BlackSaber")
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Attempt to destroy a null struct of type: BlackSaber___BlackSaber")
         return
-    elseif (si__BlackSaber__BlackSaber_V[this]!=-1) then
-            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: BlackSaber__BlackSaber")
+    elseif (si__BlackSaber___BlackSaber_V[this]!=-1) then
+            call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,1000.,"Double free of type: BlackSaber___BlackSaber")
         return
     endif
-    set si__BlackSaber__BlackSaber_V[this]=si__BlackSaber__BlackSaber_F
-    set si__BlackSaber__BlackSaber_F=this
+    set si__BlackSaber___BlackSaber_V[this]=si__BlackSaber___BlackSaber_F
+    set si__BlackSaber___BlackSaber_F=this
 endfunction
 
 //Generated method caller for BigZZ__BigZZ.R1
@@ -11047,12 +11047,12 @@ endfunction
 
 //library BigZZ ends
 //library BlackSaber:
-                function s__BlackSaber__BlackSaber_anon__92 takes integer h returns nothing
+                function s__BlackSaber___BlackSaber_anon__92 takes integer h returns nothing
                     local integer u=s__Units_Get(s__HitFlys_Unit[h])
                     call s__Units_Anime(u,"death")
                     call s__HitFlys_Remove(s__Units_unit[u])
                 endfunction
-            function s__BlackSaber__BlackSaber_anon__91 takes nothing returns nothing
+            function s__BlackSaber___BlackSaber_anon__91 takes nothing returns nothing
                 local integer data=(GetTimerData(GetExpiredTimer()))
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local integer mj
@@ -11121,7 +11121,7 @@ endfunction
                     endif
                 endif
             endfunction  //Util.Range(x,y,250); 
-        function s__BlackSaber__BlackSaber_D takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_D takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local timer t=NewTimer()
             local integer data=s__Data_create('A015')
@@ -11145,15 +11145,15 @@ endfunction
             set s___Data_r[s__Data_r[data]+2]=y
             set s___Data_r[s__Data_r[data]+3]=0
             call SetTimerData(t , data)
-            call TimerStart(t, 0.02, true, function s__BlackSaber__BlackSaber_anon__91)
+            call TimerStart(t, 0.02, true, function s__BlackSaber___BlackSaber_anon__91)
         endfunction
-                    function s__BlackSaber__BlackSaber_anon__95 takes integer dash returns nothing
+                    function s__BlackSaber___BlackSaber_anon__95 takes integer dash returns nothing
                         local integer m=s__Units_Get(s__Dash_Unit[dash])
                         if ( s__Dash_Speed[dash] > 20 ) then
                             call s__Units_SetH(s__Units_MJ(s__Players_player[s__Units_player[m]] , 'e008' , 'A012' , 0 , s__Units_X(m) , s__Units_Y(m) , 0 , 2 , s__Dash_Speed[dash] / 15 , 1 , "death" , "fire-boom-new-darkblue-3.mdl"),s__Units_H(m))
                         endif
                     endfunction
-                function s__BlackSaber__BlackSaber_anon__94 takes nothing returns nothing
+                function s__BlackSaber___BlackSaber_anon__94 takes nothing returns nothing
                     local integer data=(GetTimerData(GetExpiredTimer()))
                     local integer u=(s___Data_c[s__Data_c[data]])
                     local integer m=(s___Data_c[s__Data_c[data]+2])
@@ -11261,7 +11261,7 @@ endfunction
                         endif
                     endif
                 endfunction
-            function s__BlackSaber__BlackSaber_anon__93 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__93 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local unit k
@@ -11291,13 +11291,13 @@ endfunction
                         set s___Data_c[s__Data_c[data]+2]=s__Units_Get(k)
                         call SetTimerData(t , data)
                         call s__Dash_Start(s__Units_unit[u] , s__Dash_Angle[dash] , 300 , s__Dash_SUB , 20 , true , false)
-                        call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__94)
+                        call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__94)
                         set t=null
                         set k=null
                     endif
                 endif
             endfunction
-            function s__BlackSaber__BlackSaber_anon__96 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__96 takes integer dash returns nothing
                 local integer data=(s__Dash_Obj[dash])
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 if ( s___Data_i[s__Data_i[data]] == 0 ) then
@@ -11310,7 +11310,7 @@ endfunction
                     call s__Data_Destroy(data)
                 endif
             endfunction
-        function s__BlackSaber__BlackSaber_R takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_R takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer dash
             local integer data=s__Data_create('A012')
@@ -11328,7 +11328,7 @@ endfunction
             set s__Dash_onMove[dash]=(99)
             set s__Dash_onEnd[dash]=(100)
         endfunction
-            function s__BlackSaber__BlackSaber_anon__97 takes nothing returns nothing
+            function s__BlackSaber___BlackSaber_anon__97 takes nothing returns nothing
                 local integer data=(GetTimerData(GetExpiredTimer()))
                 local integer u=(s___Data_c[s__Data_c[data]])
                 local real x
@@ -11414,7 +11414,7 @@ endfunction
                     call ReleaseTimer(GetExpiredTimer())
                 endif
             endfunction
-        function s__BlackSaber__BlackSaber_E takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_E takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer data=s__Data_create('A00X')
             local timer t=NewTimer()
@@ -11432,10 +11432,10 @@ endfunction
             call SetTimerData(t , data)
             call s__Dash_Start(s__Units_unit[u] , s__Units_F(u) , 300 , s__Dash_SUB , 10 , true , false)
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00X' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 2 , 0.4 , 1 , "stand" , "white-qiquan.mdl")
-            call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__97)
+            call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__97)
             set t=null
         endfunction
-            function s__BlackSaber__BlackSaber_anon__98 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__98 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local integer mj
                 local real dis
@@ -11476,12 +11476,12 @@ endfunction
                     call GroupClear(tmp_group)
                 endif
             endfunction
-            function s__BlackSaber__BlackSaber_anon__99 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__99 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 call s__Units_Life(u,5)
                 call s__Units_Anime(u,"death")
             endfunction
-        function s__BlackSaber__BlackSaber_W takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_W takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer mj
             local integer dash
@@ -11496,7 +11496,7 @@ endfunction
             set s__Dash_onEnd[dash]=(102)
             call s__Spell_Destroy(e)
         endfunction
-            function s__BlackSaber__BlackSaber_anon__100 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__100 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 local real x=s__Units_X(u) + 50 * CosBJ(s__Dash_Angle[dash])
                 local real y=s__Units_Y(u) + 50 * SinBJ(s__Dash_Angle[dash])
@@ -11520,17 +11520,17 @@ endfunction
                     if ( s__Dash_NowDis[dash] > 100 ) then
                         call s__Dash_Start(s__Units_unit[u] , s__Util_XY(k , s__Units_unit[u]) , 200 * ( s__Dash_NowDis[dash] / s__Dash_MaxDis[dash] ) , s__Dash_SUB , 20 , true , false)
                     endif
-                    call RunSoundOnUnit(s__BlackSaber__BlackSaber_Q_HIT , k)
+                    call RunSoundOnUnit(s__BlackSaber___BlackSaber_Q_HIT , k)
                 endif
                 set k=null
             endfunction
-            function s__BlackSaber__BlackSaber_anon__101 takes integer dash returns nothing
+            function s__BlackSaber___BlackSaber_anon__101 takes integer dash returns nothing
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
                 call s__Spell_Destroy((s__Dash_Obj[dash]))
                 call s__Units_AnimeSpeed(u,1)
                 call s__Units_Pause(u,false)
             endfunction
-        function s__BlackSaber__BlackSaber_Q takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_Q takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             local integer dash
             call s__Units_Pause(u,true)
@@ -11541,7 +11541,7 @@ endfunction
             set s__Dash_onMove[dash]=(103)
             set s__Dash_onEnd[dash]=(104)
         endfunction
-        function s__BlackSaber__BlackSaber_HERO_START takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_HERO_START takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             if ( s__Units_IsAbility(u,'A02A') == true ) then
                 if ( s__Spell_Id[e] != 'A012' and s__Spell_Id[e] != 'A00U' ) then
@@ -11562,7 +11562,7 @@ endfunction
                         call SpellNameText(s__Units_unit[u] , "! 炎焱斩 !" , 3 , 15)
                         call s__Units_SetMP(u,s__Units_MP(u) - 150)
                         call s__Units_SetAbilityCD(u,'A00X' , 15)
-                        call s__BlackSaber__BlackSaber_E(e)
+                        call s__BlackSaber___BlackSaber_E(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -11579,7 +11579,7 @@ endfunction
                         call SpellText(s__Units_unit[u] , 'A015' , 3 , 15)
                         call s__Units_SetMP(u,s__Units_MP(u) - 250)
                         call s__Units_SetAbilityCD(u,'A015' , 25)
-                        call s__BlackSaber__BlackSaber_D(e)
+                        call s__BlackSaber___BlackSaber_D(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -11588,14 +11588,14 @@ endfunction
                 endif
             endif
         endfunction
-        function s__BlackSaber__BlackSaber_HERO_STOP takes integer e returns nothing
+        function s__BlackSaber___BlackSaber_HERO_STOP takes integer e returns nothing
             local integer u=s__Units_Get(s__Spell_Spell[e])
             if ( s__Spell_Id[e] == 'A00V' or s__Spell_Id[e] == 'A015' ) then
                 call s__Units_AnimeSpeed(u,1)
             endif
             call s__Spell_Destroy(e)
         endfunction
-        function s__BlackSaber__BlackSaber_AI takes unit ua returns nothing
+        function s__BlackSaber___BlackSaber_AI takes unit ua returns nothing
             local integer u=s__Units_Get(ua)
             local unit target
             local unit no
@@ -11629,12 +11629,12 @@ endfunction
             set target=null
             set no=null
         endfunction
-        function s__BlackSaber__BlackSaber_Spawn takes integer u,integer m returns nothing
+        function s__BlackSaber___BlackSaber_Spawn takes integer u,integer m returns nothing
             if ( s__Units_IsAbility(u,'A015') == true ) then
                 set s__Units_ai[u]=(3)
             endif
         endfunction
-        function s__BlackSaber__BlackSaber_onInit takes nothing returns nothing
+        function s__BlackSaber___BlackSaber_onInit takes nothing returns nothing
             call s__Spell_On(s__Spell_onSpell , 'A015' , (105))
             call s__Spell_On(s__Spell_onSpell , 'A012' , (106))
             call s__Spell_On(s__Spell_onSpell , 'A00U' , (107))
@@ -11647,7 +11647,7 @@ endfunction
             call s__Spell_On(s__Spell_onReady , 'A015' , (110))
             call s__Spell_On(s__Spell_onStop , 'A015' , (111))
             call s__Units_On(s__Units_onHeroSpawn , (9))
-            set s__BlackSaber__BlackSaber_Q_HIT=DefineSound("resource\\sound_effect_hit_0.wav" , 1000 , false , true)
+            set s__BlackSaber___BlackSaber_Q_HIT=DefineSound("resource\\sound_effect_hit_0.wav" , 1000 , false , true)
         endfunction
 
 //library BlackSaber ends
@@ -13447,16 +13447,20 @@ endfunction
                                 set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] + 0.25
                                 call sc__Mogu___Mogu_W1(data)
                             else
-                                if ( s___Data_i[s__Data_i[data]] > 2 ) then
+                                if ( s__Units_IsAbility(u,'BPSE') == false ) then
+                                    if ( s___Data_i[s__Data_i[data]] > 2 ) then
+                                    else
+                                        set data1=s__Data_create('A06G')
+                                        set s___Data_c[s__Data_c[data1]]=u
+                                        set s___Data_c[s__Data_c[data1]+1]=s___Data_c[s__Data_c[data]+1]
+                                        set s___Data_r[s__Data_r[data1]]=0.2
+                                        call s__Units_Pause(u,true)
+                                        call s__Units_AnimeId(u,23)
+                                        call s__Units_AnimeSpeed(u,0.7)
+                                        call s__Timers_Start(0.01 , data1 , (161))
+                                    endif
                                 else
-                                    set data1=s__Data_create('A06G')
-                                    set s___Data_c[s__Data_c[data1]]=u
-                                    set s___Data_c[s__Data_c[data1]+1]=s___Data_c[s__Data_c[data]+1]
-                                    set s___Data_r[s__Data_r[data1]]=0.2
-                                    call s__Units_Pause(u,true)
-                                    call s__Units_AnimeId(u,23)
-                                    call s__Units_AnimeSpeed(u,0.7)
-                                    call s__Timers_Start(0.01 , data1 , (161))
+                                    call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                                 endif
                                 call s__Data_Destroy(data)
                             endif
@@ -21211,7 +21215,7 @@ endfunction
 // 
 //   Warcraft III map script
 //   Generated by the Warcraft III World Editor
-//   Date: Wed May 29 12:45:52 2019
+//   Date: Thu May 30 21:09:12 2019
 //   Map Author: 未知！
 // 
 //===========================================================================
@@ -21623,7 +21627,7 @@ function main takes nothing returns nothing
     call CreateAllUnits()
     call InitBlizzard()
 
-call ExecuteFunc("jasshelper__initstructs94791359")
+call ExecuteFunc("jasshelper__initstructs211392109")
 call ExecuteFunc("BuyStrAgiInt___onInit")
 call ExecuteFunc("TeamTips___onInit")
 call ExecuteFunc("Teams___onInit")
@@ -25424,7 +25428,7 @@ function sa___prototype47_s__BigZZ__BigZZ_E2 takes nothing returns boolean
             endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__92 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__92 takes nothing returns boolean
  local integer h=f__arg_integer1
 
                     local integer u=s__Units_Get(s__HitFlys_Unit[h])
@@ -25432,7 +25436,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__92 takes nothing return
                     call s__HitFlys_Remove(s__Units_unit[u])
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__95 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__95 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                         local integer m=s__Units_Get(s__Dash_Unit[dash])
@@ -25441,7 +25445,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__95 takes nothing return
                         endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__93 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__93 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -25473,14 +25477,14 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__93 takes nothing return
                         set s___Data_c[s__Data_c[data]+2]=s__Units_Get(k)
                         call SetTimerData(t , data)
                         call s__Dash_Start(s__Units_unit[u] , s__Dash_Angle[dash] , 300 , s__Dash_SUB , 20 , true , false)
-                        call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__94)
+                        call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__94)
                         set t=null
                         set k=null
                     endif
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__96 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__96 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer data=(s__Dash_Obj[dash])
@@ -25496,7 +25500,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__96 takes nothing return
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__98 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__98 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -25540,7 +25544,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__98 takes nothing return
                 endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__99 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__99 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -25548,7 +25552,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__99 takes nothing return
                 call s__Units_Anime(u,"death")
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__100 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__100 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -25574,12 +25578,12 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__100 takes nothing retur
                     if ( s__Dash_NowDis[dash] > 100 ) then
                         call s__Dash_Start(s__Units_unit[u] , s__Util_XY(k , s__Units_unit[u]) , 200 * ( s__Dash_NowDis[dash] / s__Dash_MaxDis[dash] ) , s__Dash_SUB , 20 , true , false)
                     endif
-                    call RunSoundOnUnit(s__BlackSaber__BlackSaber_Q_HIT , k)
+                    call RunSoundOnUnit(s__BlackSaber___BlackSaber_Q_HIT , k)
                 endif
                 set k=null
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_anon__101 takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_anon__101 takes nothing returns boolean
  local integer dash=f__arg_integer1
 
                 local integer u=s__Units_Get(s__Dash_Unit[dash])
@@ -25588,11 +25592,11 @@ function sa___prototype1_s__BlackSaber__BlackSaber_anon__101 takes nothing retur
                 call s__Units_Pause(u,false)
     return true
 endfunction
-function sa___prototype29_s__BlackSaber__BlackSaber_AI takes nothing returns boolean
-    call s__BlackSaber__BlackSaber_AI(f__arg_unit1)
+function sa___prototype29_s__BlackSaber___BlackSaber_AI takes nothing returns boolean
+    call s__BlackSaber___BlackSaber_AI(f__arg_unit1)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_D takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_D takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25618,10 +25622,10 @@ function sa___prototype1_s__BlackSaber__BlackSaber_D takes nothing returns boole
             set s___Data_r[s__Data_r[data]+2]=y
             set s___Data_r[s__Data_r[data]+3]=0
             call SetTimerData(t , data)
-            call TimerStart(t, 0.02, true, function s__BlackSaber__BlackSaber_anon__91)
+            call TimerStart(t, 0.02, true, function s__BlackSaber___BlackSaber_anon__91)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_R takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_R takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25642,7 +25646,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_R takes nothing returns boole
             set s__Dash_onEnd[dash]=(100)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_Q takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_Q takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25656,7 +25660,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_Q takes nothing returns boole
             set s__Dash_onEnd[dash]=(104)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_W takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_W takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25674,7 +25678,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_W takes nothing returns boole
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_E takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_E takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25694,11 +25698,11 @@ function sa___prototype1_s__BlackSaber__BlackSaber_E takes nothing returns boole
             call SetTimerData(t , data)
             call s__Dash_Start(s__Units_unit[u] , s__Units_F(u) , 300 , s__Dash_SUB , 10 , true , false)
             call s__Units_MJ(s__Players_player[s__Units_player[u]] , 'e008' , 'A00X' , 0 , s__Units_X(u) , s__Units_Y(u) , 0 , 2 , 0.4 , 1 , "stand" , "white-qiquan.mdl")
-            call TimerStart(t, 0.01, true, function s__BlackSaber__BlackSaber_anon__97)
+            call TimerStart(t, 0.01, true, function s__BlackSaber___BlackSaber_anon__97)
             set t=null
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25721,7 +25725,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START takes nothing retu
                         call SpellNameText(s__Units_unit[u] , "! 炎焱斩 !" , 3 , 15)
                         call s__Units_SetMP(u,s__Units_MP(u) - 150)
                         call s__Units_SetAbilityCD(u,'A00X' , 15)
-                        call s__BlackSaber__BlackSaber_E(e)
+                        call s__BlackSaber___BlackSaber_E(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -25738,7 +25742,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START takes nothing retu
                         call SpellText(s__Units_unit[u] , 'A015' , 3 , 15)
                         call s__Units_SetMP(u,s__Units_MP(u) - 250)
                         call s__Units_SetAbilityCD(u,'A015' , 25)
-                        call s__BlackSaber__BlackSaber_D(e)
+                        call s__BlackSaber___BlackSaber_D(e)
                     else
                         call s__Spell_Destroy(e)
                     endif
@@ -25748,7 +25752,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START takes nothing retu
             endif
     return true
 endfunction
-function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP takes nothing returns boolean
+function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP takes nothing returns boolean
  local integer e=f__arg_integer1
 
             local integer u=s__Units_Get(s__Spell_Spell[e])
@@ -25758,7 +25762,7 @@ function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP takes nothing retur
             call s__Spell_Destroy(e)
     return true
 endfunction
-function sa___prototype6_s__BlackSaber__BlackSaber_Spawn takes nothing returns boolean
+function sa___prototype6_s__BlackSaber___BlackSaber_Spawn takes nothing returns boolean
  local integer u=f__arg_integer1
  local integer m=f__arg_integer2
 
@@ -26934,16 +26938,20 @@ function sa___prototype1_s__Mogu___Mogu_anon__315 takes nothing returns boolean
                                 set s___Data_r[s__Data_r[data]]=s___Data_r[s__Data_r[data]] + 0.25
                                 call sc__Mogu___Mogu_W1(data)
                             else
-                                if ( s___Data_i[s__Data_i[data]] > 2 ) then
+                                if ( s__Units_IsAbility(u,'BPSE') == false ) then
+                                    if ( s___Data_i[s__Data_i[data]] > 2 ) then
+                                    else
+                                        set data1=s__Data_create('A06G')
+                                        set s___Data_c[s__Data_c[data1]]=u
+                                        set s___Data_c[s__Data_c[data1]+1]=s___Data_c[s__Data_c[data]+1]
+                                        set s___Data_r[s__Data_r[data1]]=0.2
+                                        call s__Units_Pause(u,true)
+                                        call s__Units_AnimeId(u,23)
+                                        call s__Units_AnimeSpeed(u,0.7)
+                                        call s__Timers_Start(0.01 , data1 , (161))
+                                    endif
                                 else
-                                    set data1=s__Data_create('A06G')
-                                    set s___Data_c[s__Data_c[data1]]=u
-                                    set s___Data_c[s__Data_c[data1]+1]=s___Data_c[s__Data_c[data]+1]
-                                    set s___Data_r[s__Data_r[data1]]=0.2
-                                    call s__Units_Pause(u,true)
-                                    call s__Units_AnimeId(u,23)
-                                    call s__Units_AnimeSpeed(u,0.7)
-                                    call s__Timers_Start(0.01 , data1 , (161))
+                                    call s__Spell_Destroy((s___Data_c[s__Data_c[data]+1]))
                                 endif
                                 call s__Data_Destroy(data)
                             endif
@@ -33582,7 +33590,7 @@ function sa___prototype47_s__Respawn___Respawn_PressSnyc takes nothing returns b
     return true
 endfunction
 
-function jasshelper__initstructs94791359 takes nothing returns nothing
+function jasshelper__initstructs211392109 takes nothing returns nothing
     set st__Respawn___Respawn_Flush=CreateTrigger()
     call TriggerAddCondition(st__Respawn___Respawn_Flush,Condition( function sa__Respawn___Respawn_Flush))
     set st__Respawn___Respawn_Show=CreateTrigger()
@@ -34145,56 +34153,56 @@ function jasshelper__initstructs94791359 takes nothing returns nothing
     call TriggerAddAction(st___prototype47[3],function sa___prototype47_s__BigZZ__BigZZ_E2)
     call TriggerAddCondition(st___prototype47[3],Condition(function sa___prototype47_s__BigZZ__BigZZ_E2))
     set st___prototype1[97]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__BlackSaber__BlackSaber_anon__92)
-    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__92))
+    call TriggerAddAction(st___prototype1[97],function sa___prototype1_s__BlackSaber___BlackSaber_anon__92)
+    call TriggerAddCondition(st___prototype1[97],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__92))
     set st___prototype1[98]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__BlackSaber__BlackSaber_anon__95)
-    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__95))
+    call TriggerAddAction(st___prototype1[98],function sa___prototype1_s__BlackSaber___BlackSaber_anon__95)
+    call TriggerAddCondition(st___prototype1[98],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__95))
     set st___prototype1[99]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__BlackSaber__BlackSaber_anon__93)
-    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__93))
+    call TriggerAddAction(st___prototype1[99],function sa___prototype1_s__BlackSaber___BlackSaber_anon__93)
+    call TriggerAddCondition(st___prototype1[99],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__93))
     set st___prototype1[100]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__BlackSaber__BlackSaber_anon__96)
-    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__96))
+    call TriggerAddAction(st___prototype1[100],function sa___prototype1_s__BlackSaber___BlackSaber_anon__96)
+    call TriggerAddCondition(st___prototype1[100],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__96))
     set st___prototype1[101]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__BlackSaber__BlackSaber_anon__98)
-    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__98))
+    call TriggerAddAction(st___prototype1[101],function sa___prototype1_s__BlackSaber___BlackSaber_anon__98)
+    call TriggerAddCondition(st___prototype1[101],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__98))
     set st___prototype1[102]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[102],function sa___prototype1_s__BlackSaber__BlackSaber_anon__99)
-    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__99))
+    call TriggerAddAction(st___prototype1[102],function sa___prototype1_s__BlackSaber___BlackSaber_anon__99)
+    call TriggerAddCondition(st___prototype1[102],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__99))
     set st___prototype1[103]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[103],function sa___prototype1_s__BlackSaber__BlackSaber_anon__100)
-    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__100))
+    call TriggerAddAction(st___prototype1[103],function sa___prototype1_s__BlackSaber___BlackSaber_anon__100)
+    call TriggerAddCondition(st___prototype1[103],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__100))
     set st___prototype1[104]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[104],function sa___prototype1_s__BlackSaber__BlackSaber_anon__101)
-    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_anon__101))
+    call TriggerAddAction(st___prototype1[104],function sa___prototype1_s__BlackSaber___BlackSaber_anon__101)
+    call TriggerAddCondition(st___prototype1[104],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_anon__101))
     set st___prototype29[3]=CreateTrigger()
-    call TriggerAddAction(st___prototype29[3],function sa___prototype29_s__BlackSaber__BlackSaber_AI)
-    call TriggerAddCondition(st___prototype29[3],Condition(function sa___prototype29_s__BlackSaber__BlackSaber_AI))
+    call TriggerAddAction(st___prototype29[3],function sa___prototype29_s__BlackSaber___BlackSaber_AI)
+    call TriggerAddCondition(st___prototype29[3],Condition(function sa___prototype29_s__BlackSaber___BlackSaber_AI))
     set st___prototype1[105]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[105],function sa___prototype1_s__BlackSaber__BlackSaber_D)
-    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_D))
+    call TriggerAddAction(st___prototype1[105],function sa___prototype1_s__BlackSaber___BlackSaber_D)
+    call TriggerAddCondition(st___prototype1[105],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_D))
     set st___prototype1[106]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[106],function sa___prototype1_s__BlackSaber__BlackSaber_R)
-    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_R))
+    call TriggerAddAction(st___prototype1[106],function sa___prototype1_s__BlackSaber___BlackSaber_R)
+    call TriggerAddCondition(st___prototype1[106],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_R))
     set st___prototype1[107]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[107],function sa___prototype1_s__BlackSaber__BlackSaber_Q)
-    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_Q))
+    call TriggerAddAction(st___prototype1[107],function sa___prototype1_s__BlackSaber___BlackSaber_Q)
+    call TriggerAddCondition(st___prototype1[107],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_Q))
     set st___prototype1[108]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[108],function sa___prototype1_s__BlackSaber__BlackSaber_W)
-    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_W))
+    call TriggerAddAction(st___prototype1[108],function sa___prototype1_s__BlackSaber___BlackSaber_W)
+    call TriggerAddCondition(st___prototype1[108],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_W))
     set st___prototype1[109]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[109],function sa___prototype1_s__BlackSaber__BlackSaber_E)
-    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_E))
+    call TriggerAddAction(st___prototype1[109],function sa___prototype1_s__BlackSaber___BlackSaber_E)
+    call TriggerAddCondition(st___prototype1[109],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_E))
     set st___prototype1[110]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[110],function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START)
-    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_HERO_START))
+    call TriggerAddAction(st___prototype1[110],function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START)
+    call TriggerAddCondition(st___prototype1[110],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_HERO_START))
     set st___prototype1[111]=CreateTrigger()
-    call TriggerAddAction(st___prototype1[111],function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP)
-    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_s__BlackSaber__BlackSaber_HERO_STOP))
+    call TriggerAddAction(st___prototype1[111],function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP)
+    call TriggerAddCondition(st___prototype1[111],Condition(function sa___prototype1_s__BlackSaber___BlackSaber_HERO_STOP))
     set st___prototype6[9]=CreateTrigger()
-    call TriggerAddAction(st___prototype6[9],function sa___prototype6_s__BlackSaber__BlackSaber_Spawn)
-    call TriggerAddCondition(st___prototype6[9],Condition(function sa___prototype6_s__BlackSaber__BlackSaber_Spawn))
+    call TriggerAddAction(st___prototype6[9],function sa___prototype6_s__BlackSaber___BlackSaber_Spawn)
+    call TriggerAddCondition(st___prototype6[9],Condition(function sa___prototype6_s__BlackSaber___BlackSaber_Spawn))
     set st___prototype29[4]=CreateTrigger()
     call TriggerAddAction(st___prototype29[4],function sa___prototype29_s__DazzleMaster___DazzleMaster_AI)
     call TriggerAddCondition(st___prototype29[4],Condition(function sa___prototype29_s__DazzleMaster___DazzleMaster_AI))
@@ -35242,7 +35250,7 @@ function jasshelper__initstructs94791359 takes nothing returns nothing
     call ExecuteFunc("s__ASN__ASN_onInit")
     call ExecuteFunc("s__AW__AW_onInit")
     call ExecuteFunc("s__BigZZ__BigZZ_onInit")
-    call ExecuteFunc("s__BlackSaber__BlackSaber_onInit")
+    call ExecuteFunc("s__BlackSaber___BlackSaber_onInit")
     call ExecuteFunc("s__KillUi_onInit")
     call ExecuteFunc("s__MR__MR_onInit")
     call ExecuteFunc("s__Mogu___Mogu_onInit")
