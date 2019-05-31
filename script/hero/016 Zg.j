@@ -116,7 +116,7 @@ library Zg requires Groups{
                 mj=Units.Get(FirstOfGroup(tmp_group));
                 GroupRemoveUnit(tmp_group,mj.unit);
                 if(IsUnitEnemy(mj.unit,u.player.player)==true){  
-                    Buffs.Add(mj.unit,js,jsb,5,false);
+                    Buffs.Add(mj.unit,js,jsb,5,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                 }
             } 
             GroupClear(tmp_group); 

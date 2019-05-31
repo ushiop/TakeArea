@@ -71,14 +71,64 @@ library Mogu requires Groups{
                                 }else{
                                     //不踢了 
                                     if(u.IsAbility('BPSE')==false){ 
+                                        data1=Data.create('A06G');
+                                        data1.c[0]=u;
+                                        data1.c[1]=data.c[1];
+                                        data1.r[0]=0.2;
                                         if(data.i[0]>2){
                                             //踢远并减速
+                                            data1.r[0]=0.24;
+                                            u.Pause(true);
+                                            u.AnimeId(9);
+                                            u.AnimeSpeed(1);
+                                            Timers.Start(0.01,data1,function(Timers t){ 
+                                                Data data=Data(t.Data());
+                                                Units u=Units(data.c[0]);
+                                                Units mj;
+                                                real x,y,f;
+                                                if(u.Alive()==true){
+                                                    if(data.r[0]<=0){
+                                                        x=u.X();
+                                                        y=u.Y();
+                                                        f=u.F();
+                                                        x=x+100*CosBJ(f);
+                                                        y=y+100*SinBJ(f);
+                                                        Dash.Start(u.unit,f,125,Dash.SUB,10,true,false);
+                                                        mj=Units.MJ(u.player.player,'e009','A06G',0,x,y,0,2,0.5,0.7,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
+                                                        Dash.Start(mj.unit,f,140,Dash.SUB,12,true,false); 
+                                                        GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
+                                                        while(FirstOfGroup(tmp_group)!=null){
+                                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                                                //伤害和眩晕
+                                                                Dash.Start(mj.unit,f,800,Dash.SUB,11,true,true);
+                                                                HitFlys.Reset(mj.unit);
+                                                                HitFlys.Add(mj.unit,15);
+                                                                Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
+                                                                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                                                                Buffs.Add(mj.unit,'A06H','B022',6,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                                            }
+                                                        }
+                                                        GroupClear(tmp_group);  
+                                                        u.DelayReleaseAnimePause(0.5);
+                                                        t.Destroy();
+                                                        Spell(data.c[1]).Destroy();
+                                                        data.Destroy();
+                                                    }else{
+                                                        if(u.IsTimeStop()==false){
+                                                            data.r[0]-=0.01;
+                                                        }
+                                                    }
+                                                }else{
+                                                    u.Pause(false);
+                                                    t.Destroy();
+                                                    Spell(data.c[1]).Destroy();
+                                                    data.Destroy();
+                                                } 
+                                            });
                                         }else{
-                                            //踢高并眩晕
-                                            data1=Data.create('A06G');
-                                            data1.c[0]=u;
-                                            data1.c[1]=data.c[1];
-                                            data1.r[0]=0.2;
+                                            //踢高并眩晕 
                                             u.Pause(true);
                                             u.AnimeId(23);
                                             u.AnimeSpeed(0.7);
@@ -261,7 +311,7 @@ library Mogu requires Groups{
                                     GroupRemoveUnit(tmp_group,mj.unit);
                                     if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                         u.Damage(mj.unit,Damage.Magic,'A06E',u.Str(true));  
-                                        Buffs.Add(mj.unit,'A06F','B021',2,false);
+                                        Buffs.Add(mj.unit,'A06F','B021',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                     }
                                 }
                                 GroupClear(tmp_group); 
