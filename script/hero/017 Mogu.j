@@ -94,7 +94,8 @@ library Mogu requires Groups{
                                                         x=x+100*CosBJ(f);
                                                         y=y+100*SinBJ(f);
                                                         Dash.Start(u.unit,f,125,Dash.SUB,10,true,false);
-                                                        mj=Units.MJ(u.player.player,'e009','A06G',0,x,y,0,2,0.5,0.7,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
+                                                        mj=Units.MJ(u.player.player,'e009','A06G',0,x,y,f,2,1,1.25,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
+                                                        mj.SetH(75);
                                                         Dash.Start(mj.unit,f,140,Dash.SUB,12,true,false); 
                                                         GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
                                                         while(FirstOfGroup(tmp_group)!=null){
@@ -102,16 +103,16 @@ library Mogu requires Groups{
                                                             GroupRemoveUnit(tmp_group,mj.unit);
                                                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                                                                 //伤害和眩晕
-                                                                Dash.Start(mj.unit,f,800,Dash.SUB,11,true,true);
+                                                                Dash.Start(mj.unit,f,1000,Dash.SUB,20,true,true);
                                                                 HitFlys.Reset(mj.unit);
-                                                                HitFlys.Add(mj.unit,15);
+                                                                HitFlys.Add(mj.unit,22);
                                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
                                                                 Buffs.Add(mj.unit,'A06H','B022',6,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
-                                                            }
+                                                            }  
                                                         }
                                                         GroupClear(tmp_group);  
-                                                        u.DelayReleaseAnimePause(0.5);
+                                                        u.DelayReleaseAnimePause(0.4);
                                                         t.Destroy();
                                                         Spell(data.c[1]).Destroy();
                                                         data.Destroy();
