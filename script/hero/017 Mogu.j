@@ -18,6 +18,8 @@ library Mogu requires Groups{
             data.r[2]=0.123/data.r[0];//前回旋，伤害判定
             data.r[3]=0;//前回旋火焰角度
             data.r[4]=180/(data.r[2]/0.01);//前回旋火焰角度幅度
+            data.r[5]=0;//后回旋火焰角度
+            data.r[6]=180/(data.r[1]/0.01);//后回旋火焰角度幅度 
             u.Pause(true);
             u.AnimeSpeed(data.r[0]);
             u.AnimeId(2);
@@ -38,7 +40,7 @@ library Mogu requires Groups{
                             }else{
                                 data.r[1]-=0.01; 
                                 if(data.r[1]>=0.13&&data.r[1]<=0.14){//牵引周围敌人 
-
+                                    BJDebugMsg("??");
                                     mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),2,1,2,"stand","dark1_ex.mdl");
                                     mj.DelaySizeEx(1,0.5,0.5);
                                     f=u.F();
@@ -47,7 +49,7 @@ library Mogu requires Groups{
                                     f=Util.XYEX(x,y,x+100*CosBJ(f),y+100*SinBJ(f));
                                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),250,function GroupIsAliveNotAloc);     
                                     while(FirstOfGroup(tmp_group)!=null){
-                                        mj=Units.Get(FirstOfGroup(tmp_group));
+                                        mj=Units.Get(FirstOfGroup(tmp_group)); 
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                             if((Util.XY2(mj.unit,u.unit)>200&&Util.FAN(u.unit,mj.unit,f,80)==true)||(Util.FAN(u.unit,mj.unit,f,80)==false)){ 
@@ -57,7 +59,14 @@ library Mogu requires Groups{
                                         }
                                     }
                                     GroupClear(tmp_group); 
+                                    
                                 }
+                                //后回旋火焰
+                                    f=(u.F()+90)+data.r[5];
+                                    data.r[5]+=data.r[6];
+                                    mj=Units.MJ(u.player.player,'e008','A06G',0,u.X()+70*CosBJ(f),u.Y()+70*SinBJ(f),GetRandomReal(0,360),2,0.5,1,"death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl");
+                                    mj.SetH(70-(data.r[5]/2)); 
+                                    Dash.Start(mj.unit,f,70,Dash.SUB,15,true,false); 
                             }
                         }else{
                             if(data.r[2]<=0){
