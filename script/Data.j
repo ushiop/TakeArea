@@ -5,9 +5,9 @@ library Data{
 
     public struct Data{
         integer id;//标识ID，为任意技能或者单位的ID，无实际作用，仅方便用于查找是由哪块代码申请的数据
-        integer i[5];//整数型数据
-        real r[5];//实数型数据
-        integer c[5];//实例型数据(实例ID，由使用方自己转换)
+        integer i[10];//整数型数据
+        real r[10];//实数型数据
+        integer c[10];//实例型数据(实例ID，由使用方自己转换)
         unit u[4];//单位型数据
         group g[2];//单位组型数据
         string s[2];//字符串型数据
