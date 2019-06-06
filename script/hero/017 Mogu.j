@@ -89,7 +89,7 @@ library Mogu requires Groups{
                                                 if(u.Alive()==true){
                                                     if(data.r[0]<=0){
                                                         x=u.X();
-                                                        y=u.Y();
+                                                        y=u.Y(); 
                                                         f=u.F();
                                                         x=x+100*CosBJ(f);
                                                         y=y+100*SinBJ(f);
@@ -102,7 +102,9 @@ library Mogu requires Groups{
                                                             mj=Units.Get(FirstOfGroup(tmp_group));
                                                             GroupRemoveUnit(tmp_group,mj.unit);
                                                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                                                //伤害和眩晕
+                                                                //伤害和减速
+                                                                
+                                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)*5);
                                                                 Dash.Start(mj.unit,f,1000,Dash.SUB,20,true,true);
                                                                 HitFlys.Reset(mj.unit);
                                                                 HitFlys.Add(mj.unit,22);
@@ -195,7 +197,10 @@ library Mogu requires Groups{
                                                             mj=Units.Get(FirstOfGroup(tmp_group));
                                                             GroupRemoveUnit(tmp_group,mj.unit);
                                                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                                                //伤害和眩晕
+                                                                //伤害和眩晕 
+                                                                Buffs.Skill(mj.unit,'A00F',1);
+                                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true)*4);
+                                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)*3);
                                                                 Dash.Start(mj.unit,f,140,Dash.NORMAL,5,true,false);
                                                                 HitFlys.Reset(mj.unit);
                                                                 HitFlys.Add(mj.unit,35);
@@ -243,7 +248,9 @@ library Mogu requires Groups{
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                             if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
-                                                //伤害
+                                                //伤害 
+                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)); 
+                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true));
                                                 Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,true);
                                                 HitFlys.Add(mj.unit,13);
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
