@@ -1,7 +1,7 @@
 library Mogu requires Groups{
     //英雄‘妹红’的技能
     //SR
-    struct Mogu{
+    struct Mogu{ 
 
         /*
             2 - 回旋踢动作
