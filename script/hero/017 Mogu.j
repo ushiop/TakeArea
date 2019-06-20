@@ -16,19 +16,28 @@ library Mogu requires Groups{
             Units u=Units.Get(e.Spell);
             Dash dash;
             Data data=Data.create('A06I');
+            Units mj;
             u.Pause(true);
             u.AnimeId(25); 
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=0;
-            data.r[1]=0;
+            data.r[1]=0; 
+            if(GetRandomInt(0,1)==1){
+                Units.MJ(u.player.player,'e008','A06I',0,u.X(),u.Y(),e.Angle,2,1.0,2, "stand","ball_fire_kc.mdl").SetH(100);  
+            }else{
+                Units.MJ(u.player.player,'e00C','A06I',0,u.X(),u.Y(),e.Angle,2,2,0.6, "stand","fire-hit-kulouwang.mdl");     
+            }
+                 
+            mj=Units.MJ(u.player.player,'e00C','A06I',0,u.X(),u.Y(),e.Angle,2,2,2, "stand","fire-hit-kulouwang.mdl");       
+            Dash.Start(mj.unit,e.Angle,500,Dash.SUB,25,true,false);
             HitFlys.Add(u.unit,6);
             dash=Dash.Start(u.unit,e.Angle,1600,Dash.SUB,80,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
-                Units mj;
+                Units mj,mjs;
                 if(dash.Speed<6){
                     dash.Stop();
                 }else{
@@ -44,7 +53,9 @@ library Mogu requires Groups{
                                 Dash.Start(mj.unit,dash.Angle,(dash.MaxDis-dash.NowDis)+GetRandomReal(0,200),Dash.SUB,dash.Speed*0.88,true,true);
                                 HitFlys.Reset(mj.unit);
                                 HitFlys.Add(mj.unit,10);
-                                Units.MJ(u.player.player,'e008','A06I',0,mj.X(),mj.Y(),dash.Angle,3,1.5,1,"stand","fire-hit-kulouwang.mdl").SetH(75);
+                                mjs=Units.MJ(u.player.player,'e008','A06I',0,mj.X(),mj.Y(),dash.Angle,3,1.5,1,"stand","fire-hit-kulouwang.mdl");
+                                mjs.SetH(75);
+                                Dash.Start(mjs.unit,dash.Angle,200,Dash.SUB,10,true,false);
                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
                                 Buffs.Add(mj.unit,'A06J','B023',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                             }  
@@ -420,14 +431,35 @@ library Mogu requires Groups{
             Units u=Units.Get(e.Spell);
             if(e.Id=='A06I'){
                 u.FlushAnimeId(24);
+                u.AddAbility('A06K');
                 HitFlys.Add(u.unit,7);
+                Timers.Start(0.01,u,function(Timers t){ 
+                    Units u=Units(t.Data()); 
+                    real x,y;
+                    if(u.Alive()==false||t.Expired()>20){
+                        BJDebugMsg("删除了");
+                        t.Destroy();
+                    }else{
+                        if(t.Expired()==19){
+                            if(u.IsAbility('A06K')==true){
+                                x=u.X(),y=u.Y();
+                                Util.Duang(x,y,0.5,200,200,-36,0.02,50);
+                                Units.MJ(u.player.player,'e008','A06I',0,x,y,GetRandomReal(0,360),0.8,1,4, "stand","fire2.mdl").DelayAnime(2,0.2);
+                                
+                            }
+                        } 
+                    } 
+                });
                 Dash.Start(u.unit,e.Angle+180,75,Dash.NORMAL,4,true,false);
             }
         }
 
-        /*static method HERO_STOP(Spell e){
-
-        }*/
+        static method HERO_STOP(Spell e){
+            Units u=Units.Get(e.Spell); 
+            if(e.Id=='A06I'){
+                u.RemoveAbility('A06K');
+            }
+        }
 
         static method onInit(){
             Units.On(Units.onHeroSpawn,Mogu.Spawn); 
@@ -435,7 +467,7 @@ library Mogu requires Groups{
             Spell.On(Spell.onSpell,'A06G',Mogu.W);
             Spell.On(Spell.onSpell,'A06I',Mogu.E);
             Spell.On(Spell.onReady,'A06I',Mogu.HERO_START); 
-            //Spell.On(Spell.onStop,'A06I',Mogu.HERO_STOP); 
+            Spell.On(Spell.onStop,'A06I',Mogu.HERO_STOP); 
         }
     }
 }
