@@ -46,6 +46,12 @@ library Units requires Table,Players,Events,Util{
             string str_int;//智力值的文本形态
             string str_lv;//英雄等级的文本形态
 
+
+            //隐藏/显示单位
+            method Hide(boolean b){
+                ShowUnit(this.unit,b);
+            }
+
             //复制物品到目标单位身上
             //move为true时是移动物品
             //move为false时为复制物品
