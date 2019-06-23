@@ -7,9 +7,12 @@ library Mogu requires Groups{
             2 - 回旋踢动作
             9 - 回旋踢（远）终结踢
             23 - 回旋踢(近)终结踢
-            24 前摇
-            25 踢
-            26 落地
+            24 飞踢 前摇
+            25 飞踢 踢
+            26 飞踢 落地
+            27 火柱 前摇 
+            28 火柱 喷火
+            29 火柱 收招
         */
 
         static method E(Spell e){
@@ -485,6 +488,8 @@ library Mogu requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
+            Data data;
+            Units mj;
             if(e.Id=='A06I'){
                 u.FlushAnimeId(24);
                 u.AddAbility('A06K');
@@ -508,6 +513,35 @@ library Mogu requires Groups{
                 });
                 Dash.Start(u.unit,e.Angle+180,75,Dash.NORMAL,4,true,false);
             }
+            if(e.Id=='A06M'){
+                u.FlushAnimeId(27);
+                u.AddAbility('A06N');
+                data=Data.create('A06M');
+                data.c[0]=u;
+                mj=Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,5,1,2, "stand","az_coco_e1.mdl");
+                data.c[1]=mj;
+                mj=Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,5,1,2, "birth","az-red-mofazhen.mdl");
+                data.c[2]=mj;
+                data.r[0]=0.6;
+                Timers.Start(0.01,data,function(Timers t){
+                    Data data=Data(t.Data());
+                    Units u=Units(data.c[0]);
+                    if(u.Alive()==false||data.r[0]<=0||u.IsAbility('A06N')==false){ 
+                        Units(data.c[2]).Hide(true);
+                        Units(data.c[1]).Anime("death");
+                        Units(data.c[2]).Anime("death");
+                        data.Destroy();
+                        t.Destroy();
+                    }else{
+                        data.r[0]-=0.01;
+                        if(data.r[0]==0.2){
+                            Util.Duang(u.X(),u.Y(),0.6,200,200,-64,0.02,50);
+                        } 
+                    } 
+                });
+                      
+            }
+            e.Destroy();
         }
 
         static method HERO_STOP(Spell e){
@@ -515,6 +549,10 @@ library Mogu requires Groups{
             if(e.Id=='A06I'){
                 u.RemoveAbility('A06K');
             }
+            if(e.Id=='A06M'){
+                u.RemoveAbility('A06N');
+            }
+            e.Destroy();
         }
 
         static method onInit(){
@@ -524,6 +562,8 @@ library Mogu requires Groups{
             Spell.On(Spell.onSpell,'A06I',Mogu.E);
             Spell.On(Spell.onReady,'A06I',Mogu.HERO_START); 
             Spell.On(Spell.onStop,'A06I',Mogu.HERO_STOP);  
+            Spell.On(Spell.onReady,'A06M',Mogu.HERO_START); 
+            Spell.On(Spell.onStop,'A06M',Mogu.HERO_STOP);  
             Press.OnSnyc(Press.onSnycPressKeyDown,Mogu.Press);
         }
     }
