@@ -488,8 +488,6 @@ library Mogu requires Groups{
 
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
-            Data data;
-            Units mj;
             if(e.Id=='A06I'){
                 u.FlushAnimeId(24);
                 u.AddAbility('A06K');
@@ -515,28 +513,16 @@ library Mogu requires Groups{
             }
             if(e.Id=='A06M'){
                 u.FlushAnimeId(27);
-                u.AddAbility('A06N');
-                data=Data.create('A06M');
-                data.c[0]=u;
-                mj=Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,5,1,2, "stand","az_coco_e1.mdl");
-                data.c[1]=mj;
-                mj=Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,5,1,2, "birth","az-red-mofazhen.mdl");
-                data.c[2]=mj;
-                data.r[0]=0.6; 
-                Timers.Start(0.01,data,function(Timers t){
-                    Data data=Data(t.Data());
-                    Units u=Units(data.c[0]);
-                    if(u.Alive()==false||data.r[0]<=0||u.IsAbility('A06N')==false){ 
-                        Units(data.c[2]).Hide(true);
-                        Units(data.c[1]).Anime("death");
-                        Units(data.c[2]).Anime("death");
-                        data.Destroy();
+                u.AddAbility('A06N'); 
+                Timers.Start(0.01,u,function(Timers t){
+                    Units u=Units(t.Data());
+                    if(u.Alive()==false||t.Expired()>60||u.IsAbility('A06N')==false){   
                         t.Destroy();
-                    }else{
-                        data.r[0]-=0.01;
-                        if(data.r[0]==0.2){
-                            Util.Duang(u.X(),u.Y(),0.6,200,200,-64,0.02,50);
-                        } 
+                    }else{ 
+                        if(ModuloInteger(t.Expired(),10)==0){
+                            BJDebugMsg("?");
+                            Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,0.8,1,1, "birth","az-red-mofazhen_ex.mdl");
+                        }  
                     } 
                 });
                       
