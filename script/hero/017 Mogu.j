@@ -519,10 +519,10 @@ library Mogu requires Groups{
                     Units mj;
                     if(u.Alive()==false||t.Expired()>60||u.IsAbility('A06N')==false){   
                         t.Destroy();
-                    }else{  
+                    }else{   
                         if(ModuloInteger(t.Expired(),10)==0){ 
                             Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,0.8,2,1, "birth","az-red-mofazhen_ex.mdl");
-                            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),600,function GroupIsAliveNotAloc);     
+                            GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),450,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
@@ -531,8 +531,7 @@ library Mogu requires Groups{
                                         Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,10,true,false);
                                     }else{
                                         Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),100,Dash.NORMAL,7,true,true);
-                                    }
-                                    
+                                    } 
                                 }
                             }
                             GroupClear(tmp_group); 
