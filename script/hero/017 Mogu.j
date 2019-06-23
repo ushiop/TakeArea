@@ -522,7 +522,7 @@ library Mogu requires Groups{
                 data.c[1]=mj;
                 mj=Units.MJ(u.player.player,'e008','A06M',0,u.X(),u.Y(),0,5,1,2, "birth","az-red-mofazhen.mdl");
                 data.c[2]=mj;
-                data.r[0]=0.6;
+                data.r[0]=0.6; 
                 Timers.Start(0.01,data,function(Timers t){
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
