@@ -15,6 +15,93 @@ library Mogu requires Groups{
             29 火柱 收招
         */
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A06M');
+            Units mj;
+            real x=u.X(),y=u.Y();
+            u.Pause(true);
+            u.AnimeId(28);
+            u.PositionEnabled(false);
+            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,1.5,1, "stand","!huobao.mdl");
+            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,0.75,2, "stand","!huobao.mdl");
+            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2.5,0.8, "stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
+            //Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2,2, "stand","az_coco_e2.mdl");
+            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2,1, "stand","fire-boom-new.mdl"); 
+            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,1.8,2, "stand","az_kaer_t1.mdl");
+            mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,6,1.5,0.75, "birth","by_wood_effect_tianhuo_1_1.mdl");  //持续 x1.5
+            data.c[2]=mj;
+            mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,6,2,1, "birth","chushou_by_wood_effect_unusual_kof_caoti_huozhu.mdl");  //持续 0.75
+            data.c[3]=mj;
+            mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,6,3,1, "stand","fire-zhendi-guangzhu.mdl");  //持续 2
+            data.c[4]=mj; 
+            /*
+                伤害 减速
+            */
+            u.player.Duang(80,0.5);  
+            Util.Duang(x,y,0.5,400,400,-100,0.02,50);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=1;//持续时间
+            data.r[1]=0;//间隔时间
+            data.r[2]=0;//持续时间
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                real x=u.X(),y=u.Y();
+                Units mj;
+                real hp;
+                if(u.Alive()==false||u.player.press.R==false||u.IsAbility('BPSE')==true||data.r[0]<=0){
+                    Units(data.c[2]).Life(0.1);
+                    Units(data.c[3]).Anime("death");
+                    Units(data.c[4]).Life(0.1); 
+                    u.PositionEnabled(true);
+                    if(data.r[2]<0.1){
+                        u.Anime("stand");
+                        u.DelayReleaseAnimePause(0.2);
+                    }else{
+                        u.AnimeId(29);
+                        HitFlys.Lister(HitFlys.Add(u.unit,1),HitFlys.onEnd,function(HitFlys h){
+                            Units u=Units.Get(h.Unit);
+                            u.DelayReleaseAnimePause(0.5);
+                        });
+                    }
+                    /*if(data.r[2]>1){
+                        Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,1.8,2, "stand","az_kaer_t1.mdl");
+                    }*/
+                    Spell(data.c[1]).Destroy();
+                    t.Destroy();
+                    data.Destroy();
+                }else{
+                    data.r[0]-=0.01;
+                    data.r[2]+=0.01;
+                    if(data.r[1]==0){
+                        data.r[1]=0.1;
+                        u.player.Duang(10,0.05); 
+                        Util.Duang(x,y,0.4,400,400,-60,0.02,50);
+                        mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,3,1.25, "stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
+                        HitFlys.Add(mj.unit,GetRandomReal(20,50));
+                        HitFlys.Add(u.unit,10.5);
+                        //伤害
+                    }else{ 
+                        data.r[1]-=0.01;
+                    }
+                    if(data.r[0]<=0){
+                        hp=u.MaxHP()*0.05;
+                        if(u.HP()>=hp){
+                            if((u.HP()-hp)<2){
+                                u.SetHP(1);
+                            }else{ 
+                                u.SetHP(u.HP()-hp);
+                            }
+                            data.r[0]+=0.1;
+                            u.player.Duang(10,0.05); 
+                        }
+                    }
+                }
+            });
+        }
+
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
             Dash dash;
@@ -559,6 +646,7 @@ library Mogu requires Groups{
             Units.On(Units.onAlocDeath,Mogu.Q); 
             Spell.On(Spell.onSpell,'A06G',Mogu.W);
             Spell.On(Spell.onSpell,'A06I',Mogu.E);
+            Spell.On(Spell.onSpell,'A06M',Mogu.R);
             Spell.On(Spell.onReady,'A06I',Mogu.HERO_START); 
             Spell.On(Spell.onStop,'A06I',Mogu.HERO_STOP);  
             Spell.On(Spell.onReady,'A06M',Mogu.HERO_START); 
