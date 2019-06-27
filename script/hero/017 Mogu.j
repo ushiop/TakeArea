@@ -40,7 +40,7 @@ library Mogu requires Groups{
                 Units mj=Units(b.Obj);
                 mj.Life(0.1);
                 /*
-                    复活结算效果
+                    复活结算效果 
                 */
                 if(u.IsAbility('B025')==false){
                     Buffs.Add(u.unit,'A06R','B025',86400,false).Level=0;
