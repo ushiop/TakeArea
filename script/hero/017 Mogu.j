@@ -17,12 +17,48 @@ library Mogu requires Groups{
             A06R B025 - 不死鸟BUFF
         */
 
-        static method D(unit u){
+        static method D(unit ua){
+            Units u=Units.Get(ua);
+            Buffs b;
+            Units mj;
+            BJDebugMsg("蛋模式");
+            mj=Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,5,2,1, "stand alternate","units\\human\\phoenix\\phoenix.mdl");
             
+            b=Buffs.Add(u.unit,'A06S','B026',2,false);
+            b.Obj=mj;
+            b.onTime=function(Buffs b){
+                if(b.NowTime==1.8){
+                    Units.Get(b.Unit).AnimeSpeed(0);
+                }
+                if(b.NowTime==0.4){
+                    //开始做复活特效
+                }
+            }; 
+            b.onEnd=function(Buffs b){
+                Units u=Units.Get(b.Unit);
+                Buffs bb;
+                Units mj=Units(b.Obj);
+                mj.Life(0.1);
+                /*
+                    复活结算效果
+                */
+                if(u.IsAbility('B025')==false){
+                    Buffs.Add(u.unit,'A06R','B025',86400,false).Level=0;
+                }
+                bb=Buffs.Find(u.unit,'B025'); 
+                bb.Level+=2;
+                u.RemoveAbility(Units.Group_NotSelect); 
+                u.AnimeSpeed(1); 
+                u.Pause(false);
+            };
+            u.Pause(true);
+            u.AddAbility(Units.Group_NotSelect);
+            u.AnimeId(14);
+            u.AnimeSpeed(1);
         }
 
         static method Damage(DamageArgs e){
-            if(e.TriggerUnit.IsAbility('B026')==true){
+            if(e.TriggerUnit.IsAbility('B026')==true){//蛋状态减伤
                 e.Damage=0;
             }else{
                 if(e.TriggerUnit.IsAbility('A06Q')==true){//是妹红
@@ -139,7 +175,7 @@ library Mogu requires Groups{
                         HitFlys.Add(mj.unit,GetRandomReal(20,50));
                         HitFlys.Add(u.unit,10.5);
                         if(data.r[2]>1){
-                            mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2.2,1.5, "stand","chushou_by_wood_effect_flame_explosion_2.mdl"); 
+                            mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2.5,1.5, "stand","chushou_by_wood_effect_flame_explosion_2.mdl"); 
                             mj.SetH(115);
                             mj=Units.MJ(u.player.player,'e008','A06M',0,x,y,GetRandomReal(0,360),5,2.25,1, "stand","white-qiquan.mdl"); 
                             mj.Color(255,0,0);
@@ -610,7 +646,7 @@ library Mogu requires Groups{
                 data.c[1]=Effect.ToUnit("fire-buff-qiquan.mdl",u.unit,"origin");
                 data.r[0]=0;
                 BJDebugMsg("有了");
-                Timers.Start(500,data,function(Timers t){//0.05
+                Timers.Start(0.05,data,function(Timers t){//0.05
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
                     Units mj; 
