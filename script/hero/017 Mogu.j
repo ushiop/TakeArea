@@ -16,6 +16,8 @@ library Mogu requires Groups{
             A06S B026 -复活蛋蛋BUFF
             A06R B025 - 不死鸟BUFF
         */
+        static integer Sound[3];
+
         static method AI(unit ua){
             Units u=Units.Get(ua);
             unit target,no;
@@ -329,6 +331,7 @@ library Mogu requires Groups{
                 Units.MJ(u.player.player,'e00C','A06I',0,u.X(),u.Y(),e.Angle,2,2,0.6, "stand","fire-hit-kulouwang.mdl");     
             }
             mj=Units.MJ(u.player.player,'e00C','A06I',0,u.X(),u.Y(),e.Angle,2,2,2, "stand","fire-hit-kulouwang.mdl");       
+            RunSoundOnUnit(Mogu.Sound[0],u.unit);
             Dash.Start(mj.unit,e.Angle,500,Dash.SUB,25,true,false);
             HitFlys.Add(u.unit,6);
             dash=Dash.Start(u.unit,e.Angle,1600,Dash.SUB,80,true,false);
@@ -363,7 +366,8 @@ library Mogu requires Groups{
                         }
                         GroupClear(tmp_group);
                         if(s!=0){
-                            if(GetRandomInt(0,2)==1){
+                            RunSoundOnUnit(Mogu.Sound[2],u.unit);
+                            if(GetRandomInt(0,2)==1&&u.player.isai==true){
                                 Mogu.Press(u.player.player,"W");
                             }
                         }  
@@ -466,12 +470,14 @@ library Mogu requires Groups{
             u.Pause(true);
             u.AnimeSpeed(data.r[0]);
             u.AnimeId(2);
+            RunSoundOnUnit(Mogu.Sound[1],u.unit);
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 Units mj;
                 real x,y,f;
                 Data data1;
+                integer o=0;
                 boolean press;
                 if(u.Alive()==true&&u.IsAbility('B026')==false){
                     if(u.IsTimeStop()==false){
@@ -545,6 +551,7 @@ library Mogu requires Groups{
                                                 Units u=Units(data.c[0]);
                                                 Units mj;
                                                 real x,y,f;
+                                                integer o=0;
                                                 if(u.Alive()==true&&u.IsAbility('B026')==false){
                                                     if(data.r[0]<=0){
                                                         x=u.X();
@@ -554,7 +561,8 @@ library Mogu requires Groups{
                                                         y=y+100*SinBJ(f);
                                                         Dash.Start(u.unit,f,125,Dash.SUB,10,true,false);
                                                         mj=Units.MJ(u.player.player,'e009','A06G',0,x,y,f,2,1,1.25,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
-                                                        mj.SetH(75);
+                                                        mj.SetH(75); 
+                                                        RunSoundOnUnit(Mogu.Sound[1],u.unit);
                                                         Dash.Start(mj.unit,f,140,Dash.SUB,12,true,false); 
                                                         GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
                                                         while(FirstOfGroup(tmp_group)!=null){
@@ -562,7 +570,7 @@ library Mogu requires Groups{
                                                             GroupRemoveUnit(tmp_group,mj.unit);
                                                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                                                                 //伤害和减速
-                                                                
+                                                                o+=1;
                                                                 u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)*5);
                                                                 Dash.Start(mj.unit,f,1000,Dash.SUB,20,true,true);
                                                                 HitFlys.Reset(mj.unit);
@@ -573,6 +581,9 @@ library Mogu requires Groups{
                                                             }  
                                                         }
                                                         GroupClear(tmp_group);  
+                                                        if(o!=0){ 
+                                                            RunSoundOnUnit(Mogu.Sound[3],u.unit);
+                                                        }
                                                         u.DelayReleaseAnimePause(0.4);
                                                         t.Destroy();
                                                         Spell(data.c[1]).Destroy();
@@ -599,6 +610,7 @@ library Mogu requires Groups{
                                                 Units u=Units(data.c[0]);
                                                 Units mj;
                                                 real x,y,f;
+                                                integer o=0;
                                                 if(u.Alive()==true&&u.IsAbility('B026')==false){
                                                     if(data.r[0]<=0){
                                                         x=u.X();
@@ -607,7 +619,8 @@ library Mogu requires Groups{
                                                         x=x+100*CosBJ(f);
                                                         y=y+100*SinBJ(f);
                                                         Dash.Start(u.unit,f,125,Dash.SUB,10,true,false);
-                                                        HitFlys.Add(u.unit,20);
+                                                        HitFlys.Add(u.unit,20); 
+                                                        RunSoundOnUnit(Mogu.Sound[1],u.unit);
                                                         mj=Units.MJ(u.player.player,'e008','A06G',0,x,y,0,2,0.5,0.7,"stand",".mdl");
                                                         Dash.Start(mj.unit,f,140,Dash.NORMAL,5,true,false); 
                                                         Timers.Start(0.01,mj,function(Timers t){
@@ -633,6 +646,7 @@ library Mogu requires Groups{
                                                             Units u=Units.Get(h.Unit);
                                                             Units mj;
                                                             integer s=0;
+                                                        
                                                             u.aidindex=1;
                                                             mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),3,3,0.6,"stand","by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl");
                                                             mj.SetH(u.H()); 
@@ -656,6 +670,9 @@ library Mogu requires Groups{
                                                                 }
                                                             }
                                                             GroupClear(tmp_group);  
+                                                            if(s!=0){ 
+                                                                RunSoundOnUnit(Mogu.Sound[3],u.unit);
+                                                            }
                                                         }); 
                                                         GroupEnumUnitsInRange(tmp_group,x,y,150,function GroupIsAliveNotAloc);     
                                                         while(FirstOfGroup(tmp_group)!=null){
@@ -671,9 +688,13 @@ library Mogu requires Groups{
                                                                 HitFlys.Add(mj.unit,35);
                                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                                                                o+=1;
                                                             }
                                                         }
-                                                        GroupClear(tmp_group);  
+                                                        GroupClear(tmp_group);
+                                                        if(o!=0){ 
+                                                            RunSoundOnUnit(Mogu.Sound[3],u.unit);
+                                                        }  
                                                         u.DelayReleaseAnimePause(0.35);
                                                         t.Destroy();
                                                         Spell(data.c[1]).Destroy();
@@ -714,6 +735,7 @@ library Mogu requires Groups{
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                             if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
                                                 //伤害 
+                                                o+=1;
                                                 u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)); 
                                                 u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true));
                                                 Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,true);
@@ -724,6 +746,9 @@ library Mogu requires Groups{
                                         }
                                     }
                                     GroupClear(tmp_group);  
+                                    if(o!=0){
+                                        RunSoundOnUnit(Mogu.Sound[3],u.unit);
+                                    }
                                 }
                                 if(Spell(data.c[1]).State==Spell.ReadyState){ 
                                     Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",u.unit,"foot left").Destroy();
@@ -898,6 +923,13 @@ library Mogu requires Groups{
         }
 
         static method onInit(){ 
+            Mogu.Sound[0] = DefineSound("resource\\sound_effect_mh_e.wav",1000, false, true);//E的起飞
+            Mogu.Sound[1] = DefineSound("resource\\sound_effect_mh_w.wav",1000, false, true);//W的旋转
+            Mogu.Sound[2] = DefineSound("Sound\\Abilities\\Weapons\\BoatMissile\\BoatAttack1.wav",1000, false, true);//E的攻击
+            Mogu.Sound[3] = DefineSound("resource\\sound_effect_misc_7.wav",1000, false, true);//W的攻击
+            
+            
+            
             Damage.On(Damage.onDamageEnd,Mogu.Damage); 
             Units.On(Units.onHeroSpawn,Mogu.Spawn); 
             Units.On(Units.onAlocDeath,Mogu.Q); 
