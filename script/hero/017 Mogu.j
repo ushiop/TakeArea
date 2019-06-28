@@ -16,7 +16,7 @@ library Mogu requires Groups{
             A06S B026 -复活蛋蛋BUFF
             A06R B025 - 不死鸟BUFF
         */
-        static integer Sound[3];
+        static integer Sound[4];
 
         static method AI(unit ua){
             Units u=Units.Get(ua);
@@ -221,6 +221,7 @@ library Mogu requires Groups{
                 HitFlys h;
                 real hp;
                 boolean press=u.player.press.R;
+                integer o=0;
                 if(u.player.isai==true){
                     press=true;
                 }
@@ -291,6 +292,7 @@ library Mogu requires Groups{
                                 u.Damage(mj.unit,Damage.Magic,'A06M',u.Str(true)); 
                                 HitFlys.Add(mj.unit,9.5); 
                                 Buffs.Skill(mj.unit,'A00C',1);
+                                o+=1;
                             }  
                         } 
                         GroupClear(tmp_group); 
@@ -366,7 +368,7 @@ library Mogu requires Groups{
                         }
                         GroupClear(tmp_group);
                         if(s!=0){
-                            RunSoundOnUnit(Mogu.Sound[2],u.unit);
+                            RunSoundOnUnit(Mogu.Sound[3],u.unit);
                             if(GetRandomInt(0,2)==1&&u.player.isai==true){
                                 Mogu.Press(u.player.player,"W");
                             }
@@ -747,7 +749,7 @@ library Mogu requires Groups{
                                     }
                                     GroupClear(tmp_group);  
                                     if(o!=0){
-                                        RunSoundOnUnit(Mogu.Sound[3],u.unit);
+                                        RunSoundOnUnit(Mogu.Sound[4],u.unit);
                                     }
                                 }
                                 if(Spell(data.c[1]).State==Spell.ReadyState){ 
@@ -925,8 +927,9 @@ library Mogu requires Groups{
         static method onInit(){ 
             Mogu.Sound[0] = DefineSound("resource\\sound_effect_mh_e.wav",1000, false, true);//E的起飞
             Mogu.Sound[1] = DefineSound("resource\\sound_effect_mh_w.wav",1000, false, true);//W的旋转
-            Mogu.Sound[2] = DefineSound("Sound\\Abilities\\Weapons\\BoatMissile\\BoatAttack1.wav",1000, false, true);//E的攻击
+            Mogu.Sound[2] = DefineSound("Abilities\\Weapons\\BoatMissile\\BoatAttack1.wav",1000, false, true);//E的攻击
             Mogu.Sound[3] = DefineSound("resource\\sound_effect_misc_7.wav",1000, false, true);//W的攻击
+            Mogu.Sound[4] = DefineSound("resource\\sound_effect_misc_hit_2.wav",1000, false, true);//W的攻击
             
             
             
