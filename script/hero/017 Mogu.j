@@ -16,42 +16,123 @@ library Mogu requires Groups{
             A06S B026 -复活蛋蛋BUFF
             A06R B025 - 不死鸟BUFF
         */
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);   
+ 
+                no=GroupFind(u.unit,x,y,800,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "dispel",x1,y1);//飞踢
+                }  
+
+                no=GroupFind(u.unit,x,y,200,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);    
+                    IssueImmediateOrder( u.unit, "hex" );//大回旋踢
+                }  
+                
+                 
+                no=GroupFind(u.unit,x,y,400,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssueImmediateOrder( u.unit, "impale" );//爆发
+                } 
+                   
+            } 
+            target=null;
+            no=null;
+        }
 
         static method D(unit ua){
             Units u=Units.Get(ua);
             Buffs b;
             Units mj;
             BJDebugMsg("蛋模式");
+            u.SetHP(1);
+            Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,2,1,2, "death","units\\human\\phoenix\\phoenix.mdl");
             mj=Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,5,2,1, "stand alternate","units\\human\\phoenix\\phoenix.mdl");
             
             b=Buffs.Add(u.unit,'A06S','B026',2,false);
             b.Obj=mj;
             b.onTime=function(Buffs b){
+                Units u=Units.Get(b.Unit);
+                Units mj;
+                Units(b.Obj).Position(u.X(),u.Y(),false);
                 if(b.NowTime==1.8){
                     Units.Get(b.Unit).AnimeSpeed(0);
                 }
                 if(b.NowTime==0.4){
                     //开始做复活特效
+                    Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,2,2.5,2,"death","Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl");
+                    mj=Units.MJ(u.player.player,'e009','A06Q',0,u.X(),u.Y(),0,2,4,2,"stand","Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl");
+                    mj.SetH(2000);
+                    Timers.Start(0.01,mj,function(Timers t){
+                        Units u=Units(t.Data());
+                        if(u.H()<=10){
+                            BJDebugMsg("删除了！！！");
+                            t.Destroy();
+                        }else{
+                            u.Position(u.player.hero.X(),u.player.hero.Y(),false);
+                        }
+                    });
+                    HitFlys.Lister(HitFlys.Add(mj.unit,-13),HitFlys.onEnd,function(HitFlys h){
+                        Units u=Units.Get(h.Unit);
+                        u.Life(0.5);
+                    });
                 }
             }; 
             b.onEnd=function(Buffs b){
                 Units u=Units.Get(b.Unit);
                 Buffs bb;
                 Units mj=Units(b.Obj);
-                mj.Life(0.1);
-                /*
-                    复活结算效果 
-                */
+                real hp;
+                real cd;
+                mj.Life(0.1); 
+                Util.Duang(u.X(),u.Y(),1,200,200,-64,0.02,50);
+                Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,2,1.5,1.5,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
                 if(u.IsAbility('B025')==false){
                     Buffs.Add(u.unit,'A06R','B025',86400,false).Level=0;
                 }
                 bb=Buffs.Find(u.unit,'B025'); 
                 bb.Level+=2;
+                hp=u.MaxHP()*((100.0-bb.Level)/100.0);
+                if(hp<10){
+                    hp=10;
+                }
+                cd=bb.Level*2;
+                if(u.GetAbilityCD('A06G')!=0){
+                    u.SetAbilityCD('A06G',u.GetAbilityCD('A06G')+cd);
+                }
+                if(u.GetAbilityCD('A06I')!=0){
+                    u.SetAbilityCD('A06I',u.GetAbilityCD('A06I')+cd);
+                }
+                if(u.GetAbilityCD('A06M')!=0){
+                    u.SetAbilityCD('A06M',u.GetAbilityCD('A06M')+cd);
+                }
+                u.SetMP(u.MaxMP()); 
+                u.SetHP(hp);
                 u.RemoveAbility(Units.Group_NotSelect); 
-                u.AnimeSpeed(1); 
-                u.Pause(false);
+                u.AnimeId(14);
+                u.AnimeSpeed(2); 
+                //u.PositionEnabled(true);
+                u.DelayReleaseAnimePause(0.5); 
             };
             u.Pause(true);
+            //u.PositionEnabled(false);
             u.AddAbility(Units.Group_NotSelect);
             u.AnimeId(14);
             u.AnimeSpeed(1);
@@ -65,8 +146,20 @@ library Mogu requires Groups{
                     if(e.TriggerUnit.player.lv20!=null){//20级了
                         if(e.TriggerUnit.player.nextherotype==-1){//未指定复活英雄
                             if(e.Damage>(e.TriggerUnit.HP()-5)){//致死
-                                e.Damage=0;
-                                Mogu.D(e.TriggerUnit.unit);
+                                if(e.TriggerUnit.player.isai==true){//如果是AI
+                                    if(e.TriggerUnit.IsAbility('B025')==true){//如果触发过不死鸟
+                                        if(Buffs.Find(e.TriggerUnit.unit,'B025').Level<6){//如果触发次数小于3次则触发，反之不触发
+                                            e.Damage=0;
+                                            Mogu.D(e.TriggerUnit.unit); 
+                                        }
+                                    }else{//如果AI没触发过不死鸟
+                                        e.Damage=0;
+                                        Mogu.D(e.TriggerUnit.unit);  
+                                    }
+                                }else{ 
+                                    e.Damage=0;
+                                    Mogu.D(e.TriggerUnit.unit);
+                                }
                             }
                         }
                     }
@@ -125,7 +218,11 @@ library Mogu requires Groups{
                 Units mj;
                 HitFlys h;
                 real hp;
-                if(u.Alive()==false||u.player.press.R==false||u.IsAbility('BPSE')==true||data.r[0]<=0||u.IsTimeStop()==true||u.IsAbility('B026')==true){
+                boolean press=u.player.press.R;
+                if(u.player.isai==true){
+                    press=true;
+                }
+                if(u.Alive()==false||press==false||u.IsAbility('BPSE')==true||data.r[0]<=0||u.IsTimeStop()==true||u.IsAbility('B026')==true){
                     Units(data.c[2]).Life(0.1);
                     Units(data.c[3]).Anime("death");
                     Units(data.c[4]).Life(0.1); 
@@ -240,6 +337,7 @@ library Mogu requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
                 Units mj,mjs;
+                integer s=0;
                 if(dash.Speed<6||u.IsAbility('A06L')==false||u.IsAbility('B026')==true){
                     dash.Stop();
                 }else{
@@ -260,9 +358,15 @@ library Mogu requires Groups{
                                 Dash.Start(mjs.unit,dash.Angle,200,Dash.SUB,10,true,false);
                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
                                 Buffs.Add(mj.unit,'A06J','B023',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                s+=1;
                             }  
                         }
-                        GroupClear(tmp_group);  
+                        GroupClear(tmp_group);
+                        if(s!=0){
+                            if(GetRandomInt(0,2)==1){
+                                Mogu.Press(u.player.player,"W");
+                            }
+                        }  
                     }else{
                         data.r[0]-=0.01;
                     }
@@ -280,6 +384,7 @@ library Mogu requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
                 Data data1=Data.create('A06L');
+                unit k=null;
                 if(u.Alive()==true&&u.IsAbility('B026')==false){ 
                     u.AnimeSpeed(0.75);
                     u.AnimeId(26);
@@ -293,6 +398,14 @@ library Mogu requires Groups{
                     data1.r[4]=dash.Speed;
                     data1.r[5]=0.4;
                     u.AddAbility('A06O');
+                    if(u.player.isai==true){ 
+                        k=GroupFind(u.unit,dash.X,dash.Y,400,true,false);
+                        if(k!=null){
+                            Mogu.Press(u.player.player,"R");
+                            k=null;
+                        }
+                    }
+                    
                     Timers.Start(0.01,data1,function(Timers t){
                         Data data=Data(t.Data());
                         Units u=Units(data.c[0]);
@@ -326,8 +439,11 @@ library Mogu requires Groups{
                             }
                             
                         }
-                    });
+                    }); 
                 }else{ 
+                    if(u.Alive()==true){
+                        Dash.Start(u.unit,dash.Angle,(dash.MaxDis-dash.NowDis)+200,Dash.SUB,dash.Speed,true,false);
+                    }
                     u.Pause(false); 
                 }  
                 Spell(data.c[1]).Destroy();
@@ -356,6 +472,7 @@ library Mogu requires Groups{
                 Units mj;
                 real x,y,f;
                 Data data1;
+                boolean press;
                 if(u.Alive()==true&&u.IsAbility('B026')==false){
                     if(u.IsTimeStop()==false){
                         if(data.i[1]==0){
@@ -400,7 +517,13 @@ library Mogu requires Groups{
                                 u.AnimeSpeed(1);
                                 u.Pause(false);
                                 t.Destroy();
-                                if(u.player.press.W==true&&u.IsAbility('BPSE')==false&&data.i[0]<4){
+                                press=u.player.press.W;
+                                if(u.player.isai==true){
+                                    if(GetRandomInt(0,1)==1){
+                                        press=true;
+                                    }
+                                }
+                                if(press==true&&u.IsAbility('BPSE')==false&&data.i[0]<4){
                                     //继续踢
                                     data.r[0]+=0.25;
                                     Mogu.W1(data);
@@ -641,6 +764,7 @@ library Mogu requires Groups{
         static method Spawn(Units u,Units m){
             Data data;
             if(u.IsAbility('A06E')==true){
+                u.ai=Mogu.AI;
                 data=Data.create('A06E');
                 data.c[0]=u;
                 data.c[1]=Effect.ToUnit("fire-buff-qiquan.mdl",u.unit,"origin");
