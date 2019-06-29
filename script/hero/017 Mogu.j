@@ -62,8 +62,7 @@ library Mogu requires Groups{
         static method D(unit ua){
             Units u=Units.Get(ua);
             Buffs b;
-            Units mj;
-            BJDebugMsg("蛋模式");
+            Units mj; 
             u.SetHP(1);
             Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,2,1,2, "death","units\\human\\phoenix\\phoenix.mdl");
             mj=Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,5,2,1, "stand alternate","units\\human\\phoenix\\phoenix.mdl");
@@ -84,8 +83,7 @@ library Mogu requires Groups{
                     mj.SetH(2000);
                     Timers.Start(0.01,mj,function(Timers t){
                         Units u=Units(t.Data());
-                        if(u.H()<=10){
-                            BJDebugMsg("删除了！！！");
+                        if(u.H()<=10){ 
                             t.Destroy();
                         }else{
                             u.Position(u.player.hero.X(),u.player.hero.Y(),false);
@@ -428,16 +426,14 @@ library Mogu requires Groups{
                         Data data=Data(t.Data());
                         Units u=Units(data.c[0]);
                         Spell e;
-                        if(u.Alive()==false||data.r[5]<=0||u.IsAbility('B026')==true){
-                            BJDebugMsg("删除了");   
+                        if(u.Alive()==false||data.r[5]<=0||u.IsAbility('B026')==true){ 
                             t.Destroy();
                             data.Destroy(); 
                             u.RemoveAbility('A06L');
                             u.RemoveAbility('A06O');
                         }else{
                             data.r[5]-=0.01;
-                            if(u.IsAbility('A06L')==false){
-                                BJDebugMsg("柔化");
+                            if(u.IsAbility('A06L')==false){ 
                                 Dash.Start(u.unit,data.r[2],data.r[3],Dash.SUB,data.r[4],true,false);
                                 e=Spell.UseSpell(u.unit,'A06G',Spell.ReadyState); 
                                 Mogu.W(e);
@@ -446,8 +442,7 @@ library Mogu requires Groups{
                                 SpellNameText(u.unit,"大回旋踢",3,10); 
                                 data.r[5]=0;
                             }else if(u.IsAbility('A06O')==false){
-                                
-                                BJDebugMsg("柔化爆发");
+                                 
                                 e=Spell.UseSpell(u.unit,'A06M',Spell.ReadyState); 
                                 Mogu.R(e);
                                 u.SetAbilityCD('A06M',20); 
@@ -503,8 +498,7 @@ library Mogu requires Groups{
                                 data.i[1]=1;
                             }else{
                                 data.r[1]-=0.01; 
-                                if(data.r[1]>=0.13&&data.r[1]<=0.14){//牵引周围敌人 
-                                    BJDebugMsg("??");
+                                if(data.r[1]>=0.13&&data.r[1]<=0.14){//牵引周围敌人  
                                     mj=Units.MJ(u.player.player,'e008','A06G',0,u.X(),u.Y(),GetRandomReal(0,360),2,1,2,"stand","dark1_ex.mdl");
                                     mj.DelaySizeEx(1,0.5,0.5);
                                     f=u.F();
@@ -807,8 +801,7 @@ library Mogu requires Groups{
                 data=Data.create('A06E');
                 data.c[0]=u;
                 data.c[1]=Effect.ToUnit("fire-buff-qiquan.mdl",u.unit,"origin");
-                data.r[0]=0;
-                BJDebugMsg("有了");
+                data.r[0]=0; 
                 Timers.Start(0.05,data,function(Timers t){//0.05
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
@@ -836,8 +829,7 @@ library Mogu requires Groups{
                                     }
                                     GroupClear(tmp_group); 
                                 } 
-                            }else{
-                                BJDebugMsg("没了");
+                            }else{ 
                                 Effect(data.c[1]).Destroy();
                                 data.Destroy();
                                 t.Destroy();
@@ -877,8 +869,7 @@ library Mogu requires Groups{
                 Timers.Start(0.01,u,function(Timers t){ 
                     Units u=Units(t.Data()); 
                     real x,y;
-                    if(u.Alive()==false||t.Expired()>20||u.IsAbility('B026')==true){
-                        BJDebugMsg("删除了");
+                    if(u.Alive()==false||t.Expired()>20||u.IsAbility('B026')==true){ 
                         t.Destroy();
                     }else{
                         if(t.Expired()==19){
