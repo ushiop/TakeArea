@@ -140,6 +140,18 @@ library Mogu requires Groups{
             u.AnimeSpeed(1);
         }
 
+        static method DamageAdd(DamageArgs e){
+            Buffs b;
+            real add;
+            if(e.DamageUnit.IsAbility('B025')==true){//拥有不死鸟则额外造成一次伤害
+                if(e.Spell!='A06Q'){//伤害不是不死鸟造成的
+                    b=Buffs.Find(e.DamageUnit.unit,'B025');
+                    add=(b.Level/100);
+                    e.DamageUnit.Damage(e.TriggerUnit.unit,Damage.Chaos,'A06Q',e.Damage*add);
+                } 
+            }
+        }
+
         static method Damage(DamageArgs e){
             if(e.TriggerUnit.IsAbility('B026')==true){//蛋状态减伤
                 e.Damage=0;
@@ -933,6 +945,7 @@ library Mogu requires Groups{
             
             
             
+            Damage.On(Damage.onUnitDamage_AddDamage,Mogu.DamageAdd); 
             Damage.On(Damage.onDamageEnd,Mogu.Damage); 
             Units.On(Units.onHeroSpawn,Mogu.Spawn); 
             Units.On(Units.onAlocDeath,Mogu.Q); 
