@@ -108,7 +108,7 @@ library Mogu requires Groups{
                     Buffs.Add(u.unit,'A06R','B025',86400,false).Level=0;
                 }
                 bb=Buffs.Find(u.unit,'B025'); 
-                bb.Level+=2;
+                bb.Level+=2; 
                 hp=u.MaxHP()*((100.0-bb.Level)/100.0);
                 if(hp<10){
                     hp=10;
@@ -123,6 +123,7 @@ library Mogu requires Groups{
                 if(u.GetAbilityCD('A06M')!=0){
                     u.SetAbilityCD('A06M',u.GetAbilityCD('A06M')+cd);
                 }
+                u.Alpha(255);
                 u.SetMP(u.MaxMP()); 
                 u.SetHP(hp);
                 u.RemoveAbility(Units.Group_NotSelect); 
@@ -132,6 +133,7 @@ library Mogu requires Groups{
                 u.DelayReleaseAnimePause(0.5); 
             };
             u.Pause(true);
+            u.Alpha(0);
             //u.PositionEnabled(false);
             u.AddAbility(Units.Group_NotSelect);
             u.AnimeId(14);
@@ -240,33 +242,35 @@ library Mogu requires Groups{
                     Units(data.c[3]).Anime("death");
                     Units(data.c[4]).Life(0.1); 
                     u.PositionEnabled(true);
-                    if(data.r[2]<1){//爆发小于1秒硬直极短
-                        u.Anime("stand");
-                        u.DelayReleaseAnimePause(0.25);
-                    }else{
-                        u.AnimeId(29);
-                        h=HitFlys.Add(u.unit,16);
-                        h.LocalPower=0.7;
-                        HitFlys.Lister(h,HitFlys.onEnd,function(HitFlys h){
-                            Units u=Units.Get(h.Unit);
-                            u.DelayReleaseAnimePause(0.5);
-                        }); 
-                        u.player.Duang(35,0.1); 
-                        
-                        Units.MJ(u.player.player,'e008','A06M',0,x,y,0,0.75,4,1, "stand","fire-zhendi-guangzhu.mdl");
-                        Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2,1, "stand","warstompcaster.mdl");
-                        Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,3,2, "stand","fire-boom-new.mdl"); 
-                        GroupEnumUnitsInRange(tmp_group,x,y,550,function GroupIsAliveNotAloc);     
-                        while(FirstOfGroup(tmp_group)!=null){
-                            mj=Units.Get(FirstOfGroup(tmp_group));
-                            GroupRemoveUnit(tmp_group,mj.unit);
-                            if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
-                                //伤害和减速 
-                                u.Damage(mj.unit,Damage.Chaos,'A06M',u.Str(true)*2);   
-                                Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),600,Dash.SUB,30,true,true); 
-                            }  
-                        } 
-                        GroupClear(tmp_group); 
+                    if(u.Alive()==true&&u.IsAbility('B026')==false){ 
+                        if(data.r[2]<1){//爆发小于1秒硬直极短
+                            u.Anime("stand");
+                            u.DelayReleaseAnimePause(0.25);
+                        }else{
+                            u.AnimeId(29);
+                            h=HitFlys.Add(u.unit,16);
+                            h.LocalPower=0.7;
+                            HitFlys.Lister(h,HitFlys.onEnd,function(HitFlys h){
+                                Units u=Units.Get(h.Unit);
+                                u.DelayReleaseAnimePause(0.5);
+                            }); 
+                            u.player.Duang(35,0.1); 
+                            
+                            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,0.75,4,1, "stand","fire-zhendi-guangzhu.mdl");
+                            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,2,1, "stand","warstompcaster.mdl");
+                            Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,3,2, "stand","fire-boom-new.mdl"); 
+                            GroupEnumUnitsInRange(tmp_group,x,y,550,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                    //伤害和减速 
+                                    u.Damage(mj.unit,Damage.Chaos,'A06M',u.Str(true)*2);   
+                                    Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),600,Dash.SUB,30,true,true); 
+                                }  
+                            } 
+                            GroupClear(tmp_group); 
+                        }
                     }
                     /*if(data.r[2]>1){
                         Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,1.8,2, "stand","az_kaer_t1.mdl");
