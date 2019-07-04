@@ -10,16 +10,16 @@ library Ichigo requires Groups{
             Dash dash;
             Data data;
             data=Data.create('A06U');
-            mj=Units.MJ(u.player.player,'e008','A06U',0,x,y,f,10,1.25,1, "birth","az_jingzi_jiansheng01_e1.mdl");
-            Dash.Start(mj.unit,f,600,Dash.SUB,30,true,false); 
+            mj=Units.MJ(u.player.player,'e008','A06U',0,x,y,f,10,1.4,0.8, "birth","az_jingzi_jiansheng01_e1.mdl");
+            Dash.Start(mj.unit,f,700,Dash.SUB,60,true,false); 
             mj=Units.MJ(u.player.player,'e008','A06U',0,x,y,f,3,1,1, "stand","yytc.mdl");
             data.c[0]=u;
             data.c[1]=mj;
             data.g[0]=CreateGroup();
-            dash=Dash.Start(mj.unit,f,1400,Dash.SUB,70,true,false);
+            dash=Dash.Start(mj.unit,f,1600,Dash.SUB,100,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
-                if(dash.Speed<6){
+                if(dash.Speed<10){
                     dash.Stop();
                 } 
             };
@@ -121,26 +121,25 @@ library Ichigo requires Groups{
         static method HERO_START(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A06U'){
-                u.FlushAnimeId(7);
-                u.AnimeSpeed(1.1);
+                u.FlushAnimeId(13); 
                 e.Destroy();
             }
             
         }
 
-        static method HERO_STOP(Spell e){
+        /*static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
             if(e.Id=='A06U'){
                 u.AnimeSpeed(1);
             }
             e.Destroy();
-        }
+        }*/
 
         static method onInit(){ 
              
             Spell.On(Spell.onSpell,'A06U',Ichigo.W);
             Spell.On(Spell.onReady,'A06U',Ichigo.HERO_START); 
-            Spell.On(Spell.onStop,'A06U',Ichigo.HERO_STOP);  
+            //Spell.On(Spell.onStop,'A06U',Ichigo.HERO_STOP);  
             Events.On(Events.onUnitOrderToUnit,Ichigo.Q_Order);
             Events.On(Events.onUnitOrderToLocation,Ichigo.Q_Order); 
         }
