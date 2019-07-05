@@ -19,15 +19,48 @@ library Ichigo requires Groups{
             Units u=Units.Get(ua);
             Buffs b;
             Units mj;
+            Dash dash;
+            Data data;
             if(u.IsAbility('B028')==true){
                 b=Buffs.Find(u.unit,'B028');
                 if(b.Level>=s){//发动效果
                     //---
-                    mj=Units.MJ(u.player.player,'e008','A06U',0,u.X()+50*CosBJ(f),u.Y()+50*SinBJ(f),f,2,1,1, "stand","blackgetsuga2_x90.mdl");
+                    mj=Units.MJ(u.player.player,'e008','A06V',0,u.X()+50*CosBJ(f),u.Y()+50*SinBJ(f),f,2,1,1, "stand","blackgetsuga2_x90.mdl");
                     mj.SetH(100);
                     mj.DelayAlpha(255,0,0.5);
                     mj.DelaySizeEx(1,2,0.5);
-                    Dash.Start(mj.unit,f,600,Dash.SUB,25,true,false);
+                    data=Data.create('A06V');
+                    data.c[0]=u; 
+                    data.g[0]=CreateGroup();
+                    dash=Dash.Start(mj.unit,f,600,Dash.SUB,25,true,false);
+                    dash.Obj=data;
+                    dash.onMove=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        Units u=Units.Get(dash.Unit);
+                        Units mj; 
+                        GroupEnumUnitsInRange(tmp_group,dash.X,dash.Y,200,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){
+                                if(Util.FAN(u.unit,mj.unit,dash.Angle,80)==true){ 
+                                    if(IsUnitInGroup(mj.unit,data.g[0])==false){ 
+                                    //伤害和减速 
+                                        u.Damage(mj.unit,Damage.Magic,'A06V',u.Agi(true)*5); 
+                                        Units.MJ(u.player.player,'e008','A06V',0,mj.X()+120*CosBJ(mj.F()+180),mj.Y()+120*SinBJ(mj.F()+180),mj.F(),3,1,2,"death","yytc.mdl"); 
+                                        GroupAddUnit(data.g[0],mj.unit);
+                                    }
+                                }
+                            }  
+                        }
+                        GroupClear(tmp_group);
+                    };
+                    dash.onEnd=function(Dash dash){
+                        Data data=Data(dash.Obj);
+                        DestroyGroup(data.g[0]);
+                        data.g[0]=null;
+                        data.Destroy();
+                    };
                     //---
                     b.Level-=s; 
                     if(b.Level<5){
