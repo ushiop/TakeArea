@@ -39,7 +39,7 @@ library Ichigo requires Groups{
                                     Buffs.Add(mj.unit,'A06Z','B029',6,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                     if(Util.XY2(u.unit,mj.unit)<=200){
                                         Buffs.Skill(mj.unit,'A00F',1);
-                                        HitFlys.Add(mj.unit,12);
+                                        HitFlys.Add(mj.unit,12); 
                                     }   
                                     Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,10,true,false);
                                     
