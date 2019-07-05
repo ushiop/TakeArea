@@ -16,6 +16,7 @@ library Ichigo requires Groups{
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
                 real x=u.X(),y=u.Y();
+                Units mj;
                 if(u.IsTimeStop()==false){
                     if(u.Alive()==false||data.r[0]<=0){
                         if(u.Alive()==true){
@@ -29,6 +30,22 @@ library Ichigo requires Groups{
                             Util.Duang(x,y,0.5,200,200,-64,0.05,50);
                             u.player.Duang(60,0.3);
                             u.DelayReleaseAnimePause(0.5);
+                            GroupEnumUnitsInRange(tmp_group,x,y,450,function GroupIsAliveNotAloc);     
+                            while(FirstOfGroup(tmp_group)!=null){
+                                mj=Units.Get(FirstOfGroup(tmp_group));
+                                GroupRemoveUnit(tmp_group,mj.unit);
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                    u.Damage(mj.unit,Damage.Magic,'A06Y',u.Agi(true)*12);
+                                    Buffs.Add(mj.unit,'A06Z','B029',6,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                    if(Util.XY2(u.unit,mj.unit)<=200){
+                                        Buffs.Skill(mj.unit,'A00F',1);
+                                        HitFlys.Add(mj.unit,12);
+                                    }   
+                                    Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),200,Dash.SUB,10,true,false);
+                                    
+                                }  
+                            }
+                            GroupClear(tmp_group);
                         }else{ 
                             u.Pause(false);
                         }
