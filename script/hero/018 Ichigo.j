@@ -3,6 +3,55 @@ library Ichigo requires Groups{
     //SR
     struct Ichigo{ 
 
+        static method R(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A06Y');
+            u.Pause(true);
+            u.AnimeId(15); 
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0.3;
+            data.r[1]=0.1;
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                real x=u.X(),y=u.Y();
+                if(u.IsTimeStop()==false){
+                    if(u.Alive()==false||data.r[0]<=0){
+                        if(u.Alive()==true){
+                            //爆发  
+                            Ichigo.EADD(u.unit,15);
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,0,3,1,2, "stand","black_thunderclapcaster.mdl");
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,0,3,1,1, "stand","white-qiquan_ex.mdl");
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,90,3,1,0.8, "stand","white-qiquan_ex.mdl");
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,180,3,1,0.6, "stand","white-qiquan_ex.mdl");
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,270,3,1,0.6, "stand","white-qiquan_ex.mdl"); 
+                            Util.Duang(x,y,0.5,200,200,-64,0.05,50);
+                            u.player.Duang(60,0.3);
+                            u.DelayReleaseAnimePause(0.5);
+                        }else{ 
+                            u.Pause(false);
+                        }
+                        data.Destroy();
+                        t.Destroy();
+                    }else{ 
+                        data.r[0]-=0.01;
+                        data.r[1]-=0.01;
+                        if(data.r[1]==0){
+                            data.r[1]=0.1; 
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,GetRandomReal(0,360),0.5,1.5,1.25, "stand","dark1.mdl");
+                            //
+                        }
+                        if(data.r[0]==0.1){
+                            u.AnimeId(10);
+                            Units.MJ(u.player.player,'e008','A06Y',0,x,y,GetRandomReal(0,360),3,2,2, "stand","bymutou_huozhu_siwang.mdl");
+                            
+                        }
+                    }
+                }
+            });
+        }
+
         static method Attack(DamageArgs e){
             Buffs b;
             if(e.DamageType==Damage.Attack){ 
@@ -278,6 +327,7 @@ library Ichigo requires Groups{
 
         static method onInit(){ 
             Damage.On(Damage.onUnitDamage_EndDamage,Ichigo.Attack); 
+            Spell.On(Spell.onSpell,'A06Y',Ichigo.R);
             Spell.On(Spell.onSpell,'A06U',Ichigo.W);
             Spell.On(Spell.onReady,'A06U',Ichigo.HERO_START); 
             //Spell.On(Spell.onStop,'A06U',Ichigo.HERO_STOP);  
