@@ -3,15 +3,36 @@ library Ichigo requires Groups{
     //SR
     struct Ichigo{ 
 
+        static method Attack(DamageArgs e){
+            Buffs b;
+            if(e.DamageType==Damage.Attack){ 
+                if(e.DamageUnit.IsAbility('B028')==true){
+                    b=Buffs.Find(e.DamageUnit.unit,'B028');
+                    if(b.Level>=5){
+                        Ichigo.EUSE(e.DamageUnit.unit,5,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit));
+                    }
+                }
+            }
+        }
+
         static method EUSE(unit ua,integer s,real f){
             Units u=Units.Get(ua);
             Buffs b;
+            Units mj;
             if(u.IsAbility('B028')==true){
                 b=Buffs.Find(u.unit,'B028');
                 if(b.Level>=s){//发动效果
-                    b.Level-=s;
+                    //---
+                    mj=Units.MJ(u.player.player,'e008','A06U',0,u.X()+50*CosBJ(f),u.Y()+50*SinBJ(f),f,2,1,1, "stand","blackgetsuga2_x90.mdl");
+                    mj.SetH(100);
+                    mj.DelayAlpha(255,0,0.5);
+                    mj.DelaySizeEx(1,2,0.5);
+                    Dash.Start(mj.unit,f,600,Dash.SUB,25,true,false);
+                    //---
+                    b.Level-=s; 
                     if(b.Level<5){
                         if(b.Obj!=0){
+                            BJDebugMsg("删除");
                             Effect(b.Obj).Destroy();
                             b.Obj=0;
                         }
@@ -33,6 +54,7 @@ library Ichigo requires Groups{
                     b.onEnd=function(Buffs b){
                         Units u=Units.Get(b.Unit);
                         if(b.Obj!=0){ 
+                            BJDebugMsg("删除");
                             Effect(b.Obj).Destroy();
                         }
                     };
@@ -41,6 +63,7 @@ library Ichigo requires Groups{
                 b.Level+=s;
                 if(b.Level>=5){
                     if(b.Obj==0){ 
+                        BJDebugMsg("添加");
                         b.Obj=Effect.ToUnit("buff_hei.mdl",u.unit,"weapon");
                     }
                 }
@@ -221,7 +244,7 @@ library Ichigo requires Groups{
         }*/
 
         static method onInit(){ 
-             
+            Damage.On(Damage.onUnitDamage_EndDamage,Ichigo.Attack); 
             Spell.On(Spell.onSpell,'A06U',Ichigo.W);
             Spell.On(Spell.onReady,'A06U',Ichigo.HERO_START); 
             //Spell.On(Spell.onStop,'A06U',Ichigo.HERO_STOP);  
