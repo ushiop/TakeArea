@@ -3,6 +3,53 @@ library Ichigo requires Groups{
     //SR
     struct Ichigo{ 
 
+        static method AI(unit ua){
+            Units u=Units.Get(ua);
+            unit target,no;
+            real x=u.X(),y=u.Y();
+            real x1,y1;     
+            Units mj;
+            Buffs b;
+            target=GroupFind(u.unit,x,y,1000,true,false);
+            if(target!=null){
+                x1=GetUnitX(target);
+                y1=GetUnitY(target);   
+
+                if(u.player.lv10!=null){
+                    if(GetRandomInt(0,3)==0&&u.IsTimeStop()==false&&u.IsAbility('BPSE')==false&&u.IsPause()==false){
+                        Ichigo.Q(u.unit,Util.XY2EX(x,y,x1,y1),Util.XYEX(x,y,x1,y1)); 
+                    }
+                } 
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssuePointOrder(u.unit, "channel",x1,y1);//月牙天冲
+                }  
+
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);    
+                    IssueImmediateOrder( u.unit, "instant" );//灵压爆发
+                }  
+                
+                 
+                no=GroupFind(u.unit,x,y,600,true,false);
+                if(no!=null){ 
+                    x1=GetUnitX(target);
+                    y1=GetUnitY(target);
+                    u.SetF(Util.XY(u.unit,no),true);   
+                    IssueImmediateOrder( u.unit, "fanofknives" );//爆发
+                } 
+                   
+            } 
+            target=null;
+            no=null;
+        }
+
         static method D(Spell e){
             Units u=Units.Get(e.Spell);
             Buffs b;
@@ -362,7 +409,13 @@ library Ichigo requires Groups{
                 }
                 
             }
-            
+             
+        }
+
+        static method Spawn(Units u,Units m){
+            if(u.IsAbility('A06U')==true){
+                u.ai=Ichigo.AI;
+            }
         }
 
         /*static method HERO_STOP(Spell e){
@@ -374,6 +427,7 @@ library Ichigo requires Groups{
         }*/
 
         static method onInit(){ 
+            Units.On(Units.onHeroSpawn,Ichigo.Spawn);
             Damage.On(Damage.onUnitDamage_EndDamage,Ichigo.Attack); 
             Spell.On(Spell.onSpell,'A070',Ichigo.D);
             Spell.On(Spell.onSpell,'A06Y',Ichigo.R);
