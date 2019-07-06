@@ -114,7 +114,7 @@ library Mogu requires Groups{
                     hp=10;
                 }
                 cd=bb.Level*2;
-                if(u.GetAbilityCD('A06G')!=0){
+                /*if(u.GetAbilityCD('A06G')!=0){
                     u.SetAbilityCD('A06G',u.GetAbilityCD('A06G')+cd);
                 }
                 if(u.GetAbilityCD('A06I')!=0){
@@ -122,7 +122,7 @@ library Mogu requires Groups{
                 }
                 if(u.GetAbilityCD('A06M')!=0){
                     u.SetAbilityCD('A06M',u.GetAbilityCD('A06M')+cd);
-                }
+                }*/
                 u.Alpha(255);
                 u.SetMP(u.MaxMP()); 
                 u.SetHP(hp);
@@ -146,7 +146,7 @@ library Mogu requires Groups{
             if(e.DamageUnit.IsAbility('B025')==true){//拥有不死鸟则额外造成一次伤害
                 if(e.Spell!='A06Q'){//伤害不是不死鸟造成的
                     b=Buffs.Find(e.DamageUnit.unit,'B025');
-                    add=(b.Level/100);
+                    add=(b.Level/100.0); 
                     e.DamageUnit.Damage(e.TriggerUnit.unit,Damage.Chaos,'A06Q',e.Damage*add);
                 } 
             }
@@ -159,7 +159,9 @@ library Mogu requires Groups{
                 if(e.TriggerUnit.IsAbility('A06Q')==true){//是妹红
                     if(e.TriggerUnit.player.lv20!=null){//20级了
                         if(e.TriggerUnit.player.nextherotype==-1){//未指定复活英雄
-                            if(e.Damage>(e.TriggerUnit.HP()-5)){//致死
+                            BJDebugMsg("妹红-不死鸟-伤害-"+R2S(e.Damage)+"-判定血量-"+R2S((e.TriggerUnit.HP()-5)));
+                            
+                            if(e.Damage>=(e.TriggerUnit.HP()-5)){//致死
                                 if(e.TriggerUnit.player.isai==true){//如果是AI
                                     if(e.TriggerUnit.IsAbility('B025')==true){//如果触发过不死鸟
                                         if(Buffs.Find(e.TriggerUnit.unit,'B025').Level<6){//如果触发次数小于3次则触发，反之不触发
