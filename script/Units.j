@@ -300,7 +300,7 @@ library Units requires Table,Players,Events,Util{
             //时停单位
             method TimeStop(boolean b){
                 if(b==true){
-                    if(this.timestops==0){
+                    if(this.timestops==0){ 
                         PauseUnit(this.unit,true);
                         SetUnitTimeScale(this.unit,0);
                         Timers.Start(0.01,this,function(Timers t){
@@ -310,7 +310,7 @@ library Units requires Table,Players,Events,Util{
                                     if(u.timestops!=0){
                                         u.timestops=0;
                                     }
-                                }
+                                } 
                                 SetUnitTimeScale(u.unit,u.animespeed);
                                 PauseUnit(u.unit,false);
                                 t.Destroy();
@@ -334,13 +334,13 @@ library Units requires Table,Players,Events,Util{
             //暂停单位
             method Pause(boolean p){
                 if(p==true){
-                    if(this.pauses==0){ 
+                    if(this.pauses==0){  
                         EXPauseUnit(this.unit,p);
                     }
                     this.pauses+=1;
                 }else{
                     this.pauses-=1;
-                    if(this.pauses==0){ 
+                    if(this.pauses==0){  
                         EXPauseUnit(this.unit,p);
                     }
                 }
@@ -844,6 +844,7 @@ library Units requires Table,Players,Events,Util{
             ud.move=true;
             ud.Obj=0;
             ud.pauses=0;
+            ud.timestops=0;
             ud.moves=0;
             ud.movespeed=GetUnitMoveSpeed(u);
             ud.createtime=GameTime;
