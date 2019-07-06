@@ -18,6 +18,7 @@ library Test requires Util{
         if(e.ChatString=="1"){
             if(p.hero.unit!=null){//对自己造成伤害
                 p.hero.Damage(p.hero.unit,Damage.Chaos,'A02F',500);
+                p.hero.Damage(p.hero.unit,Damage.Chaos,'A02F',500);
             }
         }
         if(e.ChatString=="2"){
