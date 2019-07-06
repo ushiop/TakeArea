@@ -298,8 +298,8 @@ library Units requires Table,Players,Events,Util{
             }
 
             //时停单位
-            method TimeStop(boolean b){
-                if(b==true){
+            method TimeStop(boolean b){ 
+                if(b==true){ 
                     if(this.timestops==0){ 
                         PauseUnit(this.unit,true);
                         SetUnitTimeScale(this.unit,0);
