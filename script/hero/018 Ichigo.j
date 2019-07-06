@@ -3,6 +3,37 @@ library Ichigo requires Groups{
     //SR
     struct Ichigo{ 
 
+        static method D(Spell e){
+            Units u=Units.Get(e.Spell);
+            Buffs b;
+            integer agi;
+            u.Pause(true);
+            u.Pause(false);
+            Effect.To("red-lizi-zhendi-fast.mdl",u.X(),u.Y()).Destroy();
+            Effect.To("devilslam.mdl",u.X(),u.Y()).Destroy(); 
+            Ichigo.EADD(u.unit,30);
+            //Effect.ToUnit("dead spirit by deckai3.mdl",u.unit,"origin").Destroy();
+            if(u.IsAbility('B02A')==false){//初次施放
+                b=Buffs.Add(u.unit,'A071','B02A',10,false);
+                b.Obj=e;
+                agi=R2I(u.Agi(true)*0.3);
+                u.SetExAgi(agi);
+                b.Level=agi;
+                b.onTime=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    u.SetMP(u.MP()+0.5);
+                };
+                b.onEnd=function(Buffs b){
+                    Units u=Units.Get(b.Unit);
+                    u.SetExAgi(-b.Level);
+                    Spell(b.Obj).Destroy();
+                };
+            }else{//多次施放
+                Buffs.Add(u.unit,'A071','B02A',10,false);
+                e.Destroy();
+            }
+        }
+
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A06Y');
@@ -344,6 +375,7 @@ library Ichigo requires Groups{
 
         static method onInit(){ 
             Damage.On(Damage.onUnitDamage_EndDamage,Ichigo.Attack); 
+            Spell.On(Spell.onSpell,'A070',Ichigo.D);
             Spell.On(Spell.onSpell,'A06Y',Ichigo.R);
             Spell.On(Spell.onSpell,'A06U',Ichigo.W);
             Spell.On(Spell.onReady,'A06U',Ichigo.HERO_START); 
