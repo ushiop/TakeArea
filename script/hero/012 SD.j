@@ -25,7 +25,7 @@ library SD requires Groups{
                 data=Data.create('A03I');
                 data.c[0]=u;
                 data.u[0]=null;//W-苦无需求
-                data.r[0]=0;//上友军BUFF的间隔
+                data.r[0]=3;//上友军BUFF的间隔
                 Buffs.Add(u.unit,'A03L','B00T',86400,false).Level=2;
                 Timers.Start(0.01,data,function(Timers t){
                     Data data=Data(t.Data());
@@ -44,7 +44,7 @@ library SD requires Groups{
                         data.Destroy();
                     }else{
                         if(data.r[0]<=0){//友军标记 上BUFF
-                            data.r[0]=1; 
+                            data.r[0]=3; 
                             GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),9999999999,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
