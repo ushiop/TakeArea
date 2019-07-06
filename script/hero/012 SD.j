@@ -383,7 +383,11 @@ library SD requires Groups{
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(IsUnitEnemy(tmp.unit,f.player.player)==true){   
                                     tmp.Position(dash.X,dash.Y,true);
+                                    if(dash.NowDis<=200){
+                                        Buffs.Add(tmp.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;       
+                                    }
                                 }
+                                
                             }  
                             GroupClear(tmp_group); 
                             if(dash.Speed<4){
@@ -444,8 +448,8 @@ library SD requires Groups{
             u.AddAbility('A03T'); 
             u.RemoveAbility(TeamTips_Ability_Id[u.player.teamid]);
             u.PositionEnabled(false); 
-            if(u.IsAbility('B00V')==true){
-                Buffs.Find(u.unit,'B00V').Stop();
+            if(u.GetAbilityCD('A03M')!=0){
+                u.SetAbilityCD('A03M',0);
             }
             data.c[0]=u;
             data.c[1]=e;  
@@ -566,7 +570,7 @@ library SD requires Groups{
             boolean team;
             real x1,y1;
             Data data,data1;
-            Dash dash;
+            Dash dash; 
             if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
                     range=150,dis=999999999;//选取范围，最近距离
@@ -694,7 +698,7 @@ library SD requires Groups{
 
                         Units.MJ(u.player.player,'e008','A03I',0,x,y,0,2,2,1, "stand","fire-shanguang-lizi_y.mdl");
                         if(ft==1){//螺旋丸触发
-                            cd=0.5;
+                            cd=0.0;
                             Buffs.Find(target,'B00U').Stop();
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
@@ -713,7 +717,7 @@ library SD requires Groups{
                             GroupClear(tmp_group);   
                         }
                         if(ft==3){//飞雷神标记触发
-                            cd=2; 
+                            cd=0; 
                             Buffs.Find(target,'B00S').Stop();
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
@@ -807,7 +811,7 @@ library SD requires Groups{
                             data.u[0]=mj.unit;  
                         }
                         if(ft==4){//苦无触发
-                            cd=0.5;
+                            cd=0.0;
                             mj=Units.Get(target);
                             if(mj.Data()==0){//等于0表示掉地上了
                                 Units.Remove(target);
@@ -856,6 +860,18 @@ library SD requires Groups{
                         }
                     }
                 }
+            }
+            if(e.OrderId==852057){
+                if(u.IsAbility('B00W')==true){ 
+                    if(e.OrderTargetUnit==null){//点击的地方
+                        x=e.OrderTargetX,y=e.OrderTargetY;
+                        f=Util.XYEX(u.X(),u.Y(),x,y);
+                    }else{
+                        x=GetUnitX(e.OrderTargetUnit),y=GetUnitY(e.OrderTargetUnit);
+                        f=Util.XY(u.unit,e.OrderTargetUnit);
+                    }
+                    u.SetF(f,true);
+                } 
             }
         }
 
