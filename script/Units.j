@@ -302,13 +302,13 @@ library Units requires Table,Players,Events,Util{
                 if(b==true){ 
                     if(this.timestops==0){ 
                         PauseUnit(this.unit,true);
-                        SetUnitTimeScale(this.unit,0);
+                        SetUnitTimeScale(this.unit,0); 
                         Timers.Start(0.01,this,function(Timers t){
                             Units u=Units(t.Data());
                             if(u.Alive()==false||u.timestops==0){ 
                                 if(u.Alive()==false){
                                     if(u.timestops!=0){
-                                        u.timestops=0;
+                                        u.timestops=0;  
                                     }
                                 } 
                                 SetUnitTimeScale(u.unit,u.animespeed);
