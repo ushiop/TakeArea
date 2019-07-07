@@ -813,10 +813,10 @@ library Mogu requires Groups{
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
                     Units mj; 
-                    if(u.IsTimeStop()==false){
-                        if(data.r[0]==0){
-                            data.r[0]=1;
-                            if(u.Alive()==true){
+                    if(u.IsTimeStop()==false){ 
+                        if(u.Alive()==true){
+                            if(data.r[0]==0){
+                                data.r[0]=1;
                                 //伤害和留下火
                                 if(u.IsAbility('B026')==false){//不处于蛋蛋复活状态
                                     Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",u.unit,"right hand").Destroy();
@@ -834,16 +834,16 @@ library Mogu requires Groups{
                                             Buffs.Add(mj.unit,'A06F','B021',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                         }
                                     }
-                                    GroupClear(tmp_group); 
-                                } 
+                                    GroupClear(tmp_group);  
+                                }
                             }else{ 
-                                Effect(data.c[1]).Destroy();
-                                data.Destroy();
-                                t.Destroy();
+                                data.r[0]-=0.05;
                             }
                         }else{
-                            data.r[0]-=0.05;
-                        }
+                            Effect(data.c[1]).Destroy();
+                            data.Destroy();
+                            t.Destroy();
+                        }   
                     }
                 });
             }
