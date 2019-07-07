@@ -36,6 +36,16 @@ library Test requires Util{
                 Buffs.Skill(p.hero.unit,'A00F',1);
             }
         } 
+        if(e.ChatString=="5"){
+            if(p.hero.unit!=null){//对自己造成伤害
+                p.hero.TimeStop(true);
+            }
+        } 
+        if(e.ChatString=="6"){
+            if(p.hero.unit!=null){//对自己造成伤害
+                p.hero.TimeStop(false);
+            }
+        } 
         if(e.ChatString=="p"){
             if(p.hero.unit!=null){
                 BJDebugMsg("暂停计数："+I2S(p.hero.pauses));
