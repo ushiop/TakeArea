@@ -62,3 +62,4 @@
 //! import zinc "map/script/hero/016 Zg.j"
 //! import zinc "map/script/hero/017 Mogu.j"
 //! import zinc "map/script/hero/018 Ichigo.j"
+//! import zinc "map/script/hero/019 XN.j"
