@@ -173,6 +173,8 @@ library Ichigo requires Groups{
                     mj.SetH(100);
                     mj.DelayAlpha(255,0,0.5);
                     mj.DelaySizeEx(1,2,0.5);
+                    mj.AddAbility(Units.MJType_TSW);
+                    mj.Position(mj.X(),mj.Y(),true);
                     data=Data.create('A06V');
                     data.c[0]=u; 
                     data.g[0]=CreateGroup();
@@ -258,6 +260,8 @@ library Ichigo requires Groups{
             mj=Units.MJ(u.player.player,'e008','A06U',0,x,y,f,10,1.4,0.8, "birth","az_jingzi_jiansheng01_e1.mdl");
             Dash.Start(mj.unit,f,700,Dash.SUB,60,true,false); 
             mj=Units.MJ(u.player.player,'e008','A06U',0,x,y,f,3,1,1, "stand","yytc.mdl");
+            mj.AddAbility(Units.MJType_TSW);
+            mj.Position(x,y,true);
             data.c[0]=u;
             data.c[1]=mj;
             data.g[0]=CreateGroup();
