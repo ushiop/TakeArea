@@ -19,7 +19,7 @@ library XN requires Groups{
                     Units mj;
                     real x=u.X(),y=u.Y(),f,a=0;
                     if(u.Alive()==true){
-                        if(data.r[0]<=0){
+                        if(data.r[0]<=0){ 
                             data.r[0]=5; 
                             if(GroupNumber(data.g[0])<2){
                                 mj=Units.MJ(u.player.player,'e008','A072',0,u.X(),u.Y(),0,86400,0.4,1, "stand","hero_emberspirit_n3s_f_ribbon_misslie.mdl");
