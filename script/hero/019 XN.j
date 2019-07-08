@@ -65,8 +65,16 @@ library XN requires Groups{
             }
         }
 
+        static method Order(EventArgs e){
+            Units u=Units.Get(e.TriggerUnit);
+            BJDebugMsg(I2S(Order.RightClick)); 
+        }
+
         static method onInit(){
             Units.On(Units.onHeroSpawn,XN.Spawn);
+            
+            Events.On(Events.onUnitOrderToUnit,XN.Order);
+            Events.On(Events.onUnitOrderToLocation,XN.Order); 
         }
     }
 }
