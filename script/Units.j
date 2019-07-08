@@ -878,7 +878,9 @@ library Units requires Table,Players,Events,Util{
         //摧毁指定单位 实例
         private static method Destroys(unit u){
             Units ud=Units.ht[u];  
-            //if(ud.Obj!=0) Data(ud.Obj).Destroy();
+            if(ud.Obj!=0){
+                BJDebugMsg("【---警告---】单位携带的OBJ没有清空，名字:"+ud.name);
+            } 
             ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);
