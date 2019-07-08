@@ -43,6 +43,7 @@
 //! import zinc "map/script/Test.j" 
 //! import zinc "map/script/TianQi.j"
 //! import zinc "map/script/TeamTips.j"
+//! import zinc "map/script/Order.j"
 //英雄
 //! import zinc "map/script/hero/001 Ordinary Wizard.j"
 //! import zinc "map/script/hero/002 Dazzle Master.j"
