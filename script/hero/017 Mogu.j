@@ -518,7 +518,8 @@ library Mogu requires Groups{
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){
                                             if((Util.XY2(mj.unit,u.unit)>200&&Util.FAN(u.unit,mj.unit,f,80)==true)||(Util.FAN(u.unit,mj.unit,f,80)==false)){ 
-                                                Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),Util.XY2EX(mj.X(),mj.Y(),x,y),Dash.NORMAL,15,true,true);
+                                                Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),Util.XY2EX(mj.X(),mj.Y(),x,y),Dash.NORMAL,15,true,false);
+                                                IssueImmediateOrder(mj.unit,"stop");
                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
                                             }  
                                         }
@@ -753,7 +754,8 @@ library Mogu requires Groups{
                                                 o+=1;
                                                 u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)); 
                                                 u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true));
-                                                Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,true);
+                                                Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,false);
+                                                IssueImmediateOrder(mj.unit,"stop");
                                                 HitFlys.Add(mj.unit,13);
                                                 Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",mj.unit,"chest").Destroy();
                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
