@@ -15,6 +15,8 @@ library Events requires Table{
         unit AttackUnit;//攻击单位
         real OrderTargetX;//命令目标X坐标
         real OrderTargetY;//命令目标Y坐标
+        real OrderAngle;//命令点到目标点的方向，若是单位目标则为到单位的方向，点目标则为到点的方向
+        real OrderDis;//同上，但是是距离
         real SpellTargetX;//技能目标X
         real SpellTargetY;//技能目标Y
         integer SpellId;//施放的技能ID
@@ -111,6 +113,13 @@ library Events requires Table{
         e.OrderTargetX=GetOrderPointX();
         e.OrderTargetY=GetOrderPointY();
         e.OrderId=GetIssuedOrderId();
+        if(e.OrderTargetUnit==null){ 
+            e.OrderAngle=Util.XYEX(GetUnitX(e.TriggerUnit),GetUnitY(e.TriggerUnit),e.OrderTargetX,e.OrderTargetY);
+            e.OrderDis=Util.XY2EX(GetUnitX(e.TriggerUnit),GetUnitY(e.TriggerUnit),e.OrderTargetX,e.OrderTargetY);
+        }else{
+            e.OrderAngle=Util.XY(e.TriggerUnit,e.OrderTargetUnit);
+            e.OrderDis=Util.XY2(e.TriggerUnit,e.OrderTargetUnit);
+        } 
         e.AttackUnit=GetAttacker();
         for(1<=i<Table[Events.$name$][0]){ 
             callback=EventInterface(Table[Events.$name$][i]);
