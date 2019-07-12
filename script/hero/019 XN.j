@@ -121,13 +121,14 @@ library XN requires Groups{
 
         static method Order(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);   
-            if(e.OrderId==Order.Attack){//是A键 
+            if(e.OrderId==Order.Attack){//是A键  
                 if(u.IsAbility('A072')==true){//是夏娜 
                     if(u.IsAbility('BPSE')==false){ 
                         XN.D1(u,e.OrderAngle,e.OrderDis); 
                     }
                 }
             }
+        
         }
 
         static method onInit(){
