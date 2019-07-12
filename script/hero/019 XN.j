@@ -127,8 +127,15 @@ library XN requires Groups{
                         XN.D1(u,e.OrderAngle,e.OrderDis); 
                     }
                 }
-            }
-        
+            } 
+        }
+
+        static method HERO_START(Spell e){
+
+        }
+
+        static method HERO_STOP(Spell e){
+            
         }
 
         static method onInit(){
@@ -136,6 +143,10 @@ library XN requires Groups{
             
             Events.On(Events.onUnitOrderToUnit,XN.Order);
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
+
+            
+            Spell.On(Spell.onReady,'A074',XN.HERO_START); 
+            Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
         }
     }
 }
