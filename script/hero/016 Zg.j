@@ -478,16 +478,16 @@ library Zg requires Groups{
             }
         }
 
-        //突然贫血
+        //突然贫血 - 暂时取消了
         static method R1(Units u){
-            real r; 
+            /*real r; 
             if(u.player.lv15!=null){
                 r=GetRandomReal(0,1); 
                 if(r<=0.05){
                     RuaText(u.unit,"？？？",10,2,1,45,0,0.02);
                     Buffs.Skill(u.unit,'A00W',1);         
                 }
-            } 
+            } */
         }
 
         static method R(Spell e){
@@ -674,8 +674,8 @@ library Zg requires Groups{
                             Units u=Units(data.c[0]); 
                             if(data.u[0]==null){
                                 Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
-                                u.AnimeSpeed(1);
-                                u.DelayReleaseAnimePause(0.6);
+                                u.AnimeSpeed(2);
+                                u.DelayReleaseAnimePause(0.3);
                                 if(u.player.lv15!=null){
                                     if(u.player.press.R==false){
                                         if(GetRandomReal(0,1)<=0.5){ 
@@ -723,7 +723,7 @@ library Zg requires Groups{
             u.AddAbility('A060'); 
             IssueImmediateOrder(u.unit,"stop"); 
             data.c[0]=u;
-            data.r[0]=0.77;//一段蓄力
+            data.r[0]=0.3;//一段蓄力0.77
             data.r[1]=0.23;//小踹动作0.46
             Dash.Start(u.unit,u.F()+180,50,Dash.SUB,7,true,false);
             SpellNameText(u.unit,"自己也不清楚怎么使出的踢击",3,10); 
@@ -819,6 +819,7 @@ library Zg requires Groups{
                                                     } 
                                                 };
                                                 h=HitFlys.Add(u.unit,40);
+                                                h.LocalPower+=0.2;
                                                 HitFlys.Lister(h,HitFlys.onDown,function(HitFlys h){
                                                     Units u=Units.Get(h.Unit);
                                                     Units mj;
@@ -1088,7 +1089,7 @@ library Zg requires Groups{
  
         static method Order(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
-            real f; 
+            real f;  
             if(u.IsAbility('B01X')==true&&e.OrderId!=851973){ 
                 if(e.OrderTargetUnit==null){ 
                     f=Util.XYEX(u.X(),u.Y(),e.OrderTargetX,e.OrderTargetY);
@@ -1097,6 +1098,9 @@ library Zg requires Groups{
                 } 
                 u.SetF(f,true);
             } 
+            if(e.OrderId==852057){
+                u.SetF(e.OrderAngle,true);
+            }
                   
         }
 
