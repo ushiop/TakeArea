@@ -3,6 +3,11 @@ library XN requires Groups{
     //SSR
     struct XN{ 
 
+        /*
+            20 - 上挑前摇
+            21 - 上挑
+        */
+
         //'A073','B02B' 火种
         static method FIRE_ADD(unit u){//给目标单位添加火种
             Buffs b;
@@ -131,11 +136,16 @@ library XN requires Groups{
         }
 
         static method HERO_START(Spell e){
-
-        }
+            Units u=Units.Get(e.Spell);
+            if(e.Id=='A074'){
+                u.FlushAnimeId(20);
+            }
+            e.Destroy();
+        } 
 
         static method HERO_STOP(Spell e){
-            
+            Units u=Units.Get(e.Spell);
+            e.Destroy();
         }
 
         static method onInit(){
