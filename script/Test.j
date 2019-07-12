@@ -37,13 +37,22 @@ library Test requires Util{
             }
         } 
         if(e.ChatString=="5"){
-            if(p.hero.unit!=null){//对自己造成伤害
+            if(p.hero.unit!=null){//时停自己
                 p.hero.TimeStop(true);
             }
         } 
         if(e.ChatString=="6"){
-            if(p.hero.unit!=null){//对自己造成伤害
+            if(p.hero.unit!=null){//解除自己的时停
                 p.hero.TimeStop(false);
+            }
+        } 
+        if(e.ChatString=="pause"){
+            if(AI_ENABLED==true){
+                AI_ENABLED=false;
+                BJDebugMsg("[-----警告-----]AI已关闭");
+            }else{
+                AI_ENABLED=true;
+                BJDebugMsg("[-----警告-----]AI已开启");
             }
         } 
         if(e.ChatString=="p"){

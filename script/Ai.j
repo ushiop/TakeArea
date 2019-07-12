@@ -10,7 +10,8 @@ library Ai requires Teams,Groups{
     // 无目标: heal  -  hex   - impale - inferno - instant
 
     type AiEventInterface extends function(unit);
-
+    
+    public boolean AI_ENABLED=true;//是否启用AI
 
     function AISpell(unit ua){
         Units u=Units.Get(ua);
@@ -94,24 +95,29 @@ library Ai requires Teams,Groups{
 
 
     function onLoop(){
-        ForForce(Teams.GetAllPlayers(),function(){
-            Players p=Players.Get(GetEnumPlayer());
-            if(p.AI()==true&&p.hero.Alive()){ 
-                AISpell(p.hero.unit);
-            }
-        });
+        if(AI_ENABLED==true){ 
+            ForForce(Teams.GetAllPlayers(),function(){
+                Players p=Players.Get(GetEnumPlayer());
+                if(p.AI()==true&&p.hero.Alive()){ 
+                    AISpell(p.hero.unit);
+                }
+            });
+        }
     }
 
 
     //任意英雄受到伤害
     function onDmg(DamageArgs dmg){
         Units u=dmg.TriggerUnit; 
-        if(u.IsAbility('B012')==false){
-            Buffs.Add(u.unit,'A048','B012',0.1,false);
-            if(u.player.AI()==true){ 
-                AISpell(u.unit);
-            }
-        }       
+        if(AI_ENABLED==true){
+             
+            if(u.IsAbility('B012')==false){
+                Buffs.Add(u.unit,'A048','B012',0.1,false);
+                if(u.player.AI()==true){ 
+                    AISpell(u.unit);
+                }
+            }    
+        }   
         
     }
 
