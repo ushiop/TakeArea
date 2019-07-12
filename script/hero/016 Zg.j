@@ -1097,8 +1097,8 @@ library Zg requires Groups{
                     f=Util.XY(u.unit,e.OrderTargetUnit);
                 } 
                 u.SetF(f,true);
-            } 
-            if(e.OrderId==852057){
+            }  
+            if(u.IsAbility('A062')&&e.OrderId==852057){
                 u.SetF(e.OrderAngle,true);
             }
                   

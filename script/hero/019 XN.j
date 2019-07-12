@@ -8,6 +8,58 @@ library XN requires Groups{
             21 - 上挑
         */
 
+        static method Q(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A074');
+            Dash dash;
+            u.Pause(true);
+            u.AnimeId(21);
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=0.34;//判定帧
+            data.g[0]=CreateGroup();
+            //HitFlys.Add(u.unit,10);
+            dash=Dash.Start(u.unit,e.Angle,100,Dash.SUB,20,true,false);
+            dash.Obj=data;
+            dash.onMove=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]); 
+                Units mj;
+                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",u.unit,"weapon").Destroy();
+                if(data.r[0]>0){
+                    
+                    GroupEnumUnitsInRange(tmp_group,dash.X+80*CosBJ(dash.Angle),dash.Y+80*SinBJ(dash.Angle),80,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        mj=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,mj.unit);
+                        if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                            if(IsUnitInGroup(mj.unit,data.g[0])==false){ 
+                                u.Damage(mj.unit,Damage.Magic,'A074',u.Agi(true)*3);
+                                GroupAddUnit(data.g[0],mj.unit);
+                                HitFlys.Add(mj.unit,13);
+                                Dash.Start(mj.unit,dash.Angle,150,Dash.SUB,10,true,false); 
+                                Effect.ToUnit("Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl",mj.unit,"chest").Destroy();
+                            } 
+                            Buffs.Skill(mj.unit,'A075',1);
+                            
+                            
+                        }  
+                    }
+                    GroupClear(tmp_group);
+                }
+                data.r[0]-=0.01;
+            };
+            dash.onEnd=function(Dash dash){
+                Data data=Data(dash.Obj);
+                Units u=Units(data.c[0]); 
+                Spell(data.c[1]).Destroy();
+                u.DelayReleaseAnimePause(0.3);
+                DestroyGroup(data.g[0]);
+                data.g[0]=null;
+                data.Destroy(); 
+            };
+        }
+
         //'A073','B02B' 火种
         static method FIRE_ADD(unit u){//给目标单位添加火种
             Buffs b;
@@ -154,7 +206,7 @@ library XN requires Groups{
             Events.On(Events.onUnitOrderToUnit,XN.Order);
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
 
-            
+            Spell.On(Spell.onSpell,'A074',XN.Q);    
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
             Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
         }
