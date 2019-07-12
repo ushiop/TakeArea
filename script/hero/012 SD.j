@@ -1048,9 +1048,9 @@ library SD requires Groups{
             if(e.Id=='A03K'){
                 if(e.Dis>200){ 
                     u.FlushAnimeId(2);
-                    u.AnimeSpeed(1.25);  
+                    u.AnimeSpeed(2);  
                     e.Destroy();
-                }else{  
+                }else{   
                     SpellNameText(u.unit,"放置苦无",3,10);
                     u.SetAbilityCD('A03K',1); 
                     u.SetMP(u.MP()-50);
