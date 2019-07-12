@@ -100,6 +100,7 @@ library SD requires Groups{
                 mj.Position(mj.X(),mj.Y(),true);
                 mj.AddAbility(Units.MJType_FZW);
                 if(e.State==e.SpellState){ 
+                    u.AnimeId(20);
                     mj.AddAbility(Units.MJType_TSW);
                     mj.AddAbility('A03Y');
                     mj.SetData(1);
@@ -1008,6 +1009,7 @@ library SD requires Groups{
                                             while(FirstOfGroup(g)!=null){
                                                 mj=Units.Get(FirstOfGroup(g));
                                                 GroupRemoveUnit(g,mj.unit);
+                                                mj.RemoveObj();
                                                 mj.Life(0.5);
                                                 mj.RemoveAbility(Units.MJType_FZW);
                                                 mj.DelayAlpha(255,0,0.45);
@@ -1047,8 +1049,7 @@ library SD requires Groups{
             Dash dash;
             if(e.Id=='A03K'){
                 if(e.Dis>200){ 
-                    u.FlushAnimeId(2);
-                    u.AnimeSpeed(2);  
+                    u.FlushAnimeId(19); 
                     e.Destroy();
                 }else{   
                     SpellNameText(u.unit,"放置苦无",3,10);
@@ -1081,7 +1082,9 @@ library SD requires Groups{
  
         static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
-            u.FlushAnimeId(1);
+            if(e.Id!='A03K'){ 
+                u.FlushAnimeId(1);
+            }
             u.AnimeSpeed(1);
             if(e.Id=='A03M'){
                 u.RemoveAbility('A03N');
