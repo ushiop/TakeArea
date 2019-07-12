@@ -19,13 +19,14 @@ library XN requires Groups{
             data.r[0]=0.34;//判定帧
             data.g[0]=CreateGroup();
             //HitFlys.Add(u.unit,10);
-            dash=Dash.Start(u.unit,e.Angle,100,Dash.SUB,20,true,false);
+            Effect.ToUnit("buff_fire.mdl",u.unit,"weapon").Destroy();
+                
+            dash=Dash.Start(u.unit,e.Angle,150,Dash.SUB,30,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
                 Units mj;
-                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",u.unit,"weapon").Destroy();
                 if(data.r[0]>0){
                     
                     GroupEnumUnitsInRange(tmp_group,dash.X+80*CosBJ(dash.Angle),dash.Y+80*SinBJ(dash.Angle),80,function GroupIsAliveNotAloc);     
@@ -36,13 +37,13 @@ library XN requires Groups{
                             if(IsUnitInGroup(mj.unit,data.g[0])==false){ 
                                 u.Damage(mj.unit,Damage.Magic,'A074',u.Agi(true)*3);
                                 GroupAddUnit(data.g[0],mj.unit);
-                                HitFlys.Add(mj.unit,13);
+                                HitFlys.Add(mj.unit,16);
                                 Dash.Start(mj.unit,dash.Angle,150,Dash.SUB,10,true,false); 
                                 Effect.ToUnit("Abilities\\Weapons\\LordofFlameMissile\\LordofFlameMissile.mdl",mj.unit,"chest").Destroy();
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                XN.FIRE_ADD(mj.unit);
                             } 
-                            Buffs.Skill(mj.unit,'A075',1);
-                            
-                            
+                            Buffs.Skill(mj.unit,'A075',1); 
                         }  
                     }
                     GroupClear(tmp_group);
