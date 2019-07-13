@@ -8,12 +8,63 @@ library XN requires Groups{
             21 - 上挑
         */
 
+        static method Q1(Units u){//一文字
+            /*
+                11 - 一文字
+                0.933 前冲
+                0.167 判定
+            */
+            Buffs b=Buffs.Find(u.unit,'B02C');
+            Data data=Data.create('A074');
+            b.Level=0;
+            b.Stop();
+            u.Pause(true);
+            u.AnimeId(11);
+            u.AnimeSpeed(2);
+            data.c[0]=u;
+            data.c[1]=Effect.ToUnit("buff_fire.mdl",u.unit,"weapon");
+            data.r[0]=0.46;//0.93
+            data.r[1]=0.16;
+            data.i[0]=0;//阶段
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                if(u.Alive()==false){
+                    Effect(data.c[1]).Destroy();
+                    u.AnimeSpeed(1);
+                    u.Pause(false);
+                    t.Destroy();
+                    data.Destroy();
+                }else{ 
+                    if(u.IsTimeStop()==false){
+                        if(data.i[0]==0){
+                            if(data.r[0]<=0){
+                                //前冲
+                                data.i[0]=1;
+                                u.AnimeSpeed(1);
+                                Dash.Start(u.unit,u.F(),100,Dash.SUB,25,true,false);
+
+                            }else{
+                                data.r[0]-=0.01;
+                            }
+                        }else{
+                            if(data.r[1]<=0){
+                                //判定
+                            }else{
+                                data.r[1]-=0.01;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         static method Press(player ps,string k){
             Players p=Players.Get(ps);
             if(k=="Q"){ 
                 if(p.hero.IsAbility('B02C')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false){
                     if(Buffs.Find(p.hero.unit,'B02C').Level==1){ 
-                         
+                        XN.Q1(p.hero);
                     }
                 }
             } 
