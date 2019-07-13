@@ -8,6 +8,17 @@ library XN requires Groups{
             21 - 上挑
         */
 
+        static method Press(player ps,string k){
+            Players p=Players.Get(ps);
+            if(k=="Q"){ 
+                if(p.hero.IsAbility('B02C')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false){
+                    if(Buffs.Find(p.hero.unit,'B02C').Level==1){ 
+                         
+                    }
+                }
+            } 
+        } 
+
         static method Q(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A074');
@@ -20,7 +31,7 @@ library XN requires Groups{
             data.g[0]=CreateGroup();
             //HitFlys.Add(u.unit,10);
             Effect.ToUnit("buff_fire.mdl",u.unit,"weapon").Destroy();
-                
+            Buffs.Add(u.unit,'A076','B02C',5,false).Level=1;
             dash=Dash.Start(u.unit,e.Angle,150,Dash.SUB,30,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
@@ -207,6 +218,7 @@ library XN requires Groups{
             Events.On(Events.onUnitOrderToUnit,XN.Order);
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
 
+            Press.OnSnyc(Press.onSnycPressKeyDown,XN.Press);
             Spell.On(Spell.onSpell,'A074',XN.Q);    
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
             Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  

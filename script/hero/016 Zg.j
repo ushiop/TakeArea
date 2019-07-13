@@ -961,7 +961,7 @@ library Zg requires Groups{
             dash.onEnd=function(Dash dash){
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]);
-                Buffs.Add(u.unit,'A05Z','B01T',5,false);
+                Buffs.Add(u.unit,'A05Z','B01T',5,false).Level=1;
                 Timers.Start(0.2,u,function(Timers t){
                     Units u=Units(t.Data());
                     u.RemoveAbility('A05Y');
