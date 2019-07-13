@@ -8,6 +8,8 @@ library XN requires Groups{
             21 - 上挑
         */
 
+        
+
         static method Q1(Units u){//一文字
             /*
                 11 - 一文字
@@ -21,6 +23,8 @@ library XN requires Groups{
             u.Pause(true);
             u.AnimeId(11);
             u.AnimeSpeed(2);
+            u.SetF(u.F(),true);
+            Order.To(u.unit,"stop");
             data.c[0]=u;
             data.c[1]=Effect.ToUnit("buff_fire.mdl",u.unit,"weapon");
             data.r[0]=0.46;//0.93
@@ -29,6 +33,9 @@ library XN requires Groups{
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
+                real x=u.X(),y=u.Y(),f=u.F(),x1,y1;
+                integer i,o;
+                Units mj;
                 if(u.Alive()==false){
                     Effect(data.c[1]).Destroy();
                     u.AnimeSpeed(1);
@@ -42,14 +49,42 @@ library XN requires Groups{
                                 //前冲
                                 data.i[0]=1;
                                 u.AnimeSpeed(1);
-                                Dash.Start(u.unit,u.F(),100,Dash.SUB,25,true,false);
-
+                                Dash.Start(u.unit,f,100,Dash.SUB,25,true,false);
+                                Units.MJ(u.player.player,'e008','A074',0,x+50*CosBJ(f),y+50*SinBJ(f),f,2.5,1.75,1, "stand","az-xiapi_chengse.mdl");
+                                GroupEnumUnitsInRange(tmp_group,x+200*CosBJ(f),y+200*SinBJ(f),225,function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                        u.Damage(mj.unit,Damage.Chaos,'A074',u.Agi(true)*2);  
+                                        Dash.Start(mj.unit,f,200,Dash.SUB,40,true,false); 
+                                        
+                                        Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy(); 
+                                        XN.FIRE_BOOM(u.unit,mj.unit);  
+                                    }  
+                                }
+                                GroupClear(tmp_group);
+                                //判定 
+                                //az_lina_d2.mdl
+                                for(1<=i<4){
+                                    for(1<=o<3){
+                                        x1=x+(100*i)*CosBJ(f);
+                                        y1=y+(100*i)*SinBJ(f);
+                                        Units.MJ(u.player.player,'e009','A074',0,x1+(o*20)*CosBJ(f-60),y1+(o*20)*SinBJ(f-60),f-60,2.5,2,1, "death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);
+                                        Units.MJ(u.player.player,'e009','A074',0,x1+(o*20)*CosBJ(f+60),y1+(o*20)*SinBJ(f+60),f+60,2.5,2,1, "death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);
+                                
+                                    }
+                                }  
                             }else{
                                 data.r[0]-=0.01;
                             }
                         }else{
-                            if(data.r[1]<=0){
-                                //判定
+                            if(data.r[1]<=0){ 
+                                
+                                u.DelayReleaseAnimePause(0.4);
+                                Effect(data.c[1]).Destroy();
+                                t.Destroy();
+                                data.Destroy();
                             }else{
                                 data.r[1]-=0.01;
                             }
@@ -81,6 +116,9 @@ library XN requires Groups{
             data.r[0]=0.34;//判定帧
             data.g[0]=CreateGroup();
             //HitFlys.Add(u.unit,10);
+            if(u.player.press.D==true){
+                XN.D2(u,e.Angle);
+            }
             Effect.ToUnit("buff_fire.mdl",u.unit,"weapon").Destroy();
             Buffs.Add(u.unit,'A076','B02C',5,false).Level=1;
             dash=Dash.Start(u.unit,e.Angle,150,Dash.SUB,30,true,false);
@@ -123,6 +161,48 @@ library XN requires Groups{
             };
         }
 
+        static method FIRE_BOOM(unit ua,unit ma){//由U引爆M身上的火种
+            Buffs b;
+            Units u=Units.Get(ua),m=Units.Get(ma);  
+            Data data;
+            if(m.IsAbility('B02B')==true){
+                b=Buffs.Find(m.unit,'B02B');
+                data=Data.create('A073');
+                data.c[0]=u;
+                data.c[1]=m;
+                data.i[0]=b.Level;
+                data.r[0]=10;//击飞高度
+                data.r[1]=0.3;//爆炸间隔
+                b.Stop();
+                Timers.Start(0.1,data,function(Timers t){
+                    Data data=Data(t.Data());
+                    Units u=Units(data.c[0]);
+                    Units m=Units(data.c[1]);
+                    if(m.Alive()==false||data.i[0]<=0){
+                        t.Destroy();
+                        data.Destroy();
+                    }else{
+                        t.SetTime(data.r[1]);
+                        data.i[0]-=1;
+                        Buffs.Skill(m.unit,'A00A',1); 
+                        u.Damage(m.unit,Damage.Chaos,'A073',u.Agi(true)*2); 
+                        if(u.GetAbilityCD('A074')!=0){//减少上挑冷却
+                            u.SetAbilityCD('A074',u.GetAbilityCD('A074')-1);
+                        }
+
+                        //视觉效果
+                        HitFlys.Add(m.unit,data.r[0]);
+                        Dash.Start(m.unit,GetRandomReal(0,360),100,Dash.SUB,10,true,false);
+                        Effect.ToUnit("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl",m.unit,"chest").Destroy();
+                        Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",m.unit,"chest").Destroy();
+                        
+                        data.r[0]+=10;
+                        data.r[1]+=0.15;
+                    }
+                });
+            }
+        }
+
         //'A073','B02B' 火种
         static method FIRE_ADD(unit u){//给目标单位添加火种
             Buffs b;
@@ -134,6 +214,44 @@ library XN requires Groups{
                 }
             };
                             
+        }
+
+        static method D2(Units u,real angle){
+            Data data=Data(u.Obj);
+            Units mj;
+            Dash dash;
+            if(GroupNumber(data.g[0])!=0){
+                mj=Units.Get(GroupFirst(data.g[0])); 
+                GroupRemoveUnit(data.g[0],mj.unit); 
+                mj.Position(mj.X(),mj.Y(),true);
+                mj.AddAbility(Units.MJType_TSW);
+                mj.Model("by_wood_effect_yuzhiboyou_fire_haohuoqiu.mdl");
+                mj.Anime("birth");
+                mj.SetF(angle,true); 
+                /*
+                    击退判定
+                */
+                HitFlys.Add(mj.unit,20);
+                dash=Dash.Start(mj.unit,angle,1100,Dash.SUB,75,true,false);
+                dash.onMove=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    if(u.H()<=50){
+                        dash.Stop();
+                    }
+                }; 
+                dash.onEnd=function(Dash dash){
+                    Units u=Units.Get(dash.Unit);
+                    
+                    /*
+                        伤害判定
+                    */
+                    //Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,3,0.7,1, "death","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di__ex.mdl");
+                     
+                    Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,5,1.5,1, "stand","chushou_by_wood_effect_flame_explosion_2.mdl");
+                    u.Anime("death");
+                    u.Life(10);
+                };
+            }
         }
 
         static method D1(Units u,real disx,real disy){
@@ -155,6 +273,8 @@ library XN requires Groups{
                     Buffs b;
                     if(dash.Speed<3){
                         dash.Stop();
+                        Units.MJ(u.player.player,'e009','A072',0,dash.X,dash.Y,dash.Angle,2.5,1.5,1, "death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);
+                    
                     }else{
                         k=GroupFind(u.unit,dash.X+25*CosBJ(dash.Angle),dash.Y+25*SinBJ(dash.Angle),100,true,false);
                         if(k!=null){
@@ -169,6 +289,7 @@ library XN requires Groups{
                 };
                 dash.onEnd=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
+                                        
                     u.Anime("death"); 
                     u.Life(1.5);
                 };
@@ -247,7 +368,7 @@ library XN requires Groups{
                         XN.D1(u,e.OrderAngle,e.OrderDis); 
                     }
                 }
-            } 
+            }   
         }
 
         static method HERO_START(Spell e){
