@@ -16,15 +16,17 @@ library XN requires Groups{
             Data data=Data.create('A077');
             Dash dash;
             Units mj;
+            real x=u.X(),y=u.Y();
             u.Pause(true);
             u.AnimeId(22);
             data.c[0]=u;
             data.c[1]=e;
             if(u.player.press.W==false){//咿呀!
-            
-                Units.MJ(u.player.player,'e009','A077',0,u.X()+200*CosBJ(e.Angle),u.Y()+200*SinBJ(e.Angle),e.Angle+180,3,1.25,3.5, "stand","white-qiquan-new.mdl").SetH(100);               
+                Units.MJ(u.player.player,'e009','A077',0,x+200*CosBJ(e.Angle),y+200*SinBJ(e.Angle),e.Angle,3,1.5,1, "death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);               
                 
-                Units.MJ(u.player.player,'e009','A077',0,u.X()+150*CosBJ(e.Angle),u.Y()+150*SinBJ(e.Angle),e.Angle,3,0.75,2.5, "stand","red-lizi-zhendi-fast.mdl").SetH(100);               
+                Units.MJ(u.player.player,'e009','A077',0,x+200*CosBJ(e.Angle),y+200*SinBJ(e.Angle),e.Angle+180,3,1,3.5, "stand","white-qiquan-new.mdl").SetH(100);               
+                
+                Units.MJ(u.player.player,'e009','A077',0,x+150*CosBJ(e.Angle),y+150*SinBJ(e.Angle),e.Angle,3,0.75,1, "stand","red-lizi-zhendi-fast_ex.mdl").SetH(100);               
                 dash=Dash.Start(u.unit,e.Angle,100,Dash.NORMAL,7.69,true,false);
                 dash.Obj=data;
                 dash.onEnd=function(Dash dash){
