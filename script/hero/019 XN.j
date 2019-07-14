@@ -6,9 +6,38 @@ library XN requires Groups{
         /*
             20 - 上挑前摇
             21 - 上挑
+            19 - 咿呀前摇
+            22 - 咿呀戳刺
+            18 - 咿——呀奔跑
         */
 
-        
+        static method W(Spell e){
+            Units u=Units.Get(e.Spell);
+            Data data=Data.create('A077');
+            Dash dash;
+            Units mj;
+            u.Pause(true);
+            u.AnimeId(22);
+            data.c[0]=u;
+            data.c[1]=e;
+            if(u.player.press.W==false){//咿呀!
+            
+                Units.MJ(u.player.player,'e009','A077',0,u.X()+200*CosBJ(e.Angle),u.Y()+200*SinBJ(e.Angle),e.Angle+180,3,1.25,3.5, "stand","white-qiquan-new.mdl").SetH(100);               
+                
+                Units.MJ(u.player.player,'e009','A077',0,u.X()+150*CosBJ(e.Angle),u.Y()+150*SinBJ(e.Angle),e.Angle,3,0.75,2.5, "stand","red-lizi-zhendi-fast.mdl").SetH(100);               
+                dash=Dash.Start(u.unit,e.Angle,100,Dash.NORMAL,7.69,true,false);
+                dash.Obj=data;
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    u.DelayReleaseAnimePause(0.3);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                };
+            }else{//咿——呀！
+
+            }
+        }
 
         static method Q1(Units u){//一文字
             /*
@@ -154,7 +183,7 @@ library XN requires Groups{
                 Data data=Data(dash.Obj);
                 Units u=Units(data.c[0]); 
                 Spell(data.c[1]).Destroy();
-                u.DelayReleaseAnimePause(0.3);
+                u.DelayReleaseAnimePause(0.15);
                 DestroyGroup(data.g[0]);
                 data.g[0]=null;
                 data.Destroy(); 
@@ -403,13 +432,16 @@ library XN requires Groups{
             if(e.Id=='A074'){
                 u.FlushAnimeId(20);
             }
+            if(e.Id=='A077'){
+                u.FlushAnimeId(19);
+            }
             e.Destroy();
         } 
 
-        static method HERO_STOP(Spell e){
+        /*static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
             e.Destroy();
-        }
+        }*/
 
         static method onInit(){
             Units.On(Units.onHeroSpawn,XN.Spawn);
@@ -419,8 +451,10 @@ library XN requires Groups{
 
             Press.OnSnyc(Press.onSnycPressKeyDown,XN.Press);
             Spell.On(Spell.onSpell,'A074',XN.Q);    
+            Spell.On(Spell.onSpell,'A077',XN.W);    
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
-            Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
+            Spell.On(Spell.onReady,'A077',XN.HERO_START); 
+            //Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
         }
     }
 }
