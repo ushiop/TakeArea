@@ -220,6 +220,7 @@ library XN requires Groups{
             Data data=Data(u.Obj);
             Units mj;
             Dash dash;
+            Units tmp;
             if(GroupNumber(data.g[0])!=0){
                 mj=Units.Get(GroupFirst(data.g[0])); 
                 GroupRemoveUnit(data.g[0],mj.unit); 
@@ -231,6 +232,19 @@ library XN requires Groups{
                 /*
                     击退判定
                 */
+                //Util.Range(u.X()+100*CosBJ(angle),u.Y()+100*SinBJ(angle),200);
+                GroupEnumUnitsInRange(tmp_group,u.X()+100*CosBJ(angle),u.Y()+100*SinBJ(angle),200,function GroupIsAliveNotAloc);     
+                while(FirstOfGroup(tmp_group)!=null){
+                    tmp=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,tmp.unit);
+                    if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
+                        HitFlys.Add(tmp.unit,12.5);
+                        Dash.Start(tmp.unit,angle,950,Dash.SUB,30,true,true);  
+                        Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",tmp.unit,"chest").Destroy();
+
+                    }  
+                }
+                GroupClear(tmp_group);
                 HitFlys.Add(mj.unit,20);
                 dash=Dash.Start(mj.unit,angle,1100,Dash.SUB,75,true,false);
                 dash.onMove=function(Dash dash){
@@ -241,17 +255,30 @@ library XN requires Groups{
                 }; 
                 dash.onEnd=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
-                    
+                    Units tmp;
                     /*
                         伤害判定
                     */
                     //Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,3,0.7,1, "death","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di__ex.mdl");
-                     
-                    Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,5,1.5,1, "stand","chushou_by_wood_effect_flame_explosion_2.mdl");
+                    Util.Range(u.X(),u.Y(),325);
+                    GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);     
+                    while(FirstOfGroup(tmp_group)!=null){
+                        tmp=Units.Get(FirstOfGroup(tmp_group));
+                        GroupRemoveUnit(tmp_group,tmp.unit);
+                        if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
+                            Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",tmp.unit,"chest").Destroy();
+                        
+                            u.Damage(tmp.unit,Damage.Magic,'A072',u.Agi(true)*5);
+                            HitFlys.Add(tmp.unit,25);
+                            Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),400,Dash.SUB,55,true,false);  
+                        }  
+                    }
+                    GroupClear(tmp_group);
+                    Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,5,2,2, "stand","chushou_by_wood_effect_flame_explosion_2.mdl");
                     u.Anime("death");
                     u.Life(10);
                 };
-            }
+            } 
         }
 
         static method D1(Units u,real disx,real disy){
