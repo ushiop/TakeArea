@@ -16,7 +16,7 @@ library Ichigo requires Groups{
                 y1=GetUnitY(target);   
 
                 if(u.player.lv10!=null){
-                    if(GetRandomInt(0,3)==0&&u.IsTimeStop()==false&&u.IsAbility('BPSE')==false&&u.IsPause()==false){
+                    if(GetRandomInt(0,1)==0&&u.IsTimeStop()==false&&u.IsAbility('BPSE')==false&&u.IsPause()==false){
                         Ichigo.Q(u.unit,Util.XY2EX(x,y,x1,y1),Util.XYEX(x,y,x1,y1)); 
                     }
                 } 
@@ -265,6 +265,13 @@ library Ichigo requires Groups{
             data.c[0]=u;
             data.c[1]=mj;
             data.g[0]=CreateGroup();
+            if(e.State==Spell.SpellState){
+                BJDebugMsg("66");
+                data.r[0]=u.Agi(true)*6;
+            }else{
+                BJDebugMsg("22");
+                data.r[0]=u.Agi(true)*2;
+            }
             dash=Dash.Start(mj.unit,f,1600,Dash.SUB,100,true,false);
             dash.Obj=data;
             dash.onMove=function(Dash dash){
@@ -280,7 +287,7 @@ library Ichigo requires Groups{
                         GroupRemoveUnit(tmp_group,mj.unit);
                         if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){ 
                             //伤害和减速 
-                            u.Damage(mj.unit,Damage.Magic,'A06U',u.Agi(true)*6); 
+                            u.Damage(mj.unit,Damage.Magic,'A06U',data.r[0]); 
                             Units.MJ(u.player.player,'e008','A06U',0,mj.X()+120*CosBJ(mj.F()+180),mj.Y()+120*SinBJ(mj.F()+180),mj.F(),3,1,2,"death","yytc.mdl"); 
                             GroupAddUnit(data.g[0],mj.unit);
                         }  
@@ -401,7 +408,7 @@ library Ichigo requires Groups{
             if(e.Id=='A06U'){
                 if(u.IsAbility('B027')==true){
                     u.SetMP(u.MP()-100);
-                    u.SetAbilityCD('A06U',5); 
+                    u.SetAbilityCD('A06U',0.1); 
                     u.DelayAlpha(0,255,2);
                     mj=Units.MJ(u.player.player,'e008','A06U',0,u.X(),u.Y(),e.Angle,1,u.modelsize,2.5, "stand",u.model);
                     mj.AnimeId(13);
