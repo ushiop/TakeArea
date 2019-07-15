@@ -766,7 +766,7 @@ library BigZZ requires Groups{
                             unit k; 
                             Dash dash1;
                             Data data1,data2;
-                            if(u.IsAbility('B019')==true){
+                            if(u.IsAbility('B019')==true&&u.IsAbility('BPSE')==false){
                                 if(u.player.isai==true){//如果是AI
                                     dash.MaxSpeed=20;
                                     k=GroupFind(u.unit,dash.X,dash.Y,1200,true,false);
