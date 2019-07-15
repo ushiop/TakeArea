@@ -521,7 +521,7 @@ library XN requires Groups{
                         
                             u.Damage(tmp.unit,Damage.Magic,'A072',u.Agi(true)*5);
                             HitFlys.Add(tmp.unit,25);
-                            //Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),400,Dash.SUB,55,true,false);  
+                            Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),200,Dash.SUB,55,true,false);  
                         }  
                     }
                     GroupClear(tmp_group);
