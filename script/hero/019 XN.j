@@ -511,7 +511,7 @@ library XN requires Groups{
                         伤害判定
                     */
                     //Units.MJ(u.player.player,'e008','A072',0,dash.X,dash.Y,dash.Angle,3,0.7,1, "death","by_wood_effect_yuzhiboyou_fire_babangouyu_2_di__ex.mdl");
-                    Util.Range(u.X(),u.Y(),325);
+                    //Util.Range(u.X(),u.Y(),325);
                     GroupEnumUnitsInRange(tmp_group,u.X(),u.Y(),300,function GroupIsAliveNotAloc);     
                     while(FirstOfGroup(tmp_group)!=null){
                         tmp=Units.Get(FirstOfGroup(tmp_group));
@@ -521,7 +521,7 @@ library XN requires Groups{
                         
                             u.Damage(tmp.unit,Damage.Magic,'A072',u.Agi(true)*5);
                             HitFlys.Add(tmp.unit,25);
-                            Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),400,Dash.SUB,55,true,false);  
+                            //Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),400,Dash.SUB,55,true,false);  
                         }  
                     }
                     GroupClear(tmp_group);
