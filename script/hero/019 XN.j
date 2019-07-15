@@ -443,7 +443,7 @@ library XN requires Groups{
 
                         //视觉效果
                         HitFlys.Add(m.unit,data.r[0]);
-                        Dash.Start(m.unit,GetRandomReal(0,360),100,Dash.SUB,10,true,false);
+                        //Dash.Start(m.unit,GetRandomReal(0,360),100,Dash.SUB,10,true,false);
                         Effect.ToUnit("Abilities\\Spells\\Items\\AIfb\\AIfbSpecialArt.mdl",m.unit,"chest").Destroy();
                         Effect.ToUnit("by_wood_effect_yuzhiboyou_fire_fengxianhuo_2.mdl",m.unit,"chest").Destroy();
                         
