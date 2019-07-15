@@ -29,7 +29,49 @@ library XN requires Groups{
                 Units.MJ(u.player.player,'e009','A077',0,x+150*CosBJ(e.Angle),y+150*SinBJ(e.Angle),e.Angle,3,0.75,1, "stand","red-lizi-zhendi-fast_ex.mdl").SetH(100);               
                 dash=Dash.Start(u.unit,e.Angle,100,Dash.NORMAL,7.69,true,false);
                 dash.Obj=data;
-                dash.onEnd=function(Dash dash){
+                data.i[0]=0;//判定标记
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    Units mj;
+                    if(data.i[0]==0){
+                        data.i[0]=1; 
+                        //-------近处判定
+                        //Util.Range(dash.X+75*CosBJ(dash.Angle),dash.Y+75*SinBJ(dash.Angle),100);
+                        GroupEnumUnitsInRange(tmp_group,dash.X+75*CosBJ(dash.Angle),dash.Y+75*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                u.Damage(mj.unit,Damage.Chaos,'A077',u.Agi(true)*10);  
+                                Dash.Start(mj.unit,dash.Angle,200,Dash.SUB,15,true,false); 
+                                Buffs.Skill(mj.unit,'A00W',1);
+                                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy(); 
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                XN.FIRE_ADD(mj.unit);
+                            }  
+                        }
+                        GroupClear(tmp_group);
+                        //------远处判定 
+                        //Util.Range(dash.X+250*CosBJ(dash.Angle),dash.Y+250*SinBJ(dash.Angle),75);
+                        GroupEnumUnitsInRange(tmp_group,dash.X+250*CosBJ(dash.Angle),dash.Y+250*SinBJ(dash.Angle),75,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                u.Damage(mj.unit,Damage.Chaos,'A077',u.Agi(true)*10);  
+                                Dash.Start(mj.unit,dash.Angle,100,Dash.SUB,10,true,false); 
+                                Buffs.Skill(mj.unit,'A00W',1);
+                                Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
+                                
+                                Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy(); 
+                                XN.FIRE_ADD(mj.unit);
+                            }  
+                        }
+                        GroupClear(tmp_group); 
+                    }
+                };
+                dash.onEnd=function(Dash dash){ 
                     Data data=Data(dash.Obj);
                     Units u=Units(data.c[0]);
                     u.DelayReleaseAnimePause(0.3);
