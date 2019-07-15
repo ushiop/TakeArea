@@ -17,15 +17,14 @@ library XN requires Groups{
             Dash dash;
             Units mj;
             real x=u.X(),y=u.Y();
-            u.Pause(true);
-            u.AnimeId(22);
             data.c[0]=u;
             data.c[1]=e;
             if(u.player.press.W==false){//咿呀!
+            
+                u.Pause(true);
+                u.AnimeId(22);
                 Units.MJ(u.player.player,'e009','A077',0,x+200*CosBJ(e.Angle),y+200*SinBJ(e.Angle),e.Angle,3,1.5,1, "death","Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl").SetH(100);               
-                
                 Units.MJ(u.player.player,'e009','A077',0,x+200*CosBJ(e.Angle),y+200*SinBJ(e.Angle),e.Angle+180,3,1,3.5, "stand","white-qiquan-new.mdl").SetH(100);               
-                
                 Units.MJ(u.player.player,'e009','A077',0,x+150*CosBJ(e.Angle),y+150*SinBJ(e.Angle),e.Angle,3,0.75,1, "stand","red-lizi-zhendi-fast_ex.mdl").SetH(100);               
                 dash=Dash.Start(u.unit,e.Angle,100,Dash.NORMAL,7.69,true,false);
                 dash.Obj=data;
@@ -79,7 +78,55 @@ library XN requires Groups{
                     data.Destroy();
                 };
             }else{//咿——呀！
+                mj=Units.MJ(u.player.player,'e008','A077',0,x,y,e.Angle,86400,u.modelsize,1, "stand",u.model);
+                mj.AnimeId(18);
+                mj.AddAbility(TeamTips_Ability_Id[u.player.teamid]);  
+                data.c[2]=mj;
+                data.c[3]=Effect.ToUnit("buff_fire.mdl",u.unit,"weapon");
+                data.r[0]=0.1;//特效间隔
+                u.Alpha(0);
+                SetUnitTurnSpeed(u.unit,0.1);
+                dash=Dash.Start(u.unit,u.F(),800,Dash.NORMAL,6,true,false);                               
+                dash.Obj=data;
+                dash.onMove=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]);
+                    Units ts=Units(data.c[2]);
+                    dash.Angle=u.F();
+                    ts.SetF(dash.Angle,true);
+                    ts.Position(dash.X,dash.Y,false);
+                    if(u.player.press.W==false||u.IsAbility('BPSE')==true){
+                        dash.Stop();
+                    }else{
+                        //戳人判定
+                    }
+                    if(data.r[0]<=0){
+                        data.r[0]=0.1;
+                        Effect.To("Abilities\\Weapons\\AncientProtectorMissile\\AncientProtectorMissile.mdl",dash.X,dash.Y).Destroy();
+                    }else{
+                        data.r[0]-=0.01;
+                    }
+                };
+                dash.onEnd=function(Dash dash){
+                    Data data=Data(dash.Obj);
+                    Units u=Units(data.c[0]); 
+                    u.Pause(true);
+                    u.AnimeId(22); 
+                    u.Alpha(255); 
+                    SetUnitTurnSpeed(u.unit,0.5);
+                    Order.To(u.unit,"stop");
+                    if(1==1){//如果戳到人
 
+                    }else{//如果没戳到人
+                        u.DelayReleaseAnimePause(1);
+                        Dash.Start(u.unit,u.F(),300,Dash.SUB,15,true,false);
+                    } 
+                    Effect(data.c[3]).Destroy();
+                    Units(data.c[2]).Alpha(0);
+                    Units(data.c[2]).Life(0.5);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                };
             }
         }
 
