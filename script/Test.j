@@ -6,11 +6,18 @@ library Test requires Util{
         integer PlayerEscAnimeId[];//玩家自定义值，记录测试播放动作的
         real RangeDis[];//玩家特效距离
         real RangeR[];//玩家特效范围
+        unit SelectUnits[];//玩家选择的单位
+    }
+
+
+    function Select(EventArgs e){
+        SelectUnits[Players.Get(e.TriggerPlayer).playerid]=e.TriggerUnit;
     }
 
     //指令
     function Chat(EventArgs e){
         Players p=Players.Get(e.TriggerPlayer);
+        Units u;
         if(e.ChatString=="-reset"){
             PlayerEscAnimeId[p.playerid]=0;
             BJDebugMsg("动作序号已重置");
@@ -46,6 +53,11 @@ library Test requires Util{
                 p.hero.TimeStop(false);
             }
         } 
+        if(e.ChatString=="info"){
+            u=Units.Get(SelectUnits[p.playerid]);
+            BJDebugMsg("------------单位信息---------");
+            BJDebugMsg("名字:"+u.name+"/是否处于硬直:"+Util.B2S(u.IsPause())+"/是否处于时停:"+Util.B2S(u.IsTimeStop()));
+        }
         if(e.ChatString=="pause"){
             if(AI_ENABLED==true){
                 AI_ENABLED=false;
@@ -108,6 +120,7 @@ library Test requires Util{
   
     function onInit(){
         Events.On(Events.onPlayerPressEsc,Esc);
-        Events.On(Events.onPlayerChat,Chat);
+        Events.On(Events.onPlayerChat,Chat); 
+        Events.On(Events.onPlayerSelectUnit,Select);
     }
 }   
