@@ -147,6 +147,12 @@ library Ichigo requires Groups{
             });
         }
 
+        static method AddDamage(DamageArgs e){
+            if(e.TriggerUnit.IsAbility('B02D')==true){
+                e.Damage+=e.Damage;
+            }
+        }
+
         static method Attack(DamageArgs e){
             Buffs b;
             if(e.DamageType==Damage.Attack){ 
@@ -324,6 +330,7 @@ library Ichigo requires Groups{
                 mp=50;
             }
             if(u.MP()>=mp){//发动成功
+                Buffs.Add(u.unit,'A079','B02D',1,false);
                 if(dis>1000){
                     if(dis>2000){
                         speed=dis/4;
@@ -440,6 +447,8 @@ library Ichigo requires Groups{
         static method onInit(){ 
             Units.On(Units.onHeroSpawn,Ichigo.Spawn);
             Damage.On(Damage.onUnitDamage_EndDamage,Ichigo.Attack); 
+            Damage.On(Damage.onUnitDamage_AddDamage,Ichigo.AddDamage); 
+            
             Spell.On(Spell.onSpell,'A070',Ichigo.D);
             Spell.On(Spell.onSpell,'A06Y',Ichigo.R);
             Spell.On(Spell.onSpell,'A06U',Ichigo.W);
