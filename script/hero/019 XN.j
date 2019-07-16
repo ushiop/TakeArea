@@ -518,7 +518,7 @@ library XN requires Groups{
                         GroupRemoveUnit(tmp_group,tmp.unit);
                         if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
                             Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",tmp.unit,"chest").Destroy();
-                        
+                            Buffs.Skill(tmp.unit,'A00W',1);
                             u.Damage(tmp.unit,Damage.Magic,'A072',u.Agi(true)*5);
                             HitFlys.Add(tmp.unit,25);
                             Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),200,Dash.SUB,55,true,false);  
