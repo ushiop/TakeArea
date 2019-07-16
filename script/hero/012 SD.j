@@ -109,7 +109,7 @@ library SD requires Groups{
                     data=Data.create('A03K');
                     data.c[0]=u;
                     data.g[0]=CreateGroup();
-                    dash=Dash.Start(mj.unit,e.Angle,1600,Dash.SUB,30,true,false);
+                    dash=Dash.Start(mj.unit,e.Angle,2400,Dash.SUB,30,true,false);
                     dash.Obj=data;
                     dash.onMove=function(Dash dash){
                         Data data=Data(dash.Obj);
@@ -232,7 +232,10 @@ library SD requires Groups{
                                         mj=Units.Get(FirstOfGroup(tmp_group));
                                         GroupRemoveUnit(tmp_group,mj.unit);
                                         if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                            mj.Position(dash.X,dash.Y,true);           
+                                            mj.Position(dash.X,dash.Y,true);    
+                                            if(dash.NowDis<=300){
+                                                Buffs.Add(mj.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;
+                                            }       
                                         }
                                     }  
                                     GroupClear(tmp_group); 
@@ -279,12 +282,12 @@ library SD requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                    if(Util.XY2(mj.unit,Units(data.c[2]).unit)<100){
+                                    if(Util.XY2(mj.unit,Units(data.c[2]).unit)<150){
                                         mj.Position(mj.X(),mj.Y(),true);
                                         u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*1.0);
                                         Buffs.Add(mj.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;
                                     }else{ 
-                                        Dash.Start(mj.unit,Util.XY(mj.unit,Units(data.c[2]).unit),50,Dash.SUB,10,true,false);
+                                        Dash.Start(mj.unit,Util.XY(mj.unit,Units(data.c[2]).unit),70,Dash.SUB,20,true,false);
                                     }               
                                 }
                             }  
@@ -384,7 +387,7 @@ library SD requires Groups{
                                 GroupRemoveUnit(tmp_group,tmp.unit);
                                 if(IsUnitEnemy(tmp.unit,f.player.player)==true){   
                                     tmp.Position(dash.X,dash.Y,true);
-                                    if(dash.NowDis<=200){
+                                    if(dash.NowDis<=300){
                                         Buffs.Add(tmp.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;       
                                     }
                                 }
@@ -574,7 +577,7 @@ library SD requires Groups{
             Dash dash; 
             if(e.OrderId==851971){ 
                 if(u.IsAbility('A03I')==true&&u.IsAbility('B00V')==false){
-                    range=150,dis=999999999;//选取范围，最近距离
+                    range=200,dis=999999999;//选取范围，最近距离
                     ft=-1;//发动的飞雷神类型
                     if(e.OrderTargetUnit==null){//点击的地方
                         x=e.OrderTargetX,y=e.OrderTargetY;
@@ -851,13 +854,13 @@ library SD requires Groups{
                         Buffs.Add(u.unit,'A03U','B00V',cd,false); 
                         if(u.IsAbility('B00W')==false){
                             u.Alpha(0);
-                            b=Buffs.Add(u.unit,'A03V','B00W',0.2,false); 
+                            b=Buffs.Add(u.unit,'A03V','B00W',0.3,false); 
                             b.onEnd=function(Buffs b){
                                 Units u=Units.Get(b.Unit);
                                 u.DelayAlpha(0,255,0.5); 
                             };
                         }else{
-                            Buffs.Add(u.unit,'A03V','B00W',0.2,false);
+                            Buffs.Add(u.unit,'A03V','B00W',0.3,false);
                         }
                     }
                 }
