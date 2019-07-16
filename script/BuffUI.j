@@ -191,7 +191,9 @@ library BuffUI requires BzAPI,Buff{
         }
 
         static method onTip(){
-            YDWEDisplayChat( DzGetTriggerSyncPlayer(), 1, DzGetTriggerSyncData() );
+            if(IsPlayerAlly(GetLocalPlayer(),DzGetTriggerSyncPlayer())==true){ 
+                YDWEDisplayChat( DzGetTriggerSyncPlayer(), 1, DzGetTriggerSyncData() );
+            }
         }
 
         static method onInit(){ 
