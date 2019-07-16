@@ -240,6 +240,7 @@ library Mogu requires Groups{
                 if(u.player.isai==true){
                     press=true;
                 }
+                press=true;
                 if(u.Alive()==false||press==false||u.IsAbility('BPSE')==true||data.r[0]<=0||u.IsTimeStop()==true||u.IsAbility('B026')==true){
                     Units(data.c[2]).Life(0.1);
                     Units(data.c[3]).Anime("death");
@@ -274,6 +275,8 @@ library Mogu requires Groups{
                             } 
                             GroupClear(tmp_group); 
                         }
+                    }else{
+                        u.Pause(false);
                     }
                     /*if(data.r[2]>1){
                         Units.MJ(u.player.player,'e008','A06M',0,x,y,0,5,1.8,2, "stand","az_kaer_t1.mdl");
