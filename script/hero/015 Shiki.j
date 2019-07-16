@@ -659,6 +659,11 @@ library Shiki requires Groups{
                 }
                
             }
+            if(e.TriggerUnit.IsAbility('B01D')==true){      
+                if(e.TriggerUnit.player.isai==true&&GetRandomInt(0,1)==0){
+                    Shiki.Press(e.TriggerUnit.player.player,"Q");  
+                }
+            } 
         } 
 
         //A05M B01K
