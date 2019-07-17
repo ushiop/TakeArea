@@ -11,6 +11,11 @@ library XN requires Groups{
             18 - 咿——呀奔跑
         */
 
+        static method E(Spell e){
+            Units u=Units.Get(e.Spell);
+            u.FlushAnimeId(5);
+        }
+
         static method W(Spell e){
             Units u=Units.Get(e.Spell);
             Data data=Data.create('A077');
@@ -659,14 +664,18 @@ library XN requires Groups{
             }
             if(e.Id=='A07B'){
                 u.FlushAnimeId(9);
+                u.AnimeSpeed(0.5);
             }
             e.Destroy();
         } 
 
-        /*static method HERO_STOP(Spell e){
+        static method HERO_STOP(Spell e){
             Units u=Units.Get(e.Spell);
+            if(e.Id=='A07B'){
+                u.AnimeSpeed(1);
+            }
             e.Destroy();
-        }*/
+        }
 
         static method onInit(){
             Units.On(Units.onHeroSpawn,XN.Spawn);
@@ -675,12 +684,13 @@ library XN requires Groups{
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
 
             Press.OnSnyc(Press.onSnycPressKeyDown,XN.Press);
+            Spell.On(Spell.onSpell,'A07B',XN.E);    
             Spell.On(Spell.onSpell,'A074',XN.Q);    
             Spell.On(Spell.onSpell,'A077',XN.W);    
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
             Spell.On(Spell.onReady,'A077',XN.HERO_START); 
             Spell.On(Spell.onReady,'A07B',XN.HERO_START); 
-            //Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
+            Spell.On(Spell.onStop,'A07B',XN.HERO_STOP);  
         }
     }
 }
