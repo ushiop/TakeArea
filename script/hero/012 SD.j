@@ -833,6 +833,7 @@ library SD requires Groups{
                                 //mj.SetData(4); 可以无限次触发飞雷神
                                 dmg=u.Agi(true)*0.5;
                                 kwt=1;
+                                cd=0.2;
                                 BJDebugMsg("--飞行飞雷神");
                             }
                             
