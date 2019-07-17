@@ -100,6 +100,7 @@ library SD requires Groups{
                 mj.Position(mj.X(),mj.Y(),true);
                 mj.AddAbility(Units.MJType_FZW);
                 if(e.State==e.SpellState){ 
+                    Buffs.Add(u.unit,'A07A','B02E',0.2,false);
                     u.AnimeId(20);
                     mj.AddAbility(Units.MJType_TSW);
                     mj.AddAbility('A03Y');
@@ -277,12 +278,12 @@ library SD requires Groups{
                             //Util.Duang(x,y,0.8,250,250,-32,0.02,50);
                             //牵引阶段，5次伤害
                             Util.Duang(x,y,0.3,150,150,-48,0.02,50);
-                            GroupEnumUnitsInRange(tmp_group,x,y,250,function GroupIsAliveNotAloc);     
+                            GroupEnumUnitsInRange(tmp_group,x,y,300,function GroupIsAliveNotAloc);     
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                    if(Util.XY2(mj.unit,Units(data.c[2]).unit)<150){
+                                    if(Util.XY2(mj.unit,Units(data.c[2]).unit)<=150){
                                         mj.Position(mj.X(),mj.Y(),true);
                                         u.Damage(mj.unit,Damage.Magic,'A03M',u.Agi(true)*1.0);
                                         Buffs.Add(mj.unit,'A03O','B00U',86400,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_FALSE;
@@ -565,8 +566,8 @@ library SD requires Groups{
         //飞雷神 851971 右键
         static method Q(EventArgs e){
             Units u=Units.Get(e.TriggerUnit);
-            real x,y,dis,range,cd,f;
-            integer ft;
+            real x,y,dis,range,cd,f,dmg;
+            integer ft,kwt;
             unit target,tmp;
             Buffs b;
             Units mj,tmp1;
@@ -713,7 +714,7 @@ library SD requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                    u.Damage(mj.unit,Damage.Physics,'A03I',u.Agi(true)*5.0); 
+                                    u.Damage(mj.unit,Damage.Chaos,'A03I',u.Agi(true)*5.0); 
                                     Buffs.Skill(mj.unit,'A00F',1);  
                                     Effect.ToUnit("hiteffect10white_ex.mdl",mj.unit,"origin").Destroy();
                                 }
@@ -732,8 +733,8 @@ library SD requires Groups{
                                     mj=Units.Get(FirstOfGroup(tmp_group));
                                     GroupRemoveUnit(tmp_group,mj.unit);
                                     if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                        u.Damage(mj.unit,Damage.Physics,'A03I',u.Agi(true)*10.0); 
-                                        Buffs.Skill(mj.unit,'A00W',1);  
+                                        u.Damage(mj.unit,Damage.Magic,'A03I',u.Agi(true)*10.0); 
+                                        Buffs.Skill(mj.unit,'A00F',1);  
                                         Effect.ToUnit("hiteffect10white_ex.mdl",mj.unit,"origin").Destroy();
                                         Dash.Start(mj.unit,Util.XY(target,mj.unit),450,Dash.SUB,30,true,false);
                                     }
@@ -748,6 +749,7 @@ library SD requires Groups{
                                     GroupRemoveUnit(tmp_group,mj.unit);
                                     if(IsUnitEnemy(mj.unit,u.player.player)==true){   
                                         u.Damage(mj.unit,Damage.Chaos,'A03I',u.Agi(true)*5.0);  
+                                        Buffs.Skill(mj.unit,'A00F',1); 
                                         Effect.ToUnit("hiteffect10white_ex.mdl",mj.unit,"origin").Destroy();
                                         Dash.Start(mj.unit,Util.XY(target,mj.unit),300,Dash.SUB,25,true,true);
                                     }
@@ -819,14 +821,21 @@ library SD requires Groups{
                             mj=Units.Get(target);
                             if(mj.Data()==0){//等于0表示掉地上了
                                 Units.Remove(target);
+                                dmg=u.Agi(true)*3.0;
+                                if(u.IsAbility('B00T')==false){ 
+                                    Buffs.Add(u.unit,'A03L','B00T',86400,false);
+                                }else{
+                                    Buffs.Add(u.unit,'A03L','B00T',86400,false).Level+=1;
+                                } 
+                                kwt=0;
+                                BJDebugMsg("--地上飞雷神");
                             }else{//仍在飞行
-                                mj.SetData(4);
+                                //mj.SetData(4); 可以无限次触发飞雷神
+                                dmg=u.Agi(true)*0.5;
+                                kwt=1;
+                                BJDebugMsg("--飞行飞雷神");
                             }
-                            if(u.IsAbility('B00T')==false){ 
-                                Buffs.Add(u.unit,'A03L','B00T',86400,false);
-                            }else{
-                                Buffs.Add(u.unit,'A03L','B00T',86400,false).Level+=1;
-                            } 
+                            
                             
                             u.SetF(f,true);
                             u.Position(x1,y1,false); 
@@ -836,7 +845,10 @@ library SD requires Groups{
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){   
-                                    u.Damage(mj.unit,Damage.Physics,'A03I',u.Agi(true)*3.0); 
+                                    u.Damage(mj.unit,Damage.Physics,'A03I',dmg); 
+                                    if(kwt==0){
+                                        Buffs.Skill(mj.unit,'A00W',1);
+                                    }
                                     Effect.ToUnit("hiteffect10white_ex.mdl",mj.unit,"origin").Destroy();
                                 }
                             }  
@@ -1052,12 +1064,18 @@ library SD requires Groups{
             Dash dash;
             if(e.Id=='A03K'){
                 if(e.Dis>200){ 
-                    u.FlushAnimeId(19); 
-                    e.Destroy();
+                    if(u.IsAbility('B02E')==true){ 
+                        u.SetMP(u.MP()-25);
+                        e.State=Spell.SpellState;
+                        SD.W(e);
+                    }else{
+                        u.FlushAnimeId(19); 
+                        e.Destroy();
+                    } 
                 }else{   
                     SpellNameText(u.unit,"放置苦无",3,10);
                     u.SetAbilityCD('A03K',1); 
-                    u.SetMP(u.MP()-50);
+                    u.SetMP(u.MP()-25);
                     SD.W(e);
                 } 
             } 
