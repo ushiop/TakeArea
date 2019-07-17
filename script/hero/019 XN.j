@@ -657,6 +657,9 @@ library XN requires Groups{
             if(e.Id=='A077'){
                 u.FlushAnimeId(19);
             }
+            if(e.Id=='A07B'){
+                u.FlushAnimeId(9);
+            }
             e.Destroy();
         } 
 
@@ -676,6 +679,7 @@ library XN requires Groups{
             Spell.On(Spell.onSpell,'A077',XN.W);    
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
             Spell.On(Spell.onReady,'A077',XN.HERO_START); 
+            Spell.On(Spell.onReady,'A07B',XN.HERO_START); 
             //Spell.On(Spell.onStop,'A074',XN.HERO_STOP);  
         }
     }
