@@ -749,8 +749,7 @@ library Shiki requires Groups{
                             Buffs.Find(u.unit,'B01J').Stop();
                             u.SetAbilityCD('A05O',20);
                             e=Spell.UseSpell(u.unit,'A05O',Spell.SpellState);
-                            e.Angle=u.F();
-                            SpellNameText(u.unit,"关灯杀",3,10);
+                            e.Angle=u.F(); 
                             Shiki.R(e);
 
                         }
