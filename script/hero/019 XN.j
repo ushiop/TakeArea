@@ -10,10 +10,147 @@ library XN requires Groups{
             22 - 咿呀戳刺
             18 - 咿——呀奔跑
         */
+        static method Attack(DamageArgs e){
+            if(e.DamageType==Damage.Attack){
+                if(e.DamageUnit.IsAbility('B02G')==true){
+                    Dash.Start(e.TriggerUnit.unit,Util.XY(e.DamageUnit.unit,e.TriggerUnit.unit),50,Dash.SUB,20,true,true);
+                    Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",e.TriggerUnit.unit,"chest").Destroy();
+                                
+                }
+            }
+        }
+
+        static method E1(Units u){
+            Buffs b;
+            Units mj;
+            if(u.IsAbility('B02H')==true){
+                BJDebugMsg("引爆！");
+                b=Buffs.Find(u.unit,'B02H');
+                b.Level=0;
+                mj=Units(b.Obj); 
+                b.Stop();
+                u.Pause(true);
+                u.AnimeId(11);
+                u.AnimeSpeed(2);
+                u.DelayReleaseAnimePause(0.4);
+                u.SetF(Util.XY(u.unit,mj.unit),true);
+                mj.SetData(-10);
+            }
+        }
 
         static method E(Spell e){
             Units u=Units.Get(e.Spell);
-            u.FlushAnimeId(5);
+            Data data=Data.create('A07B');
+            Units mj;
+            real x=u.X(),y=u.Y();
+            u.FlushAnimeId(5); 
+            Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,3,1,1, "stand","!huobao.mdl");
+            mj=Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,86400,1,1, "stand",".mdl");
+            mj.SetData(300);//3/0.01,3秒    
+            mj.Position(e.X,e.Y,true);
+            mj.AddAbility(Units.MJType_FZW);
+            Buffs.Add(u.unit,'A07E','B02H',2,false).Obj=mj;
+            data.c[0]=u;
+            data.c[1]=e;
+            data.c[2]=mj;//火阵本体
+            mj=Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,86400,1,3, "stand","orboffire.mdl");
+            mj.SetH(100);
+            mj.Alpha(0);
+            data.c[3]=mj;//外圈环绕
+            mj=Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,86400,1,3, "stand","orboffire.mdl");
+            mj.SetH(100);
+            mj.Alpha(0);
+            data.c[4]=mj;//内圈环绕
+            mj=Units.MJ(u.player.player,'e008','A07B',0,e.X+500*CosBJ(0),e.Y+500*SinBJ(0),0,86400,1,1, "stand","orboffire.mdl");
+            mj.SetH(100);
+            mj.Alpha(0);
+            data.c[5]=mj;//五角星环绕
+            data.r[0]=0.5;//伤害/减速间隔
+            data.r[1]=0.07;//五角星间隔
+            data.r[2]=0;//五角星角度
+            data.r[3]=0;//五角星旋转角度
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                Units fz=Units(data.c[2]);
+                Units mj; 
+                real x=fz.X(),y=fz.Y();
+                if(fz.Data()<=0){
+                    if(fz.Data()==-10){//被引爆了
+                        //Units.MJ(u.player.player,'e008','A07B',0,x,y,0,3,2,1, "stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");   
+                        Units.MJ(u.player.player,'e008','A07B',0,x,y,0,3,2,1, "stand","fire-boom-new.mdl");   
+                        Units.MJ(u.player.player,'e008','A07B',0,x,y,GetRandomReal(0,360),3,2.5,1, "stand","chushou_by_wood_effect_fire_flamecrack.mdl");   
+                        GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                u.Damage(mj.unit,Damage.Chaos,'A07B',u.Agi(true)*10);    
+                                Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,30,true,false); 
+                                HitFlys.Add(mj.unit,15);
+                                Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
+                                XN.FIRE_BOOM(u.unit,mj.unit);
+                            } 
+                        }
+                        GroupClear(tmp_group); 
+                        Util.Duang(x,y,0.3,500,500,-168,0.1,250);
+                        if(u.GetAbilityCD('A07B')!=0){//火阵冷却-50%
+                            u.SetAbilityCD('A07B',u.GetAbilityCD('A07B')*0.5);
+                        }
+                        /*
+                            火碎冷却-50%
+                        */
+                    } 
+                    fz.Anime("death");
+                    fz.Life(5);
+                    Units.MJ(u.player.player,'e008','A07B',0,x,y,0,3,3,1, "death","orboffire.mdl").SetH(50); 
+                    Units.MJ(u.player.player,'e008','A07B',0,x,y,120,3,3,1, "death","orboffire.mdl").SetH(50); 
+                    Units.MJ(u.player.player,'e008','A07B',0,x,y,240,3,3,1, "death","orboffire.mdl").SetH(50);
+            
+                    Units(data.c[3]).Anime("death");
+                    Units(data.c[3]).Life(5); 
+                    Units(data.c[3]).Position(x,y,false);
+                    Units(data.c[4]).Anime("death");
+                    Units(data.c[4]).Life(5);   
+                    Units(data.c[4]).Position(x,y,false);
+                    Units(data.c[5]).Anime("death");
+                    Units(data.c[5]).Life(5);  
+                    Units(data.c[5]).Position(x,y,false);
+                    Spell(data.c[1]).Destroy();
+                    data.Destroy();
+                    t.Destroy();
+                }else{
+                    fz.SetData(fz.Data()-1);
+                    mj=Units(data.c[3]);
+                    mj.Position(x+500*CosBJ(Util.XY(fz.unit,mj.unit)+7),y+500*SinBJ(Util.XY(fz.unit,mj.unit)+7),false);
+                    mj=Units(data.c[4]);
+                    mj.Position(x+500*CosBJ(Util.XY(fz.unit,mj.unit)-7),y+500*SinBJ(Util.XY(fz.unit,mj.unit)-7),false);
+                    mj=Units(data.c[5]); 
+                    mj.Position(x+500*CosBJ(data.r[2]+data.r[3]),y+500*SinBJ(data.r[2]+data.r[3]),false);
+                    data.r[1]-=0.01;
+                    data.r[0]-=0.01;
+                    data.r[3]+=0.3; 
+                    if(data.r[0]<=0){//减速/伤害间隔
+                        data.r[0]=0.5;
+                        GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                Buffs.Add(mj.unit,'A07C','B02F',0.5,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                            }
+                            if(mj.IsAbility('A07B')==true){
+                                Buffs.Add(mj.unit,'A07D','B02G',0.5,false);
+                            }
+                        }
+                        GroupClear(tmp_group);
+                    }
+                    if(data.r[1]<=0){
+                        data.r[1]=0.07;
+                        data.r[2]+=144;
+                    }
+                }
+            });
         }
 
         static method W(Spell e){
@@ -40,7 +177,7 @@ library XN requires Groups{
                     Units mj;
                     if(data.i[0]==0){
                         data.i[0]=1; 
-                        //-------近处判定
+                        //-------近处判定2
                         //Util.Range(dash.X+75*CosBJ(dash.Angle),dash.Y+75*SinBJ(dash.Angle),100);
                         GroupEnumUnitsInRange(tmp_group,dash.X+75*CosBJ(dash.Angle),dash.Y+75*SinBJ(dash.Angle),100,function GroupIsAliveNotAloc);     
                         while(FirstOfGroup(tmp_group)!=null){
@@ -138,7 +275,7 @@ library XN requires Groups{
                     if(data.i[0]==1){//如果戳到人
                         data.r[0]=0;//戳人判定的间隔,0.2
                         data.i[0]=0;//第1次和第4次分开判断
-                        dash1=Dash.Start(u.unit,u.F(),600,Dash.NORMAL,5,true,false);
+                        dash1=Dash.Start(u.unit,u.F(),500,Dash.NORMAL,5,true,false);
                         dash1.Obj=data;
                         dash1.onMove=function(Dash dash){
                             Data data=Data(dash.Obj);
@@ -169,7 +306,7 @@ library XN requires Groups{
                                                 Buffs.Skill(mj.unit,'A075',1);
                                                 Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy(); 
                                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
-                                                XN.FIRE_ADD(mj.unit);
+                                                //XN.FIRE_ADD(mj.unit);
                                             }  
                                         }
                                         GroupClear(tmp_group);
@@ -223,7 +360,7 @@ library XN requires Groups{
                                         Dash.Start(mj.unit,dash.Angle,300,Dash.SUB,60,true,false);
                                         mj=Units.MJ(u.player.player,'e009','A077',0,x,y,dash.Angle+180,3,1,3.5, "stand","white-qiquan-new.mdl");
                                         mj.SetH(100);
-                                        Dash.Start(mj.unit,dash.Angle,600,Dash.SUB,40,true,false);        
+                                        Dash.Start(mj.unit,dash.Angle,500,Dash.SUB,40,true,false);        
                                         Dash.Start(u.unit,dash.Angle,400,Dash.SUB,60,true,false);
                                         GroupEnumUnitsInRange(tmp_group,x+35*CosBJ(dash.Angle),y+35*SinBJ(dash.Angle),130,function GroupIsAliveNotAloc);     
                                         while(FirstOfGroup(tmp_group)!=null){
@@ -359,6 +496,13 @@ library XN requires Groups{
                     }
                 }
             } 
+            if(k=="E"){
+                if(p.hero.IsAbility('B02H')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false&&p.hero.IsTimeStop()==false){
+                    if(Buffs.Find(p.hero.unit,'B02H').Level==1){
+                        XN.E1(p.hero);
+                    }
+                }
+            }
         } 
 
         static method Q(Spell e){
@@ -444,6 +588,9 @@ library XN requires Groups{
                         u.Damage(m.unit,Damage.Chaos,'A073',u.Agi(true)*2); 
                         if(u.GetAbilityCD('A074')!=0){//减少上挑冷却
                             u.SetAbilityCD('A074',u.GetAbilityCD('A074')-1);
+                        }
+                        if(u.GetAbilityCD('A077')!=0){//减少咿呀冷却
+                            u.SetAbilityCD('A077',u.GetAbilityCD('A077')-1);
                         }
 
                         //视觉效果
@@ -683,6 +830,7 @@ library XN requires Groups{
             Events.On(Events.onUnitOrderToUnit,XN.Order);
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
 
+            Damage.On(Damage.onUnitDamage_EndDamage,XN.Attack); 
             Press.OnSnyc(Press.onSnycPressKeyDown,XN.Press);
             Spell.On(Spell.onSpell,'A07B',XN.E);    
             Spell.On(Spell.onSpell,'A074',XN.Q);    
