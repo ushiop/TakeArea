@@ -330,7 +330,9 @@ library Ichigo requires Groups{
                 mp=50;
             }
             if(u.MP()>=mp){//发动成功
-                Buffs.Add(u.unit,'A079','B02D',1,false);
+                Buffs.Add(u.unit,'A079','B02D',1,false).Level+=1;
+                mp+=Buffs.Find(u.unit,'B02D').Level*2;
+                BJDebugMsg(I2S(Buffs.Find(u.unit,'B02D').Level));
                 if(dis>1000){
                     if(dis>2000){
                         speed=dis/4;
