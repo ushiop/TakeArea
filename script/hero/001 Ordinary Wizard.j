@@ -25,15 +25,15 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 Units u=Units.Get(e.Spell); 
                 if(dash.DashType==Dash.PWX){
                     if(data.r[0]<700){
-                        data.r[0]=data.r[0]+8;
-                        dash.Angle=dash.Angle+8;
+                        data.r[0]=data.r[0]+16;
+                        dash.Angle=dash.Angle+16;
                         if(data.r[0]>300){ 
                             u.SetH(1000*Util.GetPwx(3.99,data.r[0]-400,1400));
                             u.SetF(dash.Angle,true);
                         } 
                     }else{ 
                         dash.Angle=Util.XYEX(dash.X,dash.Y,e.X,e.Y);
-                        data.r[1]=Util.XY2EX(dash.X,dash.Y,e.X,e.Y);
+                        data.r[1]=Util.XY2EX(dash.X,dash.Y,e.X,e.Y)+200;
                         dash.NowDis=0;
                         dash.MaxDis=data.r[1];
                         dash.MaxSpeed=130;
