@@ -183,7 +183,7 @@ library XN requires Groups{
             real x=u.X(),y=u.Y();
             u.FlushAnimeId(5); 
             Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,3,1,1, "stand","!huobao.mdl");
-            mj=Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,86400,1,1, "stand",".mdl");
+            mj=Units.MJ(u.player.player,'e008','A07B',666,e.X,e.Y,0,86400,1,1, "stand",".mdl");
             mj.SetData(500);//5/0.01,5秒    
             mj.Position(e.X,e.Y,true);
             mj.AddAbility(Units.MJType_FZW);
