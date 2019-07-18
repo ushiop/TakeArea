@@ -184,10 +184,10 @@ library XN requires Groups{
             u.FlushAnimeId(5); 
             Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,3,1,1, "stand","!huobao.mdl");
             mj=Units.MJ(u.player.player,'e008','A07B',0,e.X,e.Y,0,86400,1,1, "stand",".mdl");
-            mj.SetData(300);//3/0.01,3秒    
+            mj.SetData(500);//5/0.01,5秒    
             mj.Position(e.X,e.Y,true);
             mj.AddAbility(Units.MJType_FZW);
-            Buffs.Add(u.unit,'A07E','B02H',2,false).Obj=mj;
+            Buffs.Add(u.unit,'A07E','B02H',3,false).Obj=mj;
             data.c[0]=u;
             data.c[1]=e;
             data.c[2]=mj;//火阵本体
@@ -224,7 +224,7 @@ library XN requires Groups{
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 u.Damage(mj.unit,Damage.Chaos,'A07B',u.Agi(true)*10);    
-                                Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,30,true,false); 
+                                Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),600-Util.XY2EX(x,y,mj.X(),mj.Y()),Dash.SUB,30,true,false); 
                                 HitFlys.Add(mj.unit,15);
                                 Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
                                 XN.FIRE_BOOM(u.unit,mj.unit);
@@ -374,7 +374,7 @@ library XN requires Groups{
                 u.Alpha(0); 
                 u.AddAbility('A078');
                 SetUnitTurnSpeed(u.unit,0.1);
-                dash=Dash.Start(u.unit,u.F(),800,Dash.NORMAL,6,true,false);                               
+                dash=Dash.Start(u.unit,u.F(),1600,Dash.NORMAL,10,true,false);                               
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
