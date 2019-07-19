@@ -10,8 +10,63 @@ library XN requires Groups{
         */
 
         static method F(Spell e){
-            Units u=Units.Get(e.Spell);
-            BJDebugMsg(Util.B2S(u.player.press.F));
+            Units u=Units.Get(e.Spell); 
+            Data data=Data.create('A07I');
+            u.Pause(true);
+            u.AnimeId(17);
+            /*
+                火阵强化
+                第一次爆炸与减速
+            */
+            data.c[0]=u;
+            data.c[1]=e;
+            data.r[0]=3;//地面火焰的持续时间
+            data.r[1]=0;//按住F的持续时间
+            data.r[2]=u.X();//中心点
+            data.r[3]=u.Y();//中心点
+            data.i[0]=1;//处于第一次硬直
+            Timers.Start(0.01,data,function(Timers t){
+                Data data=Data(t.Data());
+                Units u=Units(data.c[0]);
+                integer xy=0;
+                if(data.r[0]<=0){
+                    BJDebugMsg("火碎-地面结束");
+                    if(data.i[0]==1){
+                        
+                        BJDebugMsg("火碎-眩晕至结束");
+                        u.AnimeId(18);
+                        u.DelayReleaseAnimePause(0.3);
+                    }
+                    data.Destroy();
+                    t.Destroy();
+                }else{
+                    data.r[0]-=0.01;
+                    data.r[1]+=0.01;
+                    if(u.player.press.F==true){
+                        if(data.i[0]==1){//没松开过F 
+                            if(u.IsTimeStop()==false){ 
+                                xy=1;//按住了F，眩晕
+                            }
+                        }
+                    }else{
+                        if(data.i[0]==1){
+                            BJDebugMsg("松开F");
+                            u.AnimeId(18);
+                            u.DelayReleaseAnimePause(0.3);
+                            data.i[0]=0;
+                            if(data.r[1]<=0.5){
+                                BJDebugMsg("小于0.5秒，提前结束火碎");
+                                data.r[0]=0;
+                            }
+                        }
+                        
+                    }
+                    /*
+                        地面灼烧伤害
+                    */
+                    
+                }
+            });
         }
 
         static method R(Spell e){
