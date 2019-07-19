@@ -12,23 +12,53 @@ library XN requires Groups{
         static method F(Spell e){
             Units u=Units.Get(e.Spell); 
             Data data=Data.create('A07I');
+            real x=u.X(),y=u.Y();
+            Units mj;
             u.Pause(true);
             u.AnimeId(17);
+            GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsFZW);     
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,mj.unit);
+                if(mj.aid=='A07B'&&mj.aidindex==666){
+                    mj.aidindex=0;
+                    mj.SetData(mj.Data()+200);
+                } 
+            }
+            GroupClear(tmp_group); 
             /*
-                火阵强化
-                第一次爆炸与减速
-            */
+                火阵强化 
+            */  
+            Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1,1, "stand","by_wood_effect_yuzhiboyou_fire_babangouyu_1_kong.mdl").SetH(150);
+            Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,2.5,1, "stand","chushou_by_wood_effect_fire_flamecrack.mdl");
+            Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1,1, "stand","boom-huo.mdl");
+            GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+            while(FirstOfGroup(tmp_group)!=null){
+                mj=Units.Get(FirstOfGroup(tmp_group));
+                GroupRemoveUnit(tmp_group,mj.unit);
+                if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                    Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
+                    Buffs.Add(mj.unit,'A07J','B02J',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;        
+                    u.Damage(mj.unit,Damage.Magic,'A07I',u.Agi(true)*20);     
+                    XN.FIRE_BOOM(u.unit,mj.unit);
+                } 
+            }
+            GroupClear(tmp_group); 
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=3;//地面火焰的持续时间
             data.r[1]=0;//按住F的持续时间
-            data.r[2]=u.X();//中心点
-            data.r[3]=u.Y();//中心点
+            data.r[2]=x;//中心点
+            data.r[3]=y;//中心点
+            data.r[4]=0;//伤害/特效间隔 0.3s
+            data.r[5]=0;//特效旋转角度
             data.i[0]=1;//处于第一次硬直
             Timers.Start(0.01,data,function(Timers t){
                 Data data=Data(t.Data());
                 Units u=Units(data.c[0]);
-                integer xy=0;
+                integer xy=0,i;
+                real x=data.r[2],y=data.r[3];
+                Units mj;
                 if(data.r[0]<=0){
                     BJDebugMsg("火碎-地面结束");
                     if(data.i[0]==1){
@@ -57,13 +87,61 @@ library XN requires Groups{
                             if(data.r[1]<=0.5){
                                 BJDebugMsg("小于0.5秒，提前结束火碎");
                                 data.r[0]=0;
+                                Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1.5,1, "death","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");                  
+                                Util.Duang(x,y,0.5,500,500,-120,0.05,100);    
+                                GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+                                while(FirstOfGroup(tmp_group)!=null){
+                                    mj=Units.Get(FirstOfGroup(tmp_group));
+                                    GroupRemoveUnit(tmp_group,mj.unit);
+                                    if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                        Buffs.Skill(mj.unit,'A00W',1);
+                                        HitFlys.Add(mj.unit,25);
+                                        Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),600-Util.XY2EX(x,y,mj.X(),mj.Y()),Dash.SUB,30,true,false); 
+                                        Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
+                                        u.Damage(mj.unit,Damage.Chaos,'A07I',u.Agi(true)*3);     
+                                         
+                                    } 
+                                }
+                                GroupClear(tmp_group); 
                             }
-                        }
-                        
+                        } 
                     }
-                    /*
-                        地面灼烧伤害
-                    */
+                    if(data.r[4]<=0){
+                        data.r[4]=0.3; 
+                        /*
+                            地面灼烧伤害
+                        */
+                        GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+                        while(FirstOfGroup(tmp_group)!=null){
+                            mj=Units.Get(FirstOfGroup(tmp_group));
+                            GroupRemoveUnit(tmp_group,mj.unit);
+                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                if(xy==1){ 
+                                    Buffs.Skill(mj.unit,'A00W',1);
+                                } 
+                                if(Util.XY2EX(x,y,mj.X(),mj.Y())<200){
+                                    Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,20,true,false); 
+                                }else{
+                                    Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),300,Dash.SUB,20,true,false); 
+                                }
+                                Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
+                                u.Damage(mj.unit,Damage.Chaos,'A07I',u.Agi(true)*1);      
+                            } 
+                        }
+                        GroupClear(tmp_group); 
+                        for(0<i<=4){
+                            mj=Units.MJ(u.player.player,'e008','A07I',0,x+50*CosBJ(i*90+data.r[5]),y+50*SinBJ(i*90+data.r[5]),i*90+data.r[5],3,GetRandomReal(2.5,3.5),1, "death","orboffire.mdl");
+                            mj.SetH(50);
+                            Dash.Start(mj.unit,mj.F(),600,Dash.SUB,25,true,false).onMove=function(Dash dash){
+                                dash.Angle+=GetRandomReal(5,7);
+                                Units.Get(dash.Unit).SetF(dash.Angle,true);
+                            }; 
+                        }
+                        Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1.4,1, "stand","chushou_by_wood_effect_fire_flamecrack.mdl"); 
+                        data.r[5]+=15; 
+                    }else{
+                        data.r[4]-=0.01;
+                    }
                     
                 }
             });
@@ -172,7 +250,21 @@ library XN requires Groups{
                                         /*
                                             火碎处理
                                         */
-                                        
+                                        x=u.X(),y=u.Y();
+                                        Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1.5,1, "stand","az_kaer_t1.mdl"); 
+                                         
+                                        HitFlys.Add(u.unit,-50);
+                                        GroupEnumUnitsInRange(tmp_group,x,y,500,function GroupIsAliveNotAloc);     
+                                        while(FirstOfGroup(tmp_group)!=null){
+                                            mj=Units.Get(FirstOfGroup(tmp_group));
+                                            GroupRemoveUnit(tmp_group,mj.unit);
+                                            if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                                Buffs.Skill(mj.unit,'A075',1);  
+                                                u.Damage(mj.unit,Damage.Chaos,'A07I',u.Agi(true)*7);   
+                                                Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),Util.XY2(mj.unit,u.unit),Dash.SUB,25,true,false);   
+                                            } 
+                                        }
+                                        GroupClear(tmp_group); 
                             BJDebugMsg("转火碎结束");
                                         u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')*0.3);
                                         u.Pause(false);
@@ -272,6 +364,7 @@ library XN requires Groups{
                 Units u=Units(data.c[0]);
                 Units fz=Units(data.c[2]);
                 Units mj; 
+                integer i;
                 real x=fz.X(),y=fz.Y();
                 if(fz.Data()<=0){
                     if(fz.Data()==-10){//被引爆了
@@ -297,10 +390,7 @@ library XN requires Groups{
                         }
                         if(u.GetAbilityCD('A07I')!=0){//火碎冷却-50%
                             u.SetAbilityCD('A07I',u.GetAbilityCD('A07I')*0.5);
-                        }
-                        /*
-                            火碎冷却-50%
-                        */
+                        } 
                     } 
                     fz.Anime("death");
                     fz.Life(5);
@@ -339,14 +429,25 @@ library XN requires Groups{
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 Buffs.Add(mj.unit,'A07C','B02F',0.5,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                if(fz.aidindex==0){
+                                    u.Damage(mj.unit,Damage.Magic,'A07B',mj.MaxHP()*0.005);    
+                                    Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy(); 
+                                   
+                                }
                             }
                             if(mj.IsAbility('A07B')==true){
                                 Buffs.Add(mj.unit,'A07D','B02G',0.5,false);
                             }
                         }
                         GroupClear(tmp_group);
+                        
                     }
                     if(data.r[1]<=0){
+                        if(fz.aidindex==0){ 
+                            for(0<i<=15){
+                                Effect.To("Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl",x+GetRandomReal(0,450)*CosBJ(GetRandomReal(0,360)),y+GetRandomReal(0,450)*SinBJ(GetRandomReal(0,360))).Delay(0.2);
+                            }
+                        }
                         data.r[1]=0.07;
                         data.r[2]+=144;
                     }
@@ -562,6 +663,8 @@ library XN requires Groups{
                                                     }  
                                                 }
                                                 GroupClear(tmp_group);
+                                                
+                                                Buffs.Find(u.unit,'B02I').Level=0;
                                                 Buffs.Find(u.unit,'B02I').Stop();
                                             }
                                         }
@@ -732,6 +835,17 @@ library XN requires Groups{
                             XN.R(e);
                         }
                         
+                    }
+                }
+            } 
+            if(k=="F"){
+                if(p.hero.IsAbility('A07G')==true&&p.hero.IsAbility('BPSE')==false){
+                    if(p.hero.GetAbilityCD('A07I')==0){
+                        p.hero.RemoveAbility('A07G');
+                        p.hero.SetMP(p.hero.MP()-300);
+                        p.hero.SetAbilityCD('A07I',30);
+                        e=Spell.UseSpell(p.hero.unit,'A07I',Spell.SpellState);
+                        XN.F(e);
                     }
                 }
             }
