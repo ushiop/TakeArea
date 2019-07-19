@@ -1006,7 +1006,7 @@ library XN requires Groups{
                     if(u.H()<=50){
                         dash.Stop();
                     }
-                }; 
+                };  
                 dash.onEnd=function(Dash dash){
                     Units u=Units.Get(dash.Unit);
                     Units tmp;
