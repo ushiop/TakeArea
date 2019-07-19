@@ -4,10 +4,15 @@ library XN requires Groups{
     struct XN{ 
 
         /* 
-            5  飞燕前摇 
-            13 飞燕上挑
-            14 飞燕下劈
+            16 火碎前摇
+            17 火碎释放
+            18 火碎结束
         */
+
+        static method F(Spell e){
+            Units u=Units.Get(e.Spell);
+            BJDebugMsg(Util.B2S(u.player.press.F));
+        }
 
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
@@ -234,6 +239,9 @@ library XN requires Groups{
                         Util.Duang(x,y,0.3,500,500,-168,0.1,250);
                         if(u.GetAbilityCD('A07B')!=0){//火阵冷却-50%
                             u.SetAbilityCD('A07B',u.GetAbilityCD('A07B')*0.5);
+                        }
+                        if(u.GetAbilityCD('A07I')!=0){//火碎冷却-50%
+                            u.SetAbilityCD('A07I',u.GetAbilityCD('A07I')*0.5);
                         }
                         /*
                             火碎冷却-50%
@@ -764,6 +772,9 @@ library XN requires Groups{
                         if(u.GetAbilityCD('A07F')!=0){//减少飞焰冷却
                             u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')-1);
                         }
+                        if(u.GetAbilityCD('A07I')!=0){//减少火碎冷却
+                            u.SetAbilityCD('A07I',u.GetAbilityCD('A07I')-1);
+                        }
                         //视觉效果
                         HitFlys.Add(m.unit,data.r[0]);
                         //Dash.Start(m.unit,GetRandomReal(0,360),100,Dash.SUB,10,true,false);
@@ -982,6 +993,9 @@ library XN requires Groups{
             }
             if(e.Id=='A07F'){
                 u.FlushAnimeId(5);
+            } 
+            if(e.Id=='A07I'){
+                u.FlushAnimeId(16);
             }
             if(e.Id=='A07B'){
                 u.FlushAnimeId(9);
@@ -1006,10 +1020,12 @@ library XN requires Groups{
 
             Damage.On(Damage.onUnitDamage_EndDamage,XN.Attack); 
             Press.OnSnyc(Press.onSnycPressKeyDown,XN.Press);
+            Spell.On(Spell.onSpell,'A07I',XN.F);    
             Spell.On(Spell.onSpell,'A07F',XN.R);    
             Spell.On(Spell.onSpell,'A07B',XN.E);    
             Spell.On(Spell.onSpell,'A074',XN.Q);    
             Spell.On(Spell.onSpell,'A077',XN.W);    
+            Spell.On(Spell.onReady,'A07I',XN.HERO_START); 
             Spell.On(Spell.onReady,'A07F',XN.HERO_START); 
             Spell.On(Spell.onReady,'A074',XN.HERO_START); 
             Spell.On(Spell.onReady,'A077',XN.HERO_START); 
