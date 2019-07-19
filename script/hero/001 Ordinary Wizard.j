@@ -25,8 +25,8 @@ library OrdinaryWizard requires Units,Spells,Dashs,Buff,Groups{
                 Units u=Units.Get(e.Spell); 
                 if(dash.DashType==Dash.PWX){
                     if(data.r[0]<700){
-                        data.r[0]=data.r[0]+16;
-                        dash.Angle=dash.Angle+16;
+                        data.r[0]=data.r[0]+10;
+                        dash.Angle=dash.Angle+10;
                         if(data.r[0]>300){ 
                             u.SetH(1000*Util.GetPwx(3.99,data.r[0]-400,1400));
                             u.SetF(dash.Angle,true);
