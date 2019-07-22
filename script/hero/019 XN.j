@@ -8,6 +8,8 @@ library XN requires Groups{
             17 火碎释放
             18 火碎结束
         */
+        
+        static integer Sound;
 
         static method F(Spell e){
             Units u=Units.Get(e.Spell); 
@@ -84,8 +86,8 @@ library XN requires Groups{
                             u.AnimeId(18);
                             u.DelayReleaseAnimePause(0.3);
                             data.i[0]=0;
-                            if(data.r[1]<=0.5){
-                                BJDebugMsg("小于0.5秒，提前结束火碎");
+                            if(data.r[1]<=0.3){
+                                BJDebugMsg("小于0.3秒，提前结束火碎");
                                 data.r[0]=0;
                                 Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1.5,1, "death","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");                  
                                 Util.Duang(x,y,0.5,500,500,-120,0.05,100);    
@@ -94,7 +96,7 @@ library XN requires Groups{
                                     mj=Units.Get(FirstOfGroup(tmp_group));
                                     GroupRemoveUnit(tmp_group,mj.unit);
                                     if(IsUnitEnemy(mj.unit,u.player.player)==true){  
-                                        Buffs.Skill(mj.unit,'A00W',1);
+                                        Buffs.Skill(mj.unit,'A075',1);
                                         HitFlys.Add(mj.unit,25);
                                         Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),600-Util.XY2EX(x,y,mj.X(),mj.Y()),Dash.SUB,30,true,false); 
                                         Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
@@ -118,12 +120,15 @@ library XN requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                 if(xy==1){ 
                                     Buffs.Skill(mj.unit,'A00W',1);
-                                } 
-                                if(Util.XY2EX(x,y,mj.X(),mj.Y())<200){
-                                    Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,20,true,false); 
-                                }else{
-                                    Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),300,Dash.SUB,20,true,false); 
-                                }
+                                    if(Util.XY2EX(x,y,mj.X(),mj.Y())<200){
+                                        Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),300,Dash.SUB,20,true,false); 
+                                    }else{
+                                        Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),300,Dash.SUB,20,true,false); 
+                                    }
+                                    if(data.r[1]>=2){
+                                        XN.FIRE_ADD(mj.unit);
+                                    }
+                                }  
                                 Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
                                 u.Damage(mj.unit,Damage.Chaos,'A07I',u.Agi(true)*1);      
                             } 
@@ -221,7 +226,7 @@ library XN requires Groups{
                                                     u.Damage(mj.unit,Damage.Chaos,'A07F',u.Agi(true)*15);     
                                                     Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),100,Dash.SUB,10,true,false);
                                                     Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
-                                                    XN.FIRE_BOOM(u.unit,mj.unit);
+                                                    //XN.FIRE_BOOM(u.unit,mj.unit);
                                                     s+=1;
                                                 } 
                                             }
@@ -376,6 +381,7 @@ library XN requires Groups{
                             mj=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){  
+                                Buffs.Skill(mj.unit,'A07K',1);
                                 u.Damage(mj.unit,Damage.Chaos,'A07B',u.Agi(true)*10);    
                                 Dash.Start(mj.unit,Util.XYEX(x,y,mj.X(),mj.Y()),600-Util.XY2EX(x,y,mj.X(),mj.Y()),Dash.SUB,30,true,false); 
                                 HitFlys.Add(mj.unit,15);
@@ -444,8 +450,8 @@ library XN requires Groups{
                     }
                     if(data.r[1]<=0){
                         if(fz.aidindex==0){ 
-                            for(0<i<=15){
-                                Effect.To("Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl",x+GetRandomReal(0,450)*CosBJ(GetRandomReal(0,360)),y+GetRandomReal(0,450)*SinBJ(GetRandomReal(0,360))).Delay(0.2);
+                            for(0<i<=10){
+                                Effect.To("Abilities\\Spells\\Orc\\LiquidFire\\Liquidfire.mdl",x+GetRandomReal(0,450)*CosBJ(GetRandomReal(0,360)),y+GetRandomReal(0,450)*SinBJ(GetRandomReal(0,360))).Delay(0.2);
                             }
                         }
                         data.r[1]=0.07;
@@ -810,14 +816,14 @@ library XN requires Groups{
             Players p=Players.Get(ps);
             Spell e;
             if(k=="Q"){ 
-                if(p.hero.IsAbility('B02C')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false){
+                if(p.hero.IsAbility('B02C')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false&&p.hero.IsAbility('A078')==false){
                     if(Buffs.Find(p.hero.unit,'B02C').Level==1){ 
                         XN.Q1(p.hero);
                     }
                 }
             } 
             if(k=="E"){
-                if(p.hero.IsAbility('B02H')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false&&p.hero.IsTimeStop()==false){
+                if(p.hero.IsAbility('B02H')==true&&p.hero.IsPause()==false&&p.hero.IsAbility('BPSE')==false&&p.hero.IsTimeStop()==false&&p.hero.IsAbility('A078')==false){
                     if(Buffs.Find(p.hero.unit,'B02H').Level==1){
                         XN.E1(p.hero);
                     }
@@ -864,7 +870,8 @@ library XN requires Groups{
             //HitFlys.Add(u.unit,10);
             if(u.player.press.D==true){
                 XN.D2(u,e.Angle);
-            }
+            } 
+            RunSoundOnUnit(XN.Sound,u.unit);
             Effect.ToUnit("buff_fire.mdl",u.unit,"weapon").Destroy();
             Buffs.Add(u.unit,'A076','B02C',5,false).Level=1;
             dash=Dash.Start(u.unit,e.Angle,150,Dash.SUB,30,true,false);
@@ -1021,7 +1028,7 @@ library XN requires Groups{
                         GroupRemoveUnit(tmp_group,tmp.unit);
                         if(IsUnitEnemy(tmp.unit,u.player.player)==true){  
                             Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",tmp.unit,"chest").Destroy();
-                            Buffs.Skill(tmp.unit,'A00W',1);
+                            Buffs.Skill(tmp.unit,'A075',1);
                             u.Damage(tmp.unit,Damage.Magic,'A072',u.Agi(true)*5);
                             HitFlys.Add(tmp.unit,25);
                             Dash.Start(tmp.unit,Util.XY(u.unit,tmp.unit),200,Dash.SUB,55,true,false);  
@@ -1094,6 +1101,16 @@ library XN requires Groups{
                     Units mj;
                     real x=u.X(),y=u.Y(),f,a=0;
                     if(u.Alive()==true){
+                        if(u.IsAbility('A078')==true){
+                            if(data.u[0]!=null){ 
+                                Units.Kill(data.u[0]); 
+                                data.u[0]=null; 
+                            }
+                        }else{
+                            if(data.u[0]==null){
+                                data.u[0]=Units.MJ(u.player.player,'e00P','A072',0,0,0,0,86400,1,1,"two",".mdl").unit;
+                            }
+                        }
                         if(data.r[0]<=0){ 
                             data.r[0]=5; 
                             if(GroupNumber(data.g[0])<2){
@@ -1123,6 +1140,10 @@ library XN requires Groups{
                         GroupClear(tmp_group);
                     }else{
                         BJDebugMsg("没了");
+                        if(data.u[0]!=null){
+                            Units.Kill(data.u[0]);
+                            data.u[0]=null;
+                        }
                         GroupAddGroup(data.g[0],tmp_group);  
                         while(FirstOfGroup(tmp_group)!=null){
                             mj=Units.Get(FirstOfGroup(tmp_group));   
@@ -1183,6 +1204,7 @@ library XN requires Groups{
 
         static method onInit(){
             Units.On(Units.onHeroSpawn,XN.Spawn);
+            XN.Sound= DefineSound("resource\\sound_effect_misc_28.wav",1000, false, true);//Q的攻击
             
             Events.On(Events.onUnitOrderToUnit,XN.Order);
             Events.On(Events.onUnitOrderToLocation,XN.Order); 
