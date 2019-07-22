@@ -1183,7 +1183,7 @@ library XN requires Groups{
                 u.FlushAnimeId(20);
             }
             if(e.Id=='A07F'){
-                u.FlushAnimeId(5);
+                u.FlushAnimeId(25);
             } 
             if(e.Id=='A07I'){
                 u.FlushAnimeId(16);
