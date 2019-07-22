@@ -985,7 +985,8 @@ library XN requires Groups{
             if(GroupNumber(data.g[0])!=0){
                 mj=Units.Get(GroupFirst(data.g[0])); 
                 GroupRemoveUnit(data.g[0],mj.unit); 
-                mj.Position(mj.X(),mj.Y(),true);
+
+                mj.Position(u.X(),u.Y(),true);
                 mj.AddAbility(Units.MJType_TSW);
                 mj.Model("by_wood_effect_yuzhiboyou_fire_haohuoqiu.mdl");
                 mj.Anime("birth");
@@ -1166,8 +1167,8 @@ library XN requires Groups{
             Units u=Units.Get(e.TriggerUnit);   
             if(e.OrderId==Order.Attack){//是A键  
                 if(u.IsAbility('A072')==true){//是夏娜 
-                    if(u.IsAbility('BPSE')==false){ 
-                        XN.D1(u,e.OrderAngle,e.OrderDis); 
+                    if(u.IsAbility('BPSE')==false){//没眩晕 
+                        XN.D1(u,e.OrderAngle,e.OrderDis);  
                     }
                 }
             }   
