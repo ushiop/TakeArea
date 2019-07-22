@@ -98,7 +98,7 @@ library Ai requires Teams,Groups{
         if(AI_ENABLED==true){ 
             ForForce(Teams.GetAllPlayers(),function(){
                 Players p=Players.Get(GetEnumPlayer());
-                if(p.AI()==true&&p.hero.Alive()){ 
+                if(p.AI()==true&&p.hero.Alive()&&p.hero.IsTimeStop()==false&&p.hero.IsPause()==false){ 
                     AISpell(p.hero.unit);
                 }
             });
@@ -113,7 +113,7 @@ library Ai requires Teams,Groups{
              
             if(u.IsAbility('B012')==false){
                 Buffs.Add(u.unit,'A048','B012',0.1,false);
-                if(u.player.AI()==true){ 
+                if(u.player.AI()==true&&u.Alive()&&u.IsTimeStop()==false&&u.IsPause()==false){ 
                     AISpell(u.unit);
                 }
             }    
