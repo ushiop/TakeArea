@@ -47,7 +47,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
         }); 
 
  
-        /*测试*/
+        /*测试
 
         for(0<=i<=5){
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
@@ -55,11 +55,11 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
         } 
  
         //JAPI测试异步 
-        /*BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
+        BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 
         open_code_run_logs(true);*/
 
         SetTimeOfDay(6.0);//设置游戏时间为夜晚
         
-        Cheat("exec-lua:init");
+        //Cheat("exec-lua:init");
     }
 }
