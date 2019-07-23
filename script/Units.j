@@ -606,10 +606,7 @@ library Units requires Table,Players,Events,Util{
             }
 
             //返回X坐标
-            method X()->real{
-                if(GetUnitX(this.unit)==0.00){
-                    BJDebugMsg("【----坐标错误-----】单位："+this.name+"/存活:"+Util.B2S(this.Alive()));
-                }
+            method X()->real{ 
                 return GetUnitX(this.unit);
             }
  
@@ -877,10 +874,7 @@ library Units requires Table,Players,Events,Util{
 
         //摧毁指定单位 实例
         private static method Destroys(unit u){
-            Units ud=Units.ht[u];  
-            /*if(ud.Obj!=0){
-                BJDebugMsg("【---警告---】单位携带的OBJ没有清空，名字:"+ud.name);
-            } */
+            Units ud=Units.ht[u];   
             ud.unit=null; 
             ud.deallocate();
             Units.ht.flush(u);

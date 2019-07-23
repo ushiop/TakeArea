@@ -62,10 +62,10 @@ library XN requires Groups{
                 real x=data.r[2],y=data.r[3];
                 Units mj;
                 if(data.r[0]<=0){
-                    BJDebugMsg("火碎-地面结束");
+                    //BJDebugMsg("火碎-地面结束");
                     if(data.i[0]==1){
                         
-                        BJDebugMsg("火碎-眩晕至结束");
+                        //BJDebugMsg("火碎-眩晕至结束");
                         u.AnimeId(18);
                         u.DelayReleaseAnimePause(0.3);
                     }
@@ -82,12 +82,12 @@ library XN requires Groups{
                         }
                     }else{
                         if(data.i[0]==1){
-                            BJDebugMsg("松开F");
+                            //BJDebugMsg("松开F");
                             u.AnimeId(18);
                             u.DelayReleaseAnimePause(0.3);
                             data.i[0]=0;
                             if(data.r[1]<=0.3){
-                                BJDebugMsg("小于0.3秒，提前结束火碎");
+                                //BJDebugMsg("小于0.3秒，提前结束火碎");
                                 data.r[0]=0;
                                 Units.MJ(u.player.player,'e008','A07I',0,x,y,0,3,1.5,1, "death","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");                  
                                 Util.Duang(x,y,0.5,500,500,-120,0.05,100);    
@@ -227,6 +227,7 @@ library XN requires Groups{
                                                     Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),100,Dash.SUB,10,true,false);
                                                     Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
                                                     //XN.FIRE_BOOM(u.unit,mj.unit);
+                                                    Buffs.Skill(mj.unit,'A00W',1);
                                                     s+=1;
                                                 } 
                                             }
@@ -244,7 +245,7 @@ library XN requires Groups{
                                         u.DelayReleaseAnimePause(0.5);
                                     });
                                     
-                            BJDebugMsg("正常结束");
+                           
                                     Spell(data.c[1]).Destroy();
                                     Effect(data.c[2]).Destroy();
                                     data.Destroy();
@@ -270,8 +271,8 @@ library XN requires Groups{
                                             } 
                                         }
                                         GroupClear(tmp_group); 
-                            BJDebugMsg("转火碎结束");
-                                        u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')*0.3);
+                            
+                                        u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')*0.4);
                                         u.Pause(false);
                                         u.AnimeSpeed(1);
                                         Spell(data.c[1]).Destroy();
@@ -283,7 +284,7 @@ library XN requires Groups{
                             }
                         }else{
                             
-                            BJDebugMsg("蓄力结束");
+                            //BJDebugMsg("蓄力结束");
                             HitFlys.Add(u.unit,-10); 
                             u.Pause(false);
                             u.AnimeSpeed(1);
@@ -294,7 +295,7 @@ library XN requires Groups{
                         }
                     });
                 }else{
-                    BJDebugMsg("上挑结束");
+                    //BJDebugMsg("上挑结束");
                     u.Pause(false);
                     u.AnimeSpeed(1);
                     Spell(data.c[1]).Destroy();
@@ -318,8 +319,8 @@ library XN requires Groups{
         static method E1(Units u){
             Buffs b;
             Units mj;
-            if(u.IsAbility('B02H')==true){
-                BJDebugMsg("引爆！");
+            if(u.IsAbility('B02H')==true){ 
+                SpellNameText(u.unit,"! 火阵引爆 !",3,15); 
                 b=Buffs.Find(u.unit,'B02H');
                 b.Level=0;
                 mj=Units(b.Obj); 
@@ -601,7 +602,7 @@ library XN requires Groups{
                                 if(data.r[0]<=0){//判定
                                     data.r[0]=0.2;
                                     data.i[0]+=1;
-                                    BJDebugMsg(I2S(data.i[0])+"/WW");
+                                    //BJDebugMsg(I2S(data.i[0])+"/WW");
                                     /*
                                         4次判定
                                     */
@@ -713,13 +714,12 @@ library XN requires Groups{
                         dash1.onEnd=function(Dash dash){
                             Data data=Data(dash.Obj);
                             Units u=Units(data.c[0]);
-                    BJDebugMsg("戳完人了");
+                     
                             u.DelayReleaseAnimePause(0.3);
                             Dash.Start(u.unit,dash.Angle,150,Dash.SUB,3.75,true,false); 
                             data.Destroy();
                         };
-                    }else{//如果没戳到人
-                    BJDebugMsg("没戳到人结束了");
+                    }else{//如果没戳到人 
                         u.DelayReleaseAnimePause(1);
                         Dash.Start(u.unit,u.F(),300,Dash.SUB,15,true,false); 
                         data.Destroy();
@@ -733,9 +733,11 @@ library XN requires Groups{
                 11 - 一文字
                 0.933 前冲
                 0.167 判定
-            */
+            */ 
             Buffs b=Buffs.Find(u.unit,'B02C');
             Data data=Data.create('A074');
+            
+            SpellNameText(u.unit,"! 一文字 !",3,15); 
             b.Level=0;
             b.Stop();
             u.Pause(true);
@@ -984,8 +986,8 @@ library XN requires Groups{
             Units tmp;
             if(GroupNumber(data.g[0])!=0){
                 mj=Units.Get(GroupFirst(data.g[0])); 
-                GroupRemoveUnit(data.g[0],mj.unit); 
-
+                GroupRemoveUnit(data.g[0],mj.unit);  
+                SpellNameText(u.unit,"红莲之爆炎",3,10); 
                 mj.Position(u.X(),u.Y(),true);
                 mj.AddAbility(Units.MJType_TSW);
                 mj.Model("by_wood_effect_yuzhiboyou_fire_haohuoqiu.mdl");
@@ -1049,6 +1051,8 @@ library XN requires Groups{
             real f,dis,x=u.X()+disy*CosBJ(disx),y=u.Y()+disy*SinBJ(disx);
             Dash dash;
             if(GroupNumber(data.g[0])!=0){
+                
+                SpellNameText(u.unit,"飞炎",3,10); 
                 mj=Units.Get(GroupFirst(data.g[0]));
                 GroupRemoveUnit(data.g[0],mj.unit);
                 mj.Position(mj.X(),mj.Y(),true);
@@ -1095,7 +1099,7 @@ library XN requires Groups{
                 data.r[0]=5;//红莲刷新间隔
                 data.r[1]=0;//旋转角度
                 u.Obj=data;
-                BJDebugMsg("来了");
+                //BJDebugMsg("来了");
                 Timers.Start(0.01,data,function(Timers t){
                     Data data=Data(t.Data());
                     Units u=Units(data.c[0]);
@@ -1140,7 +1144,7 @@ library XN requires Groups{
                         }
                         GroupClear(tmp_group);
                     }else{
-                        BJDebugMsg("没了");
+                        //BJDebugMsg("没了");
                         if(data.u[0]!=null){
                             Units.Kill(data.u[0]);
                             data.u[0]=null;

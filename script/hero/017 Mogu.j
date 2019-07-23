@@ -160,7 +160,7 @@ library Mogu requires Groups{
                     if(e.TriggerUnit.player.lv20!=null){//20级了
                         if(e.TriggerUnit.player.nextherotype==-1){//未指定复活英雄
                             if(e.TriggerUnit.player.isai==false){
-                                BJDebugMsg("妹红-不死鸟-伤害-"+R2S(e.Damage)+"-判定血量-"+R2S((e.TriggerUnit.HP()-5)));
+                                //BJDebugMsg("妹红-不死鸟-伤害-"+R2S(e.Damage)+"-判定血量-"+R2S((e.TriggerUnit.HP()-5)));
                             } 
                             if(e.Damage>=(e.TriggerUnit.HP()-5)){//致死
                                 if(e.TriggerUnit.player.isai==true){//如果是AI

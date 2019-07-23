@@ -830,13 +830,13 @@ library SD requires Groups{
                                     Buffs.Add(u.unit,'A03L','B00T',86400,false).Level+=1;
                                 } 
                                 kwt=0;
-                                BJDebugMsg("--地上飞雷神");
+                                //BJDebugMsg("--地上飞雷神");
                             }else{//仍在飞行
                                 //mj.SetData(4); 可以无限次触发飞雷神
                                 dmg=u.Agi(true)*0.5;
                                 kwt=1;
                                 cd=0.2;
-                                BJDebugMsg("--飞行飞雷神");
+                                //BJDebugMsg("--飞行飞雷神");
                             }
                             
                             

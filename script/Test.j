@@ -119,8 +119,8 @@ library Test requires Util{
      
   
     function onInit(){
-        Events.On(Events.onPlayerPressEsc,Esc);
+        /*Events.On(Events.onPlayerPressEsc,Esc);
         Events.On(Events.onPlayerChat,Chat); 
-        Events.On(Events.onPlayerSelectUnit,Select);
+        Events.On(Events.onPlayerSelectUnit,Select);*/
     }
 }   

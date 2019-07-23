@@ -61,8 +61,8 @@ library HeroRare requires Units{
             //real r1=GetRandomReal(0,50);
             integer index=-1; 
             if(GetPlayerController(p) == MAP_CONTROL_COMPUTER){//如果是AI则在R-SR之间随机
-                if(r>80){
-                    r=80;
+                if(r>75){
+                    r=70;
                 }
             }
             if(r1>=0&&r1<=30){

@@ -217,7 +217,7 @@ library Ichigo requires Groups{
                     b.Level-=s; 
                     if(b.Level<5){
                         if(b.Obj!=0){
-                            BJDebugMsg("删除");
+                            //BJDebugMsg("删除");
                             Effect(b.Obj).Destroy();
                             b.Obj=0;
                         }
@@ -239,7 +239,7 @@ library Ichigo requires Groups{
                     b.onEnd=function(Buffs b){
                         Units u=Units.Get(b.Unit);
                         if(b.Obj!=0){ 
-                            BJDebugMsg("删除");
+                            //BJDebugMsg("删除");
                             Effect(b.Obj).Destroy();
                         }
                     };
@@ -248,7 +248,7 @@ library Ichigo requires Groups{
                 b.Level+=s;
                 if(b.Level>=5){
                     if(b.Obj==0){ 
-                        BJDebugMsg("添加");
+                        //BJDebugMsg("添加");
                         b.Obj=Effect.ToUnit("buff_hei.mdl",u.unit,"weapon");
                     }
                 }
@@ -272,10 +272,10 @@ library Ichigo requires Groups{
             data.c[1]=mj;
             data.g[0]=CreateGroup();
             if(e.State==Spell.SpellState){
-                BJDebugMsg("66");
+                //BJDebugMsg("66");
                 data.r[0]=u.Agi(true)*6;
             }else{
-                BJDebugMsg("22");
+                //BJDebugMsg("22");
                 data.r[0]=u.Agi(true)*2;
             }
             dash=Dash.Start(mj.unit,f,1600,Dash.SUB,100,true,false);
