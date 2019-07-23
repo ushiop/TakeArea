@@ -53,6 +53,12 @@ library Test requires Util{
                 p.hero.TimeStop(false);
             }
         } 
+        if(e.ChatString=="7"){
+            if(p.hero.unit!=null){//解除自己的时停
+                BJDebugMsg("??");
+                HitFlys.Remove(p.hero.unit);
+            }
+        } 
         if(e.ChatString=="info"){
             u=Units.Get(SelectUnits[p.playerid]);
             BJDebugMsg("------------单位信息---------");
@@ -120,7 +126,7 @@ library Test requires Util{
   
     function onInit(){
         /*Events.On(Events.onPlayerPressEsc,Esc);
-        Events.On(Events.onPlayerChat,Chat); 
+        Events.On(Events.onPlayerChat,Chat);
         Events.On(Events.onPlayerSelectUnit,Select);*/
     }
 }   

@@ -46,7 +46,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             p.hero.Select(p.player);
         }); 
 
- 
+        
         /*测试
 
         for(0<=i<=5){
