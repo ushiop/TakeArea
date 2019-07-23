@@ -180,13 +180,30 @@ library XN requires Groups{
             data.c[1]=e;
             data.c[2]=Effect.ToUnit("orboffire.mdl",u.unit,"weapon"); 
             data.r[0]=0.317;//0.634 2倍速 空中判定的时间
+            data.i[0]=0;
             Dash.Start(u.unit,e.Angle,300,Dash.SUB,30,true,false); 
             h=HitFlys.Add(u.unit,40);
             h.Obj=data;
+            HitFlys.Lister(h,HitFlys.onRemove,function(HitFlys h){
+                Data data=Data(h.Obj);
+                Units u=Units(data.c[0]);
+                if(data.i[0]==0){ 
+                    Timers.Start(0.1,u,function(Timers t){ 
+                        HitFlys.Add(Units(t.Data()).unit,-10); 
+                        t.Destroy();
+                    });
+                    u.AnimeId(3);
+                    u.DelayReleaseAnimePause(0.5);
+                    Spell(data.c[1]).Destroy();
+                    Effect(data.c[2]).Destroy(); 
+                    data.Destroy();
+                }
+            });
             HitFlys.Lister(h,HitFlys.onDown,function(HitFlys h){
                 Data data=Data(h.Obj);
                 Units u=Units(data.c[0]);
                 if(u.Alive()==true){
+                    data.i[0]=1;
                     HitFlys.Remove(u.unit);
                     HitFlys.Add(u.unit,10); 
                     Dash.Start(u.unit,u.F(),100,Dash.SUB,10,true,false); 
@@ -213,7 +230,7 @@ library XN requires Groups{
                                         Units u=Units.Get(h.Unit);
                                         integer i,s;
                                         Units mj;
-                                        real x=u.X(),y=u.Y();
+                                        real x=u.X(),y=u.Y(),f=u.F();
                                     
                                         if(u.player.hero.Alive()==true){
                                             s=0;
@@ -224,7 +241,7 @@ library XN requires Groups{
                                                 GroupRemoveUnit(tmp_group,mj.unit);
                                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                                                     u.Damage(mj.unit,Damage.Chaos,'A07F',u.Agi(true)*15);     
-                                                    Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),100,Dash.SUB,10,true,false);
+                                                    Dash.Start(mj.unit,f,150,Dash.SUB,20,true,false);
                                                     Effect.ToUnit("orboffire.mdl",mj.unit,"chest").Destroy(); 
                                                     //XN.FIRE_BOOM(u.unit,mj.unit);
                                                     Buffs.Skill(mj.unit,'A00W',1);
@@ -996,8 +1013,8 @@ library XN requires Groups{
                 /*
                     击退判定
                 */
-                //Util.Range(u.X()+100*CosBJ(angle),u.Y()+100*SinBJ(angle),200);
-                GroupEnumUnitsInRange(tmp_group,u.X()+100*CosBJ(angle),u.Y()+100*SinBJ(angle),200,function GroupIsAliveNotAloc);     
+                //Util.Range(u.X()+170*CosBJ(angle),u.Y()+170*SinBJ(angle),200);
+                GroupEnumUnitsInRange(tmp_group,u.X()+170*CosBJ(angle),u.Y()+170*SinBJ(angle),200,function GroupIsAliveNotAloc);     
                 while(FirstOfGroup(tmp_group)!=null){
                     tmp=Units.Get(FirstOfGroup(tmp_group));
                     GroupRemoveUnit(tmp_group,tmp.unit);
