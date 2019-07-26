@@ -40,9 +40,14 @@ library Item requires Groups{
     //自杀球的使用
     function ZiShaQiu(Spell e){
         Buffs.Add(e.Spell,'A042','B00Y',5,false).onEnd=function(Buffs b){
-             if(b.Time>=4.9){
-                 Units.Kill(b.Unit);
-             }
+            Units u=Units.Get(b.Unit);
+            if(b.Time<=0.1){
+                DisplayTextToPlayer(u.player.player,0,0,"[提示]自杀球被意外中断，这种情况可能是敌人/你身上拥有持续性伤害BUFF，例如天照,无法自杀");                    
+                
+            }
+            if(b.Time>=4.9){
+                Units.Kill(b.Unit);
+            }
         };
         e.Destroy();
     }
