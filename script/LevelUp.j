@@ -2,10 +2,24 @@ library LevelUp requires Events{
     //英雄升级管理类，解锁技能条件、调整AI等级
 
     integer MaxLv=1;
+    integer LvFix=0;
 
     function LvUp(EventArgs e){
         integer lv=GetUnitLevel(e.TriggerUnit);
         Players p=Units.Get(e.TriggerUnit).player;
+        if(LvFix==0){
+            LvFix=1; 
+            Timers.Start(120,0,function(Timers t){
+                DisplayTextToForce(Teams.GetAllPlayers(), "[等级补偿]所有玩家等级+1");
+                ForForce(Teams.GetAllPlayers(),function(){
+                    Players p=Players.Get(GetEnumPlayer()); 
+                    SetHeroLevel(p.hero.unit,GetHeroLevel(p.hero.unit)+1, true ); 
+                });             
+                if(t.Expired()>10){
+                    t.Destroy();
+                }               
+            });
+        }
         if(lv>MaxLv){
             MaxLv=lv;
             ForForce(Teams.GetAllPlayers(),function(){
@@ -37,5 +51,6 @@ library LevelUp requires Events{
 
     function onInit(){
         Events.On(Events.onHeroLevelUp,LvUp);
+         
     }
 }
