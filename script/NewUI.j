@@ -402,6 +402,8 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                         hp=1;
                         mp=1;
                         DzFrameSetText(UnitInfoName,UIStr[0]);   
+                        DzFrameSetText(UnitInfoHPText,UIStr[11]); 
+                        DzFrameSetText(UnitInfoMPText,UIStr[11]);  
                     }else{  
                         DzFrameSetText(UnitInfoName,UIStr[1]+u.str_lv+UIStr[2]+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+UIStr[3]+I2S(u.defs)+"%"+UIStr[4]+u.str_str+UIStr[5]+u.str_agi+UIStr[6]+u.str_int+UIStr[7]+R2S(GetUnitMoveSpeed(UISelectUnit))+UIStr[8]+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                         hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
@@ -414,11 +416,11 @@ library NewUI requires TakeUi,KillUi,Util,BuffUI{
                             }
                         }        
                         BuffUI.Flush(UISelectUnit);
+                        DzFrameSetText(UnitInfoHPText,UIStr[9]+I2S(R2I(GetUnitState(UISelectUnit, UNIT_STATE_LIFE)))+UIStr[11]); 
+                        DzFrameSetText(UnitInfoMPText,UIStr[10]+I2S(R2I(GetUnitState(UISelectUnit, UNIT_STATE_MANA)))+UIStr[11]);  
                     }
                     DzFrameSetSize( UnitInfoHP,0.0001+(hp*0.2524),0.016 );
-                    DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 );
-                    DzFrameSetText(UnitInfoHPText,UIStr[9]+I2S(R2I(GetUnitState(UISelectUnit, UNIT_STATE_LIFE)))+UIStr[11]); 
-                    DzFrameSetText(UnitInfoMPText,UIStr[10]+I2S(R2I(GetUnitState(UISelectUnit, UNIT_STATE_MANA)))+UIStr[11]);  
+                    DzFrameSetSize( UnitInfoMP,0.0001+(mp*0.2524),0.016 ); 
                 }else if(UIType==2){
                     DzFrameSetText(UnitInfoName,GetUnitName(UISelectUnit)+UIStr[2]+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x14))))+"~"+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x15))))+UIStr[3]+I2S(R2I(GetUnitState(UISelectUnit, ConvertUnitState(0x20))))+UIStr[7]+R2S(GetUnitMoveSpeed(UISelectUnit))+UIStr[8]+R2S(GetUnitState(UISelectUnit, ConvertUnitState(0x51))));        
                     hp=GetUnitStatePercent(UISelectUnit, UNIT_STATE_LIFE, UNIT_STATE_MAX_LIFE)/100;
