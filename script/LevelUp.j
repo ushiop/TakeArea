@@ -9,7 +9,7 @@ library LevelUp requires Events{
         Players p=Units.Get(e.TriggerUnit).player;
         if(LvFix==0){
             LvFix=1; 
-            Timers.Start(120,0,function(Timers t){
+            Timers.Start(90,0,function(Timers t){
                 DisplayTextToForce(Teams.GetAllPlayers(), "[等级补偿]所有玩家等级+1");
                 ForForce(Teams.GetAllPlayers(),function(){
                     Players p=Players.Get(GetEnumPlayer()); 
