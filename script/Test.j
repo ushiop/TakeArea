@@ -68,7 +68,12 @@ library Test requires Util{
         if(e.ChatString=="9"){
             if(p.hero.unit!=null){//解除自己的时停
                 BJDebugMsg("??");
-                Server.Global_Set("game_count",I2S(S2I(Server.Global_Get("game_count"))+1));
+                Server.Global_Set("game_count",I2S(S2I(Server.Global_GetOnlyRead("game_count"))+1));
+            } 
+        } 
+        if(e.ChatString=="10"){
+            if(p.hero.unit!=null){//解除自己的时停
+                BJDebugMsg("game_count:"+Server.Global_GetOnlyRead("game_count"));
             } 
         } 
         if(e.ChatString=="info"){
@@ -137,8 +142,8 @@ library Test requires Util{
      
   
     function onInit(){
-        Events.On(Events.onPlayerPressEsc,Esc);
+        /*Events.On(Events.onPlayerPressEsc,Esc);
         Events.On(Events.onPlayerChat,Chat);
-        Events.On(Events.onPlayerSelectUnit,Select);
+        Events.On(Events.onPlayerSelectUnit,Select);*/
     }
 }   
