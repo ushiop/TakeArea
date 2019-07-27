@@ -38,6 +38,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
 
         //设置指定阵营序号胜利
         private static method ShowWin(integer teamid){ 
+            Server.Global_Set("game_count",I2S(S2I(Server.Global_Get("game_count"))+1));
             StartSound(gg_snd_Winner);
             Winner.WinTeam=teamid;
             PauseGame(true);
