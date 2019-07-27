@@ -971,7 +971,8 @@ library Shiki requires Groups{
                                 if(IsUnitEnemy(mj.unit,u.player.player)==true){    
                                     Dash.Start(mj.unit,Util.XYEX(mj.X(),mj.Y(),x,y),50,Dash.SUB,10,true,false);
                                     Buffs.Add(mj.unit,'A05J','B01I',1,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
-                                    u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*(1+data.r[3])); 
+                                    u.Damage(mj.unit,Damage.Physics,'A05G',u.Agi(true)*(0.25+data.r[3])); 
+                                    
                                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
                                     if(data.r[0]>=1){ 
                                         Buffs.Skill(mj.unit,'A00W',1); 
@@ -980,7 +981,7 @@ library Shiki requires Groups{
                                     }
                                 } 
                             } 
-                            GroupClear(tmp_group);
+                            GroupClear(tmp_group); 
                         } 
                         if(data.r[2]>=0.5){
                             //增伤
