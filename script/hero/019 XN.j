@@ -257,6 +257,7 @@ library XN requires Groups{
                                         } 
                                         u.Anime("death");
                                     });
+                                    HitFlys.Remove(u.unit);
                                     HitFlys.Lister(HitFlys.Add(u.unit,-50),HitFlys.onEnd,function(HitFlys h){
                                         Units u=Units.Get(h.Unit);
                                         u.DelayReleaseAnimePause(0.5);
