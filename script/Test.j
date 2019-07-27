@@ -59,6 +59,12 @@ library Test requires Util{
                 HitFlys.Remove(p.hero.unit);
             }
         } 
+        if(e.ChatString=="8"){
+            if(p.hero.unit!=null){//解除自己的时停
+                
+                HitFlys.Add(p.hero.unit,25);
+            }
+        } 
         if(e.ChatString=="info"){
             u=Units.Get(SelectUnits[p.playerid]);
             BJDebugMsg("------------单位信息---------");
