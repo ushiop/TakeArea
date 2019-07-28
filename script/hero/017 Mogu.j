@@ -109,11 +109,11 @@ library Mogu requires Groups{
                 }
                 bb=Buffs.Find(u.unit,'B025'); 
                 bb.Level+=2; 
-                hp=u.MaxHP()*((100.0-bb.Level)/100.0);
+                hp=u.MaxHP()*((100.0-(bb.Level*5))/100.0);
                 if(hp<10){
                     hp=10;
                 }
-                cd=(bb.Level/100.0)*5;
+                cd=(bb.Level/100.0)*20;
                 if(u.GetAbilityCD('A06G')!=0){
                     u.SetAbilityCD('A06G',10*cd);
                 }
@@ -146,7 +146,7 @@ library Mogu requires Groups{
             if(e.DamageUnit.IsAbility('B025')==true){//拥有不死鸟则额外造成一次伤害
                 if(e.Spell!='A06Q'){//伤害不是不死鸟造成的
                     b=Buffs.Find(e.DamageUnit.unit,'B025');
-                    add=(b.Level/100.0); 
+                    add=(b.Level/100.0)*0.5; 
                     e.DamageUnit.Damage(e.TriggerUnit.unit,Damage.Chaos,'A06Q',e.Damage*add);
                 } 
             }
