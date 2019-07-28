@@ -168,7 +168,7 @@ library XN requires Groups{
                 GroupRemoveUnit(tmp_group,mj.unit);
                 if(IsUnitEnemy(mj.unit,u.player.player)==true){  
                     Buffs.Skill(mj.unit,'A075',1);
-                    Dash.Start(mj.unit,e.Angle,300,Dash.SUB,30,true,false); 
+                    Dash.Start(mj.unit,e.Angle,350,Dash.SUB,30,true,false); 
                     HitFlys.Add(mj.unit,45);
                     Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit,"chest").Destroy();
                                 
@@ -230,7 +230,7 @@ library XN requires Groups{
                                         Units u=Units.Get(h.Unit);
                                         integer i,s;
                                         Units mj;
-                                        real x=u.X(),y=u.Y(),f=u.F();
+                                        real x=u.X(),y=u.Y(),f=u.player.hero.F();
                                     
                                         if(u.player.hero.Alive()==true){
                                             s=0;
@@ -290,7 +290,7 @@ library XN requires Groups{
                                         }
                                         GroupClear(tmp_group); 
                             
-                                        u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')*0.4);
+                                        u.SetAbilityCD('A07F',u.GetAbilityCD('A07F')*0.3);
                                         u.Pause(false);
                                         u.AnimeSpeed(1);
                                         Spell(data.c[1]).Destroy();
@@ -563,7 +563,7 @@ library XN requires Groups{
                 u.Alpha(0); 
                 u.AddAbility('A078');
                 SetUnitTurnSpeed(u.unit,0.1);
-                dash=Dash.Start(u.unit,u.F(),1600,Dash.NORMAL,10,true,false);                               
+                dash=Dash.Start(u.unit,u.F(),2400,Dash.NORMAL,15,true,false);                               
                 dash.Obj=data;
                 dash.onMove=function(Dash dash){
                     Data data=Data(dash.Obj);
