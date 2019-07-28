@@ -9,6 +9,16 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
         private static real OX,OY,NowTime=0,MaxTime=240; 
         private static integer Team=-1,WinTeam=-1; 
         private static real TimeTips=0;
+        private static integer OnKill=0;
+
+        public static method GetKillStart()->boolean{
+            return OnKill!=0;
+        }
+
+        public static method SetMaxKills(integer max){
+            MaxKills=max;
+            KillUi.FlushKillData(-1);
+        }
 
         public static method GetMaxKills()->integer{
                 return MaxKills;
@@ -23,6 +33,7 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                 }
                 if(m.player.hero!=null){
                     if(u.player.teamid!=m.player.teamid){ 
+                        OnKill+=1;
                         m.player.kills=m.player.kills+1;
                         Teams.AddTeamKills(m.player.teamid,1);
                         KillUi.FlushKillData(m.player.teamid);

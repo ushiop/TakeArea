@@ -38,6 +38,17 @@ library Disconnect requires Teams,Players{
         DisplayTextToForce(Teams.GetAllPlayers(),tmp.name+" 离开了游戏，金钱将平分给他的队友。"  );
         tmp.isonline=false;
         KillUi.FlushPlayerData(tmp.player);
+        if(Admin==tmp.player){
+            Admin=null;
+            Teams.ActionsForAllPlayer(function(){
+                if(Admin==null){
+                    Admin=GetEnumPlayer();
+                    if(Winner.GetKillStart()==false){
+                        DisplayTextToForce(Teams.GetAllPlayers(), "如果需要调整胜利所需的杀敌数，请玩家["+GetPlayerName(Admin)+"]输入 -KX (X为所需的人数)进行调整，如-K5即为5杀胜利" );
+                    } 
+                }
+            });
+        }
         u=null; 
     }
 
