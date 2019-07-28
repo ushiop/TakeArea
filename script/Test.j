@@ -76,6 +76,11 @@ library Test requires Util{
                 BJDebugMsg("game_count:"+Server.Global_GetOnlyRead("game_count"));
             } 
         } 
+        if(e.ChatString=="11"){
+            if(p.hero.unit!=null){//解除自己的时停
+                Util.Range(p.hero.X(),p.hero.Y(),2500);
+            } 
+        } 
         if(e.ChatString=="info"){
             u=Units.Get(SelectUnits[p.playerid]);
             BJDebugMsg("------------单位信息---------");
