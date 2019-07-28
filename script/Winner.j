@@ -33,6 +33,9 @@ library Winner requires Units,TimerUtils,Teams,TakeUi {
                 }
                 if(m.player.hero!=null){
                     if(u.player.teamid!=m.player.teamid){ 
+                        if(OnKill==0){
+                            DisplayTextToForce(Teams.GetAllPlayers(), "[提示]由于产生了一次有效击杀，[-K]指令从现在起就不能使用了" );
+                        }
                         OnKill+=1;
                         m.player.kills=m.player.kills+1;
                         Teams.AddTeamKills(m.player.teamid,1);
