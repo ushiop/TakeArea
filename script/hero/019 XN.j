@@ -269,7 +269,6 @@ library XN requires Groups{
                                     data.Destroy();
                                     t.Destroy();
                                 }else{ 
-                                    data.r[0]-=0.01;
                                     if(u.IsAbility('A07G')==false){//中断，转为火碎
                                         /*
                                             火碎处理
@@ -297,6 +296,8 @@ library XN requires Groups{
                                         Effect(data.c[2]).Destroy();
                                         t.Destroy();
                                         data.Destroy();
+                                    }else{ 
+                                        data.r[0]-=0.01;
                                     }
                                 }
                             }
