@@ -208,8 +208,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
             integer id=first.aidindex;          
             Buffs b;
             if(GroupNumber(data.g[0])==0){
-                BJDebugMsg(first.name+R2S(x)+"/"+R2S(y)+":::"+R2S(e.X)+"/"+R2S(e.Y)+"/类型："+I2S(id)+"/炫纹组："+I2S(GroupNumber(data.g[0]))+"/A:"+Util.B2S(first.Alive())+"/AID:"+I2S(first.aid)+"/AID2:"+I2S(first.aidindex));
-                BJDebugMsg("---这是一条错误提示,如果看到了这条提示且你愿意,请保存录像并联系作者");
+                //BJDebugMsg(first.name+R2S(x)+"/"+R2S(y)+":::"+R2S(e.X)+"/"+R2S(e.Y)+"/类型："+I2S(id)+"/炫纹组："+I2S(GroupNumber(data.g[0]))+"/A:"+Util.B2S(first.Alive())+"/AID:"+I2S(first.aid)+"/AID2:"+I2S(first.aidindex));
+                //BJDebugMsg("---这是一条错误提示,如果看到了这条提示且你愿意,请保存录像并联系作者");
                 e.Destroy();
                 return;
             } 
