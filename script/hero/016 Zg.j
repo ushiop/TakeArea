@@ -249,6 +249,7 @@ library Zg requires Groups{
                 real x=u.X(),y=u.Y();
                 Dash dash1;
                 if(data.u[0]==null){ 
+                    HitFlys.Add(u.unit,-20).LocalPower=HitFlys.Power*2;
                     u.RemoveAbility(Units.Group_NotSelect);
                     u.AnimeId(20);
                     u.DelayReleaseAnimePause(0.5); 
@@ -283,6 +284,7 @@ library Zg requires Groups{
                     };
                 }else{
                     data.u[0]=null;
+                    HitFlys.Add(u.unit,-20).LocalPower=HitFlys.Power*2;
                     u.Pause(false);
                 }
                 Spell(data.c[1]).Destroy();
