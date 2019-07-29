@@ -5,7 +5,7 @@ library HitFly requires Util{
     public struct HitFlys{
         private static HitFlys Root;//根节点
         private static HitFlys Last;//最后一个节点
-        private static real Power=0.98;//下落重力 
+        public static real Power=0.98;//下落重力 
   
         public{ 
             static string onDown="HitFlys.onDown";
