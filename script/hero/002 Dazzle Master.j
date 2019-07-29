@@ -288,9 +288,10 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             tmp=Units.Get(FirstOfGroup(tmp_group));
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
+                                Buffs.Skill(tmp.unit,'A00W',1);
                                 u.Damage(tmp.unit,Damage.Chaos,'A008',dmg); 
                                 HitFlys.Add(tmp.unit,10);
-                                Buffs.Skill(tmp.unit,'A00Y',1);
+                                Buffs.Skill(tmp.unit,'A00T',1);
                                 Buffs.AllRemove(tmp.unit,Buffs.TYPE_ADD+Buffs.TYPE_DISPEL_TRUE);
                             }
                         }
@@ -312,7 +313,8 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             GroupRemoveUnit(tmp_group,tmp.unit);
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
-                                Buffs.Add(tmp.unit,'A00I','B003',2,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
+                                Buffs.Skill(tmp.unit,'A00C',1);
+                                Buffs.Add(tmp.unit,'A00I','B003',3,false).Type=Buffs.TYPE_SUB+Buffs.TYPE_DISPEL_TRUE;
                                 DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\ZigguratFrostMissile\\ZigguratFrostMissile.mdl", tmp.unit, "chest") );
                             }
                         }
@@ -335,6 +337,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             GroupRemoveUnit(tmp_group,tmp.unit); 
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 u.Damage(tmp.unit,Damage.Magic,'A008',dmg);  
+                                Buffs.Skill(tmp.unit,'A00W',1);
                                 DestroyEffect( AddSpecialEffectTarget("Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl", tmp.unit, "chest") );
                                 Dash.Start(tmp.unit,Util.XYEX(x,y,tmp.X(),tmp.Y()),350-Util.XY2EX(x,y,tmp.X(),tmp.Y()),Dash.SUB,30,true,false);
                             } 
@@ -357,6 +360,7 @@ library DazzleMaster requires TimerUtils,Groups,Units{
                             if(IsUnitEnemy(tmp.unit,u.player.player)==true){ 
                                 DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl", tmp.unit, "chest") );
                                 u.Damage(tmp.unit,Damage.Chaos,'A008',dmg);
+                                Buffs.Skill(tmp.unit,'A00C',1);
                                 HitFlys.Add(tmp.unit,20);
                                 Dash.Start(tmp.unit,Util.XY(tmp.unit,u.unit),Util.XY2(tmp.unit,u.unit),Dash.ADD,40,true,false);
                             }
