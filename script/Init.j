@@ -7,6 +7,7 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
         real Origin_X,Origin_Y;//中央球的原始坐标
         real GameTime=0.0;//游戏时间轴
         player Admin=null;//本局游戏的管理员
+        integer PlayerCount=0;//玩家人数
     }
 
     function onInit(){
@@ -48,6 +49,9 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             if(Admin==null&&p.isai==false){
                 Admin=p.player; 
                 DisplayTextToForce(Teams.GetAllPlayers(), "如果需要调整胜利所需的杀敌数，请玩家["+p.name+"]输入 -KX (X为所需的人数)进行调整，如-K5即为5杀胜利" );
+            }
+            if(p.isai==false){
+                PlayerCount+=1;
             }
         }); 
 
