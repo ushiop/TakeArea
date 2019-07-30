@@ -69,7 +69,14 @@ library Shiki requires Groups{
                     u.SetF(Util.XY(u.unit,no),true);   
                     IssueImmediateOrder( u.unit, "hex" );//砍人
                 }
-                   
+
+                no=GroupFind(u.unit,x,y,300,true,false);
+                if(no!=null){  
+                    if(GetRandomReal(0,1)<=0.05){   
+                        u.SetF(Util.XY(u.unit,no)+180,true);   
+                        IssueImmediateOrder(u.unit, "impale" );//后跳
+                    }
+                }
             } 
             target=null;
             no=null;
@@ -641,9 +648,6 @@ library Shiki requires Groups{
         static method SubDamage(DamageArgs e){
             if(e.TriggerUnit.IsAbility('B01J')==true||e.TriggerUnit.IsAbility('B01L')==true||e.TriggerUnit.IsAbility('B01M')==true||e.TriggerUnit.IsAbility('B01P')==true){
                 e.Damage=0;
-                if(e.TriggerUnit.player.isai==true){//如果是AI就放后跳
-                    IssueImmediateOrder( e.TriggerUnit.unit, "impale" );//后跳
-                }
             }
         }
 
