@@ -72,7 +72,7 @@ library Shiki requires Groups{
 
                 no=GroupFind(u.unit,x,y,300,true,false);
                 if(no!=null){  
-                    if(GetRandomReal(0,1)<=0.05){   
+                    if(GetRandomReal(0,1)<=0.1){   
                         u.SetF(Util.XY(u.unit,no)+180,true);   
                         IssueImmediateOrder(u.unit, "impale" );//后跳
                     }
@@ -664,7 +664,7 @@ library Shiki requires Groups{
                
             }
             if(e.TriggerUnit.IsAbility('B01D')==true){      
-                if(e.TriggerUnit.player.isai==true&&GetRandomInt(0,1)==0){
+                if(e.TriggerUnit.player.isai==true&&GetRandomInt(0,3)==0){
                     Shiki.Press(e.TriggerUnit.player.player,"Q");  
                 }
             } 
