@@ -702,7 +702,7 @@ library Yuuki requires Groups{
                             if(IsUnitEnemy(mj.unit,u.player.player)==true&&IsUnitInGroup(mj.unit,data.g[0])==false){   
                                 GroupAddUnit(data.g[0],mj.unit);
                                 Dash.Start(mj.unit,dash.Angle,500-dash.NowDis,Dash.ADD,50,true,true);  
-                                u.Damage(mj.unit,Damage.Physics,'A04H',u.Agi(true)*5);
+                                u.Damage(mj.unit,Damage.Physics,'A04H',u.Agi(true)*3);
                                 Effect.ToUnit("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl",mj.unit, "chest").Destroy();
                                 Effect.ToUnit("hiteffect08purplea.mdl",mj.unit,"chest").Destroy();
                             }

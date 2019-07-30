@@ -282,7 +282,11 @@ library WindWalk requires Groups{
                                     DestroyEffect( AddSpecialEffectTarget("Abilities\\Weapons\\MakuraMissile\\MakuraMissile.mdl",k, "chest"));
                                     Dash.Start(k,dash.Angle,100,Dash.SUB,20,true,true);
                                     dash.Stop(); 
-                                    u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi(true)*2.0);
+                                    if(Units.Get(k).isHero==true){ 
+                                        u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi(true)*2.0);
+                                    }else{ 
+                                        u.Damage(k,Damage.Physics,'A00J',u.player.hero.Agi(true)*5.0);
+                                    }
                                 }
                                 k=null;
                             };

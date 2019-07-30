@@ -1,7 +1,8 @@
 library SL requires Groups{
     //R级英雄‘神裂’的技能
     struct SL{
-
+        
+        static integer Sound;
         //4
         static method R(Spell e){
             Units u=Units.Get(e.Spell);
@@ -437,7 +438,8 @@ library SL requires Groups{
             Data data=Data.create('A017'); 
             u.Pause(true);
             u.AnimeSpeed(4);
-            u.AnimeId(3);
+            u.AnimeId(3); 
+            RunSoundOnUnit(SL.Sound,u.unit);
             data.c[0]=u;
             data.c[1]=e; 
             data.r[0]=0.1;
@@ -513,6 +515,8 @@ library SL requires Groups{
         } 
 
         static method onInit(){ 
+            SL.Sound = DefineSound("resource\\sound_effect_shiki_11.wav",1000, false, true);//W的音效
+            
             Spell.On(Spell.onSpell,'A01B',SL.R); 
             Spell.On(Spell.onSpell,'A01A',SL.E); 
             Spell.On(Spell.onSpell,'A017',SL.Q);  

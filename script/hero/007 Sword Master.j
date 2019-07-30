@@ -258,8 +258,20 @@ library SwordMaster requires Groups{
         }
 
         static method Damage(DamageArgs e){
+            Units mj;
             if(e.DamageType==Damage.Attack&&e.DamageUnit.IsAbility('A01E')==true&&e.TriggerUnit.IsAbility('B00J')==true){
-                HitFlys.Add(e.TriggerUnit.unit,15);              
+                HitFlys.Add(e.TriggerUnit.unit,15);   
+                GroupEnumUnitsInRange(tmp_group,e.TriggerUnit.X(),e.TriggerUnit.Y(),175,function GroupIsAliveNotAloc);                   
+                while(FirstOfGroup(tmp_group)!=null){
+                    mj=Units.Get(FirstOfGroup(tmp_group));
+                    GroupRemoveUnit(tmp_group,mj.unit);
+                    if(IsUnitEnemy(mj.unit,e.DamageUnit.player.player)==true&&mj.unit!=e.TriggerUnit.unit){ 
+                        DestroyEffect( AddSpecialEffectTarget("qqqqq.mdl", mj.unit, "chest") );
+                        e.DamageUnit.Damage(mj.unit,Damage.Physics,'A01K',e.Damage*0.7);  
+                        HitFlys.Add(mj.unit,11); 
+                    }
+                }
+                GroupClear(tmp_group);              
             }
         }
 

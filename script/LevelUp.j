@@ -3,10 +3,17 @@ library LevelUp requires Events{
 
     integer MaxLv=1;
     integer LvFix=0;
+    integer MinLv=0,MinFindLock=0;
+
+    //获取最低等级
+    public function GetGameMinLevel()->integer{
+        return MinLv;
+    }
 
     function LvUp(EventArgs e){
-        integer lv=GetUnitLevel(e.TriggerUnit);
-        Players p=Units.Get(e.TriggerUnit).player;
+        integer tmp_lv[];
+        integer lv=GetUnitLevel(e.TriggerUnit),m,lmax=0,tmp_i,v;
+        Players p=Units.Get(e.TriggerUnit).player,tmp_p;
         if(LvFix==0){
             LvFix=1; 
             Timers.Start(90,0,function(Timers t){
@@ -18,6 +25,31 @@ library LevelUp requires Events{
                 if(t.Expired()>10){
                     t.Destroy();
                 }               
+            });
+        }
+        //获取最低等级
+        if(MinFindLock==0){
+            MinFindLock=1; 
+            for(0<=m<9){
+                tmp_p=Players.Get(Player(m));
+                if(tmp_p.isonline==true){
+                    tmp_lv[lmax]=GetHeroLevel(tmp_p.hero.unit);
+                    lmax+=1;
+                }
+            }
+            for(0<=m<lmax){
+                for(m<=v<lmax){
+                    if(tmp_lv[m]>tmp_lv[v]){
+                        tmp_i=tmp_lv[m];
+                        tmp_lv[m]=tmp_lv[v];
+                        tmp_lv[v]=tmp_i;
+                    }
+                }
+            } 
+            MinLv=tmp_lv[0];
+            Timers.Start(0.1,0,function(Timers t){
+                MinFindLock=0;
+                t.Destroy();
             });
         }
         if(lv>MaxLv){

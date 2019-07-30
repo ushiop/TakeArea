@@ -55,14 +55,14 @@ library Init requires Teams,HeroRare,Winner,Players,Units/*,japi*/{
             }
         }); 
 
-        
+         
         
         /*测试
 
         for(0<=i<=5){
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h001',-4464,-3641,0));
             RemoveGuardPosition(Units.Spawn(Player(PLAYER_NEUTRAL_AGGRESSIVE),'h009',-4464,-3641,0));
-        } 
+        }
  
         //JAPI测试异步 
         BJDebugMsg(GetMapName()+"/"+GetPluginVersion()); 

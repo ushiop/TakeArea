@@ -90,6 +90,11 @@ library Test requires Util{
                     Util.Range(p.hero.X(),p.hero.Y(),2500);
                 } 
             } 
+            if(e.ChatString=="."){
+                if(p.hero.unit!=null){//解除自己的时停
+                    BJDebugMsg(R2S(GameTime));
+                } 
+            } 
             if(e.ChatString=="info"){
                 u=Units.Get(SelectUnits[p.playerid]);
                 BJDebugMsg("------------单位信息---------");

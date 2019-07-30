@@ -70,7 +70,7 @@ library MR requires Groups{
                         data.r[1]=y;
                         if(data.r[3]==1.0){
                             data.r[3]=0;
-                            if((u.HP()/u.MaxHP())<=0.3){
+                            if((u.HP()/u.MaxHP())<=0.5){
                                 Buffs.Add(u.unit,'A01Y','B00B',30,false);
                             }  
                             if(u.IsAbility('B00B')==true){

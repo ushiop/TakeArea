@@ -562,6 +562,9 @@ library TR requires Groups{
                     } 
                 }     
             }*/
+            if(e.DamageUnit.IsAbility('B00G')==true&&e.DamageType==Damage.Attack&&e.TriggerUnit.isHero==false&&e.Spell!='A02C'){
+                e.DamageUnit.Damage(e.TriggerUnit.unit,Damage.Physics,'A02C',e.DamageUnit.Agi(true)*6); 
+            }
             if(e.DamageUnit.IsAbility('B00H')==true&&e.DamageType==Damage.Attack){
                 if(e.DamageUnit.IsAbility('B00I')==true){
                     b=Buffs.Find(e.DamageUnit.unit,'B00H');
@@ -706,6 +709,7 @@ library TR requires Groups{
                 } 
                 Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
                 Effect.ToUnit("lizi_blue1.mdl",u.unit,"origin").Destroy();
+                u.AddAbility('A07M');
                 b=Buffs.Add(u.unit,'A02I','B00G',6,false);
                 b.Obj=e;
                 b.onEnd=function(Buffs b){ 
@@ -713,6 +717,7 @@ library TR requires Groups{
                     Units u=Units.Get(b.Unit);
                     Spell(b.Obj).Destroy();
                     u.PositionEnabled(true); 
+                    u.RemoveAbility('A07M');
                     //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
                     //Units.MJ(u.player.player,'e008','A02C',0,u.X(),u.Y(),0,1,1.2,1,"death","lizi_blue1.mdl");
                     
