@@ -607,6 +607,7 @@ library Zg requires Groups{
             u.Pause(true);
             u.AnimeId(13);
             u.AnimeSpeed(2);
+            u.AddAbility(Units.Group_NotSelect);//不可选取标记
             data.c[0]=u;
             data.c[1]=e;
             data.r[0]=0.26;
@@ -648,7 +649,6 @@ library Zg requires Groups{
                                         Units u=Units.Get(dash.Unit);  
                                         u.AnimeSpeed(1);
                                         u.Pause(false);
-                                        Buffs.Add(u.unit,'A063','B01U',0.3,false);
                                         if(u.player.lv15!=null){
                                             if(u.player.press.R==false){
                                                 if(GetRandomReal(0,1)<=0.5){ 
@@ -673,11 +673,13 @@ library Zg requires Groups{
                         };
                         dash.onEnd=function(Dash dash){
                             Data data=Data(dash.Obj);
-                            Units u=Units(data.c[0]); 
+                            Units u=Units(data.c[0]);  
+                            Buffs.Add(u.unit,'A063','B01U',0.4,false);
+                            u.RemoveAbility(Units.Group_NotSelect);//不可选取标记
                             if(data.u[0]==null){
                                 Dash.Start(u.unit,dash.Angle,200,Dash.SUB,dash.Speed,true,false);
-                                u.AnimeSpeed(2);
-                                u.DelayReleaseAnimePause(0.3);
+                                u.AnimeSpeed(4);
+                                u.DelayReleaseAnimePause(0.15);
                                 if(u.player.lv15!=null){
                                     if(u.player.press.R==false){
                                         if(GetRandomReal(0,1)<=0.5){ 
