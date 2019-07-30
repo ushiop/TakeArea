@@ -99,8 +99,8 @@ library Mogu requires Groups{
                 Units u=Units.Get(b.Unit);
                 Buffs bb;
                 Units mj=Units(b.Obj);
-                real hp;
-                real cd;
+                real hp,hpbl;
+                real cd,cdbl;
                 mj.Life(0.1); 
                 Util.Duang(u.X(),u.Y(),1,200,200,-64,0.02,50);
                 Units.MJ(u.player.player,'e008','A06Q',0,u.X(),u.Y(),0,2,1.5,1.5,"stand","Abilities\\Spells\\Other\\Doom\\DoomDeath.mdl");
@@ -109,11 +109,18 @@ library Mogu requires Groups{
                 }
                 bb=Buffs.Find(u.unit,'B025'); 
                 bb.Level+=2; 
-                hp=u.MaxHP()*((100.0-(bb.Level*5))/100.0);
+                if(bb.Level<6){
+                    hpbl=7;
+                    cdbl=7;
+                }else{
+                    hpbl=14;
+                    cdbl=20;
+                }
+                hp=u.MaxHP()*((100.0-(bb.Level*hpbl))/100.0);
                 if(hp<10){
                     hp=10;
                 }
-                cd=(bb.Level/100.0)*20;
+                cd=(bb.Level/100.0)*cdbl;
                 if(u.GetAbilityCD('A06G')!=0){
                     u.SetAbilityCD('A06G',10*cd);
                 }
@@ -146,8 +153,9 @@ library Mogu requires Groups{
             if(e.DamageUnit.IsAbility('B025')==true){//拥有不死鸟则额外造成一次伤害
                 if(e.Spell!='A06Q'){//伤害不是不死鸟造成的
                     b=Buffs.Find(e.DamageUnit.unit,'B025');
-                    add=(b.Level/100.0)*0.5; 
+                    add=(b.Level*0.32); 
                     e.DamageUnit.Damage(e.TriggerUnit.unit,Damage.Chaos,'A06Q',e.Damage*add);
+                    
                 } 
             }
         }
@@ -213,7 +221,7 @@ library Mogu requires Groups{
                 GroupRemoveUnit(tmp_group,mj.unit);
                 if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                     //伤害和减速 
-                    u.Damage(mj.unit,Damage.Magic,'A06M',u.Str(true)*10);
+                    u.Damage(mj.unit,Damage.Magic,'A06M',u.Str(true)*5);
                     Dash.Start(mj.unit,Util.XY(u.unit,mj.unit),300,Dash.SUB,20,true,false); 
                     HitFlys.Add(mj.unit,10); 
                     Effect.ToUnit("Abilities\\Weapons\\FireBallMissile\\FireBallMissile.mdl",mj.unit,"chest").Destroy();
@@ -308,7 +316,7 @@ library Mogu requires Groups{
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                                 //伤害和减速 
-                                u.Damage(mj.unit,Damage.Magic,'A06M',u.Str(true)); 
+                                u.Damage(mj.unit,Damage.Magic,'A06M',u.Str(true)*0.3); 
                                 HitFlys.Add(mj.unit,9.5); 
                                 Buffs.Skill(mj.unit,'A00C',1);
                                 o+=1;
@@ -373,7 +381,7 @@ library Mogu requires Groups{
                             GroupRemoveUnit(tmp_group,mj.unit);
                             if(IsUnitEnemy(mj.unit,u.player.player)==true&&mj.IsAbility('B023')==false){ 
                                 //伤害和减速 
-                                u.Damage(mj.unit,Damage.Physics,'A06I',u.Str(true)*13);
+                                u.Damage(mj.unit,Damage.Physics,'A06I',u.Str(true)*9);
                                 Dash.Start(mj.unit,dash.Angle,(dash.MaxDis-dash.NowDis)+GetRandomReal(0,200),Dash.SUB,dash.Speed*0.88,true,true);
                                 HitFlys.Reset(mj.unit);
                                 HitFlys.Add(mj.unit,10);
@@ -699,8 +707,7 @@ library Mogu requires Groups{
                                                             if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
                                                                 //伤害和眩晕 
                                                                 Buffs.Skill(mj.unit,'A00F',1);
-                                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true)*4);
-                                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)*3);
+                                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true)*5);
                                                                 Dash.Start(mj.unit,f,140,Dash.NORMAL,5,true,false);
                                                                 HitFlys.Reset(mj.unit);
                                                                 HitFlys.Add(mj.unit,35);
@@ -754,8 +761,8 @@ library Mogu requires Groups{
                                             if(Util.FAN(u.unit,mj.unit,f,80)==true){ 
                                                 //伤害 
                                                 o+=1;
-                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)); 
-                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true));
+                                                u.Damage(mj.unit,Damage.Physics,'A06G',u.Str(true)*0.5); 
+                                                u.Damage(mj.unit,Damage.Magic,'A06G',u.Str(true)*0.5);
                                                 Dash.Start(mj.unit,f,50,Dash.NORMAL,6,true,false);
                                                 IssueImmediateOrder(mj.unit,"stop");
                                                 HitFlys.Add(mj.unit,13);
@@ -801,7 +808,7 @@ library Mogu requires Groups{
             if(u.aid=='A06E'&&u.aidindex==0){ 
                 Units.MJ(u.player.player,'e008','A06E',1,u.X(),u.Y(),GetRandomReal(0,360),2.5,0.8,2, "stand","chushou_by_wood_effect_flame_explosion_2.mdl");
                 //Util.Range(u.X(),u.Y(),150);
-                GroupDamage(u, u.X(),u.Y(),150,u.player.hero.Str(true)*1.5,Damage.Magic,'A06E',false); 
+                GroupDamage(u, u.X(),u.Y(),150,u.player.hero.Str(true)*0.75,Damage.Magic,'A06E',false); 
             }
         }
 
@@ -910,12 +917,8 @@ library Mogu requires Groups{
                             while(FirstOfGroup(tmp_group)!=null){
                                 mj=Units.Get(FirstOfGroup(tmp_group));
                                 GroupRemoveUnit(tmp_group,mj.unit);
-                                if(IsUnitEnemy(mj.unit,u.player.player)==true){
-                                    if(Util.XY2(u.unit,mj.unit)>200){
-                                        Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,10,true,false);
-                                    }else{
-                                        Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),100,Dash.NORMAL,7,true,true);
-                                    } 
+                                if(IsUnitEnemy(mj.unit,u.player.player)==true){ 
+                                    Dash.Start(mj.unit,Util.XY(mj.unit,u.unit),200,Dash.SUB,5,true,false); 
                                 }
                             }
                             GroupClear(tmp_group); 
